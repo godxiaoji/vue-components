@@ -1,0 +1,36 @@
+{
+  "name": "vue-components",
+  "version": "0.0.1",
+  "description": "Vue components include form, toast, modal, et.",
+  "main": "./dist/index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config=./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godxiaoji/vue-components.git"
+  },
+  "keywords": [
+    "vue",
+    "components"
+  ],
+  "author": "Travis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godxiaoji/vue-components/issues"
+  },
+  "homepage": "https://github.com/godxiaoji/vue-components#readme",
+  "dependencies": {
+    "swiper": "^5.3.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "mini-css-extract-plugin": "^0.9.0",
+    "vue-loader": "^15.9.0"
+  }
+}

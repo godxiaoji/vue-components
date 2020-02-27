@@ -13,11 +13,10 @@
 </template>
 
 <script>
-// require sources
-import _Swiper from 'swiper/js/swiper.js'
-const Swiper = window.Swiper || _Swiper
-
-import 'swiper/css/swiper.css'
+// @url https://swiperjs.com/api/#custom-build
+import { Swiper, Pagination } from 'swiper/js/swiper.esm.js'
+import './swiper.css'
+Swiper.use([Pagination])
 
 // pollfill
 if (typeof Object.assign != 'function') {

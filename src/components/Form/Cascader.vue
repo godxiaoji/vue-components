@@ -19,7 +19,7 @@
     <div class="cascader-dropdown" ref="dropdown">
       <div class="cascader-list-group" @mousedown.prevent="onDropdownTap">
         <ul
-          class="cascader-list"
+          class="cascader-list app-scroll-bar"
           v-for="(list, listIndex) in dropdown"
           :key="listIndex"
         >

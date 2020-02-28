@@ -122,12 +122,13 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: var(--fixed-z-index);
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.25);
   text-align: left;
+  transform: translateZ(0);
 }
 
 .modal-box {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="scroll-view"
+    class="scroll-view app-scroll-bar"
     :class="{
       'scroll-x': scrollX,
       'scroll-y': scrollY,
@@ -284,19 +284,6 @@ export default {
 .scroll-view {
   display: block;
   width: 100%;
-}
-
-.scroll-view::-webkit-scrollbar {
-  background-color: transparent;
-  width: 6px;
-  height: 6px;
-}
-
-.scroll-view::-webkit-scrollbar-thumb {
-  background-color: var(--app-grey-color);
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 3px;
 }
 
 .scroll-view.scroll-x {

@@ -1,19 +1,17 @@
-import {
-  isFunction
-} from './util'
+import { isFunction } from './util'
 
 const Easing = {
-  linear: function (p) {
+  linear: function(p) {
     return p
   },
-  swing: function (p) {
+  swing: function(p) {
     return 0.5 - Math.cos(p * Math.PI) / 2
   }
 }
 
 class AnimationFrameTask {
   constructor(idle) {
-    this.stop = function () {
+    this.stop = function() {
       if (idle) {
         cancelAnimationFrame(idle)
       }
@@ -25,22 +23,16 @@ class AnimationFrameTask {
  * 变化解帧
  * @param options
  */
-export function frameTo (options) {
-  const {
-    from,
-    to,
-    duration,
-    progress,
-    complete
-  } = options
+export function frameTo(options) {
+  const { from, to, duration, progress, complete } = options
 
   const start = Date.now()
   const end = start + duration
 
   let idle
 
-  function step () {
-    idle = requestAnimationFrame(function () {
+  function step() {
+    idle = requestAnimationFrame(function() {
       const t = Date.now()
       let current
 

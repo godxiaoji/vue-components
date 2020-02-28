@@ -17,7 +17,7 @@
       <icon class="select-unfold-icon" type="unfold"></icon>
     </div>
     <div class="select-dropdown">
-      <div class="select-option-group">
+      <div class="select-option-group app-scroll-bar">
         <slot></slot>
       </div>
     </div>

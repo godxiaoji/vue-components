@@ -34,7 +34,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { getHandleEvent } from '../../helpers/events'
-import './modal'
+// import './modal'
 
 export default {
   name: 'app-modal',

@@ -1,8 +1,10 @@
 # Documents
 
+## Components
+
 组件列表，持续更新。
 
-## BASE
+### BASE
 
 [ScrollView](./README.ScrollView.md)
 
@@ -12,7 +14,7 @@
 
 [Icon](./README.Icon.md)
 
-## FORM
+### FORM
 
 [Form](./README.Form.md)
 
@@ -40,16 +42,22 @@
 
 [Switch](./README.Switch.md)
 
-## Navigation
+### Navigation
 
 [BackToTop](./README.BackToTop.md)
 
-## MEDIA
+### MEDIA
 
 [Image](./README.Image.md)
 
-## TIPS
+### TIPS
 
 [Toast](./README.Toast.md)
 
 [Modal](./README.Modal.md)
+
+## APIs
+
+API 列表，参照微信小程序，持续更新。
+
+[LocalStorage](./README.LocalStorage.md)

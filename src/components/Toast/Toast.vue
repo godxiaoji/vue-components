@@ -24,7 +24,7 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
-import './toast'
+// import './toast'
 
 export default {
   name: 'app-toast',

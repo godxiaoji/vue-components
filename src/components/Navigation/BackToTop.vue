@@ -89,7 +89,7 @@ export default {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  z-index: 99999;
+  z-index: 99998;
   cursor: pointer;
 }
 

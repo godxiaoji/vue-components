@@ -138,4 +138,12 @@ export default {
   background-color: var(--app-light-color);
   cursor: not-allowed;
 }
+
+@media screen and (max-width: 540px) {
+  .select-option {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+  }
+}
 </style>

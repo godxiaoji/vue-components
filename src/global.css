@@ -17,6 +17,13 @@
   --app-whitesmoke-color: whitesmoke;
 }
 
+html {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
 @keyframes app-rotate-360 {
   0% {
     transform: rotate(0);
@@ -25,4 +32,26 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.app-scroll-bar {
+  --app-scroll-color: #fff;
+}
+
+.app-scroll-bar:hover {
+  --app-scroll-color: var(--app-light-color);
+}
+
+.app-scroll-bar::-webkit-scrollbar {
+  background-color: transparent;
+  width: 6px;
+  height: 6px;
+}
+
+.app-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 3px;
+  background-color: var(--app-scroll-color);
 }

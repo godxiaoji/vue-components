@@ -72,11 +72,6 @@ export default {
   data() {
     return {}
   },
-  model: {
-    prop: 'visibility',
-    event: '_change'
-  },
-
   created() {},
   beforeDestroy() {},
   methods: {
@@ -102,7 +97,7 @@ export default {
       this.close(e)
     },
     close(e) {
-      this.$emit('_change', false)
+      this.$emit('update:visibility', false)
 
       const type = 'close'
       this.$emit(type, getHandleEvent(this.$el, e, {}, type))

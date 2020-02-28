@@ -620,6 +620,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .cascader.focus .cascader-dropdown {
@@ -710,11 +711,13 @@ export default {
     border-radius: 0;
     border: none;
     align-items: center;
+    height: 220px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
   }
 
   .cascader-item {
-    height: 48px;
-    line-height: 48px;
+    height: 40px;
+    line-height: 40px;
     font-size: 16px;
   }
 }

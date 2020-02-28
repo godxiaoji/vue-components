@@ -17,7 +17,9 @@
       <icon class="select-unfold-icon" type="unfold"></icon>
     </div>
     <div class="select-dropdown">
-      <slot></slot>
+      <div class="select-option-group">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -312,16 +314,48 @@ export default {
   position: absolute;
   left: 0;
   top: calc(100% + 2px);
-  background-color: #fff;
   min-width: 100%;
   max-width: calc(100% + 100px);
+  z-index: 99999;
+}
+
+.select-option-group {
+  background-color: #fff;
+  width: 100%;
   border: 1px solid var(--app-light-color);
   box-sizing: border-box;
   border-radius: 4px;
-  z-index: 99999;
+  max-height: 208px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .select.focus .select-dropdown {
   display: block;
+}
+
+@media screen and (max-width: 540px) {
+  .select-dropdown {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .select-option-group {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    top: auto;
+    border-radius: 0;
+    border: none;
+    align-items: center;
+    max-height: 220px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
+  }
 }
 </style>

@@ -1,19 +1,23 @@
-import {
-  objectForEach
-} from "./util"
+import { objectForEach, isString } from './util'
 
 const start = Date.now()
 
-export function getHandleEvent(el, event, detail = {}, changedType = null) {
-  const handleEvent = {
-    id: el.id,
-    detail,
-    dataset: getDataset(el.dataset),
-    timeStamp: event.timeStamp ? Math.round(event.timeStamp) : (Date.now() - start),
-    type: changedType || event.type
-  }
+class HandleEvent {
+  constructor(el, type, detail) {
+    this.id = el.id || ''
+    this.detail = detail
+    this.dataset = getDataset(el.dataset)
+    this.timeStamp = Date.now() - start
+    this.type = type
 
-  return handleEvent
+    return this
+  }
+}
+
+export function getHandleEvent(el, event, detail = {}, changedType = null) {
+  let type = isString(changedType) ? changedType : event.type
+
+  return new HandleEvent(el, type, detail)
 }
 
 export function getDataset(object) {

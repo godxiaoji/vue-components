@@ -41,6 +41,25 @@ export default {
 }
 ```
 
+#### 引入单个接口
+
+```
+import { showToast } from '@godxiaoji/vue-components/src/apis/Toast'
+
+showToast({
+  title: '成功',
+  icon: 'success',
+  duration: 2000
+})
+```
+
+其中接口`createIntersectionObserver`，`createSelectorQuery`单独使用需要传入组件本身
+
+```
+const query = createSelectorQuery(this)
+const io = createIntersectionObserver(this, options)
+```
+
 ## Documents
 
 [Documents](./doc/README.md)

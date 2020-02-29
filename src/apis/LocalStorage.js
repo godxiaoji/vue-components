@@ -18,14 +18,14 @@ const STORAGE_LIMIT_SIZE = 2560 // 限制使用的大小，KB
  * @param key
  * @param data
  */
-export function setStorageSync(key, data) {
+export function setStorage(key, data) {
   _isVaildKey(key)
 
   if (data == null) {
     throw new Error('Invalid param: "data" cannot be null or undefined.')
   }
 
-  const storageInfo = getStorageInfoSync()
+  const storageInfo = getStorageInfo()
 
   const value = JSON.stringify({
     isApp: true,
@@ -55,7 +55,7 @@ export function setStorageSync(key, data) {
  * 从本地缓存中获取指定 key 的内容
  * @param key
  */
-export function getStorageSync(key) {
+export function getStorage(key) {
   _isVaildKey(key)
 
   const value = localStorage.getItem(key)
@@ -79,7 +79,7 @@ export function getStorageSync(key) {
  * 从本地缓存中移除指定 key
  * @param key
  */
-export function removeStorageSync(key) {
+export function removeStorage(key) {
   _isVaildKey(key)
 
   localStorage.removeItem(key)
@@ -88,14 +88,14 @@ export function removeStorageSync(key) {
 /**
  * 清理本地数据缓存
  */
-export function clearStorageSync() {
+export function clearStorage() {
   localStorage.clear()
 }
 
 /**
  * 获取当前storage的相关信息
  */
-export function getStorageInfoSync() {
+export function getStorageInfo() {
   const keys = []
   let size = 0
 

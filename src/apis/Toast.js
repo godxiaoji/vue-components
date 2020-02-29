@@ -59,7 +59,7 @@ const ICON_NAMES = ['success', 'loading', 'none']
 var timer = null
 var $el = null
 
-export function show(object) {
+function show(object) {
   if (!isObject(object)) {
     object = {}
   }
@@ -133,7 +133,7 @@ function _hide() {
   }
 }
 
-export function hide(object) {
+function hide(object) {
   clearTimeout(timer)
 
   if (!isObject(object)) {
@@ -166,3 +166,16 @@ export function hide(object) {
     }
   }
 }
+
+export const showToast = show
+export const hideToast = hide
+export const showLoading = function(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+
+  object.icon = 'loading'
+  object.duration = 0
+  return show(object)
+}
+export const hideLoading = hide

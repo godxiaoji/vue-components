@@ -92,7 +92,7 @@ function getParamValue(object, key, type, defaultValue) {
   }
 }
 
-export function show(object) {
+function show(object) {
   if (!isObject(object)) {
     object = {}
   }
@@ -149,7 +149,7 @@ export function show(object) {
   }
 }
 
-export function hide() {
+function hide() {
   if ($el) {
     // 添加事件
     $el
@@ -163,3 +163,5 @@ export function hide() {
     $el = null
   }
 }
+
+export const showModal = show

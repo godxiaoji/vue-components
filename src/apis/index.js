@@ -1,14 +1,13 @@
 import { createIntersectionObserver } from './IntersectionObserver'
 import { createSelectorQuery } from './SelectorQuery'
-import { show as showModal } from './Modal'
-import { show as showToast, hide as hideToast } from './Toast'
-import { isObject } from '../helpers/util'
+import { showModal } from './Modal'
+import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import {
-  getStorageInfoSync,
-  getStorageSync,
-  setStorageSync,
-  removeStorageSync,
-  clearStorageSync
+  getStorageInfo,
+  getStorage,
+  setStorage,
+  removeStorage,
+  clearStorage
 } from './LocalStorage'
 import { pageScrollTo } from './Scroll'
 
@@ -23,22 +22,14 @@ export function addApis(Vue) {
   Vue.prototype.$showModal = showModal
   Vue.prototype.$showToast = showToast
   Vue.prototype.$hideToast = hideToast
-  Vue.prototype.$showLoading = function(object) {
-    if (!isObject(object)) {
-      object = {}
-    }
+  Vue.prototype.$showLoading = showLoading
+  Vue.prototype.$hideLoading = hideLoading
 
-    object.icon = 'loading'
-    object.duration = 0
-    return showToast(object)
-  }
-  Vue.prototype.$hideLoading = hideToast
-
-  Vue.prototype.$getStorageInfo = getStorageInfoSync
-  Vue.prototype.$getStorage = getStorageSync
-  Vue.prototype.$setStorage = setStorageSync
-  Vue.prototype.$removeStorage = removeStorageSync
-  Vue.prototype.$clearStorage = clearStorageSync
+  Vue.prototype.$getStorageInfo = getStorageInfo
+  Vue.prototype.$getStorage = getStorage
+  Vue.prototype.$setStorage = setStorage
+  Vue.prototype.$removeStorage = removeStorage
+  Vue.prototype.$clearStorage = clearStorage
 
   Vue.prototype.$pageScrollTo = pageScrollTo
 }

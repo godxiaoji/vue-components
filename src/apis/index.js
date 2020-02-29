@@ -10,6 +10,7 @@ import {
   removeStorageSync,
   clearStorageSync
 } from './LocalStorage'
+import { pageScrollTo } from './Scroll'
 
 export function addApis(Vue) {
   Vue.prototype.$createIntersectionObserver = function(options) {
@@ -19,15 +20,9 @@ export function addApis(Vue) {
     return createSelectorQuery(this.$el)
   }
 
-  Vue.prototype.$showModal = function(object) {
-    return showModal(object)
-  }
-  Vue.prototype.$showToast = function(object) {
-    return showToast(object)
-  }
-  Vue.prototype.$hideToast = function(object) {
-    return hideToast(object)
-  }
+  Vue.prototype.$showModal = showModal
+  Vue.prototype.$showToast = showToast
+  Vue.prototype.$hideToast = hideToast
   Vue.prototype.$showLoading = function(object) {
     if (!isObject(object)) {
       object = {}
@@ -37,13 +32,13 @@ export function addApis(Vue) {
     object.duration = 0
     return showToast(object)
   }
-  Vue.prototype.$hideLoading = function(object) {
-    return hideToast(object)
-  }
+  Vue.prototype.$hideLoading = hideToast
 
   Vue.prototype.$getStorageInfo = getStorageInfoSync
   Vue.prototype.$getStorage = getStorageSync
   Vue.prototype.$setStorage = setStorageSync
   Vue.prototype.$removeStorage = removeStorageSync
   Vue.prototype.$clearStorage = clearStorageSync
+
+  Vue.prototype.$pageScrollTo = pageScrollTo
 }

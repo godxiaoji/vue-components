@@ -166,25 +166,3 @@ export function hide(object) {
     }
   }
 }
-
-// 暴露公共函数
-if (window && !window.$showToast) {
-  window.$showToast = (object = {}) => {
-    show(object)
-  }
-
-  window.$hideToast = (object = {}) => {
-    hide(object)
-  }
-
-  window.$showLoading = (object = {}) => {
-    object.icon = 'loading'
-    object.duration = 0
-
-    show(object)
-  }
-
-  window.$hideLoading = (object = {}) => {
-    hide(object)
-  }
-}

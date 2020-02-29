@@ -1,6 +1,6 @@
 # LocalStorage
 
-## Vue.prototype.\$getStorage(key)
+## <a name="getStorage">Vue.prototype.\$getStorage(key)</a>
 
 ### 参数
 
@@ -25,7 +25,7 @@ try {
 }
 ```
 
-## Vue.prototype.\$setStorage(key, value)
+## <a name="setStorage">Vue.prototype.\$setStorage(key, value)</a>
 
 ### 参数
 
@@ -42,7 +42,7 @@ try {
 } catch (e) { }
 ```
 
-## Vue.prototype.\$removeStorage(key)
+## <a name="removeStorage">Vue.prototype.\$removeStorage(key)</a>
 
 ### 参数
 
@@ -60,7 +60,7 @@ try {
 }
 ```
 
-## Vue.prototype.\$clearStorage()
+## <a name="clearStorage">Vue.prototype.\$clearStorage()</a>
 
 ### 用法
 
@@ -72,7 +72,7 @@ try {
 }
 ```
 
-## Vue.prototype.\$getStorageInfo()
+## <a name="getStorageInfo">Vue.prototype.\$getStorageInfo()</a>
 
 ### 返回
 

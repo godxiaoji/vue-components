@@ -60,4 +60,46 @@
 
 API 列表，参照微信小程序，持续更新。
 
-[LocalStorage](./README.LocalStorage.md)
+### LocalStorage
+
+[getStorage](./README.Api.LocalStorage.md#getStorage)
+
+[setStorage](./README.Api.LocalStorage.md#setStorage)
+
+[removeStorage](./README.Api.LocalStorage.md#removeStorage)
+
+[clearStorage](./README.Api.LocalStorage.md#clearStorage)
+
+[getStorageInfo](./README.Api.LocalStorage.md#getStorageInfo)
+
+### IntersectionObserver
+
+[createIntersectionObserver](./README.Api.IntersectionObserver.md#createIntersectionObserver)
+
+[IntersectionObserver](./README.Api.IntersectionObserver.md#IntersectionObserver)
+
+### SelectorQuery
+
+[createSelectorQuery](./README.Api.SelectorQuery.md#createSelectorQuery)
+
+[SelectorQuery](./README.Api.SelectorQuery.md#SelectorQuery)
+
+[NodesRef](./README.Api.SelectorQuery.md#NodesRef)
+
+### Toast
+
+[showToast](./README.Api.Toast.md#showToast)
+
+[hideToast](./README.Api.Toast.md#hideToast)
+
+[showLoading](./README.Api.Toast.md#showLoading)
+
+[hideLoading](./README.Api.Toast.md#hideLoading)
+
+### Modal
+
+[showModal](./README.Api.Modal.md#showModal)
+
+### Scroll
+
+[pageScrollTo](./README.Api.Scroll.md#pageScrollTo)

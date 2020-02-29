@@ -30,3 +30,19 @@
 | ------- | ------- | ---------------------------------- |
 | confirm | boolean | 为 true 时，表示用户点击了确定按钮 |
 | cancel  | boolean | 为 true 时，表示用户点击了取消     |
+
+### 用法
+
+```
+this.$showModal({
+  title: '提示',
+  content: '这是一个模态弹窗',
+  success (res) {
+    if (res.confirm) {
+      console.log('用户点击确定')
+    } else if (res.cancel) {
+      console.log('用户点击取消')
+    }
+  }
+})
+```

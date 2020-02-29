@@ -31,6 +31,16 @@
 | loading | 显示加载图标，此时 title 文本最多显示 7 个汉字长度 |
 | none    | 不显示图标，此时 title 文本最多可显示两行          |
 
+### 用法
+
+```
+this.$showToast({
+  title: '成功',
+  icon: 'success',
+  duration: 2000
+})
+```
+
 ## <a name="hideToast">Vue.prototype.\$hideToast(object)</a>
 
 隐藏消息提示框。
@@ -39,7 +49,7 @@
 
 | 参数   | 类型   | 默认值 | 必填 | 说明     |
 | ------ | ------ | ------ | ---- | -------- |
-| object | Object |        | 是   | 设置对象 |
+| object | Object |        | 否   | 设置对象 |
 
 ### object 的合法值
 
@@ -49,7 +59,7 @@
 | fail     | function |        | 否   | 接口调用失败的回调函数                           |
 | complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
 
-## <a name="hideToast">Vue.prototype.\$showLoading(object)</a>
+## <a name="showLoading">Vue.prototype.\$showLoading(object)</a>
 
 显示 loading 提示框。需主动调用 \$hideLoading 才能关闭提示框。
 
@@ -69,7 +79,19 @@
 | fail     | function |        | 否   | 接口调用失败的回调函数                           |
 | complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
 
-### <a name="hideToast">Vue.prototype.\$hideLoading(object)</a>
+### 用法
+
+```
+this.$showLoading({
+  title: '加载中',
+})
+
+setTimeout(() => {
+  this.$hideLoading()
+}, 2000)
+```
+
+## <a name="hideLoading">Vue.prototype.\$hideLoading(object)</a>
 
 隐藏 loading 提示框。
 
@@ -77,7 +99,7 @@
 
 | 参数   | 类型   | 默认值 | 必填 | 说明     |
 | ------ | ------ | ------ | ---- | -------- |
-| object | Object |        | 是   | 设置对象 |
+| object | Object |        | 否   | 设置对象 |
 
 ### object 的合法值
 

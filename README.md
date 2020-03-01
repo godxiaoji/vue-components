@@ -1,15 +1,18 @@
 # GodVueComponents
 
-Vue 组件集合，提供一系列跟小程序组件很相似的组件集。
+Vue 组件集合，提供一系列跟小程序组件相似的组件集。
+
+这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 28k(Gzip)的大小。
 
 ## Install
 
 ### CDN
 
 ```
-<link rel="stylesheet" href="path/to/dist/index.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.0.1/dist/index.css"/>
+...
 <script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="path/to/dist/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.0.1/dist/index.js"></script>
 ```
 
 ### Mount

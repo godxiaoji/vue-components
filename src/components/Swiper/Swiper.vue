@@ -1,78 +1,26 @@
 <template>
-  <div class="swiper-container">
-    <slot name="parallax-bg"></slot>
-    <div :class="classes.wrapperClass">
+  <div class="swiper-wrapper">
+    <div class="swiper-list">
       <slot></slot>
     </div>
-    <div class="swiper-pagination" v-show="indicatorDots"></div>
-    <!-- <slot name="pagination"></slot>
-    <slot name="button-prev"></slot>
-    <slot name="button-next"></slot>
-    <slot name="scrollbar"></slot>-->
+    <div class="swiper-pagination" v-show="indicatorDots">
+      <span
+        class="swiper-pagination-bullet"
+        v-for="(item, index) in pagination"
+        :key="item.index"
+        :class="{ active: index === slideCurrent }"
+        :style="{
+          background:
+            index === slideCurrent ? indicatorActiveColor : indicatorColor
+        }"
+      ></span>
+    </div>
   </div>
 </template>
 
 <script>
-// @url https://swiperjs.com/api/#custom-build
-import { Swiper, Pagination } from 'swiper/js/swiper.esm.js'
-import './swiper.css'
-Swiper.use([Pagination])
-
-// pollfill
-if (typeof Object.assign != 'function') {
-  Object.defineProperty(Object, 'assign', {
-    value(target) {
-      if (target == null) {
-        throw new TypeError('Cannot convert undefined or null to object')
-      }
-      const to = Object(target)
-      for (let index = 1; index < arguments.length; index++) {
-        const nextSource = arguments[index]
-        if (nextSource != null) {
-          for (const nextKey in nextSource) {
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-              to[nextKey] = nextSource[nextKey]
-            }
-          }
-        }
-      }
-      return to
-    },
-    writable: true,
-    configurable: true
-  })
-}
-
-// as of swiper 4.0.7
-// http://idangero.us/swiper/api/#events
-// const DEFAULT_EVENTS = [
-//   "beforeDestroy",
-//   "slideChange",
-//   "slideChangeTransitionStart",
-//   "slideChangeTransitionEnd",
-//   "slideNextTransitionStart",
-//   "slideNextTransitionEnd",
-//   "slidePrevTransitionStart",
-//   "slidePrevTransitionEnd",
-//   "transitionStart",
-//   "transitionEnd",
-//   "touchStart",
-//   "touchMove",
-//   "touchMoveOpposite",
-//   "sliderMove",
-//   "touchEnd",
-//   "click",
-//   "tap",
-//   "doubleTap",
-//   "imagesReady",
-//   "progress",
-//   "reachBeginning",
-//   "reachEnd",
-//   "fromEdge",
-//   "setTranslate",
-//   "setTransition",
-//   "resize"
-// ];
+import MSlide from 'mslide/src/mslide'
+import { getHandleEvent } from '../../helpers/events'
 
 // export
 export default {
@@ -135,23 +83,9 @@ export default {
   },
   data() {
     return {
-      globalOptions: {
-        /* 分页 */
-        pagination: {
-          el: '.swiper-pagination',
-          type: 'bullets', // ... 点分页
-          // clickable: true, // 点击分页器的指示点分页器会控制Swiper切换
-          renderBullet: (index, className) => {
-            // this指vue
-            // window.console.log(className);
-            return `<span class="${className}" style="background-color: ${this.indicatorColor}; opacity: 1;"></span>`
-          }
-        }
-      },
-      swiper: null,
-      classes: {
-        wrapperClass: 'swiper-wrapper'
-      }
+      slideCurrent: 0,
+      globalOptions: {},
+      pagination: []
     }
   },
   ready() {
@@ -161,23 +95,10 @@ export default {
   },
   mounted() {
     if (!this.swiper) {
-      // let setClassName = false
-      // for (const className in this.classes) {
-      //   if (this.classes.hasOwnProperty(className)) {
-      //     if (this.options[className]) {
-      //       setClassName = true
-      //       this.classes[className] = this.options[className]
-      //     }
-      //   }
-      // }
-      // setClassName ? this.$nextTick(this.mountInstance) : this.mountInstance()
       this.mountInstance()
     }
   },
   activated() {
-    this.update()
-  },
-  updated() {
     this.update()
   },
   beforeDestroy() {
@@ -194,107 +115,139 @@ export default {
      */
     current(val) {
       if (this.swiper) {
-        this.swiper.slideToLoop(val, this.duration, false)
+        this.swiper.to(val)
       }
+    },
+    autoplay() {
+      this.updateSlide()
+    },
+    interval() {
+      this.updateSlide()
+    },
+    duration() {
+      this.updateSlide()
+    },
+    circular() {
+      this.updateSlide()
     }
   },
   methods: {
     update() {
       if (this.swiper) {
-        this.swiper.update && this.swiper.update()
-        this.swiper.navigation && this.swiper.navigation.update()
-        this.swiper.pagination && this.swiper.pagination.render()
-        this.swiper.pagination && this.swiper.pagination.update()
+        this.swiper.refresh && this.swiper.refresh()
+      }
+
+      const pagination = []
+
+      this.$el.querySelectorAll('.swiper-item').forEach(($item, k) => {
+        $item.style.paddingLeft = this.previousMargin + 'px'
+        $item.style.paddingRight = this.nextMargin + 'px'
+
+        pagination.push({
+          index: k
+        })
+      })
+
+      this.pagination = pagination
+    },
+    updateSlide() {
+      if (this.swiper) {
+        const options = {}
+
+        // 自动播放
+        options.autoPlay = this.autoplay ? true : false
+        options.interval = this.interval
+
+        // 滑动动画时长
+        options.duration = this.duration
+        // 是否采用衔接滑动
+        options.loop = this.circular
+
+        this.swiper.updateOptions(options)
       }
     },
     mergeOptions() {
       const vm = this
       const options = {}
 
-      // 自动播放
-      if (this.autoplay) {
-        options.autoplay = {
-          delay: this.interval
-        }
-      }
-      // 滑动动画时长
-      options.speed = this.duration
-      // 是否采用衔接滑动
-      options.loop = this.circular
+      options.selector = this.$el
       // 当前所在滑块的 index
-      options.initialSlide = this.current
-      // 同时显示的滑块数量
-      options.slidesPerView = this.displayMultipleItems
-      // 前边距，可用于露出前一项的一小部分
-      options.slidesOffsetBefore = this.previousMargin
-      // 后边距，可用于露出后一项的一小部分
-      options.slidesOffsetAfter = this.nextMargin
+      options.index = this.current
+      // // 同时显示的滑块数量
+      // options.slidesPerView = this.displayMultipleItems
 
-      let slideCurrent = this.current
+      options.onBeforeSlide = (index, fromIndex) => {
+        if (index !== fromIndex) {
+          // 排重
 
-      options.on = {
-        // 两个输出事件change和animationfinish， transition事件暂时不提供
-        slideChange: function() {
-          if (this.realIndex !== slideCurrent) {
-            // 左下排重
-            slideCurrent = this.realIndex
-
-            vm.$emit('change', {
-              detail: {
-                current: slideCurrent
-              }
-            })
-          }
-        },
-        transitionEnd: function() {
-          vm.$emit('animationfinish', {
-            detail: {
-              current: this.realIndex
-            }
-          })
-        },
-        // 主要在于接收数据
-        paginationUpdate: function(swiper, paginationEl) {
-          paginationEl.childNodes.forEach(el => {
-            el.style.backgroundColor = el.classList.contains(
-              'swiper-pagination-bullet-active'
+          vm.$emit('update:current', index)
+          const type = 'change'
+          vm.$emit(
+            type,
+            getHandleEvent(
+              this.$el,
+              {},
+              {
+                current: index
+              },
+              type
             )
-              ? vm.indicatorActiveColor
-              : vm.indicatorColor
-          })
+          )
         }
+
+        this.slideCurrent = index
+      }
+
+      options.onSlide = index => {
+        const type = 'animationfinish'
+        vm.$emit(
+          type,
+          getHandleEvent(
+            this.$el,
+            {},
+            {
+              current: index
+            },
+            type
+          )
+        )
       }
 
       // window.console.log(options);
       return Object.assign({}, this.globalOptions, options)
     },
     mountInstance() {
+      this.slideCurrent = this.current
       const swiperOptions = this.mergeOptions()
-      this.swiper = new Swiper(this.$el, swiperOptions)
+      this.swiper = new MSlide(swiperOptions)
+      this.updateSlide()
       this.bindEvents()
       // this.$emit('ready', this.swiper)
     },
-    bindEvents() {
-      // const vm = this;
-      // swiper.on("paginationUpdate", function(swiper, paginationEl) {
-      //   paginationEl.childNodes.forEach(el => {
-      //     el.style.backgroundColor = el.classList.contains(
-      //       "swiper-pagination-bullet-active"
-      //     )
-      //       ? vm.indicatorActiveColor
-      //       : vm.indicatorColor;
-      //   });
-      // });
-      // DEFAULT_EVENTS.forEach(eventName => {
-      //   this.swiper.on(eventName, function() {
-      //     vm.$emit(eventName, ...arguments);
-      //     vm.$emit(
-      //       eventName.replace(/([A-Z])/g, "-$1").toLowerCase(),
-      //       ...arguments
-      //     );
-      //   });
-      // });
-    }
+    bindEvents() {}
   }
 }
 </script>
+
+<style scoped>
+.swiper-wrapper {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.swiper-pagination {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.swiper-pagination-bullet {
+  display: inline-block;
+  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+</style>

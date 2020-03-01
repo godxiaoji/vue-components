@@ -10,11 +10,9 @@
 | indicator-color        | color   | rgba(0,0,0,.3) | 否   | 指示点颜色           |
 | indicator-active-color | color   | #000000        | 否   | 当前选中的指示点颜色 |
 | autoplay               | boolean | false          | 否   | 是否自动切换         |
-| current                | number  | 0              | 否   | 当前所在滑块的 index |
+| current.sync           | number  | 0              | 否   | 当前所在滑块的 index |
 | interval               | number  | 5000           | 否   | 自动切换时间间隔     |
 | duration               | number  | 500            | 否   | 滑动动画时长         |
-| circular               | boolean | false          | 否   | 是否采用衔接滑动     |
-| display-multiple-items | number  | 1              | 否   | 同时显示的滑块数量   |
 
 ## Events
 

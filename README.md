@@ -14,6 +14,10 @@ Vue 组件集合，提供一系列跟小程序组件很相似的组件集。
 
 ### Mount
 
+```
+npm i @godxiaoji/vue-components -S
+```
+
 #### 全局注册
 
 ```

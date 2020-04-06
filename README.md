@@ -30,10 +30,6 @@ import GodVueComponents from '@godxiaoji/vue-components'
 // require styles
 import '@godxiaoji/vue-components/dist/index.css'
 
-Vue.use(GodVueComponents, {
-  prefix: 'god' // 组件前缀，默认god
-})
-
 ```
 
 #### 引入单个组件
@@ -70,7 +66,3 @@ const io = createIntersectionObserver(this, options)
 ## Documents
 
 [Documents](./doc/README.md)
-
-## Author
-
-[Travis](https://github.com/godxiaoji)

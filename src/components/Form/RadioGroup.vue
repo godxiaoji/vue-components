@@ -1,35 +1,62 @@
 <template>
-  <div class="radio-group">
+  <div
+    class="ly-radio-group"
+    :class="[
+      alignClassName,
+      {
+        'has--prepend': hasPrepend
+      }
+    ]"
+  >
+    <div class="ly-radio-group_prepend" v-if="hasPrepend">
+      <slot name="prepend"></slot>
+    </div>
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { getHandleEvent } from '../../helpers/events'
-import { getRandomNumber } from '../../helpers/util'
+import { cloneData, inArray } from '../../helpers/util'
+
+const ALIGN_NAMES = ['left', 'right']
 
 export default {
   name: 'app-radio-group',
   props: {
     name: {
       type: String,
-      default() {
-        return 'radio-' + getRandomNumber()
-      }
+      default: ''
+    },
+    align: {
+      type: String,
+      value: 'left'
     }
   },
   data() {
     return {
+      hasPrepend: false,
       formValue: ''
     }
   },
-  computed: {},
+  computed: {
+    alignClassName() {
+      return (
+        'align--' +
+        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
+      )
+    }
+  },
   watch: {},
   created() {
     this._radio_group = true
   },
   ready() {},
-  mounted() {},
+  mounted() {
+    if (this.$scopedSlots.prepend) {
+      this.hasPrepend = true
+    }
+  },
   updated() {},
   attached() {},
   methods: {
@@ -41,7 +68,7 @@ export default {
 
         if (vm._radio_item) {
           if (vm.getInputChecked()) {
-            value = vm.value
+            value = cloneData(vm.value)
             break
           }
         }
@@ -67,6 +94,10 @@ export default {
       this.$emit(type, handleEvent)
     },
 
+    hookFormValue() {
+      return cloneData(this.formValue)
+    },
+
     reset() {
       this.$children.forEach(vm => {
         if (vm._radio_item) {
@@ -78,9 +109,27 @@ export default {
 }
 </script>
 
-<style scoped>
-.radio-group {
-  display: inline-flex;
+<style>
+.ly-radio-group {
+  --padding-left-right: 12px;
+
+  display: flex;
+  width: 100%;
+  height: 32px;
   align-items: center;
+  color: var(--app-semi-color);
+  box-sizing: border-box;
+}
+
+.ly-radio-group.align--right {
+  justify-content: flex-end;
+}
+
+.ly-radio-group_prepend {
+  padding: 0 var(--padding-left-right);
+}
+
+.ly-radio-group.align--right .ly-radio-group_prepend {
+  flex: 1;
 }
 </style>

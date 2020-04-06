@@ -1,10 +1,11 @@
 <template>
   <button
-    class="switch"
+    class="ly-switch"
     type="button"
     :checked="formChecked"
     :disabled="disabled"
     :name="name"
+    :value="checked + ''"
     :class="[sizeClassName]"
     :style="[switchColor]"
     @click="onClick"
@@ -13,7 +14,7 @@
 
 <script>
 import { getHandleEvent } from '../../helpers/events'
-import { getRandomNumber, inArray } from '../../helpers/util'
+import { inArray } from '../../helpers/util'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
@@ -34,9 +35,7 @@ export default {
     },
     name: {
       type: String,
-      default() {
-        return 'switch-' + getRandomNumber()
-      }
+      default: ''
     },
     disabled: {
       type: Boolean,
@@ -72,7 +71,7 @@ export default {
   },
   watch: {
     checked(val) {
-      this.formChecked = val ? true : false
+      this.$el.checked = this.formChecked = val ? true : false
     },
     formChecked(val) {
       this.$emit(
@@ -94,6 +93,8 @@ export default {
   ready() {},
   mounted() {
     this.$el._app_component = this
+    this.$el._app_type = 'switch'
+    this.$el.checked = this.formChecked
   },
   updated() {},
   attached() {},
@@ -115,10 +116,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.switch {
+.ly-switch {
   --color: var(--app-main-color);
   --font-size: 24px;
 
@@ -134,19 +135,19 @@ export default {
   transition: all 0.2s linear;
 }
 
-.switch.size--mini {
+.ly-switch.size--mini {
   --font-size: 16px;
 }
 
-.switch.size--large {
+.ly-switch.size--large {
   --font-size: 32px;
 }
 
-.switch[checked] {
+.ly-switch[checked] {
   background-color: var(--color);
 }
 
-.switch:after {
+.ly-switch:after {
   position: absolute;
   top: 1px;
   left: 1px;
@@ -158,19 +159,19 @@ export default {
   content: '';
 }
 
-.switch[checked]:after {
+.ly-switch[checked]:after {
   left: calc(50% + 1px);
 }
 
-.switch:not(:disabled):hover {
+.ly-switch:not(:disabled):hover {
   opacity: 0.8;
 }
 
-.switch:not(:disabled):active {
+.ly-switch:not(:disabled):active {
   opacity: 0.6;
 }
 
-.switch:disabled {
+.ly-switch:disabled {
   cursor: not-allowed;
   opacity: 0.3;
 }

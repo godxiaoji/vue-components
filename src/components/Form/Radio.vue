@@ -1,18 +1,18 @@
 <template>
-  <label class="radio" :disabled="disabled">
+  <label class="ly-radio" :disabled="disabled">
     <input
-      class="radio-input"
+      class="ly-radio_input"
       type="radio"
       :name="groupName"
       :value="value"
       :disabled="disabled"
       @change="onChange"
     />
-    <div class="radio-box">
-      <icon class="radio-icon" type="radio"></icon>
-      <icon class="radio-checked-icon" type="radio_checked"></icon>
+    <div class="ly-radio_box">
+      <icon class="ly-radio_icon" type="radio"></icon>
+      <icon class="ly-radio_checked-icon" type="radio_checked"></icon>
     </div>
-    <span class="radio-text">
+    <span class="ly-radio_text">
       <slot></slot>
     </span>
   </label>
@@ -26,7 +26,9 @@ export default {
   components: { Icon },
   props: {
     value: {
-      type: String,
+      validator(value) {
+        return value != null
+      },
       default: ''
     },
     checked: {
@@ -91,6 +93,8 @@ export default {
         this.$parent.updateValue(inputEl)
       }
     }
+
+    inputEl._app_type = 'radio'
   },
   updated() {},
   attached() {},
@@ -141,22 +145,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.radio {
+.ly-radio {
   --color: var(--app-main-color);
+  --padding-left-right: 12px;
 
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   height: 1.715em;
   color: var(--app-semi-color);
-  padding: 0 4px;
+  padding: 0 var(--padding-left-right);
   text-align: left;
 }
 
-.radio-box {
+.ly-radio_box {
   display: inline-flex;
   width: 1.429em;
   height: 1.429em;
@@ -167,39 +172,39 @@ export default {
   box-sizing: border-box;
 }
 
-.radio-icon {
+.ly-radio_icon {
   width: 100%;
   height: 100%;
 }
 
-.radio-checked-icon {
+.ly-radio_checked-icon {
   display: none;
   width: 100%;
   height: 100%;
   fill: var(--color);
 }
 
-.radio-input:not([disabled]):checked + .radio-box .radio-icon {
+.ly-radio_input:not([disabled]):checked + .ly-radio_box .ly-radio_icon {
   display: none;
 }
 
-.radio-input:not([disabled]):checked + .radio-box .radio-checked-icon {
+.ly-radio_input:not([disabled]):checked + .ly-radio_box .ly-radio_checked-icon {
   display: block;
 }
 
-.radio-input {
+.ly-radio_input {
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
 }
 
-.radio-text {
+.ly-radio_text {
   display: block;
   line-height: 1;
 }
 
-.radio[disabled] {
+.ly-radio[disabled] {
   opacity: 0.3;
 }
 </style>

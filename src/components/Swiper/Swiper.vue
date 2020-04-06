@@ -1,11 +1,11 @@
 <template>
-  <div class="swiper-wrapper">
-    <div class="swiper-list">
+  <div class="ly-swiper">
+    <div class="ly-swiper_list">
       <slot></slot>
     </div>
-    <div class="swiper-pagination" v-show="indicatorDots">
+    <div class="ly-swiper_pagination" v-show="indicatorDots">
       <span
-        class="swiper-pagination-bullet"
+        class="ly-swiper_pagination-bullet"
         v-for="(item, index) in pagination"
         :key="item.index"
         :class="{ active: index === slideCurrent }"
@@ -139,7 +139,7 @@ export default {
 
       const pagination = []
 
-      this.$el.querySelectorAll('.swiper-item').forEach(($item, k) => {
+      this.$el.querySelectorAll('.ly-swiper_item').forEach(($item, k) => {
         $item.style.paddingLeft = this.previousMargin + 'px'
         $item.style.paddingRight = this.nextMargin + 'px'
 
@@ -229,13 +229,13 @@ export default {
 }
 </script>
 
-<style scoped>
-.swiper-wrapper {
+<style>
+.ly-swiper {
   position: relative;
   box-sizing: border-box;
 }
 
-.swiper-pagination {
+.ly-swiper_pagination {
   position: absolute;
   left: 0;
   bottom: 20px;
@@ -243,7 +243,7 @@ export default {
   width: 100%;
 }
 
-.swiper-pagination-bullet {
+.ly-swiper_pagination-bullet {
   display: inline-block;
   margin: 0 5px;
   width: 10px;

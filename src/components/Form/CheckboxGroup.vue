@@ -1,35 +1,62 @@
 <template>
-  <div class="checkbox-group">
+  <div
+    class="ly-checkbox-group"
+    :class="[
+      alignClassName,
+      {
+        'has--prepend': hasPrepend
+      }
+    ]"
+  >
+    <div class="ly-checkbox-group_prepend" v-if="hasPrepend">
+      <slot name="prepend"></slot>
+    </div>
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { getHandleEvent } from '../../helpers/events'
-import { getRandomNumber, cloneData } from '../../helpers/util'
+import { cloneData, inArray } from '../../helpers/util'
+
+const ALIGN_NAMES = ['left', 'right']
 
 export default {
   name: 'app-checkbox-group',
   props: {
     name: {
       type: String,
-      default() {
-        return 'checkbox-' + getRandomNumber()
-      }
+      default: ''
+    },
+    align: {
+      type: String,
+      value: 'left'
     }
   },
   data() {
     return {
+      hasPrepend: false,
       formValue: []
     }
   },
-  computed: {},
+  computed: {
+    alignClassName() {
+      return (
+        'align--' +
+        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
+      )
+    }
+  },
   watch: {},
   created() {
     this._checkbox_group = true
   },
   ready() {},
-  mounted() {},
+  mounted() {
+    if (this.$scopedSlots.prepend) {
+      this.hasPrepend = true
+    }
+  },
   updated() {},
   attached() {},
   methods: {
@@ -38,7 +65,7 @@ export default {
 
       this.$children.forEach(vm => {
         if (vm._checkbox_item && vm.getInputChecked() === true) {
-          value.push(vm.value)
+          value.push(cloneData(vm.value))
         }
       })
 
@@ -77,9 +104,27 @@ export default {
 }
 </script>
 
-<style scoped>
-.checkbox-group {
-  display: inline-flex;
+<style>
+.ly-checkbox-group {
+  --padding-left-right: 12px;
+
+  display: flex;
+  width: 100%;
+  height: 32px;
   align-items: center;
+  color: var(--app-semi-color);
+  box-sizing: border-box;
+}
+
+.ly-checkbox-group.align--right {
+  justify-content: flex-end;
+}
+
+.ly-checkbox-group_prepend {
+  padding: 0 var(--padding-left-right);
+}
+
+.ly-checkbox-group.align--right .ly-checkbox-group_prepend {
+  flex: 1;
 }
 </style>

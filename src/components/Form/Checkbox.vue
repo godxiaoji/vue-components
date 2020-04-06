@@ -1,18 +1,18 @@
 <template>
-  <label class="checkbox" :disabled="disabled">
+  <label class="ly-checkbox" :disabled="disabled">
     <input
-      class="checkbox-input"
+      class="ly-checkbox_input"
       type="checkbox"
       :name="groupName"
-      :value="value"
+      :value="valueString"
       :disabled="disabled"
       @change="onChange"
     />
-    <div class="checkbox-box">
-      <icon class="checkbox-icon" type="checkbox"></icon>
-      <icon class="checkbox-checked-icon" type="checkbox_checked"></icon>
+    <div class="ly-checkbox_box">
+      <icon class="ly-checkbox_icon" type="checkbox"></icon>
+      <icon class="ly-checkbox_checked-icon" type="checkbox_checked"></icon>
     </div>
-    <span class="checkbox-text">
+    <span class="ly-checkbox_text">
       <slot></slot>
     </span>
   </label>
@@ -26,7 +26,9 @@ export default {
   components: { Icon },
   props: {
     value: {
-      type: String,
+      validator(value) {
+        return value != null
+      },
       default: ''
     },
     checked: {
@@ -40,6 +42,10 @@ export default {
     color: {
       type: String,
       default: ''
+    },
+    name: {
+      type: String,
+      default: ''
     }
   },
   model: {
@@ -50,12 +56,15 @@ export default {
     return {}
   },
   computed: {
-    /* 只接受来自分组的name */
+    /* 优先接受来自分组的name */
     groupName() {
       if (this.$parent && this.$parent.name) {
         return this.$parent.name
       }
-      return ''
+      return this.name
+    },
+    valueString() {
+      return this.value.toString()
     }
   },
   watch: {
@@ -88,6 +97,8 @@ export default {
         this.$parent.updateValue()
       }
     }
+
+    inputEl._app_type = 'checkbox'
   },
   updated() {},
   attached() {},
@@ -136,22 +147,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.checkbox {
+.ly-checkbox {
   --color: var(--app-main-color);
+  --padding-left-right: 12px;
 
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   height: 1.715em;
   color: var(--app-semi-color);
-  padding: 4px;
+  padding: 0 var(--padding-left-right);
   text-align: left;
 }
 
-.checkbox-box {
+.ly-checkbox_box {
   display: inline-flex;
   width: 1.429em;
   height: 1.429em;
@@ -162,39 +174,43 @@ export default {
   box-sizing: border-box;
 }
 
-.checkbox-icon {
+.ly-checkbox_icon {
   width: 100%;
   height: 100%;
 }
 
-.checkbox-checked-icon {
+.ly-checkbox_checked-icon {
   display: none;
   width: 100%;
   height: 100%;
   fill: var(--color);
 }
 
-.checkbox-input:not([disabled]):checked + .checkbox-box .checkbox-icon {
+.ly-checkbox_input:not([disabled]):checked
+  + .ly-checkbox_box
+  .ly-checkbox_icon {
   display: none;
 }
 
-.checkbox-input:not([disabled]):checked + .checkbox-box .checkbox-checked-icon {
+.ly-checkbox_input:not([disabled]):checked
+  + .ly-checkbox_box
+  .ly-checkbox_checked-icon {
   display: block;
 }
 
-.checkbox-input {
+.ly-checkbox_input {
   position: absolute;
   left: 0;
   top: 0;
   opacity: 0;
 }
 
-.checkbox-text {
+.ly-checkbox_text {
   display: block;
   line-height: 1;
 }
 
-.checkbox[disabled] {
+.ly-checkbox[disabled] {
   opacity: 0.3;
 }
 </style>

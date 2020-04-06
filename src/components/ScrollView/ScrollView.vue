@@ -1,6 +1,6 @@
 <template>
   <div
-    class="scroll-view app-scroll-bar"
+    class="ly-scroll-view ly-scroll-bar"
     :class="{
       'scroll-x': scrollX,
       'scroll-y': scrollY,
@@ -278,27 +278,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.scroll-view {
+.ly-scroll-view {
   display: block;
   width: 100%;
 }
 
-.scroll-view.scroll-x {
+.ly-scroll-view.scroll-x {
   overflow-x: auto;
 }
 
-.scroll-view.scroll-y {
+.ly-scroll-view.scroll-y {
   overflow-y: auto;
 }
 
-.scroll-view.enable-flex {
+.ly-scroll-view.enable-flex {
   display: flex;
 }
 
-.scroll-view.smooth {
+.ly-scroll-view.smooth {
   scroll-behavior: smooth;
 }
 </style>

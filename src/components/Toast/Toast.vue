@@ -1,23 +1,25 @@
 <template>
   <div
     v-show="visibility"
-    class="toast"
-    :class="{ 'has-icon': image || (icon && icon !== 'none') }"
+    class="ly-toast"
+    :class="{ 'has--icon': image || (icon && icon !== 'none') }"
   >
-    <div class="toast-mask" v-show="mask"></div>
-    <div class="toast-box">
-      <img v-if="image" class="toast-icon" :src="image" />
+    <div class="ly-toast_mask" v-show="mask"></div>
+    <div class="ly-toast_box">
+      <img v-if="image" class="ly-toast_icon" :src="image" />
       <icon
         v-else-if="icon == 'success'"
-        class="toast-icon"
+        class="ly-toast_icon"
         type="success_no_circle"
       ></icon>
       <icon
         v-else-if="icon == 'loading'"
-        class="toast-icon loading-icon"
+        class="ly-toast_icon loading-icon"
         type="loading"
       ></icon>
-      <div class="toast-text">{{ title }}</div>
+      <div class="ly-toast_text">
+        <slot>{{ title }}</slot>
+      </div>
     </div>
   </div>
 </template>
@@ -56,6 +58,7 @@ export default {
   },
   methods: {},
   created() {},
+  mounted() {},
   beforeDestroy() {}
 }
 </script>
@@ -63,7 +66,7 @@ export default {
 <style>
 @import url('../../global.css');
 
-.toast {
+.ly-toast {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -75,7 +78,7 @@ export default {
   margin: -20px 0 0 -100px;
 }
 
-.toast .toast-mask {
+.ly-toast_mask {
   position: fixed;
   left: 0;
   top: 0;
@@ -84,7 +87,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.toast .toast-box {
+.ly-toast_box {
   min-height: 40px;
   padding: 6px 20px;
   border-radius: 20px;
@@ -93,7 +96,7 @@ export default {
   color: #fff;
 }
 
-.toast .toast-text {
+.ly-toast_text {
   max-width: 200px;
   line-height: 28px;
   font-size: 14px;
@@ -102,13 +105,13 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.toast.has-icon {
+.ly-toast.has--icon {
   height: 100px;
   width: 100px;
   margin: -50px 0 0 -50px;
 }
 
-.toast.has-icon .toast-box {
+.ly-toast.has--icon .ly-toast_box {
   padding: 0;
   height: 100px;
   width: 100px;
@@ -118,20 +121,20 @@ export default {
   flex-direction: column;
 }
 
-.toast.has-icon .toast-icon {
+.ly-toast.has--icon .ly-toast_icon {
   width: 48px;
   height: 48px;
   fill: #fff;
 }
 
-.toast.has-icon .toast-text {
+.ly-toast.has--icon .ly-toast_text {
   margin-top: 10px;
   height: 16px;
   line-height: 16px;
   -webkit-line-clamp: 1;
 }
 
-.toast.has-icon .loading-icon {
-  animation: app-rotate-360 0.8s infinite linear both;
+.ly-toast.has--icon .loading-icon {
+  animation: ly-rotate-360 0.8s infinite linear both;
 }
 </style>

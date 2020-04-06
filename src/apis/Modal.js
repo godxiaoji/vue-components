@@ -23,21 +23,21 @@ function htmlEscape(text) {
 
 function render(options) {
   const html = [
-    `<div class="modal">`,
-    `<div class="modal-box">`,
-    `<div class="modal-header">`,
-    `<span class="modal-title">${options.title}</span>`,
+    `<div class="ly-modal">`,
+    `<div class="ly-modal_box">`,
+    `<div class="ly-modal_header">`,
+    `<span class="ly-modal_title">${options.title}</span>`,
     `</div>`,
-    `<div class="modal-body">`,
-    `<div class="modal-content">`,
+    `<div class="ly-modal_body">`,
+    `<div class="ly-modal_content">`,
     htmlEscape(options.content),
     `</div>`,
     `</div>`,
-    `<div class="modal-footer">`,
+    `<div class="ly-modal_footer">`,
     `<button style="display: ` +
       (options.showCancel ? 'block' : 'none') +
-      `;" class="modal-button modal-cancel-button">${options.cancelText}</button>`,
-    `<button class="modal-button modal-confirm-button primary">${options.confirmText}</button>`,
+      `;" class="ly-modal_button type--cancel">${options.cancelText}</button>`,
+    `<button class="ly-modal_button type--confirm primary">${options.confirmText}</button>`,
     `</div>`,
     `</div>`,
     `</div>`
@@ -126,10 +126,10 @@ function show(object) {
     $el = render(options)
 
     // 添加事件
-    const $cancel = $el.querySelector('.modal-cancel-button')
+    const $cancel = $el.querySelector('.type--cancel')
     $cancel._options = options
     $cancel.addEventListener('click', Events.onCancelClick, false)
-    const $confirm = $el.querySelector('.modal-confirm-button')
+    const $confirm = $el.querySelector('.type--confirm')
     $confirm._options = options
     $confirm.addEventListener('click', Events.onConfirmClick, false)
 
@@ -153,10 +153,10 @@ function hide() {
   if ($el) {
     // 添加事件
     $el
-      .querySelector('.modal-cancel-button')
+      .querySelector('.type--cancel')
       .removeEventListener('click', Events.onCancelClick, false)
     $el
-      .querySelector('.modal-confirm-button')
+      .querySelector('.type--confirm')
       .removeEventListener('click', Events.onConfirmClick, false)
 
     document.body.removeChild($el)

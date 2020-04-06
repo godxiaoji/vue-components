@@ -10,7 +10,7 @@ const dayCountMap = {
   '9': 30,
   '10': 31,
   '11': 30,
-  '12': 31,
+  '12': 31
 }
 
 function getDayCount(year, month) {
@@ -25,18 +25,18 @@ function getDayCount(year, month) {
 
 /**
  * 是否闰年
- * @param {number} year 
+ * @param {number} year
  */
 function isLeapYear(year) {
-  return year % 4 == 0 && year % 100 !== 0 || year % 400 == 0
+  return (year % 4 == 0 && year % 100 !== 0) || year % 400 == 0
 }
 
 function getYear() {
-  return (new Date()).getFullYear()
+  return new Date().getFullYear()
 }
 
 function num2Str(num) {
-  return num >= 10 ? num.toString() : ('0' + num)
+  return num >= 10 ? num.toString() : '0' + num
 }
 
 export function parseDateList(index, parent, options = {}) {
@@ -45,7 +45,7 @@ export function parseDateList(index, parent, options = {}) {
   if (index === 0) {
     // 年
     let year = getYear()
-    let min = year - 30
+    let min = year - 100
     let max = year
 
     for (let i = max; i >= min; i--) {
@@ -78,7 +78,10 @@ export function parseDateList(index, parent, options = {}) {
   } else if (index === 2) {
     // 日
     let min = 1
-    let max = getDayCount(parseInt(parent.values[0]), parseInt(parent.values[1]))
+    let max = getDayCount(
+      parseInt(parent.values[0]),
+      parseInt(parent.values[1])
+    )
 
     for (let i = min; i <= max; i++) {
       const dayStr = num2Str(i.toString())
@@ -157,7 +160,7 @@ export function getDateValues() {
 
   return [
     d.getFullYear().toString(),
-    num2Str((d.getMonth() + 1)),
+    num2Str(d.getMonth() + 1),
     num2Str(d.getDate())
   ]
 }

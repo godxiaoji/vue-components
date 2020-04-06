@@ -24,7 +24,10 @@ export function getDataset(object) {
   const dataset = {}
 
   objectForEach(object, (value, key) => {
-    if (key.indexOf('v-') === 0) {
+    if (
+      key.indexOf('v-') === 0 ||
+      (key.indexOf('v') === 0 && key.length === 9)
+    ) {
       // 屏蔽带v-的vue属性
     } else {
       dataset[key] = value

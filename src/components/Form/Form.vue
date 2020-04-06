@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" @reset="onReset">
+  <form class="ly-form" @submit.prevent="onSubmit" @reset="onReset">
     <slot></slot>
   </form>
 </template>
@@ -26,10 +26,11 @@ export default {
       const inputEls = e.target.elements
       const value = {}
       const uids = []
-
+      console.log(inputEls)
       inputEls.forEach(el => {
-        const _ac = el._app_component
+        console.log(el.name, el.value, el.checked, el.type)
 
+        const _ac = el._app_component
         if (
           _ac &&
           _ac._uid &&
@@ -37,7 +38,6 @@ export default {
         ) {
           // 获取配套表单组件
           uids.push(_ac._uid)
-
           if (_ac.name) {
             value[_ac.name] = _ac.hookFormValue
               ? _ac.hookFormValue()
@@ -45,6 +45,42 @@ export default {
           }
         } else {
           // 原生组件
+          if (el.name) {
+            const { type, name, checked } = el
+
+            if (type === 'checkbox') {
+              // 数组类型
+              if (!value[name]) {
+                value[name] = []
+              }
+
+              if (checked) {
+                value[name].push(el.value)
+              }
+            } else if (type === 'radio') {
+              if (value[name] == null) {
+                value[name] = ''
+              }
+              // 需要判断checked
+              if (checked) {
+                value[name] = el.value
+              }
+            } else if (type === 'select-multiple') {
+              // 多项选择，不能直接获取值
+              const selectOptions = el.options
+              const selectedValues = []
+              for (let i = 0; i < selectOptions.length; i++) {
+                // 如果该option被选中，则将它的value存入数组
+                if (selectOptions[i].selected) {
+                  selectedValues.push(selectOptions[i].value)
+                }
+              }
+              value[name] = selectedValues
+            } else if (type === 'input' || type === 'select-one') {
+              // input
+              value[name] = el.value
+            }
+          }
         }
       })
 

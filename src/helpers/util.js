@@ -74,12 +74,16 @@ export function no() {
   return false
 }
 
+function hasOwnProperty(object, key) {
+  return Object.prototype.hasOwnProperty.call(object, key)
+}
+
 export function objectKeys(object) {
   const keys = []
 
   if (isObject(object)) {
     for (const k in object) {
-      if (object.hasOwnProperty(k)) {
+      if (hasOwnProperty(object, k)) {
         keys.push(k)
       }
     }
@@ -91,7 +95,7 @@ export function objectKeys(object) {
 export function objectForEach(object, callback) {
   if (isObject(object)) {
     for (const k in object) {
-      if (object.hasOwnProperty(k)) {
+      if (hasOwnProperty(object, k)) {
         callback(object[k], k)
       }
     }

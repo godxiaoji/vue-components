@@ -1,11 +1,11 @@
 <template>
   <button
-    class="button"
+    class="ly-button"
     :class="[typeClassName, sizeClassName]"
     :disabled="disabled"
     :type="realFormType"
   >
-    <icon class="button-loading-icon" v-if="loading" type="loading"></icon>
+    <icon class="ly-button_loading-icon" v-if="loading" type="loading"></icon>
     <slot>按钮</slot>
   </button>
 </template>
@@ -65,17 +65,19 @@ export default {
     }
   },
   ready() {},
-  mounted() {},
+  mounted() {
+    this.$el._app_type = 'button'
+  },
   updated() {},
   attached() {},
   methods: {}
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.button {
+.ly-button {
   --font-color: var(--app-semi-color);
   --border-color: var(--app-light-color);
   --background-color: #fff;
@@ -98,7 +100,7 @@ export default {
   background: none;
 }
 
-.button.size--mini {
+.ly-button.size--mini {
   min-width: 48px;
   height: 24px;
   padding: 0 8px;
@@ -107,7 +109,7 @@ export default {
   --icon-size: 16px;
 }
 
-.button.size--large {
+.ly-button.size--large {
   min-width: 72px;
   height: 40px;
   padding: 0 16px;
@@ -116,47 +118,47 @@ export default {
   --icon-size: 22px;
 }
 
-.button:not(:disabled):hover {
+.ly-button:not(:disabled):hover {
   opacity: 0.8;
 }
 
-.button:not(:disabled):active {
+.ly-button:not(:disabled):active {
   opacity: 0.6;
 }
 
-.button:disabled {
+.ly-button:disabled {
   cursor: not-allowed;
   opacity: 0.3;
 }
 
-.button.type--primary {
+.ly-button.type--primary {
   --font-color: #fff;
   --border-color: var(--app-main-color);
   --background-color: var(--app-main-color);
   --icon-color: #fff;
 }
 
-.button.type--warn {
+.ly-button.type--warn {
   --font-color: #fff;
   --border-color: var(--app-warn-color);
   --background-color: var(--app-warn-color);
   --icon-color: #fff;
 }
 
-.button {
+.ly-button {
   color: var(--font-color);
   background-color: var(--background-color);
   border-color: var(--border-color);
 }
 
-.button .button-loading-icon {
+.ly-button .ly-button_loading-icon {
   display: inline-block;
   width: 1.429em;
   height: 1.429em;
   line-height: 1;
   margin: -0.2em 0.34em 0 0;
   vertical-align: middle;
-  animation: app-rotate-360 0.8s infinite linear both;
+  animation: ly-rotate-360 0.8s infinite linear both;
   fill: var(--icon-color);
 }
 </style>

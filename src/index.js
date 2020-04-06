@@ -4,7 +4,7 @@ import { addApis } from './apis'
 
 const GodVueComponents = {
   install(Vue, options) {
-    let prefix = 'god'
+    let prefix = 'ly'
 
     if (isObject(options)) {
       if (options.prefix && isString(options.prefix)) {

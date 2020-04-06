@@ -1,39 +1,50 @@
 <template>
   <div
-    class="cascader"
-    :class="[{ focus: focus, disabled: disabled }, sizeClassName]"
+    class="ly-cascader"
+    :class="[
+      { focus: focus, disabled: disabled, 'no-border': !border },
+      sizeClassName,
+      alignClassName
+    ]"
   >
-    <div class="cascader-input-box" @mouseup="onBoxClick">
-      <input
-        class="cascader-input"
-        type="text"
-        readonly
-        :disabled="disabled"
-        :placeholder="placeholder"
-        :value="formLabelString"
-        @focus="onInputFocus"
-        @blur="onInputBlur"
-      />
-      <icon class="cascader-unfold-icon" type="unfold"></icon>
+    <div class="ly-cascader_field" @mouseup="onBoxClick">
+      <div class="ly-cascader_prepend" v-if="hasPrepend">
+        <slot name="prepend"></slot>
+      </div>
+      <div class="ly-cascader_content">
+        <div class="ly-cascader_text">{{ formLabelString }}</div>
+        <input
+          class="ly-cascader_input"
+          type="text"
+          readonly
+          :name="name"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          :value="formValueString"
+          @focus="onInputFocus"
+          @blur="onInputBlur"
+        />
+      </div>
+      <icon class="ly-cascader_unfold-icon" type="unfold"></icon>
     </div>
-    <div class="cascader-dropdown" ref="dropdown">
-      <div class="cascader-list-group" @mousedown.prevent="onDropdownTap">
+    <div class="ly-cascader_dropdown" ref="dropdown">
+      <div class="ly-cascader_groups" @mousedown.prevent="onDropdownTap">
         <ul
-          class="cascader-list app-scroll-bar"
+          class="ly-cascader_list ly-scroll-bar"
           v-for="(list, listIndex) in dropdown"
           :key="listIndex"
         >
           <li
-            class="cascader-item"
+            class="ly-cascader_item"
             v-for="item in list"
             :key="item.value"
             :selected="item.selected"
             :disabled="item.disabled"
             @click="onItemClick($event, item)"
           >
-            <span class="cascader-item-text">{{ item.label }}</span>
+            <span class="ly-cascader_item-text">{{ item.label }}</span>
             <icon
-              class="cascader-item-icon"
+              class="ly-cascader_item-icon"
               v-if="item.hasChildren"
               type="forward"
             ></icon>
@@ -50,9 +61,9 @@ import { getHandleEvent } from '../../helpers/events'
 import {
   inArray,
   isArray,
-  getRandomNumber,
   cloneData,
-  isStringArray
+  isStringArray,
+  isNumberArray
 } from '../../helpers/util'
 import {
   parseDateList,
@@ -63,16 +74,18 @@ import {
   getTimeValues,
   getDatetimeValues
 } from './cascader-date'
-// import { parseRegionList } from './cascader-region'
+import { parseRegionList } from './cascader-region2'
+import { isString, isNumber } from 'util'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
+const ALIGN_NAMES = ['left', 'center', 'right']
 const MODE_NAMES = [
   'multiSelector',
   'selector',
   'date',
   'time',
-  'datetime'
-  // 'region'
+  'datetime',
+  'region'
 ]
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
@@ -83,20 +96,23 @@ export default {
   props: {
     name: {
       type: String,
-      default() {
-        return 'cascader-' + getRandomNumber()
-      }
+      default: ''
     },
     placeholder: {
       type: String,
-      default: '请选择'
+      default: ''
     },
     value: {
       validator(value) {
-        return isStringArray(value)
+        return (
+          isStringArray(value) ||
+          isNumberArray(value) ||
+          isString(value) ||
+          isNumber(value)
+        )
       },
       default() {
-        return []
+        return ''
       }
     },
     disabled: {
@@ -137,6 +153,14 @@ export default {
     },
     color: {
       type: String
+    },
+    align: {
+      type: String,
+      value: 'left'
+    },
+    border: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -145,7 +169,11 @@ export default {
       focus: false,
       formValue: [],
       formLabel: [],
-      dropdown: []
+      dropdown: [],
+
+      hasPrepend: false,
+
+      separator2: ''
     }
   },
   model: {
@@ -158,6 +186,12 @@ export default {
         'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
       )
     },
+    alignClassName() {
+      return (
+        'align--' +
+        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
+      )
+    },
     formLabelString() {
       const dateFormat = this.getDateFormat()
 
@@ -165,7 +199,20 @@ export default {
         return dateFormat
       }
 
-      return this.formLabel.join(` ${this.separator} `)
+      return this.formLabel.join(`${this.separator2}`)
+    },
+    formValueString() {
+      const dateFormat = this.getDateFormat()
+
+      if (dateFormat) {
+        return dateFormat
+      }
+
+      if (this.formValue.length === 1) {
+        return this.formValue[0]
+      }
+
+      return this.formValue.join(this.separator2)
     }
   },
   watch: {
@@ -180,16 +227,25 @@ export default {
     if (inArray(this.mode, MODE_NAMES)) {
       this.initMode = this.mode
     }
+    // 初始化分隔符
+    this.separator2 = this.separator
     // 初始化value
-    if (this.formValue != this.value) {
-      this.setVaildValue(this.value)
-    } else {
+    if ((isArray(this.value) && this.value.length === 0) || this.value === '') {
       // value没初始设定的情况下
+    } else {
+      this.setVaildValue(this.getValues(this.value))
     }
   },
   ready() {},
   mounted() {
-    this.getInputEl()._app_component = this
+    if (this.$scopedSlots.prepend) {
+      this.hasPrepend = true
+    }
+
+    const inputEl = this.getInputEl()
+
+    inputEl._app_component = this
+    inputEl._app_type = 'cascader'
 
     if (this.formValue != this.value) {
       // 说明之前校验没通过
@@ -199,6 +255,39 @@ export default {
   updated() {},
   attached() {},
   methods: {
+    /**
+     * 尝试将其他类型的数据转为数组
+     */
+    getValues(value) {
+      // 格式化数据
+      let values
+
+      if (value == null) {
+        return []
+      } else if (isArray(value)) {
+        values = value
+      } else if (this.initMode === 'date') {
+        values = value.split('-')
+      } else if (this.initMode === 'time') {
+        values = value.split(':')
+      } else if (this.initMode === 'datetime') {
+        const matched = /^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/.exec(
+          value
+        )
+        if (matched && matched[0]) {
+          values = matched.splice(1, 6)
+        } else {
+          values = []
+        }
+      } else if (isNumber(value)) {
+        values = [value]
+      } else {
+        values = value.split(this.separator2)
+      }
+
+      return values
+    },
+
     getDateFormat() {
       if (this.initMode === 'date') {
         return this.formLabel.join('-')
@@ -210,6 +299,8 @@ export default {
           this.formLabel.slice(3, 6).join(':')
         ].join(' ')
       }
+
+      return null
     },
 
     parseDropdownList(index, parent) {
@@ -219,10 +310,9 @@ export default {
         return parseTimeList(index, parent)
       } else if (this.initMode === 'datetime') {
         return parseDatetimeList(index, parent)
+      } else if (this.initMode === 'region') {
+        return parseRegionList(index, parent)
       }
-      // else if (this.initMode === 'region') {
-      //   return parseRegionList(index, parent)
-      // }
 
       // 多项选择
       const getList = options => {
@@ -234,7 +324,7 @@ export default {
           list.push({
             label: v[this.labelKey],
             value: v[this.valueKey],
-            hasChildren: children && children.length > 0,
+            hasChildren: children && children.length > 0 ? true : false,
             children
           })
         })
@@ -258,7 +348,7 @@ export default {
           inputEl.blur()
         } else {
           this.focus = true
-          this.parseDropdown(this.value)
+          this.parseDropdown(this.formValue)
 
           this.$nextTick(() => {
             // 把选择数据展示在选择框内
@@ -333,7 +423,7 @@ export default {
             menuItem.values = menuValues.concat(menuItem.value)
             menuItem.labels = menuLabels.concat(menuItem.label)
 
-            if (selected && menuItem.value === selected) {
+            if (selected != null && menuItem.value === selected) {
               // 找到
               menuItem.selected = true
 
@@ -359,7 +449,9 @@ export default {
       this.dropdown = menuGroup
 
       this.$nextTick(() => {
-        this.$refs.dropdown.lastElementChild.lastElementChild.scrollIntoView()
+        if (this.$refs.dropdown.lastElementChild.lastElementChild) {
+          this.$refs.dropdown.lastElementChild.lastElementChild.scrollIntoView()
+        }
       })
     },
     onInputFocus(e) {
@@ -383,23 +475,22 @@ export default {
       )
     },
     getInputEl() {
-      return this.$el && this.$el.firstElementChild.firstElementChild
+      return this.$el && this.$el.querySelector('input')
     },
 
     onChange(e) {
-      this.$emit('_change', cloneData(this.formValue))
-
       const detail = {
-        value: cloneData(this.formValue)
+        value: this.formValueString,
+        values: cloneData(this.formValue)
       }
 
       if (this.initMode === 'date' || this.initMode === 'datetime') {
         detail.date = getDate(detail.value)
-        detail.dataFormat = this.getDateFormat()
       } else if (this.initMode === 'time') {
         detail.date = getDate(new Array(3).concat(detail.value))
-        detail.dataFormat = this.getDateFormat()
       }
+
+      this.$emit('_change', detail.value)
 
       const type = 'change'
       const handleEvent = getHandleEvent(this.$el, e, detail, type)
@@ -491,7 +582,7 @@ export default {
     },
 
     hookFormValue() {
-      return cloneData(this.formValue)
+      return this.formValueString
     },
 
     onDropdownTap() {}
@@ -499,10 +590,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.cascader {
+.ly-cascader {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 20px;
@@ -517,20 +608,20 @@ export default {
   color: var(--app-semi-color);
 }
 
-.cascader.size--mini {
+.ly-cascader.size--mini {
   --height: 22px;
   --font-size: 12px;
   --icon-size: 16px;
   --padding-left-right: 8px;
 }
 
-.cascader.size--large {
+.ly-cascader.size--large {
   --height: 38px;
   --font-size: 16px;
   --icon-size: 22px;
 }
 
-.cascader-input-box {
+.ly-cascader_field {
   width: 100%;
   height: 100%;
   display: flex;
@@ -539,33 +630,52 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   box-sizing: border-box;
+  background-color: #fff;
 }
 
-.cascader-input-box:hover {
+.ly-cascader.no-border .ly-cascader_field {
+  border: none;
+}
+
+.ly-cascader_field:hover {
   border-color: var(--color);
 }
 
-.cascader.disabled .cascader-input-box,
-.cascader.disabled .cascader-input-box:hover {
+.ly-cascader.disabled .ly-cascader_field,
+.ly-cascader.disabled .ly-cascader_field:hover {
   background-color: var(--app-whitesmoke-color);
   border-color: var(--app-light-color);
   cursor: not-allowed;
 }
 
-.cascader.focus .cascader-input-box {
+.ly-cascader.focus .ly-cascader_field {
   border-color: var(--color);
   box-shadow: 0 0 3px var(--color);
 }
 
-.cascader-input {
+.ly-cascader.no-border.focus .ly-cascader_field {
+  box-shadow: none;
+}
+
+.ly-cascader_prepend {
+  padding: 0 var(--padding-left-right);
+}
+
+.ly-cascader_content {
   flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+.ly-cascader_text,
+.ly-cascader_input {
   box-sizing: border-box;
   margin: 0;
   height: 100%;
   outline: none;
   height: var(--height);
   line-height: var(--height);
-  padding: 0 calc(var(--padding-left-right) / 2) 0 var(--padding-left-right);
+  padding: 0 var(--padding-left-right);
   font-size: var(--font-size);
   border: none;
   cursor: pointer;
@@ -574,15 +684,32 @@ export default {
   background: none;
 }
 
-.cascader-input::-webkit-input-placeholder {
+.ly-cascader_input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.ly-cascader.align--center .ly-cascader_text {
+  text-align: center;
+}
+
+.ly-cascader.align--right .ly-cascader_text {
+  text-align: right;
+}
+
+.ly-cascader_input::-webkit-input-placeholder {
   color: var(--app-light-color);
 }
 
-.cascader-input:disabled {
+.ly-cascader_input:disabled {
   cursor: not-allowed;
 }
 
-.cascader-unfold-icon {
+.ly-cascader_unfold-icon {
   display: block;
   width: var(--icon-size);
   height: var(--icon-size);
@@ -590,11 +717,15 @@ export default {
   transition: all 0.2s;
 }
 
-.cascader.focus .cascader-unfold-icon {
+.ly-cascader.no-border .ly-cascader_unfold-icon {
+  display: none;
+}
+
+.ly-cascader.focus .ly-cascader_unfold-icon {
   transform: rotate(180deg);
 }
 
-.cascader-dropdown {
+.ly-cascader_dropdown {
   display: none;
   position: absolute;
   left: 0;
@@ -603,7 +734,7 @@ export default {
   z-index: 99999;
 }
 
-.cascader-list-group {
+.ly-cascader_groups {
   position: absolute;
   top: 0;
   left: 0;
@@ -623,11 +754,11 @@ export default {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
-.cascader.focus .cascader-dropdown {
+.ly-cascader.focus .ly-cascader_dropdown {
   display: block;
 }
 
-.cascader-list {
+.ly-cascader_list {
   float: left;
   min-width: 60px;
   max-width: 200px;
@@ -647,11 +778,11 @@ export default {
   overflow-y: auto;
 }
 
-.cascader-list:last-child {
+.ly-cascader_list:last-child {
   border-right: none;
 }
 
-.cascader-item {
+.ly-cascader_item {
   display: flex;
   align-items: center;
   height: 32px;
@@ -664,7 +795,7 @@ export default {
   box-sizing: border-box;
 }
 
-.cascader-item-text {
+.ly-cascader_item-text {
   text-align: left;
   flex: 1;
   display: -webkit-box;
@@ -673,27 +804,27 @@ export default {
   overflow: hidden;
 }
 
-.cascader-item-icon {
+.ly-cascader_item-icon {
   margin-right: calc(var(--padding-left-right) / 2 - var(--padding-left-right));
 }
 
-.cascader-item[selected] {
+.ly-cascader_item[selected] {
   background-color: var(--app-whitesmoke-color);
 }
 
-.cascader-item:hover {
+.ly-cascader_item:hover {
   background-color: var(--dropdown-color);
 }
 
-.cascader-item[disabled],
-.cascader-item[disabled]:hover {
+.ly-cascader_item[disabled],
+.ly-cascader_item[disabled]:hover {
   background-color: #ffffff;
   color: var(--app-light-color);
   cursor: not-allowed;
 }
 
 @media screen and (max-width: 540px) {
-  .cascader-dropdown {
+  .ly-cascader_dropdown {
     position: fixed;
     left: 0;
     top: 0;
@@ -702,7 +833,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  .cascader-list-group {
+  .ly-cascader_groups {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -715,7 +846,7 @@ export default {
     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
   }
 
-  .cascader-item {
+  .ly-cascader_item {
     height: 40px;
     line-height: 40px;
     font-size: 16px;

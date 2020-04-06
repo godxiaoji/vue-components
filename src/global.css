@@ -24,7 +24,7 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes app-rotate-360 {
+@keyframes ly-rotate-360 {
   0% {
     transform: rotate(0);
   }
@@ -34,24 +34,24 @@ html {
   }
 }
 
-.app-scroll-bar {
-  --app-scroll-color: #fff;
+.ly-scroll-bar {
+  --ly-scroll-bar: #fff;
 }
 
-.app-scroll-bar:hover {
-  --app-scroll-color: var(--app-light-color);
+.ly-scroll-bar:hover {
+  --ly-scroll-bar: var(--app-light-color);
 }
 
-.app-scroll-bar::-webkit-scrollbar {
+.ly-scroll-bar::-webkit-scrollbar {
   background-color: transparent;
   width: 6px;
   height: 6px;
 }
 
-.app-scroll-bar::-webkit-scrollbar-thumb {
+.ly-scroll-bar::-webkit-scrollbar-thumb {
   background-color: inherit;
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 3px;
-  background-color: var(--app-scroll-color);
+  background-color: var(--ly-scroll-bar);
 }

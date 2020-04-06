@@ -1,5 +1,5 @@
 <template>
-  <div :id="itemId" class="swiper-item">
+  <div :id="itemId" class="ly-swiper-item">
     <slot></slot>
   </div>
 </template>

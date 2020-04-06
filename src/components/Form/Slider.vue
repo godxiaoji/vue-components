@@ -1,18 +1,18 @@
 <template>
-  <div class="slider" :disabled="disabled">
-    <div class="slider-inner">
-      <div class="slider-handle">
+  <div class="ly-slider" :disabled="disabled">
+    <div class="ly-slider_inner">
+      <div class="ly-slider_box">
         <div
-          class="slider-track"
+          class="ly-slider_track"
           :style="[sliderColor, { width: progress }]"
         ></div>
         <div
-          class="slider-thumb"
+          class="ly-slider_thumb"
           :style="[sliderColor, { left: progress }]"
         ></div>
       </div>
       <input
-        class="slider-range"
+        class="ly-slider_range"
         type="range"
         :disabled="disabled"
         v-model="formValue"
@@ -23,13 +23,12 @@
         @change="onChange"
       />
     </div>
-    <div v-if="showValue" class="slider-value">{{ formValue }}</div>
+    <div v-if="showValue" class="ly-slider_text">{{ formValue }}</div>
   </div>
 </template>
 
 <script>
 import { getHandleEvent } from '../../helpers/events'
-import { getRandomNumber } from '../../helpers/util'
 
 export default {
   name: 'app-slider',
@@ -52,9 +51,7 @@ export default {
     },
     name: {
       type: String,
-      default() {
-        return 'slider-' + getRandomNumber()
-      }
+      default: ''
     },
     color: {
       type: String,
@@ -75,15 +72,12 @@ export default {
   },
   data() {
     return {
-      formValue: '0'
+      formValue: 0
     }
   },
   computed: {
     progress() {
-      return (
-        ((parseInt(this.formValue) - this.min) / (this.max - this.min)) * 100 +
-        '%'
-      )
+      return ((this.formValue - this.min) / (this.max - this.min)) * 100 + '%'
     },
     sliderColor() {
       if (this.color) {
@@ -99,6 +93,7 @@ export default {
       const val2 = Math.min(this.max, Math.max(this.min, val))
 
       if (val2 !== val) {
+        // 设定的值不在允许范围内，取边界
         this.$emit('_change', val2)
       }
 
@@ -108,7 +103,7 @@ export default {
           this.$el,
           {},
           {
-            value: parseInt(val2)
+            value: val2
           },
           type
         )
@@ -117,7 +112,21 @@ export default {
       }
 
       if (val2 != this.formValue) {
-        this.formValue = val.toString()
+        this.formValue = val
+      }
+    },
+    min(val) {
+      if (val > this.formValue) {
+        this.$nextTick(() => {
+          this.formValue = parseFloat(this.getInputEl().value)
+        })
+      }
+    },
+    max(val) {
+      if (val < this.formValue) {
+        this.$nextTick(() => {
+          this.formValue = parseFloat(this.getInputEl().value)
+        })
       }
     },
     formValue(val) {
@@ -126,7 +135,7 @@ export default {
         this.$el,
         {},
         {
-          value: parseInt(val)
+          value: val
         },
         type
       )
@@ -138,12 +147,12 @@ export default {
     const value = Math.min(this.max, Math.max(this.min, this.value))
 
     if (this.formValue != value) {
-      this.formValue = value.toString()
+      this.formValue = value
     }
 
     if (value !== this.value) {
       this.$nextTick(() => {
-        this.$emit('_change', parseInt(this.formValue))
+        this.$emit('_change', this.formValue)
       })
     }
   },
@@ -152,13 +161,14 @@ export default {
     const inputEl = this.getInputEl()
 
     inputEl._app_component = this
+    inputEl._app_type = 'slider'
   },
   updated() {},
   attached() {},
   methods: {
     onChange() {
       if (this.formValue != this.value) {
-        this.$emit('_change', parseInt(this.formValue))
+        this.$emit('_change', this.formValue)
       }
     },
     getInputEl() {
@@ -168,17 +178,17 @@ export default {
       return parseInt(this.formValue)
     },
     reset() {
-      this.formValue = this.min.toString()
+      this.formValue = this.min
       this.$emit('_change', this.min)
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.slider {
+.ly-slider {
   --color: var(--app-main-color);
 
   position: relative;
@@ -187,7 +197,7 @@ export default {
   align-items: center;
 }
 
-.slider-inner {
+.ly-slider_inner {
   flex: 1;
   display: flex;
   align-items: center;
@@ -195,20 +205,20 @@ export default {
   position: relative;
 }
 
-.slider-handle {
+.ly-slider_box {
   position: relative;
   height: 2px;
   width: 100%;
   background: var(--app-light-color);
 }
 
-.slider-track {
+.ly-slider_track {
   width: 100%;
   height: 100%;
   background: var(--color);
 }
 
-.slider-thumb {
+.ly-slider_thumb {
   position: absolute;
   width: 12px;
   height: 12px;
@@ -217,7 +227,7 @@ export default {
   background: var(--color);
 }
 
-.slider-range {
+.ly-slider_range {
   position: absolute;
   left: 0;
   top: 0;
@@ -227,7 +237,7 @@ export default {
   opacity: 0;
 }
 
-.slider-value {
+.ly-slider_text {
   font-size: 14px;
   margin-left: 4px;
   color: var(--app-grey-color);

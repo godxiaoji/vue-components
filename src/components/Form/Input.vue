@@ -1,16 +1,38 @@
 <template>
-  <div
-    class="input"
-    :class="[sizeClassName, { warn: warn, 'has-icon': type === 'search' }]"
+  <label
+    class="ly-input"
+    :class="[
+      sizeClassName,
+      alignClassName,
+      {
+        warn: warn,
+        'has--prepend': hasPrepend,
+        'has--append': hasAppend,
+        'no-border': !border,
+        'ly-textarea': type === 'textarea'
+      }
+    ]"
     :disabled="disabled"
   >
-    <icon
-      v-if="type === 'search'"
-      type="search"
-      class="input-label-icon"
-    ></icon>
+    <div class="ly-input_prepend" v-if="hasPrepend">
+      <slot name="prepend"></slot>
+    </div>
+    <textarea
+      v-if="type === 'textarea'"
+      class="ly-input_input"
+      :name="name"
+      :value="formValue"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      :readonly="readonly"
+      :maxlength="maxlength"
+      @input="onInput"
+      @focus="onFocus"
+      @blur="onBlur"
+    ></textarea>
     <input
-      class="input-input"
+      v-else
+      class="ly-input_input"
       :name="name"
       :type="realType"
       :value="formValue"
@@ -22,39 +44,28 @@
       @focus="onFocus"
       @blur="onBlur"
     />
-    <icon
-      type="clear"
-      v-show="showClearIcon"
-      class="input-clear-icon"
-      @click.native="onClearClick"
-    ></icon>
-    <p class="input-error" v-show="warn && errMsg">{{ errMsg }}</p>
-  </div>
+    <div class="ly-input_append" v-if="hasAppend">
+      <slot name="append"></slot>
+    </div>
+    <p class="ly-input_error" v-if="warn && errMsg">{{ errMsg }}</p>
+  </label>
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
-import {
-  inArray,
-  getRandomNumber,
-  isFunction,
-  isString,
-  isNumber
-} from '../../helpers/util'
+import { inArray, isFunction, isString, isNumber } from '../../helpers/util'
 import { getHandleEvent } from '../../helpers/events'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
-const TYPE_NAMES = ['text', 'number', 'password', 'search']
+const ALIGN_NAMES = ['left', 'center', 'right']
+const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
 
 export default {
   name: 'app-input',
-  components: { Icon },
+  components: {},
   props: {
     name: {
       type: String,
-      default() {
-        return 'input-' + getRandomNumber()
-      }
+      default: ''
     },
     maxlength: {
       validator(value) {
@@ -98,13 +109,24 @@ export default {
     },
     valid: {
       type: Function
+    },
+    align: {
+      type: String,
+      value: 'left'
+    },
+    border: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
       formValue: '',
       warn: false,
-      errMsg: ''
+      errMsg: '',
+
+      hasPrepend: false,
+      hasAppend: false
     }
   },
   computed: {
@@ -113,13 +135,11 @@ export default {
         'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
       )
     },
-    showClearIcon() {
-      return this.showClear &&
-        this.formValue &&
-        !this.disabled &&
-        !this.readonly
-        ? true
-        : false
+    alignClassName() {
+      return (
+        'align--' +
+        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
+      )
     },
     realType() {
       return inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
@@ -148,6 +168,13 @@ export default {
   },
   ready() {},
   mounted() {
+    if (this.$scopedSlots.prepend) {
+      this.hasPrepend = true
+    }
+    if (this.$scopedSlots.append) {
+      this.hasAppend = true
+    }
+
     const inputEl = this.getInputEl()
 
     if (this.focus) {
@@ -226,7 +253,10 @@ export default {
     },
 
     getInputEl() {
-      return this.$el && this.$el.firstElementChild
+      return (
+        (this.$el && this.$el.querySelector('input')) ||
+        this.$el.querySelector('textarea')
+      )
     },
 
     reset() {
@@ -243,22 +273,15 @@ export default {
           target: inputEl
         })
       }
-    },
-
-    /**
-     * 清除点击
-     */
-    onClearClick() {
-      this.reset()
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 @import url('../../global.css');
 
-.input {
+.ly-input {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 20px;
@@ -271,38 +294,64 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+
+  border-radius: 4px;
+  border: 1px solid var(--app-light-color);
+  box-sizing: border-box;
+  font-size: var(--font-size);
+  background-color: #fff;
+  color: var(--app-semi-color);
 }
 
-.input.warn {
+.ly-input.no-border {
+  border: none;
+  border-radius: 0;
+}
+
+.ly-input_prepend,
+.ly-input_append {
+  padding: 0 var(--padding-left-right);
+}
+
+.ly-input_prepend .icon,
+.ly-input_append .icon {
+  display: block;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.ly-input.warn {
   --color: var(--app-warn-color);
 }
 
-.input.size--mini {
+.ly-input.size--mini {
   --height: 22px;
   --font-size: 12px;
   --icon-size: 16px;
   --padding-left-right: 8px;
 }
 
-.input.size--large {
+.ly-input.size--large {
   --height: 38px;
   --font-size: 16px;
   --icon-size: 22px;
 }
 
-.input-input {
+.ly-input_input {
+  flex: 1;
   display: block;
-  border: 1px solid var(--app-light-color);
-  border-radius: 4px;
   overflow: hidden;
   margin: 0;
   outline: none;
+  border: none;
   width: 100%;
   height: 100%;
   line-height: var(--height);
   width: 100%;
-  padding: 0 calc(var(--icon-size) + var(--padding-left-right) * 1.5) 0
-    var(--padding-left-right);
+  border-radius: 4px;
+  padding: 0 var(--padding-left-right);
   font-size: var(--font-size);
   cursor: pointer;
   color: var(--app-semi-color);
@@ -311,58 +360,67 @@ export default {
   box-shadow: none;
 }
 
-.input-input[type='search']::-webkit-search-cancel-button {
+.ly-textarea .ly-input_input {
+  resize: none;
+}
+
+.ly-input.no-border .ly-input_input {
+  border: none;
+  border-radius: 0;
+}
+
+.ly-input.has--prepend .ly-input_input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ly-input.has--append .ly-input_input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ly-input.align--center .ly-input_input {
+  text-align: center;
+}
+
+.ly-input.align--right .ly-input_input {
+  text-align: right;
+}
+
+.ly-input_input[type='search']::-webkit-search-cancel-button {
   display: none;
 }
 
-.input.has-icon .input-input {
-  padding-left: calc(var(--icon-size) + var(--padding-left-right) * 1.5);
-}
-
-.input.warn .input-input {
+.ly-input.warn .ly-input_input {
   border-color: var(--warn-color);
 }
 
-.input-input::-webkit-input-placeholder {
+.ly-input_input::-webkit-input-placeholder {
   color: var(--app-light-color);
 }
 
-.input:hover .input-input,
-.input-input:hover {
+.ly-input:hover .ly-input_input,
+.ly-input_input:hover {
   border-color: var(--color);
 }
 
-.input-input:disabled,
-.input-input:disabled:hover {
+.ly-input_input:disabled,
+.ly-input_input:disabled:hover {
   background-color: var(--app-whitesmoke-color);
   border-color: var(--app-light-color);
   cursor: not-allowed;
 }
 
-.input-input:focus {
+.ly-input_input:focus {
   border-color: var(--color);
   box-shadow: 0 0 3px var(--color);
 }
 
-.input-label-icon,
-.input-clear-icon {
-  position: absolute;
-  right: var(--padding-left-right);
-  /* right: calc((var(--height) - var(--icon-size)) / 2); */
-  top: 50%;
-  margin-top: calc((var(--icon-size) / 2) - var(--icon-size));
-  width: var(--icon-size);
-  height: var(--icon-size);
-  box-sizing: border-box;
-  cursor: pointer;
+.ly-input.no-border .ly-input_input:focus {
+  box-shadow: none;
 }
 
-.input-label-icon {
-  left: var(--padding-left-right);
-  right: auto;
-}
-
-.input-error {
+.ly-input_error {
   position: absolute;
   left: var(--padding-left-right);
   top: 100%;

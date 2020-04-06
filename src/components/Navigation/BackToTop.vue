@@ -1,10 +1,10 @@
 <template>
   <div
     v-show="scrollTop >= visibilityHeight"
-    class="back-to-top"
+    class="ly-back-to-top"
     @click="onClick"
   >
-    <slot><icon class="back-to-top-icon" type="upload"></icon></slot>
+    <slot><icon class="ly-back-to-top_icon" type="upload"></icon></slot>
   </div>
 </template>
 
@@ -84,8 +84,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.back-to-top {
+<style>
+.ly-back-to-top {
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -93,7 +93,7 @@ export default {
   cursor: pointer;
 }
 
-.back-to-top-icon {
+.ly-back-to-top_icon {
   display: block;
   width: 40px;
   height: 40px;

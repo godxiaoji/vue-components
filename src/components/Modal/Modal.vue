@@ -1,29 +1,27 @@
 <template>
-  <div v-show="visibility" class="modal" @click="onModalClick">
-    <div class="modal-box" @click.stop="onBoxClick">
-      <div class="modal-header">
-        <span class="modal-title">{{ title }}</span>
-        <span class="modal-close" v-show="showClose" @click="onCloseClick">
+  <div v-show="visibility" class="ly-modal" @click="onModalClick">
+    <div class="ly-modal_box" @click.stop="onBoxClick">
+      <div class="ly-modal_header">
+        <span class="ly-modal_title">{{ title }}</span>
+        <span class="ly-modal_close" v-show="showClose" @click="onCloseClick">
           <icon type="close"></icon>
         </span>
       </div>
-      <div class="modal-body">
-        <div class="modal-content">
+      <div class="ly-modal_body">
+        <div class="ly-modal_content">
           <slot></slot>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="ly-modal_footer">
         <button
           v-show="showCancel"
-          class="modal-button modal-cancel-button"
+          class="ly-modal_button"
           @click="onCancelClick"
         >
           {{ cancelText }}
         </button>
-        <button
-          class="modal-button modal-confirm-button primary"
-          @click="onConfirmClick"
-        >
+
+        <button class="ly-modal_button primary" @click="onConfirmClick">
           {{ confirmText }}
         </button>
       </div>
@@ -109,7 +107,7 @@ export default {
 <style>
 @import url('../../global.css');
 
-.modal {
+.ly-modal {
   --confirm-background-color: var(--app-main-color);
   --confirm-border-color: var(--app-main-color);
   --confirm-font-color: #fff;
@@ -131,7 +129,7 @@ export default {
   transform: translateZ(0);
 }
 
-.modal-box {
+.ly-modal_box {
   width: 400px;
   box-sizing: border-box;
   border: 1px solid var(--app-light-color);
@@ -140,14 +138,14 @@ export default {
   overflow: hidden;
 }
 
-.modal-header {
+.ly-modal_header {
   display: flex;
   align-items: center;
   height: 51px;
   padding: 0 0 0 20px;
 }
 
-.modal-header .modal-title {
+.ly-modal_title {
   flex: 1;
   font-size: 16px;
   color: var(--app-semi-color);
@@ -157,7 +155,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.modal-header .modal-close {
+.ly-modal_close {
   width: 30px;
   height: 30px;
   margin-bottom: 21px;
@@ -167,18 +165,18 @@ export default {
   cursor: pointer;
 }
 
-.modal-header .modal-close .icon {
+.ly-modal_close .ly-icon {
   width: 20px;
   height: 20px;
   fill: var(--app-light-color);
 }
 
-.modal-body {
+.ly-modal_body {
   padding: 0 20px;
   overflow: hidden;
 }
 
-.modal-content {
+.ly-modal_content {
   max-height: 300px;
   overflow: auto;
   font-size: 14px;
@@ -186,13 +184,13 @@ export default {
   color: var(--app-grey-color);
 }
 
-.modal-footer {
+.ly-modal_footer {
   padding: 15px 20px 20px;
   display: flex;
   justify-content: flex-end;
 }
 
-.modal-footer .modal-button {
+.ly-modal_footer .ly-modal_button {
   display: inline-block;
   box-sizing: border-box;
   text-align: center;
@@ -213,35 +211,35 @@ export default {
   margin: 0 0 0 10px;
 }
 
-.modal-footer .modal-button.primary {
+.ly-modal_footer .ly-modal_button.primary {
   color: var(--confirm-font-color);
   background-color: var(--confirm-background-color);
   border-color: var(--confirm-border-color);
 }
 
-.modal-footer .modal-button:hover {
+.ly-modal_footer .ly-modal_button:hover {
   opacity: 0.8;
 }
 
-.modal-footer .modal-button:active {
+.ly-modal_footer .ly-modal_button:active {
   opacity: 0.6;
 }
 
 @media screen and (max-width: 540px) {
-  .modal-box {
+  .ly-modal_box {
     width: calc(100% - 40px);
     margin: 0 20px;
   }
 
-  .modal-header .modal-title {
+  .ly-modal_header .ly-modal_title {
     font-size: 18px;
   }
 
-  .modal-content {
+  .ly-modal_content {
     font-size: 16px;
   }
 
-  .modal-footer .modal-button {
+  .ly-modal_footer .ly-modal_button {
     height: 38px;
     line-height: 38px;
     font-size: 16px;

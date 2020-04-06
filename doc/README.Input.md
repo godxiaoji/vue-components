@@ -9,13 +9,14 @@
 | value / v-model | string, number | ''        | false |
 | name            | string         | 随机      | false | [form](./README.Form.md) 的标识，没有设置会随机生成 |
 | size            | string         | 'default' | false | 尺寸，可选值：default / mini / large                |
+| align           | string         | 'left'    | false | 左右对齐，可选值：left / center / right             |
+| border          | boolean        | true      | false | 是否显示边框                                        |
 | type            | string         | 'text'    | false | 类型，可选值：text / number / password              |
 | placeholder     | string         |           | false | 输入框为空时占位符                                  |
 | disabled        | boolean        | false     | false | 是否禁用                                            |
 | readonly        | boolean        | false     | false | 是否只读                                            |
 | maxlength       | number, string | 140       | false | 最大长度                                            |
 | focus           | boolean        | false     | false | 是否获取焦点                                        |
-| show-clear      | boolean        | true      | false | 是否展示清空 icon                                   |
 | valid           | function       |           | false | 校验 value 函数                                     |
 
 ### type 的合法值
@@ -44,3 +45,19 @@
 | change | 改变且失焦后触发 | EventHandle，可通过 e.detail.value 取值 |
 | focus  | 获取焦点时触发   | EventHandle                             |
 | blur   | 移出焦点时触发   | EventHandle                             |
+
+## Slots
+
+### 前置元素
+
+```
+<template #prepend>https://</template>
+```
+
+也可以传入 icon，比如常见的搜索
+
+### 后置元素
+
+```
+<template #append>.com</template>
+```

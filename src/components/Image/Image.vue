@@ -1,5 +1,5 @@
 <template>
-  <div class="image">
+  <div class="ly-image">
     <img :class="[modeClassName]" :src="imgSrc" />
   </div>
 </template>
@@ -121,8 +121,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.image {
+<style>
+.ly-image {
   position: relative;
   display: inline-block;
   width: 320px;
@@ -130,46 +130,46 @@ export default {
   overflow: hidden;
 }
 
-.image img {
+.ly-image img {
   position: absolute;
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.image img.mode--scaleToFill {
+.ly-image img.mode--scaleToFill {
   object-fit: fill;
 }
 
-.image img.mode--aspectFit {
+.ly-image img.mode--aspectFit {
   object-fit: contain;
 }
 
-.image img.mode--aspectFill {
+.ly-image img.mode--aspectFill {
   object-fit: cover;
 }
 
-.image img.mode--widthFix {
+.ly-image img.mode--widthFix {
   height: auto;
 }
 
-.image img.mode--top,
-.image img.mode--bottom {
+.ly-image img.mode--top,
+.ly-image img.mode--bottom {
   left: 50%;
   width: auto;
   height: auto;
   transform: translateX(-50%);
 }
 
-.image img.mode--top {
+.ly-image img.mode--top {
   top: 0;
 }
 
-.image img.mode--bottom {
+.ly-image img.mode--bottom {
   bottom: 0;
 }
 
-.image img.mode--center {
+.ly-image img.mode--center {
   top: 50%;
   left: 50%;
   width: auto;
@@ -177,44 +177,44 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.image img.mode--left,
-.image img.mode--right {
+.ly-image img.mode--left,
+.ly-image img.mode--right {
   top: 50%;
   width: auto;
   height: auto;
   transform: translateY(-50%);
 }
 
-.image img.mode--left {
+.ly-image img.mode--left {
   left: 0;
 }
 
-.image img.mode--right {
+.ly-image img.mode--right {
   right: 0;
 }
 
-.image img.mode--top-left {
+.ly-image img.mode--top-left {
   top: 0;
   left: 0;
   width: auto;
   height: auto;
 }
 
-.image img.mode--top-right {
+.ly-image img.mode--top-right {
   top: 0;
   right: 0;
   width: auto;
   height: auto;
 }
 
-.image img.mode--bottom-left {
+.ly-image img.mode--bottom-left {
   bottom: 0;
   left: 0;
   width: auto;
   height: auto;
 }
 
-.image img.mode--bottom-right {
+.ly-image img.mode--bottom-right {
   right: 0;
   bottom: 0;
   width: auto;

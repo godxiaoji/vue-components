@@ -6,7 +6,7 @@
 
 | 属性            | 类型          | 默认值     | 必填  | 说明                                                                            |
 | --------------- | ------------- | ---------- | ----- | ------------------------------------------------------------------------------- |
-| name            | string        | 随机       | 否    | [form](./README.Form.md) 的标识，没有设置会随机生成                             |
+| name            | string        | 随机       | 否    | [form](./README.Form.md) 的标识                                                 |
 | mode            | string        |            | 否    | 初始化内置选择器 date / time / datetime，为了防止逻辑混乱，组件创建后不支持更改 |
 | options         | array         | []         | 否    | 数据集                                                                          |
 | value / v-modal | array<string> | []         | 否    | 默认的选中项                                                                    |
@@ -15,7 +15,7 @@
 | border          | boolean       | true       | false | 是否显示边框                                                                    |
 | placeholder     | string        | '请选择'   | 否    | 未进行选择时的提示                                                              |
 | disabled        | boolean       | false      | 否    | 是否被禁用                                                                      |
-| separator       | string        | '/'        | 否    | 分隔符                                                                          |
+| separator       | string        | '/'        | 否    | 初始分隔符，组件创建后不支持修改                                                |
 | label-key       | string        | 'label'    | 否    | 可以指定数据集中 label 的字段 key                                               |
 | children-key    | string        | 'children' | 否    | 可以指定数据集中 children 的字段 key                                            |
 | value-key       | string        | 'value'    | 否    | 可以指定数据集中 value 的字段 key                                               |
@@ -103,11 +103,18 @@
 
 ### prop mode = date / time / datetime 模式下， change 事件的 e.detail
 
-| 值         | 类型          | 说明                                      |
-| ---------- | ------------- | ----------------------------------------- |
-| value      | array<string> | 跟选择器保持一致，如 ["2020", "02", "14"] |
-| date       | Date          | 日期选择器                                |
-| dateFormat | string        | 常用格式，如 2020-02-14 00:00:00          |
+| 值     | 类型                 | 说明                                                        |
+| ------ | -------------------- | ----------------------------------------------------------- |
+| value  | string               | 格式化后的数值，如：1, "a/b", "北京市/北京市/东城区"        |
+| values | array<string/number> | 数组形式，如：[1]，["a", "b"]，["北京市","北京市","东城区"] |
+
+### prop mode = date / time / datetime 模式下， change 事件的 e.detail
+
+| 值     | 类型          | 说明                              |
+| ------ | ------------- | --------------------------------- |
+| value  | string        | 常用格式，如 2020-02-14 00:00:00  |
+| values | array<string> | 数组形式，如 ["2020", "02", "14"] |
+| date   | Date          | 时间对应的 Date 实例              |
 
 ## Slots
 

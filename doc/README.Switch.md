@@ -4,12 +4,12 @@
 
 ## Props
 
-| 属性              | 类型    | 默认值    | 必填  | 说明                                                |
-| ----------------- | ------- | --------- | ----- | --------------------------------------------------- |
-| name              | string  | 随机      | false | [form](./README.Form.md) 的标识，没有设置会随机生成 |
-| size              | string  | 'default' | false | 尺寸，可选值：default / mini / large                |
-| disabled          | boolean | false     | false | 是否禁用                                            |
-| checked / v-model | boolean | false     | false | 是否开启                                            |
+| 属性              | 类型    | 默认值    | 必填  | 说明                                 |
+| ----------------- | ------- | --------- | ----- | ------------------------------------ |
+| name              | string  | 随机      | false | [form](./README.Form.md) 的标识      |
+| size              | string  | 'default' | false | 尺寸，可选值：default / mini / large |
+| disabled          | boolean | false     | false | 是否禁用                             |
+| checked / v-model | boolean | false     | false | 是否开启                             |
 
 ## CSS
 

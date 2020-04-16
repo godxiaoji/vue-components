@@ -14,7 +14,7 @@ import { frameTo } from '../../helpers/animation'
 import { getHandleEvent } from '../../helpers/events'
 
 export default {
-  name: 'app-back-to-top',
+  name: 'ly-back-to-top',
   components: { Icon },
   props: {
     visibilityHeight: {

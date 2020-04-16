@@ -1,5 +1,7 @@
 import { isString, isDate } from '../helpers/util'
 
+const prefix = 'ly:'
+
 /**
  * 验证是否合法key
  * @param key
@@ -48,7 +50,7 @@ export function setStorage(key, data) {
     )
   }
 
-  localStorage.setItem(key, value)
+  localStorage.setItem(prefix + key, value)
 }
 
 /**
@@ -58,7 +60,7 @@ export function setStorage(key, data) {
 export function getStorage(key) {
   _isVaildKey(key)
 
-  const value = localStorage.getItem(key)
+  const value = localStorage.getItem(prefix + key)
 
   if (value) {
     try {
@@ -82,14 +84,23 @@ export function getStorage(key) {
 export function removeStorage(key) {
   _isVaildKey(key)
 
-  localStorage.removeItem(key)
+  localStorage.removeItem(prefix + key)
 }
 
 /**
  * 清理本地数据缓存
  */
 export function clearStorage() {
-  localStorage.clear()
+  // localStorage.clear()
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+
+    if (key.indexOf(prefix) === 0) {
+      // 只删除有当前api集存储的数据
+      localStorage.removeItem(key)
+    }
+  }
 }
 
 /**
@@ -102,7 +113,11 @@ export function getStorageInfo() {
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)
 
-    keys.push(key)
+    if (key.indexOf(prefix) === 0) {
+      // 只显示有当前api集存储的数据
+      keys.push(key.replace(prefix, ''))
+    }
+
     size += localStorage.getItem(key).length
   }
 

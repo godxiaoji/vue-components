@@ -35,7 +35,7 @@ import { getHandleEvent } from '../../helpers/events'
 // import './modal'
 
 export default {
-  name: 'app-modal',
+  name: 'ly-modal',
   components: { Icon },
   props: {
     visibility: {
@@ -108,12 +108,12 @@ export default {
 @import url('../../global.css');
 
 .ly-modal {
-  --confirm-background-color: var(--app-main-color);
-  --confirm-border-color: var(--app-main-color);
+  --confirm-background-color: var(--ly-main-color);
+  --confirm-border-color: var(--ly-main-color);
   --confirm-font-color: #fff;
-  --cancel-font-color: var(--app-semi-color);
+  --cancel-font-color: var(--ly-semi-color);
   --cancel-background-color: #fff;
-  --cancel-border-color: var(--app-light-color);
+  --cancel-border-color: var(--ly-light-color);
 
   position: fixed;
   left: 0;
@@ -132,7 +132,7 @@ export default {
 .ly-modal_box {
   width: 400px;
   box-sizing: border-box;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   border-radius: 4px;
   background-color: #fff;
   overflow: hidden;
@@ -148,7 +148,7 @@ export default {
 .ly-modal_title {
   flex: 1;
   font-size: 16px;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   margin-top: 5px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -168,7 +168,7 @@ export default {
 .ly-modal_close .ly-icon {
   width: 20px;
   height: 20px;
-  fill: var(--app-light-color);
+  fill: var(--ly-light-color);
 }
 
 .ly-modal_body {
@@ -181,7 +181,7 @@ export default {
   overflow: auto;
   font-size: 14px;
   line-height: 1.715em;
-  color: var(--app-grey-color);
+  color: var(--ly-grey-color);
 }
 
 .ly-modal_footer {

@@ -248,7 +248,7 @@ const TYPE_NAMES = [
 ]
 
 export default {
-  name: 'app-icon',
+  name: 'ly-icon',
   props: {
     type: {
       validator(value) {
@@ -305,7 +305,7 @@ export default {
 
 .ly-icon {
   --size: 24px;
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
 
   display: inline-block;
   width: var(--size);
@@ -319,16 +319,16 @@ export default {
 .ly-icon.type--success_no_circle,
 .ly-icon.type--radio_checked,
 .ly-icon.type--checkbox_checked {
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
 }
 
 .ly-icon.type--info,
 .ly-icon.type--waiting {
-  --color: var(--app-link-color);
+  --color: var(--ly-link-color);
 }
 
 .ly-icon.type--warn {
-  --color: var(--app-warn-color);
+  --color: var(--ly-warn-color);
 }
 
 .ly-icon.type--cancel,
@@ -337,17 +337,17 @@ export default {
 .ly-icon.type--loading,
 .ly-icon.type--radio,
 .ly-icon.type--checkbox {
-  --color: var(--app-semi-color);
+  --color: var(--ly-semi-color);
 }
 
 .ly-icon.type--search,
 .ly-icon.type--clear,
 .ly-icon.type--unfold,
 .ly-icon.type--close {
-  --color: var(--app-grey-color);
+  --color: var(--ly-grey-color);
 }
 
 .ly-icon.type--forward {
-  --color: var(--app-light-color);
+  --color: var(--ly-light-color);
 }
 </style>

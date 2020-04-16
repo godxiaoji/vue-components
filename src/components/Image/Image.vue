@@ -25,7 +25,7 @@ const MODE_NAMES = [
 ]
 
 export default {
-  name: 'app-image',
+  name: 'ly-image',
   props: {
     // 图片资源地址
     src: {

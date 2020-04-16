@@ -5,7 +5,7 @@ import SwiperComponent from './Swiper.vue'
 const Swiper = _Swiper
 const swiper = SwiperComponent
 const swiperItem = SwiperItemComponent
-const install = function (Vue) {
+const install = function(Vue) {
   Vue.component(SwiperComponent.name, SwiperComponent)
   Vue.component(SwiperItemComponent.name, SwiperItemComponent)
 }

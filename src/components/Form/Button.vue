@@ -19,7 +19,7 @@ const TYPE_NAMES = ['default', 'primary', 'warn']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
 export default {
-  name: 'app-button',
+  name: 'ly-button',
   components: { Icon },
   props: {
     size: {
@@ -78,11 +78,11 @@ export default {
 @import url('../../global.css');
 
 .ly-button {
-  --font-color: var(--app-semi-color);
-  --border-color: var(--app-light-color);
+  --font-color: var(--ly-semi-color);
+  --border-color: var(--ly-light-color);
   --background-color: #fff;
   --icon-size: 20px;
-  --icon-color: var(--app-semi-color);
+  --icon-color: var(--ly-semi-color);
 
   display: inline-block;
   box-sizing: border-box;
@@ -133,15 +133,15 @@ export default {
 
 .ly-button.type--primary {
   --font-color: #fff;
-  --border-color: var(--app-main-color);
-  --background-color: var(--app-main-color);
+  --border-color: var(--ly-main-color);
+  --background-color: var(--ly-main-color);
   --icon-color: #fff;
 }
 
 .ly-button.type--warn {
   --font-color: #fff;
-  --border-color: var(--app-warn-color);
-  --background-color: var(--app-warn-color);
+  --border-color: var(--ly-warn-color);
+  --background-color: var(--ly-warn-color);
   --icon-color: #fff;
 }
 

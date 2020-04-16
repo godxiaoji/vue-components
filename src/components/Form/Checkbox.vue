@@ -22,7 +22,7 @@
 import Icon from '../Icon/Icon.vue'
 
 export default {
-  name: 'app-checkbox',
+  name: 'ly-checkbox',
   components: { Icon },
   props: {
     value: {
@@ -151,14 +151,14 @@ export default {
 @import url('../../global.css');
 
 .ly-checkbox {
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
   --padding-left-right: 12px;
 
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   height: 1.715em;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   padding: 0 var(--padding-left-right);
   text-align: left;
 }

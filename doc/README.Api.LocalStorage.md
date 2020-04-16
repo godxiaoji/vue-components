@@ -1,5 +1,7 @@
 # LocalStorage
 
+原本定义的`localStorage`是只有 string 类型的 value。封装的接口支持序列化数据，序列化和反序列化操作由接口内部实现。
+
 ## <a name="getStorage">Vue.prototype.\$getStorage(key)</a>
 
 ### 参数

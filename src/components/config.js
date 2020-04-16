@@ -9,10 +9,10 @@ import RadioGroupComponent from './Form/RadioGroup.vue'
 import RadioComponent from './Form/Radio.vue'
 import CheckboxGroupComponent from './Form/CheckboxGroup.vue'
 import CheckboxComponent from './Form/Checkbox.vue'
-import SelectComponent from './Form/Select.vue'
-import SelectOptionComponent from './Form/SelectOption.vue'
+// import SelectComponent from './Form/Select.vue'
+// import SelectOptionComponent from './Form/SelectOption.vue'
+// import TextareaComponent from './Form/Textarea.vue'
 import InputComponent from './Form/Input.vue'
-import TextareaComponent from './Form/Textarea.vue'
 import FormComponent from './Form/Form.vue'
 import CascaderComponent from './Form/Cascader.vue'
 import ToastComponent from './Toast/Toast.vue'
@@ -36,10 +36,10 @@ export default [
   RadioComponent,
   CheckboxGroupComponent,
   CheckboxComponent,
-  SelectComponent,
-  SelectOptionComponent,
+  // SelectComponent,
+  // SelectOptionComponent,
+  // TextareaComponent,
   InputComponent,
-  TextareaComponent,
   FormComponent,
   CascaderComponent,
   /* popup */

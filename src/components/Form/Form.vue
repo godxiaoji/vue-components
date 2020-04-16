@@ -9,7 +9,7 @@ import { inArray } from '../../helpers/util'
 import { getHandleEvent } from '../../helpers/events'
 
 export default {
-  name: 'app-form',
+  name: 'ly-form',
   props: {},
   data() {
     return {}

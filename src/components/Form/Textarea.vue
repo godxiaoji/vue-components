@@ -27,7 +27,7 @@ import { getHandleEvent } from '../../helpers/events'
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
-  name: 'app-textarea',
+  name: 'ly-textarea',
   props: {
     name: {
       type: String,
@@ -198,7 +198,7 @@ export default {
   --padding-top-bottom: 4px;
   --font-size: 14px;
   --padding-left-right: 12px;
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
 
   height: calc(var(--line-height) * 3 + var(--padding-top-bottom) * 2 + 2px);
   width: 100%;
@@ -220,7 +220,7 @@ export default {
 
 .input-text {
   display: block;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   border-radius: 4px;
   overflow: hidden;
   margin: 0;
@@ -232,7 +232,7 @@ export default {
   padding: var(--padding-top-bottom) var(--padding-left-right);
   font-size: var(--font-size);
   cursor: pointer;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   background: #ffffff;
   box-sizing: border-box;
   resize: none;
@@ -240,7 +240,7 @@ export default {
 }
 
 .input-text::-webkit-input-placeholder {
-  color: var(--app-light-color);
+  color: var(--ly-light-color);
 }
 
 .input:hover .input-text,
@@ -250,8 +250,8 @@ export default {
 
 .input-text:disabled,
 .input-text:disabled:hover {
-  background-color: var(--app-whitesmoke-color);
-  border-color: var(--app-light-color);
+  background-color: var(--ly-whitesmoke-color);
+  border-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 

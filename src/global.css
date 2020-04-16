@@ -1,20 +1,20 @@
 :root {
   /* 主色调 */
-  --app-main-color: #09bb07;
+  --ly-main-color: #09bb07;
   /* 链接色 */
-  --app-link-color: #576b95;
+  --ly-link-color: #576b95;
   /* 强调色/警告色 */
-  --app-warn-color: #e64340;
+  --ly-warn-color: #e64340;
   /* 主要内容 */
-  --app-black-color: #000000;
+  --ly-black-color: #000000;
   /* 大段内容 */
-  --app-semi-color: #353535;
+  --ly-semi-color: #353535;
   /* 次要内容 */
-  --app-grey-color: #888888;
+  --ly-grey-color: #888888;
   /* 时间戳和表单缺省 */
-  --app-light-color: #b2b2b2;
+  --ly-light-color: #b2b2b2;
   /* 禁用背景 */
-  --app-whitesmoke-color: whitesmoke;
+  --ly-whitesmoke-color: whitesmoke;
 }
 
 html {
@@ -39,7 +39,7 @@ html {
 }
 
 .ly-scroll-bar:hover {
-  --ly-scroll-bar: var(--app-light-color);
+  --ly-scroll-bar: var(--ly-light-color);
 }
 
 .ly-scroll-bar::-webkit-scrollbar {

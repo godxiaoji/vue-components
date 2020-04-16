@@ -1,4 +1,4 @@
-# GodVueComponents
+# VueComponents
 
 Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 
@@ -25,7 +25,7 @@ npm i @godxiaoji/vue-components -S
 
 ```
 import Vue from 'vue'
-import GodVueComponents from '@godxiaoji/vue-components'
+import VueComponents from '@godxiaoji/vue-components'
 
 // require styles
 import '@godxiaoji/vue-components/dist/index.css'

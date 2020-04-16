@@ -60,7 +60,7 @@ const ALIGN_NAMES = ['left', 'center', 'right']
 const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
 
 export default {
-  name: 'app-input',
+  name: 'ly-input',
   components: {},
   props: {
     name: {
@@ -286,8 +286,8 @@ export default {
   --font-size: 14px;
   --icon-size: 20px;
   --padding-left-right: 12px;
-  --color: var(--app-main-color);
-  --warn-color: var(--app-warn-color);
+  --color: var(--ly-main-color);
+  --warn-color: var(--ly-warn-color);
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -296,11 +296,11 @@ export default {
   align-items: center;
 
   border-radius: 4px;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   box-sizing: border-box;
   font-size: var(--font-size);
   background-color: #fff;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
 }
 
 .ly-input.no-border {
@@ -323,7 +323,7 @@ export default {
 }
 
 .ly-input.warn {
-  --color: var(--app-warn-color);
+  --color: var(--ly-warn-color);
 }
 
 .ly-input.size--mini {
@@ -354,7 +354,7 @@ export default {
   padding: 0 var(--padding-left-right);
   font-size: var(--font-size);
   cursor: pointer;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   background: #ffffff;
   box-sizing: border-box;
   box-shadow: none;
@@ -396,7 +396,7 @@ export default {
 }
 
 .ly-input_input::-webkit-input-placeholder {
-  color: var(--app-light-color);
+  color: var(--ly-light-color);
 }
 
 .ly-input:hover .ly-input_input,
@@ -406,8 +406,8 @@ export default {
 
 .ly-input_input:disabled,
 .ly-input_input:disabled:hover {
-  background-color: var(--app-whitesmoke-color);
-  border-color: var(--app-light-color);
+  background-color: var(--ly-whitesmoke-color);
+  border-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 

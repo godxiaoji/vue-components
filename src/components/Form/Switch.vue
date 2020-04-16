@@ -19,7 +19,7 @@ import { inArray } from '../../helpers/util'
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
-  name: 'app-switch',
+  name: 'ly-switch',
   props: {
     size: {
       type: String,
@@ -120,13 +120,13 @@ export default {
 @import url('../../global.css');
 
 .ly-switch {
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
   --font-size: 24px;
 
   position: relative;
   width: 2em;
   height: 1em;
-  background: var(--app-light-color);
+  background: var(--ly-light-color);
   border: 0;
   border-radius: 1em;
   font-size: var(--font-size);

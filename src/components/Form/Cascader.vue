@@ -36,10 +36,11 @@
         >
           <li
             class="ly-cascader_item"
-            v-for="item in list"
+            v-for="(item, index) in list"
             :key="item.value"
             :selected="item.selected"
             :disabled="item.disabled"
+            :data-index="index"
             @click="onItemClick($event, item)"
           >
             <span class="ly-cascader_item-text">{{ item.label }}</span>
@@ -91,7 +92,7 @@ const MODE_NAMES = [
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
 export default {
-  name: 'app-cascader',
+  name: 'ly-cascader',
   components: { Icon },
   props: {
     name: {
@@ -353,12 +354,19 @@ export default {
           this.$nextTick(() => {
             // 把选择数据展示在选择框内
             if (this.focus) {
-              const $selecteds = this.$refs.dropdown.querySelectorAll(
-                '[selected]'
-              )
-
-              $selecteds.forEach($selected => {
-                $selected.scrollIntoView()
+              const $dropdown = this.$refs.dropdown
+              const $list = $dropdown.querySelectorAll('.ly-cascader_list')
+              const listHeight = $list[0].clientHeight
+              const itemHeight = $list[0].firstElementChild.clientHeight
+              const $selecteds = $dropdown.querySelectorAll('[selected]')
+              $selecteds.forEach(($selected, index) => {
+                const itemIndex = parseInt($selected.dataset.index)
+                if (itemHeight * (itemIndex + 1) >= listHeight) {
+                  // 不在范围内
+                  $list[index].scrollTop =
+                    itemHeight * (itemIndex + 1) - listHeight
+                }
+                // $selected.scrollIntoView(false)
               })
             }
           })
@@ -448,11 +456,11 @@ export default {
 
       this.dropdown = menuGroup
 
-      this.$nextTick(() => {
-        if (this.$refs.dropdown.lastElementChild.lastElementChild) {
-          this.$refs.dropdown.lastElementChild.lastElementChild.scrollIntoView()
-        }
-      })
+      // this.$nextTick(() => {
+      //   if (this.$refs.dropdown.lastElementChild.lastElementChild) {
+      //     this.$refs.dropdown.lastElementChild.lastElementChild.scrollIntoView()
+      //   }
+      // })
     },
     onInputFocus(e) {
       this.$emit(e.type, getHandleEvent(this.$el, e))
@@ -597,7 +605,7 @@ export default {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 20px;
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
   --dropdown-color: rgba(9, 187, 7, 0.1);
   --padding-left-right: 12px;
 
@@ -605,7 +613,7 @@ export default {
   height: calc(var(--height) + 2px);
   font-size: var(--font-size);
   position: relative;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
 }
 
 .ly-cascader.size--mini {
@@ -626,7 +634,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   border-radius: 4px;
   overflow: hidden;
   box-sizing: border-box;
@@ -643,8 +651,8 @@ export default {
 
 .ly-cascader.disabled .ly-cascader_field,
 .ly-cascader.disabled .ly-cascader_field:hover {
-  background-color: var(--app-whitesmoke-color);
-  border-color: var(--app-light-color);
+  background-color: var(--ly-whitesmoke-color);
+  border-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 
@@ -680,7 +688,7 @@ export default {
   border: none;
   cursor: pointer;
   user-select: none;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   background: none;
 }
 
@@ -702,7 +710,7 @@ export default {
 }
 
 .ly-cascader_input::-webkit-input-placeholder {
-  color: var(--app-light-color);
+  color: var(--ly-light-color);
 }
 
 .ly-cascader_input:disabled {
@@ -739,7 +747,7 @@ export default {
   top: 0;
   left: 0;
   background-color: #fff;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   box-sizing: border-box;
   border-radius: 4px;
   z-index: 100000;
@@ -759,7 +767,6 @@ export default {
 }
 
 .ly-cascader_list {
-  float: left;
   min-width: 60px;
   max-width: 200px;
   max-height: 100%;
@@ -767,13 +774,10 @@ export default {
   margin: 0;
   padding: 0;
   user-select: none;
-  border-right: 1px solid var(--app-whitesmoke-color);
+  border-right: 1px solid var(--ly-whitesmoke-color);
   flex: 0 0 auto;
   float: none;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: block;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -809,7 +813,7 @@ export default {
 }
 
 .ly-cascader_item[selected] {
-  background-color: var(--app-whitesmoke-color);
+  background-color: var(--ly-whitesmoke-color);
 }
 
 .ly-cascader_item:hover {
@@ -819,7 +823,7 @@ export default {
 .ly-cascader_item[disabled],
 .ly-cascader_item[disabled]:hover {
   background-color: #ffffff;
-  color: var(--app-light-color);
+  color: var(--ly-light-color);
   cursor: not-allowed;
 }
 

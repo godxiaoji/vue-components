@@ -15,7 +15,7 @@ import { inArray, isNumber, isString } from '../../helpers/util'
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
-  name: 'app-select-option',
+  name: 'ly-select-option',
   props: {
     value: {
       validator(value) {
@@ -107,7 +107,7 @@ export default {
   padding: 0 12px;
   height: var(--height);
   line-height: var(--height);
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -126,7 +126,7 @@ export default {
 }
 
 .select-option.selected {
-  background-color: var(--app-whitesmoke-color);
+  background-color: var(--ly-whitesmoke-color);
 }
 
 .select-option:hover {
@@ -135,7 +135,7 @@ export default {
 
 .select-option[disabled],
 .select-option[disabled]:hover {
-  background-color: var(--app-light-color);
+  background-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 

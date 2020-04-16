@@ -39,7 +39,7 @@ const SIZE_NAMES = ['default', 'mini', 'large']
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
 export default {
-  name: 'app-select',
+  name: 'ly-select',
   components: { Icon },
   props: {
     name: {
@@ -223,7 +223,7 @@ export default {
   --font-size: 14px;
   --icon-size: 20px;
   --padding-left-right: 12px;
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
 
   display: inline-flex;
   width: 100%;
@@ -250,7 +250,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   border-radius: 4px;
   overflow: hidden;
   box-sizing: border-box;
@@ -262,8 +262,8 @@ export default {
 
 .select.disabled .select-input-box,
 .select.disabled .select-input-box:hover {
-  background-color: var(--app-whitesmoke-color);
-  border-color: var(--app-light-color);
+  background-color: var(--ly-whitesmoke-color);
+  border-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 
@@ -285,12 +285,12 @@ export default {
   border: none;
   cursor: pointer;
   user-select: none;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   background: none;
 }
 
 .select-input::-webkit-input-placeholder {
-  color: var(--app-light-color);
+  color: var(--ly-light-color);
 }
 
 .select-input:disabled {
@@ -322,7 +322,7 @@ export default {
 .select-option-group {
   background-color: #fff;
   width: 100%;
-  border: 1px solid var(--app-light-color);
+  border: 1px solid var(--ly-light-color);
   box-sizing: border-box;
   border-radius: 4px;
   max-height: 208px;

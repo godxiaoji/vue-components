@@ -24,7 +24,7 @@ import { getHandleEvent } from '../../helpers/events'
 
 // export
 export default {
-  name: 'app-swiper',
+  name: 'ly-swiper',
   props: {
     indicatorDots: {
       type: Boolean,

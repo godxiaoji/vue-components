@@ -21,7 +21,7 @@ const SCROLL_STATE_UPPER = 1
 const SCROLL_STATE_LOWER = 2
 
 export default {
-  name: 'app-scroll-view',
+  name: 'ly-scroll-view',
   props: {
     // 允许横向滚动
     scrollX: {

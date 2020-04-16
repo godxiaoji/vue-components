@@ -22,7 +22,7 @@ import { cloneData, inArray } from '../../helpers/util'
 const ALIGN_NAMES = ['left', 'right']
 
 export default {
-  name: 'app-checkbox-group',
+  name: 'ly-checkbox-group',
   props: {
     name: {
       type: String,
@@ -112,7 +112,7 @@ export default {
   width: 100%;
   height: 32px;
   align-items: center;
-  color: var(--app-semi-color);
+  color: var(--ly-semi-color);
   box-sizing: border-box;
 }
 

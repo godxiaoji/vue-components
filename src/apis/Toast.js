@@ -96,6 +96,7 @@ function show(object) {
 
     $el = render(options)
     $el._options = options
+    $el._loading = !!object.loading
     document.body.appendChild($el)
 
     // 定时隐藏
@@ -175,7 +176,19 @@ export const showLoading = function(object) {
   }
 
   object.icon = 'loading'
+  object.loading = true
   object.duration = 0
   return show(object)
 }
-export const hideLoading = hide
+export const hideLoading = function(object) {
+  if ($el && $el._loading) {
+    hide(object)
+  } else if (isObject(object)) {
+    if (isFunction(object.success)) {
+      object.success({})
+    }
+    if (isFunction(object.complete)) {
+      object.complete({})
+    }
+  }
+}

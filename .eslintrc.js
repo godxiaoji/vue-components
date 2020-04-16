@@ -1,20 +1,18 @@
 module.exports = {
+  root: true,
   env: {
-    browser: true,
-    es6: true,
     node: true
   },
-  extends: 'eslint:recommended',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
+  extends: ['plugin:vue/essential', 'eslint:recommended'],
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    parser: 'babel-eslint'
   },
-  parser: 'vue-eslint-parser',
   rules: {
-    'no-console': 'off'
+    strict: 0,
+    'newline-per-chained-call': 0,
+    semi: ['error', 'never'],
+    'comma-dangle': ['error', 'never'],
+    'array-bracket-spacing': ['error', 'never'],
+    'space-before-function-paren': ['error', 'never']
   }
 }

@@ -1,27 +1,19 @@
 import ComponentList from './components/config'
-import { isObject, isString, isUndefined } from './helpers/util'
+import { isUndefined } from './helpers/util'
 import { addApis } from './apis'
 
-const GodVueComponents = {
-  install(Vue, options) {
-    let prefix = 'ly'
-
-    if (isObject(options)) {
-      if (options.prefix && isString(options.prefix)) {
-        prefix = options.prefix
-      }
-    }
-
+const VueComponents = {
+  install(Vue) {
     ComponentList.forEach(component => {
-      Vue.component(component.name.replace('app-', prefix + '-'), component)
+      Vue.component(component.name, component)
     })
 
     addApis(Vue)
   }
 }
 
-export default GodVueComponents
+export default VueComponents
 
 if (!isUndefined(window) && window.Vue) {
-  window.Vue.use(GodVueComponents)
+  window.Vue.use(VueComponents)
 }

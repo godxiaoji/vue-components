@@ -1,5 +1,13 @@
 // import { inArray } from "../../helpers/util";
-const DEFAULT_EVENTS = ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend', 'touchmove']
+const DEFAULT_EVENTS = [
+  'scroll',
+  'wheel',
+  'mousewheel',
+  'resize',
+  'animationend',
+  'transitionend',
+  'touchmove'
+]
 
 const loadImageAsync = (item, resolve, reject) => {
   let image = new Image()
@@ -10,7 +18,7 @@ const loadImageAsync = (item, resolve, reject) => {
 
   image.src = item.src
 
-  image.onload = function (e) {
+  image.onload = function(e) {
     resolve({
       naturalHeight: image.naturalHeight,
       naturalWidth: image.naturalWidth,
@@ -19,7 +27,7 @@ const loadImageAsync = (item, resolve, reject) => {
     })
   }
 
-  image.onerror = function (e) {
+  image.onerror = function(e) {
     reject(e)
   }
 }
@@ -30,22 +38,26 @@ const lazy = {
   options: {
     preLoad: 1.3
   },
-  check (vm) {
+  check(vm) {
     if (vm.checkInView()) {
-      loadImageAsync(vm, (res) => {
-        this.removeComponent(vm)
-        vm.onLoad(res)
-      }, (e) => {
-        this.removeComponent(vm)
-        vm.onError(e)
-      })
+      loadImageAsync(
+        vm,
+        res => {
+          this.removeComponent(vm)
+          vm.onLoad(res)
+        },
+        e => {
+          this.removeComponent(vm)
+          vm.onError(e)
+        }
+      )
     }
   },
   /**
    * 删除组件
    * @param {Vue} vm
    */
-  removeComponent (vm) {
+  removeComponent(vm) {
     const index = ListenerQueue.indexOf(vm)
 
     if (index >= 0) {
@@ -58,7 +70,7 @@ const lazy = {
       offTimer = setTimeout(off, 1000)
     }
   },
-  addLazyBox (vm) {
+  addLazyBox(vm) {
     const index = ListenerQueue.indexOf(vm)
 
     if (index === -1) {
@@ -70,10 +82,10 @@ const lazy = {
     this.check(vm)
 
     on()
-  },
+  }
 }
 
-function checkQueue () {
+function checkQueue() {
   // 此时的this 指的是window
   ListenerQueue.forEach(vm => {
     lazy.check(vm)
@@ -84,7 +96,7 @@ function checkQueue () {
 let isOn = false
 let offTimer = null
 
-function on () {
+function on() {
   clearTimeout(offTimer)
   if (!isOn) {
     // 没有开启才可以添加事件
@@ -94,7 +106,7 @@ function on () {
   }
 }
 
-function off () {
+function off() {
   if (ListenerQueue.length === 0) {
     // 确认真没有监听事件才关闭
     DEFAULT_EVENTS.forEach(eventName => {

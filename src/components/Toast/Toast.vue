@@ -29,7 +29,7 @@ import Icon from '../Icon/Icon.vue'
 // import './toast'
 
 export default {
-  name: 'app-toast',
+  name: 'ly-toast',
   components: { Icon },
   props: {
     visibility: {

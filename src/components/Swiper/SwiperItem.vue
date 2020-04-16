@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'app-swiper-item',
+  name: 'ly-swiper-item',
   props: {
     itemId: {
       type: String,

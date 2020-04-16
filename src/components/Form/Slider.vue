@@ -31,7 +31,7 @@
 import { getHandleEvent } from '../../helpers/events'
 
 export default {
-  name: 'app-slider',
+  name: 'ly-slider',
   props: {
     value: {
       type: Number,
@@ -189,7 +189,7 @@ export default {
 @import url('../../global.css');
 
 .ly-slider {
-  --color: var(--app-main-color);
+  --color: var(--ly-main-color);
 
   position: relative;
   height: 24px;
@@ -209,7 +209,7 @@ export default {
   position: relative;
   height: 2px;
   width: 100%;
-  background: var(--app-light-color);
+  background: var(--ly-light-color);
 }
 
 .ly-slider_track {
@@ -240,6 +240,6 @@ export default {
 .ly-slider_text {
   font-size: 14px;
   margin-left: 4px;
-  color: var(--app-grey-color);
+  color: var(--ly-grey-color);
 }
 </style>

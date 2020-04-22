@@ -2,7 +2,12 @@
   <div
     class="ly-cascader"
     :class="[
-      { focus: focus, disabled: disabled, 'no-border': !border },
+      {
+        focus: focus,
+        disabled: disabled,
+        'no-border': !border,
+        picker: picker
+      },
       sizeClassName,
       alignClassName
     ]"
@@ -12,7 +17,12 @@
         <slot name="prepend"></slot>
       </div>
       <div class="ly-cascader_content">
-        <div class="ly-cascader_text">{{ formLabelString }}</div>
+        <div
+          class="ly-cascader_text"
+          :class="{ placeholder: !formLabelString }"
+        >
+          {{ formLabelString || placeholder }}
+        </div>
         <input
           class="ly-cascader_input"
           type="text"
@@ -28,29 +38,51 @@
       <icon class="ly-cascader_unfold-icon" type="unfold"></icon>
     </div>
     <div class="ly-cascader_dropdown" ref="dropdown">
-      <div class="ly-cascader_groups" @mousedown.prevent="onDropdownTap">
-        <ul
-          class="ly-cascader_list ly-scroll-bar"
+      <div class="ly-cascader_tools">
+        <a class="ly-cascader_cancel-button" href="javascript:;">取消</a>
+        <span class="ly-cascader_ok-group" @mousedown.prevent="onDropdownTap">
+          <a
+            class="ly-cascader_ok-button"
+            href="javascript:;"
+            @click="onOkButtonClick"
+            >完成</a
+          >
+        </span>
+      </div>
+      <div
+        ref="dropdownGroups"
+        class="ly-cascader_groups"
+        @mousedown.prevent="onDropdownTap"
+        @scroll.stop="onDropdownTap"
+      >
+        <div
+          class="ly-cascader_group"
           v-for="(list, listIndex) in dropdown"
           :key="listIndex"
         >
-          <li
-            class="ly-cascader_item"
-            v-for="(item, index) in list"
-            :key="item.value"
-            :selected="item.selected"
-            :disabled="item.disabled"
-            :data-index="index"
-            @click="onItemClick($event, item)"
+          <ul
+            class="ly-cascader_list ly-scroll-bar"
+            :data-index="listIndex"
+            @scroll.stop="onDropdownScroll"
           >
-            <span class="ly-cascader_item-text">{{ item.label }}</span>
-            <icon
-              class="ly-cascader_item-icon"
-              v-if="item.hasChildren"
-              type="forward"
-            ></icon>
-          </li>
-        </ul>
+            <li
+              class="ly-cascader_item"
+              v-for="(item, index) in list"
+              :key="item.value"
+              :selected="item.selected"
+              :disabled="item.disabled"
+              :data-index="index"
+              @click="onItemClick($event, item)"
+            >
+              <span class="ly-cascader_item-text">{{ item.label }}</span>
+              <icon
+                class="ly-cascader_item-icon"
+                v-if="item.hasChildren"
+                type="forward"
+              ></icon>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +90,7 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
+import { frameTo } from '../../helpers/animation'
 import { getHandleEvent } from '../../helpers/events'
 import {
   inArray,
@@ -95,6 +128,10 @@ export default {
   name: 'ly-cascader',
   components: { Icon },
   props: {
+    picker: {
+      type: Boolean,
+      default: false
+    },
     name: {
       type: String,
       default: ''
@@ -138,7 +175,7 @@ export default {
     },
     mode: {
       type: String,
-      default: ''
+      default: 'select'
     },
     labelKey: {
       type: String,
@@ -355,19 +392,27 @@ export default {
             // 把选择数据展示在选择框内
             if (this.focus) {
               const $dropdown = this.$refs.dropdown
-              const $list = $dropdown.querySelectorAll('.ly-cascader_list')
-              const listHeight = $list[0].clientHeight
-              const itemHeight = $list[0].firstElementChild.clientHeight
-              const $selecteds = $dropdown.querySelectorAll('[selected]')
-              $selecteds.forEach(($selected, index) => {
-                const itemIndex = parseInt($selected.dataset.index)
-                if (itemHeight * (itemIndex + 1) >= listHeight) {
-                  // 不在范围内
-                  $list[index].scrollTop =
-                    itemHeight * (itemIndex + 1) - listHeight
-                }
-                // $selected.scrollIntoView(false)
-              })
+              const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
+              const $firstList = $lists[0]
+
+              if ($firstList && $firstList.firstElementChild) {
+                const listHeight = $firstList.clientHeight
+                const itemHeight = $firstList.firstElementChild.clientHeight
+                const $selecteds = $dropdown.querySelectorAll('[selected]')
+                $selecteds.forEach(($selected, index) => {
+                  const itemIndex = parseInt($selected.dataset.index)
+                  if (this.picker) {
+                    $lists[index].scrollTop = itemHeight * itemIndex
+                  } else {
+                    if (itemHeight * (itemIndex + 1) >= listHeight) {
+                      // 不在范围内
+                      $lists[index].scrollTop =
+                        itemHeight * (itemIndex + 1) - listHeight
+                    }
+                    // $selected.scrollIntoView(false)
+                  }
+                })
+              }
             }
           })
 
@@ -395,7 +440,21 @@ export default {
         return getDatetimeValues()
       }
 
-      return []
+      const getFirstSelected = (values = [], parent) => {
+        const optionItem = this.parseDropdownList(values.length, parent)[0]
+
+        if (optionItem) {
+          values.push(optionItem.value)
+
+          if (optionItem.hasChildren) {
+            return getFirstSelected(values, optionItem)
+          }
+        }
+
+        return values
+      }
+
+      return getFirstSelected()
     },
 
     parseDropdown(selecteds) {
@@ -456,11 +515,11 @@ export default {
 
       this.dropdown = menuGroup
 
-      // this.$nextTick(() => {
-      //   if (this.$refs.dropdown.lastElementChild.lastElementChild) {
-      //     this.$refs.dropdown.lastElementChild.lastElementChild.scrollIntoView()
-      //   }
-      // })
+      this.$nextTick(() => {
+        if (this.$refs.dropdownGroups) {
+          this.$refs.dropdownGroups.scrollLeft = 10000
+        }
+      })
     },
     onInputFocus(e) {
       this.$emit(e.type, getHandleEvent(this.$el, e))
@@ -519,15 +578,42 @@ export default {
      * 选项点击
      */
     onItemClick(e, item) {
-      if (item.hasChildren) {
-        this.parseDropdown(item.values)
-      } else {
-        this.formValue = item.values
-        this.formLabel = item.labels
+      if (!this.picker) {
+        if (item.hasChildren) {
+          this.parseDropdown(item.values)
+        } else {
+          this.formValue = item.values
+          this.formLabel = item.labels
 
-        this.getInputEl().blur()
-        this.onInputBlur(e)
-        this.onChange(e)
+          this.getInputEl().blur()
+          this.onInputBlur(e)
+          this.onChange(e)
+        }
+      }
+    },
+
+    /**
+     * 完成按钮点击
+     */
+    onOkButtonClick(e) {
+      const $dropdown = this.$refs.dropdown
+      const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
+      const $lastList = $lists[$lists.length - 1]
+      if ($lastList && $lastList.firstElementChild) {
+        const itemHeight = $lastList.firstElementChild.clientHeight
+        const lastScrollTop = $lastList.scrollTop
+        const current = Math.round(lastScrollTop / itemHeight)
+
+        if (current != null) {
+          const item = this.dropdown[this.dropdown.length - 1][current]
+
+          this.formValue = item.values
+          this.formLabel = item.labels
+
+          this.getInputEl().blur()
+          this.onInputBlur(e)
+          this.onChange(e)
+        }
       }
     },
 
@@ -593,7 +679,35 @@ export default {
       return this.formValueString
     },
 
-    onDropdownTap() {}
+    onDropdownTap() {},
+
+    onDropdownScroll(e) {
+      if (!this.picker) {
+        return
+      }
+
+      const target = e.currentTarget
+      const itemHeight = target.firstElementChild.clientHeight
+      const groupIndex = parseInt(target.dataset.index)
+      const current = Math.round(target.scrollTop / itemHeight)
+      const item = this.dropdown[groupIndex][current]
+
+      clearTimeout(target.scrollTimer)
+      target.scrollTimer = setTimeout(() => {
+        // target.scrollTop = current * itemHeight
+
+        frameTo({
+          from: target.scrollTop,
+          to: current * itemHeight,
+          duration: 100,
+          progress(res) {
+            target.scrollTop = res.current
+          }
+        })
+
+        this.parseDropdown(item.values)
+      }, 500)
+    }
   }
 }
 </script>
@@ -692,7 +806,7 @@ export default {
   background: none;
 }
 
-.ly-cascader_input {
+.ly-cascader_text.p .ly-cascader_input {
   position: absolute;
   left: 0;
   top: 0;
@@ -709,6 +823,7 @@ export default {
   text-align: right;
 }
 
+.ly-cascader_text.placeholder,
 .ly-cascader_input::-webkit-input-placeholder {
   color: var(--ly-light-color);
 }
@@ -742,6 +857,10 @@ export default {
   z-index: 99999;
 }
 
+.ly-cascader_tools {
+  display: none;
+}
+
 .ly-cascader_groups {
   position: absolute;
   top: 0;
@@ -756,28 +875,31 @@ export default {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  z-index: 0;
 }
 
 .ly-cascader.focus .ly-cascader_dropdown {
   display: block;
 }
 
-.ly-cascader_list {
+.ly-cascader_group {
+  position: relative;
+  height: 100%;
+  z-index: 1;
   min-width: 60px;
   max-width: 200px;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.ly-cascader_list {
   max-height: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
   user-select: none;
   border-right: 1px solid var(--ly-whitesmoke-color);
-  flex: 0 0 auto;
-  float: none;
-  display: block;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -795,16 +917,14 @@ export default {
   padding: 0 var(--padding-left-right);
   cursor: pointer;
   user-select: none;
-  width: 100%;
   box-sizing: border-box;
 }
 
 .ly-cascader_item-text {
   text-align: left;
   flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 
@@ -827,33 +947,123 @@ export default {
   cursor: not-allowed;
 }
 
-@media screen and (max-width: 540px) {
-  .ly-cascader_dropdown {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+.ly-cascader.picker .ly-cascader_dropdown {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
-  .ly-cascader_groups {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    top: auto;
-    border-radius: 0;
-    border: none;
-    align-items: center;
-    height: 220px;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
-  }
+.ly-cascader.picker .ly-cascader_tools {
+  position: absolute;
+  left: 0;
+  bottom: 250px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--ly-whitesmoke-color);
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
+}
 
-  .ly-cascader_item {
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-  }
+.ly-cascader.picker .ly-cascader_cancel-button,
+.ly-cascader.picker .ly-cascader_ok-button {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 var(--padding-left-right);
+  text-decoration: none;
+  color: var(--ly-grey-color);
+}
+
+.ly-cascader.picker .ly-cascader_ok-group {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ly-cascader.picker .ly-cascader_ok-button {
+  color: var(--ly-main-color);
+}
+
+.ly-cascader.picker .ly-cascader_groups {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  top: auto;
+  border-radius: 0;
+  border: none;
+  align-items: center;
+  height: 250px;
+  transition: all 0.2s;
+}
+
+.ly-cascader.picker .ly-cascader_groups::before,
+.ly-cascader.picker .ly-cascader_list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--ly-whitesmoke-color);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2)
+  );
+}
+
+.ly-cascader.picker .ly-cascader_groups::after,
+.ly-cascader.picker .ly-cascader_list::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid var(--ly-whitesmoke-color);
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2)
+  );
+}
+
+.ly-cascader.picker .ly-cascader_group {
+  max-width: 300px;
+}
+
+.ly-cascader.picker .ly-cascader_item {
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+}
+
+.ly-cascader.picker .ly-cascader_item-text {
+  text-align: center;
+}
+
+.ly-cascader.picker .ly-cascader_item:first-child {
+  margin-top: 100px;
+}
+
+.ly-cascader.picker .ly-cascader_item:last-child {
+  margin-bottom: 100px;
+}
+
+.ly-cascader.picker .ly-cascader_item-icon {
+  display: none;
+}
+
+.ly-cascader.picker .ly-cascader_item[selected] {
+  background-color: #fff;
 }
 </style>

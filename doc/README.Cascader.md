@@ -13,6 +13,7 @@
 | size            | string        | 'default'  | 否    | 设置大小，可选值：default / mini / large                                        |
 | align           | string        | 'left'     | false | 左右对齐，可选值：left / center / right                                         |
 | border          | boolean       | true       | false | 是否显示边框                                                                    |
+| picker          | boolean       | false      | false | 开启移动端 picker 选择器                                                        |
 | placeholder     | string        | '请选择'   | 否    | 未进行选择时的提示                                                              |
 | disabled        | boolean       | false      | 否    | 是否被禁用                                                                      |
 | separator       | string        | '/'        | 否    | 初始分隔符，组件创建后不支持修改                                                |

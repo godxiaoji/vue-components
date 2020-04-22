@@ -26,10 +26,8 @@ export default {
       const inputEls = e.target.elements
       const value = {}
       const uids = []
-      console.log(inputEls)
-      inputEls.forEach(el => {
-        console.log(el.name, el.value, el.checked, el.type)
 
+      inputEls.forEach(el => {
         const _ac = el._app_component
         if (
           _ac &&

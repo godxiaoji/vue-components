@@ -806,7 +806,7 @@ export default {
   background: none;
 }
 
-.ly-cascader_text.p .ly-cascader_input {
+.ly-cascader_input {
   position: absolute;
   left: 0;
   top: 0;
@@ -998,9 +998,10 @@ export default {
   top: auto;
   border-radius: 0;
   border: none;
-  align-items: center;
+  max-width: 100%;
   height: 250px;
   transition: all 0.2s;
+  text-align: center;
 }
 
 .ly-cascader.picker .ly-cascader_groups::before,
@@ -1039,6 +1040,7 @@ export default {
 
 .ly-cascader.picker .ly-cascader_group {
   max-width: 300px;
+  justify-content: center;
 }
 
 .ly-cascader.picker .ly-cascader_item {

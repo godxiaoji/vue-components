@@ -35,7 +35,10 @@
           @blur="onInputBlur"
         />
       </div>
-      <icon class="ly-cascader_unfold-icon" type="unfold"></icon>
+      <icon
+        class="ly-cascader_unfold-icon"
+        :type="picker ? 'forward' : 'unfold'"
+      ></icon>
     </div>
     <div class="ly-cascader_dropdown" ref="dropdown">
       <div class="ly-cascader_tools">
@@ -79,6 +82,7 @@
                 class="ly-cascader_item-icon"
                 v-if="item.hasChildren"
                 type="forward"
+                :size="16"
               ></icon>
             </li>
           </ul>
@@ -341,6 +345,11 @@ export default {
       return null
     },
 
+    /**
+     * 解析下拉groups
+     * @param {Number} index
+     * @param {Object} parent
+     */
     parseDropdownList(index, parent) {
       if (this.initMode === 'date') {
         return parseDateList(index, parent)
@@ -378,11 +387,15 @@ export default {
 
       return []
     },
+    /**
+     * 组件点击
+     */
     onBoxClick() {
       if (!this.disabled) {
         const inputEl = this.getInputEl()
 
         if (this.focus) {
+          // 如果组件已经展开，则收起
           inputEl.blur()
         } else {
           this.focus = true
@@ -430,7 +443,10 @@ export default {
         }
       }
     },
-
+    /**
+     * 获取默认选择数据
+     * @summary 主要用于一些日期啥的，可以默认当天
+     */
     getDefaultParseSelected() {
       if (this.initMode === 'date') {
         return getDateValues()
@@ -718,9 +734,10 @@ export default {
 .ly-cascader {
   --height: 30px;
   --font-size: 14px;
-  --icon-size: 20px;
+  --icon-size: 18px;
   --color: var(--ly-main-color);
   --dropdown-color: rgba(9, 187, 7, 0.1);
+  --placeholder-color: var(--ly-light-color);
   --padding-left-right: 12px;
 
   display: flex;
@@ -740,7 +757,7 @@ export default {
 .ly-cascader.size--large {
   --height: 38px;
   --font-size: 16px;
-  --icon-size: 22px;
+  --icon-size: 20px;
 }
 
 .ly-cascader_field {
@@ -806,6 +823,11 @@ export default {
   background: none;
 }
 
+.ly-cascader.no-border .ly-cascader_text,
+.ly-cascader.no-border .ly-cascader_input {
+  padding: 0;
+}
+
 .ly-cascader_input {
   position: absolute;
   left: 0;
@@ -825,7 +847,7 @@ export default {
 
 .ly-cascader_text.placeholder,
 .ly-cascader_input::-webkit-input-placeholder {
-  color: var(--ly-light-color);
+  color: var(--placeholder-color);
 }
 
 .ly-cascader_input:disabled {
@@ -841,7 +863,7 @@ export default {
 }
 
 .ly-cascader.no-border .ly-cascader_unfold-icon {
-  display: none;
+  margin-right: 0;
 }
 
 .ly-cascader.focus .ly-cascader_unfold-icon {
@@ -894,6 +916,7 @@ export default {
 }
 
 .ly-cascader_list {
+  width: 100%;
   max-height: 100%;
   list-style: none;
   margin: 0;
@@ -954,6 +977,10 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ly-cascader.picker.focus .ly-cascader_unfold-icon {
+  transform: rotate(0);
 }
 
 .ly-cascader.picker .ly-cascader_tools {

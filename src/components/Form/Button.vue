@@ -4,6 +4,7 @@
     :class="[typeClassName, sizeClassName]"
     :disabled="disabled"
     :type="realFormType"
+    @click="onClick"
   >
     <icon class="ly-button_loading-icon" v-if="loading" type="loading"></icon>
     <slot>按钮</slot>
@@ -13,6 +14,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { inArray } from '../../helpers/util'
+import { getHandleEvent } from '../../helpers/events'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const TYPE_NAMES = ['default', 'primary', 'warn']
@@ -70,7 +72,11 @@ export default {
   },
   updated() {},
   attached() {},
-  methods: {}
+  methods: {
+    onClick(e) {
+      this.$emit(e.type, getHandleEvent(this.$el, e))
+    }
+  }
 }
 </script>
 

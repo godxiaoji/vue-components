@@ -288,6 +288,8 @@ export default {
   --padding-left-right: 12px;
   --color: var(--ly-main-color);
   --warn-color: var(--ly-warn-color);
+  --placeholder-color: var(--ly-light-color);
+  
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -367,6 +369,7 @@ export default {
 .ly-input.no-border .ly-input_input {
   border: none;
   border-radius: 0;
+  padding: 0;
 }
 
 .ly-input.has--prepend .ly-input_input {
@@ -396,7 +399,7 @@ export default {
 }
 
 .ly-input_input::-webkit-input-placeholder {
-  color: var(--ly-light-color);
+  color: var(--placeholder-color);
 }
 
 .ly-input:hover .ly-input_input,

@@ -262,6 +262,13 @@ export default {
       if (this.formValue != this.value) {
         !this.setVaildValue(this.value)
       }
+    },
+    focus() {
+      if (this.focus) {
+        document.documentElement.classList.add('noscroll')
+      } else {
+        document.documentElement.classList.remove('noscroll')
+      }
     }
   },
   created() {
@@ -401,34 +408,6 @@ export default {
           this.focus = true
           this.parseDropdown(this.formValue)
 
-          this.$nextTick(() => {
-            // 把选择数据展示在选择框内
-            if (this.focus) {
-              const $dropdown = this.$refs.dropdown
-              const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
-              const $firstList = $lists[0]
-
-              if ($firstList && $firstList.firstElementChild) {
-                const listHeight = $firstList.clientHeight
-                const itemHeight = $firstList.firstElementChild.clientHeight
-                const $selecteds = $dropdown.querySelectorAll('[selected]')
-                $selecteds.forEach(($selected, index) => {
-                  const itemIndex = parseInt($selected.dataset.index)
-                  if (this.picker) {
-                    $lists[index].scrollTop = itemHeight * itemIndex
-                  } else {
-                    if (itemHeight * (itemIndex + 1) >= listHeight) {
-                      // 不在范围内
-                      $lists[index].scrollTop =
-                        itemHeight * (itemIndex + 1) - listHeight
-                    }
-                    // $selected.scrollIntoView(false)
-                  }
-                })
-              }
-            }
-          })
-
           this.$emit(
             VISIBILITY_CHANGE_TYPE,
             getHandleEvent(
@@ -485,11 +464,13 @@ export default {
       const menuGroup = []
       const menuLabels = []
       const menuValues = []
+      let lastGroupSelected = false
 
       for (let i = 0; i <= selecteds.length; i++) {
         let selected = selecteds[i]
         const menuList = []
         let nextParent = null
+        lastGroupSelected = false
 
         if (optionList) {
           for (let j = 0; j < optionList.length; j++) {
@@ -509,6 +490,7 @@ export default {
             if (selected != null && menuItem.value === selected) {
               // 找到
               menuItem.selected = true
+              lastGroupSelected = true
 
               if (menuItem.hasChildren) {
                 nextParent = optionItem
@@ -529,11 +511,79 @@ export default {
         }
       }
 
+      if (!lastGroupSelected) {
+        let i = selecteds.length + 1
+
+        let lastGroupFirstItem = optionList[0]
+
+        while (lastGroupFirstItem) {
+          if (lastGroupFirstItem.hasChildren) {
+            menuValues.push(lastGroupFirstItem.value)
+            menuLabels.push(lastGroupFirstItem.label)
+
+            lastGroupFirstItem.selected = true
+            optionList = this.parseDropdownList(i++, lastGroupFirstItem)
+
+            const menuList = []
+
+            if (optionList) {
+              for (let j = 0; j < optionList.length; j++) {
+                let optionItem = optionList[j]
+
+                let menuItem = {
+                  label: optionItem.label,
+                  value: optionItem.value,
+                  selected: j === 0,
+                  hasChildren: optionItem.hasChildren,
+                  disabled: optionItem.disabled ? true : false
+                }
+
+                menuItem.values = menuValues.concat(menuItem.value)
+                menuItem.labels = menuLabels.concat(menuItem.label)
+
+                menuList.push(menuItem)
+              }
+              menuGroup.push(menuList)
+            }
+
+            lastGroupFirstItem = optionList[0]
+          } else {
+            break
+          }
+        }
+      }
+
       this.dropdown = menuGroup
 
       this.$nextTick(() => {
         if (this.$refs.dropdownGroups) {
           this.$refs.dropdownGroups.scrollLeft = 10000
+        }
+
+        // 把选择数据展示在选择框内
+        if (this.focus) {
+          const $dropdown = this.$refs.dropdown
+          const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
+          const $firstList = $lists[0]
+
+          if ($firstList && $firstList.firstElementChild) {
+            const listHeight = $firstList.clientHeight
+            const itemHeight = $firstList.firstElementChild.clientHeight
+            const $selecteds = $dropdown.querySelectorAll('[selected]')
+            $selecteds.forEach(($selected, index) => {
+              const itemIndex = parseInt($selected.dataset.index)
+              if (this.picker) {
+                $lists[index].scrollTop = itemHeight * itemIndex
+              } else {
+                if (itemHeight * (itemIndex + 1) >= listHeight) {
+                  // 不在范围内
+                  $lists[index].scrollTop =
+                    itemHeight * (itemIndex + 1) - listHeight
+                }
+                // $selected.scrollIntoView(false)
+              }
+            })
+          }
         }
       })
     },
@@ -637,6 +687,10 @@ export default {
      * 校验value正确性
      */
     setVaildValue(values) {
+      if (isString(values)) {
+        values = values.split(this.separator)
+      }
+
       const formValue = []
       const formLabel = []
 
@@ -709,6 +763,7 @@ export default {
       const item = this.dropdown[groupIndex][current]
 
       clearTimeout(target.scrollTimer)
+      // 如果一致 就不需要修正了
       target.scrollTimer = setTimeout(() => {
         // target.scrollTop = current * itemHeight
 
@@ -720,7 +775,6 @@ export default {
             target.scrollTop = res.current
           }
         })
-
         this.parseDropdown(item.values)
       }, 500)
     }
@@ -730,6 +784,14 @@ export default {
 
 <style>
 @import url('../../global.css');
+
+.noscroll {
+  overflow: hidden;
+}
+.noscroll body {
+  position: fixed;
+  width: 100%;
+}
 
 .ly-cascader {
   --height: 30px;
@@ -925,6 +987,7 @@ export default {
   border-right: 1px solid var(--ly-whitesmoke-color);
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ly-cascader_list:last-child {
@@ -976,7 +1039,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .ly-cascader.picker.focus .ly-cascader_unfold-icon {
@@ -1035,9 +1098,9 @@ export default {
 .ly-cascader.picker .ly-cascader_list::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 100px;
   left: 0;
-  height: 100px;
+  height: 0;
   width: 100%;
   box-sizing: border-box;
   border-bottom: 1px solid var(--ly-whitesmoke-color);
@@ -1052,9 +1115,9 @@ export default {
 .ly-cascader.picker .ly-cascader_list::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 100px;
   left: 0;
-  height: 100px;
+  height: 0;
   width: 100%;
   box-sizing: border-box;
   border-top: 1px solid var(--ly-whitesmoke-color);
@@ -1074,6 +1137,7 @@ export default {
   height: 50px;
   line-height: 50px;
   font-size: 16px;
+  opacity: 0.75;
 }
 
 .ly-cascader.picker .ly-cascader_item-text {
@@ -1092,7 +1156,9 @@ export default {
   display: none;
 }
 
-.ly-cascader.picker .ly-cascader_item[selected] {
-  background-color: #fff;
+.ly-cascader.picker .ly-cascader_item[selected],
+.ly-cascader.picker .ly-cascader_item:hover {
+  background-color: #ffffff;
+  opacity: 1;
 }
 </style>

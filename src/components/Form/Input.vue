@@ -289,7 +289,6 @@ export default {
   --color: var(--ly-main-color);
   --warn-color: var(--ly-warn-color);
   --placeholder-color: var(--ly-light-color);
-  
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -412,6 +411,13 @@ export default {
   background-color: var(--ly-whitesmoke-color);
   border-color: var(--ly-light-color);
   cursor: not-allowed;
+}
+
+.ly-input.no-border .ly-input_input:disabled,
+.ly-input.no-border .ly-input_input:disabled:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: var(--ly-light-color);
 }
 
 .ly-input_input:focus {

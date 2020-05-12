@@ -74,7 +74,7 @@ export default {
                 }
               }
               value[name] = selectedValues
-            } else if (type === 'input' || type === 'select-one') {
+            } else if (type === 'input' || type === 'select-one' || type === 'hidden') {
               // input
               value[name] = el.value
             }

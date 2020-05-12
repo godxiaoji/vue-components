@@ -13,6 +13,18 @@ const dayCountMap = {
   '12': 31
 }
 
+export function dateString2Array(string) {
+  return string.match(/^(\d+)-(\d+)-(\d+)$/).splice(1, 3)
+}
+
+export function timeString2Array(string) {
+  return string.match(/^(\d+):(\d+):(\d+)$/).splice(1, 3)
+}
+
+export function datetimeString2Array(string) {
+  return string.match(/^(\d+)-(\d+)-(\d+)\s(\d+):(\d+):(\d+)$/).splice(1, 6)
+}
+
 function getDayCount(year, month) {
   let dayCount = dayCountMap[month]
 
@@ -41,12 +53,13 @@ function num2Str(num) {
 
 export function parseDateList(index, parent, options = {}) {
   const list = []
+  const now = Date.now()
 
   if (index === 0) {
     // 年
-    let year = getYear()
-    let min = year - 100
-    let max = year
+    const year = getYear()
+    const min = year - 100
+    const max = year
 
     for (let i = max; i >= min; i--) {
       const yearStr = i.toString()
@@ -61,10 +74,23 @@ export function parseDateList(index, parent, options = {}) {
     }
   } else if (index === 1) {
     // 月
-    let min = 1
-    let max = 12
+    const min = 1
+    const max = 12
+
+    const d = new Date()
+    d.setFullYear(parseInt(parent.values[0]))
+    d.setDate(1)
+    d.setHours(0)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    d.setMilliseconds(0)
 
     for (let i = min; i <= max; i++) {
+      d.setMonth(i - 1)
+      if (d.getTime() > now) {
+        break
+      }
+
       const monthStr = num2Str(i.toString())
 
       list.push({
@@ -77,13 +103,26 @@ export function parseDateList(index, parent, options = {}) {
     }
   } else if (index === 2) {
     // 日
-    let min = 1
-    let max = getDayCount(
+    const min = 1
+    const max = getDayCount(
       parseInt(parent.values[0]),
       parseInt(parent.values[1])
     )
 
+    const d = new Date()
+    d.setFullYear(parseInt(parent.values[0]))
+    d.setMonth(parseInt(parent.values[1]) - 1)
+    d.setHours(0)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    d.setMilliseconds(0)
+
     for (let i = min; i <= max; i++) {
+      d.setDate(i)
+      if (d.getTime() > now) {
+        break
+      }
+
       const dayStr = num2Str(i.toString())
 
       list.push({

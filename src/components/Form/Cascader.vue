@@ -110,7 +110,10 @@ import {
   parseDatetimeList,
   getDateValues,
   getTimeValues,
-  getDatetimeValues
+  getDatetimeValues,
+  dateString2Array,
+  timeString2Array,
+  datetimeString2Array
 } from './cascader-date'
 import { parseRegionList } from './cascader-region2'
 import { isString, isNumber } from 'util'
@@ -516,12 +519,15 @@ export default {
 
         let lastGroupFirstItem = optionList[0]
 
+        if (lastGroupFirstItem) {
+          menuGroup[menuGroup.length - 1][0].selected = true
+        }
+
         while (lastGroupFirstItem) {
           if (lastGroupFirstItem.hasChildren) {
             menuValues.push(lastGroupFirstItem.value)
             menuLabels.push(lastGroupFirstItem.label)
 
-            lastGroupFirstItem.selected = true
             optionList = this.parseDropdownList(i++, lastGroupFirstItem)
 
             const menuList = []
@@ -688,7 +694,15 @@ export default {
      */
     setVaildValue(values) {
       if (isString(values)) {
-        values = values.split(this.separator)
+        if (this.initMode === 'date') {
+          values = dateString2Array(values)
+        } else if (this.initMode === 'time') {
+          values = timeString2Array(values)
+        } else if (this.initMode === 'datetime') {
+          values = datetimeString2Array(values)
+        } else {
+          values = values.split(this.separator)
+        }
       }
 
       const formValue = []
@@ -763,20 +777,29 @@ export default {
       const item = this.dropdown[groupIndex][current]
 
       clearTimeout(target.scrollTimer)
-      // 如果一致 就不需要修正了
-      target.scrollTimer = setTimeout(() => {
-        // target.scrollTop = current * itemHeight
 
-        frameTo({
-          from: target.scrollTop,
-          to: current * itemHeight,
-          duration: 100,
-          progress(res) {
-            target.scrollTop = res.current
-          }
-        })
-        this.parseDropdown(item.values)
-      }, 500)
+      if (
+        current * itemHeight === target.scrollTop &&
+        target.children[current].getAttribute('selected') === 'selected'
+      ) {
+        // 如果一致 就不需要修正了
+      } else {
+        target.scrollTimer = setTimeout(() => {
+          // target.scrollTop = current * itemHeight
+
+          frameTo({
+            from: target.scrollTop,
+            to: current * itemHeight,
+            duration: 100,
+            progress(res) {
+              target.scrollTop = res.current
+            },
+            complete: () => {}
+          })
+
+          this.parseDropdown(item.values)
+        }, 300)
+      }
     }
   }
 }
@@ -1137,7 +1160,7 @@ export default {
   height: 50px;
   line-height: 50px;
   font-size: 16px;
-  opacity: 0.75;
+  color: var(--ly-light-color);
 }
 
 .ly-cascader.picker .ly-cascader_item-text {
@@ -1159,6 +1182,6 @@ export default {
 .ly-cascader.picker .ly-cascader_item[selected],
 .ly-cascader.picker .ly-cascader_item:hover {
   background-color: #ffffff;
-  opacity: 1;
+  color: var(--ly-semi-color);
 }
 </style>

@@ -872,6 +872,12 @@ export default {
   cursor: not-allowed;
 }
 
+.ly-cascader.no-border.disabled .ly-cascader_field,
+.ly-cascader.no-border.disabled .ly-cascader_field:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
 .ly-cascader.focus .ly-cascader_field {
   border-color: var(--color);
   box-shadow: 0 0 3px var(--color);
@@ -911,6 +917,11 @@ export default {
 .ly-cascader.no-border .ly-cascader_text,
 .ly-cascader.no-border .ly-cascader_input {
   padding: 0;
+}
+
+.ly-cascader.no-border.disabled .ly-cascader_text,
+.ly-cascader.no-border.disabled .ly-cascader_input {
+  color: var(--ly-light-color);
 }
 
 .ly-cascader_input {

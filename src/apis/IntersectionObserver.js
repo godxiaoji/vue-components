@@ -2,12 +2,13 @@ import {
   isNumberArray,
   inArray,
   arrayLike2Array,
-  isNumber
+  isNumber,
+  isObject
 } from '../helpers/util'
 
 /**
  * 将margins对象转为css字符串
- * @param margins
+ * @param margins { left, right, top, bottom }
  */
 function margins2String(margins = {}) {
   const { left, right, top, bottom } = margins
@@ -21,13 +22,31 @@ function margins2String(margins = {}) {
   return arr.join(' ')
 }
 
+/**
+ * 创建并返回一个 IntersectionObserver 对象实例
+ * @param {HTMLElement} root
+ * @param {{thresholds?:Number[], initialRatio?: Number, observeAll?: Boolean}} options 选项
+ */
 export function createIntersectionObserver(root, options) {
-  let _root = root
+  let _root = document
+
   let _thresholds = [0]
   // let _initialRatio = 0 // 暂时未理解该字段含义
   let _observeAll = false
   let _rootMargins = '0px 0px 0px 0px'
-  let _ios
+  let _ios = []
+
+  if (root) {
+    if (root.$el && root.$el.nodeType === 1) {
+      _root = root.$el
+    } else if (root.nodeType === 1) {
+      _root = root
+    }
+  }
+
+  if (!isObject(options)) {
+    options = {}
+  }
 
   if (isNumberArray(options.thresholds)) {
     _thresholds = options.thresholds

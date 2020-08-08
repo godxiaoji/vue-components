@@ -1,10 +1,7 @@
-import {
-  isObject,
-  isString,
-  isUndefined,
-  isFunction,
-  noop
-} from '../helpers/util'
+import { isObject, isFunction, noop } from '../helpers/util'
+import { parseParamsByRules } from './rules'
+import { getCallbackFns } from './callback'
+import Exception from '../helpers/exception'
 
 function htmlEscape(text) {
   return text.replace(/[<>"&]/g, function(match) {
@@ -76,49 +73,15 @@ const Events = {
   }
 }
 
-function getParamValue(object, key, type, defaultValue) {
-  const param = object[key]
-
-  if (!isUndefined(param)) {
-    if (typeof param === type) {
-      return param
-    } else {
-      throw new TypeError(
-        `Invalid param: "object.${key}" must be a ${type} type.`
-      )
-    }
-  } else {
-    return defaultValue
-  }
-}
-
 function show(object) {
   if (!isObject(object)) {
     object = {}
   }
 
-  const options = {}
-  options.success = isFunction(object.success) ? object.success : noop
-  options.fail = isFunction(object.fail) ? object.fail : noop
-  options.complete = isFunction(object.complete) ? object.complete : noop
+  let options = getCallbackFns(object)
 
   try {
-    if (!isString(object.content)) {
-      throw new TypeError(
-        'Invalid param: "object.content" must be a string type.'
-      )
-    }
-    options.content = object.content
-    options.title = getParamValue(object, 'title', 'string', '提示')
-    options.maskClosable = getParamValue(
-      object,
-      'maskClosable',
-      'boolean',
-      false
-    )
-    options.showCancel = getParamValue(object, 'showCancel', 'boolean', true)
-    options.confirmText = getParamValue(object, 'confirmText', 'string', '确定')
-    options.cancelText = getParamValue(object, 'cancelText', 'string', '取消')
+    options = Object.assign(options, parseParamsByRules(object, 'showModal'))
 
     hide()
 
@@ -135,17 +98,8 @@ function show(object) {
 
     document.body.appendChild($el)
   } catch (e) {
-    const res = {
-      errMsg: e.message
-    }
-
-    if (options.fail != noop) {
-      options.fail(res)
-      options.complete(res)
-    } else {
-      options.complete(res)
-      throw e
-    }
+    options.fail(e)
+    options.complete()
   }
 }
 

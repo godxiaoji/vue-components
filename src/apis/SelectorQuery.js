@@ -40,9 +40,14 @@ export function createSelectorQuery(root) {
      */
     in(component) {
       // 加入组件的方法
-      if (component.$el) {
-        _root = component.$el
+      if (component) {
+        if (component.$el && component.$el.nodeType === 1) {
+          _root = component.$el
+        } else if (component.nodeType === 1) {
+          _root = component
+        }
       }
+      return this
     }
 
     /**
@@ -67,7 +72,7 @@ export function createSelectorQuery(root) {
      * 选择显示区域
      */
     selectViewport() {
-      return createNodesRef(document.body)
+      return createNodesRef(document.documentElement)
     }
 
     exec(callback) {

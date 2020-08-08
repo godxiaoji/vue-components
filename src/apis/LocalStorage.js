@@ -1,16 +1,9 @@
-import { isString, isDate } from '../helpers/util'
+import { isDate, isObject } from '../helpers/util'
+import { parseParamsByRules } from './rules'
+import { SDKKey } from '../config'
+import { getCallbackFns } from './callback'
 
-const prefix = 'ly:'
-
-/**
- * 验证是否合法key
- * @param key
- */
-function _isVaildKey(key) {
-  if (!isString(key) || !key) {
-    throw new Error(`Invalid param: "key" is not a string type or empty.`)
-  }
-}
+const prefix = SDKKey + ':'
 
 const STORAGE_PER_LIMIT_SIZE = 1024 // 每个限制使用的大小，KB
 const STORAGE_LIMIT_SIZE = 2560 // 限制使用的大小，KB
@@ -20,12 +13,14 @@ const STORAGE_LIMIT_SIZE = 2560 // 限制使用的大小，KB
  * @param key
  * @param data
  */
-export function setStorage(key, data) {
-  _isVaildKey(key)
-
-  if (data == null) {
-    throw new Error('Invalid param: "data" cannot be null or undefined.')
-  }
+export function setStorageSync(key, data) {
+  parseParamsByRules(
+    {
+      key,
+      data
+    },
+    'setStorage'
+  )
 
   const storageInfo = getStorageInfo()
 
@@ -57,8 +52,13 @@ export function setStorage(key, data) {
  * 从本地缓存中获取指定 key 的内容
  * @param key
  */
-export function getStorage(key) {
-  _isVaildKey(key)
+export function getStorageSync(key) {
+  parseParamsByRules(
+    {
+      key
+    },
+    'getStorage'
+  )
 
   const value = localStorage.getItem(prefix + key)
 
@@ -81,8 +81,13 @@ export function getStorage(key) {
  * 从本地缓存中移除指定 key
  * @param key
  */
-export function removeStorage(key) {
-  _isVaildKey(key)
+export function removeStorageSync(key) {
+  parseParamsByRules(
+    {
+      key
+    },
+    'removeStorage'
+  )
 
   localStorage.removeItem(prefix + key)
 }
@@ -90,7 +95,7 @@ export function removeStorage(key) {
 /**
  * 清理本地数据缓存
  */
-export function clearStorage() {
+export function clearStorageSync() {
   // localStorage.clear()
 
   for (let i = 0; i < localStorage.length; i++) {
@@ -106,7 +111,7 @@ export function clearStorage() {
 /**
  * 获取当前storage的相关信息
  */
-export function getStorageInfo() {
+export function getStorageInfoSync() {
   const keys = []
   let size = 0
 
@@ -126,4 +131,77 @@ export function getStorageInfo() {
     currentSize: size / 1024,
     limitSize: STORAGE_LIMIT_SIZE
   }
+}
+
+export function getStorage(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+  const { success, fail, complete } = getCallbackFns(object)
+
+  try {
+    const data = getStorageSync(object.key)
+
+    success({ data })
+  } catch (error) {
+    fail(error)
+  }
+
+  complete()
+}
+
+export function setStorage(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+  const { success, fail, complete } = getCallbackFns(object)
+
+  try {
+    setStorageSync(object.key, object.data)
+
+    success({})
+  } catch (error) {
+    fail(error)
+  }
+
+  complete()
+}
+
+export function removeStorage(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+  const { success, fail, complete } = getCallbackFns(object)
+
+  try {
+    removeStorageSync(object.key)
+
+    success({})
+  } catch (error) {
+    fail(error)
+  }
+
+  complete()
+}
+
+export function clearStorage(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+  const { success, complete } = getCallbackFns(object)
+
+  clearStorageSync()
+  success({})
+  complete()
+}
+
+export function getStorageInfo(object) {
+  if (!isObject(object)) {
+    object = {}
+  }
+  const { success, complete } = getCallbackFns(object)
+
+  const res = getStorageInfoSync()
+  success(res)
+  complete()
 }

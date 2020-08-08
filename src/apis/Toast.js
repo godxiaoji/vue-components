@@ -1,11 +1,7 @@
-import {
-  isObject,
-  isString,
-  inArray,
-  isUndefined,
-  noop,
-  isFunction
-} from '../helpers/util'
+import { isObject, noop, isFunction } from '../helpers/util'
+import { parseParamsByRules } from './rules'
+import { getCallbackFns } from './callback'
+import Exception from '../helpers/exception'
 
 function render(options) {
   const html = [
@@ -38,24 +34,6 @@ function render(options) {
   return $wrapper.firstChild
 }
 
-function getParamValue(object, key, type, defaultValue) {
-  const param = object[key]
-
-  if (!isUndefined(param)) {
-    if (typeof param === type) {
-      return param
-    } else {
-      throw new TypeError(
-        `Invalid param: "object.${key}" must be a ${type} type.`
-      )
-    }
-  } else {
-    return defaultValue
-  }
-}
-
-const ICON_NAMES = ['success', 'loading', 'none']
-
 var timer = null
 var $el = null
 
@@ -64,32 +42,19 @@ function show(object) {
     object = {}
   }
 
-  const options = {}
-  const complete = isFunction(object.complete) ? object.complete : noop
+  let options = {}
+
+  const { success, fail, complete } = getCallbackFns(object)
 
   try {
-    if (!isString(object.title)) {
-      throw new TypeError(
-        'Invalid param: "object.title" must be a string type.'
-      )
-    }
-    options.title = object.title
+    options = Object.assign(
+      options,
+      parseParamsByRules(object, object._apiName || 'showToast')
+    )
 
-    options.image = getParamValue(object, 'image', 'string', null)
-    options.mask = getParamValue(object, 'mask', 'boolean', false)
-    options.duration = getParamValue(object, 'duration', 'number', 1500)
-
-    if (!isUndefined(object.icon)) {
-      if (inArray(object.icon, ICON_NAMES)) {
-        options.icon = object.icon
-      } else {
-        const iconStr = ICON_NAMES.join(`","`)
-        throw new TypeError(
-          `Invalid param: "object.icon" must be "${iconStr}".`
-        )
-      }
-    } else {
-      options.icon = null
+    if (object.loading) {
+      options.icon = 'loading'
+      options.duration = 0
     }
 
     _hide()
@@ -106,23 +71,11 @@ function show(object) {
       }, options.duration)
     }
 
-    if (isFunction(object.success)) {
-      object.success({})
-    }
-    complete({})
+    success({})
   } catch (e) {
-    const res = {
-      errMsg: e.message
-    }
-
-    if (isFunction(object.fail)) {
-      object.fail(res)
-      complete(res)
-    } else {
-      complete(res)
-      throw e
-    }
+    fail(e)
   }
+  complete()
 }
 
 function _hide() {
@@ -141,7 +94,7 @@ function hide(object) {
     object = {}
   }
 
-  const complete = isFunction(object.complete) ? object.complete : noop
+  const { success, fail, complete } = getCallbackFns(object)
 
   try {
     if ($el) {
@@ -149,23 +102,11 @@ function hide(object) {
       $el = null
     }
 
-    if (isFunction(object.success)) {
-      object.success({})
-    }
-    complete({})
+    success()
   } catch (e) {
-    const res = {
-      errMsg: e.message
-    }
-
-    if (isFunction(object.fail)) {
-      object.fail(res)
-      complete(res)
-    } else {
-      complete(res)
-      throw e
-    }
+    fail(new Exception(e.message))
   }
+  complete()
 }
 
 export const showToast = show
@@ -175,20 +116,16 @@ export const showLoading = function(object) {
     object = {}
   }
 
-  object.icon = 'loading'
   object.loading = true
-  object.duration = 0
+  object._apiName = 'showLoading'
   return show(object)
 }
 export const hideLoading = function(object) {
   if ($el && $el._loading) {
     hide(object)
   } else if (isObject(object)) {
-    if (isFunction(object.success)) {
-      object.success({})
-    }
-    if (isFunction(object.complete)) {
-      object.complete({})
-    }
+    const { success, complete } = getCallbackFns(object)
+    success({})
+    complete()
   }
 }

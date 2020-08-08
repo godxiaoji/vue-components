@@ -22,10 +22,9 @@ function getDataset(object) {
 /**
  * 返回一个 SelectorQuery 对象实例
  * @summary 安全性要求，使用多层闭包禁止暴露私有变量，如'Element'等
- * @param root
  */
-export function createSelectorQuery(root) {
-  let _root = root
+export function createSelectorQuery() {
+  let _root = null
   let _selectorQuery
   let _execQueue = []
 
@@ -36,7 +35,7 @@ export function createSelectorQuery(root) {
 
     /**
      * api那边设置组件in传入
-     * @param component
+     * @param {HTMLElement} component
      */
     in(component) {
       // 加入组件的方法

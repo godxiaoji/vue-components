@@ -16,7 +16,7 @@ export function addApis(Vue) {
     return createIntersectionObserver(this.$el, options)
   }
   Vue.prototype.$createSelectorQuery = function() {
-    return createSelectorQuery(this.$el)
+    return createSelectorQuery().in(this.$el)
   }
 
   Vue.prototype.$showModal = showModal

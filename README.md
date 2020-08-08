@@ -59,7 +59,7 @@ showToast({
 其中接口`createIntersectionObserver`，`createSelectorQuery`单独使用需要传入组件本身
 
 ```
-const query = createSelectorQuery(this)
+const query = createSelectorQuery().in(this)
 const io = createIntersectionObserver(this, options)
 ```
 

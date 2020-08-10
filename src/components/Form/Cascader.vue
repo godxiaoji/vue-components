@@ -95,7 +95,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { frameTo } from '../../helpers/animation'
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent, BaseEvent } from '../../helpers/events'
 import {
   inArray,
   isArray,
@@ -413,13 +413,14 @@ export default {
 
           this.$emit(
             VISIBILITY_CHANGE_TYPE,
-            getHandleEvent(
-              this.$el,
-              {},
+            new CustomEvent(
+              {
+                type: VISIBILITY_CHANGE_TYPE,
+                currentTarget: this.$el
+              },
               {
                 visibility: true
-              },
-              VISIBILITY_CHANGE_TYPE
+              }
             )
           )
         }
@@ -594,22 +595,44 @@ export default {
       })
     },
     onInputFocus(e) {
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(
+        e.type,
+        new BaseEvent(
+          {
+            type: e.type,
+            currentTarget: this.$el,
+            target: e.target
+          },
+          {}
+        )
+      )
     },
-    onInputBlur(e) {
+    onInputBlur() {
       this.focus = false
       const type = 'blur'
-      this.$emit(type, getHandleEvent(this.$el, e, {}, type))
+
+      this.$emit(
+        type,
+        new BaseEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: this.getInputEl()
+          },
+          {}
+        )
+      )
 
       this.$emit(
         VISIBILITY_CHANGE_TYPE,
-        getHandleEvent(
-          this.$el,
-          e,
+        new CustomEvent(
+          {
+            type: VISIBILITY_CHANGE_TYPE,
+            currentTarget: this.$el
+          },
           {
             visibility: false
-          },
-          VISIBILITY_CHANGE_TYPE
+          }
         )
       )
     },
@@ -617,24 +640,33 @@ export default {
       return this.$el && this.$el.querySelector('input')
     },
 
-    onChange(e) {
+    onChange() {
       const detail = {
         value: this.formValueString,
         values: cloneData(this.formValue)
       }
 
       if (this.initMode === 'date' || this.initMode === 'datetime') {
-        detail.date = getDate(detail.value)
+        detail.date = getDate(detail.values)
       } else if (this.initMode === 'time') {
-        detail.date = getDate(new Array(3).concat(detail.value))
+        detail.date = getDate(new Array(3).concat(detail.values))
       }
 
       this.$emit('_change', detail.value)
 
       const type = 'change'
-      const handleEvent = getHandleEvent(this.$el, e, detail, type)
 
-      this.$emit(type, handleEvent)
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: this.getInputEl()
+          },
+          detail
+        )
+      )
     },
 
     reset() {
@@ -642,7 +674,7 @@ export default {
       if (this.formValue.length !== 0) {
         this.formValue = []
         this.formLabel = []
-        this.onChange({})
+        this.onChange()
       }
     },
 
@@ -658,8 +690,8 @@ export default {
           this.formLabel = item.labels
 
           this.getInputEl().blur()
-          this.onInputBlur(e)
-          this.onChange(e)
+          this.onInputBlur()
+          this.onChange()
         }
       }
     },
@@ -667,7 +699,7 @@ export default {
     /**
      * 完成按钮点击
      */
-    onOkButtonClick(e) {
+    onOkButtonClick() {
       const $dropdown = this.$refs.dropdown
       const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
       const $lastList = $lists[$lists.length - 1]
@@ -683,8 +715,8 @@ export default {
           this.formLabel = item.labels
 
           this.getInputEl().blur()
-          this.onInputBlur(e)
-          this.onChange(e)
+          this.onInputBlur()
+          this.onChange()
         }
       }
     },

@@ -255,7 +255,7 @@
 
 <script>
 import { inArray, isString, isNumber } from '../../helpers/util'
-import { getHandleEvent } from '../../helpers/events'
+import { BaseEvent } from '../../helpers/events'
 
 const TYPE_NAMES = [
   'success',
@@ -331,7 +331,7 @@ export default {
   attached() {},
   methods: {
     onClick(e) {
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(e.type, new BaseEvent(e))
     }
   }
 }

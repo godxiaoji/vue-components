@@ -53,7 +53,7 @@
 
 <script>
 import { inArray, isFunction, isString, isNumber } from '../../helpers/util'
-import { getHandleEvent } from '../../helpers/events'
+import { BaseEvent, CustomEvent } from '../../helpers/events'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
@@ -200,25 +200,41 @@ export default {
       this.$emit('_change', value)
 
       const type = 'input'
+
       this.$emit(
         type,
-        getHandleEvent(
-          this.$el,
-          e,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el
+          },
           {
             value
-          },
-          type
+          }
         )
       )
     },
     onFocus(e) {
       this._prevValue = this.formValue
 
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(
+        e.type,
+        new BaseEvent({
+          type: e.type,
+          currentTarget: this.$el,
+          target: e.target
+        })
+      )
     },
     onBlur(e) {
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(
+        e.type,
+        new BaseEvent({
+          type: e.type,
+          currentTarget: this.$el,
+          target: e.target
+        })
+      )
 
       if (this.formValue != this._prevValue) {
         // 改变且失焦后触发
@@ -228,15 +244,18 @@ export default {
     onChange(e) {
       // 改变且失焦后触发
       const type = 'change'
+
       this.$emit(
         type,
-        getHandleEvent(
-          this.$el,
-          e,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: e.target
+          },
           {
             value: this.formValue
-          },
-          type
+          }
         )
       )
 

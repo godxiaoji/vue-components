@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 
 const SCROLL_STATE_CENTER = 0
 const SCROLL_STATE_UPPER = 1
@@ -155,8 +155,8 @@ export default {
 
       // 滚动事件
       this.$emit(
-        'scroll',
-        getHandleEvent($el, e, {
+        e.type,
+        new CustomEvent(e, {
           scrollTop,
           scrollLeft,
           scrollWidth,
@@ -215,27 +215,30 @@ export default {
 
         this.$emit(
           'scrolltoupper',
-          getHandleEvent(
-            $el,
-            e,
+          new CustomEvent(
+            {
+              type: 'scrolltoupper',
+              currentTarget: $el
+            },
             {
               direction: 'top'
-            },
-            'scrolltoupper'
+            }
           )
         )
       } else if (isToLowerY) {
         // 触底
         this._isToLowerOrUpperY = SCROLL_STATE_LOWER
+
         this.$emit(
           'scrolltolower',
-          getHandleEvent(
-            $el,
-            e,
+          new CustomEvent(
+            {
+              type: 'scrolltolower',
+              currentTarget: $el
+            },
             {
               direction: 'bottom'
-            },
-            'scrolltolower'
+            }
           )
         )
       }
@@ -245,27 +248,30 @@ export default {
 
         this.$emit(
           'scrolltoupper',
-          getHandleEvent(
-            $el,
-            e,
+          new CustomEvent(
+            {
+              type: 'scrolltoupper',
+              currentTarget: $el
+            },
             {
               direction: 'left'
-            },
-            'scrolltoupper'
+            }
           )
         )
       } else if (isToLowerX) {
         // 触底
         this._isToLowerOrUpperX = SCROLL_STATE_LOWER
+
         this.$emit(
           'scrolltolower',
-          getHandleEvent(
-            $el,
-            e,
+          new CustomEvent(
+            {
+              type: 'scrolltolower',
+              currentTarget: $el
+            },
             {
               direction: 'right'
-            },
-            'scrolltolower'
+            }
           )
         )
       }

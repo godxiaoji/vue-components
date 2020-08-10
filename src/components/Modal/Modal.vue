@@ -31,7 +31,7 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 // import './modal'
 
 export default {
@@ -84,21 +84,51 @@ export default {
     },
     onCancelClick(e) {
       const type = 'cancel'
-      this.$emit(type, getHandleEvent(this.$el, e, {}, type))
+
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el
+          },
+          {}
+        )
+      )
 
       this.close(e)
     },
     onConfirmClick(e) {
       const type = 'confirm'
-      this.$emit(type, getHandleEvent(this.$el, e, {}, type))
+
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el
+          },
+          {}
+        )
+      )
 
       this.close(e)
     },
-    close(e) {
+    close() {
       this.$emit('update:visibility', false)
 
       const type = 'close'
-      this.$emit(type, getHandleEvent(this.$el, e, {}, type))
+
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el
+          },
+          {}
+        )
+      )
     }
   }
 }

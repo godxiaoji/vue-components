@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
@@ -74,15 +74,15 @@ export default {
       this.$el.checked = this.formChecked = val ? true : false
     },
     formChecked(val) {
+      const type = 'change'
+
       this.$emit(
-        'change',
-        getHandleEvent(
-          this.$el,
-          {},
+        type,
+        new CustomEvent(
+          { type, currentTarget: this.$el },
           {
             value: val
-          },
-          'change'
+          }
         )
       )
     }

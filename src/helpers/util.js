@@ -49,7 +49,7 @@ export function isString(object) {
 }
 
 export function isObject(object) {
-  return typeof object === 'object'
+  return typeof object === 'object' && object !== null
 }
 
 export function isNumber(object) {
@@ -66,6 +66,14 @@ export function isArray(object) {
 
 export function isDate(object) {
   return object instanceof Date
+}
+
+export function isElement(object) {
+  return object instanceof Element
+}
+
+export function isNode(object) {
+  return object instanceof Node
 }
 
 export function isEmptyObject(object) {

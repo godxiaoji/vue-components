@@ -14,7 +14,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { inArray } from '../../helpers/util'
-import { getHandleEvent } from '../../helpers/events'
+import { BaseEvent } from '../../helpers/events'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const TYPE_NAMES = ['default', 'primary', 'warn']
@@ -74,7 +74,7 @@ export default {
   attached() {},
   methods: {
     onClick(e) {
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(e.type, new BaseEvent(e))
     }
   }
 }

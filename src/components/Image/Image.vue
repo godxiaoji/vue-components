@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import lazy from './lazy'
-import { getHandleEvent } from '../../helpers/events'
+import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
+import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
 
 const MODE_NAMES = [
@@ -23,6 +23,8 @@ const MODE_NAMES = [
   'bottom left',
   'bottom right'
 ]
+
+const LAZY_PRELOAD = 1.3
 
 export default {
   name: 'ly-image',
@@ -59,11 +61,11 @@ export default {
     }
   },
   watch: {
-    src(val) {
+    src() {
       if (this.lazyLoad) {
-        lazy.addLazyBox(this)
+        addLazyQueue(this)
       } else {
-        this.imgSrc = val
+        loadNow(this)
       }
     }
   },
@@ -71,16 +73,16 @@ export default {
   mounted() {
     if (this.src) {
       if (this.lazyLoad) {
-        lazy.addLazyBox(this)
+        addLazyQueue(this)
       } else {
-        this.imgSrc = this.src
+        loadNow(this)
       }
     }
   },
   updated() {},
   attached() {},
   beforeDestroy() {
-    lazy.removeComponent(this)
+    removeComponentFromLazy(this)
   },
   methods: {
     getRect() {
@@ -89,9 +91,9 @@ export default {
     checkInView() {
       this.getRect()
       return (
-        this.rect.top < window.innerHeight * lazy.options.preLoad &&
+        this.rect.top < window.innerHeight * LAZY_PRELOAD &&
         this.rect.bottom > 0 &&
-        this.rect.left < window.innerWidth * lazy.options.preLoad &&
+        this.rect.left < window.innerWidth * LAZY_PRELOAD &&
         this.rect.right > 0
       )
     },
@@ -101,20 +103,33 @@ export default {
         this.imgSrc = res.src
       }
 
+      const type = 'load'
+
       this.$emit(
-        'load',
-        getHandleEvent(this.$el, res.event, {
-          width: res.naturalWidth,
-          height: res.naturalHeight
-        })
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: this.$el.firstElementChild
+          },
+          { width: res.naturalWidth, height: res.naturalHeight }
+        )
       )
     },
     onError(e) {
+      const type = 'error'
+
       this.$emit(
-        'error',
-        getHandleEvent(this.$el, e, {
-          errMsg: e.message
-        })
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: this.$el.firstElementChild
+          },
+          e
+        )
       )
     }
   }

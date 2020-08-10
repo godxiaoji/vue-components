@@ -20,7 +20,7 @@
 
 <script>
 import MSlide from 'mslide/src/mslide'
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 
 // export
 export default {
@@ -102,7 +102,7 @@ export default {
     this.update()
   },
   beforeDestroy() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       if (this.swiper) {
         this.swiper.destroy && this.swiper.destroy()
         delete this.swiper
@@ -184,13 +184,11 @@ export default {
           const type = 'change'
           vm.$emit(
             type,
-            getHandleEvent(
-              this.$el,
-              {},
+            new CustomEvent(
+              { type, currentTarget: this.$el },
               {
                 current: index
-              },
-              type
+              }
             )
           )
         }
@@ -200,15 +198,14 @@ export default {
 
       options.onSlide = index => {
         const type = 'animationfinish'
+
         vm.$emit(
           type,
-          getHandleEvent(
-            this.$el,
-            {},
+          new CustomEvent(
+            { type, currentTarget: this.$el },
             {
               current: index
-            },
-            type
+            }
           )
         )
       }

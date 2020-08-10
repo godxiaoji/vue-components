@@ -1,23 +1,59 @@
-import { objectForEach, isString } from './util'
+import { objectForEach, isObject, isElement } from './util'
+import Exception from './exception'
 
-const start = Date.now()
+export class BaseEvent {
+  constructor(e) {
+    let { type, currentTarget, target } = e
 
-class HandleEvent {
-  constructor(el, type, detail) {
-    this.id = el.id || ''
-    this.detail = detail
-    this.dataset = getDataset(el.dataset)
-    this.timeStamp = Date.now() - start
+    if (!isElement(currentTarget)) {
+      currentTarget = document.createElement('view')
+    }
+
+    if (!isElement(target)) {
+      target = currentTarget
+    }
+
     this.type = type
+    this.timeStamp = Date.now()
+
+    this.currentTarget = {
+      id: currentTarget.id,
+      dataset: getDataset(currentTarget.dataset),
+      offsetLeft: currentTarget.offsetLeft,
+      offsetTop: currentTarget.offsetTop
+    }
+    this.target = {
+      id: target.id,
+      dataset: getDataset(target.dataset),
+      offsetLeft: target.offsetLeft,
+      offsetTop: target.offsetTop
+    }
+
+    this.detail = {}
+
+    if (e instanceof MouseEvent) {
+      this.detail.x = e.x
+      this.detail.y = e.y
+    }
 
     return this
   }
 }
 
-export function getHandleEvent(el, event, detail = {}, changedType = null) {
-  let type = isString(changedType) ? changedType : event.type
+export class CustomEvent extends BaseEvent {
+  constructor(event, detail = {}) {
+    super(event)
 
-  return new HandleEvent(el, type, detail)
+    if (isObject(detail)) {
+      if (detail instanceof Exception) {
+        detail = detail.getFailError()
+      }
+    }
+
+    this.detail = isObject(detail) ? detail : {}
+
+    return this
+  }
 }
 
 export function getDataset(object) {

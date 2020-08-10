@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 import { cloneData, inArray } from '../../helpers/util'
 
 const ALIGN_NAMES = ['left', 'right']
@@ -77,16 +77,16 @@ export default {
 
       const value = cloneData(this.formValue)
       const type = 'change'
-      const handleEvent = getHandleEvent(
-        this.$el,
-        e,
-        {
-          value
-        },
-        type
-      )
 
-      this.$emit(type, handleEvent)
+      this.$emit(
+        type,
+        new CustomEvent(
+          { type, currentTarget: this.$el },
+          {
+            value
+          }
+        )
+      )
     },
 
     hookFormValue() {

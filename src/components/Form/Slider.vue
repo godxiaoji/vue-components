@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 
 export default {
   name: 'ly-slider',
@@ -99,16 +99,19 @@ export default {
 
       if (val2 !== oldVal) {
         const type = 'change'
-        const handleEvent = getHandleEvent(
-          this.$el,
-          {},
-          {
-            value: val2
-          },
-          type
-        )
 
-        this.$emit(type, handleEvent)
+        this.$emit(
+          type,
+          new CustomEvent(
+            {
+              type,
+              currentTarget: this.$el
+            },
+            {
+              value: val2
+            }
+          )
+        )
       }
 
       if (val2 != this.formValue) {
@@ -131,16 +134,19 @@ export default {
     },
     formValue(val) {
       const type = 'changing'
-      const handleEvent = getHandleEvent(
-        this.$el,
-        {},
-        {
-          value: val
-        },
-        type
-      )
 
-      this.$emit(type, handleEvent)
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el
+          },
+          {
+            value: val
+          }
+        )
+      )
     }
   },
   created() {

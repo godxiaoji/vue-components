@@ -11,7 +11,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { frameTo } from '../../helpers/animation'
-import { getHandleEvent } from '../../helpers/events'
+import { BaseEvent } from '../../helpers/events'
 
 export default {
   name: 'ly-back-to-top',
@@ -55,8 +55,7 @@ export default {
     onClick(e) {
       this.toTop()
 
-      const type = 'click'
-      this.$emit(type, getHandleEvent(this.$el, e, {}, type))
+      this.$emit(e.type, new BaseEvent(e))
     },
 
     toTop() {

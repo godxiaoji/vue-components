@@ -6,7 +6,7 @@
 
 <script>
 import { inArray } from '../../helpers/util'
-import { getHandleEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 
 export default {
   name: 'ly-form',
@@ -74,7 +74,11 @@ export default {
                 }
               }
               value[name] = selectedValues
-            } else if (type === 'input' || type === 'select-one' || type === 'hidden') {
+            } else if (
+              type === 'input' ||
+              type === 'select-one' ||
+              type === 'hidden'
+            ) {
               // input
               value[name] = el.value
             }
@@ -84,7 +88,7 @@ export default {
 
       this.$emit(
         e.type,
-        getHandleEvent(this.$el, e, {
+        new CustomEvent(e, {
           value
         })
       )
@@ -118,7 +122,7 @@ export default {
 
       this.$emit(
         e.type,
-        getHandleEvent(this.$el, e, {
+        new CustomEvent(e, {
           value
         })
       )

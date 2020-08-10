@@ -1002,7 +1002,6 @@ export default {
   display: none;
   position: absolute;
   left: 0;
-  width: 1000%;
   top: calc(100% + 2px);
   z-index: 99999;
 }
@@ -1012,9 +1011,6 @@ export default {
 }
 
 .ly-cascader_groups {
-  position: absolute;
-  top: 0;
-  left: 0;
   background-color: #fff;
   border: 1px solid var(--ly-light-color);
   box-sizing: border-box;
@@ -1034,6 +1030,7 @@ export default {
 }
 
 .ly-cascader_group {
+  float: left;
   position: relative;
   height: 100%;
   z-index: 1;
@@ -1195,6 +1192,7 @@ export default {
 }
 
 .ly-cascader.picker .ly-cascader_group {
+  float: none;
   max-width: 300px;
   justify-content: center;
 }

@@ -32,5 +32,5 @@
 
 | 事件  | 描述                 | 回调函数参数                            |
 | ----- | -------------------- | --------------------------------------- |
-| error | 当错误发生时触发     | EventHandle，e.detail = {errMsg}        |
-| load  | 当图片载入完毕时触发 | EventHandle，e.detail = {height, width} |
+| error | 当错误发生时触发     | CustomEvent，e.detail = {errMsg}        |
+| load  | 当图片载入完毕时触发 | CustomEvent，e.detail = {height, width} |

@@ -6,7 +6,7 @@
 
 | 属性              | 类型    | 默认值    | 必填  | 说明                                 |
 | ----------------- | ------- | --------- | ----- | ------------------------------------ |
-| name              | string  | 随机      | false | [form](./README.Form.md) 的标识      |
+| name              | string  |           | false | [form](./README.Form.md) 的标识      |
 | size              | string  | 'default' | false | 尺寸，可选值：default / mini / large |
 | disabled          | boolean | false     | false | 是否禁用                             |
 | checked / v-model | boolean | false     | false | 是否开启                             |
@@ -21,4 +21,4 @@
 
 | 事件   | 描述                   | 回调函数参数                                       |
 | ------ | ---------------------- | -------------------------------------------------- |
-| change | checked 状态切换时触发 | EventHandle，e.detail.value = true(开) / false(关) |
+| change | checked 状态切换时触发 | CustomEvent，e.detail.value = true(开) / false(关) |

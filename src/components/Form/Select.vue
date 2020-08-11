@@ -1,11 +1,11 @@
 <template>
   <div
-    class="select"
+    class="ly-select"
     :class="[{ focus: focus, disabled: disabled }, sizeClassName]"
   >
-    <div class="select-input-box" @mouseup="onBoxClick">
+    <div class="ly-select_input-box" @mouseup="onBoxClick">
       <input
-        class="select-input"
+        class="ly-select_input"
         type="text"
         readonly
         :disabled="disabled"
@@ -14,10 +14,10 @@
         @focus="onInputFocus"
         @blur="onInputBlur"
       />
-      <icon class="select-unfold-icon" type="unfold"></icon>
+      <icon class="ly-select_unfold-icon" type="unfold"></icon>
     </div>
-    <div class="select-dropdown">
-      <div class="select-option-group ly-scroll-bar">
+    <div class="ly-select_dropdown">
+      <div class="ly-select_option-group ly-scroll-bar">
         <slot></slot>
       </div>
     </div>
@@ -26,13 +26,8 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
-import { getHandleEvent } from '../../helpers/events'
-import {
-  isNumber,
-  isString,
-  inArray,
-  getRandomNumber
-} from '../../helpers/util'
+import { CustomEvent, BaseEvent } from '../../helpers/events'
+import { isNumber, isString, inArray } from '../../helpers/util'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
@@ -44,13 +39,11 @@ export default {
   props: {
     name: {
       type: String,
-      default() {
-        return 'select-' + getRandomNumber()
-      }
+      default: ''
     },
     placeholder: {
       type: String,
-      default: '请选择'
+      default: ''
     },
     value: {
       validator(value) {
@@ -125,13 +118,14 @@ export default {
 
           this.$emit(
             VISIBILITY_CHANGE_TYPE,
-            getHandleEvent(
-              this.$el,
-              {},
+            new CustomEvent(
+              {
+                type: VISIBILITY_CHANGE_TYPE,
+                currentTarget: this.$el
+              },
               {
                 visibility: true
-              },
-              VISIBILITY_CHANGE_TYPE
+              }
             )
           )
         }
@@ -144,22 +138,43 @@ export default {
       // } else {
       //   this.focus = true
       // }
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(
+        e.type,
+        new BaseEvent(
+          {
+            type: e.type,
+            currentTarget: this.$el,
+            target: e.target
+          },
+          {}
+        )
+      )
     },
     onInputBlur(e) {
       this.focus = false
 
-      this.$emit(e.type, getHandleEvent(this.$el, e))
+      this.$emit(
+        e.type,
+        new BaseEvent(
+          {
+            type: e.type,
+            currentTarget: this.$el,
+            target: e.target
+          },
+          {}
+        )
+      )
 
       this.$emit(
         VISIBILITY_CHANGE_TYPE,
-        getHandleEvent(
-          this.$el,
-          e,
+        new CustomEvent(
+          {
+            type: VISIBILITY_CHANGE_TYPE,
+            currentTarget: this.$el
+          },
           {
             visibility: false
-          },
-          VISIBILITY_CHANGE_TYPE
+          }
         )
       )
     },
@@ -190,16 +205,19 @@ export default {
       this.$emit('_change', value)
 
       const type = 'change'
-      const handleEvent = getHandleEvent(
-        this.$el,
-        e,
-        {
-          value
-        },
-        type
+      this.$emit(
+        type,
+        new CustomEvent(
+          {
+            type,
+            currentTarget: this.$el,
+            target: this.getInputEl()
+          },
+          {
+            value
+          }
+        )
       )
-
-      this.$emit(type, handleEvent)
     },
 
     reset() {
@@ -218,7 +236,7 @@ export default {
 <style scoped>
 @import url('../../global.css');
 
-.select {
+.ly-select {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 20px;
@@ -232,20 +250,20 @@ export default {
   position: relative;
 }
 
-.select.size--mini {
+.ly-select.size--mini {
   --height: 22px;
   --font-size: 12px;
   --icon-size: 16px;
   --padding-left-right: 8px;
 }
 
-.select.size--large {
+.ly-select.size--large {
   --height: 38px;
   --font-size: 16px;
   --icon-size: 22px;
 }
 
-.select-input-box {
+.ly-select_input-box {
   width: 100%;
   height: 100%;
   display: flex;
@@ -256,23 +274,23 @@ export default {
   box-sizing: border-box;
 }
 
-.select-input-box:hover {
+.ly-select_input-box:hover {
   border-color: var(--color);
 }
 
-.select.disabled .select-input-box,
-.select.disabled .select-input-box:hover {
+.ly-select.disabled .ly-select_input-box,
+.ly-select.disabled .ly-select_input-box:hover {
   background-color: var(--ly-whitesmoke-color);
   border-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 
-.select.focus .select-input-box {
+.ly-select.focus .ly-select_input-box {
   border-color: var(--color);
   box-shadow: 0 0 3px var(--color);
 }
 
-.select-input {
+.ly-select_input {
   flex: 1;
   box-sizing: border-box;
   margin: 0;
@@ -289,15 +307,15 @@ export default {
   background: none;
 }
 
-.select-input::-webkit-input-placeholder {
+.ly-select_input::-webkit-input-placeholder {
   color: var(--ly-light-color);
 }
 
-.select-input:disabled {
+.ly-select_input:disabled {
   cursor: not-allowed;
 }
 
-.select-unfold-icon {
+.ly-select_unfold-icon {
   display: block;
   width: var(--icon-size);
   height: var(--icon-size);
@@ -305,11 +323,11 @@ export default {
   transition: all 0.2s;
 }
 
-.select.focus .select-unfold-icon {
+.ly-select.focus .ly-select_unfold-icon {
   transform: rotate(180deg);
 }
 
-.select-dropdown {
+.ly-select_dropdown {
   display: none;
   position: absolute;
   left: 0;
@@ -319,7 +337,7 @@ export default {
   z-index: 99999;
 }
 
-.select-option-group {
+.ly-select_option-group {
   background-color: #fff;
   width: 100%;
   border: 1px solid var(--ly-light-color);
@@ -331,12 +349,12 @@ export default {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
-.select.focus .select-dropdown {
+.ly-select.focus .ly-select_dropdown {
   display: block;
 }
 
 @media screen and (max-width: 540px) {
-  .select-dropdown {
+  .ly-select_dropdown {
     position: fixed;
     left: 0;
     top: 0;
@@ -345,7 +363,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  .select-option-group {
+  .ly-select_option-group {
     position: absolute;
     left: 0;
     bottom: 0;

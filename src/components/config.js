@@ -9,9 +9,8 @@ import RadioGroupComponent from './Form/RadioGroup.vue'
 import RadioComponent from './Form/Radio.vue'
 import CheckboxGroupComponent from './Form/CheckboxGroup.vue'
 import CheckboxComponent from './Form/Checkbox.vue'
-// import SelectComponent from './Form/Select.vue'
-// import SelectOptionComponent from './Form/SelectOption.vue'
-// import TextareaComponent from './Form/Textarea.vue'
+import SelectComponent from './Form/Select.vue'
+import SelectOptionComponent from './Form/SelectOption.vue'
 import InputComponent from './Form/Input.vue'
 import FormComponent from './Form/Form.vue'
 import CascaderComponent from './Form/Cascader.vue'
@@ -36,9 +35,8 @@ export default [
   RadioComponent,
   CheckboxGroupComponent,
   CheckboxComponent,
-  // SelectComponent,
-  // SelectOptionComponent,
-  // TextareaComponent,
+  SelectComponent,
+  SelectOptionComponent,
   InputComponent,
   FormComponent,
   CascaderComponent,

@@ -18,5 +18,5 @@
 
 | 事件            | 描述                             | 回调函数参数                            |
 | --------------- | -------------------------------- | --------------------------------------- |
-| bindchange      | current 改变时会触发 change 事件 | EventHandle，e.detail={current, source} |
-| animationfinish | 动画结束时会触发                 | EventHandle                             |
+| bindchange      | current 改变时会触发 change 事件 | CustomEvent，e.detail={current, source} |
+| animationfinish | 动画结束时会触发                 | CustomEvent                             |

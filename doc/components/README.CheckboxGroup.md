@@ -6,14 +6,14 @@
 
 | 属性  | 类型   | 默认值 | 必填  | 说明                            |
 | ----- | ------ | ------ | ----- | ------------------------------- |
-| name  | string | 随机   | 否    | [form](./README.Form.md) 的标识 |
+| name  | string |        | 否    | [form](./README.Form.md) 的标识 |
 | align | string | 'left' | false | 左右对齐，可选值：left / right  |
 
 ## Events
 
 | 事件名称 | 描述                 | 回调函数参数                            |
 | -------- | -------------------- | --------------------------------------- |
-| change   | 选中项发生改变时触发 | EventHandle，可通过 e.detail.value 取值 |
+| change   | 选中项发生改变时触发 | CustomEvent，可通过 e.detail.value 取值 |
 
 ## Slots
 

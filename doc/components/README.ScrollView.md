@@ -20,6 +20,6 @@
 
 | 事件          | 描述                  | 回调函数参数                                                                |
 | ------------- | --------------------- | --------------------------------------------------------------------------- |
-| scrolltoupper | 滚动到顶部/左边时触发 | EventHandle，e.detail.direction = 'top' / 'left'                            |
-| scrolltolower | 滚动到底部/右边时触发 | EventHandle，e.detail.direction = 'bottom' / 'right'                        |
-| scroll        | 滚动时触发            | EventHandle，e.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth } |
+| scrolltoupper | 滚动到顶部/左边时触发 | CustomEvent，e.detail.direction = 'top' / 'left'                            |
+| scrolltolower | 滚动到底部/右边时触发 | CustomEvent，e.detail.direction = 'bottom' / 'right'                        |
+| scroll        | 滚动时触发            | CustomEvent，e.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth } |

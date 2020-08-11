@@ -1,6 +1,6 @@
 <template>
   <div
-    class="select-option"
+    class="ly-select-option"
     :disabled="disabled"
     :class="[{ selected: selected }, sizeClassName]"
     @mousedown="onSelect"
@@ -97,7 +97,7 @@ export default {
 <style scoped>
 @import url('../../global.css');
 
-.select-option {
+.ly-select-option {
   --color: rgba(9, 187, 7, 0.1);
   --height: 30px;
   --font-size: 14px;
@@ -115,32 +115,32 @@ export default {
   overflow: hidden;
 }
 
-.select-option.size--mini {
+.ly-select-option.size--mini {
   --height: 22px;
   --font-size: 12px;
 }
 
-.select-option.size--large {
+.ly-select-option.size--large {
   --height: 38px;
   --font-size: 16px;
 }
 
-.select-option.selected {
+.ly-select-option.selected {
   background-color: var(--ly-whitesmoke-color);
 }
 
-.select-option:hover {
+.ly-select-option:hover {
   background-color: var(--color);
 }
 
-.select-option[disabled],
-.select-option[disabled]:hover {
+.ly-select-option[disabled],
+.ly-select-option[disabled]:hover {
   background-color: var(--ly-light-color);
   cursor: not-allowed;
 }
 
 @media screen and (max-width: 540px) {
-  .select-option {
+  .ly-select-option {
     height: 40px;
     line-height: 40px;
     font-size: 16px;

@@ -12,55 +12,53 @@
 
 ### BASE
 
-[ScrollView](./README.ScrollView.md)
+[ScrollView](./components/README.ScrollView.md)
 
-[Swiper](./README.Swiper.md)
+[Swiper](./components/README.Swiper.md)
 
-[SwiperItem](./README.SwiperItem.md)
+[SwiperItem](./components/README.SwiperItem.md)
 
-[Icon](./README.Icon.md)
+[Icon](./components/README.Icon.md)
 
 ### FORM
 
-[Form](./README.Form.md)
+[Form](./components/README.Form.md)
 
-[Button](./README.Button.md)
+[Button](./components/README.Button.md)
 
-[Input](./README.Input.md)
+[Input](./components/README.Input.md)
 
-[Textarea](./README.Textarea.md) (准备废弃，使用 Input[type="textarea"] 替代)
+[Radio](./components/README.Radio.md)
 
-[Radio](./README.Radio.md)
+[RadioGroup](./components/README.RadioGroup.md)
 
-[RadioGroup](./README.RadioGroup.md)
+[Checkbox](./components/README.Checkbox.md)
 
-[Checkbox](./README.Checkbox.md)
+[CheckboxGroup](./components/README.CheckboxGroup.md)
 
-[CheckboxGroup](./README.CheckboxGroup.md)
+[Select](./components/README.Select.md)
 
-[Select](./README.Select.md) (准备废弃，使用 Cascader 替代)
+[SelectOption](./components/README.SelectOption.md)
 
-[SelectOption](./README.SelectOption.md) (准备废弃，使用 Cascader 替代)
+[Cascader](./components/README.Cascader.md)
 
-[Cascader](./README.Cascader.md)
+[Slider](./components/README.Slider.md)
 
-[Slider](./README.Slider.md)
-
-[Switch](./README.Switch.md)
+[Switch](./components/README.Switch.md)
 
 ### Navigation
 
-[BackToTop](./README.BackToTop.md)
+[BackToTop](./components/README.BackToTop.md)
 
 ### MEDIA
 
-[Image](./README.Image.md)
+[Image](./components/README.Image.md)
 
 ### TIPS
 
-[Toast](./README.Toast.md)
+[Toast](./components/README.Toast.md)
 
-[Modal](./README.Modal.md)
+[Modal](./components/README.Modal.md)
 
 ## APIs
 
@@ -68,44 +66,44 @@ API 列表，参照微信小程序，持续更新。
 
 ### LocalStorage
 
-[getStorage](./README.Api.LocalStorage.md#getStorage)
+[getStorage](./apis/README.LocalStorage.md#getStorage)
 
-[setStorage](./README.Api.LocalStorage.md#setStorage)
+[setStorage](./apis/README.LocalStorage.md#setStorage)
 
-[removeStorage](./README.Api.LocalStorage.md#removeStorage)
+[removeStorage](./apis/README.LocalStorage.md#removeStorage)
 
-[clearStorage](./README.Api.LocalStorage.md#clearStorage)
+[clearStorage](./apis/README.LocalStorage.md#clearStorage)
 
-[getStorageInfo](./README.Api.LocalStorage.md#getStorageInfo)
+[getStorageInfo](./apis/README.LocalStorage.md#getStorageInfo)
 
 ### IntersectionObserver
 
-[createIntersectionObserver](./README.Api.IntersectionObserver.md#createIntersectionObserver)
+[createIntersectionObserver](./apis/README.IntersectionObserver.md#createIntersectionObserver)
 
-[IntersectionObserver](./README.Api.IntersectionObserver.md#IntersectionObserver)
+[IntersectionObserver](./apis/README.IntersectionObserver.md#IntersectionObserver)
 
 ### SelectorQuery
 
-[createSelectorQuery](./README.Api.SelectorQuery.md#createSelectorQuery)
+[createSelectorQuery](./apis/README.SelectorQuery.md#createSelectorQuery)
 
-[SelectorQuery](./README.Api.SelectorQuery.md#SelectorQuery)
+[SelectorQuery](./apis/README.SelectorQuery.md#SelectorQuery)
 
-[NodesRef](./README.Api.SelectorQuery.md#NodesRef)
+[NodesRef](./apis/README.SelectorQuery.md#NodesRef)
 
 ### Toast
 
-[showToast](./README.Api.Toast.md#showToast)
+[showToast](./apis/README.Toast.md#showToast)
 
-[hideToast](./README.Api.Toast.md#hideToast)
+[hideToast](./apis/README.Toast.md#hideToast)
 
-[showLoading](./README.Api.Toast.md#showLoading)
+[showLoading](./apis/README.Toast.md#showLoading)
 
-[hideLoading](./README.Api.Toast.md#hideLoading)
+[hideLoading](./apis/README.Toast.md#hideLoading)
 
 ### Modal
 
-[showModal](./README.Api.Modal.md#showModal)
+[showModal](./apis/README.Modal.md#showModal)
 
 ### Scroll
 
-[pageScrollTo](./README.Api.Scroll.md#pageScrollTo)
+[pageScrollTo](./apis/README.Scroll.md#pageScrollTo)

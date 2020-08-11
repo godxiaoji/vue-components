@@ -8,8 +8,8 @@
 
 | 事件   | 描述                               | 回调函数参数                                                 |
 | ------ | ---------------------------------- | ------------------------------------------------------------ |
-| submit | 携带 form 中的数据触发 submit 事件 | EventHandle，其中 event.detail = {value : {'name': 'value'}} |
-| reset  | 表单重置时会触发 reset 事件        | EventHandle                                                  |
+| submit | 携带 form 中的数据触发 submit 事件 | CustomEvent，其中 event.detail = {value : {'name': 'value'}} |
+| reset  | 表单重置时会触发 reset 事件        | CustomEvent                                                  |
 
 ### event.detail.value 的值
 

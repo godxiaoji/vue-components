@@ -7,7 +7,7 @@
 | 属性            | 类型           | 默认值    | 必填  | 说明                                              |
 | --------------- | -------------- | --------- | ----- | ------------------------------------------------- |
 | value / v-model | string, number | ''        | false |
-| name            | string         | 随机      | false | [form](./README.Form.md) 的标识                   |
+| name            | string         |           | false | [form](./README.Form.md) 的标识                   |
 | size            | string         | 'default' | false | 尺寸，可选值：default / mini / large              |
 | align           | string         | 'left'    | false | 左右对齐，可选值：left / center / right           |
 | border          | boolean        | true      | false | 是否显示边框                                      |
@@ -42,10 +42,10 @@
 
 | 事件   | 描述             | 回调函数参数                            |
 | ------ | ---------------- | --------------------------------------- |
-| input  | 改变时触发       | EventHandle，可通过 e.detail.value 取值 |
-| change | 改变且失焦后触发 | EventHandle，可通过 e.detail.value 取值 |
-| focus  | 获取焦点时触发   | EventHandle                             |
-| blur   | 移出焦点时触发   | EventHandle                             |
+| input  | 改变时触发       | CustomEvent，可通过 e.detail.value 取值 |
+| change | 改变且失焦后触发 | CustomEvent，可通过 e.detail.value 取值 |
+| focus  | 获取焦点时触发   | CustomEvent                             |
+| blur   | 移出焦点时触发   | CustomEvent                             |
 
 ## Slots
 

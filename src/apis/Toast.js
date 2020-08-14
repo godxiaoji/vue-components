@@ -1,4 +1,4 @@
-import { isObject, noop, isFunction } from '../helpers/util'
+import { isObject } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
 import Exception from '../helpers/exception'

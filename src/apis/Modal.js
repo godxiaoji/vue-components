@@ -1,7 +1,6 @@
-import { isObject, isFunction, noop } from '../helpers/util'
+import { isObject } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
-import Exception from '../helpers/exception'
 
 function htmlEscape(text) {
   return text.replace(/[<>"&]/g, function(match) {

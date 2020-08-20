@@ -1,6 +1,9 @@
 import { objectForEach, isObject, isElement } from './util'
 import Exception from './exception'
 
+/**
+ * 基础事件类
+ */
 export class BaseEvent {
   constructor(e) {
     let { type, currentTarget, target } = e
@@ -40,6 +43,9 @@ export class BaseEvent {
   }
 }
 
+/**
+ * 自定义事件类
+ */
 export class CustomEvent extends BaseEvent {
   constructor(event, detail = {}) {
     super(event)

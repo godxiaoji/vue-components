@@ -1,5 +1,6 @@
 import Exception from '../helpers/exception'
-import { isObject, NotNull, inArray, isString } from '../helpers/util'
+import { isObject, inArray } from '../helpers/util'
+import { notNullValidator, getType } from '../helpers/validator'
 
 export const apiRules = {
   /**
@@ -17,7 +18,7 @@ export const apiRules = {
       required: true
     },
     data: {
-      type: NotNull,
+      validator: notNullValidator,
       required: true
     }
   },
@@ -64,8 +65,8 @@ export const apiRules = {
       required: true
     },
     icon: {
-      type: String,
-      enums: ['none', 'success', 'loading']
+      enums: ['none', 'success', 'loading'],
+      default: 'success'
     },
     image: {
       type: String
@@ -126,72 +127,68 @@ export const apiRules = {
   }
 }
 
-const PARAM_ERROR = Exception.TYPE.PARAM_ERROR
-
-const emptys = ['null', 'undefined', 'NaN']
-
-function getType(obj) {
-  if (obj === null) {
-    return 'null'
-  }
-  if (typeof obj === 'number' && isNaN(obj)) {
-    return 'NaN'
-  }
-  if (isString(obj) && inArray(obj, emptys)) {
-    return `any(not in [${emptys
-      .map(v => {
-        return `"${v}"`
-      })
-      .join(', ')}])`
-  }
-  return typeof obj
-}
-
 export const parseParamsByRules = function(options, apiName) {
   if (!isObject(options)) {
     options = {}
   }
 
   const rules = apiRules[apiName]
-  const params = {}
+  const ret = {}
+  const PARAM_ERROR = Exception.TYPE.PARAM_ERROR
 
   for (const k in rules) {
     const rule = rules[k]
-    if (rule.required && options[k] == null) {
+    const option = options[k]
+
+    if (rule.required && !notNullValidator(option)) {
       throw new Exception(
-        `param0.${k} should be ${getType(rule.type())} instead of ${getType(
-          options[k]
-        )}`,
+        `param0.${k} should be ${getType(
+          rule.validator || rule.type()
+        )} instead of ${getType(option)}`,
         PARAM_ERROR,
         apiName
       )
-    } else if (options[k] != null) {
-      if (rule.type(options[k]) !== options[k]) {
+    } else if (option != null) {
+      if (rule.validator) {
+        if (!rule.validator(option)) {
+          throw new Exception(
+            `param0.${k} should be ${getType(rule.validator)}`,
+            PARAM_ERROR,
+            apiName
+          )
+        } else {
+          ret[k] = option
+        }
+      } else if (rule.enums) {
+        if (!inArray(option, rule.enums)) {
+          throw new Exception(
+            `param0.${k} should be in [${rule.enums
+              .map(v => {
+                return `"${v}"`
+              })
+              .join(', ')}]`,
+            PARAM_ERROR,
+            apiName
+          )
+        } else {
+          ret[k] = option
+        }
+      } else if (rule.type(option) !== option) {
         throw new Exception(
           `param0.${k} should be ${getType(rule.type())} instead of ${getType(
-            options[k]
+            option
           )}`,
-          PARAM_ERROR,
-          apiName
-        )
-      } else if (rule.enums && !inArray(options[k], rule.enums)) {
-        throw new Exception(
-          `param0.${k} should be in [${rule.enums
-            .map(v => {
-              return `"${v}"`
-            })
-            .join(', ')}]`,
           PARAM_ERROR,
           apiName
         )
       } else {
         // 类型匹配正确
-        params[k] = options[k]
+        ret[k] = option
       }
     } else if (rule.default) {
-      params[k] = rule.default
+      ret[k] = rule.default
     }
   }
 
-  return params
+  return ret
 }

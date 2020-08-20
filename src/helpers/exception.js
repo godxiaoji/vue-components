@@ -41,7 +41,8 @@ class Exception extends Error {
 
 Exception.TYPE = {
   DEFAULT: 'fail',
-  PARAM_ERROR: 'Invalid param'
+  PARAM_ERROR: 'Invalid param',
+  CONFIG_ERROR: 'Invalid config'
 }
 
 export default Exception

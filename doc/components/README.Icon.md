@@ -1,4 +1,4 @@
-# Checkbox
+# Icon
 
 多选项目。
 

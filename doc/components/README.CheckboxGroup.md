@@ -4,10 +4,10 @@
 
 ## Props
 
-| 属性  | 类型   | 默认值 | 必填  | 说明                            |
-| ----- | ------ | ------ | ----- | ------------------------------- |
-| name  | string |        | 否    | [form](./README.Form.md) 的标识 |
-| align | string | 'left' | false | 左右对齐，可选值：left / right  |
+| 属性  | 类型   | 默认值 | 必填 | 说明                            |
+| ----- | ------ | ------ | ---- | ------------------------------- |
+| name  | string |        | 否   | [form](./README.Form.md) 的标识 |
+| align | string | 'left' | 否   | 左右对齐，可选值：left / right  |
 
 ## Events
 

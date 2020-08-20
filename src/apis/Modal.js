@@ -31,8 +31,8 @@ function render(options) {
     `</div>`,
     `<div class="ly-modal_footer">`,
     `<button style="display: ` +
-      (options.showCancel ? 'block' : 'none') +
-      `;" class="ly-modal_button type--cancel">${options.cancelText}</button>`,
+    (options.showCancel ? 'block' : 'none') +
+    `;" class="ly-modal_button type--cancel">${options.cancelText}</button>`,
     `<button class="ly-modal_button type--confirm primary">${options.confirmText}</button>`,
     `</div>`,
     `</div>`,

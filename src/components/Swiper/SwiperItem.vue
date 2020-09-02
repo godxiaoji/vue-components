@@ -1,12 +1,14 @@
 <template>
-  <div :id="itemId" class="ly-swiper-item">
+  <div :id="itemId" :class="[prefix + '-swiper-item']">
     <slot></slot>
   </div>
 </template>
 
 <script>
+import { SDKKey } from '../../config'
+
 export default {
-  name: 'ly-swiper-item',
+  name: SDKKey + '-swiper-item',
   props: {
     itemId: {
       type: String,
@@ -14,7 +16,7 @@ export default {
     }
   },
   data() {
-    return {}
+    return {prefix: SDKKey}
   },
   ready() {
     this.update()

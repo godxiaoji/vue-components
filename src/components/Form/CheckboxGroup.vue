@@ -1,14 +1,14 @@
 <template>
   <div
-    class="ly-checkbox-group"
     :class="[
+      prefix + '-checkbox-group',
       alignClassName,
       {
         'has--prepend': hasPrepend
       }
     ]"
   >
-    <div class="ly-checkbox-group_prepend" v-if="hasPrepend">
+    <div :class="[prefix + '-checkbox-group_prepend']" v-if="hasPrepend">
       <slot name="prepend"></slot>
     </div>
     <slot></slot>
@@ -18,11 +18,12 @@
 <script>
 import { CustomEvent } from '../../helpers/events'
 import { cloneData, inArray } from '../../helpers/util'
+import { SDKKey } from '../../config'
 
 const ALIGN_NAMES = ['left', 'right']
 
 export default {
-  name: 'ly-checkbox-group',
+  name: SDKKey + '-checkbox-group',
   props: {
     name: {
       type: String,
@@ -35,6 +36,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       hasPrepend: false,
       formValue: []
     }
@@ -72,7 +75,7 @@ export default {
       this.formValue = value
     },
 
-    onChange(e) {
+    onChange() {
       this.updateValue()
 
       const value = cloneData(this.formValue)
@@ -104,27 +107,29 @@ export default {
 }
 </script>
 
-<style>
-.ly-checkbox-group {
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-checkbox-group {
   --padding-left-right: 12px;
 
   display: flex;
   width: 100%;
   height: 32px;
   align-items: center;
-  color: var(--ly-semi-color);
+  color: $semi-color;
   box-sizing: border-box;
-}
 
-.ly-checkbox-group.align--right {
-  justify-content: flex-end;
-}
+  &.align--right {
+    justify-content: flex-end;
+  }
 
-.ly-checkbox-group_prepend {
-  padding: 0 var(--padding-left-right);
-}
+  &_prepend {
+    padding: 0 var(--padding-left-right);
 
-.ly-checkbox-group.align--right .ly-checkbox-group_prepend {
-  flex: 1;
+    .#{$prefix}-checkbox-group.align--right & {
+      flex: 1;
+    }
+  }
 }
 </style>

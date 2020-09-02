@@ -1,14 +1,14 @@
 <template>
   <div
-    class="ly-radio-group"
     :class="[
+      prefix + '-radio-group',
       alignClassName,
       {
         'has--prepend': hasPrepend
       }
     ]"
   >
-    <div class="ly-radio-group_prepend" v-if="hasPrepend">
+    <div :class="[prefix + '-radio-group_prepend']" v-if="hasPrepend">
       <slot name="prepend"></slot>
     </div>
     <slot></slot>
@@ -18,11 +18,12 @@
 <script>
 import { CustomEvent } from '../../helpers/events'
 import { cloneData, inArray } from '../../helpers/util'
+import { SDKKey } from '../../config'
 
 const ALIGN_NAMES = ['left', 'right']
 
 export default {
-  name: 'ly-radio-group',
+  name: SDKKey + '-radio-group',
   props: {
     name: {
       type: String,
@@ -35,6 +36,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       hasPrepend: false,
       formValue: ''
     }
@@ -109,27 +112,29 @@ export default {
 }
 </script>
 
-<style>
-.ly-radio-group {
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-radio-group {
   --padding-left-right: 12px;
 
   display: flex;
   width: 100%;
   height: 32px;
   align-items: center;
-  color: var(--ly-semi-color);
+  color: $semi-color;
   box-sizing: border-box;
-}
 
-.ly-radio-group.align--right {
-  justify-content: flex-end;
-}
+  &.align--right {
+    justify-content: flex-end;
+  }
 
-.ly-radio-group_prepend {
-  padding: 0 var(--padding-left-right);
-}
+  &_prepend {
+    padding: 0 var(--padding-left-right);
 
-.ly-radio-group.align--right .ly-radio-group_prepend {
-  flex: 1;
+    .#{$prefix}-radio-group.align--right & {
+      flex: 1;
+    }
+  }
 }
 </style>

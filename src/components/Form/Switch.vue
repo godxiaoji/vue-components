@@ -1,12 +1,11 @@
 <template>
   <button
-    class="ly-switch"
     type="button"
     :checked="formChecked"
     :disabled="disabled"
     :name="name"
     :value="checked + ''"
-    :class="[sizeClassName]"
+    :class="[prefix + '-switch', sizeClassName]"
     :style="[switchColor]"
     @click="onClick"
   ></button>
@@ -15,11 +14,12 @@
 <script>
 import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
+import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
-  name: 'ly-switch',
+  name: SDKKey + '-switch',
   props: {
     size: {
       type: String,
@@ -48,6 +48,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       formChecked: false
     }
   },
@@ -116,63 +118,65 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-switch {
-  --color: var(--ly-main-color);
+.#{$prefix}-switch {
+  --color: var(--#{$prefix}-main-color);
   --font-size: 24px;
 
   position: relative;
   width: 2em;
   height: 1em;
-  background: var(--ly-light-color);
+  background: $light-color;
   border: 0;
   border-radius: 1em;
   font-size: var(--font-size);
   outline: 0;
   cursor: pointer;
   transition: all 0.2s linear;
-}
+  box-sizing: border-box;
+  padding: 0;
 
-.ly-switch.size--mini {
-  --font-size: 16px;
-}
+  &.size--mini {
+    --font-size: 16px;
+  }
 
-.ly-switch.size--large {
-  --font-size: 32px;
-}
+  &.size--large {
+    --font-size: 32px;
+  }
 
-.ly-switch[checked] {
-  background-color: var(--color);
-}
+  &[checked] {
+    background-color: var(--color);
+  }
 
-.ly-switch:after {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: calc(50% - 2px);
-  height: calc(100% - 2px);
-  background: #fff;
-  border-radius: 100%;
-  transition: all 0.2s linear;
-  content: '';
-}
+  &::after {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: calc(50% - 2px);
+    height: calc(100% - 2px);
+    background: #fff;
+    border-radius: 100%;
+    transition: all 0.2s linear;
+    content: '';
+  }
 
-.ly-switch[checked]:after {
-  left: calc(50% + 1px);
-}
+  &[checked]::after {
+    left: calc(50% + 1px);
+  }
 
-.ly-switch:not(:disabled):hover {
-  opacity: 0.8;
-}
+  &:not(:disabled):hover {
+    opacity: 0.8;
+  }
 
-.ly-switch:not(:disabled):active {
-  opacity: 0.6;
-}
+  &:not(:disabled):active {
+    opacity: 0.6;
+  }
 
-.ly-switch:disabled {
-  cursor: not-allowed;
-  opacity: 0.3;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
 }
 </style>

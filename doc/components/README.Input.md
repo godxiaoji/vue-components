@@ -40,12 +40,12 @@
 
 ## Events
 
-| 事件   | 描述             | 回调函数参数                            |
-| ------ | ---------------- | --------------------------------------- |
-| input  | 改变时触发       | CustomEvent，可通过 e.detail.value 取值 |
-| change | 改变且失焦后触发 | CustomEvent，可通过 e.detail.value 取值 |
-| focus  | 获取焦点时触发   | CustomEvent                             |
-| blur   | 移出焦点时触发   | CustomEvent                             |
+| 事件   | 描述             | 回调函数参数                                 |
+| ------ | ---------------- | -------------------------------------------- |
+| input  | 改变时触发       | CustomEvent，可通过 event.details.value 取值 |
+| change | 改变且失焦后触发 | CustomEvent，可通过 event.details.value 取值 |
+| focus  | 获取焦点时触发   | FocusEvent                                   |
+| blur   | 移出焦点时触发   | FocusEvent                                   |
 
 ## Slots
 

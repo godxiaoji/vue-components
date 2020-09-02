@@ -1,12 +1,15 @@
 <template>
   <div
-    class="ly-scroll-view ly-scroll-bar"
-    :class="{
-      'scroll-x': scrollX,
-      'scroll-y': scrollY,
-      'enable-flex': enableFlex,
-      smooth: scrollWithAnimation
-    }"
+    :class="[
+      prefix + '-scroll-view',
+      prefix + '-scroll-bar',
+      {
+        'scroll-x': scrollX,
+        'scroll-y': scrollY,
+        'enable-flex': enableFlex,
+        smooth: scrollWithAnimation
+      }
+    ]"
     @scroll="scrollEvent"
   >
     <slot></slot>
@@ -15,13 +18,14 @@
 
 <script>
 import { CustomEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 const SCROLL_STATE_CENTER = 0
 const SCROLL_STATE_UPPER = 1
 const SCROLL_STATE_LOWER = 2
 
 export default {
-  name: 'ly-scroll-view',
+  name: SDKKey + '-scroll-view',
   props: {
     // 允许横向滚动
     scrollX: {
@@ -70,7 +74,7 @@ export default {
     }
   },
   data() {
-    return {}
+    return { prefix: SDKKey }
   },
   ready() {},
   mounted() {
@@ -284,27 +288,27 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-scroll-view {
+.#{$prefix}-scroll-view {
   display: block;
   width: 100%;
-}
 
-.ly-scroll-view.scroll-x {
-  overflow-x: auto;
-}
+  &.scroll-x {
+    overflow-x: auto;
+  }
 
-.ly-scroll-view.scroll-y {
-  overflow-y: auto;
-}
+  &.scroll-y {
+    overflow-y: auto;
+  }
 
-.ly-scroll-view.enable-flex {
-  display: flex;
-}
+  &.enable-flex {
+    display: flex;
+  }
 
-.ly-scroll-view.smooth {
-  scroll-behavior: smooth;
+  &.smooth {
+    scroll-behavior: smooth;
+  }
 }
 </style>

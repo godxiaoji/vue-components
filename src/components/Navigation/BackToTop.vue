@@ -1,20 +1,18 @@
 <template>
-  <div
-    v-show="scrollTop >= visibilityHeight"
-    class="ly-back-to-top"
-    @click="onClick"
-  >
-    <slot><icon class="ly-back-to-top_icon" type="upload"></icon></slot>
+  <div v-show="scrollTop >= visibilityHeight" :class="[prefix + '-back-to-top']" @click="onClick">
+    <slot>
+      <icon :class="[prefix + '-back-to-top_icon']" type="upload"></icon>
+    </slot>
   </div>
 </template>
 
 <script>
 import Icon from '../Icon/Icon.vue'
 import { frameTo } from '../../helpers/animation'
-import { BaseEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 export default {
-  name: 'ly-back-to-top',
+  name: SDKKey + '-back-to-top',
   components: { Icon },
   props: {
     visibilityHeight: {
@@ -31,6 +29,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       scrollTop: 0
     }
   },
@@ -55,7 +55,7 @@ export default {
     onClick(e) {
       this.toTop()
 
-      this.$emit(e.type, new BaseEvent(e))
+      this.$emit(e.type, e)
     },
 
     toTop() {
@@ -83,18 +83,20 @@ export default {
 }
 </script>
 
-<style>
-.ly-back-to-top {
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-back-to-top {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 99998;
   cursor: pointer;
-}
 
-.ly-back-to-top_icon {
-  display: block;
-  width: 40px;
-  height: 40px;
+  &_icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>

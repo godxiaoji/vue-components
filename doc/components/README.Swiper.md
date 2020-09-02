@@ -16,7 +16,7 @@
 
 ## Events
 
-| 事件            | 描述                             | 回调函数参数                            |
-| --------------- | -------------------------------- | --------------------------------------- |
-| bindchange      | current 改变时会触发 change 事件 | CustomEvent，e.detail={current, source} |
-| animationfinish | 动画结束时会触发                 | CustomEvent                             |
+| 事件            | 描述                             | 回调函数参数                                   |
+| --------------- | -------------------------------- | ---------------------------------------------- |
+| change          | current 改变时会触发 change 事件 | CustomEvent，event.details = {current, source} |
+| animationfinish | 动画结束时会触发                 | CustomEvent                                    |

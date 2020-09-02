@@ -1,18 +1,18 @@
 <template>
-  <label class="ly-radio" :disabled="disabled">
+  <label :class="[prefix + '-radio']" :disabled="disabled">
     <input
-      class="ly-radio_input"
+      :class="[prefix + '-radio_input']"
       type="radio"
       :name="groupName"
       :value="value"
       :disabled="disabled"
       @change="onChange"
     />
-    <div class="ly-radio_box">
-      <icon class="ly-radio_icon" type="radio"></icon>
-      <icon class="ly-radio_checked-icon" type="radio_checked"></icon>
+    <div :class="[prefix + '-radio_box']">
+      <icon :class="[prefix + '-radio_icon']" type="radio"></icon>
+      <icon :class="[prefix + '-radio_checked-icon']" type="radio_checked"></icon>
     </div>
-    <span class="ly-radio_text">
+    <span :class="[prefix + '-radio_text']">
       <slot></slot>
     </span>
   </label>
@@ -20,9 +20,10 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
+import { SDKKey } from '../../config'
 
 export default {
-  name: 'ly-radio',
+  name: SDKKey + '-radio',
   components: { Icon },
   props: {
     value: {
@@ -45,7 +46,7 @@ export default {
     }
   },
   data() {
-    return {}
+    return { prefix: SDKKey }
   },
   computed: {
     /* 只接受来自分组的name */
@@ -145,66 +146,68 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-radio {
-  --color: var(--ly-main-color);
+.#{$prefix}-radio {
+  --color: var(--#{$prefix}-main-color);
   --padding-left-right: 12px;
 
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   height: 1.715em;
-  color: var(--ly-semi-color);
+  color: $semi-color;
   padding: 0 var(--padding-left-right);
   text-align: left;
-}
+  position: relative;
 
-.ly-radio_box {
-  display: inline-flex;
-  width: 1.429em;
-  height: 1.429em;
-  box-sizing: border-box;
-  margin-right: 0.34em;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
+  &_box {
+    display: inline-flex;
+    width: 1.429em;
+    height: 1.429em;
+    box-sizing: border-box;
+    margin-right: 0.34em;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
 
-.ly-radio_icon {
-  width: 100%;
-  height: 100%;
-}
+  &_icon {
+    width: 100%;
+    height: 100%;
+  }
 
-.ly-radio_checked-icon {
-  display: none;
-  width: 100%;
-  height: 100%;
-  fill: var(--color);
-}
+  &_checked-icon {
+    display: none;
+    width: 100%;
+    height: 100%;
+    fill: var(--color);
+  }
 
-.ly-radio_input:not([disabled]):checked + .ly-radio_box .ly-radio_icon {
-  display: none;
-}
+  &_input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 
-.ly-radio_input:not([disabled]):checked + .ly-radio_box .ly-radio_checked-icon {
-  display: block;
-}
+    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
+      display: none;
+    }
+    &:not([disabled]):checked
+      + .#{$prefix}-radio_box
+      .#{$prefix}-radio_checked-icon {
+      display: block;
+    }
+  }
 
-.ly-radio_input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
+  &_text {
+    display: block;
+    line-height: 1;
+  }
 
-.ly-radio_text {
-  display: block;
-  line-height: 1;
-}
-
-.ly-radio[disabled] {
-  opacity: 0.3;
+  &[disabled] {
+    opacity: 0.3;
+  }
 }
 </style>

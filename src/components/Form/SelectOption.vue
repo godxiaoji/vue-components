@@ -1,8 +1,7 @@
 <template>
   <div
-    class="ly-select-option"
     :disabled="disabled"
-    :class="[{ selected: selected }, sizeClassName]"
+    :class="[prefix + '-select-option', { selected: selected }, sizeClassName]"
     @mousedown="onSelect"
   >
     <slot></slot>
@@ -11,11 +10,12 @@
 
 <script>
 import { inArray, isNumber, isString } from '../../helpers/util'
+import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
-  name: 'ly-select-option',
+  name: SDKKey + '-select-option',
   props: {
     value: {
       validator(value) {
@@ -30,6 +30,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       selected: false,
       size: SIZE_NAMES[0]
     }
@@ -94,10 +96,10 @@ export default {
 }
 </script>
 
-<style scoped>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-select-option {
+.#{$prefix}-select-option {
   --color: rgba(9, 187, 7, 0.1);
   --height: 30px;
   --font-size: 14px;
@@ -107,40 +109,40 @@ export default {
   padding: 0 12px;
   height: var(--height);
   line-height: var(--height);
-  color: var(--ly-semi-color);
+  color: $semi-color;
   text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
 
-.ly-select-option.size--mini {
-  --height: 22px;
-  --font-size: 12px;
-}
+  &.size--mini {
+    --height: 22px;
+    --font-size: 12px;
+  }
 
-.ly-select-option.size--large {
-  --height: 38px;
-  --font-size: 16px;
-}
+  &.size--large {
+    --height: 38px;
+    --font-size: 16px;
+  }
 
-.ly-select-option.selected {
-  background-color: var(--ly-whitesmoke-color);
-}
+  &.selected {
+    background-color: $whitesmoke-color;
+  }
 
-.ly-select-option:hover {
-  background-color: var(--color);
-}
+  &:hover {
+    background-color: var(--color);
+  }
 
-.ly-select-option[disabled],
-.ly-select-option[disabled]:hover {
-  background-color: var(--ly-light-color);
-  cursor: not-allowed;
+  &[disabled],
+  &[disabled]:hover {
+    background-color: $light-color;
+    cursor: not-allowed;
+  }
 }
 
 @media screen and (max-width: 540px) {
-  .ly-select-option {
+  .#{$prefix}-select-option {
     height: 40px;
     line-height: 40px;
     font-size: 16px;

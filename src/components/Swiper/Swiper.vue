@@ -1,14 +1,16 @@
 <template>
-  <div class="ly-swiper">
-    <div class="ly-swiper_list">
+  <div :class="[prefix + '-swiper']">
+    <div :class="[prefix + '-swiper_list']">
       <slot></slot>
     </div>
-    <div class="ly-swiper_pagination" v-show="indicatorDots">
+    <div :class="[prefix + '-swiper_pagination']" v-show="indicatorDots">
       <span
-        class="ly-swiper_pagination-bullet"
         v-for="(item, index) in pagination"
         :key="item.index"
-        :class="{ active: index === slideCurrent }"
+        :class="[
+          prefix + '-swiper_pagination-bullet',
+          { active: index === slideCurrent }
+        ]"
         :style="{
           background:
             index === slideCurrent ? indicatorActiveColor : indicatorColor
@@ -21,10 +23,11 @@
 <script>
 import MSlide from 'mslide/src/mslide'
 import { CustomEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 // export
 export default {
-  name: 'ly-swiper',
+  name: SDKKey + '-swiper',
   props: {
     indicatorDots: {
       type: Boolean,
@@ -83,6 +86,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       slideCurrent: 0,
       globalOptions: {},
       pagination: []
@@ -102,7 +107,7 @@ export default {
     this.update()
   },
   beforeDestroy() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       if (this.swiper) {
         this.swiper.destroy && this.swiper.destroy()
         delete this.swiper
@@ -139,14 +144,16 @@ export default {
 
       const pagination = []
 
-      this.$el.querySelectorAll('.ly-swiper_item').forEach(($item, k) => {
-        $item.style.paddingLeft = this.previousMargin + 'px'
-        $item.style.paddingRight = this.nextMargin + 'px'
+      this.$el
+        .querySelectorAll(`.${SDKKey}-swiper_item`)
+        .forEach(($item, k) => {
+          $item.style.paddingLeft = this.previousMargin + 'px'
+          $item.style.paddingRight = this.nextMargin + 'px'
 
-        pagination.push({
-          index: k
+          pagination.push({
+            index: k
+          })
         })
-      })
 
       this.pagination = pagination
     },
@@ -226,25 +233,27 @@ export default {
 }
 </script>
 
-<style>
-.ly-swiper {
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-swiper {
   position: relative;
   box-sizing: border-box;
-}
 
-.ly-swiper_pagination {
-  position: absolute;
-  left: 0;
-  bottom: 20px;
-  text-align: center;
-  width: 100%;
-}
+  &_pagination {
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+  }
 
-.ly-swiper_pagination-bullet {
-  display: inline-block;
-  margin: 0 5px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  &_pagination-bullet {
+    display: inline-block;
+    margin: 0 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
 }
 </style>

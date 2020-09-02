@@ -1,7 +1,7 @@
 <template>
   <label
-    class="ly-input"
     :class="[
+      prefix + '-input',
       sizeClassName,
       alignClassName,
       {
@@ -9,17 +9,17 @@
         'has--prepend': hasPrepend,
         'has--append': hasAppend,
         'no-border': !border,
-        'ly-textarea': type === 'textarea'
+        [prefix + '-textarea']: type === 'textarea'
       }
     ]"
     :disabled="disabled"
   >
-    <div class="ly-input_prepend" v-if="hasPrepend">
+    <div :class="[prefix + '-input_prepend']" v-if="hasPrepend">
       <slot name="prepend"></slot>
     </div>
     <textarea
       v-if="type === 'textarea'"
-      class="ly-input_input"
+      :class="[prefix + '-input_input']"
       :name="name"
       :value="formValue"
       :disabled="disabled"
@@ -32,7 +32,7 @@
     ></textarea>
     <input
       v-else
-      class="ly-input_input"
+      :class="[prefix + '-input_input']"
       :name="name"
       :type="realType"
       :value="formValue"
@@ -44,23 +44,24 @@
       @focus="onFocus"
       @blur="onBlur"
     />
-    <div class="ly-input_append" v-if="hasAppend">
+    <div :class="[prefix + '-input_append']" v-if="hasAppend">
       <slot name="append"></slot>
     </div>
-    <p class="ly-input_error" v-if="warn && errMsg">{{ errMsg }}</p>
+    <p :class="[prefix + '-input_error']" v-if="warn && errMsg">{{ errMsg }}</p>
   </label>
 </template>
 
 <script>
 import { inArray, isFunction, isString, isNumber } from '../../helpers/util'
-import { BaseEvent, CustomEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
 const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
 
 export default {
-  name: 'ly-input',
+  name: SDKKey + '-input',
   components: {},
   props: {
     name: {
@@ -121,6 +122,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       formValue: '',
       warn: false,
       errMsg: '',
@@ -217,24 +220,10 @@ export default {
     onFocus(e) {
       this._prevValue = this.formValue
 
-      this.$emit(
-        e.type,
-        new BaseEvent({
-          type: e.type,
-          currentTarget: this.$el,
-          target: e.target
-        })
-      )
+      this.$emit(e.type, e)
     },
     onBlur(e) {
-      this.$emit(
-        e.type,
-        new BaseEvent({
-          type: e.type,
-          currentTarget: this.$el,
-          target: e.target
-        })
-      )
+      this.$emit(e.type, e)
 
       if (this.formValue != this._prevValue) {
         // 改变且失焦后触发
@@ -297,17 +286,17 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-input {
+.#{$prefix}-input {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 20px;
   --padding-left-right: 12px;
-  --color: var(--ly-main-color);
-  --warn-color: var(--ly-warn-color);
-  --placeholder-color: var(--ly-light-color);
+  --color: var(--#{$prefix}-main-color);
+  --warn-color: var(--#{$prefix}-warn-color);
+  --placeholder-color: var(--#{$prefix}-light-color);
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -316,148 +305,141 @@ export default {
   align-items: center;
 
   border-radius: 4px;
-  border: 1px solid var(--ly-light-color);
+  border: 1px solid $light-color;
   box-sizing: border-box;
   font-size: var(--font-size);
   background-color: #fff;
-  color: var(--ly-semi-color);
-}
+  color: $semi-color;
 
-.ly-input.no-border {
-  border: none;
-  border-radius: 0;
-}
+  &_prepend,
+  &_append {
+    padding: 0 var(--padding-left-right);
+    .icon {
+      display: block;
+      width: var(--icon-size);
+      height: var(--icon-size);
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+  }
 
-.ly-input_prepend,
-.ly-input_append {
-  padding: 0 var(--padding-left-right);
-}
+  &.warn {
+    --color: $warn-color;
+  }
 
-.ly-input_prepend .icon,
-.ly-input_append .icon {
-  display: block;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  box-sizing: border-box;
-  cursor: pointer;
-}
+  &.size--mini {
+    --height: 22px;
+    --font-size: 12px;
+    --icon-size: 16px;
+    --padding-left-right: 8px;
+  }
 
-.ly-input.warn {
-  --color: var(--ly-warn-color);
-}
+  &.size--large {
+    --height: 38px;
+    --font-size: 16px;
+    --icon-size: 22px;
+  }
 
-.ly-input.size--mini {
-  --height: 22px;
-  --font-size: 12px;
-  --icon-size: 16px;
-  --padding-left-right: 8px;
-}
+  &_input {
+    flex: 1;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    line-height: var(--height);
+    width: 100%;
+    border-radius: 4px;
+    padding: 0 var(--padding-left-right);
+    font-size: var(--font-size);
+    cursor: pointer;
+    color: $semi-color;
+    background: #ffffff;
+    box-sizing: border-box;
+    box-shadow: none;
+    resize: none;
 
-.ly-input.size--large {
-  --height: 38px;
-  --font-size: 16px;
-  --icon-size: 22px;
-}
+    .#{$prefix}-input.has--prepend & {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
 
-.ly-input_input {
-  flex: 1;
-  display: block;
-  overflow: hidden;
-  margin: 0;
-  outline: none;
-  border: none;
-  width: 100%;
-  height: 100%;
-  line-height: var(--height);
-  width: 100%;
-  border-radius: 4px;
-  padding: 0 var(--padding-left-right);
-  font-size: var(--font-size);
-  cursor: pointer;
-  color: var(--ly-semi-color);
-  background: #ffffff;
-  box-sizing: border-box;
-  box-shadow: none;
-}
+    .#{$prefix}-input.has--append & {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-.ly-textarea .ly-input_input {
-  resize: none;
-}
+    .#{$prefix}-input.align--center & {
+      text-align: center;
+    }
 
-.ly-input.no-border .ly-input_input {
-  border: none;
-  border-radius: 0;
-  padding: 0;
-}
+    .#{$prefix}-input.align--right & {
+      text-align: right;
+    }
 
-.ly-input.has--prepend .ly-input_input {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
+    .#{$prefix}-input.warn & {
+      border-color: var(--warn-color);
+    }
 
-.ly-input.has--append .ly-input_input {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
+    &[type='search']::-webkit-search-cancel-button {
+      display: none;
+    }
 
-.ly-input.align--center .ly-input_input {
-  text-align: center;
-}
+    &::-webkit-input-placeholder {
+      color: var(--placeholder-color);
+    }
 
-.ly-input.align--right .ly-input_input {
-  text-align: right;
-}
+    .#{$prefix}-input:hover &,
+    &:hover {
+      border-color: var(--color);
+    }
 
-.ly-input_input[type='search']::-webkit-search-cancel-button {
-  display: none;
-}
+    &:disabled,
+    &:disabled:hover {
+      background-color: $whitesmoke-color;
+      border-color: $light-color;
+      cursor: not-allowed;
+    }
 
-.ly-input.warn .ly-input_input {
-  border-color: var(--warn-color);
-}
+    &:focus {
+      border-color: var(--color);
+      box-shadow: 0 0 3px var(--color);
+    }
+  }
 
-.ly-input_input::-webkit-input-placeholder {
-  color: var(--placeholder-color);
-}
+  &.no-border {
+    border: none;
+    border-radius: 0;
+    .#{$prefix}-input_input {
+      border: none;
+      border-radius: 0;
+      padding: 0;
 
-.ly-input:hover .ly-input_input,
-.ly-input_input:hover {
-  border-color: var(--color);
-}
+      &:disabled,
+      &:disabled:hover {
+        background-color: #ffffff;
+        border-color: #ffffff;
+        color: $light-color;
+      }
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
 
-.ly-input_input:disabled,
-.ly-input_input:disabled:hover {
-  background-color: var(--ly-whitesmoke-color);
-  border-color: var(--ly-light-color);
-  cursor: not-allowed;
-}
-
-.ly-input.no-border .ly-input_input:disabled,
-.ly-input.no-border .ly-input_input:disabled:hover {
-  background-color: #ffffff;
-  border-color: #ffffff;
-  color: var(--ly-light-color);
-}
-
-.ly-input_input:focus {
-  border-color: var(--color);
-  box-shadow: 0 0 3px var(--color);
-}
-
-.ly-input.no-border .ly-input_input:focus {
-  box-shadow: none;
-}
-
-.ly-input_error {
-  position: absolute;
-  left: var(--padding-left-right);
-  top: 100%;
-  font-size: 12px;
-  height: 14px;
-  line-height: 14px;
-  padding: 0 5px;
-  margin-top: -8px;
-  background-color: #fff;
-  color: var(--warn-color);
+  &_error {
+    position: absolute;
+    left: var(--padding-left-right);
+    top: 100%;
+    font-size: 12px;
+    height: 14px;
+    line-height: 14px;
+    padding: 0 5px;
+    margin-top: -8px;
+    background-color: #fff;
+    color: var(--warn-color);
+  }
 }
 </style>

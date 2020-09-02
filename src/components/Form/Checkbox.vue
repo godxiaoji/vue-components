@@ -1,18 +1,18 @@
 <template>
-  <label class="ly-checkbox" :disabled="disabled">
+  <label :class="[prefix + '-checkbox']" :disabled="disabled">
     <input
-      class="ly-checkbox_input"
+      :class="[prefix + '-checkbox_input']"
       type="checkbox"
       :name="groupName"
       :value="valueString"
       :disabled="disabled"
       @change="onChange"
     />
-    <div class="ly-checkbox_box">
-      <icon class="ly-checkbox_icon" type="checkbox"></icon>
-      <icon class="ly-checkbox_checked-icon" type="checkbox_checked"></icon>
+    <div :class="[prefix + '-checkbox_box']">
+      <icon :class="[prefix + '-checkbox_icon']" type="checkbox"></icon>
+      <icon :class="[prefix + '-checkbox_checked-icon']" type="checkbox_checked"></icon>
     </div>
-    <span class="ly-checkbox_text">
+    <span :class="[prefix + '-checkbox_text']">
       <slot></slot>
     </span>
   </label>
@@ -20,9 +20,10 @@
 
 <script>
 import Icon from '../Icon/Icon.vue'
+import { SDKKey } from '../../config'
 
 export default {
-  name: 'ly-checkbox',
+  name: SDKKey + '-checkbox',
   components: { Icon },
   props: {
     value: {
@@ -53,7 +54,7 @@ export default {
     event: '_change'
   },
   data() {
-    return {}
+    return { prefix: SDKKey }
   },
   computed: {
     /* 优先接受来自分组的name */
@@ -147,70 +148,70 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-checkbox {
-  --color: var(--ly-main-color);
+.#{$prefix}-checkbox {
+  --color: var(--#{$prefix}-main-color);
   --padding-left-right: 12px;
 
   display: inline-flex;
   align-items: center;
   font-size: 14px;
   height: 1.715em;
-  color: var(--ly-semi-color);
+  color: $semi-color;
   padding: 0 var(--padding-left-right);
   text-align: left;
-}
+  position: relative;
 
-.ly-checkbox_box {
-  display: inline-flex;
-  width: 1.429em;
-  height: 1.429em;
-  box-sizing: border-box;
-  margin-right: 0.34em;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
+  &_box {
+    display: inline-flex;
+    width: 1.429em;
+    height: 1.429em;
+    box-sizing: border-box;
+    margin-right: 0.34em;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
 
-.ly-checkbox_icon {
-  width: 100%;
-  height: 100%;
-}
+  &_icon {
+    width: 100%;
+    height: 100%;
+  }
 
-.ly-checkbox_checked-icon {
-  display: none;
-  width: 100%;
-  height: 100%;
-  fill: var(--color);
-}
+  &_checked-icon {
+    display: none;
+    width: 100%;
+    height: 100%;
+    fill: var(--color);
+  }
 
-.ly-checkbox_input:not([disabled]):checked
-  + .ly-checkbox_box
-  .ly-checkbox_icon {
-  display: none;
-}
+  &_input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 
-.ly-checkbox_input:not([disabled]):checked
-  + .ly-checkbox_box
-  .ly-checkbox_checked-icon {
-  display: block;
-}
+    &:not([disabled]):checked
+      + .#{$prefix}-checkbox_box
+      .#{$prefix}-checkbox_icon {
+      display: none;
+    }
+    &:not([disabled]):checked
+      + .#{$prefix}-checkbox_box
+      .#{$prefix}-checkbox_checked-icon {
+      display: block;
+    }
+  }
 
-.ly-checkbox_input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-}
+  &_text {
+    display: block;
+    line-height: 1;
+  }
 
-.ly-checkbox_text {
-  display: block;
-  line-height: 1;
-}
-
-.ly-checkbox[disabled] {
-  opacity: 0.3;
+  &[disabled] {
+    opacity: 0.3;
+  }
 }
 </style>

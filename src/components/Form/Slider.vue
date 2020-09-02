@@ -1,18 +1,12 @@
 <template>
-  <div class="ly-slider" :disabled="disabled">
-    <div class="ly-slider_inner">
-      <div class="ly-slider_box">
-        <div
-          class="ly-slider_track"
-          :style="[sliderColor, { width: progress }]"
-        ></div>
-        <div
-          class="ly-slider_thumb"
-          :style="[sliderColor, { left: progress }]"
-        ></div>
+  <div :class="[prefix + '-slider']" :disabled="disabled">
+    <div :class="[prefix + '-slider_inner']">
+      <div :class="[prefix + '-slider_box']">
+        <div :class="[prefix + '-slider_track']" :style="[sliderColor, { width: progress }]"></div>
+        <div :class="[prefix + '-slider_thumb']" :style="[sliderColor, { left: progress }]"></div>
       </div>
       <input
-        class="ly-slider_range"
+        :class="[prefix + '-slider_range']"
         type="range"
         :disabled="disabled"
         v-model="formValue"
@@ -23,15 +17,16 @@
         @change="onChange"
       />
     </div>
-    <div v-if="showValue" class="ly-slider_text">{{ formValue }}</div>
+    <div v-if="showValue" :class="[prefix + '-slider_text']">{{ formValue }}</div>
   </div>
 </template>
 
 <script>
 import { CustomEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 export default {
-  name: 'ly-slider',
+  name: SDKKey + '-slider',
   props: {
     value: {
       type: Number,
@@ -72,6 +67,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       formValue: 0
     }
   },
@@ -191,61 +188,61 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-slider {
-  --color: var(--ly-main-color);
+.#{$prefix}-slider {
+  --color: var(--#{$prefix}-main-color);
 
   position: relative;
   height: 24px;
   display: flex;
   align-items: center;
-}
 
-.ly-slider_inner {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: 0 6px;
-  position: relative;
-}
+  &_inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    position: relative;
+  }
 
-.ly-slider_box {
-  position: relative;
-  height: 2px;
-  width: 100%;
-  background: var(--ly-light-color);
-}
+  &_box {
+    position: relative;
+    height: 2px;
+    width: 100%;
+    background: $light-color;
+  }
 
-.ly-slider_track {
-  width: 100%;
-  height: 100%;
-  background: var(--color);
-}
+  &_track {
+    width: 100%;
+    height: 100%;
+    background: var(--color);
+  }
 
-.ly-slider_thumb {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin: -7px 0 0 -6px;
-  background: var(--color);
-}
+  &_thumb {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: -7px 0 0 -6px;
+    background: var(--color);
+  }
 
-.ly-slider_range {
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
+  &_range {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
 
-.ly-slider_text {
-  font-size: 14px;
-  margin-left: 4px;
-  color: var(--ly-grey-color);
+  &_text {
+    font-size: 14px;
+    margin-left: 4px;
+    color: $grey-color;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div
-    class="ly-cascader"
     :class="[
+      prefix + '-cascader',
       {
         focus: focus,
         disabled: disabled,
@@ -12,19 +12,19 @@
       alignClassName
     ]"
   >
-    <div class="ly-cascader_field" @mouseup="onBoxClick">
-      <div class="ly-cascader_prepend" v-if="hasPrepend">
+    <div :class="[prefix + '-cascader_field']" @mouseup="onBoxClick">
+      <div :class="[prefix + '-cascader_prepend']" v-if="hasPrepend">
         <slot name="prepend"></slot>
       </div>
-      <div class="ly-cascader_content">
+      <div :class="[prefix + '-cascader_content']">
         <div
-          class="ly-cascader_text"
-          :class="{ placeholder: !formLabelString }"
-        >
-          {{ formLabelString || placeholder }}
-        </div>
+          :class="[
+            prefix + '-cascader_text',
+            { placeholder: !formLabelString }
+          ]"
+        >{{ formLabelString || placeholder }}</div>
         <input
-          class="ly-cascader_input"
+          :class="[prefix + '-cascader_input']"
           type="text"
           readonly
           :name="name"
@@ -35,41 +35,37 @@
           @blur="onInputBlur"
         />
       </div>
-      <icon
-        class="ly-cascader_unfold-icon"
-        :type="picker ? 'forward' : 'unfold'"
-      ></icon>
+      <icon :class="[prefix + '-cascader_unfold-icon']" :type="picker ? 'forward' : 'unfold'"></icon>
     </div>
-    <div class="ly-cascader_dropdown" ref="dropdown">
-      <div class="ly-cascader_tools">
-        <a class="ly-cascader_cancel-button" href="javascript:;">取消</a>
-        <span class="ly-cascader_ok-group" @mousedown.prevent="onDropdownTap">
+    <div :class="[prefix + '-cascader_dropdown']" ref="dropdown">
+      <div :class="[prefix + '-cascader_tools']">
+        <a :class="[prefix + '-cascader_cancel-button']" href="javascript:;">取消</a>
+        <span :class="[prefix + '-cascader_ok-group']" @mousedown.prevent="onDropdownTap">
           <a
-            class="ly-cascader_ok-button"
+            :class="[prefix + '-cascader_ok-button']"
             href="javascript:;"
             @click="onOkButtonClick"
-            >完成</a
-          >
+          >完成</a>
         </span>
       </div>
       <div
         ref="dropdownGroups"
-        class="ly-cascader_groups"
+        :class="[prefix + '-cascader_groups']"
         @mousedown.prevent="onDropdownTap"
         @scroll.stop="onDropdownTap"
       >
         <div
-          class="ly-cascader_group"
+          :class="[prefix + '-cascader_group']"
           v-for="(list, listIndex) in dropdown"
           :key="listIndex"
         >
           <ul
-            class="ly-cascader_list ly-scroll-bar"
+            :class="[prefix + '-cascader_list', prefix + '-scroll-bar']"
             :data-index="listIndex"
             @scroll.stop="onDropdownScroll"
           >
             <li
-              class="ly-cascader_item"
+              :class="[prefix + '-cascader_item']"
               v-for="(item, index) in list"
               :key="item.value"
               :selected="item.selected"
@@ -77,9 +73,13 @@
               :data-index="index"
               @click="onItemClick($event, item)"
             >
-              <span class="ly-cascader_item-text">{{ item.label }}</span>
+              <span :class="[prefix + '-cascader_item-text']">
+                {{
+                item.label
+                }}
+              </span>
               <icon
-                class="ly-cascader_item-icon"
+                :class="[prefix + '-cascader_item-icon']"
                 v-if="item.hasChildren"
                 type="forward"
                 :size="16"
@@ -95,7 +95,7 @@
 <script>
 import Icon from '../Icon/Icon.vue'
 import { frameTo } from '../../helpers/animation'
-import { CustomEvent, BaseEvent } from '../../helpers/events'
+import { CustomEvent } from '../../helpers/events'
 import {
   inArray,
   isArray,
@@ -117,6 +117,7 @@ import {
 } from './cascader-date'
 import { parseRegionList } from './cascader-region2'
 import { isString, isNumber } from 'util'
+import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
@@ -132,7 +133,7 @@ const MODE_NAMES = [
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
 export default {
-  name: 'ly-cascader',
+  name: SDKKey + '-cascader',
   components: { Icon },
   props: {
     picker: {
@@ -210,6 +211,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       initMode: MODE_NAMES[0],
       focus: false,
       formValue: [],
@@ -268,9 +271,9 @@ export default {
     },
     focus() {
       if (this.focus) {
-        document.documentElement.classList.add('noscroll')
+        document.documentElement.classList.add(SDKKey + '-noscroll')
       } else {
-        document.documentElement.classList.remove('noscroll')
+        document.documentElement.classList.remove(SDKKey + '-noscroll')
       }
     }
   },
@@ -570,7 +573,7 @@ export default {
         // 把选择数据展示在选择框内
         if (this.focus) {
           const $dropdown = this.$refs.dropdown
-          const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
+          const $lists = $dropdown.querySelectorAll(`.${SDKKey}-cascader_list`)
           const $firstList = $lists[0]
 
           if ($firstList && $firstList.firstElementChild) {
@@ -595,33 +598,12 @@ export default {
       })
     },
     onInputFocus(e) {
-      this.$emit(
-        e.type,
-        new BaseEvent(
-          {
-            type: e.type,
-            currentTarget: this.$el,
-            target: e.target
-          },
-          {}
-        )
-      )
+      this.$emit(e.type, e)
     },
-    onInputBlur() {
+    onInputBlur(e) {
       this.focus = false
-      const type = 'blur'
 
-      this.$emit(
-        type,
-        new BaseEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: this.getInputEl()
-          },
-          {}
-        )
-      )
+      this.$emit(e.type, e)
 
       this.$emit(
         VISIBILITY_CHANGE_TYPE,
@@ -690,7 +672,6 @@ export default {
           this.formLabel = item.labels
 
           this.getInputEl().blur()
-          this.onInputBlur()
           this.onChange()
         }
       }
@@ -701,7 +682,7 @@ export default {
      */
     onOkButtonClick() {
       const $dropdown = this.$refs.dropdown
-      const $lists = $dropdown.querySelectorAll('.ly-cascader_list')
+      const $lists = $dropdown.querySelectorAll(`.${SDKKey}-cascader_list`)
       const $lastList = $lists[$lists.length - 1]
       if ($lastList && $lastList.firstElementChild) {
         const itemHeight = $lastList.firstElementChild.clientHeight
@@ -715,7 +696,6 @@ export default {
           this.formLabel = item.labels
 
           this.getInputEl().blur()
-          this.onInputBlur()
           this.onChange()
         }
       }
@@ -837,392 +817,420 @@ export default {
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.noscroll {
-  overflow: hidden;
-}
-.noscroll body {
-  position: fixed;
-  width: 100%;
-}
-
-.ly-cascader {
+.#{$prefix}-cascader {
   --height: 30px;
   --font-size: 14px;
   --icon-size: 18px;
-  --color: var(--ly-main-color);
+  --color: var(--#{$prefix}-main-color);
   --dropdown-color: rgba(9, 187, 7, 0.1);
-  --placeholder-color: var(--ly-light-color);
+  --placeholder-color: var(--#{$prefix}-light-color);
   --padding-left-right: 12px;
 
   display: flex;
   height: calc(var(--height) + 2px);
   font-size: var(--font-size);
   position: relative;
-  color: var(--ly-semi-color);
-}
+  color: $semi-color;
 
-.ly-cascader.size--mini {
-  --height: 22px;
-  --font-size: 12px;
-  --icon-size: 16px;
-  --padding-left-right: 8px;
-}
+  &.size--mini {
+    --height: 22px;
+    --font-size: 12px;
+    --icon-size: 16px;
+    --padding-left-right: 8px;
+  }
 
-.ly-cascader.size--large {
-  --height: 38px;
-  --font-size: 16px;
-  --icon-size: 20px;
-}
+  &.size--large {
+    --height: 38px;
+    --font-size: 16px;
+    --icon-size: 20px;
+  }
 
-.ly-cascader_field {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--ly-light-color);
-  border-radius: 4px;
-  overflow: hidden;
-  box-sizing: border-box;
-  background-color: #fff;
-}
+  &_field {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid $light-color;
+    border-radius: 4px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #fff;
 
-.ly-cascader.no-border .ly-cascader_field {
-  border: none;
-}
+    &:hover {
+      border-color: var(--color);
+    }
+  }
 
-.ly-cascader_field:hover {
-  border-color: var(--color);
-}
+  &_prepend {
+    padding: 0 var(--padding-left-right);
+  }
 
-.ly-cascader.disabled .ly-cascader_field,
-.ly-cascader.disabled .ly-cascader_field:hover {
-  background-color: var(--ly-whitesmoke-color);
-  border-color: var(--ly-light-color);
-  cursor: not-allowed;
-}
+  &_content {
+    flex: 1;
+    height: 100%;
+    position: relative;
+  }
 
-.ly-cascader.no-border.disabled .ly-cascader_field,
-.ly-cascader.no-border.disabled .ly-cascader_field:hover {
-  background-color: transparent;
-  border-color: transparent;
-}
+  &_text,
+  &_input {
+    box-sizing: border-box;
+    margin: 0;
+    height: 100%;
+    outline: none;
+    height: var(--height);
+    line-height: var(--height);
+    padding: 0 var(--padding-left-right);
+    font-size: var(--font-size);
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    color: $semi-color;
+    background: none;
+  }
 
-.ly-cascader.focus .ly-cascader_field {
-  border-color: var(--color);
-  box-shadow: 0 0 3px var(--color);
-}
+  &_input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
 
-.ly-cascader.no-border.focus .ly-cascader_field {
-  box-shadow: none;
-}
+    &::-webkit-input-placeholder {
+      color: var(--placeholder-color);
+    }
 
-.ly-cascader_prepend {
-  padding: 0 var(--padding-left-right);
-}
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
 
-.ly-cascader_content {
-  flex: 1;
-  height: 100%;
-  position: relative;
-}
+  &_text {
+    .#{$prefix}-cascader.align--center & {
+      text-align: center;
+    }
 
-.ly-cascader_text,
-.ly-cascader_input {
-  box-sizing: border-box;
-  margin: 0;
-  height: 100%;
-  outline: none;
-  height: var(--height);
-  line-height: var(--height);
-  padding: 0 var(--padding-left-right);
-  font-size: var(--font-size);
-  border: none;
-  cursor: pointer;
-  user-select: none;
-  color: var(--ly-semi-color);
-  background: none;
-}
+    .#{$prefix}-cascader.align--right & {
+      text-align: right;
+    }
 
-.ly-cascader.no-border .ly-cascader_text,
-.ly-cascader.no-border .ly-cascader_input {
-  padding: 0;
-}
+    &.placeholder {
+      color: var(--placeholder-color);
+    }
+  }
 
-.ly-cascader.no-border.disabled .ly-cascader_text,
-.ly-cascader.no-border.disabled .ly-cascader_input {
-  color: var(--ly-light-color);
-}
+  &_unfold-icon {
+    display: block;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin-right: var(--padding-left-right);
+    transition: all 0.2s;
+  }
 
-.ly-cascader_input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
+  &_dropdown {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 2px);
+    z-index: 99999;
+  }
 
-.ly-cascader.align--center .ly-cascader_text {
-  text-align: center;
-}
+  &_tools {
+    display: none;
+  }
 
-.ly-cascader.align--right .ly-cascader_text {
-  text-align: right;
-}
+  &_groups {
+    background-color: #fff;
+    border: 1px solid $light-color;
+    box-sizing: border-box;
+    border-radius: 4px;
+    z-index: 100000;
+    height: 208px;
+    max-width: 600px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    z-index: 0;
+  }
 
-.ly-cascader_text.placeholder,
-.ly-cascader_input::-webkit-input-placeholder {
-  color: var(--placeholder-color);
-}
+  &_group {
+    float: left;
+    position: relative;
+    height: 100%;
+    z-index: 1;
+    min-width: 60px;
+    max-width: 200px;
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
 
-.ly-cascader_input:disabled {
-  cursor: not-allowed;
-}
+  &_list {
+    width: 100%;
+    max-height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    border-right: 1px solid $whitesmoke-color;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 
-.ly-cascader_unfold-icon {
-  display: block;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  margin-right: var(--padding-left-right);
-  transition: all 0.2s;
-}
+    &:last-child {
+      border-right: none;
+    }
+  }
 
-.ly-cascader.no-border .ly-cascader_unfold-icon {
-  margin-right: 0;
-}
+  &_item {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    padding: 0 var(--padding-left-right);
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
 
-.ly-cascader.focus .ly-cascader_unfold-icon {
-  transform: rotate(180deg);
-}
+    &[selected] {
+      background-color: $whitesmoke-color;
+    }
 
-.ly-cascader_dropdown {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: calc(100% + 2px);
-  z-index: 99999;
-}
+    &:hover {
+      background-color: var(--dropdown-color);
+    }
 
-.ly-cascader_tools {
-  display: none;
-}
+    &[disabled],
+    &[disabled]:hover {
+      background-color: #ffffff;
+      color: $light-color;
+      cursor: not-allowed;
+    }
+  }
 
-.ly-cascader_groups {
-  background-color: #fff;
-  border: 1px solid var(--ly-light-color);
-  box-sizing: border-box;
-  border-radius: 4px;
-  z-index: 100000;
-  height: 208px;
-  max-width: 600px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-  z-index: 0;
-}
+  &_item-text {
+    text-align: left;
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 
-.ly-cascader.focus .ly-cascader_dropdown {
-  display: block;
-}
+  &_item-icon {
+    margin-right: calc(
+      var(--padding-left-right) / 2 - var(--padding-left-right)
+    );
+  }
 
-.ly-cascader_group {
-  float: left;
-  position: relative;
-  height: 100%;
-  z-index: 1;
-  min-width: 60px;
-  max-width: 200px;
-  display: inline-flex;
-  flex: 0 0 auto;
-}
+  &.disabled {
+    .#{$prefix}-cascader {
+      &_field,
+      &_field:hover {
+        background-color: $whitesmoke-color;
+        border-color: $light-color;
+        cursor: not-allowed;
+      }
+    }
+  }
 
-.ly-cascader_list {
-  width: 100%;
-  max-height: 100%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  border-right: 1px solid var(--ly-whitesmoke-color);
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
+  &.focus {
+    .#{$prefix}-cascader {
+      &_field {
+        border-color: var(--color);
+        box-shadow: 0 0 3px var(--color);
+      }
 
-.ly-cascader_list:last-child {
-  border-right: none;
-}
+      &_unfold-icon {
+        transform: rotate(180deg);
+      }
 
-.ly-cascader_item {
-  display: flex;
-  align-items: center;
-  height: 32px;
-  line-height: 32px;
-  font-size: 14px;
-  padding: 0 var(--padding-left-right);
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
+      &_dropdown {
+        display: block;
+      }
+    }
+  }
 
-.ly-cascader_item-text {
-  text-align: left;
-  flex: 1;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
+  &.no-border {
+    .#{$prefix}-cascader {
+      &_field {
+        border: none;
+      }
 
-.ly-cascader_item-icon {
-  margin-right: calc(var(--padding-left-right) / 2 - var(--padding-left-right));
-}
+      &_text,
+      &_input {
+        padding: 0;
+      }
 
-.ly-cascader_item[selected] {
-  background-color: var(--ly-whitesmoke-color);
-}
+      &_unfold-icon {
+        margin-right: 0;
+      }
+    }
 
-.ly-cascader_item:hover {
-  background-color: var(--dropdown-color);
-}
+    &.focus {
+      .#{$prefix}-cascader {
+        &_field {
+          box-shadow: none;
+        }
+      }
+    }
 
-.ly-cascader_item[disabled],
-.ly-cascader_item[disabled]:hover {
-  background-color: #ffffff;
-  color: var(--ly-light-color);
-  cursor: not-allowed;
-}
+    &.disabled {
+      .#{$prefix}-cascader {
+        &_field,
+        &_field:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
 
-.ly-cascader.picker .ly-cascader_dropdown {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
-}
+        &_text,
+        &_input {
+          color: $light-color;
+        }
+      }
+    }
+  }
 
-.ly-cascader.picker.focus .ly-cascader_unfold-icon {
-  transform: rotate(0);
-}
+  &.picker {
+    .#{$prefix}-cascader {
+      &_dropdown {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.25);
+      }
 
-.ly-cascader.picker .ly-cascader_tools {
-  position: absolute;
-  left: 0;
-  bottom: 250px;
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--ly-whitesmoke-color);
-  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
-}
+      &_tools {
+        position: absolute;
+        left: 0;
+        bottom: 250px;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $whitesmoke-color;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
+      }
 
-.ly-cascader.picker .ly-cascader_cancel-button,
-.ly-cascader.picker .ly-cascader_ok-button {
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 var(--padding-left-right);
-  text-decoration: none;
-  color: var(--ly-grey-color);
-}
+      &_ok-group {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
 
-.ly-cascader.picker .ly-cascader_ok-group {
-  flex: 1;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
+      &_cancel-button,
+      &_ok-button {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 var(--padding-left-right);
+        text-decoration: none;
+        color: $grey-color;
+      }
 
-.ly-cascader.picker .ly-cascader_ok-button {
-  color: var(--ly-main-color);
-}
+      &_ok-button {
+        color: $main-color;
+      }
 
-.ly-cascader.picker .ly-cascader_groups {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  top: auto;
-  border-radius: 0;
-  border: none;
-  max-width: 100%;
-  height: 250px;
-  transition: all 0.2s;
-  text-align: center;
-}
+      &_groups {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        top: auto;
+        border-radius: 0;
+        border: none;
+        max-width: 100%;
+        height: 250px;
+        transition: all 0.2s;
+        text-align: center;
+      }
 
-.ly-cascader.picker .ly-cascader_groups::before,
-.ly-cascader.picker .ly-cascader_list::before {
-  content: '';
-  position: absolute;
-  top: 100px;
-  left: 0;
-  height: 0;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 1px solid var(--ly-whitesmoke-color);
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.2)
-  );
-}
+      &_groups,
+      &_list {
+        &::before {
+          content: '';
+          position: absolute;
+          top: 100px;
+          left: 0;
+          height: 0;
+          width: 100%;
+          box-sizing: border-box;
+          border-bottom: 1px solid $whitesmoke-color;
+          background-image: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.2)
+          );
+        }
 
-.ly-cascader.picker .ly-cascader_groups::after,
-.ly-cascader.picker .ly-cascader_list::after {
-  content: '';
-  position: absolute;
-  bottom: 100px;
-  left: 0;
-  height: 0;
-  width: 100%;
-  box-sizing: border-box;
-  border-top: 1px solid var(--ly-whitesmoke-color);
-  background-image: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.2)
-  );
-}
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 100px;
+          left: 0;
+          height: 0;
+          width: 100%;
+          box-sizing: border-box;
+          border-top: 1px solid $whitesmoke-color;
+          background-image: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.2)
+          );
+        }
+      }
 
-.ly-cascader.picker .ly-cascader_group {
-  float: none;
-  max-width: 300px;
-  justify-content: center;
-}
+      &_group {
+        float: none;
+        max-width: 300px;
+        justify-content: center;
+      }
 
-.ly-cascader.picker .ly-cascader_item {
-  height: 50px;
-  line-height: 50px;
-  font-size: 16px;
-  color: var(--ly-light-color);
-}
+      &_item {
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+        color: $light-color;
 
-.ly-cascader.picker .ly-cascader_item-text {
-  text-align: center;
-}
+        &:first-child {
+          margin-top: 100px;
+        }
 
-.ly-cascader.picker .ly-cascader_item:first-child {
-  margin-top: 100px;
-}
+        &:last-child {
+          margin-bottom: 100px;
+        }
 
-.ly-cascader.picker .ly-cascader_item:last-child {
-  margin-bottom: 100px;
-}
+        &[selected],
+        &:hover {
+          background-color: #ffffff;
+          color: $semi-color;
+        }
+      }
 
-.ly-cascader.picker .ly-cascader_item-icon {
-  display: none;
-}
+      &_item-text {
+        text-align: center;
+      }
 
-.ly-cascader.picker .ly-cascader_item[selected],
-.ly-cascader.picker .ly-cascader_item:hover {
-  background-color: #ffffff;
-  color: var(--ly-semi-color);
+      &_item-icon {
+        display: none;
+      }
+    }
+
+    &.focus {
+      .#{$prefix}-cascader {
+        &_unfold-icon {
+          transform: rotate(0);
+        }
+      }
+    }
+  }
 }
 </style>

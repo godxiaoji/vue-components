@@ -95,21 +95,21 @@
 
 ## Events
 
-| 事件              | 描述                    | 回调函数参数                                                |
-| ----------------- | ----------------------- | ----------------------------------------------------------- |
-| change            | 选中值发生变化时触发    | CustomEvent，可通过 e.detail.value 取值                     |
-| visibility-change | 下拉框出现/隐藏时触发   | CustomEvent，e.detail.visibility = true(显示) / false(隐藏) |
-| blur              | 当 input 失去焦点时触发 | CustomEvent                                                 |
-| focus             | 当 input 获得焦点时触发 | CustomEvent                                                 |
+| 事件              | 描述                    | 回调函数参数                                                     |
+| ----------------- | ----------------------- | ---------------------------------------------------------------- |
+| change            | 选中值发生变化时触发    | CustomEvent，可通过 event.details.value 取值                     |
+| visibility-change | 下拉框出现/隐藏时触发   | CustomEvent，event.details.visibility = true(显示) / false(隐藏) |
+| blur              | 当 input 失去焦点时触发 | FocusEvent                                                       |
+| focus             | 当 input 获得焦点时触发 | FocusEvent                                                       |
 
-### prop mode = date / time / datetime 模式下， change 事件的 e.detail
+### prop mode = date / time / datetime 模式下， change 事件的 event.details
 
 | 值     | 类型              | 说明                                                        |
 | ------ | ----------------- | ----------------------------------------------------------- |
 | value  | string            | 格式化后的数值，如：1, "a/b", "北京市/北京市/东城区"        |
 | values | number[]/string[] | 数组形式，如：[1]，["a", "b"]，["北京市","北京市","东城区"] |
 
-### prop mode = date / time / datetime 模式下， change 事件的 e.detail
+### prop mode = date / time / datetime 模式下， change 事件的 event.details
 
 | 值     | 类型     | 说明                              |
 | ------ | -------- | --------------------------------- |

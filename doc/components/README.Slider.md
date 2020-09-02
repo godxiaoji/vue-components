@@ -22,7 +22,7 @@
 
 ## Events
 
-| 事件     | 描述                     | 回调函数参数                            |
-| -------- | ------------------------ | --------------------------------------- |
-| changing | 拖动过程中触发的事件     | CustomEvent，可通过 e.detail.value 取值 |
-| change   | 完成一次拖动后触发的事件 | CustomEvent，可通过 e.detail.value 取值 |
+| 事件     | 描述                     | 回调函数参数                                 |
+| -------- | ------------------------ | -------------------------------------------- |
+| changing | 拖动过程中触发的事件     | CustomEvent，可通过 event.details.value 取值 |
+| change   | 完成一次拖动后触发的事件 | CustomEvent，可通过 event.details.value 取值 |

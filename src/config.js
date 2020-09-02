@@ -1,1 +1,1 @@
-export const SDKKey = 'ly'
+export const SDKKey = 'fx'

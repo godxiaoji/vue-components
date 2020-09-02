@@ -1,6 +1,23 @@
 import { objectForEach, isObject, isElement } from './util'
 import Exception from './exception'
 
+export function getAppTarget(el) {
+  if (el == null || !isElement(el)) {
+    return null
+  }
+
+  return new AppTarget(el)
+}
+
+export class AppTarget {
+  constructor(el) {
+    this.id = el.id
+    this.dataset = getDataset(el.dataset)
+    this.offsetLeft = el.offsetLeft
+    this.offsetTop = el.offsetTop
+  }
+}
+
 /**
  * 基础事件类
  */
@@ -19,24 +36,14 @@ export class BaseEvent {
     this.type = type
     this.timeStamp = Date.now()
 
-    this.currentTarget = {
-      id: currentTarget.id,
-      dataset: getDataset(currentTarget.dataset),
-      offsetLeft: currentTarget.offsetLeft,
-      offsetTop: currentTarget.offsetTop
-    }
-    this.target = {
-      id: target.id,
-      dataset: getDataset(target.dataset),
-      offsetLeft: target.offsetLeft,
-      offsetTop: target.offsetTop
-    }
+    this.currentTarget = getAppTarget(currentTarget)
+    this.target = getAppTarget(target)
 
-    this.detail = {}
+    this.details = {}
 
     if (e instanceof MouseEvent) {
-      this.detail.x = e.x
-      this.detail.y = e.y
+      this.details.x = e.x
+      this.details.y = e.y
     }
 
     return this
@@ -47,16 +54,16 @@ export class BaseEvent {
  * 自定义事件类
  */
 export class CustomEvent extends BaseEvent {
-  constructor(event, detail = {}) {
+  constructor(event, details = {}) {
     super(event)
 
-    if (isObject(detail)) {
-      if (detail instanceof Exception) {
-        detail = detail.getFailError()
+    if (isObject(details)) {
+      if (details instanceof Exception) {
+        details = details.getFailError()
       }
     }
 
-    this.detail = isObject(detail) ? detail : {}
+    this.details = isObject(details) ? details : {}
 
     return this
   }

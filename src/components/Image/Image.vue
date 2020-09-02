@@ -1,6 +1,6 @@
 <template>
-  <div class="ly-image">
-    <img :class="[modeClassName]" :src="imgSrc" />
+  <div :class="[prefix + '-image']">
+    <img :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
 import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
+import { SDKKey } from '../../config'
 
 const MODE_NAMES = [
   'scaleToFill',
@@ -27,7 +28,7 @@ const MODE_NAMES = [
 const LAZY_PRELOAD = 1.3
 
 export default {
-  name: 'ly-image',
+  name: SDKKey + '-image',
   props: {
     // 图片资源地址
     src: {
@@ -48,6 +49,8 @@ export default {
   },
   data() {
     return {
+      prefix: SDKKey,
+
       imgSrc: null,
       inViewed: false
     }
@@ -136,103 +139,105 @@ export default {
 }
 </script>
 
-<style>
-.ly-image {
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-image {
   position: relative;
   display: inline-block;
   width: 320px;
   height: 240px;
   overflow: hidden;
-}
 
-.ly-image img {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
+  &_img {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
 
-.ly-image img.mode--scaleToFill {
-  object-fit: fill;
-}
+    &.mode--scaleToFill {
+      object-fit: fill;
+    }
 
-.ly-image img.mode--aspectFit {
-  object-fit: contain;
-}
+    &.mode--aspectFit {
+      object-fit: contain;
+    }
 
-.ly-image img.mode--aspectFill {
-  object-fit: cover;
-}
+    &.mode--aspectFill {
+      object-fit: cover;
+    }
 
-.ly-image img.mode--widthFix {
-  height: auto;
-}
+    &.mode--widthFix {
+      height: auto;
+    }
 
-.ly-image img.mode--top,
-.ly-image img.mode--bottom {
-  left: 50%;
-  width: auto;
-  height: auto;
-  transform: translateX(-50%);
-}
+    &.mode--top,
+    &.mode--bottom {
+      left: 50%;
+      width: auto;
+      height: auto;
+      transform: translateX(-50%);
+    }
 
-.ly-image img.mode--top {
-  top: 0;
-}
+    &.mode--top {
+      top: 0;
+    }
 
-.ly-image img.mode--bottom {
-  bottom: 0;
-}
+    &.mode--bottom {
+      bottom: 0;
+    }
 
-.ly-image img.mode--center {
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-}
+    &.mode--center {
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+    }
 
-.ly-image img.mode--left,
-.ly-image img.mode--right {
-  top: 50%;
-  width: auto;
-  height: auto;
-  transform: translateY(-50%);
-}
+    &.mode--left,
+    &.mode--right {
+      top: 50%;
+      width: auto;
+      height: auto;
+      transform: translateY(-50%);
+    }
 
-.ly-image img.mode--left {
-  left: 0;
-}
+    &.mode--left {
+      left: 0;
+    }
 
-.ly-image img.mode--right {
-  right: 0;
-}
+    &.mode--right {
+      right: 0;
+    }
 
-.ly-image img.mode--top-left {
-  top: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-}
+    &.mode--top-left {
+      top: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+    }
 
-.ly-image img.mode--top-right {
-  top: 0;
-  right: 0;
-  width: auto;
-  height: auto;
-}
+    &.mode--top-right {
+      top: 0;
+      right: 0;
+      width: auto;
+      height: auto;
+    }
 
-.ly-image img.mode--bottom-left {
-  bottom: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-}
+    &.mode--bottom-left {
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+    }
 
-.ly-image img.mode--bottom-right {
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto;
+    &.mode--bottom-right {
+      right: 0;
+      bottom: 0;
+      width: auto;
+      height: auto;
+    }
+  }
 }
 </style>

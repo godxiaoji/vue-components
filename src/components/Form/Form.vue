@@ -1,5 +1,5 @@
 <template>
-  <form class="ly-form" @submit.prevent="onSubmit" @reset="onReset">
+  <form :class="[prefix + '-form']" @submit.prevent="onSubmit" @reset="onReset">
     <slot></slot>
   </form>
 </template>
@@ -7,12 +7,13 @@
 <script>
 import { inArray } from '../../helpers/util'
 import { CustomEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 export default {
-  name: 'ly-form',
+  name: SDKKey + '-form',
   props: {},
   data() {
-    return {}
+    return { prefix: SDKKey }
   },
   computed: {},
   watch: {},

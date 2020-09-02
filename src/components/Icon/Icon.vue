@@ -1,8 +1,7 @@
 <template>
   <svg
     v-if="type === 'success' || type === 'radio_checked'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -15,8 +14,7 @@
   </svg>
   <svg
     v-else-if="type === 'success_no_circle'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -29,8 +27,7 @@
   </svg>
   <svg
     v-else-if="type === 'info'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -43,8 +40,7 @@
   </svg>
   <svg
     v-else-if="type === 'warn'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -57,8 +53,7 @@
   </svg>
   <svg
     v-else-if="type === 'waiting'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -71,8 +66,7 @@
   </svg>
   <svg
     v-else-if="type === 'cancel'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -85,8 +79,7 @@
   </svg>
   <svg
     v-else-if="type === 'download'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -99,8 +92,7 @@
   </svg>
   <svg
     v-else-if="type === 'search'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -113,8 +105,7 @@
   </svg>
   <svg
     v-else-if="type === 'clear'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -127,8 +118,7 @@
   </svg>
   <svg
     v-else-if="type === 'upload'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -141,8 +131,7 @@
   </svg>
   <svg
     v-else-if="type === 'unfold'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -155,8 +144,7 @@
   </svg>
   <svg
     v-else-if="type === 'forward'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -169,8 +157,7 @@
   </svg>
   <svg
     v-else-if="type === 'loading'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -183,8 +170,7 @@
   </svg>
   <svg
     v-else-if="type === 'close'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -197,8 +183,7 @@
   </svg>
   <svg
     v-else-if="type === 'radio'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -211,8 +196,7 @@
   </svg>
   <svg
     v-else-if="type === 'checkbox'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -225,8 +209,7 @@
   </svg>
   <svg
     v-else-if="type === 'checkbox_checked'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -239,8 +222,7 @@
   </svg>
   <svg
     v-else-if="type === 'back'"
-    class="ly-icon"
-    :class="[className]"
+    :class="[prefix + '-icon', className]"
     :style="[iconColor, iconSize]"
     viewBox="0 0 1024 1024"
     version="1.1"
@@ -249,13 +231,13 @@
   >
     <path
       d="M671.968 912c-12.288 0-24.576-4.672-33.952-14.048L286.048 545.984c-18.752-18.72-18.752-49.12 0-67.872l351.968-352c18.752-18.752 49.12-18.752 67.872 0 18.752 18.72 18.752 49.12 0 67.872l-318.016 318.048 318.016 318.016c18.752 18.752 18.752 49.12 0 67.872C696.544 907.328 684.256 912 671.968 912z"
-    ></path>
+    />
   </svg>
 </template>
 
 <script>
 import { inArray, isString, isNumber } from '../../helpers/util'
-import { BaseEvent } from '../../helpers/events'
+import { SDKKey } from '../../config'
 
 const TYPE_NAMES = [
   'success',
@@ -281,7 +263,7 @@ const TYPE_NAMES = [
 ]
 
 export default {
-  name: 'ly-icon',
+  name: SDKKey + '-icon',
   props: {
     type: {
       validator(value) {
@@ -299,7 +281,7 @@ export default {
     }
   },
   data() {
-    return {}
+    return { prefix: SDKKey }
   },
   computed: {
     iconColor() {
@@ -331,18 +313,18 @@ export default {
   attached() {},
   methods: {
     onClick(e) {
-      this.$emit(e.type, new BaseEvent(e))
+      this.$emit(e.type, e)
     }
   }
 }
 </script>
 
-<style>
-@import url('../../global.css');
+<style lang="scss">
+@import '../component.module.scss';
 
-.ly-icon {
+.#{$prefix}-icon {
   --size: 24px;
-  --color: var(--ly-main-color);
+  --color: var(--#{$prefix}-main-color);
 
   display: inline-block;
   width: var(--size);
@@ -350,42 +332,42 @@ export default {
   overflow: hidden;
   line-height: 0;
   fill: var(--color);
-}
 
-.ly-icon.type--success,
-.ly-icon.type--success_no_circle,
-.ly-icon.type--radio_checked,
-.ly-icon.type--checkbox_checked {
-  --color: var(--ly-main-color);
-}
+  &.type--success,
+  &.type--success_no_circle,
+  &.type--radio_checked,
+  &.type--checkbox_checked {
+    --color: var(--#{$prefix}-main-color);
+  }
 
-.ly-icon.type--info,
-.ly-icon.type--waiting {
-  --color: var(--ly-link-color);
-}
+  &.type--info,
+  &.type--waiting {
+    --color: var(--#{$prefix}-link-color);
+  }
 
-.ly-icon.type--warn {
-  --color: var(--ly-warn-color);
-}
+  &.type--warn {
+    --color: var(--#{$prefix}-warn-color);
+  }
 
-.ly-icon.type--cancel,
-.ly-icon.type--download,
-.ly-icon.type--upload,
-.ly-icon.type--loading,
-.ly-icon.type--radio,
-.ly-icon.type--checkbox {
-  --color: var(--ly-semi-color);
-}
+  &.type--cancel,
+  &.type--download,
+  &.type--upload,
+  &.type--loading,
+  &.type--radio,
+  &.type--checkbox {
+    --color: var(--#{$prefix}-semi-color);
+  }
 
-.ly-icon.type--search,
-.ly-icon.type--clear,
-.ly-icon.type--unfold,
-.ly-icon.type--close {
-  --color: var(--ly-grey-color);
-}
+  &.type--search,
+  &.type--clear,
+  &.type--unfold,
+  &.type--close {
+    --color: var(--#{$prefix}-grey-color);
+  }
 
-.ly-icon.type--back,
-.ly-icon.type--forward {
-  --color: var(--ly-light-color);
+  &.type--back,
+  &.type--forward {
+    --color: var(--#{$prefix}-light-color);
+  }
 }
 </style>

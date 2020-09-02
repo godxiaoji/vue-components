@@ -20,9 +20,9 @@
 
 ## Events
 
-| 事件              | 描述                    | 回调函数参数                                                |
-| ----------------- | ----------------------- | ----------------------------------------------------------- |
-| change            | 选中值发生变化时触发    | CustomEvent，可通过 e.detail.value 取值                     |
-| visibility-change | 下拉框出现/隐藏时触发   | CustomEvent，e.detail.visibility = true(显示) / false(隐藏) |
-| blur              | 当 input 失去焦点时触发 | CustomEvent                                                 |
-| focus             | 当 input 获得焦点时触发 | CustomEvent                                                 |
+| 事件              | 描述                    | 回调函数参数                                                     |
+| ----------------- | ----------------------- | ---------------------------------------------------------------- |
+| change            | 选中值发生变化时触发    | CustomEvent，可通过 event.details.value 取值                     |
+| visibility-change | 下拉框出现/隐藏时触发   | CustomEvent，event.details.visibility = true(显示) / false(隐藏) |
+| blur              | 当 input 失去焦点时触发 | FocusEvent                                                       |
+| focus             | 当 input 获得焦点时触发 | FocusEvent                                                       |

@@ -1,6 +1,7 @@
 import { isObject } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
+import { SDKKey } from "../config"
 
 function htmlEscape(text) {
   return text.replace(/[<>"&]/g, function(match) {
@@ -19,21 +20,21 @@ function htmlEscape(text) {
 
 function render(options) {
   const html = [
-    `<div class="ly-modal">`,
-    `<div class="ly-modal_box">`,
-    `<div class="ly-modal_header">`,
-    `<span class="ly-modal_title">${options.title}</span>`,
+    `<div class="${SDKKey}-modal">`,
+    `<div class="${SDKKey}-modal_box">`,
+    `<div class="${SDKKey}-modal_header">`,
+    `<span class="${SDKKey}-modal_title">${options.title}</span>`,
     `</div>`,
-    `<div class="ly-modal_body">`,
-    `<div class="ly-modal_content">`,
+    `<div class="${SDKKey}-modal_body">`,
+    `<div class="${SDKKey}-modal_content">`,
     htmlEscape(options.content),
     `</div>`,
     `</div>`,
-    `<div class="ly-modal_footer">`,
+    `<div class="${SDKKey}-modal_footer">`,
     `<button style="display: ` +
     (options.showCancel ? 'block' : 'none') +
-    `;" class="ly-modal_button type--cancel">${options.cancelText}</button>`,
-    `<button class="ly-modal_button type--confirm primary">${options.confirmText}</button>`,
+    `;" class="${SDKKey}-modal_button type--cancel">${options.cancelText}</button>`,
+    `<button class="${SDKKey}-modal_button type--confirm primary">${options.confirmText}</button>`,
     `</div>`,
     `</div>`,
     `</div>`

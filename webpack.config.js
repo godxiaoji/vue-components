@@ -38,7 +38,8 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/i,
+        test: /\.(sa|sc|c)ss$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -46,11 +47,8 @@ module.exports = {
               esModule: true
             }
           },
-          'css-loader'
-          // {
-          //   loader: 'css-loader',
-          //   options: { minimize: true }
-          // }
+          'css-loader',
+          'sass-loader'
         ]
       },
       {

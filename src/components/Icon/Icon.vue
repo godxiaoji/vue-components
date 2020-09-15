@@ -236,7 +236,7 @@
 </template>
 
 <script>
-import { inArray, isString, isNumber } from '../../helpers/util'
+import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
 const TYPE_NAMES = [
@@ -273,11 +273,13 @@ export default {
     },
     size: {
       validator(value) {
-        return isString(value) || isNumber(value)
-      }
+        return !isNaN(parseFloat(value))
+      },
+      default: -1
     },
     color: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -293,7 +295,7 @@ export default {
       return null
     },
     iconSize() {
-      if (this.size > 0) {
+      if (this.size >= 0) {
         return {
           width: this.size + 'px',
           height: this.size + 'px'

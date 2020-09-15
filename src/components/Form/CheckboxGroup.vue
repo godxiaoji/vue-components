@@ -75,7 +75,7 @@ export default {
       this.formValue = value
     },
 
-    onChange() {
+    onChange(e) {
       this.updateValue()
 
       const value = cloneData(this.formValue)
@@ -84,7 +84,7 @@ export default {
       this.$emit(
         type,
         new CustomEvent(
-          { type, currentTarget: this.$el },
+          { type, currentTarget: this.$el, target: e.target },
           {
             value
           }

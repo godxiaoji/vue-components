@@ -204,7 +204,7 @@ export default {
       }
 
       options.onSlide = index => {
-        const type = 'animationfinish'
+        const type = 'animation-finish'
 
         vm.$emit(
           type,

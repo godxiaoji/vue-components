@@ -18,6 +18,7 @@ import ToastComponent from './Toast/Toast.vue'
 import ModalComponent from './Modal/Modal.vue'
 import IconComponent from './Icon/Icon.vue'
 import BackToTopComponent from './Navigation/BackToTop.vue'
+import FlatListComponent from './List/FlatList.vue'
 
 export default [
   /* Base */
@@ -44,5 +45,7 @@ export default [
   ToastComponent,
   ModalComponent,
   /* Navigation */
-  BackToTopComponent
+  BackToTopComponent,
+  /* List */
+  FlatListComponent
 ]

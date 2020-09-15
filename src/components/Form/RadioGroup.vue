@@ -81,7 +81,7 @@ export default {
     },
 
     onChange(e) {
-      this.updateValue(e.target)
+      this.updateValue()
 
       const value = this.formValue
       const type = 'change'
@@ -89,7 +89,7 @@ export default {
       this.$emit(
         type,
         new CustomEvent(
-          { type, currentTarget: this.$el },
+          { type, currentTarget: this.$el, target: e.target },
           {
             value
           }

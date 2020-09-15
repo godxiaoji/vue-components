@@ -10,7 +10,10 @@
     />
     <div :class="[prefix + '-radio_box']">
       <icon :class="[prefix + '-radio_icon']" type="radio"></icon>
-      <icon :class="[prefix + '-radio_checked-icon']" type="radio_checked"></icon>
+      <icon
+        :class="[prefix + '-radio_checked-icon']"
+        type="radio_checked"
+      ></icon>
     </div>
     <span :class="[prefix + '-radio_text']">
       <slot></slot>
@@ -43,18 +46,22 @@ export default {
     color: {
       type: String,
       default: ''
+    },
+    name: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return { prefix: SDKKey }
   },
   computed: {
-    /* 只接受来自分组的name */
+    /* 优先接受来自分组的name */
     groupName() {
       if (this.$parent && this.$parent.name) {
         return this.$parent.name
       }
-      return ''
+      return this.name
     }
   },
   model: {
@@ -64,10 +71,10 @@ export default {
   watch: {
     checked() {
       const inputEl = this.getInputEl()
-      const checked = this.checked
+      const checked = !!this.checked
 
       if (checked !== inputEl.checked) {
-        inputEl.checked = checked ? true : false
+        inputEl.checked = checked
 
         this.callParent({
           target: inputEl
@@ -81,17 +88,18 @@ export default {
   ready() {},
   mounted() {
     const inputEl = this.getInputEl()
-    const checked = this.checked
+    const checked = !!this.checked
 
-    if (checked != inputEl.checked) {
-      inputEl.checked = checked ? true : false
+    if (checked !== inputEl.checked) {
+      inputEl.defaultChecked = checked
+      inputEl.checked = checked
     }
 
     if (this.isGroupParent()) {
       inputEl._app_component = this.$parent
 
       if (inputEl.checked) {
-        this.$parent.updateValue(inputEl)
+        this.$parent.updateValue()
       }
     }
 
@@ -100,24 +108,23 @@ export default {
   updated() {},
   attached() {},
   methods: {
-    isGroupParent() {
-      return this.$parent && this.$parent._radio_group
-    },
     onChange(e) {
-      this.modelChange()
+      this.modelChange(this.getInputChecked())
 
       this.callParent(e)
     },
     /**
      * v-modal checked 的值跟input对齐
      */
-    modelChange() {
-      const inputChecked = this.getInputChecked()
+    modelChange(inputChecked) {
       const checked = this.checked ? true : false
 
       if (checked !== inputChecked) {
         this.$emit('_change', inputChecked)
       }
+    },
+    isGroupParent() {
+      return this.$parent && this.$parent._radio_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -133,9 +140,8 @@ export default {
     reset() {
       const inputEl = this.getInputEl()
 
-      if (inputEl.checked !== false) {
-        inputEl.checked = false
-        this.modelChange()
+      if (inputEl.checked !== inputEl.defaultChecked) {
+        this.modelChange((inputEl.checked = inputEl.defaultChecked))
 
         this.callParent({
           target: inputEl

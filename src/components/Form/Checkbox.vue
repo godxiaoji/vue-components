@@ -10,7 +10,10 @@
     />
     <div :class="[prefix + '-checkbox_box']">
       <icon :class="[prefix + '-checkbox_icon']" type="checkbox"></icon>
-      <icon :class="[prefix + '-checkbox_checked-icon']" type="checkbox_checked"></icon>
+      <icon
+        :class="[prefix + '-checkbox_checked-icon']"
+        type="checkbox_checked"
+      ></icon>
     </div>
     <span :class="[prefix + '-checkbox_text']">
       <slot></slot>
@@ -49,10 +52,6 @@ export default {
       default: ''
     }
   },
-  model: {
-    prop: 'checked',
-    event: '_change'
-  },
   data() {
     return { prefix: SDKKey }
   },
@@ -68,14 +67,21 @@ export default {
       return this.value.toString()
     }
   },
+  model: {
+    prop: 'checked',
+    event: '_change'
+  },
   watch: {
     checked() {
       const inputEl = this.getInputEl()
-      const checked = this.checked
+      const checked = !!this.checked
 
-      if (checked != inputEl.checked) {
-        inputEl.checked = checked ? true : false
-        this.callParent({})
+      if (checked !== inputEl.checked) {
+        inputEl.checked = checked
+
+        this.callParent({
+          target: inputEl
+        })
       }
     }
   },
@@ -85,10 +91,11 @@ export default {
   ready() {},
   mounted() {
     const inputEl = this.getInputEl()
-    const checked = this.checked
+    const checked = !!this.checked
 
-    if (checked != inputEl.checked) {
-      inputEl.checked = checked ? true : false
+    if (checked !== inputEl.checked) {
+      inputEl.defaultChecked = checked
+      inputEl.checked = checked
     }
 
     if (this.isGroupParent()) {
@@ -105,15 +112,14 @@ export default {
   attached() {},
   methods: {
     onChange(e) {
-      this.modelChange()
+      this.modelChange(this.getInputChecked())
 
       this.callParent(e)
     },
     /**
      * v-modal checked 的值跟input对齐
      */
-    modelChange() {
-      const inputChecked = this.getInputChecked()
+    modelChange(inputChecked) {
       const checked = this.checked ? true : false
 
       if (checked !== inputChecked) {
@@ -137,11 +143,12 @@ export default {
     reset() {
       const inputEl = this.getInputEl()
 
-      if (inputEl.checked !== false) {
-        inputEl.checked = false
-        this.modelChange()
+      if (inputEl.checked !== inputEl.defaultChecked) {
+        this.modelChange((inputEl.checked = inputEl.defaultChecked))
 
-        this.callParent({})
+        this.callParent({
+          target: inputEl
+        })
       }
     }
   }

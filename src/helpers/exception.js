@@ -42,7 +42,8 @@ class Exception extends Error {
 Exception.TYPE = {
   DEFAULT: 'fail',
   PARAM_ERROR: 'Invalid param',
-  CONFIG_ERROR: 'Invalid config'
+  CONFIG_ERROR: 'Invalid config',
+  PROP_ERROR: 'Invalid Prop'
 }
 
 export default Exception

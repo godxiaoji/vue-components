@@ -5,7 +5,6 @@
       sizeClassName,
       alignClassName,
       {
-        warn: warn,
         'has--prepend': hasPrepend,
         'has--append': hasAppend,
         'no-border': !border,
@@ -21,12 +20,12 @@
       v-if="type === 'textarea'"
       :class="[prefix + '-input_input']"
       :name="name"
-      :value="formValue"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
       :maxlength="maxlength"
       @input="onInput"
+      @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
     ></textarea>
@@ -35,26 +34,25 @@
       :class="[prefix + '-input_input']"
       :name="name"
       :type="realType"
-      :value="formValue"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
       :maxlength="maxlength"
       @input="onInput"
+      @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
     />
     <div :class="[prefix + '-input_append']" v-if="hasAppend">
       <slot name="append"></slot>
     </div>
-    <p :class="[prefix + '-input_error']" v-if="warn && errMsg">{{ errMsg }}</p>
   </label>
 </template>
 
 <script>
-import { inArray, isFunction, isString, isNumber } from '../../helpers/util'
-import { CustomEvent } from '../../helpers/events'
+import { inArray, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
+import { CustomEvent } from '../../helpers/events'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
@@ -100,16 +98,9 @@ export default {
       type: Boolean,
       default: false
     },
-    showClear: {
-      type: Boolean,
-      default: true
-    },
     readonly: {
       type: Boolean,
       default: false
-    },
-    valid: {
-      type: Function
     },
     align: {
       type: String,
@@ -124,12 +115,10 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: '',
-      warn: false,
-      errMsg: '',
-
       hasPrepend: false,
-      hasAppend: false
+      hasAppend: false,
+
+      formValue: ''
     }
   },
   computed: {
@@ -150,11 +139,11 @@ export default {
   },
   model: {
     prop: 'value',
-    event: '_change'
+    event: '_input'
   },
   watch: {
     value() {
-      this.updateFormValue()
+      this.updateValue()
     },
     focus(value) {
       const inputEl = this.getInputEl()
@@ -166,9 +155,7 @@ export default {
       }
     }
   },
-  created() {
-    this.updateFormValue()
-  },
+  created() {},
   ready() {},
   mounted() {
     if (this.$scopedSlots.prepend) {
@@ -180,6 +167,9 @@ export default {
 
     const inputEl = this.getInputEl()
 
+    if (this.value != null) {
+      inputEl.defaultValue = this.formValue = this.value.toString()
+    }
     if (this.focus) {
       inputEl.focus()
     }
@@ -189,27 +179,17 @@ export default {
   updated() {},
   attached() {},
   methods: {
-    updateFormValue() {
-      if (this.formValue !== this.value) {
-        this.formValue = this.value
-      }
+    updateValue() {
+      this.getInputEl().value = this.formValue = this.value.toString()
     },
-
-    onInput(e) {
-      // 输入改变时触发
-      const value = e.target.value
-
-      this.formValue = value
-      this.$emit('_change', value)
-
-      const type = 'input'
-
+    _changing($el, value) {
       this.$emit(
-        type,
+        'changing',
         new CustomEvent(
           {
-            type,
-            currentTarget: this.$el
+            type: 'changing',
+            target: $el,
+            currentTarget: $el
           },
           {
             value
@@ -217,70 +197,45 @@ export default {
         )
       )
     },
-    onFocus(e) {
-      this._prevValue = this.formValue
+    onInput(e) {
+      // 输入改变时触发
+      const target = e.target
+      const value = target.value
 
+      if (value !== this.formValue) {
+        this._changing(target, value)
+      }
+
+      this.formValue = value
+      this.$emit('_input', value)
+      this.$emit(e.type, e)
+    },
+    onFocus(e) {
       this.$emit(e.type, e)
     },
     onBlur(e) {
       this.$emit(e.type, e)
-
-      if (this.formValue != this._prevValue) {
-        // 改变且失焦后触发
-        this.onChange(e)
-      }
     },
     onChange(e) {
-      // 改变且失焦后触发
-      const type = 'change'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: e.target
-          },
-          {
-            value: this.formValue
-          }
-        )
-      )
-
-      if (isFunction(this.valid)) {
-        let ret = this.valid(this.formValue)
-        if (ret instanceof Error) {
-          this.warn = true
-          this.errMsg = ret.message
-        } else {
-          this.warn = false
-          this.errMsg = ''
-        }
-      }
+      this.$emit(e.type, e)
     },
-
     getInputEl() {
       return (
         (this.$el && this.$el.querySelector('input')) ||
         this.$el.querySelector('textarea')
       )
     },
-
     reset() {
-      if (this.formValue) {
-        // 只有原来有数据才会显示
-        const inputEl = this.getInputEl()
+      const $el = this.getInputEl()
+      const defaultValue = $el.defaultValue
 
-        inputEl.value = ''
-        this.onInput({
-          target: inputEl
-        })
-
-        this.onChange({
-          target: inputEl
-        })
+      if (defaultValue !== this.formValue) {
+        this._changing($el, defaultValue)
       }
+
+      $el.value = $el.defaultValue
+      this.formValue = defaultValue
+      this.$emit('_input', defaultValue)
     }
   }
 }
@@ -295,7 +250,6 @@ export default {
   --icon-size: 20px;
   --padding-left-right: 12px;
   --color: var(--#{$prefix}-main-color);
-  --warn-color: var(--#{$prefix}-warn-color);
   --placeholder-color: var(--#{$prefix}-light-color);
 
   height: calc(var(--height) + 2px);
@@ -321,10 +275,6 @@ export default {
       box-sizing: border-box;
       cursor: pointer;
     }
-  }
-
-  &.warn {
-    --color: $warn-color;
   }
 
   &.size--mini {
@@ -379,10 +329,6 @@ export default {
       text-align: right;
     }
 
-    .#{$prefix}-input.warn & {
-      border-color: var(--warn-color);
-    }
-
     &[type='search']::-webkit-search-cancel-button {
       display: none;
     }
@@ -427,19 +373,6 @@ export default {
         box-shadow: none;
       }
     }
-  }
-
-  &_error {
-    position: absolute;
-    left: var(--padding-left-right);
-    top: 100%;
-    font-size: 12px;
-    height: 14px;
-    line-height: 14px;
-    padding: 0 5px;
-    margin-top: -8px;
-    background-color: #fff;
-    color: var(--warn-color);
   }
 }
 </style>

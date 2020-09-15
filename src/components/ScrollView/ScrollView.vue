@@ -85,7 +85,7 @@ export default {
 
     // 处理初始化设置的滚动位置
     this.updateScroll()
-    this.updateScrollIntoView()
+    this.scrollIntoIdView(this.scrollIntoView)
   },
   updated() {},
   attached() {},
@@ -97,23 +97,36 @@ export default {
     scrollTop() {
       this.updateScroll()
     },
-    scrollIntoView() {
-      this.updateScrollIntoView()
+    scrollIntoView(val) {
+      this.scrollIntoIdView(val)
     }
   },
   methods: {
     /**
-     * 接收滚动到那个元素
+     * 滚动到指定Id元素
      */
-    updateScrollIntoView() {
-      if (this.scrollIntoView) {
-        const el = document.getElementById(this.scrollIntoView)
+    scrollIntoIdView(id) {
+      if (id) {
+        const $view = this.$el.getElementById(id)
 
-        if (el) {
-          el.scrollIntoView({
+        if ($view) {
+          $view.scrollIntoView({
             behavior: this.scrollWithAnimation ? 'smooth' : 'auto'
           })
         }
+      }
+    },
+
+    /**
+     * 滑动到第index个元素
+     */
+    scrollIntoIndex(index) {
+      const $view = this.$el.children[index]
+
+      if ($view) {
+        $view.scrollIntoView({
+          behavior: this.scrollWithAnimation ? 'smooth' : 'auto'
+        })
       }
     },
 
@@ -156,6 +169,9 @@ export default {
       let isToUpperY = false
       let isToLowerX = false
       let isToUpperX = false
+
+      const typeLower = 'scroll-to-lower'
+      const typeUpper = 'scroll-to-upper'
 
       // 滚动事件
       this.$emit(
@@ -218,10 +234,10 @@ export default {
         this._isToLowerOrUpperY = SCROLL_STATE_UPPER
 
         this.$emit(
-          'scrolltoupper',
+          typeUpper,
           new CustomEvent(
             {
-              type: 'scrolltoupper',
+              type: typeUpper,
               currentTarget: $el
             },
             {
@@ -234,10 +250,10 @@ export default {
         this._isToLowerOrUpperY = SCROLL_STATE_LOWER
 
         this.$emit(
-          'scrolltolower',
+          typeLower,
           new CustomEvent(
             {
-              type: 'scrolltolower',
+              type: typeLower,
               currentTarget: $el
             },
             {
@@ -251,10 +267,10 @@ export default {
         this._isToLowerOrUpperX = SCROLL_STATE_UPPER
 
         this.$emit(
-          'scrolltoupper',
+          typeUpper,
           new CustomEvent(
             {
-              type: 'scrolltoupper',
+              type: typeUpper,
               currentTarget: $el
             },
             {
@@ -267,10 +283,10 @@ export default {
         this._isToLowerOrUpperX = SCROLL_STATE_LOWER
 
         this.$emit(
-          'scrolltolower',
+          typeLower,
           new CustomEvent(
             {
-              type: 'scrolltolower',
+              type: typeLower,
               currentTarget: $el
             },
             {
@@ -294,6 +310,7 @@ export default {
 .#{$prefix}-scroll-view {
   display: block;
   width: 100%;
+  overflow: hidden;
 
   &.scroll-x {
     overflow-x: auto;

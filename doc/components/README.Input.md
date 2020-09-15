@@ -17,7 +17,6 @@
 | readonly        | boolean        | false     | false | 是否只读                                          |
 | maxlength       | number, string | 140       | false | 最大长度                                          |
 | focus           | boolean        | false     | false | 是否获取焦点                                      |
-| valid           | function       |           | false | 校验 value 函数                                   |
 
 ### type 的合法值
 
@@ -28,10 +27,6 @@
 | password | 密码输入                                        |
 | textarea | 多行文本，该类型下，默认 1 行，需要自行修改高度 |
 
-### valid 函数
-
-回调函数首个参数接收 change 的 value，如果 return 一个 Error 对象 error，则展示警告信息 error.message
-
 ## CSS
 
 | 属性    | 默认值  | 说明   |
@@ -40,12 +35,12 @@
 
 ## Events
 
-| 事件   | 描述             | 回调函数参数                                 |
-| ------ | ---------------- | -------------------------------------------- |
-| input  | 改变时触发       | CustomEvent，可通过 event.details.value 取值 |
-| change | 改变且失焦后触发 | CustomEvent，可通过 event.details.value 取值 |
-| focus  | 获取焦点时触发   | FocusEvent                                   |
-| blur   | 移出焦点时触发   | FocusEvent                                   |
+| 事件   | 描述             | 回调函数参数 |
+| ------ | ---------------- | ------------ |
+| input  | 改变时触发       | InputEvent   |
+| change | 改变且失焦后触发 | Event        |
+| focus  | 获取焦点时触发   | FocusEvent   |
+| blur   | 移出焦点时触发   | FocusEvent   |
 
 ## Slots
 

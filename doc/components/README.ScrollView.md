@@ -18,8 +18,8 @@
 
 ## Events
 
-| 事件          | 描述                  | 回调函数参数                                                                     |
-| ------------- | --------------------- | -------------------------------------------------------------------------------- |
-| scrolltoupper | 滚动到顶部/左边时触发 | CustomEvent，event.details.direction = 'top' / 'left'                            |
-| scrolltolower | 滚动到底部/右边时触发 | CustomEvent，event.details.direction = 'bottom' / 'right'                        |
-| scroll        | 滚动时触发            | CustomEvent，event.details = { scrollLeft, scrollTop, scrollHeight, scrollWidth } |
+| 事件            | 描述                  | 回调函数参数                                                                      |
+| --------------- | --------------------- | --------------------------------------------------------------------------------- |
+| scroll-to-upper | 滚动到顶部/左边时触发 | CustomEvent，event.details.direction = 'top' / 'left'                             |
+| scroll-to-lower | 滚动到底部/右边时触发 | CustomEvent，event.details.direction = 'bottom' / 'right'                         |
+| scroll          | 滚动时触发            | CustomEvent，event.details = { scrollLeft, scrollTop, scrollHeight, scrollWidth } |

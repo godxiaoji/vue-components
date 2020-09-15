@@ -2,22 +2,31 @@
   <div :class="[prefix + '-slider']" :disabled="disabled">
     <div :class="[prefix + '-slider_inner']">
       <div :class="[prefix + '-slider_box']">
-        <div :class="[prefix + '-slider_track']" :style="[sliderColor, { width: progress }]"></div>
-        <div :class="[prefix + '-slider_thumb']" :style="[sliderColor, { left: progress }]"></div>
+        <div
+          :class="[prefix + '-slider_track']"
+          :style="[sliderColor, { width: progress }]"
+        ></div>
+        <div
+          :class="[prefix + '-slider_thumb']"
+          :style="[sliderColor, { left: progress }]"
+        ></div>
       </div>
       <input
         :class="[prefix + '-slider_range']"
         type="range"
         :disabled="disabled"
-        v-model="formValue"
+        :value="formValue"
         :min="min"
         :max="max"
         :step="step"
         :name="name"
+        @input="onInput"
         @change="onChange"
       />
     </div>
-    <div v-if="showValue" :class="[prefix + '-slider_text']">{{ formValue }}</div>
+    <div v-if="showValue" :class="[prefix + '-slider_text']">
+      {{ formValue }}
+    </div>
   </div>
 </template>
 
@@ -69,7 +78,7 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: 0
+      formValue: '0'
     }
   },
   computed: {
@@ -86,7 +95,7 @@ export default {
     }
   },
   watch: {
-    value(val, oldVal) {
+    value(val) {
       const val2 = Math.min(this.max, Math.max(this.min, val))
 
       if (val2 !== val) {
@@ -94,69 +103,46 @@ export default {
         this.$emit('_change', val2)
       }
 
-      if (val2 !== oldVal) {
-        const type = 'change'
-
-        this.$emit(
-          type,
-          new CustomEvent(
-            {
-              type,
-              currentTarget: this.$el
-            },
-            {
-              value: val2
-            }
-          )
-        )
-      }
-
       if (val2 != this.formValue) {
-        this.formValue = val
+        this.formValue = val.toString()
       }
     },
     min(val) {
       if (val > this.formValue) {
         this.$nextTick(() => {
-          this.formValue = parseFloat(this.getInputEl().value)
+          const inputEl = this.getInputEl()
+          this.formValue = inputEl.value
+
+          if (inputEl.defaultValue < val) {
+            inputEl.defaultValue = inputEl.value
+          }
+          if (this.formValue != this.value) {
+            this._change()
+          }
         })
       }
     },
     max(val) {
       if (val < this.formValue) {
         this.$nextTick(() => {
-          this.formValue = parseFloat(this.getInputEl().value)
+          const inputEl = this.getInputEl()
+          this.formValue = inputEl.value
+
+          if (inputEl.defaultValue > val) {
+            inputEl.defaultValue = inputEl.value
+          }
+          if (this.formValue != this.value) {
+            this._change()
+          }
         })
       }
-    },
-    formValue(val) {
-      const type = 'changing'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {
-            value: val
-          }
-        )
-      )
     }
   },
   created() {
-    const value = Math.min(this.max, Math.max(this.min, this.value))
+    const value = this.value
 
     if (this.formValue != value) {
-      this.formValue = value
-    }
-
-    if (value !== this.value) {
-      this.$nextTick(() => {
-        this.$emit('_change', this.formValue)
-      })
+      this.formValue = value.toString()
     }
   },
   ready() {},
@@ -165,24 +151,84 @@ export default {
 
     inputEl._app_component = this
     inputEl._app_type = 'slider'
+
+    if (this.formValue !== inputEl.value) {
+      this.formValue = inputEl.defaultValue = inputEl.value
+      this._change()
+    }
   },
   updated() {},
   attached() {},
   methods: {
-    onChange() {
-      if (this.formValue != this.value) {
-        this.$emit('_change', this.formValue)
+    _change() {
+      if (this.formValue !== this.value.toString()) {
+        this.$emit('_change', parseFloat(this.formValue))
       }
+    },
+    onInput(e) {
+      this.formValue = e.target.value
+
+      this._change()
+
+      this.$emit(
+        e.type,
+        new CustomEvent(
+          {
+            type: e.type,
+            currentTarget: this.$el,
+            target: e.target
+          },
+          {
+            value: parseFloat(this.formValue)
+          }
+        )
+      )
+    },
+    onChange(e) {
+      this.$emit(
+        e.type,
+        new CustomEvent(
+          {
+            type: e.type,
+            currentTarget: this.$el,
+            target: e.target
+          },
+          {
+            value: parseFloat(this.formValue)
+          }
+        )
+      )
     },
     getInputEl() {
       return this.$el && this.$el.querySelector('input')
     },
     hookFormValue() {
-      return parseInt(this.formValue)
+      return parseFloat(this.formValue)
     },
     reset() {
-      this.formValue = this.min
-      this.$emit('_change', this.min)
+      const inputEl = this.getInputEl()
+      const defaultValue = inputEl.defaultValue || this.min.toString()
+
+      if (defaultValue !== this.formValue) {
+        this.formValue = defaultValue
+        this._change()
+
+        const type = 'change'
+
+        this.$emit(
+          type,
+          new CustomEvent(
+            {
+              type: type,
+              currentTarget: this.$el,
+              target: inputEl
+            },
+            {
+              value: parseFloat(defaultValue)
+            }
+          )
+        )
+      }
     }
   }
 }

@@ -85,7 +85,7 @@ export function isNumber(object) {
  * @param {any} object 值
  */
 export function isNumeric(object) {
-  return object != null && isFinite(object)
+  return object != null && !isNaN(parseFloat(object))
 }
 
 /**
@@ -285,4 +285,14 @@ export function getRandomString(length = 32) {
     pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
   }
   return pwd
+}
+
+/**
+ * 首字母大写
+ * @param {String} value 值
+ */
+export function capitalize(value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }

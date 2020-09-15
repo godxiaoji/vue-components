@@ -1,14 +1,13 @@
 <template>
-  <button
-    type="button"
-    :checked="formChecked"
+  <input
+    type="checkbox"
     :disabled="disabled"
     :name="name"
     :value="checked + ''"
     :class="[prefix + '-switch', sizeClassName]"
     :style="[switchColor]"
-    @click="onClick"
-  ></button>
+    @change="onChange"
+  />
 </template>
 
 <script>
@@ -73,46 +72,64 @@ export default {
   },
   watch: {
     checked(val) {
-      this.$el.checked = this.formChecked = val ? true : false
-    },
-    formChecked(val) {
-      const type = 'change'
+      val = !!val
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          { type, currentTarget: this.$el },
-          {
-            value: val
-          }
+      if (val !== this.formChecked) {
+        const $el = this.$el
+        $el.checked = this.formChecked = val
+
+        this.$emit(
+          'change',
+          new CustomEvent(
+            { type: 'change', target: $el, currentTarget: $el },
+            {
+              value: val
+            }
+          )
         )
-      )
+      }
     }
   },
   created() {
-    this.formChecked = this.checked
+    this.formChecked = !!this.checked
   },
   ready() {},
   mounted() {
-    this.$el._app_component = this
-    this.$el._app_type = 'switch'
-    this.$el.checked = this.formChecked
+    const $el = this.$el
+    const checked = !!this.checked
+
+    $el._app_component = this
+    $el._app_type = 'switch'
+    $el.defaultChecked = checked
+    $el.checked = checked
   },
   updated() {},
   attached() {},
   methods: {
-    onClick() {
-      this.formChecked = !this.formChecked
-
-      if (this.formChecked != this.checked) {
-        this.$emit('_change', this.formChecked)
-      }
+    onChange(e) {
+      this._change(e.target.checked)
     },
     reset() {
-      this.formChecked = false
-      if (this.formChecked != this.checked) {
-        this.$emit('_change', this.formChecked)
+      if (this.$el.defaultChecked !== this.$el.checked) {
+        this._change(this.$el.defaultChecked)
       }
+    },
+    _change(checked) {
+      this.formChecked = checked
+
+      if (this.checked !== checked) {
+        this.$emit('_change', checked)
+      }
+
+      this.$emit(
+        'change',
+        new CustomEvent(
+          { type: 'change', target: this.$el, currentTarget: this.$el },
+          {
+            value: checked
+          }
+        )
+      )
     }
   }
 }
@@ -137,6 +154,8 @@ export default {
   transition: all 0.2s linear;
   box-sizing: border-box;
   padding: 0;
+  margin: 0;
+  appearance: none;
 
   &.size--mini {
     --font-size: 16px;
@@ -146,7 +165,7 @@ export default {
     --font-size: 32px;
   }
 
-  &[checked] {
+  &:checked {
     background-color: var(--color);
   }
 
@@ -162,7 +181,7 @@ export default {
     content: '';
   }
 
-  &[checked]::after {
+  &:checked::after {
     left: calc(50% + 1px);
   }
 

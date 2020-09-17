@@ -2,17 +2,17 @@
 
 Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 
-这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 30k(Gzip)的大小。
+这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 32k(Gzip)的大小。
 
 ## Install
 
 ### CDN
 
 ```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.4/dist/index.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.5/dist/index.css"/>
 ...
 <script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.4/dist/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.5/dist/index.js"></script>
 ```
 
 ### Mount

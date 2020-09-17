@@ -6,7 +6,8 @@
 
 | 属性                  | 类型     | 默认值 | 必填 | 说明                                                                                                                                                     |
 | --------------------- | -------- | ------ | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scroll-x              | boolean  | false  | 否   | 允许横向滚动                                                                                                                                             |
+| data                  | any[]    |        | 是   | 列表数组                                                                                                                                                 |
+| data-key              | string   |        | 否   | 表明每个 item 项的身份（item[dataKey]），如果想指向自己，则设置为 `*this` 。建议填写，不填默认使用 index 作为身份标识                                    |
 | horizontal            | boolean  | false  | 否   | 设置为 true 则变为水平布局模式                                                                                                                           |
 | get-item-size         | Function |        | 否   | 动态返回列表项尺寸（垂直布局下指高度，水平布局下指宽度），`getItemSize(item:any, index:number) => number`，item 是 data[index] 的副本                    |
 | item-size             | number   |        | 否   | 设置列表项尺寸，优先使用 `get-item-size`                                                                                                                 |

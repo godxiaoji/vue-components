@@ -13,7 +13,9 @@
     <div
       :class="[prefix + '-flat-list_item']"
       v-for="(item, index) in list"
-      :key="dataKey ? item.data[dataKey] : index"
+      :key="
+        dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index
+      "
     >
       <div :class="[prefix + '-flat-list_item-inner']" v-show="!item.recycled">
         <slot name="item" :item="item.data" :index="index"> </slot>
@@ -171,7 +173,12 @@ export default {
         const newItem = { data: v, recycled: this.sizeFixed ? true : false }
 
         if (oldItem) {
-          if (this.dataKey && v[this.dataKey] === oldItem.data[this.dataKey]) {
+          if (this.dataKey === '*this' && v === oldItem.data) {
+            newItem.recycled = oldItem.recycled
+          } else if (
+            this.dataKey &&
+            v[this.dataKey] === oldItem.data[this.dataKey]
+          ) {
             newItem.recycled = oldItem.recycled
           } else if (!this.dataKey) {
             newItem.recycled = oldItem.recycled
@@ -282,8 +289,7 @@ export default {
      * @param {Number?} scrollSize 滚动值
      * @param {String?} source 调用来源
      */
-    updateItems(scrollSize, source) {
-      console.log(source)
+    updateItems(scrollSize) {
       const wrapperSize = this.wrapperSize
 
       if (scrollSize == null) {

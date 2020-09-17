@@ -52,14 +52,14 @@ html {
 }
 
 .#{$prefix}-scroll-bar {
-  --#{$prefix}-scroll-bar: #fff;
+  --#{$prefix}-scroll-bar: rgba(0, 0, 0, 0.3);
 
   &:hover {
-    --#{$prefix}-scroll-bar: var(--#{$prefix}-light-color);
+    --#{$prefix}-scroll-bar: rgba(0, 0, 0, 0.6);
   }
 
   &::-webkit-scrollbar {
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.1);
     width: 6px;
     height: 6px;
   }

@@ -371,5 +371,9 @@ export default {
   &.type--forward {
     --color: var(--#{$prefix}-light-color);
   }
+
+  &.type--loading {
+    @include rotate-360-animation(800ms);
+  }
 }
 </style>

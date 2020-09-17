@@ -14,8 +14,11 @@ import SelectOptionComponent from './Form/SelectOption.vue'
 import InputComponent from './Form/Input.vue'
 import FormComponent from './Form/Form.vue'
 import CascaderComponent from './Form/Cascader.vue'
-import ToastComponent from './Toast/Toast.vue'
-import ModalComponent from './Modal/Modal.vue'
+
+import ToastComponent from './Notice/Toast.vue'
+import ModalComponent from './Notice/Modal.vue'
+import NotifyComponent from './Notice/Notify.vue'
+
 import IconComponent from './Icon/Icon.vue'
 import BackToTopComponent from './Navigation/BackToTop.vue'
 import FlatListComponent from './List/FlatList.vue'
@@ -41,9 +44,10 @@ export default [
   InputComponent,
   FormComponent,
   CascaderComponent,
-  /* popup */
+  /* Notice */
   ToastComponent,
   ModalComponent,
+  NotifyComponent,
   /* Navigation */
   BackToTopComponent,
   /* List */

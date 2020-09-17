@@ -2,6 +2,7 @@ import { createIntersectionObserver } from './IntersectionObserver'
 import { createSelectorQuery } from './SelectorQuery'
 import { showModal } from './Modal'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
+import { showNotify, hideNotify } from './Notify'
 import {
   getStorageInfo,
   getStorage,
@@ -24,6 +25,8 @@ export function addApis(Vue) {
   Vue.prototype.$hideToast = hideToast
   Vue.prototype.$showLoading = showLoading
   Vue.prototype.$hideLoading = hideLoading
+  Vue.prototype.$showNotify = showNotify
+  Vue.prototype.$hideNotify = hideNotify
 
   Vue.prototype.$getStorageInfo = getStorageInfo
   Vue.prototype.$getStorage = getStorage

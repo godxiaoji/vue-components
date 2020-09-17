@@ -5,7 +5,11 @@
     :type="realFormType"
     @click="onClick"
   >
-    <icon :class="[prefix + '-button_loading-icon']" v-if="loading" type="loading"></icon>
+    <icon
+      :class="[prefix + '-button_loading-icon']"
+      v-if="loading"
+      type="loading"
+    ></icon>
     <slot>按钮</slot>
   </button>
 </template>
@@ -16,7 +20,7 @@ import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
-const TYPE_NAMES = ['default', 'primary', 'warn']
+const TYPE_NAMES = ['primary', 'warning', 'secondary']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
 export default {
@@ -85,11 +89,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-button {
-  --font-color: var(--#{$prefix}-semi-color);
-  --border-color: var(--#{$prefix}-light-color);
-  --background-color: #fff;
   --icon-size: 20px;
-  --icon-color: var(--#{$prefix}-semi-color);
+  --icon-color: #000;
 
   display: inline-block;
   box-sizing: border-box;
@@ -106,9 +107,9 @@ export default {
   border-style: solid;
   background: none;
 
-  color: var(--font-color);
-  background-color: var(--background-color);
-  border-color: var(--border-color);
+  color: #000;
+  background-color: #fbfafc;
+  border-color: #d6d5d6;
 
   &.size--mini {
     min-width: 48px;
@@ -128,42 +129,75 @@ export default {
     --icon-size: 22px;
   }
 
-  &:not(:disabled):hover {
-    opacity: 0.8;
-  }
-
+  &:not(:disabled):hover,
   &:not(:disabled):active {
-    opacity: 0.6;
+    background-color: #dfdfdf;
+    border-color: #bfbfbf;
+    color: rgba($color: #000000, $alpha: 0.6);
+    --icon-color: rgba(0, 0, 0, 0.6);
   }
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.3;
+    border-color: rgba($color: #d6d5d6, $alpha: 0.6);
+    background-color: rgba($color: #fbfafc, $alpha: 0.6);
+    color: rgba($color: #000000, $alpha: 0.3);
+    --icon-color: rgba(0, 0, 0, 0.3);
   }
 
   &.type--primary {
-    --font-color: #fff;
-    --border-color: var(--#{$prefix}-main-color);
-    --background-color: var(--#{$prefix}-main-color);
+    color: #fff;
+    border-color: #029400;
+    background-color: #09bb07;
     --icon-color: #fff;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+      border-color: #029400;
+      background-color: #09bb07;
+      color: rgba($color: #fff, $alpha: 0.3);
+      --icon-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:disabled {
+      border-color: rgba($color: #029400, $alpha: 0.4);
+      background-color: rgba($color: #09bb07, $alpha: 0.4);
+      color: rgba($color: #fff, $alpha: 0.6);
+      --icon-color: rgba(255, 255, 255, 0.6);
+    }
   }
 
-  &.type--warn {
-    --font-color: #fff;
-    --border-color: var(--#{$prefix}-warn-color);
-    --background-color: var(--#{$prefix}-warn-color);
+  &.type--warning {
+    color: #fff;
+    border-color: #d64949;
+    background-color: #e94f4f;
     --icon-color: #fff;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+      border-color: #c04242;
+      background-color: #d14747;
+      color: rgba($color: #fff, $alpha: 0.3);
+      --icon-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:disabled {
+      color: rgba($color: #fff, $alpha: 0.6);
+      --icon-color: rgba(255, 255, 255, 0.6);
+    }
   }
 
-  &_loading-icon {
+  .#{$prefix}-icon {
     display: inline-block;
-    width: 1.429em;
-    height: 1.429em;
     line-height: 1;
     margin: -0.2em 0.34em 0 0;
     vertical-align: middle;
+    --size: var(--icon-size);
+    --color: var(--icon-color);
+  }
+
+  &_loading-icon {
     @include rotate-360-animation(800ms);
-    fill: var(--icon-color);
   }
 }
 </style>

@@ -63,6 +63,8 @@
 
 [Modal](./components/README.Modal.md)
 
+[Notify](./components/README.Notify.md)
+
 ## <a name="列表组件">列表组件</a>
 
 [FlatList](./components/README.FlatList.md)

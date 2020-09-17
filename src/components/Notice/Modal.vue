@@ -1,10 +1,17 @@
 <template>
   <div v-show="visibility" :class="[prefix + '-modal']" @click="onModalClick">
-    <div :class="[prefix + '-modal_box']" @click.stop="onBoxClick">
+    <div
+      :class="[prefix + '-modal_box', { visibility }]"
+      @click.stop="onBoxClick"
+    >
       <div :class="[prefix + '-modal_header']">
         <span :class="[prefix + '-modal_title']">{{ title }}</span>
-        <span :class="[prefix + '-modal_close']" v-show="showClose" @click="onCloseClick">
-          <icon type="close"></icon>
+        <span
+          :class="[prefix + '-modal_close']"
+          v-show="showClose"
+          @click="onCloseClick"
+        >
+          <fx-icon type="close"></fx-icon>
         </span>
       </div>
       <div :class="[prefix + '-modal_body']">
@@ -13,28 +20,35 @@
         </div>
       </div>
       <div :class="[prefix + '-modal_footer']">
-        <button
+        <fx-button
           v-show="showCancel"
           :class="[prefix + '-modal_button']"
+          type="secondary"
           @click="onCancelClick"
-        >{{ cancelText }}</button>
-        <button
-          :class="[prefix + '-modal_button primary']"
+        >
+          {{ cancelText }}
+        </fx-button>
+        <fx-button
+          :class="[prefix + '-modal_button']"
+          type="primary"
           @click="onConfirmClick"
-        >{{ confirmText }}</button>
+        >
+          {{ confirmText }}
+        </fx-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import FxIcon from '../Icon/Icon.vue'
+import FxButton from '../Form/Button.vue'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-modal',
-  components: { Icon },
+  components: { FxIcon, FxButton },
   props: {
     visibility: {
       type: Boolean,
@@ -163,6 +177,14 @@ export default {
     border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
+    transform: scale(0);
+    transition: all 0.2s;
+    opacity: 0;
+
+    &.visibility {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   &_header {
@@ -216,37 +238,8 @@ export default {
     display: flex;
     justify-content: flex-end;
 
-    .#{$prefix}-modal_button {
-      display: inline-block;
-      box-sizing: border-box;
-      text-align: center;
-      border-radius: 4px;
-      outline: none;
-      cursor: pointer;
-      min-width: 64px;
-      height: 32px;
-      padding: 0 16px;
-      font-size: 14px;
-      line-height: 30px;
-      border-width: 1px;
-      border-style: solid;
-      background: none;
-      color: var(--cancel-font-color);
-      background-color: var(--cancel-background-color);
-      border-color: var(--cancel-border-color);
+    .#{$prefix}-modal_button + .#{$prefix}-modal_button {
       margin: 0 0 0 10px;
-
-      &.primary {
-        color: var(--confirm-font-color);
-        background-color: var(--confirm-background-color);
-        border-color: var(--confirm-border-color);
-      }
-      &:hover {
-        opacity: 0.8;
-      }
-      &:active {
-        opacity: 0.6;
-      }
     }
   }
 }

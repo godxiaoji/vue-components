@@ -89,9 +89,40 @@ export const apiRules = {
     mask: {
       type: Boolean,
       default: false
+    },
+    icon: {
+      enums: ['loading'],
+      default: 'loading'
+    },
+    duration: {
+      type: Number,
+      default: 0
     }
   },
   hideLoading: {},
+  showNotify: {
+    title: {
+      type: String,
+      required: true
+    },
+    type: {
+      enums: ['primary', 'success', 'warning', 'danger'],
+      default: 'primary'
+    },
+    duration: {
+      type: Number,
+      default: 0
+    },
+    backgroundColor: {
+      type: String,
+      default: null
+    },
+    color: {
+      type: String,
+      default: null
+    }
+  },
+  hideNotify: {},
   /**
    * 路由
    */

@@ -1,9 +1,8 @@
 <template>
   <div
-    v-show="visibility"
     :class="[
       prefix + '-toast',
-      { 'has--icon': image || (icon && icon !== 'none') }
+      { 'has--icon': image || (icon && icon !== 'none'), visibility }
     ]"
   >
     <div :class="[prefix + '-toast_mask']" v-show="mask"></div>
@@ -16,11 +15,11 @@
       ></icon>
       <icon
         v-else-if="icon == 'loading'"
-        :class="[prefix + '-toast_icon loading-icon']"
+        :class="[prefix + '-toast_icon']"
         type="loading"
       ></icon>
       <div :class="[prefix + '-toast_text']">
-        <slot>{{ title }}</slot>
+        {{ title }}
       </div>
     </div>
   </div>
@@ -53,15 +52,69 @@ export default {
     mask: {
       type: Boolean,
       default: false
+    },
+    // 展示时长(ms)，值为 0 时，notify 不会消失
+    duration: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return { prefix: SDKKey }
   },
-  methods: {},
-  created() {},
+  watch: {
+    visibility: {
+      handler(val) {
+        if (val && this.duration > 0) {
+          this.durationTimer = setTimeout(() => {
+            this.close('autoClose')
+          }, this.duration)
+        } else if (!val) {
+          this.close()
+        }
+      }
+    }
+  },
+  created() {
+    if (this.visibility && this.duration > 0) {
+      this.durationTimer = setTimeout(() => {
+        this.close('autoClose')
+      }, this.duration)
+    }
+  },
   mounted() {},
-  beforeDestroy() {}
+  beforeDestroy() {
+    this.clearTimer()
+  },
+  methods: {
+    /**
+     * 清除关闭定时器
+     */
+    clearTimer() {
+      clearTimeout(this.durationTimer)
+    },
+    /**
+     * 关闭
+     */
+    close(source = 'activeClose') {
+      this.clearTimer()
+      if (source === 'autoClose') {
+        this.$emit('update:visibility', false)
+      }
+
+      this.$emit(
+        'close',
+        new CustomEvent(
+          {
+            type: 'close',
+            currentTarget: this.$el,
+            target: this.$el
+          },
+          { source }
+        )
+      )
+    }
+  }
 }
 </script>
 
@@ -78,6 +131,14 @@ export default {
   justify-content: center;
   align-items: center;
   margin: -20px 0 0 -100px;
+  transition: all 0.2s;
+  opacity: 0;
+  transform: scale(0);
+
+  &.visibility {
+    opacity: 1;
+    transform: scale(1);
+  }
 
   &_mask {
     position: fixed;
@@ -122,8 +183,7 @@ export default {
     }
 
     .#{$prefix}-toast_icon {
-      width: 48px;
-      height: 48px;
+      --size: 48px;
       fill: #fff;
     }
 
@@ -132,10 +192,6 @@ export default {
       height: 16px;
       line-height: 16px;
       -webkit-line-clamp: 1;
-    }
-
-    .loading-icon {
-      @include rotate-360-animation(800ms);
     }
   }
 }

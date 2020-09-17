@@ -12,12 +12,16 @@ $grey-color: var(--#{$prefix}-grey-color);
 }
 
 :root {
-  /* 主色调 */
+  /* 主色调/成功色 */
   --#{$prefix}-main-color: #09bb07;
   /* 链接色 */
   --#{$prefix}-link-color: #576b95;
+  /* 提示色 */
+  --#{$prefix}-primary-color: #10aeff;
   /* 强调色/警告色 */
-  --#{$prefix}-warn-color: #e64340;
+  --#{$prefix}-warn-color: #ffbe00;
+  /* 危险色 */
+  --#{$prefix}-danger-color: #f76260;
   /* 主要内容 */
   --#{$prefix}-black-color: #000000;
   /* 大段内容 */

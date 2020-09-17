@@ -1,7 +1,7 @@
 import { isObject } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
-import { SDKKey } from "../config"
+import { SDKKey } from '../config'
 
 function htmlEscape(text) {
   return text.replace(/[<>"&]/g, function(match) {
@@ -19,34 +19,37 @@ function htmlEscape(text) {
 }
 
 function render(options) {
-  const html = [
-    `<div class="${SDKKey}-modal">`,
-    `<div class="${SDKKey}-modal_box">`,
-    `<div class="${SDKKey}-modal_header">`,
-    `<span class="${SDKKey}-modal_title">${options.title}</span>`,
-    `</div>`,
-    `<div class="${SDKKey}-modal_body">`,
-    `<div class="${SDKKey}-modal_content">`,
-    htmlEscape(options.content),
-    `</div>`,
-    `</div>`,
-    `<div class="${SDKKey}-modal_footer">`,
-    `<button style="display: ` +
-    (options.showCancel ? 'block' : 'none') +
-    `;" class="${SDKKey}-modal_button type--cancel">${options.cancelText}</button>`,
-    `<button class="${SDKKey}-modal_button type--confirm primary">${options.confirmText}</button>`,
-    `</div>`,
-    `</div>`,
-    `</div>`
-  ].join('')
-
   const $wrapper = document.createElement('div')
-  $wrapper.innerHTML = html
 
-  return $wrapper.firstChild
+  $wrapper.innerHTML = `
+  <div class="${SDKKey}-modal">
+    <div class="${SDKKey}-modal_box">
+      <div class="${SDKKey}-modal_header">
+        <span class="${SDKKey}-modal_title">${options.title}</span>
+      </div>
+      <div class="${SDKKey}-modal_body">
+        <div class="${SDKKey}-modal_content">
+          ${htmlEscape(options.content)}
+        </div>
+      </div>
+      <div class="${SDKKey}-modal_footer">
+        <button style="display: ${
+          options.showCancel ? 'inline-block' : 'none'
+        };" class="${SDKKey}-button type--secondary size--default ${SDKKey}-modal_button">${
+    options.cancelText
+  }</button>
+        <button class="${SDKKey}-button type--primary size--default ${SDKKey}-modal_button">${
+    options.confirmText
+  }</button>
+      </div>
+    </div>
+  </div>
+      `.trim()
+
+  return $wrapper.firstElementChild
 }
 
-var $el = null
+let $el = null
 
 const Events = {
   onCancelClick() {
@@ -86,17 +89,23 @@ function show(object) {
     hide()
 
     // 获取节点
-    $el = render(options)
+    const $currentEl = render(options)
 
     // 添加事件
-    const $cancel = $el.querySelector('.type--cancel')
+    const $cancel = $currentEl.querySelector('.type--secondary')
     $cancel._options = options
     $cancel.addEventListener('click', Events.onCancelClick, false)
-    const $confirm = $el.querySelector('.type--confirm')
+    const $confirm = $currentEl.querySelector('.type--primary')
     $confirm._options = options
     $confirm.addEventListener('click', Events.onConfirmClick, false)
 
-    document.body.appendChild($el)
+    document.body.appendChild($currentEl)
+
+    setTimeout(() => {
+      $currentEl.firstElementChild.classList.add('visibility')
+    }, 17)
+
+    $el = $currentEl
   } catch (e) {
     options.fail(e)
     options.complete()
@@ -107,10 +116,10 @@ function hide() {
   if ($el) {
     // 添加事件
     $el
-      .querySelector('.type--cancel')
+      .querySelector('.type--secondary')
       .removeEventListener('click', Events.onCancelClick, false)
     $el
-      .querySelector('.type--confirm')
+      .querySelector('.type--primary')
       .removeEventListener('click', Events.onConfirmClick, false)
 
     document.body.removeChild($el)

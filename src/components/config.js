@@ -23,12 +23,17 @@ import IconComponent from './Icon/Icon.vue'
 import BackToTopComponent from './Navigation/BackToTop.vue'
 import FlatListComponent from './List/FlatList.vue'
 
+import CopyComponent from './Base/Copy.vue'
+import BadgeComponent from './Base/Badge.vue'
+
 export default [
   /* Base */
   ScrollViewComponent,
   SwiperComponent,
   SwiperItemComponent,
   IconComponent,
+  CopyComponent,
+  BadgeComponent,
   /* Media */
   ImageComponent,
   /* Form */

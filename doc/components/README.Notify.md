@@ -25,11 +25,9 @@
 
 | 事件  | 描述         | 回调函数参数                                                                           |
 | ----- | ------------ | -------------------------------------------------------------------------------------- |
-| close | 被关闭时触发 | CustomEvent，其中 event.details,source = 'activeClose' 主动关闭 / 'autoClose' 自动关闭 |
+| close | 被关闭时触发 | CustomEvent，其中 event.details.source = 'activeClose' 主动关闭 / 'autoClose' 自动关闭 |
 
 ## Slots
-
-### default
 
 ```
 <notify>提示内容</notify>

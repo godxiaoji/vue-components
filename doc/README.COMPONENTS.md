@@ -23,6 +23,10 @@
 
 [Icon](./components/README.Icon.md)
 
+[Copy](./components/README.Copy.md)
+
+[Badge](./components/README.Badge.md)
+
 ## <a name="表单组件">表单组件</a>
 
 [Form](./components/README.Form.md)

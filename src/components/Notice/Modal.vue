@@ -150,13 +150,6 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-modal {
-  --confirm-background-color: var(--#{$prefix}-main-color);
-  --confirm-border-color: var(--#{$prefix}-main-color);
-  --confirm-font-color: #fff;
-  --cancel-font-color: var(--#{$prefix}-semi-color);
-  --cancel-background-color: #fff;
-  --cancel-border-color: var(--#{$prefix}-light-color);
-
   position: fixed;
   left: 0;
   top: 0;

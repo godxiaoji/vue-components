@@ -2,7 +2,7 @@ import ComponentList from './components/config'
 import { isUndefined } from './helpers/util'
 import { addApis } from './apis'
 
-const VueComponents = {
+const Vfox = {
   install(Vue) {
     ComponentList.forEach(component => {
       Vue.component(component.name, component)
@@ -12,8 +12,8 @@ const VueComponents = {
   }
 }
 
-export default VueComponents
+export default Vfox
 
 if (!isUndefined(window) && window.Vue) {
-  window.Vue.use(VueComponents)
+  window.Vue.use(Vfox)
 }

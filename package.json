@@ -1,6 +1,6 @@
 {
-  "name": "@godxiaoji/vue-components",
-  "version": "1.2.6",
+  "name": "vfox",
+  "version": "0.1.0",
   "description": "Vue components include form, toast, modal, et.",
   "main": "./dist/index.js",
   "directories": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/godxiaoji/vue-components.git"
+    "url": "git+https://github.com/godxiaoji/vfox.git"
   },
   "keywords": [
     "vue",
@@ -24,13 +24,13 @@
   "author": "Travis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/godxiaoji/vue-components/issues"
+    "url": "https://github.com/godxiaoji/vfox/issues"
   },
   "files": [
     "dist/",
     "src/"
   ],
-  "homepage": "https://github.com/godxiaoji/vue-components#readme",
+  "homepage": "https://github.com/godxiaoji/vfox#readme",
   "dependencies": {
     "mslide": "^1.0.0"
   },

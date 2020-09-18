@@ -1,4 +1,4 @@
-# VueComponents
+# Vfox
 
 Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 
@@ -9,33 +9,33 @@ Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 ### CDN
 
 ```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.5/dist/index.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vfox@0.1.0/dist/index.css"/>
 ...
 <script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@godxiaoji/vue-components@1.2.5/dist/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox@0.1.0/dist/index.js"></script>
 ```
 
 ### Mount
 
 ```
-npm i @godxiaoji/vue-components -S
+npm i vfox -S
 ```
 
 #### 全局注册
 
 ```
 import Vue from 'vue'
-import VueComponents from '@godxiaoji/vue-components'
+import Vfox from 'vfox'
 
 // require styles
-import '@godxiaoji/vue-components/dist/index.css'
+import 'vfox/dist/index.css'
 
 ```
 
 #### 引入单个组件
 
 ```
-import Toast from '@godxiaoji/vue-components/src/components/Toast/Toast.vue'
+import Toast from 'vfox/src/components/Toast/Toast.vue'
 
 export default {
   components: {
@@ -47,7 +47,7 @@ export default {
 #### 引入单个接口
 
 ```
-import { showToast } from '@godxiaoji/vue-components/src/apis/Toast'
+import { showToast } from 'vfox/src/apis/Toast'
 
 showToast({
   title: '成功',

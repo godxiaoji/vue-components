@@ -7,12 +7,12 @@ module.exports = {
   devtool: 'source-map',
   mode: 'production',
   entry: {
-    'god-vue-components': './src/index.js'
+    vfox: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',
-    library: 'GodVueComponents',
+    library: 'vfox',
     libraryTarget: 'umd'
   },
   resolve: {

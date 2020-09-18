@@ -12,27 +12,20 @@ import {
 } from './LocalStorage'
 import { pageScrollTo } from './Scroll'
 
-export function addApis(Vue) {
-  Vue.prototype.$createIntersectionObserver = function(options) {
-    return createIntersectionObserver(this.$el, options)
-  }
-  Vue.prototype.$createSelectorQuery = function() {
-    return createSelectorQuery().in(this.$el)
-  }
-
-  Vue.prototype.$showModal = showModal
-  Vue.prototype.$showToast = showToast
-  Vue.prototype.$hideToast = hideToast
-  Vue.prototype.$showLoading = showLoading
-  Vue.prototype.$hideLoading = hideLoading
-  Vue.prototype.$showNotify = showNotify
-  Vue.prototype.$hideNotify = hideNotify
-
-  Vue.prototype.$getStorageInfo = getStorageInfo
-  Vue.prototype.$getStorage = getStorage
-  Vue.prototype.$setStorage = setStorage
-  Vue.prototype.$removeStorage = removeStorage
-  Vue.prototype.$clearStorage = clearStorage
-
-  Vue.prototype.$pageScrollTo = pageScrollTo
+export {
+  createIntersectionObserver,
+  createSelectorQuery,
+  showToast,
+  showLoading,
+  hideLoading,
+  hideToast,
+  showModal,
+  showNotify,
+  hideNotify,
+  getStorageInfo,
+  getStorage,
+  setStorage,
+  removeStorage,
+  clearStorage,
+  pageScrollTo
 }

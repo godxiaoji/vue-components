@@ -2,17 +2,17 @@
 
 Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 
-这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 32k(Gzip)的大小。
+这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 33k(Gzip)的大小。
 
 ## Install
 
 ### CDN
 
 ```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vfox@0.1.0/dist/index.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vfox@0.1.1/dist/index.css"/>
 ...
 <script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox@0.1.0/dist/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox@0.1.1/dist/index.js"></script>
 ```
 
 ### Mount
@@ -32,10 +32,11 @@ import 'vfox/dist/index.css'
 
 ```
 
-#### 引入单个组件
+#### 局部注册
 
 ```
-import Toast from 'vfox/src/components/Toast/Toast.vue'
+import 'vfox/dist/index.css'
+import { Toast } from 'vfox'
 
 export default {
   components: {
@@ -44,10 +45,11 @@ export default {
 }
 ```
 
-#### 引入单个接口
+#### 函数调用
 
 ```
-import { showToast } from 'vfox/src/apis/Toast'
+import 'vfox/dist/index.css'
+import { showToast } from 'vfox'
 
 showToast({
   title: '成功',

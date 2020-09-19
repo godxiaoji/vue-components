@@ -16,7 +16,7 @@ export default {
     }
   },
   data() {
-    return {prefix: SDKKey}
+    return { prefix: SDKKey }
   },
   ready() {
     this.update()

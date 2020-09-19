@@ -2,7 +2,7 @@
   <div
     :class="[
       prefix + '-toast',
-      { 'has--icon': image || (icon && icon !== 'none'), visibility }
+      { 'has--icon': image || (icon && icon !== 'none'), visible }
     ]"
   >
     <div :class="[prefix + '-toast_mask']" v-show="mask"></div>
@@ -33,7 +33,7 @@ export default {
   name: SDKKey + '-toast',
   components: { Icon },
   props: {
-    visibility: {
+    visible: {
       type: Boolean,
       default: false
     },
@@ -63,7 +63,7 @@ export default {
     return { prefix: SDKKey }
   },
   watch: {
-    visibility: {
+    visible: {
       handler(val) {
         if (val && this.duration > 0) {
           this.durationTimer = setTimeout(() => {
@@ -76,7 +76,7 @@ export default {
     }
   },
   created() {
-    if (this.visibility && this.duration > 0) {
+    if (this.visible && this.duration > 0) {
       this.durationTimer = setTimeout(() => {
         this.close('autoClose')
       }, this.duration)
@@ -99,7 +99,7 @@ export default {
     close(source = 'activeClose') {
       this.clearTimer()
       if (source === 'autoClose') {
-        this.$emit('update:visibility', false)
+        this.$emit('update:visible', false)
       }
 
       this.$emit(
@@ -135,7 +135,7 @@ export default {
   opacity: 0;
   transform: scale(0);
 
-  &.visibility {
+  &.visible {
     opacity: 1;
     transform: scale(1);
   }

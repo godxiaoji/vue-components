@@ -1,9 +1,6 @@
 <template>
-  <div v-show="visibility" :class="[prefix + '-modal']" @click="onModalClick">
-    <div
-      :class="[prefix + '-modal_box', { visibility }]"
-      @click.stop="onBoxClick"
-    >
+  <div v-show="visible" :class="[prefix + '-modal']" @click="onModalClick">
+    <div :class="[prefix + '-modal_box', { visible }]" @click.stop="onBoxClick">
       <div :class="[prefix + '-modal_header']">
         <span :class="[prefix + '-modal_title']">{{ title }}</span>
         <span
@@ -50,7 +47,7 @@ export default {
   name: SDKKey + '-modal',
   components: { FxIcon, FxButton },
   props: {
-    visibility: {
+    visible: {
       type: Boolean,
       default: false
     },
@@ -127,7 +124,7 @@ export default {
       this.close(e)
     },
     close() {
-      this.$emit('update:visibility', false)
+      this.$emit('update:visible', false)
 
       const type = 'close'
 
@@ -174,7 +171,7 @@ export default {
     transition: all 0.2s;
     opacity: 0;
 
-    &.visibility {
+    &.visible {
       opacity: 1;
       transform: scale(1);
     }

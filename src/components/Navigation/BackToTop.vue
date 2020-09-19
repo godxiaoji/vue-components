@@ -1,5 +1,10 @@
 <template>
-  <div v-show="scrollTop >= visibilityHeight" :class="[prefix + '-back-to-top']" @click="onClick">
+  <div
+    v-show="scrollTop >= visibleHeight"
+    :class="[prefix + '-back-to-top']"
+    :style="styles"
+    @click="onClick"
+  >
     <slot>
       <icon :class="[prefix + '-back-to-top_icon']" type="upload"></icon>
     </slot>
@@ -15,26 +20,41 @@ export default {
   name: SDKKey + '-back-to-top',
   components: { Icon },
   props: {
-    visibilityHeight: {
+    visibleHeight: {
       type: Number,
       default: 200
     },
-    duration: {
-      type: Number,
-      default: 200
+    // 是否需要动画
+    animated: {
+      type: Boolean,
+      default: true
     },
     iconSize: {
       type: Number
+    },
+    // 偏移量，格式为 [x, y]
+    offset: {
+      type: Array,
+      default() {
+        return [0, 0]
+      }
     }
   },
   data() {
     return {
       prefix: SDKKey,
 
-      scrollTop: 0
+      scrollTop: 0,
+      duration: 200
     }
   },
-  computed: {},
+  computed: {
+    styles() {
+      return {
+        transform: `translate3d(${this.offset[0]}px, ${this.offset[1]}px, 0px)`
+      }
+    }
+  },
   watch: {},
   created() {
     this.scrollTop = document.documentElement.scrollTop
@@ -65,7 +85,7 @@ export default {
 
       if (from === to) {
         // 不需要跳转
-      } else if (this.duration === 0) {
+      } else if (!this.animated) {
         // 不需要动画
         docElem.scrollTop = to
       } else {

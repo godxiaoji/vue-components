@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-notify', { visibility }]" :style="styles">
+  <div :class="[prefix + '-notify', { visible }]" :style="styles">
     <slot>消息提示</slot>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   name: SDKKey + '-notify',
   components: {},
   props: {
-    visibility: {
+    visible: {
       type: Boolean,
       require: true
     },
@@ -43,7 +43,7 @@ export default {
     return { prefix: SDKKey }
   },
   watch: {
-    visibility: {
+    visible: {
       handler(val) {
         if (val && this.duration > 0) {
           this.durationTimer = setTimeout(() => {
@@ -72,7 +72,7 @@ export default {
     }
   },
   created() {
-    if (this.visibility && this.duration > 0) {
+    if (this.visible && this.duration > 0) {
       this.durationTimer = setTimeout(() => {
         this.close('autoClose')
       }, this.duration)
@@ -95,7 +95,7 @@ export default {
     close(source = 'activeClose') {
       this.clearTimer()
       if (source === 'autoClose') {
-        this.$emit('update:visibility', false)
+        this.$emit('update:visible', false)
       }
 
       this.$emit(
@@ -139,7 +139,7 @@ export default {
   transition: all 0.2s;
   opacity: 0;
 
-  &.visibility {
+  &.visible {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }

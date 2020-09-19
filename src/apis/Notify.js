@@ -44,7 +44,7 @@ export function baseShow(object, apiName, renderFn) {
     $currentEl._options = options
     document.body.appendChild($currentEl)
     setTimeout(() => {
-      $currentEl.classList.add('visibility')
+      $currentEl.classList.add('visible')
     }, 17)
 
     $els[key] = $currentEl
@@ -76,7 +76,7 @@ function _hide(immediate = false, key) {
 
   if ($els[key]) {
     const $currentEl = $els[key]
-    $currentEl.classList.remove('visibility')
+    $currentEl.classList.remove('visible')
 
     if (immediate) {
       document.body.removeChild($currentEl)

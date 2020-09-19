@@ -4,14 +4,14 @@
 
 ## Props
 
-| 属性                       | 类型    | 默认值 | 必填 | 说明                                                                        |
-| -------------------------- | ------- | ------ | ---- | --------------------------------------------------------------------------- |
-| visibility/visibility.sync | boolean | false  | 否   | 是否显示                                                                    |
-| title                      | string  |        | 是   | 提示的内容                                                                  |
-| icon                       | string  | 'none' | 否   | 图标，可选 'success' / 'loading'                                            |
-| image                      | string  |        | 否   | 自定义图标的本地路径，image 的优先级高于 icon                               |
-| mask                       | boolean | false  | 否   | 是否显示透明蒙层，防止触摸穿透                                              |
-| duration                   | number  | 0      | 否   | 展示时长(单位 ms)，值为 0 时，`toast` 不会消失，在 `visibility.sync` 下生效 |
+| 属性                 | 类型    | 默认值 | 必填 | 说明                                                                     |
+| -------------------- | ------- | ------ | ---- | ------------------------------------------------------------------------ |
+| visible/visible.sync | boolean | false  | 否   | 是否显示                                                                 |
+| title                | string  |        | 是   | 提示的内容                                                               |
+| icon                 | string  | 'none' | 否   | 图标，可选 'success' / 'loading'                                         |
+| image                | string  |        | 否   | 自定义图标的本地路径，image 的优先级高于 icon                            |
+| mask                 | boolean | false  | 否   | 是否显示透明蒙层，防止触摸穿透                                           |
+| duration             | number  | 0      | 否   | 展示时长(单位 ms)，值为 0 时，`toast` 不会消失，在 `visible.sync` 下生效 |
 
 ### icon 的合法值
 

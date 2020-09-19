@@ -102,7 +102,7 @@ function show(object) {
     document.body.appendChild($currentEl)
 
     setTimeout(() => {
-      $currentEl.firstElementChild.classList.add('visibility')
+      $currentEl.firstElementChild.classList.add('visible')
     }, 17)
 
     $el = $currentEl

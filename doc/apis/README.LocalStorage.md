@@ -20,7 +20,7 @@ key 对应的内容
 
 ```
 try {
-  var value = this.$getStorageSync('key')
+  const value = this.$getStorageSync('key')
   if (value) {
     // Do something with return value
   }

@@ -41,3 +41,9 @@
 | ------------ | ------- | -------------- |
 | --icon-color | #000000 | 按钮内图标颜色 |
 | --icon-size  | 20px    | 按钮内图标大小 |
+
+## Slots
+
+```
+<fx-button form-type="submit">提交</fx-button>
+```

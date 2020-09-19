@@ -23,7 +23,7 @@ PS：
 ## Slots
 
 ```
-<copy :text="'复制的内容'">
-  <button>复制</button>
-</copy>
+<fx-copy :text="'复制的内容'">
+  <fx-button>复制</fx-button>
+</fx-copy>
 ```

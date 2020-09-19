@@ -17,8 +17,19 @@
 
 ## Slots
 
+```
+<fx-checkbox-group>
+  <fx-checkbox>开朗</fx-checkbox>
+  <fx-checkbox>活泼</fx-checkbox>
+  ...
+</fx-checkbox-group>
+```
+
 ### 前置元素
 
 ```
-<template #prepend>标签</template>
+<fx-checkbox-group>
+  <template #prepend>性格</template>
+  ...
+</fx-checkbox-group>
 ```

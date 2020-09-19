@@ -35,23 +35,30 @@
 ### 列表项
 
 ```
-<template #item="{ item, index }">
+<fx-flat-list>
+ <template #item="{ item, index }">
   {{ index }} : {{ item }}
-</template>
+ </template>
+</fx-flat-list>
 ```
 
 ### 列表为空
 
 ```
-<template #empty>暂无数据</template>
+<fx-flat-list>
+  <template #empty>暂无数据</template>
+  ...
+</fx-flat-list>
 ```
 
 ### 分割线
 
 ```
-<template #separator>
-  <div class="line"></div>
-</template>
+<fx-flat-list>
+  <template #separator>
+    <div class="line"></div>
+  </template>
+</fx-flat-list>
 ```
 
 注：`getItemSize` 或者 `itemSize` 设定值需要把分割线也考虑进去。
@@ -59,7 +66,10 @@
 ### 前置
 
 ```
-<template #header></template>
+<fx-flat-list>
+  <template #header></template>
+  ...
+</fx-flat-list>
 ```
 
 也可以传入 icon，比如常见的搜索
@@ -67,7 +77,10 @@
 ### 后置
 
 ```
-<template #footer>暂时没有更多了</template>
+<fx-flat-list>
+  ...
+  <template #footer>暂时没有更多了</template>
+</fx-flat-list>
 ```
 
 ## Methods

@@ -19,7 +19,7 @@ PS：
 ## Slots
 
 ```
-<badge :count="1" show-zero>
-  <button>badge</button>
-</badge>
+<fx-badge :count="1" show-zero>
+  <fx-button>badge</fx-button>
+</fx-badge>
 ```

@@ -4,22 +4,22 @@
 
 ## Props
 
-| 属性            | 类型     | 默认值     | 必填  | 说明                                                                            |
-| --------------- | -------- | ---------- | ----- | ------------------------------------------------------------------------------- |
-| name            | string   |            | 否    | [form](./README.Form.md) 的标识                                                 |
-| mode            | string   |            | 否    | 初始化内置选择器 date / time / datetime，为了防止逻辑混乱，组件创建后不支持更改 |
-| options         | array    | []         | 否    | 数据集                                                                          |
-| value / v-modal | string[] | []         | 否    | 默认的选中项                                                                    |
-| size            | string   | 'default'  | 否    | 设置大小，可选值：default / mini / large                                        |
-| align           | string   | 'left'     | false | 左右对齐，可选值：left / center / right                                         |
-| border          | boolean  | true       | false | 是否显示边框                                                                    |
-| picker          | boolean  | false      | false | 开启移动端 picker 选择器                                                        |
-| placeholder     | string   | '请选择'   | 否    | 未进行选择时的提示                                                              |
-| disabled        | boolean  | false      | 否    | 是否被禁用                                                                      |
-| separator       | string   | '/'        | 否    | 初始分隔符，组件创建后不支持修改                                                |
-| label-key       | string   | 'label'    | 否    | 可以指定数据集中 label 的字段 key                                               |
-| children-key    | string   | 'children' | 否    | 可以指定数据集中 children 的字段 key                                            |
-| value-key       | string   | 'value'    | 否    | 可以指定数据集中 value 的字段 key                                               |
+| 属性            | 类型     | 默认值     | 必填 | 说明                                                                            |
+| --------------- | -------- | ---------- | ---- | ------------------------------------------------------------------------------- |
+| name            | string   |            | 否   | [form](./README.Form.md) 的标识                                                 |
+| mode            | string   |            | 否   | 初始化内置选择器 date / time / datetime，为了防止逻辑混乱，组件创建后不支持更改 |
+| options         | array    | []         | 否   | 数据集                                                                          |
+| value / v-modal | string[] | []         | 否   | 默认的选中项                                                                    |
+| size            | string   | 'default'  | 否   | 设置大小，可选值：default / mini / large                                        |
+| align           | string   | 'left'     | 否   | 左右对齐，可选值：left / center / right                                         |
+| border          | boolean  | true       | 否   | 是否显示边框                                                                    |
+| picker          | boolean  | false      | 否   | 开启移动端 picker 选择器                                                        |
+| placeholder     | string   | '请选择'   | 否   | 未进行选择时的提示                                                              |
+| disabled        | boolean  | false      | 否   | 是否被禁用                                                                      |
+| separator       | string   | '/'        | 否   | 初始分隔符，组件创建后不支持修改                                                |
+| label-key       | string   | 'label'    | 否   | 可以指定数据集中 label 的字段 key                                               |
+| children-key    | string   | 'children' | 否   | 可以指定数据集中 children 的字段 key                                            |
+| value-key       | string   | 'value'    | 否   | 可以指定数据集中 value 的字段 key                                               |
 
 ### mode 的合法值
 
@@ -122,5 +122,7 @@
 ### 前置元素
 
 ```
-<template #prepend>性别</template>
+<fx-cascader>
+  <template #prepend>性别</template>
+</fx-cascader>
 ```

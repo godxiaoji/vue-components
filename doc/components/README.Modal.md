@@ -14,13 +14,19 @@
 | confirmText     | string  | '确定' | 否   | 确认按钮的文字           |
 | cancelText      | string  | '取消' | 否   | 取消按钮的文字           |
 
-## CSS
+## Events
 
-| 属性                       | 默认值  | 说明           |
-| -------------------------- | ------- | -------------- |
-| --confirm-font-color       | #ffffff | 确定按钮文字色 |
-| --confirm-background-color | #09bb07 | 确定按钮背景色 |
-| --confirm-border-color     | #09bb07 | 确定按钮边框色 |
-| --cancel-font-color        | #353535 | 取消按钮文字色 |
-| --cancel-background-color  | #ffffff | 取消按钮背景色 |
-| --cancel-border-color      | #b2b2b2 | 取消按钮边框色 |
+| 事件    | 描述               | 回调函数参数                               |
+| ------- | ------------------ | ------------------------------------------ |
+| close   | 被关闭时触发       | CustomEvent                                |
+| cancel  | 取消按钮点击时触发 | CustomEvent，该事件同时会触发 `close` 事件 |
+| confirm | 确认按钮点击时触发 | CustomEvent，该事件同时会触发 `close` 事件 |
+
+## Slots
+
+```
+<fx-modal>
+  提示内容
+  ...
+</fx-modal>
+```

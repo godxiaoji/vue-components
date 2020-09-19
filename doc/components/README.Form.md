@@ -14,3 +14,13 @@
 ### event.details.value 的值
 
 该数据汇集了所有设置 name 的表单标签数据（含原生标签），部分数据类型是 Array，如：`checbox`，`select multiple`等
+
+## Slots
+
+```
+<fx-form>
+  ...
+  <fx-input type="text" />
+  <fx-button form-type="submit">提交</fx-button>
+</fx-form>
+```

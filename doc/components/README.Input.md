@@ -4,19 +4,19 @@
 
 ## Props
 
-| 属性            | 类型           | 默认值    | 必填  | 说明                                              |
-| --------------- | -------------- | --------- | ----- | ------------------------------------------------- |
-| value / v-model | string, number | ''        | false |
-| name            | string         |           | false | [form](./README.Form.md) 的标识                   |
-| size            | string         | 'default' | false | 尺寸，可选值：default / mini / large              |
-| align           | string         | 'left'    | false | 左右对齐，可选值：left / center / right           |
-| border          | boolean        | true      | false | 是否显示边框                                      |
-| type            | string         | 'text'    | false | 类型，可选值：text / number / password / textarea |
-| placeholder     | string         |           | false | 输入框为空时占位符                                |
-| disabled        | boolean        | false     | false | 是否禁用                                          |
-| readonly        | boolean        | false     | false | 是否只读                                          |
-| maxlength       | number, string | 140       | false | 最大长度                                          |
-| focus           | boolean        | false     | false | 是否获取焦点                                      |
+| 属性            | 类型           | 默认值    | 必填 | 说明                                              |
+| --------------- | -------------- | --------- | ---- | ------------------------------------------------- |
+| value / v-model | string, number | ''        | 否   |
+| name            | string         |           | 否   | [form](./README.Form.md) 的标识                   |
+| size            | string         | 'default' | 否   | 尺寸，可选值：default / mini / large              |
+| align           | string         | 'left'    | 否   | 左右对齐，可选值：left / center / right           |
+| border          | boolean        | true      | 否   | 是否显示边框                                      |
+| type            | string         | 'text'    | 否   | 类型，可选值：text / number / password / textarea |
+| placeholder     | string         |           | 否   | 输入框为空时占位符                                |
+| disabled        | boolean        | false     | 否   | 是否禁用                                          |
+| readonly        | boolean        | false     | 否   | 是否只读                                          |
+| maxlength       | number, string | 140       | 否   | 最大长度                                          |
+| focus           | boolean        | false     | 否   | 是否获取焦点                                      |
 
 ### type 的合法值
 
@@ -47,13 +47,17 @@
 ### 前置元素
 
 ```
-<template #prepend>https://</template>
+<fx-input>
+  <template #prepend>https://</template>
+</fx-input>
 ```
 
-也可以传入 icon，比如常见的搜索
+也可以传入 `Icon`，比如常见的搜索
 
 ### 后置元素
 
 ```
-<template #append>.com</template>
+<fx-input>
+  <template #append>.com</template>
+</fx-input>
 ```

@@ -20,3 +20,17 @@
 | ---------------- | -------------------------------- | ---------------------------------------------- |
 | change           | current 改变时会触发 change 事件 | CustomEvent，event.details = {current, source} |
 | animation-finish | 动画结束时会触发                 | CustomEvent                                    |
+
+## Slots
+
+```
+<fx-swiper>
+  <fx-swiper-item>
+    <fx-image src="a.jpg" />
+  </fx-swiper-item>
+  <fx-swiper-item>
+    <fx-image src="b.jpg" />
+  </fx-swiper-item>
+  ...
+</fx-swiper>
+```

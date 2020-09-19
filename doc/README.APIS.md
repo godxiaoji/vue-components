@@ -4,13 +4,23 @@ API 列表，参照微信小程序，持续更新。
 
 ## LocalStorage
 
+[getStorageSync](./apis/README.LocalStorage.md#getStorageSync)
+
 [getStorage](./apis/README.LocalStorage.md#getStorage)
+
+[setStorageSync](./apis/README.LocalStorage.md#setStorageSync)
 
 [setStorage](./apis/README.LocalStorage.md#setStorage)
 
+[removeStorageSync](./apis/README.LocalStorage.md#removeStorageSync)
+
 [removeStorage](./apis/README.LocalStorage.md#removeStorage)
 
+[clearStorageSync](./apis/README.LocalStorage.md#clearStorageSync)
+
 [clearStorage](./apis/README.LocalStorage.md#clearStorage)
+
+[getStorageInfoSync](./apis/README.LocalStorage.md#getStorageInfoSync)
 
 [getStorageInfo](./apis/README.LocalStorage.md#getStorageInfo)
 
@@ -27,6 +37,12 @@ API 列表，参照微信小程序，持续更新。
 [SelectorQuery](./apis/README.SelectorQuery.md#SelectorQuery)
 
 [NodesRef](./apis/README.SelectorQuery.md#NodesRef)
+
+## Notify
+
+[showNotify](./apis/README.Notify.md#showNotify)
+
+[hideNotify](./apis/README.Notify.md#hideNotify)
 
 ## Toast
 

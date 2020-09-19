@@ -15,3 +15,11 @@
 | 属性    | 默认值  | 说明   |
 | ------- | ------- | ------ |
 | --color | #09bb07 | 主色调 |
+
+## Slots
+
+```
+<fx-checkbox>开朗</fx-checkbox>
+<fx-checkbox>活泼</fx-checkbox>
+...
+```

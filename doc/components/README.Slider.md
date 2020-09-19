@@ -4,15 +4,15 @@
 
 ## Props
 
-| 属性            | 类型    | 默认值 | 必填  | 说明                                          |
-| --------------- | ------- | ------ | ----- | --------------------------------------------- |
-| value / v-model | number  |        | false |
-| name            | string  |        | false | [form](./README.Form.md) 的标识               |
-| min             | number  | 0      | false | 最小值                                        |
-| max             | number  | 100    | false | 最大值                                        |
-| step            | number  | 1      | false | 步长，取值必须大于 0，并且可被(max - min)整除 |
-| disabled        | boolean | false  | false | 是否禁用                                      |
-| show-value      | boolean | false  | false | 是否显示当前 value                            |
+| 属性            | 类型    | 默认值 | 必填 | 说明                                          |
+| --------------- | ------- | ------ | ---- | --------------------------------------------- |
+| value / v-model | number  |        | 否   |
+| name            | string  |        | 否   | [form](./README.Form.md) 的标识               |
+| min             | number  | 0      | 否   | 最小值                                        |
+| max             | number  | 100    | 否   | 最大值                                        |
+| step            | number  | 1      | 否   | 步长，取值必须大于 0，并且可被(max - min)整除 |
+| disabled        | boolean | false  | 否   | 是否禁用                                      |
+| show-value      | boolean | false  | 否   | 是否显示当前 value                            |
 
 ## CSS
 

@@ -17,8 +17,19 @@
 
 ## Slots
 
+```
+<fx-radio-group>
+  <fx-radio>男</fx-radio>
+  <fx-radio>女</fx-radio>
+  ...
+</fx-radio-group>
+```
+
 ### 前置元素
 
 ```
-<template #prepend>性别</template>
+<fx-radio-group>
+  <template #prepend>性别</template>
+  ...
+</fx-radio-group>
 ```

@@ -13,7 +13,6 @@ module.exports = {
     semi: ['error', 'never'],
     'comma-dangle': ['error', 'never'],
     'array-bracket-spacing': ['error', 'never'],
-    'space-before-function-paren': ['error', 'never'],
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'space-before-function-paren': ['error', 'never']
   }
 }

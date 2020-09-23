@@ -1,7 +1,7 @@
 {
   "name": "vfox",
   "version": "0.1.2",
-  "description": "Vue components include form, toast, modal, et.",
+  "description": "Vue components include form, toast, modal, etc.",
   "main": "./dist/index.js",
   "directories": {
     "doc": "doc"

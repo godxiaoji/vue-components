@@ -1,6 +1,6 @@
 {
   "name": "vfox",
-  "version": "0.1.2",
+  "version": "0.0.0-development",
   "description": "Vue components include form, toast, modal, etc.",
   "main": "./dist/index.js",
   "directories": {
@@ -9,11 +9,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config=./webpack.config.js",
-    "lint": "eslint --fix ./src/**/*.js"
+    "lint": "eslint --fix ./src/**/*.js",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/godxiaoji/vfox.git"
+    "url": "https://github.com/godxiaoji/vfox.git"
   },
   "keywords": [
     "vue",
@@ -37,6 +38,11 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.1.1",
+    "@semantic-release/npm": "^7.0.6",
+    "@semantic-release/release-notes-generator": "^9.0.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
@@ -47,6 +53,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.1",
+    "semantic-release": "^17.1.2",
     "vue-loader": "^15.9.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.6",

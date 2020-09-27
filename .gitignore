@@ -1,3 +1,7 @@
+# Node
+package-lock.json
+node_modules
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -42,6 +46,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-package-lock.json
-node_modules

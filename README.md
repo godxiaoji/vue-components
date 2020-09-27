@@ -9,10 +9,10 @@ Vue 组件集合，提供一系列跟小程序组件相似的组件集。
 ### CDN
 
 ```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vfox@0.1.1/dist/index.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vfox/dist/index.css"/>
 ...
 <script type="text/javascript" src="path/to/vue.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox@0.1.1/dist/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox/dist/index.js"></script>
 ```
 
 ### Mount

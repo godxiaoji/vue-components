@@ -14,6 +14,12 @@ module.exports = {
       {
         assets: ['dist/**/*.{js,css,map}', 'doc/**/*.md', 'CHANGELOG.md', 'package.json', 'README.md']
       }
+    ],
+    [
+      '@semantic-release/git',
+      {
+        assets: ['dist/**/*.{js,css,map}', 'doc/**/*.md', 'CHANGELOG.md', 'package.json', 'README.md']
+      }
     ]
   ]
 }

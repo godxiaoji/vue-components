@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/godxiaoji/vfox/compare/v1.0.0...v1.0.1) (2020-09-27)
+
+
+### Bug Fixes
+
+* release ([7b28f54](https://github.com/godxiaoji/vfox/commit/7b28f5431196591bed8b0f4c1daefcdfb5a0375d))
+
 # 1.0.0 (2020-09-27)
 
 

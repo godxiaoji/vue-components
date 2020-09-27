@@ -6,7 +6,6 @@ install:
 
 script: #执行的命令
   - npm run lint
-  - npm run test
   - npm run build
 
 deploy: #发布部分

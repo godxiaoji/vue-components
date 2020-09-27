@@ -1,5 +1,8 @@
-#.travis.yml
 language: node_js
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
 node_js: 12
 install:
   - npm install

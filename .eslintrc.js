@@ -8,7 +8,7 @@ module.exports = {
     parser: 'babel-eslint'
   },
   rules: {
-    strict: 0,
+    strict: 2,
     'newline-per-chained-call': 0,
     semi: ['error', 'never'],
     'comma-dangle': ['error', 'never'],

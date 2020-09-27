@@ -10,7 +10,7 @@ script: #执行的命令
 
 deploy: #发布部分
   provider: script
-  skip_cleanup: true
+  cleanup: true
   on:
     branch: master
   script:

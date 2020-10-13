@@ -37,6 +37,10 @@ export default {
     type: {
       type: String,
       default: TYPE_NAMES[0]
+    },
+    zIndex: {
+      type: Number,
+      default: 10000
     }
   },
   data() {
@@ -61,6 +65,8 @@ export default {
 
       if (this.backgroundColor) obj.backgroundColor = this.backgroundColor
       if (this.color) obj.color = this.color
+
+      obj.zIndex = this.zIndex
 
       return obj
     },

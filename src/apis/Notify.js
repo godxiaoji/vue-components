@@ -1,29 +1,16 @@
+import Vue from 'vue'
+import Notify from '../components/Notice/Notify.vue'
 import { isObject, isString } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
 import Exception from '../helpers/exception'
-import { SDKKey } from '../config'
-
-function render(options) {
-  const $wrapper = document.createElement('div')
-
-  $wrapper.innerHTML = `
-<div class="${SDKKey}-notify" style="${
-    options.backgroundColor
-      ? 'background-color: ' + options.backgroundColor + ';'
-      : ''
-  } ${options.backgroundColor ? 'color: ' + options.color + ';' : ''}">
-${options.title}
-</div>
-      `.trim()
-
-  return $wrapper.firstElementChild
-}
+import { removeEl } from '../helpers/dom'
+import { createPopup } from './popup'
 
 let timers = {}
 let $els = {}
 
-export function baseShow(object, apiName, renderFn) {
+export function baseShow(object, apiName, componentOptions) {
   if (isString(object)) {
     object = {
       title: object
@@ -36,25 +23,29 @@ export function baseShow(object, apiName, renderFn) {
 
   try {
     const key = apiName.replace('show', '')
-    const options = parseParamsByRules(object, apiName)
+    const propsData = parseParamsByRules(object, apiName)
 
     _hide(true, key)
 
-    const $currentEl = renderFn(options)
-    $currentEl._options = options
-    document.body.appendChild($currentEl)
-    setTimeout(() => {
-      $currentEl.classList.add('visible')
-    }, 17)
+    const Comp = Vue.extend({
+      extends: componentOptions,
+      methods: {
+        close() {
+          _hide(false, key)
+        }
+      }
+    })
 
-    $els[key] = $currentEl
+    const { $wrapper, zIndex } = createPopup()
 
-    // 定时隐藏
-    if (options.duration > 0) {
-      timers[key] = setTimeout(() => {
-        _hide(false, key)
-      }, options.duration)
-    }
+    const app = new Comp({
+      propsData: Object.assign(propsData, {
+        zIndex,
+        visible: true
+      })
+    }).$mount($wrapper)
+
+    $els[key] = app
 
     success({})
   } catch (e) {
@@ -68,21 +59,24 @@ export function baseShow(object, apiName, renderFn) {
  * @param {{title: String, type?: String, duration?: Number, backgroundColor?: String, color?: String}} object 配置
  */
 export function showNotify(object) {
-  return baseShow(object, 'showNotify', render)
+  return baseShow(object, 'showNotify', Notify)
 }
 
 function _hide(immediate = false, key) {
   clearTimeout(timers[key])
 
   if ($els[key]) {
-    const $currentEl = $els[key]
-    $currentEl.classList.remove('visible')
+    const app = $els[key]
+
+    app.visible = false
 
     if (immediate) {
-      document.body.removeChild($currentEl)
+      app.$destroy()
+      removeEl(app.$el)
     } else {
       setTimeout(() => {
-        document.body.removeChild($currentEl)
+        app.$destroy()
+        removeEl(app.$el)
       }, 200)
     }
 

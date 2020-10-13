@@ -1,5 +1,10 @@
 <template>
-  <div v-show="visible" :class="[prefix + '-modal']" @click="onModalClick">
+  <div
+    v-show="visible"
+    :class="[prefix + '-modal']"
+    :style="{ zIndex }"
+    @click="onModalClick"
+  >
     <div :class="[prefix + '-modal_box', { visible }]" @click.stop="onBoxClick">
       <div :class="[prefix + '-modal_header']">
         <span :class="[prefix + '-modal_title']">{{ title }}</span>
@@ -13,7 +18,10 @@
       </div>
       <div :class="[prefix + '-modal_body']">
         <div :class="[prefix + '-modal_content']">
-          <slot></slot>
+          <template v-if="content">
+            {{ content }}
+          </template>
+          <slot v-else></slot>
         </div>
       </div>
       <div :class="[prefix + '-modal_footer']">
@@ -74,6 +82,14 @@ export default {
     showCancel: {
       type: Boolean,
       default: true
+    },
+    zIndex: {
+      type: Number,
+      default: 10000
+    },
+    content: {
+      type: String,
+      default: ''
     }
   },
   data() {

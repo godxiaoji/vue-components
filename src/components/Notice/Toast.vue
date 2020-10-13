@@ -4,6 +4,7 @@
       prefix + '-toast',
       { 'has--icon': image || (icon && icon !== 'none'), visible }
     ]"
+    :style="{ zIndex }"
   >
     <div :class="[prefix + '-toast_mask']" v-show="mask"></div>
     <div :class="[prefix + '-toast_box']">
@@ -57,6 +58,10 @@ export default {
     duration: {
       type: Number,
       default: 0
+    },
+    zIndex: {
+      type: Number,
+      default: 10000
     }
   },
   data() {

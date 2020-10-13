@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/godxiaoji/vfox/compare/v1.0.2...v1.0.3) (2020-10-13)
+
+
+### Bug Fixes
+
+* **popup:** 通知apis改为使用组件渲染 ([2d10df3](https://github.com/godxiaoji/vfox/commit/2d10df33d65d20070f8c81fa735dc6ea4a9b9b93))
+
 ## [1.0.2](https://github.com/godxiaoji/vfox/compare/v1.0.1...v1.0.2) (2020-09-28)
 
 

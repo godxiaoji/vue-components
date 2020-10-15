@@ -10,7 +10,6 @@ import Radio from './Form/Radio.vue'
 import CheckboxGroup from './Form/CheckboxGroup.vue'
 import Checkbox from './Form/Checkbox.vue'
 import Select from './Form/Select.vue'
-import SelectOption from './Form/SelectOption.vue'
 import Input from './Form/Input.vue'
 import Form from './Form/Form.vue'
 import Cascader from './Form/Cascader.vue'
@@ -45,7 +44,6 @@ export {
   CheckboxGroup,
   Checkbox,
   Select,
-  SelectOption,
   Input,
   Form,
   Cascader,

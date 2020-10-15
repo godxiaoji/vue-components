@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Modal from '../components/Notice/Modal.vue'
-import { createPopup } from './popup'
+import { createPopup } from '../helpers/popup'
 import { htmlEscape, isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
 import { parseParamsByRules } from './rules'

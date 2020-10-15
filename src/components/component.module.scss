@@ -81,3 +81,41 @@ html {
     width: 100%;
   }
 }
+
+.#{$prefix}-picker {
+  position: absolute;
+
+  &_inner {
+    min-width: 100%;
+    border: 1px solid $light-color;
+    box-sizing: border-box;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .#{$prefix}-picker {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    &_inner {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      bottom: 0;
+      border: none;
+      box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
+      border-radius: 0;
+    }
+  }
+}

@@ -1,16 +1,33 @@
 # Select
 
-下拉选择器，内部由多个 [select-option](./README.SelectOption.md) 组成
+下拉选择器。
 
 ## Props
 
 | 属性            | 类型           | 默认值    | 必填 | 说明                                 |
 | --------------- | -------------- | --------- | ---- | ------------------------------------ |
+| options         | object[]          | []        | 否   | 数据集                               |
 | value / v-model | string, number |           | 否   |
 | name            | string         |           | 否   | [form](./README.Form.md) 的标识      |
 | size            | string         | 'default' | 否   | 尺寸，可选值：default / mini / large |
 | placeholder     | string         | ''        | 否   | 未选择时占位符                       |
 | disabled        | boolean        | false     | 否   | 是否禁用                             |
+
+### options 的结构
+
+```
+[
+  {
+    label: '藻类',
+    disabled: true,
+    value: 'zaolei'
+  },
+  {
+    label: '苔藓',
+    value: 'taixian'
+  }
+]
+```
 
 ## CSS
 

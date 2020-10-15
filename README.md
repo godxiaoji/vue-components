@@ -32,6 +32,14 @@ import 'vfox/dist/index.css'
 
 ```
 
+注：由于地区涉及的数据较大，使用`Cascader`组件的地区选择器时，需要额外引入地区数据。
+
+```
+import regionData from 'vfox/data/region'
+
+Vfox.addRegionData(regionData)
+```
+
 #### 局部注册
 
 ```

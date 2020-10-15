@@ -5,7 +5,7 @@ import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'
 import Exception from '../helpers/exception'
 import { removeEl } from '../helpers/dom'
-import { createPopup } from './popup'
+import { createPopup } from '../helpers/popup'
 
 let timers = {}
 let $els = {}

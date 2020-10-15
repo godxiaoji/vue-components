@@ -1,6 +1,7 @@
 import { isUndefined, objectForEach } from './helpers/util'
 import * as Components from './components'
 import * as Apis from './apis'
+import { addData as _addRegionData } from './components/Form/cascader-util/region'
 
 const Vfox = {
   install(Vue) {
@@ -20,6 +21,13 @@ const Vfox = {
     Vue.prototype.$createSelectorQuery = function createSelectorQuery() {
       return Apis.createSelectorQuery().in(this.$el)
     }
+  },
+  /**
+   * 地区数据
+   * @param {Array} regionData
+   */
+  addRegionData(regionData) {
+    return _addRegionData(regionData)
   }
 }
 
@@ -30,4 +38,5 @@ export default Vfox
 
 if (!isUndefined(window) && window.Vue) {
   window.Vue.use(Vfox)
+  window.Vfox = Vfox
 }

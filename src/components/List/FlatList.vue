@@ -38,11 +38,10 @@
 
 <script>
 import { CustomEvent } from '../../helpers/events'
-import { cloneData, isFunction, isNumber } from '../../helpers/util'
+import { cloneData, isFunction, isNumber, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import ScrollView from '../ScrollView/ScrollView.vue'
 import Exception from '../../helpers/exception'
-import { isObject } from 'util'
 
 export default {
   name: SDKKey + '-flat-list',

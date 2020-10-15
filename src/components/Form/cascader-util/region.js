@@ -1,4 +1,4 @@
-const data = []
+let _data = []
 
 function getList(options) {
   const list = []
@@ -17,8 +17,12 @@ function getList(options) {
 
 export function parseRegionList(index, parent) {
   if (index === 0) {
-    return getList(data)
+    return getList(_data)
   } else if (parent && parent.hasChildren) {
     return getList(parent.children)
   }
+}
+
+export function addData(data) {
+  _data = data
 }

@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/godxiaoji/vfox/compare/v1.0.3...v1.1.0) (2020-10-15)
+
+
+### Features
+
+* **picker:** 优化select和cascader组件 ([88b28d2](https://github.com/godxiaoji/vfox/commit/88b28d2deaed7dee24ef5106c3b15f31f2110e2d))
+
 ## [1.0.3](https://github.com/godxiaoji/vfox/compare/v1.0.2...v1.0.3) (2020-10-13)
 
 

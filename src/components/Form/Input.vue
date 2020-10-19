@@ -342,8 +342,6 @@ export default {
     }
 
     &:focus {
-      border-color: var(--color);
-      box-shadow: 0 0 3px var(--color);
     }
   }
 }

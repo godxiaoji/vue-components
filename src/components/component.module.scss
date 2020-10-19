@@ -1,22 +1,49 @@
 $prefix: 'fx';
 
 $main-color: var(--#{$prefix}-primary-color);
-$primary-color: var(--#{$prefix}-primary-color);
+$warning-color: #faad14;
+$primary-color: #1890ff;
 $light-color: var(--#{$prefix}-light-color);
 $warn-color: var(--#{$prefix}-warn-color);
-$danger-color: var(--#{$prefix}-danger-color);
+$danger-color: #ff4d4f;
 $success-color: var(--#{$prefix}-success-color);
 $semi-color: var(--#{$prefix}-semi-color);
 $whitesmoke-color: var(--#{$prefix}-whitesmoke-color);
 $grey-color: var(--#{$prefix}-grey-color);
-$title-color: var(--#{$prefix}-title-color);
-$font-color: var(--#{$prefix}-font-color);
-$font2-color: var(--#{$prefix}-font2-color);
-$font3-color: var(--#{$prefix}-font3-color);
-$border-color: var(--#{$prefix}-border-color);
-$divider-color: var(--#{$prefix}-divider-color);
-$background-color: var(--#{$prefix}-background-color);
-$background2-color: var(--#{$prefix}-background2-color);
+
+$black-color: #040a13;
+$title-color: rgba(
+  $color: $black-color,
+  $alpha: 0.85
+);
+$font-color: rgba(
+  $color: $black-color,
+  $alpha: 0.65
+);
+$font2-color: rgba(
+  $color: $black-color,
+  $alpha: 0.45
+);
+$font3-color: rgba(
+  $color: $black-color,
+  $alpha: 0.25
+);
+$border-color: rgba(
+  $color: $black-color,
+  $alpha: 0.15
+);
+$divider-color: rgba(
+  $color: $black-color,
+  $alpha: 0.06
+);
+$background-color: rgba(
+  $color: $black-color,
+  $alpha: 0.04
+);
+$background2-color: rgba(
+  $color: $black-color,
+  $alpha: 0.02
+);
 
 @mixin rotate-360-animation($duration: 800ms) {
   animation: #{$prefix}-rotate-360 $duration infinite linear both;

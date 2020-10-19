@@ -7,7 +7,7 @@
       <div :class="[prefix + '-form-item_content_inner']">
         <slot></slot>
       </div>
-      <div :class="[prefix + '-form-item_error']">{{ errMsg }}</div>
+      <div :class="[prefix + '-form-item_error']" v-if="isError">{{ errMsg }}</div>
     </div>
   </div>
 </template>
@@ -207,11 +207,19 @@ export default {
           padding: 0;
         }
       }
+
+      z-index: 0;
     }
   }
 
   &_error {
+    position: relative;
     color: $danger-color;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 0 0 10px 0;
+    margin-top: -6px;
+    z-index: 1;
   }
 }
 </style>

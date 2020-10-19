@@ -10,11 +10,7 @@
     :type="realFormType"
     @click="onClick"
   >
-    <icon
-      v-if="loading"
-      class-name="LoadingOutlined"
-      :spin="true"
-    ></icon>
+    <icon v-if="loading" class-name="LoadingOutlined" :spin="true"></icon>
     <slot>按钮</slot>
   </button>
 </template>
@@ -25,7 +21,7 @@ import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
-const TYPE_NAMES = ['primary', 'warning', 'danger', 'success']
+const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
 const PATTERN_NAMES = ['default', 'solid', 'dashed', 'link']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
@@ -104,30 +100,34 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-button {
-  --icon-size: 20px;
+  --icon-size: 17px;
   --icon-color: #fff;
 
   display: inline-flex;
+  flex: 1 0 100%;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
   min-width: 66px;
-  height: 32px;
+  height: 48px;
   padding: 0 12px;
-  font-size: 14px;
-  line-height: 19.6px;
-  border-width: 1px;
-  border-style: solid;
-  background: none;
+  font-size: 17px;
+  line-height: 24px;
+  border: 1px solid transparent;
+  background: #fff;
   font-weight: 400;
-
   color: #fff;
-  background-color: #fbfafc;
-  border-color: #d6d5d6;
+
+  .#{$prefix}-icon {
+    margin-right: 10px;
+    --size: var(--icon-size);
+    --color: var(--icon-color);
+    fill: #fff;
+  }
 
   &.size--mini {
     min-width: 58px;
@@ -153,14 +153,40 @@ export default {
 
   &:disabled {
     cursor: not-allowed;
-    border-color: rgba($color: #d6d5d6, $alpha: 0.6);
-    background-color: rgba($color: #fbfafc, $alpha: 0.6);
-    color: rgba($color: #000000, $alpha: 0.3);
-    --icon-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+  }
+
+  &.type--default {
+    border-color: $divider-color;
+    background-color: #fff;
+    color: $title-color;
+
+    .#{$prefix}-icon {
+      fill: $title-color;
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: $background-color;
+      }
+
+      &:active {
+        background-color: $background-color;
+      }
+    }
+
+    &:disabled {
+      border-color: $divider-color;
+      background-color: $background2-color;
+      color: $font3-color;
+
+      .#{$prefix}-icon {
+        fill: $font3-color;
+      }
+    }
   }
 
   &.type--primary {
-    border-color: $primary-color;
     background-color: $primary-color;
 
     &:not(:disabled) {
@@ -182,13 +208,11 @@ export default {
     }
 
     &:disabled {
-      border-color: rgba($color: #029400, $alpha: 0.4);
-      background-color: rgba($color: #09bb07, $alpha: 0.4);
+      background-color: rgba($color: $primary-color, $alpha: 0.2);
     }
   }
 
   &.type--success {
-    border-color: $success-color;
     background-color: $success-color;
 
     &:not(:disabled) {
@@ -204,14 +228,12 @@ export default {
     }
 
     &:disabled {
-      border-color: rgba($color: #029400, $alpha: 0.4);
-      background-color: rgba($color: #09bb07, $alpha: 0.4);
+      background-color: rgba($color: $primary-color, $alpha: 0.2);
     }
   }
 
   &.type--warning {
-    border-color: $warn-color;
-    background-color: $warn-color;
+    background-color: $warning-color;
 
     &:not(:disabled) {
       &:hover {
@@ -226,13 +248,11 @@ export default {
     }
 
     &:disabled {
-      border-color: rgba($color: #029400, $alpha: 0.4);
-      background-color: rgba($color: #09bb07, $alpha: 0.4);
+      background-color: rgba($color: $warning-color, $alpha: 0.2);
     }
   }
 
   &.type--danger {
-    border-color: $danger-color;
     background-color: $danger-color;
 
     &:not(:disabled) {
@@ -248,19 +268,8 @@ export default {
     }
 
     &:disabled {
-      border-color: rgba($color: #029400, $alpha: 0.4);
-      background-color: rgba($color: #09bb07, $alpha: 0.4);
+      background-color: rgba($color: $danger-color, $alpha: 0.2);
     }
-  }
-
-  .#{$prefix}-icon {
-    display: inline-block;
-    line-height: 1;
-    margin: -0.2em 0.34em 0 0;
-    vertical-align: middle;
-    --size: var(--icon-size);
-    --color: var(--icon-color);
-    fill: #fff;
   }
 }
 </style>

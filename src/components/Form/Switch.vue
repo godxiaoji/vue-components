@@ -14,11 +14,13 @@
 import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
+import formMixin from './util/form-mixin'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
   name: SDKKey + '-switch',
+  mixins: [formMixin],
   props: {
     size: {
       type: String,
@@ -49,6 +51,7 @@ export default {
     return {
       prefix: SDKKey,
 
+      formName: '',
       formChecked: false
     }
   },
@@ -121,15 +124,21 @@ export default {
         this.$emit('_change', checked)
       }
 
+      const type = 'change'
+
       this.$emit(
-        'change',
+        type,
         new CustomEvent(
-          { type: 'change', target: this.$el, currentTarget: this.$el },
+          { type, target: this.$el, currentTarget: this.$el },
           {
             value: checked
           }
         )
       )
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(type, checked)
+      }
     }
   }
 }
@@ -139,11 +148,11 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-switch {
-  --color: var(--#{$prefix}-main-color);
-  --font-size: 24px;
+  --color: var(--#{$prefix}-primary-color);
+  --font-size: 32px;
 
   position: relative;
-  width: 2em;
+  width: 1.75em;
   height: 1em;
   background: $light-color;
   border: 0;
@@ -171,18 +180,21 @@ export default {
 
   &::after {
     position: absolute;
-    top: 1px;
-    left: 1px;
-    width: calc(50% - 2px);
-    height: calc(100% - 2px);
+    top: 2px;
+    left: 2px;
+    width: calc(100% / 1.75 - 4px);
+    height: calc(100% - 4px);
     background: #fff;
     border-radius: 100%;
     transition: all 0.2s linear;
+    border: 1px solid rgba(4, 10, 19, 0.06);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px $border-color, 0px 1px 2px $background2-color;
     content: '';
   }
 
   &:checked::after {
-    left: calc(50% + 1px);
+    left: calc(100% / 1.75 * 0.75 + 2px);
   }
 
   &:not(:disabled):hover {

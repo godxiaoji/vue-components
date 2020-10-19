@@ -17,7 +17,7 @@
       >
         {{ formLabelString || placeholder }}
       </div>
-      <icon :class="[prefix + '-cascader_unfold-icon']" :type="'unfold'"></icon>
+      <icon :class="[prefix + '-cascader_unfold-icon']"  class-name="DownOutlined"></icon>
       <input
         :class="[prefix + '-cascader_input']"
         type="text"
@@ -658,6 +658,7 @@ export default {
     margin-right: var(--padding-left-right);
     transition: all 0.2s;
     flex-shrink: 1;
+    fill: $font3-color;
   }
 
   &_tools {
@@ -742,6 +743,7 @@ export default {
       margin-right: calc(
         var(--padding-left-right) / 2 - var(--padding-left-right)
       );
+      fill: $border-color;
     }
   }
 

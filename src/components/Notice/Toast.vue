@@ -12,12 +12,13 @@
       <icon
         v-else-if="icon == 'success'"
         :class="[prefix + '-toast_icon']"
-        type="success_no_circle"
+        class-name="CheckOutlined"
       ></icon>
       <icon
         v-else-if="icon == 'loading'"
         :class="[prefix + '-toast_icon']"
-        type="loading"
+        class-name="LoadingOutlined"
+        :spin="true"
       ></icon>
       <div :class="[prefix + '-toast_text']">
         {{ title }}

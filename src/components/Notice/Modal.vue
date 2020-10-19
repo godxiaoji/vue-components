@@ -13,7 +13,7 @@
           v-show="showClose"
           @click="onCloseClick"
         >
-          <fx-icon type="close"></fx-icon>
+          <fx-icon class-name="CloseOutlined"></fx-icon>
         </span>
       </div>
       <div :class="[prefix + '-modal_body']">

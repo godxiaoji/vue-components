@@ -6,7 +6,7 @@
     @click="onClick"
   >
     <slot>
-      <icon :class="[prefix + '-back-to-top_icon']" type="upload"></icon>
+      <icon :class="[prefix + '-back-to-top_icon']" class-name="UpCircleOutlined"></icon>
     </slot>
   </div>
 </template>

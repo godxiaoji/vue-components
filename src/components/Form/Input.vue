@@ -7,7 +7,6 @@
       {
         'has--prepend': hasPrepend,
         'has--append': hasAppend,
-        'no-border': !border,
         [prefix + '-textarea']: type === 'textarea'
       }
     ]"
@@ -19,7 +18,7 @@
     <textarea
       v-if="type === 'textarea'"
       :class="[prefix + '-input_input']"
-      :name="name"
+      :name="formName"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -53,6 +52,7 @@
 import { inArray, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { CustomEvent } from '../../helpers/events'
+import formMixin from './util/form-mixin'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
@@ -61,6 +61,7 @@ const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
 export default {
   name: SDKKey + '-input',
   components: {},
+  mixins: [formMixin],
   props: {
     name: {
       type: String,
@@ -105,10 +106,6 @@ export default {
     align: {
       type: String,
       value: 'left'
-    },
-    border: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -118,6 +115,7 @@ export default {
       hasPrepend: false,
       hasAppend: false,
 
+      formName: '',
       formValue: ''
     }
   },
@@ -215,9 +213,17 @@ export default {
     },
     onBlur(e) {
       this.$emit(e.type, e)
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
+      }
     },
     onChange(e) {
       this.$emit(e.type, e)
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
+      }
     },
     getInputEl() {
       return (
@@ -245,12 +251,11 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-input {
-  --height: 30px;
-  --font-size: 14px;
+  --height: 43px;
+  --font-size: 17px;
   --icon-size: 20px;
-  --padding-left-right: 12px;
-  --color: var(--#{$prefix}-main-color);
-  --placeholder-color: var(--#{$prefix}-light-color);
+  --color: var(--#{$prefix}-title-color);
+  --placeholder-color: var(--#{$prefix}-font3-color);
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -258,8 +263,7 @@ export default {
   display: flex;
   align-items: center;
 
-  border-radius: 4px;
-  border: 1px solid $light-color;
+  border: 1px solid $border-color;
   box-sizing: border-box;
   font-size: var(--font-size);
   background-color: #fff;
@@ -267,7 +271,7 @@ export default {
 
   &_prepend,
   &_append {
-    padding: 0 var(--padding-left-right);
+    padding: 0 16px;
     .icon {
       display: block;
       width: var(--icon-size);
@@ -279,9 +283,8 @@ export default {
 
   &.size--mini {
     --height: 22px;
-    --font-size: 12px;
+    --font-size: 14px;
     --icon-size: 16px;
-    --padding-left-right: 8px;
   }
 
   &.size--large {
@@ -301,8 +304,7 @@ export default {
     height: 100%;
     line-height: var(--height);
     width: 100%;
-    border-radius: 4px;
-    padding: 0 var(--padding-left-right);
+    padding: 0 16px;
     font-size: var(--font-size);
     cursor: pointer;
     color: $semi-color;
@@ -310,16 +312,6 @@ export default {
     box-sizing: border-box;
     box-shadow: none;
     resize: none;
-
-    .#{$prefix}-input.has--prepend & {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    .#{$prefix}-input.has--append & {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
 
     .#{$prefix}-input.align--center & {
       text-align: center;
@@ -352,26 +344,6 @@ export default {
     &:focus {
       border-color: var(--color);
       box-shadow: 0 0 3px var(--color);
-    }
-  }
-
-  &.no-border {
-    border: none;
-    border-radius: 0;
-    .#{$prefix}-input_input {
-      border: none;
-      border-radius: 0;
-      padding: 0;
-
-      &:disabled,
-      &:disabled:hover {
-        background-color: #ffffff;
-        border-color: #ffffff;
-        color: $light-color;
-      }
-      &:focus {
-        box-shadow: none;
-      }
     }
   }
 }

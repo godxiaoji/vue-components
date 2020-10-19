@@ -1,11 +1,22 @@
 $prefix: 'fx';
 
-$main-color: var(--#{$prefix}-main-color);
+$main-color: var(--#{$prefix}-primary-color);
+$primary-color: var(--#{$prefix}-primary-color);
 $light-color: var(--#{$prefix}-light-color);
 $warn-color: var(--#{$prefix}-warn-color);
+$danger-color: var(--#{$prefix}-danger-color);
+$success-color: var(--#{$prefix}-success-color);
 $semi-color: var(--#{$prefix}-semi-color);
 $whitesmoke-color: var(--#{$prefix}-whitesmoke-color);
 $grey-color: var(--#{$prefix}-grey-color);
+$title-color: var(--#{$prefix}-title-color);
+$font-color: var(--#{$prefix}-font-color);
+$font2-color: var(--#{$prefix}-font2-color);
+$font3-color: var(--#{$prefix}-font3-color);
+$border-color: var(--#{$prefix}-border-color);
+$divider-color: var(--#{$prefix}-divider-color);
+$background-color: var(--#{$prefix}-background-color);
+$background2-color: var(--#{$prefix}-background2-color);
 
 @mixin rotate-360-animation($duration: 800ms) {
   animation: #{$prefix}-rotate-360 $duration infinite linear both;
@@ -13,19 +24,35 @@ $grey-color: var(--#{$prefix}-grey-color);
 
 :root {
   /* 主色调/成功色 */
-  --#{$prefix}-main-color: #09bb07;
+  --#{$prefix}-main-color: #1890ff;
+  --#{$prefix}-primary-color: #1890ff;
   /* 链接色 */
   --#{$prefix}-link-color: #576b95;
-  /* 提示色 */
-  --#{$prefix}-primary-color: #10aeff;
   /* 强调色/警告色 */
-  --#{$prefix}-warn-color: #ffbe00;
+  --#{$prefix}-warn-color: #faad14;
+  /* 成功色 */
+  --#{$prefix}-success-color: #52c41a;
   /* 危险色 */
-  --#{$prefix}-danger-color: #f76260;
-  /* 主要内容 */
-  --#{$prefix}-black-color: #000000;
-  /* 大段内容 */
-  --#{$prefix}-semi-color: #353535;
+  --#{$prefix}-danger-color: #ff4d4f;
+  /* 基准黑 */
+  --#{$prefix}-black-color: #040a13;
+  /* 标题 */
+  --#{$prefix}-title-color: rgba(4, 10, 19, 0.85);
+  /* 主文字 */
+  --#{$prefix}-font-color: rgba(4, 10, 19, 0.65);
+  /* 辅助文字 */
+  --#{$prefix}-font2-color: rgba(4, 10, 19, 0.45);
+  /* 辅助文字 */
+  --#{$prefix}-font3-color: rgba(4, 10, 19, 0.25);
+  /* 容器线 */
+  --#{$prefix}-border-color: rgba(4, 10, 19, 0.15);
+  /* 划分线 */
+  --#{$prefix}-divider-color: rgba(4, 10, 19, 0.06);
+  /* 背景 */
+  --#{$prefix}-background-color: rgba(4, 10, 19, 0.04);
+  /* 表头背景 */
+  --#{$prefix}-background2-color: rgba(4, 10, 19, 0.02);
+
   /* 次要内容 */
   --#{$prefix}-grey-color: #888888;
   /* 时间戳和表单缺省 */

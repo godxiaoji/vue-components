@@ -29,7 +29,7 @@
           <icon
             :class="[prefix + '-cascader_item-icon']"
             v-if="item.hasChildren"
-            type="forward"
+            class-name="RightOutlined"
             :size="16"
           ></icon>
         </li>

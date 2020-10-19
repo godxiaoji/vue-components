@@ -13,6 +13,7 @@ import Select from './Form/Select.vue'
 import Input from './Form/Input.vue'
 import Form from './Form/Form.vue'
 import Cascader from './Form/Cascader.vue'
+import FormItem from './Form/FormItem.vue'
 
 import Toast from './Notice/Toast.vue'
 import Modal from './Notice/Modal.vue'
@@ -24,6 +25,9 @@ import FlatList from './List/FlatList.vue'
 
 import Copy from './Base/Copy.vue'
 import Badge from './Base/Badge.vue'
+
+import GridRow from './Layout/GridRow.vue'
+import GridCol from './Layout/GridCol.vue'
 
 export {
   /* Base */
@@ -47,6 +51,7 @@ export {
   Input,
   Form,
   Cascader,
+  FormItem,
   /* Notice */
   Toast,
   Modal,
@@ -54,5 +59,8 @@ export {
   /* Navigation */
   BackToTop,
   /* List */
-  FlatList
+  FlatList,
+  /* Layout */
+  GridRow,
+  GridCol
 }

@@ -9,10 +9,10 @@
       @change="onChange"
     />
     <div :class="[prefix + '-checkbox_box']">
-      <icon :class="[prefix + '-checkbox_icon']" type="checkbox"></icon>
+      <icon :class="[prefix + '-checkbox_icon']" class-name="CheckSquareOutlined"></icon>
       <icon
         :class="[prefix + '-checkbox_checked-icon']"
-        type="checkbox_checked"
+        class-name="CheckSquareFilled"
       ></icon>
     </div>
     <span :class="[prefix + '-checkbox_text']">
@@ -58,8 +58,8 @@ export default {
   computed: {
     /* 优先接受来自分组的name */
     groupName() {
-      if (this.$parent && this.$parent.name) {
-        return this.$parent.name
+      if (this.$parent && this.$parent.formName) {
+        return this.$parent.formName
       }
       return this.name
     },
@@ -86,7 +86,7 @@ export default {
     }
   },
   created() {
-    this._checkbox_item = true
+    this._app_checkbox_item = true
   },
   ready() {},
   mounted() {
@@ -127,7 +127,7 @@ export default {
       }
     },
     isGroupParent() {
-      return this.$parent && this.$parent._checkbox_group
+      return this.$parent && this.$parent._app_checkbox_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -159,24 +159,23 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-checkbox {
-  --color: var(--#{$prefix}-main-color);
-  --padding-left-right: 12px;
+  --color: var(--#{$prefix}-primary-color);
 
   display: inline-flex;
   align-items: center;
-  font-size: 14px;
-  height: 1.715em;
-  color: $semi-color;
-  padding: 0 var(--padding-left-right);
+  font-size: 17px;
+  height: 1.235em;
+  color: $title-color;
+  padding: 0 12px;
   text-align: left;
   position: relative;
 
   &_box {
     display: inline-flex;
-    width: 1.429em;
-    height: 1.429em;
+    width: 1.235em;
+    height: 1.235em;
     box-sizing: border-box;
-    margin-right: 0.34em;
+    margin-right: 12px;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -185,6 +184,7 @@ export default {
   &_icon {
     width: 100%;
     height: 100%;
+    fill: $border-color;
   }
 
   &_checked-icon {

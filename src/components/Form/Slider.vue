@@ -33,9 +33,11 @@
 <script>
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
+import formMixin from './util/form-mixin'
 
 export default {
   name: SDKKey + '-slider',
+  mixins: [formMixin],
   props: {
     value: {
       type: Number,
@@ -78,6 +80,7 @@ export default {
     return {
       prefix: SDKKey,
 
+      formName: '',
       formValue: '0'
     }
   },
@@ -162,11 +165,12 @@ export default {
   methods: {
     _change() {
       if (this.formValue !== this.value.toString()) {
-        this.$emit('_change', parseFloat(this.formValue))
+        this.$emit('_change', this.hookFormValue())
       }
     },
     onInput(e) {
       this.formValue = e.target.value
+      const value = this.hookFormValue()
 
       this._change()
 
@@ -179,12 +183,18 @@ export default {
             target: e.target
           },
           {
-            value: parseFloat(this.formValue)
+            value
           }
         )
       )
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(e.type, value)
+      }
     },
     onChange(e) {
+      const value = this.hookFormValue()
+
       this.$emit(
         e.type,
         new CustomEvent(
@@ -194,10 +204,14 @@ export default {
             target: e.target
           },
           {
-            value: parseFloat(this.formValue)
+            value
           }
         )
       )
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(e.type, value)
+      }
     },
     getInputEl() {
       return this.$el && this.$el.querySelector('input')
@@ -213,21 +227,11 @@ export default {
         this.formValue = defaultValue
         this._change()
 
-        const type = 'change'
-
-        this.$emit(
-          type,
-          new CustomEvent(
-            {
-              type: type,
-              currentTarget: this.$el,
-              target: inputEl
-            },
-            {
-              value: parseFloat(defaultValue)
-            }
-          )
-        )
+        this.onChange({
+          type: 'change',
+          currentTarget: this.$el,
+          target: inputEl
+        })
       }
     }
   }
@@ -238,10 +242,11 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-slider {
-  --color: var(--#{$prefix}-main-color);
+  --color: var(--#{$prefix}-primary-color);
 
   position: relative;
   height: 24px;
+  width: 100%;
   display: flex;
   align-items: center;
 
@@ -249,30 +254,35 @@ export default {
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 0 6px;
     position: relative;
+    padding: 12px;
   }
 
   &_box {
     position: relative;
     height: 2px;
     width: 100%;
-    background: $light-color;
+    background: $border-color;
+    border-radius: 2px;
   }
 
   &_track {
     width: 100%;
     height: 100%;
     background: var(--color);
+    border-radius: 2px;
   }
 
   &_thumb {
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    margin: -7px 0 0 -6px;
-    background: var(--color);
+    margin: -13px 0 0 -12px;
+    background: #ffffff;
+    border: 1px solid rgba(4, 10, 19, 0.06);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px $border-color, 0px 1px 2px $background2-color;
   }
 
   &_range {
@@ -287,8 +297,8 @@ export default {
 
   &_text {
     font-size: 14px;
-    margin-left: 4px;
-    color: $grey-color;
+    margin-left: 6px;
+    color: $title-color;
   }
 }
 </style>

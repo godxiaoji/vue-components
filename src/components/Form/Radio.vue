@@ -9,10 +9,13 @@
       @change="onChange"
     />
     <div :class="[prefix + '-radio_box']">
-      <icon :class="[prefix + '-radio_icon']" type="radio"></icon>
+      <icon
+        :class="[prefix + '-radio_icon']"
+        class-name="CheckCircleOutlined"
+      ></icon>
       <icon
         :class="[prefix + '-radio_checked-icon']"
-        type="radio_checked"
+        class-name="CheckCircleFilled"
       ></icon>
     </div>
     <span :class="[prefix + '-radio_text']">
@@ -58,8 +61,8 @@ export default {
   computed: {
     /* 优先接受来自分组的name */
     groupName() {
-      if (this.$parent && this.$parent.name) {
-        return this.$parent.name
+      if (this.$parent && this.$parent.formName) {
+        return this.$parent.formName
       }
       return this.name
     }
@@ -83,7 +86,7 @@ export default {
     }
   },
   created() {
-    this._radio_item = true
+    this._app_radio_item = true
   },
   ready() {},
   mounted() {
@@ -124,7 +127,7 @@ export default {
       }
     },
     isGroupParent() {
-      return this.$parent && this.$parent._radio_group
+      return this.$parent && this.$parent._app_radio_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -156,24 +159,23 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-radio {
-  --color: var(--#{$prefix}-main-color);
-  --padding-left-right: 12px;
+  --color: var(--#{$prefix}-primary-color);
 
   display: inline-flex;
   align-items: center;
-  font-size: 14px;
-  height: 1.715em;
-  color: $semi-color;
-  padding: 0 var(--padding-left-right);
+  font-size: 17px;
+  height: 1.235em;
+  color: $title-color;
+  padding: 0 12px;
   text-align: left;
   position: relative;
 
   &_box {
     display: inline-flex;
-    width: 1.429em;
-    height: 1.429em;
+    width: 1.235em;
+    height: 1.235em;
     box-sizing: border-box;
-    margin-right: 0.34em;
+    margin-right: 12px;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -182,6 +184,7 @@ export default {
   &_icon {
     width: 100%;
     height: 100%;
+    fill: $border-color;
   }
 
   &_checked-icon {

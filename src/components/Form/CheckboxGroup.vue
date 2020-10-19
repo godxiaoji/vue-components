@@ -1,65 +1,39 @@
 <template>
-  <div
-    :class="[
-      prefix + '-checkbox-group',
-      alignClassName,
-      {
-        'has--prepend': hasPrepend
-      }
-    ]"
-  >
-    <div :class="[prefix + '-checkbox-group_prepend']" v-if="hasPrepend">
-      <slot name="prepend"></slot>
-    </div>
+  <div :class="[prefix + '-checkbox-group']">
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { CustomEvent } from '../../helpers/events'
-import { cloneData, inArray } from '../../helpers/util'
+import { cloneData } from '../../helpers/util'
 import { SDKKey } from '../../config'
-
-const ALIGN_NAMES = ['left', 'right']
+import formMixin from './util/form-mixin'
 
 export default {
   name: SDKKey + '-checkbox-group',
+  mixins: [formMixin],
   props: {
     name: {
       type: String,
       default: ''
-    },
-    align: {
-      type: String,
-      value: 'left'
     }
   },
   data() {
     return {
       prefix: SDKKey,
 
-      hasPrepend: false,
+      formName: '',
       formValue: []
     }
   },
-  computed: {
-    alignClassName() {
-      return (
-        'align--' +
-        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
-      )
-    }
-  },
+  computed: {},
   watch: {},
   created() {
-    this._checkbox_group = true
+    this._app_checkbox_group = true
   },
   ready() {},
-  mounted() {
-    if (this.$scopedSlots.prepend) {
-      this.hasPrepend = true
-    }
-  },
+  mounted() {},
   updated() {},
   attached() {},
   methods: {
@@ -67,7 +41,7 @@ export default {
       const value = this.formValue.slice(0, 0)
 
       this.$children.forEach(vm => {
-        if (vm._checkbox_item && vm.getInputChecked() === true) {
+        if (vm._app_checkbox_item && vm.getInputChecked() === true) {
           value.push(cloneData(vm.value))
         }
       })
@@ -78,7 +52,6 @@ export default {
     onChange(e) {
       this.updateValue()
 
-      const value = cloneData(this.formValue)
       const type = 'change'
 
       this.$emit(
@@ -86,10 +59,14 @@ export default {
         new CustomEvent(
           { type, currentTarget: this.$el, target: e.target },
           {
-            value
+            value: this.hookFormValue()
           }
         )
       )
+
+      if (this.parentIsFormItem()) {
+        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
+      }
     },
 
     hookFormValue() {
@@ -98,7 +75,7 @@ export default {
 
     reset() {
       this.$children.forEach(vm => {
-        if (vm._checkbox_item) {
+        if (vm._app_checkbox_item) {
           vm.reset()
         }
       })
@@ -111,25 +88,10 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-checkbox-group {
-  --padding-left-right: 12px;
-
   display: flex;
-  width: 100%;
   height: 32px;
   align-items: center;
   color: $semi-color;
   box-sizing: border-box;
-
-  &.align--right {
-    justify-content: flex-end;
-  }
-
-  &_prepend {
-    padding: 0 var(--padding-left-right);
-
-    .#{$prefix}-checkbox-group.align--right & {
-      flex: 1;
-    }
-  }
 }
 </style>

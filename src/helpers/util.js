@@ -311,3 +311,7 @@ export function htmlEscape(text) {
     }
   })
 }
+
+export function rangeInt(number, min, max) {
+  return Math.min(max, Math.max(min, Math.round(number)))
+}

@@ -10,7 +10,7 @@
       <div :class="[prefix + '-select_text', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
       </div>
-      <icon :class="[prefix + '-select_unfold-icon']" type="unfold"></icon>
+      <icon :class="[prefix + '-select_unfold-icon']" class-name="DownOutlined"></icon>
       <input
         :class="[prefix + '-select_input']"
         type="text"
@@ -437,6 +437,7 @@ export default {
     margin-right: var(--padding-left-right);
     transition: all 0.2s;
     flex-shrink: 0;
+    fill: $font3-color;
   }
 
   &_option-group {

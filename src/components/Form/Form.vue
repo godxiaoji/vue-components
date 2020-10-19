@@ -11,7 +11,9 @@ import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-form',
-  props: {},
+  props: {
+    rules: Object
+  },
   data() {
     return { prefix: SDKKey }
   },
@@ -37,8 +39,8 @@ export default {
         ) {
           // 获取配套表单组件
           uids.push(_ac._uid)
-          if (_ac.name) {
-            value[_ac.name] = _ac.hookFormValue
+          if (_ac.formName || _ac.name) {
+            value[_ac.formName || _ac.name] = _ac.hookFormValue
               ? _ac.hookFormValue()
               : _ac.formValue
           }
@@ -94,7 +96,41 @@ export default {
         })
       )
 
+      const validateEmit = vaild => {
+        const type = 'validate-submit'
+        this.$emit(
+          type,
+          new CustomEvent(
+            { type },
+            {
+              vaild,
+              value
+            }
+          )
+        )
+      }
+
+      this.validate(value)
+        .then(() => {
+          validateEmit(true)
+        })
+        .catch(() => {
+          validateEmit(false)
+        })
+
       return false
+    },
+
+    validate(value) {
+      const retList = []
+
+      this.$children.forEach($child => {
+        if ($child._form_item && $child.name && value[$child.name] != null) {
+          retList.push($child.validate(value[$child.name]))
+        }
+      })
+
+      return Promise.all(retList)
     },
 
     onReset(e) {

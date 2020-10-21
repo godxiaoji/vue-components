@@ -159,7 +159,7 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-checkbox {
-  --color: var(--#{$prefix}-primary-color);
+  --color: #{$primary-color};
 
   display: inline-flex;
   align-items: center;
@@ -181,17 +181,16 @@ export default {
     box-sizing: border-box;
   }
 
-  &_icon {
+  &_icon,
+  &_checked-icon {
     width: 100%;
     height: 100%;
-    fill: $border-color;
+    --color: #{$border-color};
   }
 
   &_checked-icon {
     display: none;
-    width: 100%;
-    height: 100%;
-    fill: var(--color);
+    --color: #{$primary-color};
   }
 
   &_input {

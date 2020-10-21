@@ -245,7 +245,7 @@ export default {
   --color: var(--#{$prefix}-primary-color);
 
   position: relative;
-  height: 24px;
+  height: 28px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -255,7 +255,7 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
-    padding: 12px;
+    padding: 13px 12px;
   }
 
   &_box {

@@ -30,7 +30,6 @@
             :class="[prefix + '-cascader_item-icon']"
             v-if="item.hasChildren"
             class-name="RightOutlined"
-            :size="16"
           ></icon>
         </li>
       </ul>
@@ -73,11 +72,7 @@ export default {
     onDropdownTap() {},
 
     parseDropdown(selecteds) {
-      let optionList = parseDropdownList(
-        this.mode,
-        0,
-        this.options
-      )
+      let optionList = parseDropdownList(this.mode, 0, this.options)
 
       if (selecteds.length === 0) {
         // 如果没有默认值，尝试获取默认值
@@ -128,11 +123,7 @@ export default {
         if (!nextParent) {
           break
         } else {
-          optionList = parseDropdownList(
-            this.mode,
-            i + 1,
-            nextParent
-          )
+          optionList = parseDropdownList(this.mode, i + 1, nextParent)
           menuValues.push(nextParent.value)
           menuLabels.push(nextParent.label)
         }
@@ -224,6 +215,10 @@ export default {
      * 选项点击
      */
     onItemClick(e, item) {
+      if (item.disabled) {
+        return
+      }
+
       if (item.hasChildren) {
         this.parseDropdown(item.values)
       } else {

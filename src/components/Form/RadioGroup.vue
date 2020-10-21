@@ -98,9 +98,9 @@ export default {
 
 .#{$prefix}-radio-group {
   display: flex;
-  height: 32px;
+  height: 28px;
   align-items: center;
-  color: $semi-color;
+  color: $title-color;
   box-sizing: border-box;
 }
 </style>

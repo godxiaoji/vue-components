@@ -152,9 +152,8 @@ export default {
   }
 
   .#{$prefix}-icon {
-    fill: #fff;
-    width: 20px;
-    height: 20px;
+    --color: #fff;
+    --size: 20px;
     margin: 0 -2px;
 
     + span {
@@ -186,8 +185,7 @@ export default {
     font-size: 12px;
 
     .#{$prefix}-icon {
-      width: 16px;
-      height: 16px;
+      --size: 16px;
     }
 
     &.shape--round {
@@ -212,7 +210,7 @@ export default {
     color: $font3-color;
 
     .#{$prefix}-icon {
-      fill: $font3-color;
+      --color: #{$font3-color};
     }
   }
 
@@ -222,7 +220,7 @@ export default {
     color: $title-color;
 
     .#{$prefix}-icon {
-      fill: $title-color;
+      --color: #{$title-color};
     }
 
     &:hover {
@@ -267,7 +265,7 @@ export default {
         }
 
         .#{$prefix}-icon {
-          fill: $primary-color;
+          --color: #{$primary-color};
         }
       }
     }
@@ -312,7 +310,7 @@ export default {
         }
 
         .#{$prefix}-icon {
-          fill: $success-color;
+          --color: #{$success-color};
         }
       }
     }
@@ -357,7 +355,7 @@ export default {
         }
 
         .#{$prefix}-icon {
-          fill: $warning-color;
+          --color: #{$warning-color};
         }
       }
     }
@@ -402,7 +400,7 @@ export default {
         }
 
         .#{$prefix}-icon {
-          fill: $danger-color;
+          --color: #{$danger-color};
         }
       }
     }

@@ -148,13 +148,13 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-switch {
-  --color: var(--#{$prefix}-primary-color);
+  --color: #{$primary-color};
   --font-size: 32px;
 
   position: relative;
   width: 1.75em;
   height: 1em;
-  background: $light-color;
+  background: $border-color;
   border: 0;
   border-radius: 1em;
   font-size: var(--font-size);
@@ -195,14 +195,6 @@ export default {
 
   &:checked::after {
     left: calc(100% / 1.75 * 0.75 + 2px);
-  }
-
-  &:not(:disabled):hover {
-    opacity: 0.8;
-  }
-
-  &:not(:disabled):active {
-    opacity: 0.6;
   }
 
   &:disabled {

@@ -10,7 +10,16 @@
       <div :class="[prefix + '-select_text', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
       </div>
-      <icon :class="[prefix + '-select_unfold-icon']" class-name="DownOutlined"></icon>
+      <icon
+        class="right"
+        :class="[prefix + '-select_unfold-icon']"
+        class-name="RightOutlined"
+      ></icon>
+      <icon
+        class="down"
+        :class="[prefix + '-select_unfold-icon']"
+        class-name="DownOutlined"
+      ></icon>
       <input
         :class="[prefix + '-select_input']"
         type="text"
@@ -224,7 +233,8 @@ export default {
             option = {
               label:
                 item[labelName] == null ? item[valueName] : item[labelName],
-              value: item[valueName]
+              value: item[valueName],
+              disabled: !!item.disabled
             }
           }
 
@@ -291,7 +301,7 @@ export default {
       )
     },
     getInputEl() {
-      return this.$el && this.$el.firstElementChild.firstElementChild
+      return this.$el && this.$el.firstElementChild.lastElementChild
     },
 
     updateSelected(value) {
@@ -309,6 +319,12 @@ export default {
       })
 
       return hasValue
+    },
+
+    onSelect(value) {
+      this.getInputEl().blur()
+
+      this.onChange(value)
     },
 
     onChange(value) {
@@ -347,11 +363,12 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-select {
-  --height: 30px;
-  --font-size: 14px;
+  --height: 43px;
+  --font-size: 17px;
   --icon-size: 20px;
-  --padding-left-right: 12px;
-  --color: var(--#{$prefix}-main-color);
+  --padding-left-right: 16px;
+  --color: #{$primary-color};
+  --placeholder-color: #{$font3-color};
 
   display: inline-flex;
   width: 100%;
@@ -378,8 +395,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    border: 1px solid $light-color;
-    border-radius: 4px;
+    border: 1px solid $border-color;
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
@@ -395,7 +411,7 @@ export default {
     box-sizing: border-box;
     padding: 0 calc(var(--padding-left-right) / 2) 0 var(--padding-left-right);
     font-size: var(--font-size);
-    color: $semi-color;
+    color: $title-color;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -409,7 +425,7 @@ export default {
     width: 0;
 
     &.placeholder {
-      color: $light-color;
+      color: var(--placeholder-color);
     }
   }
 
@@ -422,7 +438,7 @@ export default {
     opacity: 0;
 
     &::-webkit-input-placeholder {
-      color: $light-color;
+      color: var(--placeholder-color);
     }
 
     &:disabled {
@@ -432,12 +448,15 @@ export default {
 
   &_unfold-icon {
     display: block;
-    width: var(--icon-size);
-    height: var(--icon-size);
+    --size: var(--icon-size);
+    --color: #{$font3-color};
     margin-right: var(--padding-left-right);
     transition: all 0.2s;
     flex-shrink: 0;
-    fill: $font3-color;
+
+    &.right {
+      display: none;
+    }
   }
 
   &_option-group {
@@ -454,7 +473,7 @@ export default {
         border-color: var(--color);
         box-shadow: 0 0 3px var(--color);
       }
-      &_unfold-icon {
+      &_unfold-icon.down {
         transform: rotate(180deg);
       }
       &_dropdown {
@@ -467,54 +486,61 @@ export default {
     .#{$prefix}-select {
       &_field,
       &_field:hover {
-        background-color: $whitesmoke-color;
-        border-color: $light-color;
+        background-color: $background2-color;
+        border-color: $border-color;
         cursor: not-allowed;
+      }
+
+      &_text,
+      &_text.placeholder {
+        color: $font3-color;
       }
     }
   }
 
   &_option {
-    --color: rgba(9, 187, 7, 0.1);
-    --height: 32px;
-    --font-size: 14px;
-
     width: 100%;
     box-sizing: border-box;
-    padding: 0 12px;
-    height: var(--height);
-    line-height: var(--height);
-    color: $semi-color;
+    padding: 0 16px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 17px;
+    color: $title-color;
     text-align: left;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    -webkit-tap-highlight-color: var(--color);
     white-space: nowrap;
     text-overflow: ellipsis;
 
     &.selected {
-      background-color: $whitesmoke-color;
+      background-color: rgba($color: $primary-color, $alpha: 0.2);
     }
 
     &:hover {
-      background-color: var(--color);
+      background-color: $background-color;
     }
 
     &[disabled],
     &[disabled]:hover {
-      background-color: $light-color;
+      background-color: $background2-color;
+      color: $font3-color;
       cursor: not-allowed;
     }
   }
 }
 
 @media screen and (max-width: 575px) {
-  .#{$prefix}-select-option {
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
+  .#{$prefix}-select {
+    &_unfold-icon {
+      &.down {
+        display: none;
+      }
+      &.right {
+        display: block;
+      }
+    }
   }
 }
 </style>

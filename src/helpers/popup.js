@@ -34,7 +34,7 @@ function updatePos($wrapper, $el, options) {
     $wrapper.style.top = '1px'
   } else {
     $wrapper.style.left = left + 'px'
-    $wrapper.style.top = 1 + top + $el.offsetHeight + 'px'
+    $wrapper.style.top = 1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
   }
 
   if (options.minWidth) {

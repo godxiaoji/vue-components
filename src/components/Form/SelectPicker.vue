@@ -1,13 +1,14 @@
 <template>
-  <div :class="[prefix + '-select_option-group', prefix + '-scroll-bar']">
+  <div
+    :class="[prefix + '-select_option-group', prefix + '-scroll-bar']"
+    @mousedown.prevent="onDropdownTap"
+    @scroll.stop="onDropdownTap"
+  >
     <div
       v-for="item in options"
       :key="item.value"
       :disabled="item.disabled"
-      :class="[
-        prefix + '-select_option',
-        { selected: item.selected }
-      ]"
+      :class="[prefix + '-select_option', { selected: item.selected }]"
       :title="item.label"
       @mousedown="onSelect(item)"
     >
@@ -44,9 +45,11 @@ export default {
   updated() {},
   attached() {},
   methods: {
+    onDropdownTap() {},
+
     onSelect(item) {
       if (!item.disabled) {
-        this.$parent.onChange(item.value)
+        this.$parent.onSelect(item.value)
       }
     }
   }

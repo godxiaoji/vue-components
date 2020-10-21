@@ -28,7 +28,7 @@
         <fx-button
           v-show="showCancel"
           :class="[prefix + '-modal_button']"
-          type="secondary"
+          type="default"
           @click="onCancelClick"
         >
           {{ cancelText }}
@@ -179,7 +179,7 @@ export default {
   &_box {
     width: 400px;
     box-sizing: border-box;
-    border: 1px solid $light-color;
+    border: 1px solid $border-color;
     border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
@@ -203,7 +203,7 @@ export default {
   &_title {
     flex: 1;
     font-size: 16px;
-    color: $semi-color;
+    color: $title-color;
     margin-top: 5px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -221,9 +221,8 @@ export default {
   }
 
   .#{$prefix}-icon {
-    width: 20px;
-    height: 20px;
-    fill: var(--#{$prefix}-light-color);
+    --size: 20px;
+    --color: #{$border-color};
   }
 
   &_body {
@@ -236,7 +235,7 @@ export default {
     overflow: auto;
     font-size: 14px;
     line-height: 1.715em;
-    color: $grey-color;
+    color: $font-color;
   }
 
   &_footer {

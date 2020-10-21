@@ -124,7 +124,6 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-notify {
-  --background-color: var(--#{$prefix}-primary-color);
   position: fixed;
   left: 0;
   top: 0;
@@ -140,7 +139,7 @@ export default {
   padding: 7px 0;
   overflow: hidden;
   color: #fff;
-  background-color: var(--background-color);
+  background-color: $primary-color;
   transform: translate3d(0, calc(-100%), 0);
   transition: all 0.2s;
   opacity: 0;
@@ -151,15 +150,15 @@ export default {
   }
 
   &.type--success {
-    --background-color: var(--#{$prefix}-main-color);
+    background-color: $success-color;
   }
 
   &.type--warning {
-    --background-color: var(--#{$prefix}-warn-color);
+    background-color: $warning-color;
   }
 
   &.type--danger {
-    --background-color: var(--#{$prefix}-danger-color);
+    background-color: $danger-color;
   }
 
   .#{$prefix}-icon {

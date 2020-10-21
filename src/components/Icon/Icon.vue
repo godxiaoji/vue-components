@@ -79,12 +79,15 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-icon {
+  --size: 24px;
+  --color: #{$title-color};
+
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: var(--size);
+  height: var(--size);
   overflow: hidden;
   line-height: 0;
-  fill: $title-color;
+  fill: var(--color);
 
   &.spin {
     @include rotate-360-animation(800ms);

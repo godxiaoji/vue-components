@@ -4,8 +4,7 @@
       prefix + '-cascader',
       {
         focus: focus,
-        disabled: disabled,
-        'no-border': !border
+        disabled: disabled
       },
       sizeClassName,
       alignClassName
@@ -17,7 +16,16 @@
       >
         {{ formLabelString || placeholder }}
       </div>
-      <icon :class="[prefix + '-cascader_unfold-icon']"  class-name="DownOutlined"></icon>
+      <icon
+        class="right"
+        :class="[prefix + '-cascader_unfold-icon']"
+        class-name="RightOutlined"
+      ></icon>
+      <icon
+        class="down"
+        :class="[prefix + '-cascader_unfold-icon']"
+        class-name="DownOutlined"
+      ></icon>
       <input
         :class="[prefix + '-cascader_input']"
         type="text"
@@ -109,6 +117,7 @@ function parseOptions(options, fieldNames) {
               ? option[fieldNames.value]
               : option[fieldNames.label],
           value: option[fieldNames.value],
+          disabled: option.disabled ? true : false,
           children: parseOptions(option[fieldNames.children], fieldNames)
         })
       }
@@ -189,10 +198,6 @@ export default {
     align: {
       type: String,
       value: 'left'
-    },
-    border: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -553,19 +558,18 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-cascader {
-  --height: 30px;
-  --font-size: 14px;
-  --icon-size: 18px;
-  --color: var(--#{$prefix}-main-color);
-  --dropdown-color: var(--#{$prefix}-light-color);
-  --placeholder-color: var(--#{$prefix}-light-color);
-  --padding-left-right: 12px;
+  --height: 43px;
+  --font-size: 17px;
+  --icon-size: 20px;
+  --color: #{$primary-color};
+  --placeholder-color: #{$font3-color};
+  --padding-left-right: 16px;
 
   display: flex;
   height: calc(var(--height) + 2px);
   font-size: var(--font-size);
   position: relative;
-  color: $semi-color;
+  color: $title-color;
 
   &.size--mini {
     --height: 22px;
@@ -585,8 +589,7 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    border: 1px solid $light-color;
-    border-radius: 4px;
+    border: 1px solid $border-color;
     overflow: hidden;
     box-sizing: border-box;
     background-color: #fff;
@@ -602,7 +605,7 @@ export default {
     box-sizing: border-box;
     padding: 0 calc(var(--padding-left-right) / 2) 0 var(--padding-left-right);
     font-size: var(--font-size);
-    color: $semi-color;
+    color: $title-color;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -616,7 +619,7 @@ export default {
     width: 0;
 
     &.placeholder {
-      color: $light-color;
+      color: var(--placeholder-color);
     }
   }
 
@@ -659,6 +662,10 @@ export default {
     transition: all 0.2s;
     flex-shrink: 1;
     fill: $font3-color;
+
+    &.right {
+      display: none;
+    }
   }
 
   &_tools {
@@ -681,7 +688,7 @@ export default {
     min-width: 60px;
     display: inline-flex;
     flex: 0 0 auto;
-    border-right: 1px solid $whitesmoke-color;
+    border-right: 1px solid $divider-color;
     vertical-align: top;
 
     &:last-child {
@@ -702,32 +709,27 @@ export default {
   }
 
   &_item {
-    --color: rgba(9, 187, 7, 0.1);
-    --height: 32px;
-    --font-size: 14px;
-
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    height: var(--height);
-    font-size: var(--font-size);
+    padding: 0 16px;
+    height: 40px;
+    font-size: 17px;
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: var(--color);
 
     &[selected] {
-      background-color: $whitesmoke-color;
+      background-color: rgba($color: $primary-color, $alpha: 0.2);
     }
 
     &:hover {
-      background-color: var(--color);
+      background-color: $background-color;
     }
 
     &[disabled],
     &[disabled]:hover {
-      background-color: #ffffff;
-      color: $light-color;
+      background-color: $background2-color;
+      color: $font3-color;
       cursor: not-allowed;
     }
 
@@ -743,7 +745,8 @@ export default {
       margin-right: calc(
         var(--padding-left-right) / 2 - var(--padding-left-right)
       );
-      fill: $border-color;
+      --size: 20px;
+      --color: #{$border-color};
     }
   }
 
@@ -751,9 +754,14 @@ export default {
     .#{$prefix}-cascader {
       &_field,
       &_field:hover {
-        background-color: $whitesmoke-color;
-        border-color: $light-color;
+        background-color: $background2-color;
+        border-color: $border-color;
         cursor: not-allowed;
+      }
+
+      &_text,
+      &_text.placeholder {
+        color: $font3-color;
       }
     }
   }
@@ -765,48 +773,8 @@ export default {
         box-shadow: 0 0 3px var(--color);
       }
 
-      &_unfold-icon {
+      &_unfold-icon.down {
         transform: rotate(180deg);
-      }
-    }
-  }
-
-  &.no-border {
-    .#{$prefix}-cascader {
-      &_field {
-        border: none;
-      }
-
-      &_text,
-      &_input {
-        padding: 0;
-      }
-
-      &_unfold-icon {
-        margin-right: 0;
-      }
-    }
-
-    &.focus {
-      .#{$prefix}-cascader {
-        &_field {
-          box-shadow: none;
-        }
-      }
-    }
-
-    &.disabled {
-      .#{$prefix}-cascader {
-        &_field,
-        &_field:hover {
-          background-color: transparent;
-          border-color: transparent;
-        }
-
-        &_text,
-        &_input {
-          color: $light-color;
-        }
       }
     }
   }
@@ -816,17 +784,25 @@ export default {
   .#{$prefix}-cascader {
     &_group {
       &:last-child {
-        border-right: 1px solid $whitesmoke-color;
+        border-right: 1px solid $divider-color;
       }
 
       &:first-child {
-        border-left: 1px solid $whitesmoke-color;
+        border-left: 1px solid $divider-color;
       }
     }
+  }
+}
 
-    &_item {
-      --height: 40px;
-      --font-size: 16px;
+@media screen and (max-width: 575px) {
+  .#{$prefix}-select {
+    &_unfold-icon {
+      &.down {
+        display: none;
+      }
+      &.right {
+        display: block;
+      }
     }
   }
 }

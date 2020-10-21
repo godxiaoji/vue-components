@@ -1,14 +1,5 @@
 $prefix: 'fx';
 
-$main-color: var(--#{$prefix}-primary-color);
-
-$light-color: var(--#{$prefix}-light-color);
-$warn-color: var(--#{$prefix}-warn-color);
-
-$semi-color: var(--#{$prefix}-semi-color);
-$whitesmoke-color: var(--#{$prefix}-whitesmoke-color);
-$grey-color: var(--#{$prefix}-grey-color);
-
 $primary-color: #1890ff;
 $success-color: #52c41a;
 $warning-color: #faad14;
@@ -53,42 +44,32 @@ $background2-color: rgba(
 }
 
 :root {
-  /* 主色调/成功色 */
-  --#{$prefix}-main-color: #1890ff;
-  --#{$prefix}-primary-color: #1890ff;
-  /* 链接色 */
-  --#{$prefix}-link-color: #576b95;
-  /* 强调色/警告色 */
-  --#{$prefix}-warn-color: #faad14;
+  /* 主色调 */
+  --#{$prefix}-primary-color: #{$primary-color};
+  /* 警告色 */
+  --#{$prefix}-warning-color: #{$warning-color};
   /* 成功色 */
-  --#{$prefix}-success-color: #52c41a;
+  --#{$prefix}-success-color: #{$success-color};
   /* 危险色 */
-  --#{$prefix}-danger-color: #ff4d4f;
+  --#{$prefix}-danger-color: #{$danger-color};
   /* 基准黑 */
-  --#{$prefix}-black-color: #040a13;
+  --#{$prefix}-black-color: #{$black-color};
   /* 标题 */
-  --#{$prefix}-title-color: rgba(4, 10, 19, 0.85);
+  --#{$prefix}-title-color: #{$title-color};
   /* 主文字 */
-  --#{$prefix}-font-color: rgba(4, 10, 19, 0.65);
+  --#{$prefix}-font-color: #{$font-color};
   /* 辅助文字 */
-  --#{$prefix}-font2-color: rgba(4, 10, 19, 0.45);
+  --#{$prefix}-font2-color: #{$font2-color};
   /* 辅助文字 */
-  --#{$prefix}-font3-color: rgba(4, 10, 19, 0.25);
+  --#{$prefix}-font3-color: #{$font3-color};
   /* 容器线 */
-  --#{$prefix}-border-color: rgba(4, 10, 19, 0.15);
+  --#{$prefix}-border-color: #{$border-color};
   /* 划分线 */
-  --#{$prefix}-divider-color: rgba(4, 10, 19, 0.06);
+  --#{$prefix}-divider-color: #{$divider-color};
   /* 背景 */
-  --#{$prefix}-background-color: rgba(4, 10, 19, 0.04);
+  --#{$prefix}-background-color: #{$background-color};
   /* 表头背景 */
-  --#{$prefix}-background2-color: rgba(4, 10, 19, 0.02);
-
-  /* 次要内容 */
-  --#{$prefix}-grey-color: #888888;
-  /* 时间戳和表单缺省 */
-  --#{$prefix}-light-color: #b2b2b2;
-  /* 禁用背景 */
-  --#{$prefix}-whitesmoke-color: whitesmoke;
+  --#{$prefix}-background2-color: #{$background2-color};
 }
 
 html {
@@ -144,12 +125,12 @@ html {
 
   &_inner {
     min-width: 100%;
-    border: 1px solid $light-color;
+    border: 1px solid $border-color;
     box-sizing: border-box;
-    border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
     background-color: #fff;
+    border-radius: 0;
   }
 }
 

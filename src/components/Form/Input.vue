@@ -7,7 +7,8 @@
       {
         'has--prepend': hasPrepend,
         'has--append': hasAppend,
-        [prefix + '-textarea']: type === 'textarea'
+        [prefix + '-textarea']: type === 'textarea',
+        focus: focus2
       }
     ]"
     :disabled="disabled"
@@ -116,7 +117,9 @@ export default {
       hasAppend: false,
 
       formName: '',
-      formValue: ''
+      formValue: '',
+
+      focus2: false
     }
   },
   computed: {
@@ -209,9 +212,11 @@ export default {
       this.$emit(e.type, e)
     },
     onFocus(e) {
+      this.focus2 = true
       this.$emit(e.type, e)
     },
     onBlur(e) {
+      this.focus2 = false
       this.$emit(e.type, e)
 
       if (this.parentIsFormItem()) {
@@ -254,8 +259,6 @@ export default {
   --height: 43px;
   --font-size: 17px;
   --icon-size: 20px;
-  --color: var(--#{$prefix}-title-color);
-  --placeholder-color: var(--#{$prefix}-font3-color);
 
   height: calc(var(--height) + 2px);
   width: 100%;
@@ -267,7 +270,13 @@ export default {
   box-sizing: border-box;
   font-size: var(--font-size);
   background-color: #fff;
-  color: $semi-color;
+  color: $title-color;
+
+  &[disabled] {
+    background-color: $background2-color;
+    color: $font3-color;
+    user-select: none;
+  }
 
   &_prepend,
   &_append {
@@ -307,7 +316,7 @@ export default {
     padding: 0 16px;
     font-size: var(--font-size);
     cursor: pointer;
-    color: $semi-color;
+    color: $title-color;
     background: #ffffff;
     box-sizing: border-box;
     box-shadow: none;
@@ -326,23 +335,20 @@ export default {
     }
 
     &::-webkit-input-placeholder {
-      color: var(--placeholder-color);
-    }
-
-    .#{$prefix}-input:hover &,
-    &:hover {
-      border-color: var(--color);
+      color: $font3-color;
     }
 
     &:disabled,
     &:disabled:hover {
-      background-color: $whitesmoke-color;
-      border-color: $light-color;
+      background-color: $background2-color;
+      color: $font3-color;
       cursor: not-allowed;
+      user-select: none;
     }
+  }
 
-    &:focus {
-    }
+  &.focus {
+    border-color: $primary-color;
   }
 }
 </style>

@@ -4,29 +4,49 @@
 
 ## Props
 
-| 属性      | 类型    | 默认值    | 必填 | 说明                                                  |
-| --------- | ------- | --------- | ---- | ----------------------------------------------------- |
-| size      | string  | 'default' | 否   | 按钮尺寸，可选值：'default' / 'mini' / 'large'        |
-| type      | string  | 'default' | 否   | 按钮类型，可选值：'primary' / 'secondary' / 'warning' |
-| disabled  | boolean | false     | 否   | 是否禁用                                              |
-| loading   | boolean | false     | 否   | 名称前是否带 loading 图标                             |
-| form-type | string  |           | 否   | 'submit' / 'reset'                                    |
+| 属性      | 类型    | 默认值    | 必填 | 说明                                       |
+| --------- | ------- | --------- | ---- | ------------------------------------------ |
+| size      | string  | 'default' | 否   | 按钮尺寸                                   |
+| type      | string  | 'default' | 否   | 按钮类型                                   |
+| pattern   | string  | 'default' | 否   | 按钮款式                                   |
+| shape     | string  | 'default' | 否   | 按钮形状                                   |
+| disabled  | boolean | false     | 否   | 是否禁用                                   |
+| icon      | string  |           | 否   | 图标，显示 icon 组件带的图标               |
+| loading   | boolean | false     | 否   | 名称前是否带 loading 图标，优先级大于 icon |
+| form-type | string  |           | 否   | 'submit' / 'reset'                         |
 
 ### size 的合法值
 
-| 值      | 说明                           |
-| ------- | ------------------------------ |
-| default | 默认大小，高度 32px，文字 14px |
-| mini    | 小尺寸，高度 24px，文字 12px   |
-| large   | 大尺寸，高度 40px，文字 16px   |
+| 值      | 说明                                      |
+| ------- | ----------------------------------------- |
+| default | 默认大小，高度 48px，文字 17px，图标 20px |
+| small   | 小尺寸，高度 28px，文字 12px，图标 16px   |
 
 ### type 的合法值
 
-| 值        | 说明                            |
-| --------- | ------------------------------- |
-| primary   | <font color=#09bb07>主要</font> |
-| secondary | 次要                            |
-| warning   | <font color=#e94f4f>警告</font> |
+| 值      | 说明                                      |
+| ------- | ----------------------------------------- |
+| primary | <font color=#1890ff>主要</font>           |
+| default | <font color=rgb(4,10,19,0.04)>次要</font> |
+| success | <font color=#52c41a>成功</font>           |
+| warning | <font color=#faad14>警告</font>           |
+| danger  | <font color=#ff4d4f>危险</font>           |
+
+### pattern 的合法值
+
+| 值      | 说明     |
+| ------- | -------- |
+| default | 默认按钮 |
+| solid   | 细线按钮 |
+| dashed  | 虚线按钮 |
+
+### shape 的合法值
+
+| 值      | 说明                               |
+| ------- | ---------------------------------- |
+| default | 默认按钮                           |
+| round   | 圆角按钮                           |
+| circle  | 圆圈按钮，搭配图标使用，不显示文字 |
 
 ### form-type 的合法值
 
@@ -34,13 +54,6 @@
 | ------ | -------- |
 | submit | 提交表单 |
 | reset  | 重置表单 |
-
-## CSS
-
-| 属性         | 默认值  | 说明           |
-| ------------ | ------- | -------------- |
-| --icon-color | #000000 | 按钮内图标颜色 |
-| --icon-size  | 20px    | 按钮内图标大小 |
 
 ## Slots
 

@@ -4,14 +4,16 @@
       prefix + '-button',
       typeClassName,
       sizeClassName,
-      patternClassName
+      patternClassName,
+      shapeClassName
     ]"
     :disabled="disabled"
     :type="realFormType"
     @click="onClick"
   >
     <icon v-if="loading" class-name="LoadingOutlined" :spin="true"></icon>
-    <slot>按钮</slot>
+    <icon v-else-if="icon" :class-name="icon"></icon>
+    <span><slot>按钮</slot></span>
   </button>
 </template>
 
@@ -20,9 +22,10 @@ import Icon from '../Icon/Icon.vue'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
-const SIZE_NAMES = ['default', 'mini', 'large']
+const SIZE_NAMES = ['default', 'small']
 const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
-const PATTERN_NAMES = ['default', 'solid', 'dashed', 'link']
+const PATTERN_NAMES = ['default', 'solid', 'dashed']
+const SHAPE_NAMES = ['default', 'round', 'circle']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
 export default {
@@ -30,16 +33,28 @@ export default {
   components: { Icon },
   props: {
     size: {
-      type: String,
+      validator(val) {
+        return inArray(val, SIZE_NAMES)
+      },
       default: SIZE_NAMES[0]
     },
     type: {
-      type: String,
+      validator(val) {
+        return inArray(val, TYPE_NAMES)
+      },
       default: TYPE_NAMES[0]
     },
     pattern: {
-      type: String,
+      validator(val) {
+        return inArray(val, PATTERN_NAMES)
+      },
       default: PATTERN_NAMES[0]
+    },
+    shape: {
+      validator(val) {
+        return inArray(val, SHAPE_NAMES)
+      },
+      default: SHAPE_NAMES[0]
     },
     loading: {
       type: Boolean,
@@ -50,8 +65,14 @@ export default {
       default: false
     },
     formType: {
-      type: String,
+      validator(val) {
+        return inArray(val, FORM_TYPE_NAMES)
+      },
       default: FORM_TYPE_NAMES[0]
+    },
+    icon: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -68,12 +89,18 @@ export default {
     patternClassName() {
       return (
         'pattern--' +
-        (inArray(this.type, PATTERN_NAMES) ? this.pattern : PATTERN_NAMES[0])
+        (inArray(this.pattern, PATTERN_NAMES) ? this.pattern : PATTERN_NAMES[0])
       )
     },
     sizeClassName() {
       return (
         'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
+      )
+    },
+    shapeClassName() {
+      return (
+        'shape--' +
+        (inArray(this.shape, SHAPE_NAMES) ? this.shape : SHAPE_NAMES[0])
       )
     },
     realFormType() {
@@ -100,11 +127,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-button {
-  --icon-size: 17px;
-  --icon-color: #fff;
-
   display: inline-flex;
-  flex: 1 0 100%;
+  flex: 1;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -116,35 +140,65 @@ export default {
   height: 48px;
   padding: 0 12px;
   font-size: 17px;
-  line-height: 24px;
+  line-height: 23.8px;
   border: 1px solid transparent;
   background: #fff;
-  font-weight: 400;
+  font-weight: 500;
   color: #fff;
+  user-select: none;
+
+  + .#{$prefix}-button {
+    margin-left: 16px;
+  }
 
   .#{$prefix}-icon {
-    margin-right: 10px;
-    --size: var(--icon-size);
-    --color: var(--icon-color);
     fill: #fff;
+    width: 20px;
+    height: 20px;
+    margin: 0 -2px;
+
+    + span {
+      margin-left: 10px;
+    }
   }
 
-  &.size--mini {
-    min-width: 58px;
+  &.shape--round {
+    border-radius: 24px;
+  }
+
+  &.shape--circle {
+    border-radius: 24px;
+    width: 48px;
+    min-width: 48px;
+    flex: 0;
+    padding: 0;
+
+    span {
+      display: none;
+    }
+  }
+
+  &.size--small {
+    min-width: 60px;
     height: 28px;
     padding: 0 8px;
-    line-height: 19.6px;
-    font-size: 14px;
-    --icon-size: 16px;
-  }
+    line-height: 16.8px;
+    font-size: 12px;
 
-  &.size--large {
-    min-width: 80px;
-    height: 40px;
-    padding: 0 16px;
-    line-height: 22.4px;
-    font-size: 16px;
-    --icon-size: 22px;
+    .#{$prefix}-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.shape--round {
+      border-radius: 14px;
+    }
+
+    &.shape--circle {
+      border-radius: 14px;
+      width: 28px;
+      min-width: 28px;
+    }
   }
 
   &.pattern--dashed {
@@ -153,11 +207,17 @@ export default {
 
   &:disabled {
     cursor: not-allowed;
-    color: #fff;
+    border-color: $divider-color;
+    background-color: $background2-color;
+    color: $font3-color;
+
+    .#{$prefix}-icon {
+      fill: $font3-color;
+    }
   }
 
-  &.type--default {
-    border-color: $divider-color;
+  &.type--default:not(:disabled) {
+    border-color: $border-color;
     background-color: #fff;
     color: $title-color;
 
@@ -165,31 +225,19 @@ export default {
       fill: $title-color;
     }
 
-    &:not(:disabled) {
-      &:hover {
-        background-color: $background-color;
-      }
-
-      &:active {
-        background-color: $background-color;
-      }
+    &:hover {
+      background-color: $background2-color;
     }
 
-    &:disabled {
-      border-color: $divider-color;
-      background-color: $background2-color;
-      color: $font3-color;
-
-      .#{$prefix}-icon {
-        fill: $font3-color;
-      }
+    &:active {
+      background-color: $background-color;
     }
   }
 
   &.type--primary {
-    background-color: $primary-color;
-
     &:not(:disabled) {
+      background-color: $primary-color;
+
       &:hover {
         border-color: #40a9ff;
         background-color: #40a9ff;
@@ -199,63 +247,132 @@ export default {
         border-color: #096dd9;
         background-color: #096dd9;
       }
+
+      &.pattern--solid,
+      &.pattern--dashed {
+        border-color: $primary-color;
+        background-color: #fff;
+        color: $primary-color;
+
+        &:hover {
+          background-color: #fff;
+          border-color: #40a9ff;
+          color: #40a9ff;
+        }
+
+        &:active {
+          background-color: #fff;
+          border-color: #096dd9;
+          color: #096dd9;
+        }
+
+        .#{$prefix}-icon {
+          fill: $primary-color;
+        }
+      }
     }
 
-    &.pattern--solid,
-    &.pattern--dashed {
-      background-color: #fff;
-      color: $primary-color;
-    }
-
-    &:disabled {
+    &.pattern--default:disabled {
+      border-color: transparent;
       background-color: rgba($color: $primary-color, $alpha: 0.2);
+      color: #fff;
     }
   }
 
   &.type--success {
-    background-color: $success-color;
-
     &:not(:disabled) {
+      background-color: $success-color;
+
       &:hover {
-        border-color: #40a9ff;
-        background-color: #40a9ff;
+        border-color: #73d13d;
+        background-color: #73d13d;
       }
 
       &:active {
-        border-color: #096dd9;
-        background-color: #096dd9;
+        border-color: #389e0d;
+        background-color: #389e0d;
+      }
+
+      &.pattern--solid,
+      &.pattern--dashed {
+        border-color: $success-color;
+        background-color: #fff;
+        color: $success-color;
+
+        &:hover {
+          background-color: #fff;
+          border-color: #73d13d;
+          color: #73d13d;
+        }
+
+        &:active {
+          background-color: #fff;
+          border-color: #389e0d;
+          color: #389e0d;
+        }
+
+        .#{$prefix}-icon {
+          fill: $success-color;
+        }
       }
     }
 
-    &:disabled {
-      background-color: rgba($color: $primary-color, $alpha: 0.2);
+    &.pattern--default:disabled {
+      border-color: transparent;
+      background-color: rgba($color: $success-color, $alpha: 0.2);
+      color: #fff;
     }
   }
 
   &.type--warning {
-    background-color: $warning-color;
-
     &:not(:disabled) {
+      background-color: $warning-color;
+
       &:hover {
-        border-color: #40a9ff;
-        background-color: #40a9ff;
+        border-color: #ffc53d;
+        background-color: #ffc53d;
       }
 
       &:active {
-        border-color: #096dd9;
-        background-color: #096dd9;
+        border-color: #f5a511;
+        background-color: #f5a511;
+      }
+
+      &.pattern--solid,
+      &.pattern--dashed {
+        border-color: $warning-color;
+        background-color: #fff;
+        color: $warning-color;
+
+        &:hover {
+          background-color: #fff;
+          border-color: #ffc53d;
+          color: #ffc53d;
+        }
+
+        &:active {
+          background-color: #fff;
+          border-color: #f5a511;
+          color: #f5a511;
+        }
+
+        .#{$prefix}-icon {
+          fill: $warning-color;
+        }
       }
     }
 
-    &:disabled {
+    &.pattern--default:disabled {
+      border-color: transparent;
       background-color: rgba($color: $warning-color, $alpha: 0.2);
+      color: #fff;
     }
   }
 
   &.type--danger {
-    background-color: $danger-color;
-
     &:not(:disabled) {
+      background-color: $danger-color;
+
       &:hover {
         border-color: #ff7875;
         background-color: #ff7875;
@@ -265,10 +382,35 @@ export default {
         border-color: #f5222d;
         background-color: #f5222d;
       }
+
+      &.pattern--solid,
+      &.pattern--dashed {
+        border-color: $danger-color;
+        background-color: #fff;
+        color: $danger-color;
+
+        &:hover {
+          background-color: #fff;
+          border-color: #ff7875;
+          color: #ff7875;
+        }
+
+        &:active {
+          background-color: #fff;
+          border-color: #f5222d;
+          color: #f5222d;
+        }
+
+        .#{$prefix}-icon {
+          fill: $danger-color;
+        }
+      }
     }
 
-    &:disabled {
+    &.pattern--default:disabled {
+      border-color: transparent;
       background-color: rgba($color: $danger-color, $alpha: 0.2);
+      color: #fff;
     }
   }
 }

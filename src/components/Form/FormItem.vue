@@ -1,13 +1,18 @@
 <template>
   <div :class="[prefix + '-form-item']">
-    <label for="" :class="[prefix + '-form-item_label', { required }]">{{
-      label
-    }}</label>
+    <label
+      for=""
+      :class="[prefix + '-form-item_label', { required }]"
+      :style="labelStyles"
+      >{{ label }}</label
+    >
     <div :class="[prefix + '-form-item_content']">
       <div :class="[prefix + '-form-item_content_inner']">
         <slot></slot>
       </div>
-      <div :class="[prefix + '-form-item_error']" v-if="isError">{{ errMsg }}</div>
+      <div :class="[prefix + '-form-item_error']" v-if="isError">
+        {{ errMsg }}
+      </div>
     </div>
   </div>
 </template>
@@ -29,12 +34,28 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    labelWidth: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return { prefix: SDKKey, isError: false, errMsg: '' }
   },
-  computed: {},
+  computed: {
+    labelStyles() {
+      const styles = {}
+
+      if (this.labelWidth) {
+        styles.width = this.labelWidth
+      } else if (this.parentIsForm() && this.$parent.labelWidth) {
+        styles.width = this.$parent.labelWidth
+      }
+
+      return styles
+    }
+  },
   watch: {
     name(newVal) {
       this.$children.forEach($child => {
@@ -52,6 +73,12 @@ export default {
   updated() {},
   attached() {},
   methods: {
+    parentIsForm() {
+      const $parent = this.$parent
+
+      return $parent && $parent._app_form
+    },
+
     getRulesByName(name, value) {
       let rules = []
 
@@ -181,19 +208,20 @@ export default {
   &_content {
     flex: 1;
     border-bottom: 0.5px solid $divider-color;
+    padding: 8px 0;
 
     &_inner {
-      min-height: 44px;
+      min-height: 28px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
 
       .#{$prefix}-input {
-        --height: 42px;
+        --height: 26px;
         border-left-width: 0;
         border-right-width: 0;
-        border-top-color: #fff;
-        border-bottom-color: #fff;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
 
         &_prepend {
           padding: 0 16px 0 0;
@@ -208,6 +236,10 @@ export default {
         }
       }
 
+      .#{$prefix}-switch {
+        font-size: 28px;
+      }
+
       z-index: 0;
     }
   }
@@ -217,8 +249,7 @@ export default {
     color: $danger-color;
     font-size: 12px;
     line-height: 17px;
-    padding: 0 0 10px 0;
-    margin-top: -6px;
+    padding: 2px 0;
     z-index: 1;
   }
 }

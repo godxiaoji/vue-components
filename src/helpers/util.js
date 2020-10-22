@@ -89,6 +89,14 @@ export function isNumeric(object) {
 }
 
 /**
+ * 是否整数
+ * @param {any} object 值
+ */
+export function isInteger(object) {
+  return isNumber(object) && object % 1 === 0
+}
+
+/**
  * 是否数组
  * @param {any} object 值
  */

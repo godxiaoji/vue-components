@@ -14,6 +14,7 @@ import Input from './Form/Input.vue'
 import Form from './Form/Form.vue'
 import Cascader from './Form/Cascader.vue'
 import FormItem from './Form/FormItem.vue'
+import Rate from './Form/Rate.vue'
 
 import Toast from './Notice/Toast.vue'
 import Modal from './Notice/Modal.vue'
@@ -52,6 +53,7 @@ export {
   Form,
   Cascader,
   FormItem,
+  Rate,
   /* Notice */
   Toast,
   Modal,

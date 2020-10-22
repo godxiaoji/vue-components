@@ -164,16 +164,19 @@ export default {
   display: inline-flex;
   align-items: center;
   font-size: 17px;
-  height: 1.235em;
+  height: 1.412em;
   color: $title-color;
-  padding: 0 12px;
   text-align: left;
   position: relative;
 
+  + .#{$prefix}-checkbox {
+    margin-left: 16px;
+  }
+
   &_box {
     display: inline-flex;
-    width: 1.235em;
-    height: 1.235em;
+    width: 1.412em;
+    height: 1.412em;
     box-sizing: border-box;
     margin-right: 12px;
     align-items: center;

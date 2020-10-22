@@ -12,14 +12,20 @@ import { SDKKey } from '../../config'
 export default {
   name: SDKKey + '-form',
   props: {
-    rules: Object
+    rules: Object,
+    labelWidth: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return { prefix: SDKKey }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this._app_form = true
+  },
   ready() {},
   mounted() {},
   updated() {},

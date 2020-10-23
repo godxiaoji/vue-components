@@ -36,11 +36,6 @@ export default {
         return inArray(val, TYPE_NAMES)
       },
       default: TYPE_NAMES[0]
-    },
-    // 类型图片
-    image: {
-      type: String,
-      default: ''
     }
   },
   data() {
@@ -48,9 +43,6 @@ export default {
   },
   watch: {},
   computed: {
-    imageUrl() {
-      return null
-    }
   },
   created() {},
   mounted() {

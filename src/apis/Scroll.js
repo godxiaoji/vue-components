@@ -6,16 +6,23 @@ import { isNumber } from '../helpers/util'
  * @param object
  */
 export function pageScrollTo(object) {
-  const docElem = document.documentElement
+  elementScrollTo(document.documentElement, object)
+}
+
+/**
+ * 将元素滚动到目标位置（可以设置滚动动画时长）
+ * @param object
+ */
+export function elementScrollTo(element, object) {
   const to =
     isNumber(object.scrollTop) && object.scrollTop >= 0 ? object.scrollTop : 0
-  const from = docElem.scrollTop
+  const from = element.scrollTop
 
   if (from === to) {
     // 不需要跳转
   } else if (object.duration === 0) {
     // 不需要动画
-    docElem.scrollTop = to
+    element.scrollTop = to
   } else {
     const duration = object.duration > 0 ? object.duration : 300
 
@@ -24,7 +31,7 @@ export function pageScrollTo(object) {
       to,
       duration,
       progress(res) {
-        docElem.scrollTop = res.current
+        element.scrollTop = res.current
       }
     })
   }

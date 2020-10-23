@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import Modal from '../components/Notice/Modal.vue'
+import Dialog from '../components/Notice/Dialog.vue'
 import { createPopup } from '../helpers/popup'
 import { htmlEscape, isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
 import { parseParamsByRules } from './rules'
 import { removeEl } from '../helpers/dom'
 
-export function showModal(object) {
+export function showDialog(object) {
   if (!isObject(object)) {
     object = {}
   }
@@ -14,11 +14,11 @@ export function showModal(object) {
   const { success, fail, complete } = getCallbackFns(object)
 
   try {
-    const propsData = parseParamsByRules(object, 'showModal')
+    const propsData = parseParamsByRules(object, 'showDialog')
     propsData.content = htmlEscape(propsData.content)
 
     const Comp = Vue.extend({
-      extends: Modal,
+      extends: Dialog,
       methods: {
         onCancelClick(e) {
           const res = {

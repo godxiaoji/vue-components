@@ -5,71 +5,46 @@
     :style="{ zIndex }"
     @click="onModalClick"
   >
-    <div :class="[prefix + '-modal_box', { visible }]" @click.stop="onBoxClick">
-      <div :class="[prefix + '-modal_header']">
-        <span :class="[prefix + '-modal_title']">{{ title }}</span>
-        <span
-          :class="[prefix + '-modal_close']"
-          v-show="showClose"
-          @click="onCloseClick"
-        >
-          <fx-icon class-name="CloseOutlined"></fx-icon>
-        </span>
+    <div
+      :class="[prefix + '-modal_box', { visible }]"
+      :style="boxStyles"
+      @click.stop="onBoxClick"
+    >
+      <div :class="[prefix + '-modal_header']" v-if="hasHeader">
+        <slot name="header"></slot>
       </div>
       <div :class="[prefix + '-modal_body']">
-        <div :class="[prefix + '-modal_content']">
-          <template v-if="content">
-            {{ content }}
-          </template>
-          <slot v-else></slot>
-        </div>
+        <slot></slot>
       </div>
-      <div :class="[prefix + '-modal_footer']">
-        <fx-button
-          v-show="showCancel"
-          :class="[prefix + '-modal_button']"
-          type="default"
-          @click="onCancelClick"
-        >
-          {{ cancelText }}
-        </fx-button>
-        <fx-button
-          :class="[prefix + '-modal_button']"
-          type="primary"
-          @click="onConfirmClick"
-        >
-          {{ confirmText }}
-        </fx-button>
+      <div :class="[prefix + '-modal_footer']" v-if="hasFooter">
+        <slot name="footer"></slot>
       </div>
+      <i
+        v-if="showClose"
+        :class="[prefix + '-modal_close']"
+        @click="onCloseClick"
+        ><icon class-name="CloseOutlined"></icon
+      ></i>
     </div>
   </div>
 </template>
 
 <script>
-import FxIcon from '../Icon/Icon.vue'
-import FxButton from '../Form/Button.vue'
+import Icon from '../Icon/Icon.vue'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-modal',
-  components: { FxIcon, FxButton },
+  components: { Icon },
   props: {
+    width: {
+      type: String,
+      default: ''
+    },
     visible: {
       type: Boolean,
       default: false
-    },
-    title: {
-      type: String,
-      default: '提示'
-    },
-    cancelText: {
-      type: String,
-      default: '取消'
-    },
-    confirmText: {
-      type: String,
-      default: '确定'
     },
     maskClosable: {
       type: Boolean,
@@ -79,23 +54,35 @@ export default {
       type: Boolean,
       default: true
     },
-    showCancel: {
-      type: Boolean,
-      default: true
-    },
     zIndex: {
       type: Number,
       default: 10000
-    },
-    content: {
-      type: String,
-      default: ''
     }
   },
   data() {
-    return { prefix: SDKKey }
+    return { prefix: SDKKey, hasHeader: false, hasFooter: false }
+  },
+  computed: {
+    boxStyles() {
+      const styles = {}
+
+      if (this.width) {
+        styles.width = this.width
+      }
+
+      return styles
+    }
   },
   created() {},
+  mounted() {
+    if (this.$scopedSlots.header) {
+      this.hasHeader = true
+    }
+
+    if (this.$scopedSlots.footer) {
+      this.hasFooter = true
+    }
+  },
   beforeDestroy() {},
   methods: {
     onBoxClick() {},
@@ -105,38 +92,6 @@ export default {
       }
     },
     onCloseClick(e) {
-      this.close(e)
-    },
-    onCancelClick(e) {
-      const type = 'cancel'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
-
-      this.close(e)
-    },
-    onConfirmClick(e) {
-      const type = 'confirm'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
-
       this.close(e)
     },
     close() {
@@ -172,17 +127,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba($color: $black-color, $alpha: 0.5);
   text-align: left;
   transform: translateZ(0);
 
   &_box {
     width: 400px;
     box-sizing: border-box;
-    border: 1px solid $border-color;
     border-radius: 4px;
     background-color: #fff;
-    overflow: hidden;
     transform: scale(0);
     transition: all 0.2s;
     opacity: 0;
@@ -194,57 +147,52 @@ export default {
   }
 
   &_header {
-    display: flex;
-    align-items: center;
-    height: 51px;
-    padding: 0 0 0 20px;
-  }
-
-  &_title {
     flex: 1;
-    font-size: 16px;
+    font-size: 21px;
+    font-weight: bold;
     color: $title-color;
-    margin-top: 5px;
+    padding: 16px 0 12px;
+    margin: 0 24px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-  }
-
-  &_close {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 21px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-
-  .#{$prefix}-icon {
-    --size: 20px;
-    --color: #{$border-color};
+    overflow: hidden;
+    text-align: center;
   }
 
   &_body {
-    padding: 0 20px;
-    overflow: hidden;
-  }
-
-  &_content {
-    max-height: 300px;
-    overflow: auto;
-    font-size: 14px;
-    line-height: 1.715em;
+    padding: 0;
+    font-size: 17px;
+    line-height: 23.8px;
     color: $font-color;
   }
 
   &_footer {
-    padding: 15px 20px 20px;
+    padding: 12px 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    margin: 0 24px;
+  }
 
-    .#{$prefix}-modal_button + .#{$prefix}-modal_button {
-      margin: 0 0 0 10px;
+  &_close {
+    position: absolute;
+    left: 50%;
+    bottom: -56px;
+    margin: 0 0 0 -20px;
+    background-color: rgba($color: $black-color, $alpha: 0.5);
+    border: 2px solid #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .#{$prefix}-icon {
+      --size: 24px;
+      --color: #fff;
     }
   }
 }

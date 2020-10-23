@@ -137,7 +137,7 @@ export default {
   outline: none;
   cursor: pointer;
   min-width: 66px;
-  height: 48px;
+  height: 44px;
   padding: 0 12px;
   font-size: 17px;
   line-height: 23.8px;
@@ -167,8 +167,8 @@ export default {
 
   &.shape--circle {
     border-radius: 24px;
-    width: 48px;
-    min-width: 48px;
+    width: 44px;
+    min-width: 44px;
     flex: 0;
     padding: 0;
 

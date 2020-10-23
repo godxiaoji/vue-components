@@ -1,6 +1,6 @@
 import { createIntersectionObserver } from './IntersectionObserver'
 import { createSelectorQuery } from './SelectorQuery'
-import { showModal } from './Modal'
+import { showDialog } from './Dialog'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import { showNotify, hideNotify } from './Notify'
 import {
@@ -10,7 +10,7 @@ import {
   removeStorage,
   clearStorage
 } from './LocalStorage'
-import { pageScrollTo } from './Scroll'
+import { pageScrollTo, elementScrollTo } from './Scroll'
 
 export {
   createIntersectionObserver,
@@ -19,7 +19,7 @@ export {
   showLoading,
   hideLoading,
   hideToast,
-  showModal,
+  showDialog,
   showNotify,
   hideNotify,
   getStorageInfo,
@@ -27,5 +27,6 @@ export {
   setStorage,
   removeStorage,
   clearStorage,
-  pageScrollTo
+  pageScrollTo,
+  elementScrollTo
 }

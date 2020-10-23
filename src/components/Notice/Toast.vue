@@ -152,7 +152,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba($color: $black-color, $alpha: 0.5);
   }
 
   &_box {
@@ -160,7 +160,7 @@ export default {
     padding: 6px 20px;
     border-radius: 20px;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba($color: $black-color, $alpha: 0.5);
     color: #fff;
   }
 

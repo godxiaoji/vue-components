@@ -54,9 +54,9 @@ API 列表，参照微信小程序，持续更新。
 
 [hideLoading](./apis/README.Toast.md#hideLoading)
 
-## Modal
+## Dialog
 
-[showModal](./apis/README.Modal.md#showModal)
+[showDialog](./apis/README.Dialog.md#showDialog)
 
 ## Scroll
 

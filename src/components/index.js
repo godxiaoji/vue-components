@@ -29,6 +29,8 @@ import Badge from './Base/Badge.vue'
 
 import GridRow from './Layout/GridRow.vue'
 import GridCol from './Layout/GridCol.vue'
+import Tabs from './Layout/Tabs.vue'
+import Empty from './Layout/Empty.vue'
 
 export {
   /* Base */
@@ -64,5 +66,7 @@ export {
   FlatList,
   /* Layout */
   GridRow,
-  GridCol
+  GridCol,
+  Tabs,
+  Empty
 }

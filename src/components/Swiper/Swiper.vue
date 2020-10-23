@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import MSlide from 'mslide'
+import MSlide from 'mslide/src/mslide'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 

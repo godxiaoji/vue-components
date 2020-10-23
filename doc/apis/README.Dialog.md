@@ -1,6 +1,6 @@
-# Modal
+# Dialog
 
-## <a name="showModal">Vue.prototype.\$showModal(object)</a>
+## <a name="showDialog">Vue.prototype.\$showDialog(object)</a>
 
 显示模态对话框。
 
@@ -30,7 +30,7 @@ Object object
 ### 用法
 
 ```
-this.$showModal({
+this.$showDialog({
   title: '提示',
   content: '这是一个模态弹窗',
   success (res) {

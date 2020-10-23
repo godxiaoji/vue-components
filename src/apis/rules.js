@@ -33,7 +33,7 @@ export const apiRules = {
   /**
    * 界面
    */
-  showModal: {
+  showDialog: {
     title: {
       type: String,
       default: '提示'
@@ -66,7 +66,7 @@ export const apiRules = {
     },
     icon: {
       enums: ['none', 'success', 'loading'],
-      default: 'success'
+      default: 'none'
     },
     image: {
       type: String

@@ -43,7 +43,7 @@
 
 <script>
 import Vue from 'vue'
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import CascaderPicker from './CascaderPicker.vue'
 import { CustomEvent } from '../../helpers/events'
 import {

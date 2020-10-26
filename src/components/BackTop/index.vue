@@ -1,23 +1,23 @@
 <template>
   <div
     v-show="scrollTop >= visibleHeight"
-    :class="[prefix + '-back-to-top']"
+    :class="[prefix + '-back-top']"
     :style="styles"
     @click="onClick"
   >
     <slot>
-      <icon :class="[prefix + '-back-to-top_icon']" class-name="UpCircleOutlined"></icon>
+      <icon :class="[prefix + '-back-top_icon']" class-name="UpCircleOutlined"></icon>
     </slot>
   </div>
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { frameTo } from '../../helpers/animation'
 import { SDKKey } from '../../config'
 
 export default {
-  name: SDKKey + '-back-to-top',
+  name: SDKKey + '-back-top',
   components: { Icon },
   props: {
     visibleHeight: {
@@ -106,7 +106,7 @@ export default {
 <style lang="scss">
 @import '../component.module.scss';
 
-.#{$prefix}-back-to-top {
+.#{$prefix}-back-top {
   position: fixed;
   right: 20px;
   bottom: 20px;

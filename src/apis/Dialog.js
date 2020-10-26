@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Dialog from '../components/Notice/Dialog.vue'
+import Dialog from '../components/Dialog'
 import { createPopup } from '../helpers/popup'
 import { htmlEscape, isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'

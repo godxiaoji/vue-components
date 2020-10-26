@@ -1,7 +1,7 @@
-import ScrollView from './ScrollView/ScrollView.vue'
+import ScrollView from './ScrollView'
 import Swiper from './Swiper/Swiper.vue'
 import SwiperItem from './Swiper/SwiperItem.vue'
-import Image from './Image/Image.vue'
+
 import Button from './Form/Button.vue'
 import Switch from './Form/Switch.vue'
 import Slider from './Form/Slider.vue'
@@ -16,21 +16,22 @@ import Cascader from './Form/Cascader.vue'
 import FormItem from './Form/FormItem.vue'
 import Rate from './Form/Rate.vue'
 
-import Toast from './Notice/Toast.vue'
-import Modal from './Notice/Modal.vue'
-import Notify from './Notice/Notify.vue'
+import Toast from './Toast'
+import Modal from './Modal'
+import Notify from './Notify'
 
-import Icon from './Icon/Icon.vue'
-import BackToTop from './Navigation/BackToTop.vue'
-import FlatList from './List/FlatList.vue'
+import Icon from './Icon'
+import Image from './Image'
+import BackTop from './BackTop'
+import FlatList from './FlatList'
 
-import Copy from './Base/Copy.vue'
-import Badge from './Base/Badge.vue'
+import Copy from './Copy'
+import Badge from './Badge'
 
-import GridRow from './Layout/GridRow.vue'
-import GridCol from './Layout/GridCol.vue'
-import Tabs from './Layout/Tabs.vue'
-import Empty from './Layout/Empty.vue'
+import GridRow from './Row'
+import GridCol from './Col'
+import Tabs from './Tabs'
+import Empty from './Empty'
 
 import Skeleton from './Skeleton'
 import SkeletonAvatar from './Skeleton/Avatar.vue'
@@ -68,7 +69,7 @@ export {
   Modal,
   Notify,
   /* Navigation */
-  BackToTop,
+  BackTop,
   /* List */
   FlatList,
   /* Layout */

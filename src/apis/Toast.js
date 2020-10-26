@@ -1,4 +1,4 @@
-import Toast from '../components/Notice/Toast.vue'
+import Toast from '../components/Toast'
 import { isObject, isString } from '../helpers/util'
 import { baseShow, baseHide } from './Notify'
 

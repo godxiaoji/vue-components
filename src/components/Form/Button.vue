@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 

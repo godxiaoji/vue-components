@@ -40,7 +40,7 @@
 import { CustomEvent } from '../../helpers/events'
 import { cloneData, isFunction, isNumber, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import ScrollView from '../ScrollView/ScrollView.vue'
+import ScrollView from '../ScrollView'
 import Exception from '../../helpers/exception'
 
 export default {

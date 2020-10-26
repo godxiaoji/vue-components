@@ -38,7 +38,7 @@
 
 <script>
 import FxButton from '../Form/Button.vue'
-import Modal from '../Notice/Modal.vue'
+import Modal from '../Modal'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 

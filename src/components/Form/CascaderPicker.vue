@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { getDefaultSelecteds, parseDropdownList } from './cascader-util'
 

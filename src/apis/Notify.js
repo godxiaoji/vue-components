@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Notify from '../components/Notice/Notify.vue'
+import Notify from '../components/Notify'
 import { isObject, isString } from '../helpers/util'
 import { parseParamsByRules } from './rules'
 import { getCallbackFns } from './callback'

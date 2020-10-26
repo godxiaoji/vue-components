@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'

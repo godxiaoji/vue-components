@@ -1,14 +1,10 @@
-import _Swiper from 'swiper/js/swiper'
-import SwiperItemComponent from './SwiperItem.vue'
-import SwiperComponent from './Swiper.vue'
+import SwiperItem from './SwiperItem.vue'
+import Swiper from './Swiper.vue'
 
-const Swiper = _Swiper
-const swiper = SwiperComponent
-const swiperItem = SwiperItemComponent
 const install = function(Vue) {
-  Vue.component(SwiperComponent.name, SwiperComponent)
-  Vue.component(SwiperItemComponent.name, SwiperItemComponent)
+  Vue.component(Swiper.name, Swiper)
+  Vue.component(SwiperItem.name, SwiperItem)
 }
 
-export default { Swiper, swiper, swiperItem, install }
-export { Swiper, swiper, swiperItem, install }
+export default { Swiper, SwiperItem, install }
+export { Swiper, SwiperItem }

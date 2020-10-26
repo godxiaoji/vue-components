@@ -37,7 +37,7 @@
 <script>
 import Vue from 'vue'
 import SelectPicker from './SelectPicker.vue'
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
 import {
   isNumber,

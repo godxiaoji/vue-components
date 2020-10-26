@@ -39,10 +39,6 @@ $background2-color: rgba(
   $alpha: 0.02
 );
 
-@mixin rotate-360-animation($duration: 800ms) {
-  animation: #{$prefix}-rotate-360 $duration infinite linear both;
-}
-
 :root {
   /* 主色调 */
   --#{$prefix}-primary-color: #{$primary-color};
@@ -89,6 +85,16 @@ html {
   }
 }
 
+@keyframes #{$prefix}-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  to {
+    background-position: 0 50%;
+  }
+}
+
 .#{$prefix}-scroll-bar {
   --#{$prefix}-scroll-bar: rgba(0, 0, 0, 0.3);
 
@@ -132,6 +138,15 @@ html {
     background-color: #fff;
     border-radius: 0;
   }
+}
+
+@mixin rotate-360-animation($duration: 800ms) {
+  animation: #{$prefix}-rotate-360 $duration infinite linear both;
+}
+
+@mixin skeleton-background {
+  background: linear-gradient(90deg, #f0f0f1 25%, #d6d6d8 37%, #f0f0f1 63%);
+  background-size: 400% 100%;
 }
 
 @media screen and (max-width: 575px) {

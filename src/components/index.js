@@ -32,6 +32,13 @@ import GridCol from './Layout/GridCol.vue'
 import Tabs from './Layout/Tabs.vue'
 import Empty from './Layout/Empty.vue'
 
+import Skeleton from './Skeleton'
+import SkeletonAvatar from './Skeleton/Avatar.vue'
+import SkeletonTitle from './Skeleton/Title.vue'
+import SkeletonParagraph from './Skeleton/Paragraph.vue'
+import SkeletonButton from './Skeleton/Button.vue'
+import SkeletonImage from './Skeleton/Image.vue'
+
 export {
   /* Base */
   ScrollView,
@@ -68,5 +75,11 @@ export {
   GridRow,
   GridCol,
   Tabs,
-  Empty
+  Empty,
+  Skeleton,
+  SkeletonAvatar,
+  SkeletonTitle,
+  SkeletonParagraph,
+  SkeletonButton,
+  SkeletonImage
 }

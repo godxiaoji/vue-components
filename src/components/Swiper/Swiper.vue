@@ -255,5 +255,13 @@ export default {
     height: 10px;
     border-radius: 50%;
   }
+
+  &_list {
+    height: 100%;
+  }
+
+  &-item {
+    height: 100%;
+  }
 }
 </style>

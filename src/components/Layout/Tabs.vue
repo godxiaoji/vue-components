@@ -268,7 +268,7 @@ export default {
 
 .#{$prefix}-tabs {
   --active-color: #{$danger-color};
-  --color: #{$font-color};
+  --color: #{$font2-color};
 
   &_list {
     position: relative;
@@ -293,8 +293,8 @@ export default {
     &::before {
       content: '';
       display: block;
-      width: 14px;
-      height: 14px;
+      width: 0.772em;
+      height: 0.778em;
       box-sizing: border-box;
       border: 2px solid #fff;
       margin-right: 10px;

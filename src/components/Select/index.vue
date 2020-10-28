@@ -36,7 +36,7 @@
 
 <script>
 import Vue from 'vue'
-import SelectPicker from './SelectPicker.vue'
+import SelectPicker from './Picker.vue'
 import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
 import {

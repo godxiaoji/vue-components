@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[prefix + '-select_option-group', prefix + '-scroll-bar']"
+    :class="[prefix + '-select_option-group']"
     @mousedown.prevent="onDropdownTap"
     @scroll.stop="onDropdownTap"
   >

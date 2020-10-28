@@ -141,8 +141,8 @@ export default {
 
     &-left {
       + .#{$prefix}-skeleton_layout-right {
-        padding: 14px 0 0 0;
-        margin-left: 16px;
+        padding: 8px 0 0 0;
+        margin-left: 12px;
       }
     }
 

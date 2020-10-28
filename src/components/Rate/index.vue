@@ -26,7 +26,7 @@ import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
 import { rangeInt, inArray, capitalize, isInteger } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import formMixin from './util/form-mixin'
+import formMixin from '../util/form-mixin'
 
 const ALLOW_ICONS = ['star', 'heart']
 

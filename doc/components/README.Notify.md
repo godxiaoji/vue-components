@@ -16,10 +16,10 @@
 
 | 值      | 说明                                |
 | ------- | ----------------------------------- |
-| primary | <font color=#10aeff>提示</font>     |
-| success | <font color=#09bb07>成功</font>     |
-| warning | <font color=#ffbe00>警告</font>     |
-| danger  | <font color=#f76260>强烈警告</font> |
+| primary | <font color="#1890ff">提示</font>     |
+| success | <font color="#52c41a">成功</font>     |
+| warning | <font color="#faad14">警告</font>     |
+| danger  | <font color="#ff4d4f">强烈警告</font> |
 
 ## Events
 

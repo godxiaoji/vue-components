@@ -49,11 +49,10 @@ export default {
   watch: {
     visible: {
       handler(val) {
-        if (val && this.duration > 0) {
-          this.durationTimer = setTimeout(() => {
-            this.close('autoClose')
-          }, this.duration)
-        } else if (!val) {
+        if (val) {
+          this.clearTimer()
+          this.setAutoClose()
+        } else {
           this.close()
         }
       }
@@ -84,11 +83,22 @@ export default {
       }, this.duration)
     }
   },
-  mounted() {},
+  mounted() {
+    if (this.visible) {
+      this.setAutoClose()
+    }
+  },
   beforeDestroy() {
     this.clearTimer()
   },
   methods: {
+    setAutoClose() {
+      if (this.duration > 0) {
+        this.durationTimer = setTimeout(() => {
+          this.close('autoClose')
+        }, this.duration)
+      }
+    },
     /**
      * 清除关闭定时器
      */

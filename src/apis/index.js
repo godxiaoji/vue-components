@@ -3,6 +3,7 @@ import { createSelectorQuery } from './SelectorQuery'
 import { showDialog } from './Dialog'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import { showNotify, hideNotify } from './Notify'
+import { previewImage } from './PreviewImage'
 import {
   getStorageInfo,
   getStorage,
@@ -28,5 +29,6 @@ export {
   removeStorage,
   clearStorage,
   pageScrollTo,
-  elementScrollTo
+  elementScrollTo,
+  previewImage
 }

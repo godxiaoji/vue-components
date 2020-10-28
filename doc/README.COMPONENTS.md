@@ -13,25 +13,17 @@
 - `src/config.js` 的 `SDKKey`
 - `src/components/component.module.sass` 的 `$prefix`
 
-## <a name="基础组件">基础组件</a>
+## <a name="Basic">基础组件</a>
 
-[ScrollView](./components/README.ScrollView.md)
-
-[Swiper](./components/README.Swiper.md)
-
-[SwiperItem](./components/README.SwiperItem.md)
+[Button](./components/README.Button.md)
 
 [Icon](./components/README.Icon.md)
 
-[Copy](./components/README.Copy.md)
-
-[Badge](./components/README.Badge.md)
+[Image](./components/README.Image.md)
 
 ## <a name="表单组件">表单组件</a>
 
 [Form](./components/README.Form.md)
-
-[Button](./components/README.Button.md)
 
 [Input](./components/README.Input.md)
 
@@ -45,23 +37,13 @@
 
 [Select](./components/README.Select.md)
 
-[SelectOption](./components/README.SelectOption.md)
-
 [Cascader](./components/README.Cascader.md)
 
 [Slider](./components/README.Slider.md)
 
 [Switch](./components/README.Switch.md)
 
-## <a name="导航组件">导航组件</a>
-
-[BackToTop](./components/README.BackToTop.md)
-
-## <a name="媒体组件">媒体组件</a>
-
-[Image](./components/README.Image.md)
-
-## <a name="提示组件">提示组件</a>
+## <a name="Feedback">反馈组件</a>
 
 [Toast](./components/README.Toast.md)
 
@@ -69,6 +51,32 @@
 
 [Notify](./components/README.Notify.md)
 
-## <a name="列表组件">列表组件</a>
+## <a name="Navigation">导航组件</a>
+
+[Tabs](./components/README.Tabs.md)
+
+[BackTop](./components/README.BackTop.md)
+
+## <a name="Layout">布局组件</a>
+
+[Row](./components/README.Row.md)
+
+[Col](./components/README.Col.md)
+
+## <a name="Show">展示组件</a>
+
+[ScrollView](./components/README.ScrollView.md)
+
+[Swiper](./components/README.Swiper.md)
 
 [FlatList](./components/README.FlatList.md)
+
+[Empty](./components/README.Empty.md)
+
+[Skeleton](./components/README.Skeleton.md)
+
+## <a name="Other">其他组件</a>
+
+[Copy](./components/README.Copy.md)
+
+[Badge](./components/README.Badge.md)

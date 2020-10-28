@@ -33,7 +33,7 @@
 <script>
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
-import formMixin from './util/form-mixin'
+import formMixin from '../util/form-mixin'
 
 export default {
   name: SDKKey + '-slider',
@@ -80,7 +80,6 @@ export default {
     return {
       prefix: SDKKey,
 
-      formName: '',
       formValue: '0'
     }
   },
@@ -188,9 +187,7 @@ export default {
         )
       )
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(e.type, value)
-      }
+      this.validateAfterEventTrigger(e.type, value)
     },
     onChange(e) {
       const value = this.hookFormValue()
@@ -209,9 +206,7 @@ export default {
         )
       )
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(e.type, value)
-      }
+      this.validateAfterEventTrigger(e.type, value)
     },
     getInputEl() {
       return this.$el && this.$el.querySelector('input')

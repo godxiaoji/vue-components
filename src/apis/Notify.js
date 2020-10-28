@@ -33,6 +33,11 @@ export function baseShow(object, apiName, componentOptions) {
         close() {
           _hide(false, key)
         }
+      },
+      mounted() {
+        setTimeout(() => {
+          this.visible = true
+        }, 17)
       }
     })
 
@@ -40,8 +45,7 @@ export function baseShow(object, apiName, componentOptions) {
 
     const app = new Comp({
       propsData: Object.assign(propsData, {
-        zIndex,
-        visible: true
+        zIndex
       })
     }).$mount($wrapper)
 

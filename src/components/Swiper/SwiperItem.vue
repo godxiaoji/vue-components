@@ -1,5 +1,5 @@
 <template>
-  <div :id="itemId" :class="[prefix + '-swiper-item']">
+  <div :class="[prefix + '-swiper-item']">
     <slot></slot>
   </div>
 </template>
@@ -9,12 +9,12 @@ import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-swiper-item',
-  props: {
-    itemId: {
-      type: String,
-      default: ''
+  inject: {
+    appSwiper: {
+      default: null
     }
   },
+  props: {},
   data() {
     return { prefix: SDKKey }
   },
@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     update() {
-      if (this.$parent && this.$parent.swiper) {
-        this.$parent.update()
+      if (this.appSwiper) {
+        this.appSwiper.update()
       }
     }
   }

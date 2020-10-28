@@ -3,9 +3,8 @@
     <slot class="image" v-if="hasImage"></slot>
     <template v-else>
       <img
-        v-if="type === 'default'"
         :class="[prefix + '-empty_image']"
-        src="../../images/empty/default@2x.png"
+        :src="imageUrl"
       />
     </template>
     <p :class="[prefix + '-empty_description']" v-show="description">
@@ -43,6 +42,11 @@ export default {
   },
   watch: {},
   computed: {
+    imageUrl() {
+      return inArray(this.type, TYPE_NAMES)
+        ? `https://cdn.fox2.cn/vfox/empty/${this.type}@2x.png`
+        : null
+    }
   },
   created() {},
   mounted() {
@@ -67,18 +71,18 @@ export default {
   box-sizing: border-box;
 
   &_image {
-    width: 224px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
   }
 
   &_description {
-    color: $font-color;
+    color: $font2-color;
     text-align: center;
     word-break: break-all;
     word-wrap: break-word;
     margin: 16px 0 0 0;
-    font-size: 17px;
-    line-height: 23.8px;
+    font-size: 14px;
+    line-height: 19.6px;
   }
 }
 </style>

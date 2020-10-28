@@ -1,7 +1,7 @@
 <template>
   <div :class="[prefix + '-form-item']">
     <label
-      for=""
+      v-if="label"
       :class="[prefix + '-form-item_label', { required }]"
       :style="labelStyles"
       >{{ label }}</label
@@ -24,10 +24,20 @@ import { isArray, isBoolean, isNumber } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-form-item',
+  provide() {
+    return {
+      appFormItem: this
+    }
+  },
+  inject: {
+    appForm: {
+      default: null
+    }
+  },
   props: {
     name: {
       type: String,
-      default: ''
+      required: true
     },
     rules: Array,
     label: String,
@@ -49,47 +59,46 @@ export default {
 
       if (this.labelWidth) {
         styles.width = this.labelWidth
-      } else if (this.parentIsForm() && this.$parent.labelWidth) {
-        styles.width = this.$parent.labelWidth
+      } else if (this.appForm) {
+        styles.width = this.appForm.labelWidth
       }
 
       return styles
     }
   },
-  watch: {
-    name(newVal) {
-      this.$children.forEach($child => {
-        if ($child._app_form_component) {
-          $child.formName = newVal
-        }
-      })
-    }
-  },
   created() {
     this._form_item = true
+
+    if (this.appForm) {
+      this.appForm.formList.push(this)
+    }
   },
   ready() {},
   mounted() {},
   updated() {},
   attached() {},
+  beforeDestroy() {
+    if (this.appForm) {
+      const formList = this.appForm.formList
+      for (let i = 0; i < formList.length; i++) {
+        if (formList[i]._uid === this._uid) {
+          this.appForm.formList.splice(i, 1)
+        }
+      }
+    }
+  },
   methods: {
-    parentIsForm() {
-      const $parent = this.$parent
-
-      return $parent && $parent._app_form
-    },
-
     getRulesByName(name, value) {
       let rules = []
 
       if (this.rules && this.rules[0]) {
         rules = this.rules
       } else if (
-        this.$parent &&
-        this.$parent.rules &&
-        isArray(this.$parent.rules[name])
+        this.appForm &&
+        this.appForm.rules &&
+        isArray(this.appForm.rules[name])
       ) {
-        rules = this.$parent.rules[name]
+        rules = this.appForm.rules[name]
       }
 
       if (rules.length === 0 && this.required) {

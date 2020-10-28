@@ -44,7 +44,7 @@
 <script>
 import Vue from 'vue'
 import Icon from '../Icon'
-import CascaderPicker from './CascaderPicker.vue'
+import CascaderPicker from './Picker.vue'
 import { CustomEvent } from '../../helpers/events'
 import {
   inArray,
@@ -62,7 +62,7 @@ import {
   timeString2Array,
   datetimeString2Array,
   getDate
-} from './cascader-util'
+} from './util'
 import { SDKKey } from '../../config'
 import { createPicker, destroyPicker } from '../../helpers/popup'
 
@@ -180,7 +180,6 @@ export default {
 
         return true
       },
-      type: Array,
       default() {
         return []
       }

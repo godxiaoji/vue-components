@@ -1,6 +1,23 @@
-import { isString, inArray, isFunction, isNumber, isSymbol } from './util'
+import {
+  isString,
+  inArray,
+  isFunction,
+  isNumber,
+  isSymbol,
+  isStringArray
+} from './util'
 
 const emptys = ['null', 'undefined', 'NaN']
+
+/**
+ * 字符串数组
+ * @param {any} value
+ */
+export function stringArrayValidator(value) {
+  return isStringArray(value)
+}
+
+stringArrayValidator._type = `String[]`
 
 /**
  * 非空校验器

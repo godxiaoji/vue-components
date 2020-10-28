@@ -2,7 +2,6 @@
   <div
     :class="[
       prefix + '-scroll-view',
-      prefix + '-scroll-bar',
       {
         'scroll-x': scrollX,
         'scroll-y': scrollY,

@@ -1,6 +1,10 @@
 import Exception from '../helpers/exception'
-import { isObject, inArray } from '../helpers/util'
-import { notNullValidator, getType } from '../helpers/validator'
+import { isObject, inArray, cloneData } from '../helpers/util'
+import {
+  notNullValidator,
+  stringArrayValidator,
+  getType
+} from '../helpers/validator'
 
 export const apiRules = {
   /**
@@ -57,6 +61,20 @@ export const apiRules = {
     maskClosable: {
       type: Boolean,
       default: false
+    }
+  },
+  previewImage: {
+    urls: {
+      validator: stringArrayValidator,
+      required: true
+    },
+    current: {
+      type: String,
+      default: ''
+    },
+    showClose: {
+      type: Boolean,
+      default: true
     }
   },
   showToast: {
@@ -217,7 +235,7 @@ export const parseParamsByRules = function(options, apiName) {
         ret[k] = option
       }
     } else if (rule.default) {
-      ret[k] = rule.default
+      ret[k] = cloneData(rule.default)
     }
   }
 

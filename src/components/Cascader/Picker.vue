@@ -1,7 +1,7 @@
 <template>
   <div
     ref="dropdown"
-    :class="[prefix + '-cascader_groups', prefix + '-scroll-bar']"
+    :class="[prefix + '-cascader_groups']"
     @mousedown.prevent="onDropdownTap"
     @scroll.stop="onDropdownTap"
   >
@@ -10,10 +10,7 @@
       v-for="(list, listIndex) in dropdown"
       :key="listIndex"
     >
-      <ul
-        :class="[prefix + '-cascader_list', prefix + '-scroll-bar']"
-        :data-index="listIndex"
-      >
+      <ul :class="[prefix + '-cascader_list']" :data-index="listIndex">
         <li
           :class="[prefix + '-cascader_item']"
           v-for="(item, index) in list"
@@ -40,7 +37,8 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
-import { getDefaultSelecteds, parseDropdownList } from './cascader-util'
+import { getDefaultSelecteds, parseDropdownList } from './util'
+import { frameTo } from '../../helpers/animation'
 
 export default {
   name: SDKKey + '-cascader-picker',
@@ -195,16 +193,45 @@ export default {
             $next = $lists[$lists.length - 1]
           }
 
-          $next.scrollIntoView(
-            $next.offsetWidth >= document.documentElement.offsetWidth
-          )
+          $next = $next.parentNode
+          const $groups = $next.parentNode
+
+          let to
+
+          if ($next.offsetWidth >= document.documentElement.offsetWidth) {
+            to = $next.offsetLeft
+          } else {
+            to = $next.offsetLeft - ($groups.offsetWidth - $next.offsetWidth)
+          }
+
+          if (to >= 0) {
+            frameTo({
+              from: $groups.scrollLeft,
+              to,
+              duration: 100,
+              progress(res) {
+                $groups.scrollLeft = res.current
+              }
+            })
+          }
+
+          // $next.scrollIntoView(
+          //   $next.offsetWidth < document.documentElement.offsetWidth
+          // )
         } else {
           $dropdown.scrollLeft = 0
         }
 
         $lists.forEach(($list, index) => {
           if ($selecteds[index]) {
-            $selecteds[index].scrollIntoView(false)
+            frameTo({
+              from: $list.scrollTop,
+              to: $selecteds[index].offsetTop,
+              duration: 100,
+              progress(res) {
+                $list.scrollTop = res.current
+              }
+            })
           } else {
             $list.scrollTop = 0
           }

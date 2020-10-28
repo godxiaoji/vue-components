@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import FxButton from '../Form/Button.vue'
+import FxButton from '../Button'
 import Modal from '../Modal'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'

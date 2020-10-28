@@ -28,6 +28,11 @@ import { SDKKey } from '../../config'
 // export
 export default {
   name: SDKKey + '-swiper',
+  provide() {
+    return {
+      appSwiper: this
+    }
+  },
   props: {
     indicatorDots: {
       type: Boolean,
@@ -138,24 +143,28 @@ export default {
   },
   methods: {
     update() {
-      if (this.swiper) {
-        this.swiper.refresh && this.swiper.refresh()
-      }
+      clearTimeout(this.updateTimer)
 
-      const pagination = []
+      this.updateTimer = setTimeout(() => {
+        if (this.swiper) {
+          this.swiper.refresh && this.swiper.refresh()
+        }
 
-      this.$el
-        .querySelectorAll(`.${SDKKey}-swiper_item`)
-        .forEach(($item, k) => {
-          $item.style.paddingLeft = this.previousMargin + 'px'
-          $item.style.paddingRight = this.nextMargin + 'px'
+        const pagination = []
 
-          pagination.push({
-            index: k
+        this.$el
+          .querySelectorAll(`.${SDKKey}-swiper_item`)
+          .forEach(($item, k) => {
+            $item.style.paddingLeft = this.previousMargin + 'px'
+            $item.style.paddingRight = this.nextMargin + 'px'
+
+            pagination.push({
+              index: k
+            })
           })
-        })
 
-      this.pagination = pagination
+        this.pagination = pagination
+      }, 17)
     },
     updateSlide() {
       if (this.swiper) {
@@ -215,6 +224,10 @@ export default {
             }
           )
         )
+      }
+
+      options.onClick = e => {
+        this.$emit(e.type, e)
       }
 
       // window.console.log(options);

@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-image']">
+  <div :class="[prefix + '-image']" @click="onClick">
     <img :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
             currentTarget: this.$el,
             target: this.$el.firstElementChild
           },
-          { width: res.naturalWidth, height: res.naturalHeight }
+          { width: res.naturalWidth, height: res.naturalHeight, src: this.imgSrc }
         )
       )
     },
@@ -134,6 +134,9 @@ export default {
           e
         )
       )
+    },
+    onClick(e) {
+      this.$emit(e.type, e)
     }
   }
 }

@@ -1,9 +1,12 @@
-import { appendToBody, removeEl } from './dom'
+import { appendToBody, removeEl, resizeDetector } from './dom'
 import { SDKKey } from '../config'
-import elementResizeDetectorMaker from 'element-resize-detector'
 
 let puid = 1
-const zIndex = 10000
+let zIndex = 2000
+
+export function getNewZIndex() {
+  return zIndex++
+}
 
 export function createPopup() {
   const $wrapper = document.createElement('div')
@@ -14,7 +17,7 @@ export function createPopup() {
   return {
     id,
     $wrapper,
-    zIndex: zIndex + id
+    zIndex: getNewZIndex()
   }
 }
 
@@ -34,7 +37,8 @@ function updatePos($wrapper, $el, options) {
     $wrapper.style.top = '1px'
   } else {
     $wrapper.style.left = left + 'px'
-    $wrapper.style.top = 1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
+    $wrapper.style.top =
+      1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
   }
 
   if (options.minWidth) {
@@ -49,15 +53,8 @@ export function createPicker($el, options = {}) {
   const id = puid++
 
   $wrapper.className = SDKKey + '-picker'
-  $wrapper.style.zIndex = zIndex + id
   $wrapper.style.display = 'none'
   $wrapper.innerHTML = `<div class="${SDKKey}-picker_inner"><div></div></div>`
-
-  const erd = elementResizeDetectorMaker()
-
-  erd.listenTo($wrapper, function() {
-    updatePos($wrapper, $el, options)
-  })
 
   appendToBody($wrapper)
 
@@ -65,8 +62,11 @@ export function createPicker($el, options = {}) {
     id,
     $mount: $wrapper.firstElementChild.firstElementChild,
     $wrapper,
-    erd,
+    offResizeDetector: resizeDetector($wrapper, function() {
+      updatePos($wrapper, $el, options)
+    }),
     show() {
+      $wrapper.style.zIndex = getNewZIndex()
       $wrapper.style.display = 'block'
       updatePos($wrapper, $el, options)
     },

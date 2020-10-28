@@ -16,7 +16,7 @@
 | placeholder     | string            | '请选择'                                                 | 否   | 未进行选择时的提示                                                              |
 | disabled        | boolean           | false                                                    | 否   | 是否被禁用                                                                      |
 | separator       | string            | '/'                                                      | 否   | 分隔符                                                                          |
-| field-names     | object            | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label name children 的字段 key                                |
+| field-names     | object            | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key                                |
 
 ### mode 的合法值
 

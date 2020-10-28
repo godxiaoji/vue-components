@@ -8,11 +8,16 @@
 import { CustomEvent } from '../../helpers/events'
 import { cloneData } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import formMixin from './util/form-mixin'
+import formMixin from '../util/form-mixin'
 
 export default {
   name: SDKKey + '-checkbox-group',
   mixins: [formMixin],
+  provide() {
+    return {
+      checkboxOptions: this.checkboxOptions
+    }
+  },
   props: {
     name: {
       type: String,
@@ -23,14 +28,19 @@ export default {
     return {
       prefix: SDKKey,
 
-      formName: '',
-      formValue: []
+      formValue: [],
+
+      checkboxOptions: {
+        formName: ''
+      }
     }
   },
   computed: {},
   watch: {},
   created() {
     this._app_checkbox_group = true
+
+    this.checkboxOptions.formName = this.formName
   },
   ready() {},
   mounted() {},
@@ -64,9 +74,7 @@ export default {
         )
       )
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
-      }
+      this.validateAfterEventTrigger(e.type, this.formValue)
     },
 
     hookFormValue() {

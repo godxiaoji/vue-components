@@ -34,7 +34,7 @@
   ],
   "homepage": "https://github.com/godxiaoji/vfox#readme",
   "dependencies": {
-    "element-resize-detector": "^1.2.1",
+    "async-validator": "^3.4.0",
     "mslide": "^1.1.1"
   },
   "devDependencies": {
@@ -51,11 +51,13 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
+    "file-loader": "^6.1.1",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.1",
     "semantic-release": "^17.1.2",
+    "svg-sprite-loader": "^5.0.0",
     "vue-loader": "^15.9.0",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.6",

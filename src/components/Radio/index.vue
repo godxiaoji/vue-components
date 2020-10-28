@@ -1,21 +1,24 @@
 <template>
-  <label :class="[prefix + '-checkbox']" :disabled="disabled">
+  <label :class="[prefix + '-radio']" :disabled="disabled">
     <input
-      :class="[prefix + '-checkbox_input']"
-      type="checkbox"
-      :name="groupName"
-      :value="valueString"
+      :class="[prefix + '-radio_input']"
+      type="radio"
+      :name="formName"
+      :value="value"
       :disabled="disabled"
       @change="onChange"
     />
-    <div :class="[prefix + '-checkbox_box']">
-      <icon :class="[prefix + '-checkbox_icon']" class-name="CheckSquareOutlined"></icon>
+    <div :class="[prefix + '-radio_box']">
       <icon
-        :class="[prefix + '-checkbox_checked-icon']"
-        class-name="CheckSquareFilled"
+        :class="[prefix + '-radio_icon']"
+        class-name="CheckCircleOutlined"
+      ></icon>
+      <icon
+        :class="[prefix + '-radio_checked-icon']"
+        class-name="CheckCircleFilled"
       ></icon>
     </div>
-    <span :class="[prefix + '-checkbox_text']">
+    <span :class="[prefix + '-radio_text']">
       <slot></slot>
     </span>
   </label>
@@ -26,8 +29,13 @@ import Icon from '../Icon'
 import { SDKKey } from '../../config'
 
 export default {
-  name: SDKKey + '-checkbox',
+  name: SDKKey + '-radio',
   components: { Icon },
+  inject: {
+    radioOptions: {
+      default: null
+    }
+  },
   props: {
     value: {
       validator(value) {
@@ -57,14 +65,12 @@ export default {
   },
   computed: {
     /* 优先接受来自分组的name */
-    groupName() {
-      if (this.$parent && this.$parent.formName) {
-        return this.$parent.formName
+    formName() {
+      if (this.radioOptions) {
+        return this.radioOptions.formName
       }
-      return this.name
-    },
-    valueString() {
-      return this.value.toString()
+
+      return this.name || ''
     }
   },
   model: {
@@ -86,7 +92,7 @@ export default {
     }
   },
   created() {
-    this._app_checkbox_item = true
+    this._app_radio_item = true
   },
   ready() {},
   mounted() {
@@ -106,7 +112,7 @@ export default {
       }
     }
 
-    inputEl._app_type = 'checkbox'
+    inputEl._app_type = 'radio'
   },
   updated() {},
   attached() {},
@@ -127,7 +133,7 @@ export default {
       }
     },
     isGroupParent() {
-      return this.$parent && this.$parent._app_checkbox_group
+      return this.$parent && this.$parent._app_radio_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -158,7 +164,7 @@ export default {
 <style lang="scss">
 @import '../component.module.scss';
 
-.#{$prefix}-checkbox {
+.#{$prefix}-radio {
   --color: #{$primary-color};
 
   display: inline-flex;
@@ -169,7 +175,7 @@ export default {
   text-align: left;
   position: relative;
 
-  + .#{$prefix}-checkbox {
+  + .#{$prefix}-radio {
     margin-left: 16px;
   }
 
@@ -202,14 +208,12 @@ export default {
     top: 0;
     opacity: 0;
 
-    &:not([disabled]):checked
-      + .#{$prefix}-checkbox_box
-      .#{$prefix}-checkbox_icon {
+    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
       display: none;
     }
     &:not([disabled]):checked
-      + .#{$prefix}-checkbox_box
-      .#{$prefix}-checkbox_checked-icon {
+      + .#{$prefix}-radio_box
+      .#{$prefix}-radio_checked-icon {
       display: block;
     }
   }

@@ -14,7 +14,7 @@
 import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import formMixin from './util/form-mixin'
+import formMixin from '../util/form-mixin'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 
@@ -51,7 +51,6 @@ export default {
     return {
       prefix: SDKKey,
 
-      formName: '',
       formChecked: false
     }
   },
@@ -136,9 +135,8 @@ export default {
         )
       )
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(type, checked)
-      }
+        this.validateAfterEventTrigger(type, checked)
+      
     }
   }
 }

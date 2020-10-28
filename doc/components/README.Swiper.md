@@ -1,8 +1,8 @@
 # Swiper
 
-滑块视图容器。其中只可放置 [swiper-item](./README.SwiperItem.md) 组件，否则会导致未定义的行为。
+滑块视图容器。其中只可放置 `swiper-item` 组件，否则会导致未定义的行为。
 
-## Props
+## SwiperProps
 
 | 属性                   | 类型    | 默认值         | 必填 | 说明                 |
 | ---------------------- | ------- | -------------- | ---- | -------------------- |
@@ -14,14 +14,14 @@
 | interval               | number  | 5000           | 否   | 自动切换时间间隔     |
 | duration               | number  | 500            | 否   | 滑动动画时长         |
 
-## Events
+## SwiperEvents
 
 | 事件             | 描述                             | 回调函数参数                                   |
 | ---------------- | -------------------------------- | ---------------------------------------------- |
 | change           | current 改变时会触发 change 事件 | CustomEvent，event.details = {current, source} |
 | animation-finish | 动画结束时会触发                 | CustomEvent                                    |
 
-## Slots
+## SwiperSlots
 
 ```
 <fx-swiper>

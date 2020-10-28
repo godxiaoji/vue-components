@@ -1,14 +1,23 @@
 <template>
-  <div :class="[prefix + '-tabs', { horizontal }]">
-    <ul :class="[prefix + '-tabs_list', prefix + '-scroll-bar']" ref="list">
+  <div :class="[prefix + '-tabs', { vertical }]">
+    <ul :class="[prefix + '-tabs_list']" ref="list">
       <li
-        :class="[prefix + '-tabs_item', { active: item.active }]"
-        v-for="item in options2"
+        :class="[
+          prefix + '-tabs_item',
+          {
+            active: index === activeIndex,
+            'active-prev': index === activeIndex - 1,
+            'active-next': index === activeIndex + 1
+          }
+        ]"
+        v-for="(item, index) in options2"
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <icon v-if="item.icon" :class-name="item.icon"></icon>
-        <span>{{ item.label }}</span>
+        <div :class="[prefix + '-tabs_item-inner']">
+          <icon v-if="item.icon" :class-name="item.icon"></icon>
+          <span>{{ item.label }}</span>
+        </div>
       </li>
     </ul>
   </div>
@@ -41,7 +50,7 @@ export default {
 
         return true
       },
-      type: Array,
+      required: true,
       default() {
         return []
       }
@@ -59,8 +68,8 @@ export default {
         return { label: 'label', value: 'value' }
       }
     },
-    // 横向
-    horizontal: {
+    // 纵向
+    vertical: {
       type: Boolean,
       default: false
     }
@@ -71,6 +80,7 @@ export default {
 
       value2: null,
       label2: '',
+      activeIndex: -1,
 
       fieldNames2: { label: 'label', value: 'value' },
       options2: []
@@ -93,7 +103,6 @@ export default {
     }
   },
   created() {
-    this.value2 = this.value
     this.updateOptions()
   },
   ready() {},
@@ -127,7 +136,7 @@ export default {
       let hasActive = false
 
       if (isArray(this.options)) {
-        this.options.forEach(item => {
+        this.options.forEach((item, index) => {
           let option
 
           if (isNumber(item)) {
@@ -154,7 +163,7 @@ export default {
 
           if (option) {
             if (option.value === this.value2) {
-              option.active = true
+              this.activeIndex = index
               hasActive = true
             }
 
@@ -181,38 +190,31 @@ export default {
         if (option.value === value) {
           this.label2 = option.label
           this.value2 = option.value
+          this.activeIndex = index
           hasValue = true
-          this.$set(this.options2[index], 'active', true)
-        } else {
-          this.$set(this.options2[index], 'active', false)
         }
       })
 
-      if (hasValue && this.isMounted) {
-        this.updatePos()
+      if (hasValue) {
+        this.isMounted && this.updatePos()
+      } else {
+        this.activeIndex = -1
       }
 
       return hasValue
     },
 
-    getActiveIndex() {
-      for (let i = 0; i < this.options2.length; i++) {
-        if (this.options2[i].active) {
-          return i
-        }
+    updatePos() {
+      const $list = this.$refs.list
+      const $activeItem = $list.children[this.activeIndex]
+
+      if (!$activeItem) {
+        return
       }
 
-      return 0
-    },
-
-    updatePos() {
-      const activeIndex = this.getActiveIndex()
-      const $list = this.$refs.list
-      const $activeItem = $list.children[activeIndex]
-
       let scrollOffset = 0
-      const sizeKey = this.horizontal ? 'Width' : 'Height'
-      const directionKey = this.horizontal ? 'Left' : 'Top'
+      const sizeKey = !this.vertical ? 'Width' : 'Height'
+      const directionKey = !this.vertical ? 'Left' : 'Top'
 
       if ($activeItem['offset' + sizeKey] > $list['offset' + sizeKey]) {
         scrollOffset = $activeItem['offset' + directionKey]
@@ -254,7 +256,7 @@ export default {
           },
           {
             value,
-            index: this.getActiveIndex()
+            index: this.activeIndex
           }
         )
       )
@@ -267,62 +269,102 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-tabs {
-  --active-color: #{$danger-color};
-  --color: #{$font2-color};
+  --active-color: #{$title-color};
+  --default-color: #{$font-color};
 
   &_list {
-    position: relative;
-    list-style: none;
     padding: 0;
     margin: 0;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    width: 100%;
+    height: 36px;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    background-color: #fff;
+    position: relative;
   }
 
   &_item {
-    display: flex;
+    height: 100%;
+    display: inline-flex;
     align-items: center;
-    height: 40px;
-    cursor: pointer;
-    padding: 0 10px;
-    font-size: 18px;
-    box-sizing: border-box;
-    color: var(--color);
+    justify-content: center;
 
-    &::before {
-      content: '';
-      display: block;
-      width: 0.772em;
-      height: 0.778em;
-      box-sizing: border-box;
-      border: 2px solid #fff;
-      margin-right: 10px;
-      border-radius: 50%;
+    font-size: 16px;
+    padding: 0 16px;
+    position: relative;
+    box-sizing: border-box;
+    color: var(--default-color);
+
+    &-inner {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      position: relative;
+
+      &::before {
+        content: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -4px;
+        width: 16px;
+        height: 16px;
+        z-index: 0;
+        border-radius: 50%;
+        background: linear-gradient(
+          145deg,
+          rgba(24, 144, 255, 0.3) 13.5%,
+          rgba(24, 144, 255, 0.05) 86.5%
+        );
+      }
+
+      span {
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
     }
 
     &.active {
       color: var(--active-color);
+      font-weight: 700;
 
-      &::before {
-        border-color: var(--active-color);
+      .#{$prefix}-tabs_item-inner::before {
+        content: '';
       }
     }
   }
 
-  &.horizontal {
+  &.vertical {
+    height: 100%;
+    background: none;
+
     .#{$prefix}-tabs {
       &_list {
-        width: 100%;
-        white-space: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        height: 40px;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
       &_item {
-        display: inline-flex;
-        justify-content: center;
+        display: flex;
+        height: 48px;
+        cursor: pointer;
+
+        &.active {
+          background-color: transparent;
+        }
+
+        &.active-prev {
+          border-radius: 0 0 4px 0;
+        }
+
+        &.active-next {
+          border-radius: 0 4px 0 0;
+        }
       }
     }
   }

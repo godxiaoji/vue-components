@@ -74,8 +74,8 @@ export default {
 
 .#{$prefix}-skeleton-avatar {
   display: block;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border-radius: 2px;
   @include skeleton-background;
 

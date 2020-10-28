@@ -5,12 +5,17 @@
 </template>
 
 <script>
-import { inArray } from '../../helpers/util'
+import { inArray, isUndefined } from '../../helpers/util'
 import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-form',
+  provide() {
+    return {
+      appForm: this
+    }
+  },
   props: {
     rules: Object,
     labelWidth: {
@@ -25,6 +30,8 @@ export default {
   watch: {},
   created() {
     this._app_form = true
+
+    this.formList = []
   },
   ready() {},
   mounted() {},
@@ -130,8 +137,8 @@ export default {
     validate(value) {
       const retList = []
 
-      this.$children.forEach($child => {
-        if ($child._form_item && $child.name && value[$child.name] != null) {
+      this.formList.forEach($child => {
+        if ($child.name && !isUndefined(value[$child.name])) {
           retList.push($child.validate(value[$child.name]))
         }
       })

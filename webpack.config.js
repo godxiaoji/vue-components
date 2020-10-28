@@ -1,7 +1,14 @@
-const path = require('path')
+const { resolve, relative } = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+
+function kebabCase2Pascalcase(name) {
+  name = name.replace(/-(\w)/g, (all, letter) => {
+    return letter.toUpperCase()
+  })
+  return name.substr(0, 1).toUpperCase() + name.substr(1)
+}
 
 module.exports = {
   devtool: 'source-map',
@@ -10,7 +17,7 @@ module.exports = {
     vfox: './src/index.js'
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: resolve(__dirname, './dist'),
     filename: 'index.js',
     library: 'vfox',
     libraryTarget: 'umd'
@@ -55,11 +62,28 @@ module.exports = {
         ]
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [resolve('src/icons')],
+        options: {
+          symbolId(filePath) {
+            let paths = relative('src/icons', filePath)
+              .replace(/\\/g, '/')
+              .split('/')
+
+            const fileName = paths.pop().replace('.svg', '')
+
+            return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+          }
+        }
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]'
-        }
+          name: 'imgs/[name].[hash:7].[ext]'
+        },
+        exclude: [resolve('src/icons')]
       }
     ]
   },

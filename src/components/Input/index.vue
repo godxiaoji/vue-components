@@ -53,7 +53,7 @@
 import { inArray, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { CustomEvent } from '../../helpers/events'
-import formMixin from './util/form-mixin'
+import formMixin from '../util/form-mixin'
 
 const SIZE_NAMES = ['default', 'mini', 'large']
 const ALIGN_NAMES = ['left', 'center', 'right']
@@ -116,7 +116,6 @@ export default {
       hasPrepend: false,
       hasAppend: false,
 
-      formName: '',
       formValue: '',
 
       focus2: false
@@ -219,16 +218,12 @@ export default {
       this.focus2 = false
       this.$emit(e.type, e)
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
-      }
+      this.validateAfterEventTrigger(e.type, this.formValue)
     },
     onChange(e) {
       this.$emit(e.type, e)
 
-      if (this.parentIsFormItem()) {
-        this.$parent.validateAfterEventTrigger(e.type, this.formValue)
-      }
+      this.validateAfterEventTrigger(e.type, this.formValue)
     },
     getInputEl() {
       return (

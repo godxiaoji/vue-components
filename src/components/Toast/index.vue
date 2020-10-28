@@ -136,7 +136,7 @@ export default {
   left: 50%;
   top: 50%;
   width: 200px;
-  z-index: 10000;
+  z-index: 2000;
   display: flex;
   justify-content: center;
   align-items: center;

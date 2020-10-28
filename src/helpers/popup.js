@@ -1,4 +1,10 @@
-import { appendToBody, removeEl, resizeDetector } from './dom'
+import {
+  appendToBody,
+  removeEl,
+  resizeDetector,
+  addClassName,
+  removeClassName
+} from './dom'
 import { SDKKey } from '../config'
 
 let puid = 1
@@ -54,24 +60,39 @@ export function createPicker($el, options = {}) {
 
   $wrapper.className = SDKKey + '-picker'
   $wrapper.style.display = 'none'
-  $wrapper.innerHTML = `<div class="${SDKKey}-picker_inner"><div></div></div>`
+  $wrapper.innerHTML = `<div class="${SDKKey}-picker_overlay"></div><div class="${SDKKey}-picker_inner"><div></div></div>`
 
   appendToBody($wrapper)
 
   return (caches[id] = {
     id,
-    $mount: $wrapper.firstElementChild.firstElementChild,
+    $mount: $wrapper.lastElementChild.firstElementChild,
     $wrapper,
     offResizeDetector: resizeDetector($wrapper, function() {
       updatePos($wrapper, $el, options)
     }),
     show() {
+      clearTimeout(this.visibleTimer)
+      if (document.documentElement.offsetWidth < 576) {
+        addClassName(document.body, SDKKey + '-overflow-hidden')
+      }
+
       $wrapper.style.zIndex = getNewZIndex()
       $wrapper.style.display = 'block'
-      updatePos($wrapper, $el, options)
+
+      this.visibleTimer = setTimeout(() => {
+        addClassName($wrapper, 'visible')
+        updatePos($wrapper, $el, options)
+      }, 17)
     },
     hide() {
-      $wrapper.style.display = 'none'
+      removeClassName($wrapper, 'visible')
+
+      this.visibleTimer = setTimeout(() => {
+        $wrapper.style.display = 'none'
+      }, 220)
+
+      removeClassName(document.body, SDKKey + '-overflow-hidden')
     }
   })
 }

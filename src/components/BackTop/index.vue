@@ -6,7 +6,10 @@
     @click="onClick"
   >
     <slot>
-      <icon :class="[prefix + '-back-top_icon']" class-name="UpCircleOutlined"></icon>
+      <icon
+        :class="[prefix + '-back-top_icon']"
+        class-name="UpCircleOutlined"
+      ></icon>
     </slot>
   </div>
 </template>
@@ -110,7 +113,7 @@ export default {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  z-index: 99998;
+  z-index: 1000;
   cursor: pointer;
 
   &_icon {

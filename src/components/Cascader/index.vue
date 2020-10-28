@@ -683,7 +683,6 @@ export default {
   &_group {
     position: relative;
     height: 100%;
-    z-index: 1;
     min-width: 60px;
     display: inline-flex;
     flex: 0 0 auto;

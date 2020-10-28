@@ -248,8 +248,6 @@ export default {
       .#{$prefix}-switch {
         font-size: 28px;
       }
-
-      z-index: 0;
     }
   }
 
@@ -259,7 +257,6 @@ export default {
     font-size: 12px;
     line-height: 17px;
     padding: 2px 0;
-    z-index: 1;
   }
 }
 </style>

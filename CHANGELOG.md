@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/godxiaoji/vfox/compare/v1.1.0...v1.2.0) (2020-10-29)
+
+
+### Features
+
+* 重构 ([e5256f1](https://github.com/godxiaoji/vfox/commit/e5256f118856be34066f3cbaa0bb08c56044537e))
+
 # [1.1.0](https://github.com/godxiaoji/vfox/compare/v1.0.3...v1.1.0) (2020-10-15)
 
 

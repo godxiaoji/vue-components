@@ -3,7 +3,8 @@ import { isObject, inArray, cloneData } from '../helpers/util'
 import {
   notNullValidator,
   stringArrayValidator,
-  getType
+  getType,
+  elementValidator
 } from '../helpers/validator'
 
 export const apiRules = {
@@ -172,6 +173,30 @@ export const apiRules = {
     url: {
       type: String,
       required: true
+    }
+  },
+  pageScrollTo: {
+    scrollTop: {
+      type: Number,
+      default: 0
+    },
+    duration: {
+      type: Number,
+      default: 300
+    }
+  },
+  elementScrollTo: {
+    element: {
+      validator: elementValidator,
+      required: true
+    },
+    scrollTop: {
+      type: Number,
+      default: 0
+    },
+    duration: {
+      type: Number,
+      default: 300
     }
   }
 }

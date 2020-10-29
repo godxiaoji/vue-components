@@ -4,10 +4,21 @@ import {
   isFunction,
   isNumber,
   isSymbol,
-  isStringArray
+  isStringArray,
+  isElement
 } from './util'
 
 const emptys = ['null', 'undefined', 'NaN']
+
+/**
+ * dom
+ * @param {any} value
+ */
+export function elementValidator(value) {
+  return isElement(value)
+}
+
+elementValidator._type = `Element`
 
 /**
  * 字符串数组

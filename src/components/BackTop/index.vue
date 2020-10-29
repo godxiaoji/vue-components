@@ -16,8 +16,8 @@
 
 <script>
 import Icon from '../Icon'
-import { frameTo } from '../../helpers/animation'
 import { SDKKey } from '../../config'
+import { pageScrollTo } from '../../apis/Scroll'
 
 export default {
   name: SDKKey + '-back-top',
@@ -82,25 +82,10 @@ export default {
     },
 
     toTop() {
-      const docElem = document.documentElement
-      const to = 0
-      const from = docElem.scrollTop
-
-      if (from === to) {
-        // 不需要跳转
-      } else if (!this.animated) {
-        // 不需要动画
-        docElem.scrollTop = to
-      } else {
-        frameTo({
-          from,
-          to,
-          duration: this.duration,
-          progress(res) {
-            docElem.scrollTop = res.current
-          }
-        })
-      }
+      pageScrollTo({
+        scrollTop: 0,
+        duration: this.duration
+      })
     }
   }
 }

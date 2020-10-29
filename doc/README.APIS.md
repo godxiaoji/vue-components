@@ -61,3 +61,9 @@ API 列表，参照微信小程序，持续更新。
 ## Scroll
 
 [pageScrollTo](./apis/README.Scroll.md#pageScrollTo)
+
+[elementScrollTo](./apis/README.Scroll.md#elementScrollTo)
+
+## PreviewImage
+
+[previewImage](./apis/README.PreviewImage.md#previewImage)

@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/godxiaoji/vfox/compare/v1.2.0...v1.2.1) (2020-10-30)
+
+
+### Bug Fixes
+
+* 修复表单各个组件的bug ([bc5f167](https://github.com/godxiaoji/vfox/commit/bc5f16726e92369814de8a82f2df3dff27f23879))
+
 # [1.2.0](https://github.com/godxiaoji/vfox/compare/v1.1.0...v1.2.0) (2020-10-29)
 
 

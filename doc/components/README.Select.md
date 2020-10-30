@@ -9,7 +9,6 @@
 | options         | object[]          | []        | 否   | 数据集                               |
 | value / v-model | string, number |           | 否   |
 | name            | string         |           | 否   | [form](./README.Form.md) 的标识      |
-| size            | string         | 'default' | 否   | 尺寸，可选值：default / mini / large |
 | placeholder     | string         | ''        | 否   | 未选择时占位符                       |
 | disabled        | boolean        | false     | 否   | 是否禁用                             |
 | field-names     | object         | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key |

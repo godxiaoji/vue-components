@@ -1,31 +1,30 @@
 <template>
-  <input
-    type="checkbox"
-    :disabled="disabled"
-    :name="name"
-    :value="checked + ''"
-    :class="[prefix + '-switch', sizeClassName]"
-    :style="[switchColor]"
-    @change="onChange"
-  />
+  <label :class="[prefix + '-switch']">
+    <input
+      :class="[prefix + '-switch_checkbox']"
+      type="checkbox"
+      :disabled="disabled"
+      :style="[switchColor]"
+      @change="onChange"
+    />
+    <input
+      type="hidden"
+      :disabled="disabled"
+      :name="formName"
+      :value="formChecked"
+    />
+  </label>
 </template>
 
 <script>
 import { CustomEvent } from '../../helpers/events'
-import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
-
-const SIZE_NAMES = ['default', 'mini', 'large']
 
 export default {
   name: SDKKey + '-switch',
   mixins: [formMixin],
   props: {
-    size: {
-      type: String,
-      default: SIZE_NAMES[0]
-    },
     checked: {
       type: Boolean,
       default: false
@@ -65,11 +64,6 @@ export default {
     },
     formValue() {
       return this.formChecked
-    },
-    sizeClassName() {
-      return (
-        'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
-      )
     }
   },
   watch: {
@@ -100,10 +94,10 @@ export default {
     const $el = this.$el
     const checked = !!this.checked
 
-    $el._app_component = this
-    $el._app_type = 'switch'
-    $el.defaultChecked = checked
-    $el.checked = checked
+    $el.lastElementChild._app_component = this
+    $el.lastElementChild._app_type = 'switch'
+    $el.firstElementChild.defaultChecked = checked
+    $el.firstElementChild.checked = checked
   },
   updated() {},
   attached() {},
@@ -135,8 +129,7 @@ export default {
         )
       )
 
-        this.validateAfterEventTrigger(type, checked)
-      
+      this.validateAfterEventTrigger(type, checked)
     }
   }
 }
@@ -149,55 +142,48 @@ export default {
   --color: #{$primary-color};
   --font-size: 32px;
 
-  position: relative;
-  width: 1.75em;
-  height: 1em;
-  background: $border-color;
-  border: 0;
-  border-radius: 1em;
-  font-size: var(--font-size);
-  outline: 0;
-  cursor: pointer;
-  transition: all 0.2s linear;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  appearance: none;
-
-  &.size--mini {
-    --font-size: 16px;
-  }
-
-  &.size--large {
-    --font-size: 32px;
-  }
-
-  &:checked {
-    background-color: var(--color);
-  }
-
-  &::after {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: calc(100% / 1.75 - 4px);
-    height: calc(100% - 4px);
-    background: #fff;
-    border-radius: 100%;
+  &_checkbox {
+    position: relative;
+    width: 1.75em;
+    height: 1em;
+    background: $border-color;
+    border: 0;
+    border-radius: 1em;
+    font-size: var(--font-size);
+    outline: 0;
+    cursor: pointer;
     transition: all 0.2s linear;
-    border: 1px solid rgba(4, 10, 19, 0.06);
     box-sizing: border-box;
-    box-shadow: 0px 4px 4px $border-color, 0px 1px 2px $background2-color;
-    content: '';
-  }
+    padding: 0;
+    margin: 0;
+    appearance: none;
 
-  &:checked::after {
-    left: calc(100% / 1.75 * 0.75 + 2px);
-  }
+    &:checked {
+      background-color: var(--color);
+    }
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
+    &::after {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: calc(100% / 1.75 - 4px);
+      height: calc(100% - 4px);
+      background: #fff;
+      border-radius: 100%;
+      transition: all 0.2s linear;
+      border: 1px solid rgba(4, 10, 19, 0.06);
+      box-sizing: border-box;
+      content: '';
+    }
+
+    &:checked::after {
+      left: calc(100% / 1.75 * 0.75 + 2px);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
   }
 }
 </style>

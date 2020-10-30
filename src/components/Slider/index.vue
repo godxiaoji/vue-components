@@ -19,7 +19,7 @@
         :min="min"
         :max="max"
         :step="step"
-        :name="name"
+        :name="formName"
         @input="onInput"
         @change="onChange"
       />
@@ -240,7 +240,7 @@ export default {
   --color: var(--#{$prefix}-primary-color);
 
   position: relative;
-  height: 28px;
+  height: 32px;
   width: 100%;
   display: flex;
   align-items: center;

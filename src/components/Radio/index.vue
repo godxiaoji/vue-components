@@ -32,7 +32,7 @@ export default {
   name: SDKKey + '-radio',
   components: { Icon },
   inject: {
-    radioOptions: {
+    appRadioGroup: {
       default: null
     }
   },
@@ -66,8 +66,8 @@ export default {
   computed: {
     /* 优先接受来自分组的name */
     formName() {
-      if (this.radioOptions) {
-        return this.radioOptions.formName
+      if (this.appRadioGroup) {
+        return this.appRadioGroup.formName
       }
 
       return this.name || ''
@@ -79,6 +79,10 @@ export default {
   },
   watch: {
     checked() {
+      if (this.appRadioGroup) {
+        return
+      }
+
       const inputEl = this.getInputEl()
       const checked = !!this.checked
 
@@ -97,18 +101,24 @@ export default {
   ready() {},
   mounted() {
     const inputEl = this.getInputEl()
-    const checked = !!this.checked
+    let checked
+
+    if (this.appRadioGroup) {
+      checked = this.value === this.appRadioGroup.value
+    } else {
+      checked = !!this.checked
+    }
 
     if (checked !== inputEl.checked) {
       inputEl.defaultChecked = checked
       inputEl.checked = checked
     }
 
-    if (this.isGroupParent()) {
-      inputEl._app_component = this.$parent
+    if (this.appRadioGroup) {
+      inputEl._app_component = this.appRadioGroup
 
       if (inputEl.checked) {
-        this.$parent.updateValue()
+        this.appRadioGroup.updateValue()
       }
     }
 
@@ -126,14 +136,11 @@ export default {
      * v-modal checked 的值跟input对齐
      */
     modelChange(inputChecked) {
-      const checked = this.checked ? true : false
+      const checked = !!this.checked
 
       if (checked !== inputChecked) {
         this.$emit('_change', inputChecked)
       }
-    },
-    isGroupParent() {
-      return this.$parent && this.$parent._app_radio_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -142,9 +149,7 @@ export default {
       return this.getInputEl().checked
     },
     callParent(e) {
-      if (this.isGroupParent()) {
-        this.$parent.onChange(e)
-      }
+      this.appRadioGroup && this.appRadioGroup.onChange(e)
     },
     reset() {
       const inputEl = this.getInputEl()

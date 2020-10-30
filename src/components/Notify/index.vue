@@ -40,7 +40,7 @@ export default {
     },
     zIndex: {
       type: Number,
-      default: 10000
+      default: 2000
     }
   },
   data() {

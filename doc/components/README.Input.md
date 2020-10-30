@@ -8,9 +8,6 @@
 | --------------- | -------------- | --------- | ---- | ------------------------------------------------- |
 | value / v-model | string, number | ''        | 否   |
 | name            | string         |           | 否   | [form](./README.Form.md) 的标识                   |
-| size            | string         | 'default' | 否   | 尺寸，可选值：default / mini / large              |
-| align           | string         | 'left'    | 否   | 左右对齐，可选值：left / center / right           |
-| border          | boolean        | true      | 否   | 是否显示边框                                      |
 | type            | string         | 'text'    | 否   | 类型，可选值：text / number / password / textarea |
 | placeholder     | string         |           | 否   | 输入框为空时占位符                                |
 | disabled        | boolean        | false     | 否   | 是否禁用                                          |

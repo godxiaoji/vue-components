@@ -6,38 +6,14 @@ $warning-color: #faad14;
 $danger-color: #ff4d4f;
 
 $black-color: #040a13;
-$title-color: rgba(
-  $color: $black-color,
-  $alpha: 0.85
-);
-$font-color: rgba(
-  $color: $black-color,
-  $alpha: 0.65
-);
-$font2-color: rgba(
-  $color: $black-color,
-  $alpha: 0.45
-);
-$font3-color: rgba(
-  $color: $black-color,
-  $alpha: 0.25
-);
-$border-color: rgba(
-  $color: $black-color,
-  $alpha: 0.15
-);
-$divider-color: rgba(
-  $color: $black-color,
-  $alpha: 0.06
-);
-$background-color: rgba(
-  $color: $black-color,
-  $alpha: 0.04
-);
-$background2-color: rgba(
-  $color: $black-color,
-  $alpha: 0.02
-);
+$title-color: #292e36;
+$font-color: #5b5f65;
+$font2-color: #8e9095;
+$font3-color: #c0c1c4;
+$border-color: #dadadc;
+$divider-color: #f0f1f1;
+$background-color: #f5f5f6;
+$background2-color: #fafafa;
 
 :root {
   /* 主色调 */

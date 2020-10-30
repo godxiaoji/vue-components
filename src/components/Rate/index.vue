@@ -1,6 +1,11 @@
 <template>
   <div :class="[prefix + '-rate', { disabled, readonly }]">
-    <input :name="name" type="hidden" :value="formValue" :disabled="disabled" />
+    <input
+      :name="formName"
+      type="hidden"
+      :value="formValue"
+      :disabled="disabled"
+    />
     <div
       :class="[
         prefix + '-rate_item',
@@ -177,6 +182,8 @@ export default {
             }
           )
         )
+
+        this.validateAfterEventTrigger(type, this.formValue)
       }
     },
 
@@ -198,7 +205,7 @@ export default {
     },
 
     reset() {
-      this.updateValue(this.defaultValue)
+      this._change(this.defaultValue)
     }
   }
 }
@@ -211,7 +218,7 @@ export default {
   --item-size: 24px;
   display: flex;
   align-items: center;
-  height: 28px;
+  height: 32px;
 
   &_item {
     width: var(--item-size);

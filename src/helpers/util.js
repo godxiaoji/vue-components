@@ -200,6 +200,25 @@ export function isStringArray(object) {
 }
 
 /**
+ * 是否相同的数组
+ * @param {Array} a 数组a
+ * @param {Array} b 数组b
+ */
+export function isSameArray(a, b) {
+  if (a.length === b.length) {
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) {
+        return false
+      }
+    }
+  } else {
+    return false
+  }
+
+  return true
+}
+
+/**
  * 伪数组转为数组
  * @param {ArrayLike} object 伪数组
  */

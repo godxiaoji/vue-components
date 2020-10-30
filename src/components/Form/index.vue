@@ -17,11 +17,7 @@ export default {
     }
   },
   props: {
-    rules: Object,
-    labelWidth: {
-      type: String,
-      default: ''
-    }
+    rules: Object
   },
   data() {
     return { prefix: SDKKey }
@@ -45,17 +41,16 @@ export default {
 
       inputEls.forEach(el => {
         const _ac = el._app_component
-        if (
-          _ac &&
-          _ac._uid &&
-          !inArray(_ac._uid, uids) // 主要用于排重checbox等多选的情况
-        ) {
-          // 获取配套表单组件
-          uids.push(_ac._uid)
-          if (_ac.formName || _ac.name) {
-            value[_ac.formName || _ac.name] = _ac.hookFormValue
-              ? _ac.hookFormValue()
-              : _ac.formValue
+        if (_ac && _ac._uid) {
+          // 主要用于排重checbox等多选的情况
+          if (!inArray(_ac._uid, uids)) {
+            // 获取配套表单组件
+            uids.push(_ac._uid)
+            if (_ac.formName || _ac.name) {
+              value[_ac.formName || _ac.name] = _ac.hookFormValue
+                ? _ac.hookFormValue()
+                : _ac.formValue
+            }
           }
         } else {
           // 原生组件
@@ -91,7 +86,8 @@ export default {
               }
               value[name] = selectedValues
             } else if (
-              type === 'input' ||
+              type === 'text' ||
+              type === 'range' ||
               type === 'select-one' ||
               type === 'hidden'
             ) {

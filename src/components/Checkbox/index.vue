@@ -27,12 +27,13 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
+import { inArray } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-checkbox',
   components: { Icon },
   inject: {
-    checkboxOptions: {
+    appCheckboxGroup: {
       default: null
     }
   },
@@ -66,8 +67,8 @@ export default {
   computed: {
     /* 优先接受来自分组的name */
     formName() {
-      if (this.checkboxOptions) {
-        return this.checkboxOptions.formName
+      if (this.appCheckboxGroup) {
+        return this.appCheckboxGroup.formName
       }
 
       return this.name || ''
@@ -82,6 +83,10 @@ export default {
   },
   watch: {
     checked() {
+      if (this.appCheckboxGroup) {
+        return
+      }
+
       const inputEl = this.getInputEl()
       const checked = !!this.checked
 
@@ -100,18 +105,24 @@ export default {
   ready() {},
   mounted() {
     const inputEl = this.getInputEl()
-    const checked = !!this.checked
+    let checked
+
+    if (this.appCheckboxGroup) {
+      checked = inArray(this.value, this.appCheckboxGroup.value)
+    } else {
+      checked = !!this.checked
+    }
 
     if (checked !== inputEl.checked) {
       inputEl.defaultChecked = checked
       inputEl.checked = checked
     }
 
-    if (this.isGroupParent()) {
-      inputEl._app_component = this.$parent
+    if (this.appCheckboxGroup) {
+      inputEl._app_component = this.appCheckboxGroup
 
       if (inputEl.checked) {
-        this.$parent.updateValue()
+        this.appCheckboxGroup.updateValue()
       }
     }
 
@@ -129,14 +140,11 @@ export default {
      * v-modal checked 的值跟input对齐
      */
     modelChange(inputChecked) {
-      const checked = this.checked ? true : false
+      const checked = !!this.checked
 
       if (checked !== inputChecked) {
         this.$emit('_change', inputChecked)
       }
-    },
-    isGroupParent() {
-      return this.$parent && this.$parent._app_checkbox_group
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
@@ -145,9 +153,7 @@ export default {
       return this.getInputEl().checked
     },
     callParent(e) {
-      if (this.isGroupParent()) {
-        this.$parent.onChange(e)
-      }
+      this.appCheckboxGroup && this.appCheckboxGroup.onChange(e)
     },
     reset() {
       const inputEl = this.getInputEl()

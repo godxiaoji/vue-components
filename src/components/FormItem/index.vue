@@ -1,29 +1,20 @@
 <template>
   <div :class="[prefix + '-form-item']">
-    <label
-      v-if="label"
-      :class="[prefix + '-form-item_label', { required }]"
-      :style="labelStyles"
-      >{{ label }}</label
-    >
-    <div :class="[prefix + '-form-item_content']">
-      <div :class="[prefix + '-form-item_content_inner']">
-        <slot></slot>
-      </div>
-      <div :class="[prefix + '-form-item_error']" v-if="isError">
-        {{ errMsg }}
-      </div>
-    </div>
+    <cell :label="label" :description="errMsg" :required="required">
+      <slot></slot>
+    </cell>
   </div>
 </template>
 
 <script>
+import Cell from '../Cell'
 import Schema from 'async-validator'
 import { SDKKey } from '../../config'
 import { isArray, isBoolean, isNumber } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-form-item',
+  components: { Cell },
   provide() {
     return {
       appFormItem: this
@@ -44,28 +35,12 @@ export default {
     required: {
       type: Boolean,
       default: false
-    },
-    labelWidth: {
-      type: String,
-      default: ''
     }
   },
   data() {
-    return { prefix: SDKKey, isError: false, errMsg: '' }
+    return { prefix: SDKKey, errMsg: '' }
   },
-  computed: {
-    labelStyles() {
-      const styles = {}
-
-      if (this.labelWidth) {
-        styles.width = this.labelWidth
-      } else if (this.appForm) {
-        styles.width = this.appForm.labelWidth
-      }
-
-      return styles
-    }
-  },
+  computed: {},
   created() {
     this._form_item = true
 
@@ -164,12 +139,13 @@ export default {
             // validation failed, errors is an array of all errors
             // fields is an object keyed by field name with an array of
             // errors per field
-            this.isError = true
-            this.errMsg = errors
-              .map(v => {
-                return v.message
-              })
-              .join(' ')
+            // this.errMsg = errors
+            //   .map(v => {
+            //     return v.message
+            //   })
+            //   .join(' ')
+
+            this.errMsg = (errors[0] && errors[0].message) || 'error'
           } else {
             // validation passed
             this.clearValidate()
@@ -181,7 +157,6 @@ export default {
     },
 
     clearValidate() {
-      this.isError = false
       this.errMsg = ''
 
       return Promise.resolve(true)
@@ -194,69 +169,80 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-form-item {
-  display: flex;
-  align-items: flex-start;
-  min-height: 45px;
+  display: block;
 
-  &_label {
-    height: 44px;
-    display: flex;
-    align-items: center;
-    padding-right: 12px;
-    font-size: 17px;
-    color: $font-color;
-    box-sizing: border-box;
-
-    &.required::after {
-      content: '*';
-      margin-left: 4px;
-      color: $danger-color;
+  > .#{$prefix}-cell {
+    &:first-child,
+    &:last-child {
+      border: none;
     }
-  }
 
-  &_content {
-    flex: 1;
-    border-bottom: 0.5px solid $divider-color;
-    padding: 8px 0;
-
-    &_inner {
-      min-height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-
-      .#{$prefix}-input {
-        --height: 26px;
-        border-left-width: 0;
-        border-right-width: 0;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-
-        &_prepend {
-          padding: 0 16px 0 0;
-        }
-
-        &_append {
-          padding: 0 0 0 16px;
-        }
-
-        &_input {
-          padding: 0;
-        }
-      }
-
-      .#{$prefix}-switch {
-        font-size: 28px;
+    .#{$prefix}-cell {
+      &_description {
+        color: $danger-color;
       }
     }
   }
 
-  &_error {
-    position: relative;
-    color: $danger-color;
-    font-size: 12px;
-    line-height: 17px;
-    padding: 2px 0;
+  &:first-child {
+    border-top: 1px solid $divider-color;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $divider-color;
+  }
+
+  + .#{$prefix}-form-item .#{$prefix}-cell_inner {
+    border-top: 1px solid $divider-color;
+  }
+
+  .#{$prefix}-input {
+    --height: 32px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+
+    &_prepend {
+      padding: 0 16px 0 0;
+    }
+
+    &_append {
+      padding: 0 0 0 16px;
+    }
+
+    &_input {
+      padding: 0;
+      text-align: right;
+    }
+  }
+
+  .#{$prefix}-select {
+    --height: 32px;
+
+    &_field {
+      border: none;
+      padding: 0;
+    }
+
+    &_text {
+      text-align: right;
+      line-height: 32px;
+    }
+  }
+
+  .#{$prefix}-cascader {
+    --height: 32px;
+
+    &_field {
+      border: none;
+      padding: 0;
+    }
+
+    &_text {
+      text-align: right;
+      line-height: 32px;
+    }
   }
 }
 </style>

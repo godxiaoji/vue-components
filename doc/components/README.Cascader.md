@@ -10,8 +10,6 @@
 | default-mode    | string            |                                                          | 否   | 初始化内置选择器 date / time / datetime，为了防止逻辑混乱，组件创建后不支持更改 |
 | options         | array             | []                                                       | 否   | 数据集                                                                          |
 | value / v-modal | string[]/number[] | []                                                       | 否   | 默认的选中项                                                                    |
-| size            | string            | 'default'                                                | 否   | 设置大小，可选值：default / mini / large                                        |
-| align           | string            | 'left'                                                   | 否   | 左右对齐，可选值：left / center / right                                         |
 | border          | boolean           | true                                                     | 否   | 是否显示边框                                                                    |
 | placeholder     | string            | '请选择'                                                 | 否   | 未进行选择时的提示                                                              |
 | disabled        | boolean           | false                                                    | 否   | 是否被禁用                                                                      |

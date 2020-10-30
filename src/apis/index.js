@@ -12,6 +12,7 @@ import {
   clearStorage
 } from './LocalStorage'
 import { pageScrollTo, elementScrollTo } from './Scroll'
+import { queryString } from './URL'
 
 export {
   createIntersectionObserver,
@@ -30,5 +31,6 @@ export {
   clearStorage,
   pageScrollTo,
   elementScrollTo,
-  previewImage
+  previewImage,
+  queryString
 }

@@ -30,19 +30,29 @@ export function createPopup() {
 const caches = {}
 
 function updatePos($wrapper, $el, options) {
-  let { left, top } = $el.getBoundingClientRect()
+  let { left, top, right } = $el.getBoundingClientRect()
   const docW = document.documentElement.offsetWidth
-  const w = $wrapper.offsetWidth
+  const w = $wrapper.offsetWidth || 0
 
+  right = docW - right
   if (docW - left < w) {
     left = 0
+  } else if (docW - right < w) {
+    right = 0
   }
 
   if (docW <= 575) {
     $wrapper.style.left = '0px'
     $wrapper.style.top = '1px'
   } else {
-    $wrapper.style.left = left + 'px'
+    if (options.align === 'right') {
+      $wrapper.style.right = right + 'px'
+      $wrapper.style.left = 'auto'
+    } else {
+      $wrapper.style.left = left + 'px'
+      $wrapper.style.right = 'auto'
+    }
+
     $wrapper.style.top =
       1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
   }
@@ -63,6 +73,7 @@ export function createPicker($el, options = {}) {
   $wrapper.innerHTML = `<div class="${SDKKey}-picker_overlay"></div><div class="${SDKKey}-picker_inner"><div></div></div>`
 
   appendToBody($wrapper)
+  updatePos($wrapper, $el, options)
 
   return (caches[id] = {
     id,
@@ -102,7 +113,7 @@ export function destroyPicker(id) {
     const cache = caches[id]
     const $wrapper = cache.$wrapper
 
-    cache.erd.uninstall($wrapper)
+    cache.offResizeDetector()
     removeEl($wrapper)
 
     delete caches[id]

@@ -43,6 +43,7 @@ import SkeletonParagraph from './Skeleton/Paragraph.vue'
 import SkeletonButton from './Skeleton/Button.vue'
 import SkeletonImage from './Skeleton/Image.vue'
 import PreviewImage from './PreviewImage'
+import Cell from './Cell'
 
 /* Other */
 import Copy from './Copy'
@@ -84,5 +85,6 @@ export {
   SkeletonParagraph,
   SkeletonButton,
   SkeletonImage,
-  PreviewImage
+  PreviewImage,
+  Cell
 }

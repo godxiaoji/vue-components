@@ -2,8 +2,6 @@
   <label
     :class="[
       prefix + '-input',
-      sizeClassName,
-      alignClassName,
       {
         'has--prepend': hasPrepend,
         'has--append': hasAppend,
@@ -32,7 +30,7 @@
     <input
       v-else
       :class="[prefix + '-input_input']"
-      :name="name"
+      :name="formName"
       :type="realType"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -55,8 +53,6 @@ import { SDKKey } from '../../config'
 import { CustomEvent } from '../../helpers/events'
 import formMixin from '../util/form-mixin'
 
-const SIZE_NAMES = ['default', 'mini', 'large']
-const ALIGN_NAMES = ['left', 'center', 'right']
 const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
 
 export default {
@@ -82,10 +78,6 @@ export default {
       type: String,
       default: 'text'
     },
-    size: {
-      type: String,
-      default: SIZE_NAMES[0]
-    },
     value: {
       validator(value) {
         return isString(value) || isNumber(value)
@@ -103,10 +95,6 @@ export default {
     readonly: {
       type: Boolean,
       default: false
-    },
-    align: {
-      type: String,
-      value: 'left'
     }
   },
   data() {
@@ -122,17 +110,6 @@ export default {
     }
   },
   computed: {
-    sizeClassName() {
-      return (
-        'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
-      )
-    },
-    alignClassName() {
-      return (
-        'align--' +
-        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
-      )
-    },
     realType() {
       return inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
     }
@@ -251,11 +228,11 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-input {
-  --height: 43px;
+  --height: 48px;
   --font-size: 17px;
   --icon-size: 20px;
 
-  height: calc(var(--height) + 2px);
+  height: var(--height);
   width: 100%;
   position: relative;
   display: flex;
@@ -275,7 +252,9 @@ export default {
 
   &_prepend,
   &_append {
-    padding: 0 16px;
+    padding: 0 0 0 16px;
+    color: $font2-color;
+
     .icon {
       display: block;
       width: var(--icon-size);
@@ -285,16 +264,8 @@ export default {
     }
   }
 
-  &.size--mini {
-    --height: 22px;
-    --font-size: 14px;
-    --icon-size: 16px;
-  }
-
-  &.size--large {
-    --height: 38px;
-    --font-size: 16px;
-    --icon-size: 22px;
+  &_append {
+    padding: 0 16px 0 0;
   }
 
   &_input {
@@ -306,7 +277,7 @@ export default {
     border: none;
     width: 100%;
     height: 100%;
-    line-height: var(--height);
+    line-height: calc(var(--height) - 2px);
     width: 100%;
     padding: 0 16px;
     font-size: var(--font-size);
@@ -316,14 +287,6 @@ export default {
     box-sizing: border-box;
     box-shadow: none;
     resize: none;
-
-    .#{$prefix}-input.align--center & {
-      text-align: center;
-    }
-
-    .#{$prefix}-input.align--right & {
-      text-align: right;
-    }
 
     &[type='search']::-webkit-search-cancel-button {
       display: none;
@@ -339,6 +302,14 @@ export default {
       color: $font3-color;
       cursor: not-allowed;
       user-select: none;
+    }
+
+    .#{$prefix}-input.has--prepend & {
+      padding-left: 6px;
+    }
+
+    .#{$prefix}-input.has--append & {
+      padding-right: 6px;
     }
   }
 

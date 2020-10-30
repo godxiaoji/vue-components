@@ -6,7 +6,7 @@
 
 <script>
 import { CustomEvent } from '../../helpers/events'
-import { cloneData } from '../../helpers/util'
+import { cloneData, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 
@@ -15,7 +15,7 @@ export default {
   mixins: [formMixin],
   provide() {
     return {
-      radioOptions: this.radioOptions
+      appRadioGroup: this
     }
   },
   props: {
@@ -23,28 +23,28 @@ export default {
       type: String,
       default: ''
     },
-    align: {
-      type: String,
-      value: 'left'
+    value: {
+      validator(value) {
+        return isString(value) || isNumber(value)
+      },
+      default: ''
     }
   },
   data() {
     return {
       prefix: SDKKey,
 
-      formValue: '',
-
-      radioOptions: {
-        formName: ''
-      }
+      formValue: ''
     }
+  },
+  model: {
+    prop: 'value',
+    event: '_change'
   },
   computed: {},
   watch: {},
   created() {
     this._app_radio_group = true
-
-    this.radioOptions.formName = this.formName
   },
   ready() {},
   mounted() {},
@@ -66,6 +66,10 @@ export default {
       }
 
       this.formValue = value
+
+      if (value !== this.value) {
+        this.$emit('_change', value)
+      }
     },
 
     onChange(e) {
@@ -106,7 +110,7 @@ export default {
 
 .#{$prefix}-radio-group {
   display: flex;
-  height: 28px;
+  height: 32px;
   align-items: center;
   color: $title-color;
   box-sizing: border-box;

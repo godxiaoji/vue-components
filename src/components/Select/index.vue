@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      prefix + '-select',
-      { focus: focus, disabled: disabled },
-      sizeClassName
-    ]"
-  >
+  <div :class="[prefix + '-select', { focus: focus, disabled: disabled }]">
     <div :class="[prefix + '-select_field']" @mouseup="onBoxClick">
       <div :class="[prefix + '-select_text', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
@@ -24,6 +18,7 @@
         :class="[prefix + '-select_input']"
         type="text"
         readonly
+        :name="formName"
         :disabled="disabled"
         :placeholder="placeholder"
         :value="formValue"
@@ -39,22 +34,18 @@ import Vue from 'vue'
 import SelectPicker from './Picker.vue'
 import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
-import {
-  isNumber,
-  isString,
-  inArray,
-  isArray,
-  isObject
-} from '../../helpers/util'
+import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { createPicker, destroyPicker } from '../../helpers/popup'
-
-const SIZE_NAMES = ['default', 'mini', 'large']
+import formMixin from '../util/form-mixin'
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
-function createSelectPicker(parent) {
-  const picker = createPicker(parent.$el, { minWidth: true })
+function createSelectPicker(parent, alignRight = false) {
+  const picker = createPicker(parent.$el, {
+    minWidth: false,
+    align: alignRight ? 'right' : 'left'
+  })
 
   const Comp = Vue.extend({
     extends: SelectPicker,
@@ -77,6 +68,7 @@ function createSelectPicker(parent) {
 export default {
   name: SDKKey + '-select',
   components: { Icon },
+  mixins: [formMixin],
   props: {
     options: {
       validator(value) {
@@ -118,10 +110,6 @@ export default {
       type: Boolean,
       default: false
     },
-    size: {
-      type: String,
-      default: 'default'
-    },
     fieldNames: {
       type: Object,
       default() {
@@ -136,6 +124,7 @@ export default {
       focus: false,
       formValue: '',
       formLabel: '',
+      defaultValue: '',
 
       fieldNames2: { label: 'label', value: 'value' },
       options2: []
@@ -145,13 +134,7 @@ export default {
     prop: 'value',
     event: '_change'
   },
-  computed: {
-    sizeClassName() {
-      return (
-        'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
-      )
-    }
-  },
+  computed: {},
   watch: {
     value() {
       this.updateValue()
@@ -173,6 +156,8 @@ export default {
   created() {
     this.updateOptions()
     this.updateValue()
+
+    this.defaultValue = this.formValue
   },
   ready() {},
   mounted() {
@@ -259,7 +244,7 @@ export default {
           inputEl.blur()
         } else {
           if (!this.picker) {
-            this.picker = createSelectPicker(this)
+            this.picker = createSelectPicker(this, !!this.appFormItem)
           }
 
           this.focus = true
@@ -318,6 +303,11 @@ export default {
         }
       })
 
+      if (!hasValue) {
+        this.formValue = ''
+        this.formLabel = ''
+      }
+
       return hasValue
     },
 
@@ -333,6 +323,9 @@ export default {
       this.$emit('_change', value)
 
       const type = 'change'
+
+      this.validateAfterEventTrigger(type, this.formValue)
+
       this.$emit(
         type,
         new CustomEvent(
@@ -349,10 +342,8 @@ export default {
     },
 
     reset() {
-      const value = ''
-
-      if (this.formValue !== value) {
-        this.onChange(value)
+      if (this.formValue !== this.defaultValue) {
+        this.onChange(this.defaultValue)
       }
     }
   }
@@ -363,7 +354,7 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-select {
-  --height: 43px;
+  --height: 48px;
   --font-size: 17px;
   --icon-size: 20px;
   --padding-left-right: 16px;
@@ -372,22 +363,9 @@ export default {
 
   display: inline-flex;
   width: 100%;
-  height: calc(var(--height) + 2px);
+  height: var(--height);
   font-size: var(--font-size);
   position: relative;
-
-  &.size--mini {
-    --height: 22px;
-    --font-size: 12px;
-    --icon-size: 16px;
-    --padding-left-right: 8px;
-  }
-
-  &.size--large {
-    --height: 38px;
-    --font-size: 16px;
-    --icon-size: 22px;
-  }
 
   &_field {
     width: 100%;
@@ -399,6 +377,8 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
+    padding: 0 16px;
+    background-color: #fff;
 
     &:hover {
       border-color: var(--color);
@@ -409,14 +389,13 @@ export default {
   &_input {
     flex-grow: 1;
     box-sizing: border-box;
-    padding: 0 calc(var(--padding-left-right) / 2) 0 var(--padding-left-right);
     font-size: var(--font-size);
     color: $title-color;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     height: 100%;
-    line-height: var(--height);
+    line-height: calc(var(--height) - 2px);
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -449,10 +428,10 @@ export default {
   &_unfold-icon {
     display: block;
     --size: var(--icon-size);
-    --color: #{$font3-color};
-    margin-right: var(--padding-left-right);
+    --color: #{$font-color};
     transition: all 0.2s;
     flex-shrink: 0;
+    margin-left: 5px;
 
     &.right {
       display: none;
@@ -471,7 +450,6 @@ export default {
     .#{$prefix}-select {
       &_field {
         border-color: var(--color);
-        box-shadow: 0 0 3px var(--color);
       }
       &_unfold-icon.down {
         transform: rotate(180deg);

@@ -67,3 +67,7 @@ API 列表，参照微信小程序，持续更新。
 ## PreviewImage
 
 [previewImage](./apis/README.PreviewImage.md#previewImage)
+
+## URL
+
+[queryString](./apis/README.URL.md#queryString)

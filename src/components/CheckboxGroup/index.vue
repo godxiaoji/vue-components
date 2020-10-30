@@ -6,41 +6,52 @@
 
 <script>
 import { CustomEvent } from '../../helpers/events'
-import { cloneData } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
+import {
+  isStringArray,
+  isNumberArray,
+  cloneData,
+  isSameArray
+} from '../../helpers/util'
 
 export default {
   name: SDKKey + '-checkbox-group',
   mixins: [formMixin],
   provide() {
     return {
-      checkboxOptions: this.checkboxOptions
+      appCheckboxGroup: this
     }
   },
   props: {
     name: {
       type: String,
       default: ''
+    },
+    value: {
+      validator(value) {
+        return isStringArray(value) || isNumberArray(value)
+      },
+      default() {
+        return []
+      }
     }
   },
   data() {
     return {
       prefix: SDKKey,
 
-      formValue: [],
-
-      checkboxOptions: {
-        formName: ''
-      }
+      formValue: []
     }
+  },
+  model: {
+    prop: 'value',
+    event: '_change'
   },
   computed: {},
   watch: {},
   created() {
     this._app_checkbox_group = true
-
-    this.checkboxOptions.formName = this.formName
   },
   ready() {},
   mounted() {},
@@ -57,6 +68,10 @@ export default {
       })
 
       this.formValue = value
+
+      if (!isSameArray(value, this.value)) {
+        this.$emit('_change', value)
+      }
     },
 
     onChange(e) {
@@ -97,7 +112,7 @@ export default {
 
 .#{$prefix}-checkbox-group {
   display: flex;
-  height: 28px;
+  height: 32px;
   align-items: center;
   color: $title-color;
   box-sizing: border-box;

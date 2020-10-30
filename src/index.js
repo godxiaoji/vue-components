@@ -2,6 +2,7 @@ import { isUndefined, objectForEach } from './helpers/util'
 import * as Components from './components'
 import * as Apis from './apis'
 import { addData as _addRegionData } from './components/Cascader/util/region'
+import { SDKKey } from './config'
 
 const Vfox = {
   install(Vue) {
@@ -38,5 +39,5 @@ export default Vfox
 
 if (!isUndefined(window) && window.Vue) {
   window.Vue.use(Vfox)
-  window.Vfox = Vfox
+  window[SDKKey] = Apis
 }

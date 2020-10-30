@@ -5,9 +5,7 @@
       {
         focus: focus,
         disabled: disabled
-      },
-      sizeClassName,
-      alignClassName
+      }
     ]"
   >
     <div :class="[prefix + '-cascader_field']" @mouseup="onBoxClick">
@@ -30,7 +28,7 @@
         :class="[prefix + '-cascader_input']"
         type="text"
         readonly
-        :name="name"
+        :name="formName"
         :disabled="disabled"
         :placeholder="placeholder"
         :value="formValueString"
@@ -65,9 +63,8 @@ import {
 } from './util'
 import { SDKKey } from '../../config'
 import { createPicker, destroyPicker } from '../../helpers/popup'
+import formMixin from '../util/form-mixin'
 
-const SIZE_NAMES = ['default', 'mini', 'large']
-const ALIGN_NAMES = ['left', 'center', 'right']
 const MODE_NAMES = [
   'multiSelector',
   'selector',
@@ -79,8 +76,11 @@ const MODE_NAMES = [
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
-function createCascaderPicker(parent) {
-  const picker = createPicker(parent.$el, { minWidth: false })
+function createCascaderPicker(parent, alignRight = false) {
+  const picker = createPicker(parent.$el, {
+    minWidth: false,
+    align: alignRight ? 'right' : 'left'
+  })
 
   const Comp = Vue.extend({
     extends: CascaderPicker,
@@ -130,6 +130,7 @@ function parseOptions(options, fieldNames) {
 export default {
   name: SDKKey + '-cascader',
   components: { Icon },
+  mixins: [formMixin],
   props: {
     name: {
       type: String,
@@ -155,10 +156,6 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    size: {
-      type: String,
-      default: 'default'
     },
     separator: {
       type: String,
@@ -193,10 +190,6 @@ export default {
       default() {
         return { label: 'label', value: 'value', children: 'children' }
       }
-    },
-    align: {
-      type: String,
-      value: 'left'
     }
   },
   data() {
@@ -220,17 +213,6 @@ export default {
     event: '_change'
   },
   computed: {
-    sizeClassName() {
-      return (
-        'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
-      )
-    },
-    alignClassName() {
-      return (
-        'align--' +
-        (inArray(this.align, ALIGN_NAMES) ? this.align : ALIGN_NAMES[0])
-      )
-    },
     formLabelString() {
       const dateFormat = this.getDateFormat()
 
@@ -380,7 +362,7 @@ export default {
           inputEl.blur()
         } else {
           if (!this.picker) {
-            this.picker = createCascaderPicker(this)
+            this.picker = createCascaderPicker(this, !!this.appFormItem)
           }
 
           this.focus = true
@@ -451,6 +433,8 @@ export default {
       this.$emit('_change', this.hookFormValue())
 
       const type = 'change'
+
+      this.validateAfterEventTrigger(type, this.formValue)
 
       this.$emit(
         type,
@@ -557,40 +541,29 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-cascader {
-  --height: 43px;
+  --height: 48px;
   --font-size: 17px;
   --icon-size: 20px;
   --color: #{$primary-color};
   --placeholder-color: #{$font3-color};
-  --padding-left-right: 16px;
 
   display: flex;
-  height: calc(var(--height) + 2px);
+  height: var(--height);
   font-size: var(--font-size);
   position: relative;
+  width: 100%;
   color: $title-color;
-
-  &.size--mini {
-    --height: 22px;
-    --font-size: 12px;
-    --icon-size: 16px;
-    --padding-left-right: 8px;
-  }
-
-  &.size--large {
-    --height: 38px;
-    --font-size: 16px;
-    --icon-size: 20px;
-  }
 
   &_field {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     border: 1px solid $border-color;
     overflow: hidden;
     box-sizing: border-box;
+    padding: 0 16px;
     background-color: #fff;
 
     &:hover {
@@ -602,14 +575,14 @@ export default {
   &_input {
     flex-grow: 1;
     box-sizing: border-box;
-    padding: 0 calc(var(--padding-left-right) / 2) 0 var(--padding-left-right);
+    padding: 0;
     font-size: var(--font-size);
     color: $title-color;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     height: 100%;
-    line-height: var(--height);
+    line-height: calc(var(--height) - 2px);
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -640,14 +613,6 @@ export default {
   }
 
   &_text {
-    .#{$prefix}-cascader.align--center & {
-      text-align: center;
-    }
-
-    .#{$prefix}-cascader.align--right & {
-      text-align: right;
-    }
-
     &.placeholder {
       color: var(--placeholder-color);
     }
@@ -657,10 +622,10 @@ export default {
     display: block;
     width: var(--icon-size);
     height: var(--icon-size);
-    margin-right: var(--padding-left-right);
+    margin-left: 5px;
     transition: all 0.2s;
     flex-shrink: 1;
-    fill: $font3-color;
+    fill: $font-color;
 
     &.right {
       display: none;
@@ -740,9 +705,7 @@ export default {
     }
 
     &-icon {
-      margin-right: calc(
-        var(--padding-left-right) / 2 - var(--padding-left-right)
-      );
+      margin-right: -8px;
       --size: 20px;
       --color: #{$border-color};
     }
@@ -768,7 +731,6 @@ export default {
     .#{$prefix}-cascader {
       &_field {
         border-color: var(--color);
-        box-shadow: 0 0 3px var(--color);
       }
 
       &_unfold-icon.down {
@@ -789,11 +751,7 @@ export default {
         border-left: 1px solid $divider-color;
       }
     }
-  }
-}
 
-@media screen and (max-width: 575px) {
-  .#{$prefix}-select {
     &_unfold-icon {
       &.down {
         display: none;

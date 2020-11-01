@@ -29,7 +29,7 @@
 <script>
 import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
-import { rangeInt, inArray, capitalize, isInteger } from '../../helpers/util'
+import { rangeInteger, inArray, capitalize, isInteger } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 
@@ -195,7 +195,7 @@ export default {
       const times = this.allowHalf ? 5 : 10
 
       const value =
-        rangeInt(this.value * times, 0, Math.floor(this.size) * times) / times
+        rangeInteger(this.value * times, 0, Math.floor(this.size) * times) / times
 
       if (value !== this.value) {
         this.$emit('_change', value)

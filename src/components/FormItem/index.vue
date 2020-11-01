@@ -172,11 +172,6 @@ export default {
   display: block;
 
   > .#{$prefix}-cell {
-    &:first-child,
-    &:last-child {
-      border: none;
-    }
-
     .#{$prefix}-cell {
       &_description {
         color: $danger-color;
@@ -184,65 +179,9 @@ export default {
     }
   }
 
-  &:first-child {
-    border-top: 1px solid $divider-color;
-  }
-
-  &:last-child {
-    border-bottom: 1px solid $divider-color;
-  }
-
-  + .#{$prefix}-form-item .#{$prefix}-cell_inner {
-    border-top: 1px solid $divider-color;
-  }
-
-  .#{$prefix}-input {
-    --height: 32px;
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-
-    &_prepend {
-      padding: 0 16px 0 0;
-    }
-
-    &_append {
-      padding: 0 0 0 16px;
-    }
-
-    &_input {
-      padding: 0;
-      text-align: right;
-    }
-  }
-
-  .#{$prefix}-select {
-    --height: 32px;
-
-    &_field {
-      border: none;
-      padding: 0;
-    }
-
-    &_text {
-      text-align: right;
-      line-height: 32px;
-    }
-  }
-
-  .#{$prefix}-cascader {
-    --height: 32px;
-
-    &_field {
-      border: none;
-      padding: 0;
-    }
-
-    &_text {
-      text-align: right;
-      line-height: 32px;
-    }
+  + .#{$prefix}-form-item .#{$prefix}-cell::before {
+    content: '';
+    margin-left: 16px;
   }
 }
 </style>

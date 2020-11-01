@@ -106,9 +106,13 @@ export default {
       this._change(e.target.checked)
     },
     reset() {
-      if (this.$el.defaultChecked !== this.$el.checked) {
-        this._change(this.$el.defaultChecked)
+      const $input = this.getInputEl()
+      if ($input.defaultChecked !== $input.checked) {
+        this._change($input.defaultChecked)
       }
+    },
+    getInputEl() {
+      return this.$el.firstElementChild
     },
     _change(checked) {
       this.formChecked = checked
@@ -122,7 +126,7 @@ export default {
       this.$emit(
         type,
         new CustomEvent(
-          { type, target: this.$el, currentTarget: this.$el },
+          { type, target: this.$el.lastElementChild, currentTarget: this.$el },
           {
             value: checked
           }
@@ -141,10 +145,11 @@ export default {
 .#{$prefix}-switch {
   --color: #{$primary-color};
   --font-size: 32px;
+  height: 32px;
 
   &_checkbox {
     position: relative;
-    width: 1.75em;
+    width: 1.875em;
     height: 1em;
     background: $border-color;
     border: 0;
@@ -166,18 +171,20 @@ export default {
       position: absolute;
       top: 2px;
       left: 2px;
-      width: calc(100% / 1.75 - 4px);
+      width: calc(100% / 1.875 - 4px);
       height: calc(100% - 4px);
       background: #fff;
       border-radius: 100%;
       transition: all 0.2s linear;
-      border: 1px solid rgba(4, 10, 19, 0.06);
+      border: 1px solid $divider-color;
       box-sizing: border-box;
       content: '';
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12),
+        0px 1px 2px rgba(0, 0, 0, 0.02);
     }
 
     &:checked::after {
-      left: calc(100% / 1.75 * 0.75 + 2px);
+      left: calc(100% / 1.875 * 0.875 + 2px);
     }
 
     &:disabled {

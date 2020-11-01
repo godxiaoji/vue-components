@@ -5,7 +5,8 @@
       typeClassName,
       sizeClassName,
       patternClassName,
-      shapeClassName
+      shapeClassName,
+      { 'has--icon': loading || icon }
     ]"
     :disabled="disabled"
     :type="realFormType"
@@ -25,12 +26,20 @@ import { SDKKey } from '../../config'
 const SIZE_NAMES = ['default', 'small']
 const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
 const PATTERN_NAMES = ['default', 'solid', 'dashed']
-const SHAPE_NAMES = ['default', 'round', 'circle']
+const SHAPE_NAMES = ['default', 'round', 'circle', 'square']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
 export default {
   name: SDKKey + '-button',
   components: { Icon },
+  inject: {
+    appButtonGroupSubOptions: {
+      default: null
+    },
+    appButtonGroup: {
+      default: null
+    }
+  },
   props: {
     size: {
       validator(val) {
@@ -89,18 +98,31 @@ export default {
     patternClassName() {
       return (
         'pattern--' +
-        (inArray(this.pattern, PATTERN_NAMES) ? this.pattern : PATTERN_NAMES[0])
+        (this.appButtonGroupSubOptions
+          ? this.appButtonGroupSubOptions.pattern
+          : inArray(this.pattern, PATTERN_NAMES)
+          ? this.pattern
+          : PATTERN_NAMES[0])
       )
     },
     sizeClassName() {
       return (
-        'size--' + (inArray(this.size, SIZE_NAMES) ? this.size : SIZE_NAMES[0])
+        'size--' +
+        (this.appButtonGroupSubOptions
+          ? this.appButtonGroupSubOptions.size
+          : inArray(this.size, SIZE_NAMES)
+          ? this.size
+          : SIZE_NAMES[0])
       )
     },
     shapeClassName() {
       return (
         'shape--' +
-        (inArray(this.shape, SHAPE_NAMES) ? this.shape : SHAPE_NAMES[0])
+        (this.appButtonGroupSubOptions
+          ? this.appButtonGroupSubOptions.shape
+          : inArray(this.shape, SHAPE_NAMES)
+          ? this.shape
+          : SHAPE_NAMES[0])
       )
     },
     realFormType() {
@@ -109,9 +131,15 @@ export default {
         : FORM_TYPE_NAMES[0]
     }
   },
+  created() {
+    this.appButtonGroup && this.appButtonGroup.addButton(this._uid)
+  },
   ready() {},
   mounted() {
     this.$el._app_type = 'button'
+  },
+  destroyed() {
+    this.appButtonGroup && this.appButtonGroup.removeButton(this._uid)
   },
   updated() {},
   attached() {},
@@ -136,8 +164,8 @@ export default {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  min-width: 66px;
-  height: 44px;
+  min-width: 72px;
+  height: 48px;
   padding: 0 12px;
   font-size: 17px;
   line-height: 23.8px;
@@ -147,34 +175,47 @@ export default {
   color: #fff;
   user-select: none;
 
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 12px;
+    width: 1px;
+    margin-top: -6px;
+  }
+
   + .#{$prefix}-button {
     margin-left: 16px;
   }
 
   .#{$prefix}-icon {
     --color: #fff;
-    --size: 20px;
-    margin: 0 -2px;
-
-    + span {
-      margin-left: 10px;
-    }
+    --size: 18px;
+    margin: 0 10px 0 -1px;
   }
 
   &.shape--round {
     border-radius: 24px;
   }
 
+  &.shape--square,
   &.shape--circle {
-    border-radius: 24px;
-    width: 44px;
-    min-width: 44px;
+    width: 48px;
+    min-width: 48px;
     flex: 0;
     padding: 0;
+
+    .#{$prefix}-icon {
+      margin: 0;
+    }
 
     span {
       display: none;
     }
+  }
+
+  &.shape--circle {
+    border-radius: 24px;
   }
 
   &.size--small {
@@ -183,9 +224,16 @@ export default {
     padding: 0 8px;
     line-height: 16.8px;
     font-size: 12px;
+    border-radius: 2px;
+
+    &::before {
+      height: 8px;
+      margin-top: -4px;
+    }
 
     .#{$prefix}-icon {
-      --size: 16px;
+      --size: 12px;
+      margin: 0 4px 0 0;
     }
 
     &.shape--round {
@@ -196,6 +244,20 @@ export default {
       border-radius: 14px;
       width: 28px;
       min-width: 28px;
+      padding: 0;
+    }
+
+    &.shape--square {
+      width: 28px;
+      min-width: 28px;
+      padding: 0;
+    }
+
+    &.shape--square,
+    &.shape--circle {
+      .#{$prefix}-icon {
+        margin: 0;
+      }
     }
   }
 
@@ -218,6 +280,10 @@ export default {
     border-color: $border-color;
     background-color: #fff;
     color: $title-color;
+
+    &::before {
+      background-color: $border-color;
+    }
 
     .#{$prefix}-icon {
       --color: #{$title-color};
@@ -251,6 +317,10 @@ export default {
         border-color: $primary-color;
         background-color: #fff;
         color: $primary-color;
+
+        &::before {
+          background-color: $primary-color;
+        }
 
         &:hover {
           background-color: #fff;
@@ -297,6 +367,10 @@ export default {
         background-color: #fff;
         color: $success-color;
 
+        &::before {
+          background-color: $success-color;
+        }
+
         &:hover {
           background-color: #fff;
           border-color: #73d13d;
@@ -342,6 +416,10 @@ export default {
         background-color: #fff;
         color: $warning-color;
 
+        &::before {
+          background-color: $warning-color;
+        }
+
         &:hover {
           background-color: #fff;
           border-color: #ffc53d;
@@ -386,6 +464,10 @@ export default {
         border-color: $danger-color;
         background-color: #fff;
         color: $danger-color;
+
+        &::before {
+          background-color: $danger-color;
+        }
 
         &:hover {
           background-color: #fff;

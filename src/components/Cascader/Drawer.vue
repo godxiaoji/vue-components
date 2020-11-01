@@ -1,49 +1,49 @@
 <template>
-  <div
-    ref="dropdown"
-    :class="[prefix + '-cascader_groups', {mobile: isMobile}]"
-    @mousedown.prevent="onDropdownTap"
-    @scroll.stop="onDropdownTap"
-  >
+  <drawer ref="drawer" :title="title" align="right" :visible="true">
     <div
-      :class="[prefix + '-cascader_group']"
-      v-for="(list, listIndex) in dropdown"
-      :key="listIndex"
+      ref="dropdown"
+      :class="[prefix + '-cascader_groups', { mobile: isMobile }]"
     >
-      <ul :class="[prefix + '-cascader_list']" :data-index="listIndex">
-        <li
-          :class="[prefix + '-cascader_item']"
-          v-for="(item, index) in list"
-          :key="item.value"
-          :selected="item.selected"
-          :disabled="item.disabled"
-          :data-index="index"
-          @click="onItemClick($event, item)"
-        >
-          <span :class="[prefix + '-cascader_item-text']">
-            {{ item.label }}
-          </span>
-          <icon
-            :class="[prefix + '-cascader_item-icon']"
-            v-if="item.hasChildren"
-            class-name="RightOutlined"
-          ></icon>
-        </li>
-      </ul>
+      <div
+        :class="[prefix + '-cascader_group', prefix + '-vertical-hairline']"
+        v-for="(list, listIndex) in dropdown"
+        :key="listIndex"
+      >
+        <ul :class="[prefix + '-cascader_list']" :data-index="listIndex">
+          <li
+            :class="[
+              prefix + '-cascader_item',
+              prefix + '-horizontal-hairline',
+              {
+                selected: item.selected,
+                disabled: item.disabled
+              }
+            ]"
+            v-for="(item, index) in list"
+            :key="item.value"
+            :data-index="index"
+            @click="onItemClick($event, item)"
+          >
+            <span :class="[prefix + '-cascader_item-text']">
+              {{ item.label }}
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </drawer>
 </template>
 
 <script>
-import Icon from '../Icon'
+import Drawer from '../Drawer'
 import { SDKKey } from '../../config'
-import { getDefaultSelecteds, parseDropdownList } from './util'
+import { array2String, getDefaultSelecteds, parseDropdownList } from './util'
 import { frameTo } from '../../helpers/animation'
 import { isMobile } from '../../helpers/device'
 
 export default {
   name: SDKKey + '-cascader-picker',
-  components: { Icon },
+  components: { Drawer },
   props: {
     options: {
       type: Array,
@@ -51,17 +51,28 @@ export default {
         return []
       }
     },
-    mode: String
+    mode: String,
+    separator: String
   },
   data() {
     return {
       prefix: SDKKey,
       isMobile,
 
-      dropdown: []
+      dropdown: [],
+
+      labels: []
     }
   },
-  computed: {},
+  computed: {
+    title() {
+      if (this.labels[0]) {
+        return array2String(this.labels, this.mode, this.separator)
+      }
+
+      return '请选择'
+    }
+  },
   watch: {},
   created() {},
   ready() {},
@@ -69,9 +80,22 @@ export default {
   updated() {},
   attached() {},
   methods: {
+    show() {
+      this.$refs.drawer && this.$refs.drawer.show()
+    },
+
+    hide() {
+      this.$refs.drawer && this.$refs.drawer.hide()
+    },
+
+    destroy() {
+      this.$refs.drawer && this.$refs.drawer.destroy()
+    },
+
     onDropdownTap() {},
 
     parseDropdown(selecteds) {
+      this.labels = []
       let optionList = parseDropdownList(this.mode, 0, this.options)
 
       if (selecteds.length === 0) {
@@ -109,6 +133,8 @@ export default {
               // 找到
               menuItem.selected = true
               //   lastGroupSelected = true
+
+              this.labels.push(menuItem.label)
 
               if (menuItem.hasChildren) {
                 nextParent = optionItem

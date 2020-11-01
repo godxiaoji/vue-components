@@ -25,7 +25,6 @@
 
 <script>
 import Icon from '../Icon'
-import { CustomEvent } from '../../helpers/events'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
@@ -246,20 +245,10 @@ export default {
       this.$emit('_change', value)
 
       const type = 'change'
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: this.$el
-          },
-          {
-            value,
-            index: this.activeIndex
-          }
-        )
-      )
+      this.$emit(type, {
+        value,
+        index: this.activeIndex
+      })
     }
   }
 }

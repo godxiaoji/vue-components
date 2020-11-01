@@ -31,7 +31,8 @@
       v-else
       :class="[prefix + '-input_input']"
       :name="formName"
-      :type="realType"
+      :type="inputType"
+      :inputmode="inputMode"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -40,7 +41,16 @@
       @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
+      @compositionstart="onCompositionStart"
+      @compositionend="onCompositionEnd"
     />
+    <icon
+      v-if="showClear"
+      v-show="formValue"
+      :class="[prefix + '-input_clear']"
+      class-name="CloseCircleFilled"
+      @click.native.prevent="onClear"
+    ></icon>
     <div :class="[prefix + '-input_append']" v-if="hasAppend">
       <slot name="append"></slot>
     </div>
@@ -48,16 +58,26 @@
 </template>
 
 <script>
+import Icon from '../Icon'
 import { inArray, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { CustomEvent } from '../../helpers/events'
 import formMixin from '../util/form-mixin'
+import { formatInputDigit, formatInputNumber } from '../../helpers/input'
 
-const TYPE_NAMES = ['text', 'number', 'password', 'search', 'textarea']
+const TYPE_NAMES = [
+  'text',
+  'number',
+  'digit',
+  'tel',
+  'password',
+  'search',
+  'textarea'
+]
 
 export default {
   name: SDKKey + '-input',
-  components: {},
+  components: { Icon },
   mixins: [formMixin],
   props: {
     name: {
@@ -82,7 +102,7 @@ export default {
       validator(value) {
         return isString(value) || isNumber(value)
       },
-      default: ''
+      default: null
     },
     disabled: {
       type: Boolean,
@@ -93,6 +113,10 @@ export default {
       default: false
     },
     readonly: {
+      type: Boolean,
+      default: false
+    },
+    showClear: {
       type: Boolean,
       default: false
     }
@@ -110,8 +134,46 @@ export default {
     }
   },
   computed: {
-    realType() {
+    inputType() {
+      if (this.type === 'number') {
+        return 'text'
+      }
+
+      if (this.type === 'digit') {
+        return 'tel'
+      }
+
       return inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
+    },
+    inputMode() {
+      let mode = ''
+
+      switch (this.type) {
+        case 'search':
+          mode = 'search'
+          break
+
+        case 'digit':
+          mode = 'numeric'
+          break
+
+        case 'number':
+          mode = 'decimal'
+          break
+
+        case 'tel':
+          mode = 'tel'
+          break
+
+        case 'text':
+          mode = 'text'
+          break
+
+        default:
+          break
+      }
+
+      return mode
     }
   },
   model: {
@@ -119,16 +181,18 @@ export default {
     event: '_input'
   },
   watch: {
-    value() {
-      this.updateValue()
+    value(val) {
+      if (val != this.formValue) {
+        this.updateValue(val)
+      }
     },
-    focus(value) {
-      const inputEl = this.getInputEl()
+    focus(val) {
+      const $input = this.getInputEl()
 
-      if (value) {
-        inputEl.focus()
+      if (val) {
+        $input.focus()
       } else {
-        inputEl.blur()
+        $input.blur()
       }
     }
   },
@@ -142,50 +206,86 @@ export default {
       this.hasAppend = true
     }
 
-    const inputEl = this.getInputEl()
+    this.updateValue(this.value == null ? '' : this.value)
 
-    if (this.value != null) {
-      inputEl.defaultValue = this.formValue = this.value.toString()
-    }
+    const $input = this.getInputEl()
+
+    $input.defaultValue = $input.value
+
     if (this.focus) {
-      inputEl.focus()
+      $input.focus()
     }
 
-    inputEl._app_component = this
+    $input._app_component = this
   },
   updated() {},
   attached() {},
   methods: {
-    updateValue() {
-      this.getInputEl().value = this.formValue = this.value.toString()
+    onCompositionStart() {
+      this.isComposition = true
     },
-    _changing($el, value) {
-      this.$emit(
-        'changing',
-        new CustomEvent(
-          {
-            type: 'changing',
-            target: $el,
-            currentTarget: $el
-          },
-          {
-            value
-          }
-        )
-      )
+    onCompositionEnd(e) {
+      this.isComposition = false
+      this._input(e.target.value)
     },
-    onInput(e) {
-      // 输入改变时触发
-      const target = e.target
-      const value = target.value
+    updateValue(value) {
+      switch (this.type) {
+        case 'digit':
+          value = formatInputDigit(value)
+          break
 
-      if (value !== this.formValue) {
-        this._changing(target, value)
+        case 'number':
+          value = formatInputNumber(value)
+          break
+
+        default:
+          break
       }
 
-      this.formValue = value
-      this.$emit('_input', value)
-      this.$emit(e.type, e)
+      const $input = this.getInputEl()
+      let isChange = false
+
+      if ($input.value != value) {
+        $input.value = value.toString()
+      }
+
+      value = $input.value
+
+      if (value !== this.formValue) {
+        this.formValue = value
+        isChange = true
+      }
+
+      if (value != this.value) {
+        this.$emit('_input', this.formValue)
+      }
+
+      return { value, isChange }
+    },
+    /**
+     * 输入改变时触发
+     */
+    onInput(e) {
+      if (!this.isComposition) {
+        this._input(e.target.value)
+      }
+    },
+    _input(newVal) {
+      const { value, isChange } = this.updateValue(newVal)
+
+      if (isChange) {
+        const type = 'input'
+
+        this.$emit(
+          type,
+          new CustomEvent(
+            { type, target: this.getInputEl(), currentTarget: this.$el },
+            {
+              value
+            }
+          )
+        )
+      }
     },
     onFocus(e) {
       this.focus2 = true
@@ -198,7 +298,15 @@ export default {
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
     onChange(e) {
-      this.$emit(e.type, e)
+      this.$emit(
+        e.type,
+        new CustomEvent(
+          { type: e.type, target: e.target, currentTarget: this.$el },
+          {
+            value: this.formValue
+          }
+        )
+      )
 
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
@@ -209,16 +317,10 @@ export default {
       )
     },
     reset() {
-      const $el = this.getInputEl()
-      const defaultValue = $el.defaultValue
-
-      if (defaultValue !== this.formValue) {
-        this._changing($el, defaultValue)
-      }
-
-      $el.value = $el.defaultValue
-      this.formValue = defaultValue
-      this.$emit('_input', defaultValue)
+      this._input(this.getInputEl().defaultValue)
+    },
+    onClear() {
+      this._input('')
     }
   }
 }
@@ -230,7 +332,7 @@ export default {
 .#{$prefix}-input {
   --height: 48px;
   --font-size: 17px;
-  --icon-size: 20px;
+  --icon-size: 18px;
 
   height: var(--height);
   width: 100%;
@@ -247,21 +349,23 @@ export default {
   &[disabled] {
     background-color: $background2-color;
     color: $font3-color;
-    user-select: none;
+    -webkit-text-fill-color: $font3-color;
+    opacity: 1;
+  }
+
+  .#{$prefix}-icon {
+    --size: var(--icon-size);
+  }
+
+  &_clear {
+    --color: #{$font3-color};
+    margin: 0 16px 0 0;
   }
 
   &_prepend,
   &_append {
     padding: 0 0 0 16px;
     color: $font2-color;
-
-    .icon {
-      display: block;
-      width: var(--icon-size);
-      height: var(--icon-size);
-      box-sizing: border-box;
-      cursor: pointer;
-    }
   }
 
   &_append {
@@ -283,10 +387,14 @@ export default {
     font-size: var(--font-size);
     cursor: pointer;
     color: $title-color;
-    background: #ffffff;
+    background: none;
     box-sizing: border-box;
     box-shadow: none;
     resize: none;
+
+    &:read-only {
+      cursor: auto;
+    }
 
     &[type='search']::-webkit-search-cancel-button {
       display: none;
@@ -298,8 +406,9 @@ export default {
 
     &:disabled,
     &:disabled:hover {
-      background-color: $background2-color;
       color: $font3-color;
+      -webkit-text-fill-color: $font3-color;
+      opacity: 1;
       cursor: not-allowed;
       user-select: none;
     }

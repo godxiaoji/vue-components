@@ -18,7 +18,7 @@
     </div>
     <template #footer>
       <fx-button
-        v-show="showCancel"
+        v-if="showCancel"
         :class="[prefix + '-modal_button']"
         type="default"
         @click="onCancelClick"
@@ -149,6 +149,7 @@ export default {
     word-break: break-all;
     word-wrap: break-word;
     text-align: center;
+    white-space: pre-line;
   }
 }
 </style>

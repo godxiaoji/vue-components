@@ -4,7 +4,8 @@
       prefix + '-cascader',
       {
         focus: focus,
-        disabled: disabled
+        disabled: disabled,
+        mobile: isMobile
       }
     ]"
   >
@@ -15,14 +16,11 @@
         {{ formLabelString || placeholder }}
       </div>
       <icon
-        class="right"
-        :class="[prefix + '-cascader_unfold-icon']"
-        class-name="RightOutlined"
-      ></icon>
-      <icon
-        class="down"
-        :class="[prefix + '-cascader_unfold-icon']"
-        class-name="DownOutlined"
+        :class="[
+          prefix + '-cascader_unfold-icon',
+          { 'arrow--down': !isMobile }
+        ]"
+        :class-name="isMobile ? 'RightOutlined' : 'DownOutlined'"
       ></icon>
       <input
         :class="[prefix + '-cascader_input']"
@@ -42,7 +40,7 @@
 <script>
 import Vue from 'vue'
 import Icon from '../Icon'
-import CascaderPicker from './Picker.vue'
+import CascaderDrawer from './Drawer.vue'
 import { CustomEvent } from '../../helpers/events'
 import {
   inArray,
@@ -59,11 +57,13 @@ import {
   dateString2Array,
   timeString2Array,
   datetimeString2Array,
-  getDate
+  getDate,
+  array2String
 } from './util'
 import { SDKKey } from '../../config'
-import { createPicker, destroyPicker } from '../../helpers/popup'
+import { createPopup } from '../../helpers/popup'
 import formMixin from '../util/form-mixin'
+import { isMobile } from '../../helpers/device'
 
 const MODE_NAMES = [
   'multiSelector',
@@ -76,29 +76,23 @@ const MODE_NAMES = [
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
-function createCascaderPicker(parent, alignRight = false) {
-  const picker = createPicker(parent.$el, {
-    minWidth: false,
-    align: alignRight ? 'right' : 'left'
-  })
+function createCascaderPicker(parent) {
+  const { $wrapper } = createPopup()
 
   const Comp = Vue.extend({
-    extends: CascaderPicker,
+    extends: CascaderDrawer,
     created() {
       this.$parent = parent
     }
   })
 
-  const app = new Comp({
+  return new Comp({
     propsData: {
       options: parent.options2,
-      mode: parent.initMode
+      mode: parent.initMode,
+      separator: parent.separator
     }
-  }).$mount(picker.$mount)
-
-  picker.app = app
-
-  return picker
+  }).$mount($wrapper)
 }
 
 function parseOptions(options, fieldNames) {
@@ -195,6 +189,7 @@ export default {
   data() {
     return {
       prefix: SDKKey,
+      isMobile,
 
       initMode: MODE_NAMES[0],
       focus: false,
@@ -214,26 +209,10 @@ export default {
   },
   computed: {
     formLabelString() {
-      const dateFormat = this.getDateFormat()
-
-      if (dateFormat) {
-        return dateFormat
-      }
-
-      return this.formLabel.join(this.separator)
+      return array2String(this.formLabel, this.initMode, this.separator)
     },
     formValueString() {
-      const dateFormat = this.getDateFormat()
-
-      if (dateFormat) {
-        return dateFormat
-      }
-
-      if (this.formValue.length === 1) {
-        return this.formValue[0]
-      }
-
-      return this.formValue.join(this.separator)
+      return array2String(this.formValue, this.initMode, this.separator)
     }
   },
   watch: {
@@ -243,10 +222,12 @@ export default {
       }
     },
     focus(newVal) {
-      if (newVal) {
-        this.picker.show()
-      } else {
-        this.picker.hide()
+      if (this.picker) {
+        if (newVal) {
+          this.picker.show()
+        } else {
+          this.picker.hide()
+        }
       }
     },
     options() {
@@ -278,8 +259,7 @@ export default {
   attached() {},
   destroyed() {
     if (this.picker) {
-      this.picker.app.$destroy()
-      destroyPicker(this.picker.id)
+      this.picker.destroy()
     }
   },
   methods: {
@@ -361,12 +341,12 @@ export default {
           // 如果组件已经展开，则收起
           inputEl.blur()
         } else {
+          this.focus = true
+
           if (!this.picker) {
             this.picker = createCascaderPicker(this, !!this.appFormItem)
           }
-
-          this.focus = true
-          this.picker.app.parseDropdown(this.formValue)
+          this.picker.parseDropdown(this.formValue)
 
           this.$emit(
             VISIBILITY_CHANGE_TYPE,
@@ -626,10 +606,6 @@ export default {
     transition: all 0.2s;
     flex-shrink: 1;
     fill: $font-color;
-
-    &.right {
-      display: none;
-    }
   }
 
   &_tools {
@@ -651,17 +627,28 @@ export default {
     min-width: 60px;
     display: inline-flex;
     flex: 0 0 auto;
-    border-right: 1px solid $divider-color;
     vertical-align: top;
+    color: $font2-color;
 
-    &:last-child {
-      border-right: none;
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: '';
     }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  &_group:last-child {
+    color: $title-color;
   }
 
   &_list {
     width: 100%;
-    max-height: 100%;
+    height: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -672,42 +659,42 @@ export default {
   }
 
   &_item {
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    height: 40px;
-    font-size: 17px;
+    padding: 0 0 0 12px;
+    height: 45px;
+    font-size: 15px;
     cursor: pointer;
-    user-select: none;
-    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
 
-    &[selected] {
-      background-color: rgba($color: $primary-color, $alpha: 0.2);
+    &.selected {
+      color: $primary-color;
     }
 
-    &:hover {
-      background-color: $background-color;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      width: 100%;
+      bottom: 0;
     }
 
-    &[disabled],
-    &[disabled]:hover {
+    &.disabled {
       background-color: $background2-color;
       color: $font3-color;
       cursor: not-allowed;
     }
 
     &-text {
-      text-align: left;
       flex: 1;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      padding-right: 12px;
+      height: 100%;
+      width: 100%;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-    }
-
-    &-icon {
-      margin-right: -8px;
-      --size: 20px;
-      --color: #{$border-color};
     }
   }
 
@@ -733,33 +720,14 @@ export default {
         border-color: var(--color);
       }
 
-      &_unfold-icon.down {
+      &_unfold-icon.arrow--down {
         transform: rotate(180deg);
       }
     }
   }
 }
 
-@media screen and (max-width: 575px) {
-  .#{$prefix}-cascader {
-    &_group {
-      &:last-child {
-        border-right: 1px solid $divider-color;
-      }
-
-      &:first-child {
-        border-left: 1px solid $divider-color;
-      }
-    }
-
-    &_unfold-icon {
-      &.down {
-        display: none;
-      }
-      &.right {
-        display: block;
-      }
-    }
-  }
+.#{$prefix}-cascader_groups.mobile {
+  height: 100%;
 }
 </style>

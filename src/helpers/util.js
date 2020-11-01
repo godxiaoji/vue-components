@@ -339,6 +339,22 @@ export function htmlEscape(text) {
   })
 }
 
-export function rangeInt(number, min, max) {
-  return Math.min(max, Math.max(min, Math.round(number)))
+/**
+ * 获取限定范围的数值
+ * @param {Number} number
+ * @param {Number} min
+ * @param {Number} max
+ */
+export function rangeNumber(number, min, max) {
+  return Math.min(max, Math.max(min, number))
+}
+
+/**
+ * 获取限定范围内的整数
+ * @param {Number} number
+ * @param {Number} min
+ * @param {Number} max
+ */
+export function rangeInteger(number, min, max) {
+  return rangeNumber(Math.round(number), Math.ceil(min), Math.floor(max))
 }

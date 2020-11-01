@@ -1,5 +1,11 @@
 <template>
-  <div :class="[prefix + '-cell', { middle, clickable, 'has--icon': !!icon }]">
+  <div
+    :class="[
+      prefix + '-cell',
+      { clickable, 'has--icon': !!icon },
+      prefix + '-horizontal-hairline'
+    ]"
+  >
     <div :class="[prefix + '-cell_inner']">
       <i :class="[prefix + '-cell_icon']" v-if="icon">
         <icon :class-name="icon"></icon>
@@ -49,10 +55,6 @@ export default {
       type: String,
       default: ''
     },
-    middle: {
-      type: Boolean,
-      default: false
-    },
     clickable: {
       type: Boolean,
       default: false
@@ -101,16 +103,9 @@ export default {
   min-height: 48px;
   background-color: #fff;
 
-  &:first-child {
-    border-top: 1px solid $divider-color;
-  }
-
-  &:last-child {
-    border-bottom: 1px solid $divider-color;
-  }
-
-  + .#{$prefix}-cell .#{$prefix}-cell_inner {
-    border-top: 1px solid $divider-color;
+  + .#{$prefix}-cell::before {
+    content: '';
+    margin-left: 16px;
   }
 
   &_inner {
@@ -164,6 +159,7 @@ export default {
     line-height: 32px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
 
   &_icon {
@@ -194,6 +190,63 @@ export default {
     cursor: pointer;
     &:active {
       background-color: $background-color;
+    }
+  }
+
+  .#{$prefix}-input {
+    --height: 32px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+
+    &_prepend {
+      padding: 0 16px 0 0;
+    }
+
+    &_append {
+      padding: 0 0 0 16px;
+    }
+
+    &_input {
+      padding: 0;
+      text-align: right;
+    }
+
+    &_clear {
+      margin: 0 0 0 16px;
+    }
+
+    &[disabled] {
+      background-color: transparent;
+    }
+  }
+
+  .#{$prefix}-select {
+    --height: 32px;
+
+    &_field {
+      border: none;
+      padding: 0;
+    }
+
+    &_text {
+      text-align: right;
+      line-height: 32px;
+    }
+  }
+
+  .#{$prefix}-cascader {
+    --height: 32px;
+
+    &_field {
+      border: none;
+      padding: 0;
+    }
+
+    &_text {
+      text-align: right;
+      line-height: 32px;
     }
   }
 }

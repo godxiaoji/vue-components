@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="[prefix + '-select_option-group']"
+    :class="[prefix + '-select_options', { mobile: isMobile }]"
     @mousedown.prevent="onDropdownTap"
     @scroll.stop="onDropdownTap"
   >
@@ -19,6 +19,7 @@
 
 <script>
 import { SDKKey } from '../../config'
+import { isMobile } from '../../helpers/device'
 
 export default {
   name: SDKKey + '-select-picker',
@@ -33,6 +34,7 @@ export default {
   data() {
     return {
       prefix: SDKKey,
+      isMobile,
 
       selected: false
     }

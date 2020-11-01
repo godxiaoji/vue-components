@@ -55,6 +55,20 @@ export function parseDropdownList(mode, index, parent) {
   return []
 }
 
+export function array2String(labels, mode, separator = '') {
+  if (mode === 'date') {
+    return labels.join('-')
+  } else if (mode === 'time') {
+    return labels.join(':')
+  } else if (mode === 'datetime' && labels.length > 0) {
+    return [labels.slice(0, 3).join('-'), labels.slice(3, 6).join(':')].join(
+      ' '
+    )
+  }
+
+  return labels.join(separator)
+}
+
 // function getFirstSelected(mode, values = [], parent) {
 //   const optionItem = parseDropdownList(
 //     mode,

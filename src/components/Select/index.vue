@@ -1,18 +1,17 @@
 <template>
-  <div :class="[prefix + '-select', { focus: focus, disabled: disabled }]">
+  <div
+    :class="[
+      prefix + '-select',
+      { focus: focus, disabled: disabled, mobile: isMobile }
+    ]"
+  >
     <div :class="[prefix + '-select_field']" @mouseup="onBoxClick">
       <div :class="[prefix + '-select_text', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
       </div>
       <icon
-        class="right"
-        :class="[prefix + '-select_unfold-icon']"
-        class-name="RightOutlined"
-      ></icon>
-      <icon
-        class="down"
-        :class="[prefix + '-select_unfold-icon']"
-        class-name="DownOutlined"
+        :class="[prefix + '-select_unfold-icon', { 'arrow--down': !isMobile }]"
+        :class-name="isMobile ? 'RightOutlined' : 'DownOutlined'"
       ></icon>
       <input
         :class="[prefix + '-select_input']"
@@ -31,38 +30,62 @@
 
 <script>
 import Vue from 'vue'
-import SelectPicker from './Picker.vue'
+import SelectDrawer from './Drawer.vue'
 import Icon from '../Icon'
 import { CustomEvent } from '../../helpers/events'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import { createPicker, destroyPicker } from '../../helpers/popup'
+import { createPopup } from '../../helpers/popup'
 import formMixin from '../util/form-mixin'
+import { isMobile } from '../../helpers/device'
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
 
-function createSelectPicker(parent, alignRight = false) {
-  const picker = createPicker(parent.$el, {
-    minWidth: false,
-    align: alignRight ? 'right' : 'left'
-  })
+// function createSelectPicker(parent, alignRight = false) {
+//   let picker
+
+//   if (isMobile) {
+//     picker = createDrawer()
+//   } else {
+//     picker = createPicker(parent.$el, {
+//       minWidth: false,
+//       align: alignRight ? 'right' : 'left'
+//     })
+//   }
+
+//   const Comp = Vue.extend({
+//     extends: SelectDrawer,
+//     created() {
+//       this.$parent = parent
+//     }
+//   })
+
+//   const app = new Comp({
+//     propsData: {
+//       options: parent.options2
+//     }
+//   }).$mount(picker.$mount)
+
+//   picker.app = app
+
+//   return picker
+// }
+
+function createSelectPicker(parent) {
+  const { $wrapper } = createPopup()
 
   const Comp = Vue.extend({
-    extends: SelectPicker,
+    extends: SelectDrawer,
     created() {
       this.$parent = parent
     }
   })
 
-  const app = new Comp({
+  return new Comp({
     propsData: {
       options: parent.options2
     }
-  }).$mount(picker.$mount)
-
-  picker.app = app
-
-  return picker
+  }).$mount($wrapper)
 }
 
 export default {
@@ -120,6 +143,7 @@ export default {
   data() {
     return {
       prefix: SDKKey,
+      isMobile,
 
       focus: false,
       formValue: '',
@@ -140,10 +164,12 @@ export default {
       this.updateValue()
     },
     focus(newVal) {
-      if (newVal) {
-        this.picker.show()
-      } else {
-        this.picker.hide()
+      if (this.picker) {
+        if (newVal) {
+          this.picker.show()
+        } else {
+          this.picker.hide()
+        }
       }
     },
     options() {
@@ -170,8 +196,7 @@ export default {
   attached() {},
   destroyed() {
     if (this.picker) {
-      this.picker.app.$destroy()
-      destroyPicker(this.picker.id)
+      this.picker.destroy()
     }
   },
   methods: {
@@ -243,11 +268,11 @@ export default {
         if (this.focus) {
           inputEl.blur()
         } else {
+          this.focus = true
+
           if (!this.picker) {
             this.picker = createSelectPicker(this, !!this.appFormItem)
           }
-
-          this.focus = true
 
           this.$emit(
             VISIBILITY_CHANGE_TYPE,
@@ -292,14 +317,14 @@ export default {
     updateSelected(value) {
       let hasValue = false
 
-      this.options2.forEach(option => {
+      this.options2.forEach((option, index) => {
         if (option.value === value) {
           this.formLabel = option.label
           this.formValue = option.value
           hasValue = true
-          option.selected = true
+          this.$set(this.options2[index], 'selected', true)
         } else {
-          option.selected = false
+          this.$set(this.options2[index], 'selected', false)
         }
       })
 
@@ -432,18 +457,6 @@ export default {
     transition: all 0.2s;
     flex-shrink: 0;
     margin-left: 5px;
-
-    &.right {
-      display: none;
-    }
-  }
-
-  &_option-group {
-    width: 100%;
-    box-sizing: border-box;
-    max-height: 220px;
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 
   &.focus {
@@ -451,7 +464,7 @@ export default {
       &_field {
         border-color: var(--color);
       }
-      &_unfold-icon.down {
+      &_unfold-icon.arrow--down {
         transform: rotate(180deg);
       }
       &_dropdown {
@@ -476,13 +489,22 @@ export default {
     }
   }
 
+  &_options {
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   &_option {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 16px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 17px;
+    padding: 0 12px;
+    height: 41px;
+    line-height: 41px;
+    font-size: 15px;
     color: $title-color;
     text-align: left;
     display: -webkit-box;
@@ -493,7 +515,7 @@ export default {
     text-overflow: ellipsis;
 
     &.selected {
-      background-color: rgba($color: $primary-color, $alpha: 0.2);
+      color: $primary-color;
     }
 
     &:hover {
@@ -509,16 +531,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 575px) {
-  .#{$prefix}-select {
-    &_unfold-icon {
-      &.down {
-        display: none;
-      }
-      &.right {
-        display: block;
-      }
-    }
-  }
+.#{$prefix}-select_options.mobile {
+  height: 100%;
 }
 </style>

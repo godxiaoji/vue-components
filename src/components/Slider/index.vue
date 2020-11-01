@@ -275,9 +275,9 @@ export default {
     border-radius: 50%;
     margin: -13px 0 0 -12px;
     background: #ffffff;
-    border: 1px solid rgba(4, 10, 19, 0.06);
+    border: 1px solid $divider-color;
     box-sizing: border-box;
-    box-shadow: 0px 4px 8px $border-color, 0px 1px 2px $background2-color;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.02);
   }
 
   &_range {
@@ -291,8 +291,8 @@ export default {
   }
 
   &_text {
-    font-size: 14px;
-    margin-left: 6px;
+    font-size: 17px;
+    margin-left: 5px;
     color: $title-color;
   }
 }

@@ -6,10 +6,10 @@
 
 <script>
 import { SDKKey } from '../../config'
-import { rangeInt } from '../../helpers/util'
+import { rangeInteger } from '../../helpers/util'
 
 function rangeCol(number) {
-  return rangeInt(number, 0, 24)
+  return rangeInteger(number, 0, 24)
 }
 
 export default {

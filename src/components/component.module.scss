@@ -45,11 +45,16 @@ $background2-color: #fafafa;
 }
 
 html {
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body,
+input,
+textarea {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes #{$prefix}-rotate-360 {
@@ -101,10 +106,6 @@ html {
 .#{$prefix}-picker {
   position: absolute;
 
-  &_overlay {
-    display: none;
-  }
-
   &_inner {
     min-width: 100%;
     border: 1px solid $border-color;
@@ -113,6 +114,7 @@ html {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
     background-color: #fff;
     border-radius: 0;
+    max-height: 220px;
   }
 }
 
@@ -125,48 +127,55 @@ html {
   background-size: 400% 100%;
 }
 
-@media screen and (max-width: 575px) {
-  .#{$prefix}-picker {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
+.#{$prefix}-horizontal-hairline,
+.#{$prefix}-vertical-hairline {
+  &::before,
+  &::after {
+    display: block;
+    box-sizing: border-box;
     width: 100%;
-    width: 100vw;
-    height: 100vh;
+    height: 1px;
+    border: none;
+    background-color: $divider-color;
+  }
+}
 
-    &_overlay {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transition: opacity 0.2s;
+.#{$prefix}-vertical-hairline {
+  &::before,
+  &::after {
+    height: 100%;
+    width: 1px;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .#{$prefix}-horizontal-hairline {
+    &::before,
+    &::after {
+      transform: scaleY(0.5);
     }
+  }
 
-    &_inner {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      bottom: 0;
-      border: none;
-      box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
-      border-radius: 0;
-      transform: translate3d(0, 100vh, 0);
-      transition: transform 0.2s;
+  .#{$prefix}-vertical-hairline {
+    &::before,
+    &::after {
+      transform: scaleX(0.5);
     }
+  }
+}
 
-    &.visible {
-      .#{$prefix}-picker {
-        &_overlay {
-          opacity: 1;
-        }
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+  .#{$prefix}-horizontal-hairline {
+    &::before,
+    &::after {
+      transform: scaleY(0.333333);
+    }
+  }
 
-        &_inner {
-          transform: translate3d(0, 0, 0);
-        }
-      }
+  .#{$prefix}-vertical-hairline {
+    &::before,
+    &::after {
+      transform: scaleX(0.333333);
     }
   }
 }

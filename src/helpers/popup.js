@@ -41,21 +41,16 @@ function updatePos($wrapper, $el, options) {
     right = 0
   }
 
-  if (docW <= 575) {
-    $wrapper.style.left = '0px'
-    $wrapper.style.top = '1px'
+  if (options.align === 'right') {
+    $wrapper.style.right = right + 'px'
+    $wrapper.style.left = 'auto'
   } else {
-    if (options.align === 'right') {
-      $wrapper.style.right = right + 'px'
-      $wrapper.style.left = 'auto'
-    } else {
-      $wrapper.style.left = left + 'px'
-      $wrapper.style.right = 'auto'
-    }
-
-    $wrapper.style.top =
-      1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
+    $wrapper.style.left = left + 'px'
+    $wrapper.style.right = 'auto'
   }
+
+  $wrapper.style.top =
+    1 + top + $el.offsetHeight + document.documentElement.scrollTop + 'px'
 
   if (options.minWidth) {
     $wrapper.style.minWidth = $el.offsetWidth + 'px'
@@ -70,7 +65,7 @@ export function createPicker($el, options = {}) {
 
   $wrapper.className = SDKKey + '-picker'
   $wrapper.style.display = 'none'
-  $wrapper.innerHTML = `<div class="${SDKKey}-picker_overlay"></div><div class="${SDKKey}-picker_inner"><div></div></div>`
+  $wrapper.innerHTML = `<div class="${SDKKey}-picker_inner"><div></div></div>`
 
   appendToBody($wrapper)
   updatePos($wrapper, $el, options)
@@ -104,16 +99,22 @@ export function createPicker($el, options = {}) {
       }, 220)
 
       removeClassName(document.body, SDKKey + '-overflow-hidden')
+    },
+    destroy() {
+      destroy(id)
     }
   })
 }
 
-export function destroyPicker(id) {
+function destroy(id) {
   if (caches[id]) {
     const cache = caches[id]
     const $wrapper = cache.$wrapper
 
-    cache.offResizeDetector()
+    if (cache.offResizeDetector) {
+      cache.offResizeDetector()
+    }
+
     removeEl($wrapper)
 
     delete caches[id]

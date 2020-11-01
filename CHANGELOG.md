@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/godxiaoji/vfox/compare/v1.2.1...v1.3.0) (2020-11-01)
+
+
+### Features
+
+* 增加NavBar Drawer Group Setpper等组件 ([81b581e](https://github.com/godxiaoji/vfox/commit/81b581ea52a23eb9dcd80ab83ad6df51fcee1a4f))
+
 ## [1.2.1](https://github.com/godxiaoji/vfox/compare/v1.2.0...v1.2.1) (2020-10-30)
 
 

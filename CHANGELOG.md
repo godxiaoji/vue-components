@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/godxiaoji/vfox/compare/v1.3.0...v1.4.0) (2020-11-05)
+
+
+### Features
+
+* 增加 previewImage 组件 ([bbeb1be](https://github.com/godxiaoji/vfox/commit/bbeb1beea5268f68bc8e9bb9805165e62790c95d))
+
 # [1.3.0](https://github.com/godxiaoji/vfox/compare/v1.2.1...v1.3.0) (2020-11-01)
 
 

@@ -1,12 +1,27 @@
 <template>
   <div :class="[prefix + '-image']" @click="onClick">
-    <img :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
+    <span
+      v-if="aspectRatio != null && aspectRatio > 0"
+      :class="[prefix + '-image_ratio']"
+      :style="{ 'padding-top': aspectRatio * 100 + '%' }"
+    ></span>
+    <i :class="[prefix + '-image_loading']" v-if="loading">
+      <icon class-name="ImageOutlined"></icon>
+    </i>
+    <i :class="[prefix + '-image_error']" v-if="error">
+      <icon class-name="ImageBreakOutlined"></icon>
+    </i>
+    <img
+      v-if="imgSrc"
+      :class="[prefix + '-image_img', modeClassName]"
+      :src="imgSrc"
+    />
   </div>
 </template>
 
 <script>
+import Icon from '../Icon'
 import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
-import { CustomEvent } from '../../helpers/events'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
@@ -29,6 +44,7 @@ const LAZY_PRELOAD = 1.3
 
 export default {
   name: SDKKey + '-image',
+  components: { Icon },
   props: {
     // 图片资源地址
     src: {
@@ -45,6 +61,11 @@ export default {
     lazyLoad: {
       type: Boolean,
       default: false
+    },
+    // 自适应正方形
+    aspectRatio: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -52,7 +73,10 @@ export default {
       prefix: SDKKey,
 
       imgSrc: null,
-      inViewed: false
+      inViewed: false,
+
+      loading: true,
+      error: false
     }
   },
   computed: {
@@ -75,6 +99,9 @@ export default {
   ready() {},
   mounted() {
     if (this.src) {
+      this.loading = true
+      this.error = false
+
       if (this.lazyLoad) {
         addLazyQueue(this)
       } else {
@@ -103,6 +130,8 @@ export default {
     onLoad(res) {
       if (res.src === this.src) {
         // 防止多次变更图片导致的图片不正确
+        this.loading = false
+        this.error = false
         this.imgSrc = res.src
       }
 
@@ -110,30 +139,18 @@ export default {
 
       this.$emit(
         type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: this.$el.firstElementChild
-          },
-          { width: res.naturalWidth, height: res.naturalHeight, src: this.imgSrc }
-        )
+        {
+          width: res.naturalWidth,
+          height: res.naturalHeight,
+          src: this.imgSrc
+        }
       )
     },
     onError(e) {
-      const type = 'error'
+      this.loading = false
+      this.error = true
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: this.$el.firstElementChild
-          },
-          e
-        )
-      )
+      this.$emit('error', e)
     },
     onClick(e) {
       this.$emit(e.type, e)
@@ -148,15 +165,36 @@ export default {
 .#{$prefix}-image {
   position: relative;
   display: inline-block;
-  width: 320px;
-  height: 240px;
   overflow: hidden;
+
+  &_loading,
+  &_error {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .#{$prefix}-icon {
+      --color: #{$border-color};
+      --size: 32px;
+    }
+  }
+
+  &_ratio {
+    padding-top: 100%;
+    float: left;
+  }
 
   &_img {
     position: absolute;
     display: block;
     width: 100%;
     height: 100%;
+    border: none;
 
     &.mode--scaleToFill {
       object-fit: fill;

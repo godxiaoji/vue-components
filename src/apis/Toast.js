@@ -18,7 +18,7 @@ export function showLoading(object) {
     object = {}
   }
 
-  object.icon = 'loading'
+  object.type = 'loading'
   object.duration = 0
 
   return baseShow(object, 'showLoading', Toast)

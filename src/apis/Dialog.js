@@ -4,7 +4,6 @@ import { createPopup } from '../helpers/popup'
 import { htmlEscape, isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
 import { parseParamsByRules } from './rules'
-import { removeEl } from '../helpers/dom'
 
 export function showDialog(object) {
   if (!isObject(object)) {
@@ -20,46 +19,32 @@ export function showDialog(object) {
     const Comp = Vue.extend({
       extends: Dialog,
       methods: {
-        onCancelClick(e) {
-          const res = {
-            confirm: false,
-            cancel: true
-          }
+        onCancelClick() {
+          this.visible2 = false
 
-          success(res)
+          success({ confirm: false, cancel: true })
           complete()
-
-          this.close(e)
         },
-        onConfirmClick(e) {
-          const res = {
-            confirm: true,
-            cancel: false
-          }
+        onConfirmClick() {
+          this.visible2 = false
 
-          success(res)
+          success({ confirm: true, cancel: false })
           complete()
-
-          this.close(e)
         },
-        close() {
-          this.visible = false
-          const $el = this.$el
-
-          setTimeout(() => {
-            this.$destroy()
-
-            removeEl($el)
-          }, 200)
+        onMaskClick() {
+          success({ confirm: false, cancel: true, maskClick: true })
+          complete()
+        },
+        onHidden() {
+          this.destroy()
         }
       }
     })
 
-    const { $wrapper, zIndex } = createPopup()
+    const { $wrapper } = createPopup()
 
     const app = new Comp({
       propsData: Object.assign(propsData, {
-        zIndex,
         visible: true
       })
     }).$mount($wrapper)

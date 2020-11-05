@@ -17,7 +17,7 @@ import { SDKKey } from '../../config'
 import { inArray } from '../../helpers/util'
 
 const SIZE_NAMES = ['default', 'small']
-const PATTERN_NAMES = ['default', 'solid', 'dashed']
+const PATTERN_NAMES = ['default', 'solid', 'dashed', 'borderless']
 const SHAPE_NAMES = ['default', 'round', 'circle', 'square']
 
 export default {
@@ -133,25 +133,20 @@ export default {
       &:first-child {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        border-right: none;
+        border-right-color: transparent;
         margin-right: -1px;
-        padding-right: 13px;
 
         &.shape--square,
         &.shape--circle {
-          width: 55px;
-          min-width: 55px;
-          padding: 0;
+          width: 54px;
+          min-width: 54px;
         }
 
         &.size--small {
-          padding-right: 9px;
-
           &.shape--square,
           &.shape--circle {
-            width: 33px;
-            min-width: 33px;
-            padding: 0;
+            width: 40px;
+            min-width: 40px;
           }
         }
       }
@@ -159,7 +154,7 @@ export default {
       + .#{$prefix}-button {
         position: relative;
         margin-left: 0;
-        border-left: none;
+        border-left-width: 0;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
 
@@ -169,14 +164,15 @@ export default {
 
         &.shape--square,
         &.shape--circle {
-          width: 55px;
-          min-width: 55px;
+          width: 54px;
+          min-width: 54px;
+          padding-left: 1px;
         }
 
         &.shape--square.size--small,
         &.shape--circle.size--small {
-          width: 33px;
-          min-width: 33px;
+          width: 40px;
+          min-width: 40px;
         }
       }
     }

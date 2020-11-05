@@ -5,6 +5,7 @@
       { clickable, 'has--icon': !!icon },
       prefix + '-horizontal-hairline'
     ]"
+    @click="onClick"
   >
     <div :class="[prefix + '-cell_inner']">
       <i :class="[prefix + '-cell_icon']" v-if="icon">
@@ -90,7 +91,11 @@ export default {
   },
   updated() {},
   attached() {},
-  methods: {}
+  methods: {
+    onClick(e) {
+      this.$emit(e.type, e)
+    }
+  }
 }
 </script>
 
@@ -155,7 +160,7 @@ export default {
     font-size: 17px;
     font-weight: 400;
     color: var(--right-color);
-    height: 32px;
+    min-height: 32px;
     line-height: 32px;
     display: flex;
     justify-content: flex-end;
@@ -247,6 +252,22 @@ export default {
     &_text {
       text-align: right;
       line-height: 32px;
+    }
+  }
+
+  .#{$prefix}-radio-group {
+    justify-content: flex-end;
+
+    &.vertical .#{$prefix}-radio_box {
+      justify-content: flex-end;
+    }
+  }
+
+  .#{$prefix}-checkbox-group {
+    justify-content: flex-end;
+
+    &.vertical .#{$prefix}-checkbox_box {
+      justify-content: flex-end;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-checkbox-group']">
+  <div :class="[prefix + '-checkbox-group', { vertical: !inline }]">
     <slot></slot>
   </div>
 </template>
@@ -35,6 +35,10 @@ export default {
       default() {
         return []
       }
+    },
+    inline: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -116,5 +120,25 @@ export default {
   align-items: center;
   color: $title-color;
   box-sizing: border-box;
+  flex: 1;
+
+  &.vertical {
+    flex-direction: column;
+    height: auto;
+    min-height: 32px;
+
+    .#{$prefix}-checkbox {
+      display: flex;
+      width: 100%;
+
+      + .#{$prefix}-checkbox {
+        margin-left: 0;
+
+        &::before {
+          content: '';
+        }
+      }
+    }
+  }
 }
 </style>

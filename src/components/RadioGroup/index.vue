@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-radio-group']">
+  <div :class="[prefix + '-radio-group', { vertical: !inline }]">
     <slot></slot>
   </div>
 </template>
@@ -28,6 +28,10 @@ export default {
         return isString(value) || isNumber(value)
       },
       default: ''
+    },
+    inline: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -114,5 +118,25 @@ export default {
   align-items: center;
   color: $title-color;
   box-sizing: border-box;
+  flex: 1;
+
+  &.vertical {
+    flex-direction: column;
+    height: auto;
+    min-height: 32px;
+
+    .#{$prefix}-radio {
+      display: flex;
+      width: 100%;
+
+      + .#{$prefix}-radio {
+        margin-left: 0;
+
+        &::before {
+          content: '';
+        }
+      }
+    }
+  }
 }
 </style>

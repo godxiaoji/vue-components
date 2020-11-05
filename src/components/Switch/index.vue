@@ -189,7 +189,7 @@ export default {
 
     &:disabled {
       cursor: not-allowed;
-      opacity: 0.3;
+      opacity: 0.2;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div :class="[prefix + '-group', { card: card }]">
-    <div :class="[prefix + '-group_head']">
+    <div :class="[prefix + '-group_header']">
       <div :class="[prefix + '-group_title']">{{ title }}</div>
     </div>
     <div :class="[prefix + '-group_body', prefix + '-horizontal-hairline']">
@@ -48,7 +48,7 @@ export default {
   overflow: hidden;
   margin-bottom: 12px;
 
-  &_head {
+  &_header {
     height: 44px;
     padding: 0 16px;
     display: flex;
@@ -77,7 +77,7 @@ export default {
     box-shadow: 0px 2px 4px rgba($color: $black-color, $alpha: 0.04);
 
     .#{$prefix}-group {
-      &_head {
+      &_header {
         height: 48px;
         padding: 0 12px;
       }

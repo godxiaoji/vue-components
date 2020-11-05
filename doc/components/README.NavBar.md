@@ -11,8 +11,8 @@
 | show-back     | boolean | false    | 否   | 是否展示返回按钮                                |
 | show-home     | boolean | false    | 否   | 是否展示首页按钮                                |
 | right-buttons | array   | []       |      | 右侧按钮列表                                    |
-| icon-size     | number  | 40       | 否   | 缺少 `slot` 下默认 `Icon` 大小                  |
-| button-shape  | string  | 'square' | 否   | 可选值： 'default', 'round', 'circle', 'square' |
+| icon-only     | boolean | true    | 否   | 是否展示纯图标按钮                                |
+
 
 ### right-buttons 的结构
 

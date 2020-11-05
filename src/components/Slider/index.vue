@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-slider']" :disabled="disabled">
+  <div :class="[prefix + '-slider', { disabled }]">
     <div :class="[prefix + '-slider_inner']">
       <div :class="[prefix + '-slider_box']">
         <div
@@ -294,6 +294,10 @@ export default {
     font-size: 17px;
     margin-left: 5px;
     color: $title-color;
+  }
+
+  &.disabled {
+    opacity: 0.2;
   }
 }
 </style>

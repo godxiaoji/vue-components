@@ -22,7 +22,6 @@
 
 <script>
 import MSlide from 'mslide'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 // export
@@ -34,6 +33,7 @@ export default {
     }
   },
   props: {
+    // 是否显示面板指示点
     indicatorDots: {
       type: Boolean,
       default: false
@@ -41,12 +41,12 @@ export default {
 
     indicatorColor: {
       type: String,
-      default: 'rgba(0, 0, 0, .3)'
+      default: 'rgba(4, 10, 19, .45)'
     },
 
     indicatorActiveColor: {
       type: String,
-      default: '#09bb07'
+      default: '#1890ff'
     },
 
     autoplay: {
@@ -69,14 +69,9 @@ export default {
       default: false
     },
 
-    current: {
+    activeIndex: {
       type: Number,
       default: 0
-    },
-
-    displayMultipleItems: {
-      type: Number,
-      default: 1
     },
 
     previousMargin: {
@@ -123,7 +118,7 @@ export default {
     /**
      * 外部修改索引可以旋转
      */
-    current(val) {
+    activeIndex(val) {
       if (this.swiper) {
         this.swiper.to(val)
       }
@@ -153,7 +148,7 @@ export default {
         const pagination = []
 
         this.$el
-          .querySelectorAll(`.${SDKKey}-swiper_item`)
+          .querySelectorAll(`.${SDKKey}-swiper-item`)
           .forEach(($item, k) => {
             $item.style.paddingLeft = this.previousMargin + 'px'
             $item.style.paddingRight = this.nextMargin + 'px'
@@ -183,47 +178,33 @@ export default {
       }
     },
     mergeOptions() {
-      const vm = this
       const options = {}
 
       options.selector = this.$el
       // 当前所在滑块的 index
-      options.index = this.current
+      options.index = this.activeIndex
       // // 同时显示的滑块数量
-      // options.slidesPerView = this.displayMultipleItems
 
       options.onBeforeSlide = (index, fromIndex) => {
         if (index !== fromIndex) {
           // 排重
 
-          vm.$emit('update:current', index)
+          this.$emit('update:activeIndex', index)
           const type = 'change'
-          vm.$emit(
-            type,
-            new CustomEvent(
-              { type, currentTarget: this.$el },
-              {
-                current: index
-              }
-            )
-          )
+          this.$emit(type, {
+            activeIndex: index
+          })
         }
 
         this.slideCurrent = index
       }
 
       options.onSlide = index => {
-        const type = 'animation-finish'
+        const type = 'changed'
 
-        vm.$emit(
-          type,
-          new CustomEvent(
-            { type, currentTarget: this.$el },
-            {
-              current: index
-            }
-          )
-        )
+        this.$emit(type, {
+          activeIndex: index
+        })
       }
 
       options.onClick = e => {
@@ -234,7 +215,7 @@ export default {
       return Object.assign({}, this.globalOptions, options)
     },
     mountInstance() {
-      this.slideCurrent = this.current
+      this.slideCurrent = this.activeIndex
       const swiperOptions = this.mergeOptions()
       this.swiper = new MSlide(swiperOptions)
       this.updateSlide()

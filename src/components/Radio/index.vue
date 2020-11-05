@@ -1,5 +1,8 @@
 <template>
-  <label :class="[prefix + '-radio']" :disabled="disabled">
+  <label
+    :class="[prefix + '-radio', prefix + '-horizontal-hairline']"
+    :disabled="disabled"
+  >
     <input
       :class="[prefix + '-radio_input']"
       type="radio"
@@ -11,16 +14,17 @@
     <div :class="[prefix + '-radio_box']">
       <icon
         :class="[prefix + '-radio_icon']"
-        class-name="CheckCircleOutlined"
+        class-name="CircleOutlined"
       ></icon>
       <icon
         :class="[prefix + '-radio_checked-icon']"
         class-name="CheckCircleFilled"
       ></icon>
+
+      <span :class="[prefix + '-radio_text']">
+        <slot></slot>
+      </span>
     </div>
-    <span :class="[prefix + '-radio_text']">
-      <slot></slot>
-    </span>
   </label>
 </template>
 
@@ -173,9 +177,9 @@ export default {
   --color: #{$primary-color};
 
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   font-size: 17px;
-  height: 1.412em;
   color: $title-color;
   text-align: left;
   position: relative;
@@ -185,20 +189,18 @@ export default {
   }
 
   &_box {
-    display: inline-flex;
-    width: 1.412em;
-    height: 1.412em;
+    display: flex;
+    width: 100%;
+    height: 32px;
     box-sizing: border-box;
-    margin-right: 12px;
     align-items: center;
-    justify-content: center;
     box-sizing: border-box;
   }
 
   &_icon,
   &_checked-icon {
-    width: 100%;
-    height: 100%;
+    --size: 24px;
+    margin-right: 12px;
     --color: #{$border-color};
   }
 

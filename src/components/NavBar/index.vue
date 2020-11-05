@@ -7,52 +7,57 @@
         { fixed: fixedTop }
       ]"
     >
-      <div :class="[prefix + '-nav-bar_left']">
-        <slot name="left" v-if="$slots.left"></slot>
-        <template v-else>
-          <fx-button-group size="small" :shape="buttonShape2">
-            <fx-button
-              type="default"
-              icon="LeftOutlined"
-              v-if="showBack"
-              @click="onBack"
-              >返回</fx-button
+      <div :class="[prefix + '-nav-bar_layout']">
+        <div :class="[prefix + '-nav-bar_left']">
+          <slot name="left" v-if="$slots.left"></slot>
+          <template v-else>
+            <fx-button-group :shape="buttonShape" pattern="borderless">
+              <fx-button
+                :class="[prefix + '-nav-bar_button']"
+                type="default"
+                icon="LeftOutlined"
+                v-if="showBack"
+                @click="onBack"
+                >返回</fx-button
+              >
+              <fx-button
+                :class="[prefix + '-nav-bar_button']"
+                type="default"
+                icon="HomeOutlined"
+                v-if="showHome"
+                @click="onBackHome"
+                >首页</fx-button
+              >
+            </fx-button-group>
+          </template>
+        </div>
+        <div
+          :class="[prefix + '-nav-bar_title']"
+          @mousedown="onTitleStart"
+          @touchstart="onTitleStart"
+        >
+          {{ title }}
+        </div>
+        <div :class="[prefix + '-nav-bar_right']">
+          <slot name="right" v-if="$slots.right"></slot>
+          <template v-else>
+            <fx-button-group
+              :shape="buttonShape"
+              pattern="borderless"
+              v-if="rightButtons.length > 0"
             >
-            <fx-button
-              type="default"
-              icon="HomeOutlined"
-              v-if="showHome"
-              @click="onBackHome"
-              >首页</fx-button
-            >
-          </fx-button-group>
-        </template>
-      </div>
-      <div
-        :class="[prefix + '-nav-bar_title']"
-        @mousedown="onTitleStart"
-        @touchstart="onTitleStart"
-      >
-        {{ title }}
-      </div>
-      <div :class="[prefix + '-nav-bar_right']">
-        <slot name="right" v-if="$slots.right"></slot>
-        <template v-else>
-          <fx-button-group
-            size="small"
-            :shape="buttonShape2"
-            v-if="rightButtons.length > 0"
-          >
-            <fx-button
-              type="default"
-              :icon="item.icon"
-              v-for="(item, index) in rightButtons"
-              :key="index"
-              @click="onRightIconClick(item, index)"
-              >{{ item.text }}</fx-button
-            >
-          </fx-button-group>
-        </template>
+              <fx-button
+                :class="[prefix + '-nav-bar_button']"
+                type="default"
+                :icon="item.icon"
+                v-for="(item, index) in rightButtons"
+                :key="index"
+                @click="onRightIconClick(item, index)"
+                >{{ item.text }}</fx-button
+              >
+            </fx-button-group>
+          </template>
+        </div>
       </div>
     </div>
   </div>
@@ -60,9 +65,7 @@
 
 <script>
 import { SDKKey } from '../../config'
-import { inArray, isArray, isString } from '../../helpers/util'
-
-const BUTTON_SHAPE_NAMES = ['default', 'round', 'circle', 'square']
+import { isArray, isString } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-nav-bar',
@@ -110,11 +113,9 @@ export default {
         return []
       }
     },
-    buttonShape: {
-      validator(val) {
-        return inArray(val, BUTTON_SHAPE_NAMES)
-      },
-      default: BUTTON_SHAPE_NAMES[3]
+    iconOnly: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -122,10 +123,8 @@ export default {
   },
   watch: {},
   computed: {
-    buttonShape2() {
-      return inArray(this.buttonShape, BUTTON_SHAPE_NAMES)
-        ? this.buttonShape
-        : BUTTON_SHAPE_NAMES[3]
+    buttonShape() {
+      return this.iconOnly ? 'square' : 'default'
     }
   },
   created() {},
@@ -133,7 +132,6 @@ export default {
   beforeDestroy() {},
   methods: {
     onBack() {
-      console.log(this.$scopedSlots, this.$slots)
       this.$emit('back-click', {})
     },
     onBackHome() {
@@ -167,6 +165,7 @@ export default {
 
 .#{$prefix}-nav-bar {
   --nav-bar-height: 48px;
+
   position: relative;
   height: var(--nav-bar-height);
   width: 100%;
@@ -175,10 +174,6 @@ export default {
   &_inner {
     position: relative;
     width: 100%;
-    height: var(--nav-bar-height);
-    display: flex;
-    align-items: center;
-    background: #ffffff;
 
     &.fixed {
       position: fixed;
@@ -189,11 +184,14 @@ export default {
 
     &::after {
       content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
     }
+  }
+
+  &_layout {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    height: var(--nav-bar-height);
   }
 
   &_title {
@@ -214,10 +212,9 @@ export default {
   &_left,
   &_right {
     position: absolute;
-    padding: 0 16px;
     left: 0;
     top: 0;
-    height: 100%;
+    height: var(--nav-bar-height);
     display: flex;
     align-items: center;
   }
@@ -225,6 +222,10 @@ export default {
   &_right {
     left: auto;
     right: 0;
+  }
+
+  &_button {
+    border-radius: 0;
   }
 }
 </style>

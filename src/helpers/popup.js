@@ -7,8 +7,10 @@ import {
 } from './dom'
 import { SDKKey } from '../config'
 
+export const defaultZIndex = 2000
+
 let puid = 1
-let zIndex = 2000
+let zIndex = defaultZIndex
 
 export function getNewZIndex() {
   return zIndex++
@@ -22,8 +24,7 @@ export function createPopup() {
 
   return {
     id,
-    $wrapper,
-    zIndex: getNewZIndex()
+    $wrapper
   }
 }
 

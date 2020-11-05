@@ -5,11 +5,16 @@
 </template>
 
 <script>
-import { isFunction, isNumber, isArray } from '../../helpers/util'
+import { isNumber, isArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-row',
+  provide() {
+    return {
+      appRowSubOptions: this.subOptions
+    }
+  },
   props: {
     // 栅格间隔
     gutter: {
@@ -45,12 +50,15 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey
+      prefix: SDKKey,
+      subOptions: {
+        gutter: [0, 0]
+      }
     }
   },
   computed: {
     styles() {
-      const [gH, gV] = this.gutter2
+      const [gH, gV] = this.subOptions.gutter
 
       if (gH > 0 || gV > 0) {
         return {
@@ -72,27 +80,27 @@ export default {
       }
 
       return arr
-    },
-    gutter2() {
-      const arr = [0, 0]
-
-      if (isNumber(this.gutter)) {
-        arr[0] = Math.max(0, this.gutter)
-      } else if (isArray(this.gutter)) {
-        if (isNumber(this.gutter[0])) {
-          arr[0] = Math.max(0, this.gutter[0])
-        }
-        if (isNumber(this.gutter[1])) {
-          arr[1] = Math.max(0, this.gutter[1])
-        }
-      }
-
-      return arr
     }
   },
   watch: {
-    gutter2(newVal) {
-      this.updateColGetter(newVal)
+    gutter: {
+      immediate: true,
+      handler(newVal) {
+        const arr = [0, 0]
+
+        if (isNumber(newVal)) {
+          arr[0] = Math.max(0, newVal)
+        } else if (isArray(newVal)) {
+          if (isNumber(newVal[0])) {
+            arr[0] = Math.max(0, newVal[0])
+          }
+          if (isNumber(newVal[1])) {
+            arr[1] = Math.max(0, newVal[1])
+          }
+        }
+
+        this.subOptions.gutter = arr
+      }
     }
   },
   created() {},
@@ -102,14 +110,6 @@ export default {
   attached() {},
   beforeDestroy() {},
   methods: {
-    updateColGetter(gutter) {
-      this.$children.forEach($child => {
-        if (isFunction($child.updateGutter)) {
-          $child.updateGutter(gutter)
-        }
-      })
-    },
-
     onClick(e) {
       this.$emit(e.type, e)
     }

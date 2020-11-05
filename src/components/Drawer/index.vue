@@ -1,20 +1,29 @@
 <template>
   <div
-    :class="[prefix + '-drawer', { visible: visible2 }]"
+    :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
     :style="{ zIndex }"
     v-show="isShow"
   >
-    <div :class="[prefix + '-drawer_overlay']" @click="onOverlayClick"></div>
+    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div
-      :class="[
-        prefix + '-drawer_inner',
-        { 'has--title': !!title },
-        alignClassName
-      ]"
+      :class="[prefix + '-drawer_inner', alignClassName]"
       @mousedown.prevent="noop"
     >
-      <div :class="[prefix + '-drawer_head', prefix + '-horizontal-hairline']">
-        <div :class="[prefix + '-drawer_title']">{{ title }}</div>
+      <div
+        v-show="title != null || showClose"
+        :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
+      >
+        <div :class="[prefix + '-drawer_header-inner']">
+          <div :class="[prefix + '-drawer_title']">{{ title }}</div>
+          <fx-button
+            v-if="showClose"
+            :class="[prefix + '-drawer_close']"
+            shape="square"
+            icon="CloseOutlined"
+            pattern="borderless"
+            @click="onCloseClick()"
+          ></fx-button>
+        </div>
       </div>
       <div :class="[prefix + '-drawer_body']">
         <slot></slot>
@@ -25,19 +34,15 @@
 
 <script>
 import { SDKKey } from '../../config'
-import { addClassName, removeClassName, removeEl } from '../../helpers/dom'
-import { getNewZIndex } from '../../helpers/popup'
 import { inArray } from '../../helpers/util'
+import popupMixin from '../util/popup-mixin'
 
-const DRAWER_ALIGNS = ['bottom', 'up', 'left', 'right']
+const DRAWER_ALIGNS = ['bottom', 'top', 'left', 'right']
 
 export default {
   name: SDKKey + '-drawer',
+  mixins: [popupMixin],
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String,
       default: null
@@ -47,110 +52,34 @@ export default {
         return inArray(val, DRAWER_ALIGNS)
       },
       default: DRAWER_ALIGNS[0]
+    },
+    showClose: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      prefix: SDKKey,
-
-      isShow: false,
-      visible2: false,
-
-      zIndex: 2000
+      prefix: SDKKey
     }
   },
   computed: {
     alignClassName() {
       return (
-        'algin--' +
+        'align--' +
         (inArray(this.align, DRAWER_ALIGNS) ? this.align : DRAWER_ALIGNS[0])
       )
     }
   },
-  watch: {
-    visible(newVal) {
-      if (newVal) {
-        this.show()
-      } else {
-        this.hide()
-      }
-    }
-  },
+  watch: {},
   created() {},
   ready() {},
-  mounted() {
-    if (this.visible) {
-      this.show()
-    } else {
-      this.hide()
-    }
-  },
   updated() {},
   attached() {},
   methods: {
-    onOverlayClick() {
-      if (this.isShowing) {
-        return
-      }
-
+    onCloseClick() {
+      this.$emit('close-click', {})
       this.hide()
-    },
-
-    noop() {},
-
-    clearTimer() {
-      this.isShowing = false
-      this.isHiding = false
-      clearTimeout(this.visibleTimer)
-    },
-
-    show() {
-      this.isShowing = true
-
-      clearTimeout(this.visibleTimer)
-      addClassName(document.body, SDKKey + '-overflow-hidden')
-
-      this.zIndex = getNewZIndex()
-      this.isShow = true
-
-      this.visibleTimer = setTimeout(() => {
-        this.isShowing = false
-        this.visible2 = true
-      }, 17)
-
-      if (!this.visible) {
-        this.$emit('update:visible', true)
-      }
-
-      const type = 'show'
-      this.$emit(type, {})
-    },
-    hide() {
-      if (this.isHiding) {
-        return
-      }
-      this.isHiding = true
-
-      this.clearTimer()
-      removeClassName(document.body, SDKKey + '-overflow-hidden')
-      this.visible2 = false
-
-      this.visibleTimer = setTimeout(() => {
-        this.isShow = false
-        this.isHiding = false
-      }, 220)
-
-      if (this.visible) {
-        this.$emit('update:visible', false)
-      }
-
-      const type = 'hide'
-      this.$emit(type, {})
-    },
-    destroy() {
-      this.$destroy()
-
-      removeEl(this.$el)
     }
   }
 }
@@ -160,23 +89,6 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-drawer {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  width: 100vw;
-  height: 100vh;
-
-  &_overlay {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
   &_inner {
     position: absolute;
     left: 0;
@@ -188,10 +100,11 @@ export default {
     transform: translate3d(0, 100vh, 0);
     transition: transform 0.2s;
     background-color: #fff;
-    height: 410px;
+    height: 360px;
 
-    &.algin--left,
-    &.algin--right {
+    &.align--left,
+    &.align--right {
+      min-width: 100px;
       max-width: 90%;
       width: auto;
       height: 100%;
@@ -199,39 +112,55 @@ export default {
       transform: translate3d(-100vw, 0, 0);
     }
 
-    &.algin--right {
+    &.align--right {
       left: auto;
       right: 0;
       transform: translate3d(100vw, 0, 0);
     }
+
+    &.align--top {
+      top: 0;
+      bottom: auto;
+      transform: translate3d(0, -100vh, 0);
+      height: 260px;
+    }
   }
 
-  &_head {
-    height: 48px;
+  &_header {
     flex-shrink: 0;
     flex-direction: column;
     box-sizing: border-box;
-    min-width: 100px;
-    display: none;
-
-    .#{$prefix}-drawer_inner.has--title & {
-      display: flex;
-    }
+    display: flex;
 
     &::after {
       content: '';
     }
   }
 
+  &_header-inner {
+    height: 48px;
+    box-sizing: border-box;
+    display: flex;
+  }
+
   &_title {
     flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
     font-size: 17px;
+    line-height: 48px;
+    height: 48px;
     font-weight: 500;
     color: $title-color;
-    padding: 0 12px;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+  }
+
+  &_close.type--default {
+    flex-shrink: 0;
+    border-radius: 0;
+    --button-font-color: #{$font3-color};
   }
 
   &_body {
@@ -245,10 +174,6 @@ export default {
 
   &.visible {
     .#{$prefix}-drawer {
-      &_overlay {
-        opacity: 1;
-      }
-
       &_inner {
         transform: translate3d(0, 0, 0);
       }

@@ -414,16 +414,16 @@ export default {
   &_input {
     flex-grow: 1;
     box-sizing: border-box;
+    padding: 0;
     font-size: var(--font-size);
     color: $title-color;
-    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
     height: 100%;
     line-height: calc(var(--height) - 2px);
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    display: block;
     margin: 0;
     border: none;
     width: 0;

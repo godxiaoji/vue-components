@@ -1,10 +1,19 @@
 <template>
   <div
-    v-show="visible"
-    :class="[prefix + '-preview-image', { visible: visible2 }]"
+    :class="[
+      prefix + '-preview-image',
+      prefix + '-popup',
+      { visible: visible2 }
+    ]"
     :style="{ zIndex }"
+    v-show="isShow"
   >
-    <swiper :current.sync="activeIndex" @click="onPreviewClick">
+    <div :class="[prefix + '-mask']"></div>
+    <swiper
+      :active-index.sync="activeIndex"
+      @click="onPreviewClick"
+      @change="onSwiperChange"
+    >
       <swiper-item v-for="(item, index) in images" :key="index">
         <div :class="[prefix + '-preview-image_image']">
           <fx-image
@@ -19,39 +28,36 @@
     <div :class="[prefix + '-preview-image_pagination']">
       {{ activeIndex + 1 }} / {{ urls.length }}
     </div>
-    <i
+    <fx-button
       v-if="showClose"
       :class="[prefix + '-preview-image_close']"
       @click.stop="onCloseClick"
-      ><icon class-name="CloseCircleFilled"></icon
-    ></i>
+      icon="CloseOutlined"
+      pattern="borderless"
+      shape="square"
+      :ghost="true"
+    ></fx-button>
   </div>
 </template>
 
 <script>
-import Icon from '../Icon'
+import FxButton from '../Button'
 import FxImage from '../Image'
 import { Swiper, SwiperItem } from '../Swiper'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 import { isStringArray } from '../../helpers/util'
+import popupMixin from '../util/popup-mixin'
 
 export default {
   name: SDKKey + '-preview-image',
-  components: { Icon, Swiper, SwiperItem, FxImage },
+  components: { FxButton, Swiper, SwiperItem, FxImage },
+  mixins: [popupMixin],
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
     urls: {
       validator(value) {
         return isStringArray(value)
       },
-      required: true,
-      default() {
-        return []
-      }
+      required: true
     },
     current: {
       type: String,
@@ -59,11 +65,7 @@ export default {
     },
     showClose: {
       type: Boolean,
-      default: true
-    },
-    zIndex: {
-      type: Number,
-      default: 2000
+      default: false
     }
   },
   data() {
@@ -102,68 +104,62 @@ export default {
         this.images = images
       }
     },
-    visible(newVal) {
-      if (newVal) {
-        this.$nextTick(() => {
-          this.visible2 = true
-        })
-      } else {
-        this.visible2 = false
+    current: {
+      handler(val) {
+        this.updateCurrent(val)
       }
     }
   },
-  created() {},
-  mounted() {
-    if (this.visible) {
-      this.visible2 = true
-    }
+  created() {
+    this.updateCurrent(this.current)
   },
   beforeDestroy() {},
   methods: {
-    onImageLoad({ details: { width, height, src } }) {
+    updateCurrent(val) {
+      let hasUrl = false
+
+      for (let i = 0; i < this.urls.length; i++) {
+        if (this.images[i].src === val) {
+          if (this.activeIndex !== i) {
+            this.activeIndex = i
+          }
+          hasUrl = true
+          break
+        }
+      }
+
+      if (!hasUrl && this.images[0]) {
+        this.$emit('update:activeIndex', this.images[0].src)
+      }
+    },
+    onImageLoad({ width, height, src }) {
       for (let i = 0; i < this.images.length; i++) {
         const image = this.images[i]
 
         if (image.src === src) {
-          const doc = document.documentElement
-          image.width = Math.min(width, doc.offsetWidth)
-          image.height = Math.min(height, doc.offsetHeight)
+          const { clientWidth, clientHeight } = document.documentElement
+          image.width = Math.min(width, clientWidth)
+          image.height = Math.min(height, clientHeight)
           image.loaded = true
           break
         }
       }
     },
-    onBoxClick() {},
-    onPreviewClick(e) {
-      this.close(e)
+    onSwiperChange({ activeIndex }) {
+      const current = this.urls[activeIndex]
+
+      this.$emit('update:current', current)
+
+      this.$emit('change', {
+        activeIndex,
+        current
+      })
     },
-    onCloseClick(e) {
-      this.close(e)
+    onPreviewClick() {
+      this.hide()
     },
-    close() {
-      if (this.isClosing) {
-        return
-      }
-      this.isClosing = true
-
-      this.visible2 = false
-      setTimeout(() => {
-        this.isClosing = false
-        this.$emit('update:visible', false)
-      }, 500)
-
-      const type = 'close'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
+    onCloseClick() {
+      this.hide()
     }
   }
 }
@@ -173,29 +169,22 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-preview-image {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba($color: $black-color, $alpha: 0.9);
-  text-align: left;
-  transform: translateZ(0);
-  opacity: 0;
-  transition: opacity 0.5s;
-
-  &.visible {
-    opacity: 1;
+  .#{$prefix}-mask {
+    background-color: rgba($color: $black-color, $alpha: 0.9);
   }
 
   .#{$prefix}-swiper {
     display: block;
     width: 100%;
     height: 100%;
+    transition: opacity 0.2s;
+    opacity: 0;
+  }
+
+  &.visible {
+    .#{$prefix}-swiper {
+      opacity: 1;
+    }
   }
 
   &_image {
@@ -213,9 +202,9 @@ export default {
 
   &_pagination {
     position: absolute;
-    top: 16px;
+    top: 0;
     left: 0;
-    line-height: 32px;
+    line-height: 48px;
     width: 100%;
     font-size: 17px;
     color: #fff;
@@ -224,15 +213,9 @@ export default {
 
   &_close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-
-    .#{$prefix}-icon {
-      --size: 32px;
-      --color: #fff;
-    }
+    top: 0;
+    left: 0;
+    border-radius: 0;
   }
 }
 </style>

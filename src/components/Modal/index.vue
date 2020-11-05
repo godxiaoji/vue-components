@@ -1,24 +1,12 @@
 <template>
   <div
-    v-show="visible"
-    :class="[prefix + '-modal']"
+    :class="[prefix + '-modal', prefix + '-popup', { visible: visible2 }]"
     :style="{ zIndex }"
-    @click="onModalClick"
+    v-show="isShow"
   >
-    <div
-      :class="[prefix + '-modal_box', { visible }]"
-      :style="boxStyles"
-      @click.stop="onBoxClick"
-    >
-      <div :class="[prefix + '-modal_header']" v-if="hasHeader">
-        <slot name="header"></slot>
-      </div>
-      <div :class="[prefix + '-modal_body']">
-        <slot></slot>
-      </div>
-      <div :class="[prefix + '-modal_footer']" v-if="hasFooter">
-        <slot name="footer"></slot>
-      </div>
+    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+    <div :class="[prefix + '-modal_box']" :style="boxStyles">
+      <slot></slot>
       <i
         v-if="showClose"
         :class="[prefix + '-modal_close']"
@@ -31,20 +19,17 @@
 
 <script>
 import Icon from '../Icon'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
+import popupMixin from '../util/popup-mixin'
 
 export default {
   name: SDKKey + '-modal',
   components: { Icon },
+  mixins: [popupMixin],
   props: {
     width: {
       type: String,
       default: ''
-    },
-    visible: {
-      type: Boolean,
-      default: false
     },
     maskClosable: {
       type: Boolean,
@@ -53,14 +38,10 @@ export default {
     showClose: {
       type: Boolean,
       default: true
-    },
-    zIndex: {
-      type: Number,
-      default: 2000
     }
   },
   data() {
-    return { prefix: SDKKey, hasHeader: false, hasFooter: false }
+    return { prefix: SDKKey }
   },
   computed: {
     boxStyles() {
@@ -74,41 +55,18 @@ export default {
     }
   },
   created() {},
-  mounted() {
-    if (this.$scopedSlots.header) {
-      this.hasHeader = true
-    }
-
-    if (this.$scopedSlots.footer) {
-      this.hasFooter = true
-    }
-  },
+  mounted() {},
   beforeDestroy() {},
   methods: {
-    onBoxClick() {},
-    onModalClick(e) {
+    onMaskClick() {
       if (this.maskClosable) {
-        this.close(e)
+        this.$emit('mask-click', {})
+        this.hide()
       }
     },
-    onCloseClick(e) {
-      this.close(e)
-    },
-    close() {
-      this.$emit('update:visible', false)
-
-      const type = 'close'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
+    onCloseClick() {
+      this.$emit('close-click', {})
+      this.hide()
     }
   }
 }
@@ -118,19 +76,6 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-modal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba($color: $black-color, $alpha: 0.5);
-  text-align: left;
-  transform: translateZ(0);
-
   &_box {
     width: 400px;
     box-sizing: border-box;
@@ -139,39 +84,14 @@ export default {
     transform: scale(0);
     transition: all 0.2s;
     opacity: 0;
+    position: relative;
+  }
 
-    &.visible {
+  &.visible {
+    .#{$prefix}-modal_box {
       opacity: 1;
       transform: scale(1);
     }
-  }
-
-  &_header {
-    flex: 1;
-    font-size: 21px;
-    font-weight: bold;
-    color: $title-color;
-    padding: 16px 0 12px;
-    margin: 0 24px;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  &_body {
-    padding: 0;
-    font-size: 17px;
-    line-height: 23.8px;
-    color: $font-color;
-  }
-
-  &_footer {
-    padding: 12px 0;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 24px;
   }
 
   &_close {
@@ -179,7 +99,7 @@ export default {
     left: 50%;
     bottom: -56px;
     margin: 0 0 0 -20px;
-    background-color: rgba($color: $black-color, $alpha: 0.5);
+    background-color: rgba($color: $black-color, $alpha: 0.65);
     border: 2px solid #fff;
     width: 40px;
     height: 40px;
@@ -197,27 +117,10 @@ export default {
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 575px) {
   .#{$prefix}-modal {
     &_box {
-      width: calc(100% - 40px);
-      margin: 0 20px;
-    }
-
-    &_title {
-      font-size: 18px;
-    }
-
-    &_content {
-      font-size: 16px;
-    }
-
-    &_footer {
-      .#{$prefix}-modal_button {
-        height: 38px;
-        line-height: 38px;
-        font-size: 16px;
-      }
+      width: calc(100% - 96px);
     }
   }
 }

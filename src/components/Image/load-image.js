@@ -63,11 +63,11 @@ function lazyCheck(vm) {
     loadImageAsync(
       vm,
       res => {
-        this.removeComponent(vm)
+        removeComponentFromLazy(vm)
         vm.onLoad(res)
       },
       e => {
-        this.removeComponent(vm)
+        removeComponentFromLazy(vm)
         vm.onError(e)
       }
     )

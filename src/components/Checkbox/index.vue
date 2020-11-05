@@ -1,5 +1,8 @@
 <template>
-  <label :class="[prefix + '-checkbox']" :disabled="disabled">
+  <label
+    :class="[prefix + '-checkbox', prefix + '-horizontal-hairline']"
+    :disabled="disabled"
+  >
     <input
       :class="[prefix + '-checkbox_input']"
       type="checkbox"
@@ -11,16 +14,16 @@
     <div :class="[prefix + '-checkbox_box']">
       <icon
         :class="[prefix + '-checkbox_icon']"
-        class-name="CheckSquareOutlined"
+        class-name="BorderOutlined"
       ></icon>
       <icon
         :class="[prefix + '-checkbox_checked-icon']"
         class-name="CheckSquareFilled"
       ></icon>
+      <span :class="[prefix + '-checkbox_text']">
+        <slot></slot>
+      </span>
     </div>
-    <span :class="[prefix + '-checkbox_text']">
-      <slot></slot>
-    </span>
   </label>
 </template>
 
@@ -177,9 +180,9 @@ export default {
   --color: #{$primary-color};
 
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   font-size: 17px;
-  height: 1.412em;
   color: $title-color;
   text-align: left;
   position: relative;
@@ -189,20 +192,18 @@ export default {
   }
 
   &_box {
-    display: inline-flex;
-    width: 1.412em;
-    height: 1.412em;
+    display: flex;
+    width: 100%;
+    height: 32px;
     box-sizing: border-box;
-    margin-right: 12px;
     align-items: center;
-    justify-content: center;
     box-sizing: border-box;
   }
 
   &_icon,
   &_checked-icon {
-    width: 100%;
-    height: 100%;
+    --size: 24px;
+    margin-right: 12px;
     --color: #{$border-color};
   }
 

@@ -24,10 +24,7 @@ import Toast from './Toast'
 import Modal from './Modal'
 import Notify from './Notify'
 import Drawer from './Drawer'
-
-/* Layout */
-import Row from './Row'
-import Col from './Col'
+import Dialog from './Dialog'
 
 /* Navigation */
 import Tabs from './Tabs'
@@ -49,6 +46,9 @@ import SkeletonImage from './Skeleton/Image.vue'
 import PreviewImage from './PreviewImage'
 import Cell from './Cell'
 import Group from './Group'
+import Row from './Row'
+import Col from './Col'
+
 
 /* Other */
 import Copy from './Copy'
@@ -92,6 +92,7 @@ export {
   SkeletonImage,
   PreviewImage,
   Cell,
+  Dialog,
   Stepper,
   Group,
   Drawer,

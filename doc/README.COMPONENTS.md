@@ -63,13 +63,11 @@
 
 [NavBar](./components/README.NavBar.md)
 
-## <a name="Layout">布局组件</a>
+## <a name="Show">展示组件</a>
 
 [Row](./components/README.Row.md)
 
 [Col](./components/README.Col.md)
-
-## <a name="Show">展示组件</a>
 
 [ScrollView](./components/README.ScrollView.md)
 
@@ -84,6 +82,8 @@
 [Cell](./components/README.Cell.md)
 
 [Group](./components/README.Group.md)
+
+[PreviewImage](./components/README.PreviewImage.md)
 
 ## <a name="Other">其他组件</a>
 

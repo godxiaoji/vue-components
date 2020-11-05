@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import PreviewImage from '../components/PreviewImage'
-import { createPopup, getNewZIndex } from '../helpers/popup'
+import { createPopup } from '../helpers/popup'
 import { isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
 import { parseParamsByRules } from './rules'
-// import { removeEl } from '../helpers/dom'
 
-let app
+let $ref
 
 export function previewImage(object) {
   if (!isObject(object)) {
@@ -18,53 +17,30 @@ export function previewImage(object) {
   try {
     const propsData = parseParamsByRules(object, 'previewImage')
 
-    if (app) {
-      app.activeIndex = 0
+    if ($ref) {
+      $ref.activeIndex = 0
       for (const k in propsData) {
-        app[k] = propsData[k]
+        $ref[k] = propsData[k]
       }
-      app.zIndex = getNewZIndex()
-      app.visible = true
+      $ref.show()
     } else {
       const Comp = Vue.extend({
         extends: PreviewImage,
-        methods: {
-          close() {
-            if (this.isClosing) {
-              return
-            }
-            this.isClosing = true
-
-            this.visible2 = false
-            setTimeout(() => {
-              this.isClosing = false
-              this.visible = false
-            }, 500)
-            // const $el = this.$el
-
-            // setTimeout(() => {
-            //   this.$destroy()
-
-            //   removeEl($el)
-            // }, 200)
-          }
-        },
-        destroyed() {
-          app = null
-        }
+        methods: {}
       })
 
-      const { $wrapper, zIndex } = createPopup()
+      const { $wrapper } = createPopup()
 
-      app = new Comp({
+      $ref = new Comp({
         propsData: Object.assign(propsData, {
-          zIndex,
           visible: true
         })
       }).$mount($wrapper)
     }
 
     success({})
+
+    return $ref
   } catch (e) {
     fail(e)
   }

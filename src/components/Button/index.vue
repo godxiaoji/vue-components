@@ -6,7 +6,7 @@
       sizeClassName,
       patternClassName,
       shapeClassName,
-      { 'has--icon': loading || icon }
+      { 'has--icon': loading || icon, ghost: !!ghost }
     ]"
     :disabled="disabled"
     :type="realFormType"
@@ -25,7 +25,7 @@ import { SDKKey } from '../../config'
 
 const SIZE_NAMES = ['default', 'small']
 const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
-const PATTERN_NAMES = ['default', 'solid', 'dashed']
+const PATTERN_NAMES = ['default', 'solid', 'dashed', 'borderless']
 const SHAPE_NAMES = ['default', 'round', 'circle', 'square']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
@@ -82,6 +82,10 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+    ghost: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -155,6 +159,10 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-button {
+  --button-font-color: #fff;
+  --button-border-color: transparent;
+  --button-icon-size: 21px;
+
   display: inline-flex;
   flex: 1;
   align-items: center;
@@ -169,11 +177,20 @@ export default {
   padding: 0 12px;
   font-size: 17px;
   line-height: 23.8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--button-border-color);
   background: #fff;
   font-weight: 500;
-  color: #fff;
+  color: var(--button-font-color);
   user-select: none;
+  position: relative;
+  overflow: hidden;
+  -webkit-appearance: none;
+
+  span {
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 
   &::before {
     position: absolute;
@@ -181,7 +198,23 @@ export default {
     top: 50%;
     height: 12px;
     width: 1px;
-    margin-top: -6px;
+    transform: translate3d(0, -50%, 0) scaleX(1);
+    background-color: var(--button-border-color);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    border: 0 solid var(--button-border-color);
+  }
+
+  &:not(:disabled):active::after {
+    background-color: rgba(0, 0, 0, 0.16);
   }
 
   + .#{$prefix}-button {
@@ -189,8 +222,8 @@ export default {
   }
 
   .#{$prefix}-icon {
-    --color: #fff;
-    --size: 18px;
+    --color: var(--button-font-color);
+    --size: var(--button-icon-size);
     margin: 0 10px 0 -1px;
   }
 
@@ -220,36 +253,40 @@ export default {
 
   &.size--small {
     min-width: 60px;
-    height: 28px;
+    height: 32px;
     padding: 0 8px;
     line-height: 16.8px;
     font-size: 12px;
     border-radius: 2px;
+    --button-icon-size: 18px;
+    // border-width: 0;
 
     &::before {
       height: 8px;
-      margin-top: -4px;
     }
 
+    // &::after {
+    //   border-width: 1px;
+    // }
+
     .#{$prefix}-icon {
-      --size: 12px;
       margin: 0 4px 0 0;
     }
 
     &.shape--round {
-      border-radius: 14px;
+      border-radius: 16px;
     }
 
     &.shape--circle {
-      border-radius: 14px;
-      width: 28px;
-      min-width: 28px;
+      border-radius: 16px;
+      width: 32px;
+      min-width: 32px;
       padding: 0;
     }
 
     &.shape--square {
-      width: 28px;
-      min-width: 28px;
+      width: 32px;
+      min-width: 32px;
       padding: 0;
     }
 
@@ -261,236 +298,130 @@ export default {
     }
   }
 
-  &.pattern--dashed {
+  &.pattern--dashed,
+  &.pattern--dashed::after {
     border-style: dashed;
+  }
+
+  &.pattern--borderless,
+  &.pattern--borderless::after {
+    border-width: 0;
   }
 
   &:disabled {
     cursor: not-allowed;
-    border-color: $divider-color;
-    background-color: $background2-color;
-    color: $font3-color;
-
-    .#{$prefix}-icon {
-      --color: #{$font3-color};
-    }
+    opacity: 0.2;
   }
 
-  &.type--default:not(:disabled) {
-    border-color: $border-color;
+  &.type--default {
     background-color: #fff;
-    color: $title-color;
+    --button-font-color: #{$title-color};
+    --button-border-color: #{$border-color};
 
-    &::before {
-      background-color: $border-color;
-    }
-
-    .#{$prefix}-icon {
-      --color: #{$title-color};
-    }
-
-    &:hover {
-      background-color: $background2-color;
-    }
-
-    &:active {
-      background-color: $background-color;
+    &.ghost {
+      background-color: transparent;
+      --button-font-color: #fff;
+      --button-border-color: #fff;
     }
   }
 
   &.type--primary {
-    &:not(:disabled) {
-      background-color: $primary-color;
+    background-color: $primary-color;
 
-      &:hover {
-        border-color: #40a9ff;
-        background-color: #40a9ff;
-      }
-
-      &:active {
-        border-color: #096dd9;
-        background-color: #096dd9;
-      }
-
-      &.pattern--solid,
-      &.pattern--dashed {
-        border-color: $primary-color;
-        background-color: #fff;
-        color: $primary-color;
-
-        &::before {
-          background-color: $primary-color;
-        }
-
-        &:hover {
-          background-color: #fff;
-          border-color: #40a9ff;
-          color: #40a9ff;
-        }
-
-        &:active {
-          background-color: #fff;
-          border-color: #096dd9;
-          color: #096dd9;
-        }
-
-        .#{$prefix}-icon {
-          --color: #{$primary-color};
-        }
-      }
+    &.pattern--solid,
+    &.pattern--dashed,
+    &.pattern--borderless,
+    &.ghost {
+      background-color: #fff;
+      --button-font-color: #{$primary-color};
+      --button-border-color: #{$primary-color};
     }
 
-    &.pattern--default:disabled {
-      border-color: transparent;
-      background-color: rgba($color: $primary-color, $alpha: 0.2);
-      color: #fff;
+    &.ghost {
+      background-color: transparent;
     }
   }
 
   &.type--success {
-    &:not(:disabled) {
-      background-color: $success-color;
+    background-color: $success-color;
 
-      &:hover {
-        border-color: #73d13d;
-        background-color: #73d13d;
-      }
-
-      &:active {
-        border-color: #389e0d;
-        background-color: #389e0d;
-      }
-
-      &.pattern--solid,
-      &.pattern--dashed {
-        border-color: $success-color;
-        background-color: #fff;
-        color: $success-color;
-
-        &::before {
-          background-color: $success-color;
-        }
-
-        &:hover {
-          background-color: #fff;
-          border-color: #73d13d;
-          color: #73d13d;
-        }
-
-        &:active {
-          background-color: #fff;
-          border-color: #389e0d;
-          color: #389e0d;
-        }
-
-        .#{$prefix}-icon {
-          --color: #{$success-color};
-        }
-      }
+    &.pattern--solid,
+    &.pattern--dashed,
+    &.pattern--borderless,
+    &.ghost {
+      background-color: #fff;
+      --button-font-color: #{$success-color};
+      --button-border-color: #{$success-color};
     }
 
-    &.pattern--default:disabled {
-      border-color: transparent;
-      background-color: rgba($color: $success-color, $alpha: 0.2);
-      color: #fff;
+    &.ghost {
+      background-color: transparent;
     }
   }
 
   &.type--warning {
-    &:not(:disabled) {
-      background-color: $warning-color;
+    background-color: $warning-color;
 
-      &:hover {
-        border-color: #ffc53d;
-        background-color: #ffc53d;
-      }
-
-      &:active {
-        border-color: #f5a511;
-        background-color: #f5a511;
-      }
-
-      &.pattern--solid,
-      &.pattern--dashed {
-        border-color: $warning-color;
-        background-color: #fff;
-        color: $warning-color;
-
-        &::before {
-          background-color: $warning-color;
-        }
-
-        &:hover {
-          background-color: #fff;
-          border-color: #ffc53d;
-          color: #ffc53d;
-        }
-
-        &:active {
-          background-color: #fff;
-          border-color: #f5a511;
-          color: #f5a511;
-        }
-
-        .#{$prefix}-icon {
-          --color: #{$warning-color};
-        }
-      }
+    &.pattern--solid,
+    &.pattern--dashed,
+    &.pattern--borderless,
+    &.ghost {
+      background-color: #fff;
+      --button-font-color: #{$warning-color};
+      --button-border-color: #{$warning-color};
     }
 
-    &.pattern--default:disabled {
-      border-color: transparent;
-      background-color: rgba($color: $warning-color, $alpha: 0.2);
-      color: #fff;
+    &.ghost {
+      background-color: transparent;
     }
   }
 
   &.type--danger {
-    &:not(:disabled) {
-      background-color: $danger-color;
+    background-color: $danger-color;
 
-      &:hover {
-        border-color: #ff7875;
-        background-color: #ff7875;
-      }
-
-      &:active {
-        border-color: #f5222d;
-        background-color: #f5222d;
-      }
-
-      &.pattern--solid,
-      &.pattern--dashed {
-        border-color: $danger-color;
-        background-color: #fff;
-        color: $danger-color;
-
-        &::before {
-          background-color: $danger-color;
-        }
-
-        &:hover {
-          background-color: #fff;
-          border-color: #ff7875;
-          color: #ff7875;
-        }
-
-        &:active {
-          background-color: #fff;
-          border-color: #f5222d;
-          color: #f5222d;
-        }
-
-        .#{$prefix}-icon {
-          --color: #{$danger-color};
-        }
-      }
+    &.pattern--solid,
+    &.pattern--dashed,
+    &.pattern--borderless,
+    &.ghost {
+      background-color: #fff;
+      --button-font-color: #{$danger-color};
+      --button-border-color: #{$danger-color};
     }
 
-    &.pattern--default:disabled {
-      border-color: transparent;
-      background-color: rgba($color: $danger-color, $alpha: 0.2);
-      color: #fff;
+    &.ghost {
+      background-color: transparent;
+    }
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .#{$prefix}-button {
+    &::before {
+      transform: translate3d(0, -50%, 0) scaleX(0.5);
+    }
+
+    &::after {
+      left: -50%;
+      right: -50%;
+      top: -50%;
+      bottom: -50%;
+      transform: scale(0.5);
+    }
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+  .#{$prefix}-button {
+    &::before {
+      transform: translate3d(0, -50%, 0) scaleX($one-third);
+    }
+
+    &::after {
+      left: -100%;
+      right: -100%;
+      top: -100%;
+      bottom: -100%;
+      transform: scale($one-third);
     }
   }
 }

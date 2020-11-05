@@ -4,23 +4,24 @@
 
 ## Props
 
-| 属性      | 类型    | 默认值    | 必填 | 说明                                       |
-| --------- | ------- | --------- | ---- | ------------------------------------------ |
-| size      | string  | 'default' | 否   | 按钮尺寸                                   |
-| type      | string  | 'default' | 否   | 按钮类型                                   |
-| pattern   | string  | 'default' | 否   | 按钮款式                                   |
-| shape     | string  | 'default' | 否   | 按钮形状                                   |
-| disabled  | boolean | false     | 否   | 是否禁用                                   |
-| icon      | string  |           | 否   | 图标，显示 icon 组件带的图标               |
-| loading   | boolean | false     | 否   | 名称前是否带 loading 图标，优先级大于 icon |
-| form-type | string  |           | 否   | 'submit' / 'reset'                         |
+| 属性      | 类型    | 默认值    | 必填 | 说明                                                     |
+| --------- | ------- | --------- | ---- | -------------------------------------------------------- |
+| size      | string  | 'default' | 否   | 按钮尺寸                                                 |
+| type      | string  | 'default' | 否   | 按钮类型                                                 |
+| pattern   | string  | 'default' | 否   | 按钮款式                                                 |
+| shape     | string  | 'default' | 否   | 按钮形状                                                 |
+| ghost     | boolean | false     | 否   | 是否使用幽灵按钮，幽灵按钮将按钮的内容反色，背景变为透明 |
+| disabled  | boolean | false     | 否   | 是否禁用                                                 |
+| icon      | string  |           | 否   | 图标，显示 icon 组件带的图标                             |
+| loading   | boolean | false     | 否   | 名称前是否带 loading 图标，优先级大于 icon               |
+| form-type | string  |           | 否   | 'submit' / 'reset'                                       |
 
 ### size 的合法值
 
 | 值      | 说明                                      |
 | ------- | ----------------------------------------- |
-| default | 默认大小，高度 48px，文字 17px，图标 20px |
-| small   | 小尺寸，高度 28px，文字 12px，图标 16px   |
+| default | 默认大小，高度 48px，文字 17px，图标 21px |
+| small   | 小尺寸，高度 28px，文字 12px，图标 18px   |
 
 ### type 的合法值
 
@@ -34,11 +35,12 @@
 
 ### pattern 的合法值
 
-| 值      | 说明     |
-| ------- | -------- |
-| default | 默认按钮 |
-| solid   | 细线按钮 |
-| dashed  | 虚线按钮 |
+| 值         | 说明       |
+| ---------- | ---------- |
+| default    | 默认按钮   |
+| solid      | 细线按钮   |
+| dashed     | 虚线按钮   |
+| borderless | 无边框按钮 |
 
 ### shape 的合法值
 

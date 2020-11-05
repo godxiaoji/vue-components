@@ -1,5 +1,7 @@
 $prefix: 'fx';
 
+$default-z-index: 2000;
+
 $primary-color: #1890ff;
 $success-color: #52c41a;
 $warning-color: #faad14;
@@ -11,7 +13,7 @@ $font-color: #5b5f65;
 $font2-color: #8e9095;
 $font3-color: #c0c1c4;
 $border-color: #dadadc;
-$divider-color: #f0f1f1;
+$divider-color: #e6e7e8;
 $background-color: #f5f5f6;
 $background2-color: #fafafa;
 
@@ -49,12 +51,17 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-body,
-input,
-textarea {
+body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+input,
+button,
+textarea {
+  color: inherit;
+  font: inherit;
 }
 
 @keyframes #{$prefix}-rotate-360 {
@@ -118,6 +125,42 @@ textarea {
   }
 }
 
+.#{$prefix}-mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: $black-color, $alpha: 0.65);
+}
+
+.#{$prefix}-popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: $default-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > .#{$prefix}-mask {
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+  }
+
+  &.visible {
+    > .#{$prefix}-mask {
+      opacity: 1;
+    }
+  }
+}
+
 @mixin rotate-360-animation($duration: 800ms) {
   animation: #{$prefix}-rotate-360 $duration infinite linear both;
 }
@@ -164,18 +207,20 @@ textarea {
   }
 }
 
+$one-third: 1 / 3;
+
 @media screen and (-webkit-min-device-pixel-ratio: 3) {
   .#{$prefix}-horizontal-hairline {
     &::before,
     &::after {
-      transform: scaleY(0.333333);
+      transform: scaleY($one-third);
     }
   }
 
   .#{$prefix}-vertical-hairline {
     &::before,
     &::after {
-      transform: scaleX(0.333333);
+      transform: scaleX($one-third);
     }
   }
 }

@@ -7,7 +7,7 @@
 | 属性          | 类型    | 默认值 | 必填 | 说明                     |
 | ------------- | ------- | ------ | ---- | ------------------------ |
 | visible.sync  | boolean | false  | 否   | 是否显示                 |
-| title         | string  |        | 否   | 提示的标题               |
+| title         | string  | '提示' | 否   | 提示的标题               |
 | content       | string  |        | 否   | 提示的内容，优先于 slot  |
 | mask-closable | boolean | false  | 否   | 点击蒙层是否触发关闭操作 |
 | show-cancel   | boolean | true   | 否   | 是否显示取消按钮         |
@@ -16,11 +16,12 @@
 
 ## Events
 
-| 事件    | 描述               | 回调函数参数                               |
-| ------- | ------------------ | ------------------------------------------ |
-| close   | 被关闭时触发       | CustomEvent                                |
-| cancel  | 取消按钮点击时触发 | CustomEvent，该事件同时会触发 `close` 事件 |
-| confirm | 确认按钮点击时触发 | CustomEvent，该事件同时会触发 `close` 事件 |
+| 事件    | 描述                 | 回调函数参数                     |
+| ------- | -------------------- | -------------------------------- |
+| hide    | 隐藏时触发           | {}                               |
+| hidden  | 隐藏且动画结束后触发 | {}                               |
+| cancel  | 取消按钮点击时触发   | { confirm: false, cancel: true } |
+| confirm | 确认按钮点击时触发   | { confirm: true, cancel: false } |
 
 ## Slots
 

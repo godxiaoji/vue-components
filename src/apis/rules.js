@@ -41,7 +41,7 @@ export const apiRules = {
   showDialog: {
     title: {
       type: String,
-      default: '提示'
+      default: null
     },
     content: {
       type: String,
@@ -75,7 +75,7 @@ export const apiRules = {
     },
     showClose: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   showToast: {
@@ -83,12 +83,13 @@ export const apiRules = {
       type: String,
       required: true
     },
-    icon: {
-      enums: ['none', 'success', 'loading'],
-      default: 'none'
+    type: {
+      enums: ['default', 'success', 'loading', 'fail'],
+      default: 'default'
     },
-    image: {
-      type: String
+    icon: {
+      type: String,
+      default: null
     },
     duration: {
       type: Number,
@@ -109,13 +110,13 @@ export const apiRules = {
       type: Boolean,
       default: false
     },
-    icon: {
+    type: {
       enums: ['loading'],
       default: 'loading'
     },
     duration: {
       type: Number,
-      default: 0
+      default: 1500
     }
   },
   hideLoading: {},
@@ -124,13 +125,17 @@ export const apiRules = {
       type: String,
       required: true
     },
+    icon: {
+      type: String,
+      default: null
+    },
     type: {
       enums: ['primary', 'success', 'warning', 'danger'],
       default: 'primary'
     },
     duration: {
       type: Number,
-      default: 0
+      default: 1500
     },
     backgroundColor: {
       type: String,

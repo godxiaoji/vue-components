@@ -1,22 +1,39 @@
 <template>
-  <div :class="[prefix + '-notify', { visible }]" :style="styles">
-    <slot>消息提示</slot>
+  <div
+    :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
+    :style="{ zIndex }"
+    v-show="isShow"
+  >
+    <div :class="[prefix + '-notify_inner', typeClassName]" :style="styles">
+      <template v-if="title">
+        <icon v-if="icon" :class-name="icon" :style="iconStyle"></icon>
+        <span>{{ title }}</span>
+      </template>
+      <slot v-else></slot>
+    </div>
   </div>
 </template>
 
 <script>
+import Icon from '../Icon'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
+import popupMixin from '../util/popup-mixin'
 
 const TYPE_NAMES = ['primary', 'success', 'warning', 'danger']
 
 export default {
   name: SDKKey + '-notify',
-  components: {},
+  components: { Icon },
+  mixins: [popupMixin],
   props: {
-    visible: {
-      type: Boolean,
-      require: true
+    title: {
+      type: String,
+      default: null
+    },
+    icon: {
+      type: String,
+      default: null
     },
     // 背景颜色
     backgroundColor: {
@@ -37,27 +54,12 @@ export default {
     type: {
       type: String,
       default: TYPE_NAMES[0]
-    },
-    zIndex: {
-      type: Number,
-      default: 2000
     }
   },
   data() {
     return { prefix: SDKKey }
   },
-  watch: {
-    visible: {
-      handler(val) {
-        if (val) {
-          this.clearTimer()
-          this.setAutoClose()
-        } else {
-          this.close()
-        }
-      }
-    }
-  },
+  watch: {},
   computed: {
     styles() {
       const obj = {}
@@ -65,7 +67,12 @@ export default {
       if (this.backgroundColor) obj.backgroundColor = this.backgroundColor
       if (this.color) obj.color = this.color
 
-      obj.zIndex = this.zIndex
+      return obj
+    },
+    iconStyle() {
+      const obj = {}
+
+      if (this.color) obj.fill = this.color
 
       return obj
     },
@@ -76,55 +83,27 @@ export default {
       )
     }
   },
-  created() {
-    if (this.visible && this.duration > 0) {
-      this.durationTimer = setTimeout(() => {
-        this.close('autoClose')
-      }, this.duration)
-    }
-  },
-  mounted() {
-    if (this.visible) {
-      this.setAutoClose()
-    }
-  },
+  created() {},
   beforeDestroy() {
-    this.clearTimer()
+    this.clearDurationTimer()
   },
   methods: {
     setAutoClose() {
       if (this.duration > 0) {
         this.durationTimer = setTimeout(() => {
-          this.close('autoClose')
+          this.hide('auto')
         }, this.duration)
       }
     },
     /**
      * 清除关闭定时器
      */
-    clearTimer() {
+    clearDurationTimer() {
       clearTimeout(this.durationTimer)
     },
-    /**
-     * 关闭
-     */
-    close(source = 'activeClose') {
-      this.clearTimer()
-      if (source === 'autoClose') {
-        this.$emit('update:visible', false)
-      }
-
-      this.$emit(
-        'close',
-        new CustomEvent(
-          {
-            type: 'close',
-            currentTarget: this.$el,
-            target: this.$el
-          },
-          { source }
-        )
-      )
+    show() {
+      this._doShow()
+      this.setAutoClose()
     }
   }
 }
@@ -133,50 +112,58 @@ export default {
 <style lang="scss">
 @import '../component.module.scss';
 
-.#{$prefix}-notify {
+.#{$prefix}-popup.#{$prefix}-notify {
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
-  z-index: 2000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 1.5;
-  word-break: break-all;
-  word-wrap: break-word;
-  padding: 7px 0;
-  overflow: hidden;
-  color: #fff;
-  background-color: $primary-color;
-  transform: translate3d(0, calc(-100%), 0);
-  transition: all 0.2s;
-  opacity: 0;
+  height: auto;
+}
+
+.#{$prefix}-notify {
+  &_inner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    line-height: 24px;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding: 12px 0;
+    overflow: hidden;
+    color: #fff;
+    background-color: $primary-color;
+    transform: translate3d(0, calc(-100%), 0);
+    transition: all 0.2s;
+    opacity: 0;
+
+    &.type--success {
+      background-color: $success-color;
+    }
+
+    &.type--warning {
+      background-color: $warning-color;
+    }
+
+    &.type--danger {
+      background-color: $danger-color;
+    }
+
+    .#{$prefix}-icon {
+      --size: 21px;
+      --color: #fff;
+
+      & + * {
+        margin-left: 8px;
+      }
+    }
+  }
 
   &.visible {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  &.type--success {
-    background-color: $success-color;
-  }
-
-  &.type--warning {
-    background-color: $warning-color;
-  }
-
-  &.type--danger {
-    background-color: $danger-color;
-  }
-
-  .#{$prefix}-icon {
-    --size: 18px;
-    --color: #fff;
-
-    & + * {
-      margin-left: 5px;
+    .#{$prefix}-notify_inner {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
     }
   }
 }

@@ -14,6 +14,11 @@ function rangeCol(number) {
 
 export default {
   name: SDKKey + '-col',
+  inject: {
+    appRowSubOptions: {
+      default: null
+    }
+  },
   props: {
     // 栅格占据的列数
     span: {
@@ -38,7 +43,6 @@ export default {
   },
   data() {
     return {
-      gutter: [0, 0],
       prefix: SDKKey
     }
   },
@@ -46,7 +50,9 @@ export default {
     styles() {
       const arr = []
 
-      const [gH, gV] = this.gutter
+      const [gH, gV] = (this.appRowSubOptions &&
+        this.appRowSubOptions.gutter) || [0, 0]
+
       if (gH > 0 || gV > 0) {
         arr.push({
           padding: `${gV / 2}px ${gH / 2}px`
@@ -74,21 +80,13 @@ export default {
     }
   },
   watch: {},
-  created() {
-    if (this.$parent && this.$parent.gutter2) {
-      this.updateGutter(this.$parent.gutter2)
-    }
-  },
+  created() {},
   ready() {},
   mounted() {},
   updated() {},
   attached() {},
   beforeDestroy() {},
   methods: {
-    updateGutter(gutter) {
-      this.gutter = gutter
-    },
-
     onClick(e) {
       this.$emit(e.type, e)
     }

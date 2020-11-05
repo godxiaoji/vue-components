@@ -1,45 +1,53 @@
 <template>
   <modal
-    :visible.sync="visible"
-    @click="onClose"
+    :class="[prefix + '-dialog']"
+    :visible.sync="visible2"
     :show-close="false"
-    :z-index="zIndex"
     :mask-closable="maskClosable"
+    @show="onShow"
+    @shown="onShown"
+    @hide="onHide"
+    @hidden="onHidden"
+    @mask-click="onMaskClick"
     ref="modal"
   >
-    <template #header>
+    <div :class="[prefix + '-dialog_header']" v-if="title != null">
       {{ title }}
-    </template>
+    </div>
     <div :class="[prefix + '-dialog_content']">
-      <template v-if="content">
+      <div :class="[prefix + '-dialog_content-text']" v-if="content != null">
         {{ content }}
-      </template>
+      </div>
       <slot v-else></slot>
     </div>
-    <template #footer>
-      <fx-button
-        v-if="showCancel"
-        :class="[prefix + '-modal_button']"
-        type="default"
-        @click="onCancelClick"
+    <div :class="[prefix + '-dialog_footer', prefix + '-horizontal-hairline']">
+      <fx-button-group
+        :class="[prefix + '-dialog_footer-inner']"
+        pattern="borderless"
       >
-        {{ cancelText }}
-      </fx-button>
-      <fx-button
-        :class="[prefix + '-modal_button']"
-        type="primary"
-        @click="onConfirmClick"
-      >
-        {{ confirmText }}
-      </fx-button>
-    </template>
+        <fx-button
+          v-if="showCancel"
+          :class="[prefix + '-dialog_button']"
+          type="default"
+          @click="onCancelClick"
+        >
+          {{ cancelText }}
+        </fx-button>
+        <fx-button
+          :class="[prefix + '-dialog_button']"
+          type="primary"
+          @click="onConfirmClick"
+        >
+          {{ confirmText }}
+        </fx-button>
+      </fx-button-group>
+    </div>
   </modal>
 </template>
 
 <script>
 import FxButton from '../Button'
 import Modal from '../Modal'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 export default {
@@ -52,7 +60,7 @@ export default {
     },
     title: {
       type: String,
-      default: '提示'
+      default: null
     },
     cancelText: {
       type: String,
@@ -70,68 +78,62 @@ export default {
       type: Boolean,
       default: true
     },
-    zIndex: {
-      type: Number,
-      default: 2000
-    },
     content: {
       type: String,
-      default: ''
+      default: null
     }
   },
   data() {
-    return { prefix: SDKKey }
+    return { prefix: SDKKey, visible2: false }
+  },
+  watch: {
+    visible: {
+      immediate: true,
+      handler(val) {
+        if (this.visible2 != val) {
+          this.visible2 = val
+        }
+      }
+    },
+    visible2: {
+      handler(val) {
+        if (this.visible != val) {
+          this.$emit('update:visible', val)
+        }
+      }
+    }
   },
   created() {},
   beforeDestroy() {},
   methods: {
-    onCancelClick(e) {
-      const type = 'cancel'
+    onCancelClick() {
+      this.$emit('cancel', { confirm: false, cancel: true })
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
-
-      this.$refs.close.close(e)
+      this.visible2 = false
     },
-    onConfirmClick(e) {
-      const type = 'confirm'
+    onConfirmClick() {
+      this.$emit('confirm', { confirm: true, cancel: false })
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
-
-      this.$refs.close.close(e)
+      this.visible2 = false
     },
-    onClose() {
-      this.$emit('update:visible', false)
-
-      const type = 'close'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el
-          },
-          {}
-        )
-      )
+    onMaskClick() {
+      this.$emit('cancel', { confirm: false, cancel: true, maskClick: true })
+    },
+    onShow(res) {
+      this.$emit('show', res)
+    },
+    onShown(res) {
+      this.$emit('shown', res)
+    },
+    onHide(res) {
+      this.$emit('hide', res)
+    },
+    onHidden(res) {
+      this.$emit('hidden', res)
+    },
+    destroy() {
+      this.$refs.modal.destroy()
+      this.$destroy()
     }
   }
 }
@@ -141,15 +143,63 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-dialog {
-  &_content {
-    padding: 16px 24px;
-    max-height: 300px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    word-break: break-all;
-    word-wrap: break-word;
+  &_header {
+    flex: 1;
+    font-size: 17px;
+    line-height: 24px;
+    height: 24px;
+    font-weight: 500;
+    color: $title-color;
+    margin: 32px 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     text-align: center;
     white-space: pre-line;
+
+    + .#{$prefix}-dialog_content {
+      margin-top: 0;
+    }
+  }
+
+  &_content {
+    margin-top: 16px;
+    padding: 16px 24px;
+    font-size: 17px;
+    line-height: 24px;
+    color: $font-color;
+
+    &-text {
+      min-height: 24px;
+      max-height: 300px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      word-break: break-all;
+      word-wrap: break-word;
+      text-align: center;
+    }
+  }
+
+  &_footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+
+    &::before {
+      content: '';
+    }
+
+    &-inner {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      > .#{$prefix}-button + .#{$prefix}-button::before {
+        height: 100%;
+        background-color: $border-color;
+      }
+    }
   }
 }
 </style>

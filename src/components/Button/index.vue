@@ -164,7 +164,7 @@ export default {
   --button-icon-size: 21px;
 
   display: inline-flex;
-  flex: 1;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;

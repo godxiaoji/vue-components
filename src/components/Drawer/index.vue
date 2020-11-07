@@ -6,11 +6,15 @@
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div
-      :class="[prefix + '-drawer_inner', alignClassName]"
+      :class="[
+        prefix + '-drawer_inner',
+        alignClassName,
+        { 'has--header': hasHeader }
+      ]"
       @mousedown.prevent="noop"
     >
       <div
-        v-show="title != null || showClose"
+        v-show="hasHeader"
         :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
       >
         <div :class="[prefix + '-drawer_header-inner']">
@@ -69,6 +73,9 @@ export default {
         'align--' +
         (inArray(this.align, DRAWER_ALIGNS) ? this.align : DRAWER_ALIGNS[0])
       )
+    },
+    hasHeader() {
+      return this.title != null || this.showClose
     }
   },
   watch: {},
@@ -167,7 +174,7 @@ export default {
     flex-shrink: 1;
     flex-grow: 1;
 
-    .#{$prefix}-drawer_inner.has--title & {
+    .#{$prefix}-drawer_inner.has--header & {
       height: calc(100% - 48px);
     }
   }

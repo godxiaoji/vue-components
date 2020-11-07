@@ -10,10 +10,11 @@ const Easing = {
 }
 
 class AnimationFrameTask {
-  constructor(idle) {
+  constructor(ref) {
     this.stop = function() {
-      if (idle) {
-        cancelAnimationFrame(idle)
+      if (ref.idle) {
+        cancelAnimationFrame(ref.idle)
+        ref.idle = null
       }
     }
   }
@@ -29,10 +30,11 @@ export function frameTo(options) {
   const start = Date.now()
   const end = start + duration
 
-  let idle
+  const ref = { idle: null }
+  let frameIndex = 0
 
   function step() {
-    idle = requestAnimationFrame(function() {
+    ref.idle = requestAnimationFrame(function() {
       const t = Date.now()
       let current
 
@@ -41,12 +43,13 @@ export function frameTo(options) {
 
         if (isFunction(progress)) {
           progress({
-            current
+            current,
+            frameIndex: frameIndex++
           })
         }
 
         if (isFunction(complete)) {
-          complete()
+          complete({ current })
         }
       } else {
         const p = Easing['swing']((t - start) / duration)
@@ -54,7 +57,8 @@ export function frameTo(options) {
 
         if (isFunction(progress)) {
           progress({
-            current
+            current,
+            frameIndex: frameIndex++
           })
         }
 
@@ -67,5 +71,5 @@ export function frameTo(options) {
     step()
   }
 
-  return new AnimationFrameTask(idle)
+  return new AnimationFrameTask(ref)
 }

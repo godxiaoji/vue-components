@@ -1,24 +1,17 @@
 <template>
-  <div :class="[prefix + '-badge']">
+  <div :class="[prefix + '-badge', { animated: !!animated }]">
     <slot></slot>
-    <i
-      v-if="dot"
-      :class="[prefix + '-badge_dot']"
-      :style="styles"
-      v-show="showZero || count > 0"
-    ></i>
-    <span
-      v-else
-      :class="[prefix + '-badge_num']"
-      :style="styles"
-      v-show="showZero || count > 0"
-      >{{ showCount }}</span
-    >
+    <i v-if="dot" :class="[prefix + '-badge_dot']" :style="styles"></i>
+    <span v-else :class="[prefix + '-badge_num']" :style="styles">{{
+      showCount
+    }}</span>
   </div>
 </template>
 
 <script>
+import { rangeInteger } from '../../helpers/util'
 import { SDKKey } from '../../config'
+import { frameTo } from '../../helpers/animation'
 
 export default {
   name: SDKKey + '-badge',
@@ -44,6 +37,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // 是否开启动画
+    animated: {
+      type: Boolean,
+      default: false
+    },
     // 偏移量，格式为 [x, y]
     offset: {
       type: Array,
@@ -53,27 +51,60 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey }
+    return { prefix: SDKKey, count2: 0 }
   },
-  watch: {},
-  computed: {
-    showCount() {
-      const count = Math.abs(this.count)
+  watch: {
+    count: {
+      handler(val) {
+        this.frameTask && this.frameTask.stop()
 
-      if (count > this.maxCount) {
-        return this.maxCount + '+'
-      }
-      return count.toString()
-    },
-    styles() {
-      return {
-        transform: `translate3d(${this.offset[0]}px, ${this.offset[1]}px, 0px)`
+        const currentIsShow = this.showZero || this.count2 > 0
+        const isReadyToHide = !this.showZero && val === 0
+
+        if (!currentIsShow || isReadyToHide) {
+          this.count2 = val
+        } else {
+          const to = rangeInteger(val, 0, this.maxCount)
+
+          this.frameTask = frameTo({
+            from: this.count2,
+            to,
+            duration: Math.min(Math.abs(to - this.count2) * 50, 1000),
+            progress: ({ current, frameIndex }) => {
+              if (frameIndex % 3 === 0) {
+                this.count2 = Math.round(current)
+              }
+            },
+            complete: ({ current }) => {
+              this.count2 = current
+            }
+          })
+        }
       }
     }
   },
-  created() {},
+  computed: {
+    showCount() {
+      if (this.count > this.maxCount && this.count2 === this.maxCount) {
+        return this.count2 + '+'
+      }
+      return this.count2.toString()
+    },
+    styles() {
+      return {
+        transform: `translate3d(${this.offset[0]}px, ${
+          this.offset[1]
+        }px, 0px) scale(${this.showZero || this.count > 0 ? 1 : 0})`
+      }
+    }
+  },
+  created() {
+    this.count2 = rangeInteger(this.count, 0, this.maxCount)
+  },
   mounted() {},
-  beforeDestroy() {},
+  destroyed() {
+    this.frameTask && this.frameTask.stop()
+  },
   methods: {}
 }
 </script>
@@ -103,6 +134,7 @@ export default {
     color: var(--color);
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
+    transform: scale(0);
   }
 
   &_dot {
@@ -116,6 +148,19 @@ export default {
     color: var(--color);
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
+    transform: scale(0);
+  }
+
+  &.animated {
+    .#{$prefix}-badge {
+      &_num {
+        transition: transform 0.2s;
+      }
+
+      &_dot {
+        transition: transform 0.1s;
+      }
+    }
   }
 }
 </style>

@@ -6,10 +6,7 @@
     @click="onClick"
   >
     <slot>
-      <icon
-        :class="[prefix + '-back-top_icon']"
-        class-name="UpCircleOutlined"
-      ></icon>
+      <icon class-name="UpCircleOutlined"></icon>
     </slot>
   </div>
 </template>
@@ -18,6 +15,7 @@
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { pageScrollTo } from '../../apis/Scroll'
+import { addScrollEvent, removeScrollEvent } from '../../helpers/events'
 
 export default {
   name: SDKKey + '-back-top',
@@ -31,9 +29,6 @@ export default {
     animated: {
       type: Boolean,
       default: true
-    },
-    iconSize: {
-      type: Number
     },
     // 偏移量，格式为 [x, y]
     offset: {
@@ -61,14 +56,15 @@ export default {
   watch: {},
   created() {
     this.scrollTop = document.documentElement.scrollTop
-    document.addEventListener('scroll', this.onScroll, false)
+
+    addScrollEvent(this.onScroll)
   },
   ready() {},
   mounted() {},
   updated() {},
   attached() {},
   beforeDestroy() {
-    document.removeEventListener('scroll', this.onScroll, false)
+    removeScrollEvent(this.onScroll)
   },
   methods: {
     onScroll(e) {
@@ -100,11 +96,19 @@ export default {
   bottom: 20px;
   z-index: 1000;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 17px;
+  --back-top-color: #{$title-color};
+  color: var(--back-top-color);
 
-  &_icon {
+  .#{$prefix}-icon {
+    --size: 40px;
+    --color: var(--back-top-color);
     display: block;
-    width: 40px;
-    height: 40px;
   }
 }
 </style>

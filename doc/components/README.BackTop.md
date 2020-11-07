@@ -8,7 +8,6 @@
 | -------------- | -------- | ------ | ---- | ------------------------------ |
 | visible-height | number   | 200    | 否   | 滚动高度达到此参数值才出现     |
 | animated       | boolean  | true   | 否   | 是否需要动画                   |
-| icon-size      | number   | 40     | 否   | 缺少 `slot` 下默认 `Icon` 大小 |
 | offset         | number[] | [0, 0] | 否   | 偏移量，格式为 [x, y]          |
 
 ## Events

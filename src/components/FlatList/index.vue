@@ -4,8 +4,10 @@
     :scroll-x="scrollX"
     :scroll-y="scrollY"
     :lower-threshold="lowerThreshold"
+    :enable-pull-directions="enablePullDirections"
     @scroll="onScroll"
     @scroll-to-lower="onScrollToLower"
+    @refreshing="onRefreshing"
   >
     <div :class="[prefix + '-flat-list_header']" v-show="hasHeader">
       <slot name="header"></slot>
@@ -33,11 +35,15 @@
     <div :class="[prefix + '-flat-list_footer']" v-show="hasFooter">
       <slot name="footer"></slot>
     </div>
+    <div :class="[prefix + '-flat-list_lower-loading']" v-show="lowerLoading">
+      <icon :class-name="'LoadingOutlined'" :spin="true"></icon
+      ><span>正在加载</span>
+    </div>
   </scroll-view>
 </template>
 
 <script>
-import { CustomEvent } from '../../helpers/events'
+import Icon from '../Icon'
 import { cloneData, isFunction, isNumber, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import ScrollView from '../ScrollView'
@@ -45,7 +51,7 @@ import Exception from '../../helpers/exception'
 
 export default {
   name: SDKKey + '-flat-list',
-  components: { ScrollView },
+  components: { ScrollView, Icon },
   props: {
     dataKey: {
       type: String,
@@ -53,6 +59,7 @@ export default {
     },
     data: {
       type: Array,
+      required: true,
       default() {
         return []
       }
@@ -73,7 +80,7 @@ export default {
     // 开始时屏幕顶端的元素是列表中的第 initialScrollIndex个元素, 而不是第一个元素
     initialScrollIndex: {
       type: Number,
-      default: null
+      default: 0
     },
     // 预加载多少屏
     preLoad: {
@@ -84,6 +91,15 @@ export default {
     endReachedThreshold: {
       type: Number,
       default: 0.5
+    },
+    // 是否开启下拉刷新
+    enablePullRefresh: {
+      type: Boolean,
+      default: false
+    },
+    lowerLoading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -106,6 +122,13 @@ export default {
     },
     lowerThreshold() {
       return this.wrapperSize * this.endReachedThreshold
+    },
+    enablePullDirections() {
+      if (this.enablePullRefresh) {
+        return this.horizontal ? ['right'] : ['down']
+      }
+
+      return []
     }
   },
   watch: {
@@ -116,6 +139,9 @@ export default {
           this.updateItems(null, 'dataChange')
         })
       }
+    },
+    itemSize() {
+      this.setItemsSize()
     }
   },
   created() {
@@ -160,6 +186,10 @@ export default {
     this.$el.removeEventListener('resize', this.onResize, false)
   },
   methods: {
+    onRefreshing(res, done) {
+      this.$emit('refreshing', res, done)
+    },
+
     getScrollSize() {
       return this.$el[this.scrollX ? 'scrollLeft' : 'scrollTop']
     },
@@ -188,8 +218,8 @@ export default {
       })
       this.list = newList
     },
-    onScroll(e) {
-      const scrollSize = e.details[this.scrollX ? 'scrollLeft' : 'scrollTop']
+    onScroll(res) {
+      const scrollSize = res[this.scrollX ? 'scrollLeft' : 'scrollTop']
       //   console.log(e)
       if (this.scrollCount > 10) {
         // 每轮询10次更新一次
@@ -206,7 +236,7 @@ export default {
       }
 
       // scroll 事件回调
-      this.$emit(e.type, e)
+      this.$emit('scroll', res)
     },
     onScrollToLower() {
       const $el = this.$el
@@ -214,19 +244,9 @@ export default {
         ? $el.scrollWidth - $el.scrollLeft - $el.offsetWidth
         : $el.scrollHeight - $el.scrollTop - $el.offsetHeight
 
-      this.$emit(
-        'end-reached',
-        new CustomEvent(
-          {
-            type: 'end-reached',
-            target: $el,
-            currentTarget: $el
-          },
-          {
-            distanceFromEnd
-          }
-        )
-      )
+      this.$emit('end-reached', {
+        distanceFromEnd
+      })
     },
     onResize() {
       clearTimeout(this.resizeTimer)
@@ -304,21 +324,11 @@ export default {
         const change = recycled => {
           $item._recycled = recycled
 
-          this.$emit(
-            'recycle-change',
-            new CustomEvent(
-              {
-                type: 'recycle-change',
-                target: $item,
-                currentTarget: this.$el
-              },
-              {
-                recycled,
-                index,
-                item: cloneData(item.data)
-              }
-            )
-          )
+          this.$emit('recycle-change', {
+            recycled,
+            index,
+            item: cloneData(item.data)
+          })
         }
 
         if (itemLayout.fixed) {
@@ -358,9 +368,11 @@ export default {
      */
     getItemEls() {
       const $els = []
+      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`)
+        .children
 
-      for (let i = 0, len = this.$el.children.length; i < len; i++) {
-        const $el = this.$el.children[i]
+      for (let i = 0, len = $children.length; i < len; i++) {
+        const $el = $children[i]
         if ($el.className.indexOf('item') > -1) {
           $els.push($el)
         }
@@ -485,14 +497,54 @@ export default {
     }
   }
 
+  &_lower-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    color: $font-color;
+    box-sizing: border-box;
+    height: 48px;
+
+    .#{$prefix}-icon {
+      --size: 18px;
+      --color: #{$font-color};
+      margin-right: 8px;
+    }
+
+    span {
+      line-height: 16px;
+      text-align: center;
+      white-space: normal;
+    }
+  }
+
   &.horizontal {
     white-space: nowrap;
 
-    .#{$prefix}-flat-list_item {
-      display: inline-flex;
-      flex-direction: row;
-      height: 100%;
-      vertical-align: top;
+    .#{$prefix}-flat-list {
+      &_item {
+        display: inline-flex;
+        flex-direction: row;
+        height: 100%;
+        vertical-align: top;
+      }
+
+      &_lower-loading {
+        display: inline-flex;
+        width: 48px;
+        height: 100%;
+        flex-direction: column;
+
+        .#{$prefix}-icon {
+          margin: 0 0 8px 0;
+        }
+
+        span {
+          padding: 0 12px;
+        }
+      }
     }
   }
 }

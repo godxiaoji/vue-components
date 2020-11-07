@@ -7,7 +7,6 @@
 
 <script>
 import { SDKKey } from '../../config'
-import { CustomEvent } from '../../helpers/events'
 
 export default {
   name: SDKKey + '-copy',
@@ -38,31 +37,11 @@ export default {
         $el.firstElementChild.select()
         document.execCommand('Copy')
 
-        this.$emit(
-          'success',
-          new CustomEvent(
-            {
-              type: 'success',
-              currentTarget: $el,
-              target: $el
-            },
-            {
-              text: $el.firstElementChild.value
-            }
-          )
-        )
+        this.$emit('success', {
+          text: $el.firstElementChild.value
+        })
       } catch (error) {
-        this.$emit(
-          'error',
-          new CustomEvent(
-            {
-              type: 'error',
-              currentTarget: $el,
-              target: $el
-            },
-            error
-          )
-        )
+        this.$emit('error', error)
       }
 
       this.$emit(e.type, e)
@@ -95,7 +74,7 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    display: flex;
   }
 }
 </style>

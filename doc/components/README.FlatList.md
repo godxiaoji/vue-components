@@ -12,15 +12,18 @@
 | get-item-size         | Function |        | 否   | 动态返回列表项尺寸（垂直布局下指高度，水平布局下指宽度），`getItemSize(item:any, index:number) => number`，item 是 data[index] 的副本                    |
 | item-size             | number   |        | 否   | 设置列表项尺寸，优先使用 `get-item-size`                                                                                                                 |
 | initial-scroll-index  | number   |        | 否   | 开始时屏幕顶端的元素是列表中的第 `initialScrollIndex` 个元素, 而不是第一个元素                                                                           |
-| end-reached-threshold | number   | 0.5    | 否   | 决定当距离内容最底部还有多远时触发 onEndReached 回调。注意此参数是一个比值而非像素单位。比如，0.5 表示距离内容最底部的距离为当前列表可见长度的一半时触发 |  |
+| end-reached-threshold | number   | 0.5    | 否   | 决定当距离内容最底部还有多远时触发 onEndReached 回调。注意此参数是一个比值而非像素单位。比如，0.5 表示距离内容最底部的距离为当前列表可见长度的一半时触发 |
+| enable-pull-refresh   | boolean  | false  | 否   | 是否开启下拉刷，如果时水平列表则为左拉刷新，搭配 `refreshing` 事件使用新                                                                                 |
+| lower-loading         | boolean  | false  | 否   | 是否展示底部加载更多状态，配合 `end-reached` 事件加载无无限列表                                                                                          |
 
 ## Events
 
-| 事件           | 描述                 | 回调函数参数                                                                      |
-| -------------- | -------------------- | --------------------------------------------------------------------------------- |
-| recycle-change | 列表项回收变化时触发 | CustomEvent，event.details = { item, index, recycled }                            |
-| end-reached    | 滚动到末尾时触发     | CustomEvent，event.details.distanceFromEnd 距离末尾的距离，单位 px                |
-| scroll         | 滚动时触发           | CustomEvent，event.details = { scrollLeft, scrollTop, scrollHeight, scrollWidth } |
+| 事件           | 描述                 | 回调函数参数                                                                                           |
+| -------------- | -------------------- | ------------------------------------------------------------------------------------------------------ |
+| recycle-change | 列表项回收变化时触发 | { item, index, recycled }                                                                              |
+| end-reached    | 滚动到末尾时触发     | { distanceFromEnd } 其中 distanceFromEnd 为距离末尾的距离，单位 px                                     |
+| scroll         | 滚动时触发           | { scrollLeft, scrollTop, scrollHeight, scrollWidth }                                                   |
+| refreshing     | 下拉刷新时触发       | ({ pullDirection: string }, done: Function) 其中 pullDirection 指下拉的方向，done 指刷新完毕回调的函数 |
 
 ### recycle-change 的 event.details 项
 

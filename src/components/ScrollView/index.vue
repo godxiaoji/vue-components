@@ -5,26 +5,74 @@
       {
         'scroll-x': scrollX,
         'scroll-y': scrollY,
-        'enable-flex': enableFlex,
-        smooth: scrollWithAnimation
+        smooth: scrollAnimated
       }
     ]"
-    @scroll="scrollEvent"
+    ref="scroll"
+    @scroll="onScroll"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
   >
-    <slot></slot>
+    <div :class="[prefix + '-scroll-view_inner']">
+      <div :class="[prefix + '-scroll-view_content']" :style="contentStyles">
+        <div
+          v-if="enablePullDirections.length > 0"
+          :class="[
+            prefix + '-scroll-view_pull-refresh',
+            'direction--' + (pullDirection || 'unknown')
+          ]"
+        >
+          <slot
+            v-bind:pullDirection="pullDirection"
+            v-bind:pullRefreshState="pullRefreshState"
+            v-bind:pullIndicatorSafeArea="pullIndicatorSafeArea"
+            name="indicator"
+          >
+            <div
+              :class="[prefix + '-scroll-view_pull-refresh-indicator']"
+              :style="indicatorStyles"
+            >
+              <icon
+                :class-name="
+                  pullRefreshState === PULL_REFRESH_STATE_REFRESHING
+                    ? 'LoadingOutlined'
+                    : 'CircleOutlined'
+                "
+                :spin="pullRefreshState === PULL_REFRESH_STATE_REFRESHING"
+              ></icon>
+              <span>{{
+                pullRefreshState === PULL_REFRESH_STATE_REFRESHING
+                  ? '正在刷新'
+                  : pullRefreshState === PULL_REFRESH_STATE_HOLDING
+                  ? '松开刷新'
+                  : pullDirectionNames[pullDirection] + '拉刷新'
+              }}</span>
+            </div></slot
+          >
+        </div>
+        <slot></slot>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { CustomEvent } from '../../helpers/events'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
+import { inArray, isArray, isString, isStringArray } from '../../helpers/util'
 
 const SCROLL_STATE_CENTER = 0
 const SCROLL_STATE_UPPER = 1
 const SCROLL_STATE_LOWER = 2
 
+const PULL_REFRESH_STATE_PULLING = 'pulling'
+const PULL_REFRESH_STATE_HOLDING = 'holding'
+const PULL_REFRESH_STATE_REFRESHING = 'refreshing'
+
 export default {
   name: SDKKey + '-scroll-view',
+  components: { Icon },
   props: {
     // 允许横向滚动
     scrollX: {
@@ -37,7 +85,7 @@ export default {
       default: false
     },
     // 在设置滚动条位置时使用动画过渡
-    scrollWithAnimation: {
+    scrollAnimated: {
       type: Boolean,
       default: false
     },
@@ -66,19 +114,71 @@ export default {
       type: String,
       default: ''
     },
-    // 启用 flexbox 布局。开启后，当前节点声明了 display: flex 就会成为 flex container，并作用于其孩子节点。
-    enableFlex: {
-      type: Boolean,
-      default: false
+    // 下拉刷新方向
+    enablePullDirections: {
+      validator(val) {
+        return isString(val) || isStringArray(val)
+      },
+      default() {
+        return []
+      }
+    },
+    // 下拉刷新阈值
+    pullRefreshThreshold: {
+      type: Number,
+      default: 48
     }
   },
   data() {
-    return { prefix: SDKKey }
+    return {
+      prefix: SDKKey,
+
+      pullRefreshState: PULL_REFRESH_STATE_PULLING,
+      pullDistance: 0,
+      translateDuration: 0,
+      pullDirection: '',
+
+      pullDirectionNames: {
+        '': '下',
+        up: '上',
+        down: '下',
+        left: '左',
+        right: '右'
+      },
+      pullIndicatorSafeArea: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+      },
+
+      PULL_REFRESH_STATE_PULLING,
+      PULL_REFRESH_STATE_HOLDING,
+      PULL_REFRESH_STATE_REFRESHING
+    }
+  },
+  computed: {
+    contentStyles() {
+      const styles = {
+        transition: `transform ${this.translateDuration}ms`
+      }
+
+      styles.transform = inArray(this.pullDirection, ['up', 'down'])
+        ? `translate3d(0, ${this.pullDistance}px, 0)`
+        : `translate3d(${this.pullDistance}px, 0, 0)`
+
+      return styles
+    },
+    indicatorStyles() {
+      return {
+        padding: `${this.pullIndicatorSafeArea.top}px ${this.pullIndicatorSafeArea.right}px ${this.pullIndicatorSafeArea.bottom}px ${this.pullIndicatorSafeArea.left}px`
+      }
+    }
   },
   ready() {},
   mounted() {
-    this._isToLowerOrUpperY === SCROLL_STATE_UPPER
-    this._isToLowerOrUpperX === SCROLL_STATE_UPPER
+    this._isToLowerOrUpperY = SCROLL_STATE_UPPER
+    this._isToLowerOrUpperX = SCROLL_STATE_UPPER
     this._prevY = 0
     this._prevX = 0
 
@@ -101,6 +201,176 @@ export default {
     }
   },
   methods: {
+    loadComplete() {
+      this.pullRefreshState = PULL_REFRESH_STATE_PULLING
+      this.pullDistance = 0
+    },
+
+    onTouchStart(e) {
+      if (this.pullRefreshState === PULL_REFRESH_STATE_REFRESHING) {
+        return
+      }
+
+      const allowPullDirections = isArray(this.enablePullDirections)
+        ? this.enablePullDirections
+        : [this.enablePullDirections]
+
+      if (allowPullDirections.length === 0) {
+        return
+      }
+
+      this.pullDistance = 0
+      this.translateDuration = 0
+      this.pullDirection = ''
+
+      // 猜想可能刷新的方向，0-4个都有可能
+      const directions = []
+
+      const $scroll = this.$refs.scroll
+
+      if ($scroll.scrollTop === 0 && inArray('down', allowPullDirections)) {
+        directions.push('down')
+      }
+      if (
+        $scroll.scrollTop + $scroll.offsetHeight >= $scroll.scrollHeight &&
+        inArray('up', allowPullDirections)
+      ) {
+        directions.push('up')
+      }
+      if ($scroll.scrollLeft === 0 && inArray('right', allowPullDirections)) {
+        directions.push('right')
+      }
+      if (
+        $scroll.scrollLeft + $scroll.offsetWidth >= $scroll.scrollWidth &&
+        inArray('left', allowPullDirections)
+      ) {
+        directions.push('left')
+      }
+
+      if (directions[0]) {
+        // 只要命中一个方向
+        const { pageX, pageY } = e.targetTouches[0]
+
+        this.pullStart = { pageX, pageY, directions }
+      }
+    },
+
+    onTouchMove(e) {
+      if (!this.pullStart) {
+        return
+      }
+
+      const { pageX, pageY } = e.targetTouches[0]
+      const offsetX = pageX - this.pullStart.pageX
+      const offsetY = pageY - this.pullStart.pageY
+
+      let pullDirection = this.pullStart.direction
+
+      if (!pullDirection) {
+        // 如果可能存在两个方向，继续验证会走的方向
+        if (Math.abs(offsetY) >= Math.abs(offsetX)) {
+          this.pullStart.directions = this.pullStart.directions.filter(v => {
+            return (
+              inArray(v, ['up', 'down']) &&
+              ((v === 'down' && offsetY > 0) || (v === 'up' && offsetY < 0))
+            )
+          })
+        } else {
+          this.pullStart.directions = this.pullStart.directions.filter(v => {
+            return (
+              inArray(v, ['left', 'right']) &&
+              ((v === 'right' && offsetX > 0) || (v === 'left' && offsetX < 0))
+            )
+          })
+        }
+
+        this.pullStart.direction = pullDirection = this.pullStart.directions[0]
+      }
+
+      if (!pullDirection) {
+        this.pullStart = null
+        return
+      }
+
+      e.preventDefault()
+
+      if (!this.pullStart.safeArea) {
+        const safeArea = {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0
+        }
+        const $scroll = this.$refs.scroll
+
+        if (inArray(pullDirection, ['up', 'down'])) {
+          safeArea.left = $scroll.scrollLeft
+          safeArea.right =
+            $scroll.scrollWidth - $scroll.scrollLeft - $scroll.offsetWidth
+        } else {
+          safeArea.top = $scroll.scrollTop
+          safeArea.bottom =
+            $scroll.scrollHeight - $scroll.scrollTop - $scroll.offsetHeight
+        }
+
+        this.pullIndicatorSafeArea = safeArea
+        this.pullStart.safeArea = safeArea
+      }
+
+      this.pullDirection = pullDirection
+
+      let distance
+      if (inArray(this.pullDirection, ['up', 'down'])) {
+        distance = offsetY
+      } else {
+        distance = offsetX
+      }
+      distance = Math.abs(distance)
+
+      if (distance >= this.pullRefreshThreshold) {
+        if (this.pullRefreshState === PULL_REFRESH_STATE_PULLING) {
+          this.pullRefreshState = PULL_REFRESH_STATE_HOLDING
+        }
+
+        distance =
+          this.pullRefreshThreshold +
+          Math.ceil(
+            (distance - this.pullRefreshThreshold) /
+              Math.log(Math.abs(distance - this.pullRefreshThreshold) / 2)
+          ) // 除于2比不除更好拉一点
+      }
+
+      this.pullDistance = inArray(this.pullDirection, ['down', 'right'])
+        ? distance
+        : -distance
+    },
+
+    onTouchEnd() {
+      if (!this.pullStart) {
+        return
+      }
+      this.pullStart = null
+
+      this.translateDuration = 300
+
+      if (this.pullRefreshState === PULL_REFRESH_STATE_HOLDING) {
+        this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
+        this.pullDistance = inArray(this.pullDirection, ['down', 'right'])
+          ? this.pullRefreshThreshold
+          : -this.pullRefreshThreshold
+
+        this.$emit(
+          'refreshing',
+          {
+            pullDirection: this.pullDirection
+          },
+          this.loadComplete
+        )
+      } else {
+        this.pullDistance = 0
+      }
+    },
+
     /**
      * 滚动到指定Id元素
      */
@@ -110,22 +380,9 @@ export default {
 
         if ($view) {
           $view.scrollIntoView({
-            behavior: this.scrollWithAnimation ? 'smooth' : 'auto'
+            behavior: this.scrollAnimated ? 'smooth' : 'auto'
           })
         }
-      }
-    },
-
-    /**
-     * 滑动到第index个元素
-     */
-    scrollIntoIndex(index) {
-      const $view = this.$el.children[index]
-
-      if ($view) {
-        $view.scrollIntoView({
-          behavior: this.scrollWithAnimation ? 'smooth' : 'auto'
-        })
       }
     },
 
@@ -145,7 +402,7 @@ export default {
         this.$el.scrollTo({
           top: scrollTop,
           left: scrollLeft,
-          behavior: this.scrollWithAnimation ? 'smooth' : 'instant'
+          behavior: this.scrollAnimated ? 'smooth' : 'instant'
         })
       }
     },
@@ -153,7 +410,7 @@ export default {
     /**
      * 滚动事件处理
      */
-    scrollEvent(e) {
+    onScroll(e) {
       const { upperThreshold, lowerThreshold, scrollX, scrollY, $el } = this
       const {
         scrollTop,
@@ -173,15 +430,14 @@ export default {
       const typeUpper = 'scroll-to-upper'
 
       // 滚动事件
-      this.$emit(
-        e.type,
-        new CustomEvent(e, {
-          scrollTop,
-          scrollLeft,
-          scrollWidth,
-          scrollHeight
-        })
-      )
+      this.$emit(e.type, {
+        scrollTop,
+        scrollLeft,
+        scrollWidth,
+        scrollHeight,
+        clientHeight,
+        clientWidth
+      })
 
       // 上下滚动
       if (scrollY) {
@@ -232,67 +488,31 @@ export default {
         // 触顶
         this._isToLowerOrUpperY = SCROLL_STATE_UPPER
 
-        this.$emit(
-          typeUpper,
-          new CustomEvent(
-            {
-              type: typeUpper,
-              currentTarget: $el
-            },
-            {
-              direction: 'top'
-            }
-          )
-        )
+        this.$emit(typeUpper, {
+          direction: 'top'
+        })
       } else if (isToLowerY) {
         // 触底
         this._isToLowerOrUpperY = SCROLL_STATE_LOWER
 
-        this.$emit(
-          typeLower,
-          new CustomEvent(
-            {
-              type: typeLower,
-              currentTarget: $el
-            },
-            {
-              direction: 'bottom'
-            }
-          )
-        )
+        this.$emit(typeLower, {
+          direction: 'bottom'
+        })
       }
       if (isToUpperX) {
         // 触顶
         this._isToLowerOrUpperX = SCROLL_STATE_UPPER
 
-        this.$emit(
-          typeUpper,
-          new CustomEvent(
-            {
-              type: typeUpper,
-              currentTarget: $el
-            },
-            {
-              direction: 'left'
-            }
-          )
-        )
+        this.$emit(typeUpper, {
+          direction: 'left'
+        })
       } else if (isToLowerX) {
         // 触底
         this._isToLowerOrUpperX = SCROLL_STATE_LOWER
 
-        this.$emit(
-          typeLower,
-          new CustomEvent(
-            {
-              type: typeLower,
-              currentTarget: $el
-            },
-            {
-              direction: 'right'
-            }
-          )
-        )
+        this.$emit(typeLower, {
+          direction: 'right'
+        })
       }
 
       this._prevY = scrollTop
@@ -313,18 +533,114 @@ export default {
 
   &.scroll-x {
     overflow-x: auto;
+    white-space: nowrap;
   }
 
   &.scroll-y {
     overflow-y: auto;
   }
 
-  &.enable-flex {
-    display: flex;
-  }
-
   &.smooth {
     scroll-behavior: smooth;
+  }
+
+  &_inner {
+    min-height: 100%;
+    min-width: 100%;
+    overflow: hidden;
+
+    .#{$prefix}-scroll-view.scroll-x & {
+      display: inline-block;
+      vertical-align: top;
+      height: 100%;
+    }
+  }
+
+  &_content {
+    position: relative;
+    min-height: 100%;
+    min-width: 100%;
+
+    .#{$prefix}-scroll-view.scroll-x & {
+      height: 100%;
+    }
+  }
+
+  &_pull-refresh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transform: translate3d(0, -100%, 0);
+
+    &-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 14px;
+      color: $font-color;
+      box-sizing: border-box;
+      height: 48px;
+
+      .#{$prefix}-icon {
+        --size: 18px;
+        --color: #{$font-color};
+        margin-right: 8px;
+      }
+
+      span {
+        line-height: 16px;
+        text-align: center;
+        white-space: normal;
+      }
+    }
+
+    &.direction--unknown {
+      display: none;
+    }
+
+    &.direction--up {
+      top: auto;
+      bottom: 0;
+      align-items: flex-start;
+      transform: translate3d(0, 100%, 0);
+    }
+
+    &.direction--left,
+    &.direction--right {
+      left: 0;
+      top: 0;
+      bottom: 0;
+      height: auto;
+      justify-content: flex-end;
+      align-items: center;
+      transform: translate3d(-100%, 0, 0);
+
+      .#{$prefix}-scroll-view_pull-refresh-indicator {
+        width: 48px;
+        height: 100%;
+        flex-direction: column;
+
+        .#{$prefix}-icon {
+          margin: 0 0 8px 0;
+        }
+
+        span {
+          padding: 0 12px;
+        }
+      }
+    }
+
+    &.direction--left {
+      left: auto;
+      right: 0;
+      transform: translate3d(100%, 0, 0);
+      justify-content: flex-start;
+    }
   }
 }
 </style>

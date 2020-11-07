@@ -15,6 +15,7 @@ PS：
 | dot       | boolean  | false  | 否   | 是否显示为小红点      |
 | show-zero | boolean  | false  | 否   | 消息数为 0 时是否显示 |
 | offset    | number[] | [0, 0] | 否   | 偏移量，格式为 [x, y] |
+| animated  | boolean  | false  | 否   | 是否开启动画          |
 
 ## Slots
 

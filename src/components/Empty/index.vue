@@ -1,11 +1,8 @@
 <template>
   <div :class="[prefix + '-empty']">
-    <slot class="image" v-if="hasImage"></slot>
+    <slot name="image" v-if="$slots.image"></slot>
     <template v-else>
-      <img
-        :class="[prefix + '-empty_image']"
-        :src="imageUrl"
-      />
+      <img :class="[prefix + '-empty_image']" :src="imageUrl" />
     </template>
     <p :class="[prefix + '-empty_description']" v-show="description">
       {{ description }}
@@ -38,22 +35,18 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, hasImage: false }
+    return { prefix: SDKKey }
   },
   watch: {},
   computed: {
     imageUrl() {
-      return inArray(this.type, TYPE_NAMES)
-        ? `https://cdn.fox2.cn/vfox/empty/${this.type}@2x.png`
-        : null
+      return `https://cdn.fox2.cn/vfox/empty/${
+        inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
+      }@2x.png`
     }
   },
   created() {},
-  mounted() {
-    if (this.$scopedSlots.image) {
-      this.hasImage = true
-    }
-  },
+  mounted() {},
   beforeDestroy() {},
   methods: {}
 }
@@ -83,6 +76,10 @@ export default {
     margin: 16px 0 0 0;
     font-size: 14px;
     line-height: 19.6px;
+
+    + * {
+      margin-top: 16px;
+    }
   }
 }
 </style>

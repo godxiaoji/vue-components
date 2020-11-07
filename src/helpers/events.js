@@ -1,4 +1,4 @@
-import { objectForEach, isObject, isElement } from './util'
+import { objectForEach, isObject, isElement, isFunction } from './util'
 import Exception from './exception'
 
 export function getAppTarget(el) {
@@ -84,4 +84,41 @@ export function getDataset(object) {
   })
 
   return dataset
+}
+
+let scrollCallbacks = []
+
+function onScroll(e) {
+  scrollCallbacks.forEach(callback => {
+    callback.call(callback, e)
+  })
+}
+
+export function addScrollEvent(callback) {
+  if (scrollCallbacks.length === 0) {
+    document.addEventListener('scroll', onScroll, false)
+  }
+
+  if (isFunction(callback)) {
+    scrollCallbacks.push(callback)
+  }
+}
+
+export function removeScrollEvent(callback) {
+  let index = -1
+
+  for (let i = 0; i < scrollCallbacks.length; i++) {
+    if (scrollCallbacks[i] == callback) {
+      index = i
+      break
+    }
+  }
+
+  if (index >= 0) {
+    scrollCallbacks.splice(index, 1)
+
+    if (scrollCallbacks.length === 0) {
+      document.removeEventListener('scroll', onScroll, false)
+    }
+  }
 }

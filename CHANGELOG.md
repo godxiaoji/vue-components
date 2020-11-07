@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/godxiaoji/vfox/compare/v1.4.1...v1.4.2) (2020-11-07)
+
+
+### Bug Fixes
+
+* 修复flat-list组件加载更多抖动的bug ([85a0220](https://github.com/godxiaoji/vfox/commit/85a02204c1e20005a1f9a85f8debef4edd9b8439))
+
 ## [1.4.1](https://github.com/godxiaoji/vfox/compare/v1.4.0...v1.4.1) (2020-11-07)
 
 

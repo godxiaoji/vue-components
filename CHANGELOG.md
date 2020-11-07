@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/godxiaoji/vfox/compare/v1.4.0...v1.4.1) (2020-11-07)
+
+
+### Bug Fixes
+
+* scroll-view及其相关的组件优化 ([379845f](https://github.com/godxiaoji/vfox/commit/379845fd84134bdaf4861a967f5253cb856b5718))
+
 # [1.4.0](https://github.com/godxiaoji/vfox/compare/v1.3.0...v1.4.0) (2020-11-05)
 
 

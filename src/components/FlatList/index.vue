@@ -5,6 +5,7 @@
     :scroll-y="scrollY"
     :lower-threshold="lowerThreshold"
     :enable-pull-directions="enablePullDirections"
+    :lowerLoading="lowerLoading"
     @scroll="onScroll"
     @scroll-to-lower="onScrollToLower"
     @refreshing="onRefreshing"
@@ -35,15 +36,10 @@
     <div :class="[prefix + '-flat-list_footer']" v-show="hasFooter">
       <slot name="footer"></slot>
     </div>
-    <div :class="[prefix + '-flat-list_lower-loading']" v-show="lowerLoading">
-      <icon :class-name="'LoadingOutlined'" :spin="true"></icon
-      ><span>正在加载</span>
-    </div>
   </scroll-view>
 </template>
 
 <script>
-import Icon from '../Icon'
 import { cloneData, isFunction, isNumber, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import ScrollView from '../ScrollView'
@@ -51,7 +47,7 @@ import Exception from '../../helpers/exception'
 
 export default {
   name: SDKKey + '-flat-list',
-  components: { ScrollView, Icon },
+  components: { ScrollView },
   props: {
     dataKey: {
       type: String,
@@ -244,9 +240,11 @@ export default {
         ? $el.scrollWidth - $el.scrollLeft - $el.offsetWidth
         : $el.scrollHeight - $el.scrollTop - $el.offsetHeight
 
-      this.$emit('end-reached', {
-        distanceFromEnd
-      })
+      if (!this.lowerLoading) {
+        this.$emit('end-reached', {
+          distanceFromEnd
+        })
+      }
     },
     onResize() {
       clearTimeout(this.resizeTimer)
@@ -485,6 +483,7 @@ export default {
     flex-direction: column;
 
     &-inner {
+      height: 100%;
       flex-grow: 1;
     }
   }
@@ -497,29 +496,6 @@ export default {
     }
   }
 
-  &_lower-loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    font-size: 14px;
-    color: $font-color;
-    box-sizing: border-box;
-    height: 48px;
-
-    .#{$prefix}-icon {
-      --size: 18px;
-      --color: #{$font-color};
-      margin-right: 8px;
-    }
-
-    span {
-      line-height: 16px;
-      text-align: center;
-      white-space: normal;
-    }
-  }
-
   &.horizontal {
     white-space: nowrap;
 
@@ -529,21 +505,6 @@ export default {
         flex-direction: row;
         height: 100%;
         vertical-align: top;
-      }
-
-      &_lower-loading {
-        display: inline-flex;
-        width: 48px;
-        height: 100%;
-        flex-direction: column;
-
-        .#{$prefix}-icon {
-          margin: 0 0 8px 0;
-        }
-
-        span {
-          padding: 0 12px;
-        }
       }
     }
   }

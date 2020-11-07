@@ -17,6 +17,7 @@
     <div :class="[prefix + '-scroll-view_inner']">
       <div :class="[prefix + '-scroll-view_content']" :style="contentStyles">
         <div
+          v-show="!lowerLoading"
           v-if="enablePullDirections.length > 0"
           :class="[
             prefix + '-scroll-view_pull-refresh',
@@ -52,6 +53,21 @@
           >
         </div>
         <slot></slot>
+        <div
+          :class="[
+            prefix + '-scroll-view_lower-loading',
+            'direction--' + (pullDirection || 'unknown')
+          ]"
+          v-show="lowerLoading"
+        >
+          <div
+            :class="[prefix + '-scroll-view_lower-loading-indicator']"
+            :style="indicatorStyles"
+          >
+            <icon :class-name="'LoadingOutlined'" :spin="true"></icon
+            ><span>正在加载</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -127,6 +143,10 @@ export default {
     pullRefreshThreshold: {
       type: Number,
       default: 48
+    },
+    lowerLoading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -135,7 +155,7 @@ export default {
 
       pullRefreshState: PULL_REFRESH_STATE_PULLING,
       pullDistance: 0,
-      translateDuration: 0,
+      translateDuration: 200,
       pullDirection: '',
 
       pullDirectionNames: {
@@ -198,6 +218,21 @@ export default {
     },
     scrollIntoView(val) {
       this.scrollIntoIdView(val)
+    },
+    lowerLoading(val) {
+      if (val) {
+        if (this._isToLowerOrUpperY === SCROLL_STATE_LOWER) {
+          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
+          this.pullDirection = 'up'
+          this.pullDistance = -this.pullRefreshThreshold
+        } else if (this._isToLowerOrUpperX === SCROLL_STATE_LOWER) {
+          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
+          this.pullDirection = 'left'
+          this.pullDistance = -this.pullRefreshThreshold
+        }
+      } else {
+        this.loadComplete()
+      }
     }
   },
   methods: {
@@ -207,6 +242,10 @@ export default {
     },
 
     onTouchStart(e) {
+      if (this.lowerLoading) {
+        return
+      }
+
       if (this.pullRefreshState === PULL_REFRESH_STATE_REFRESHING) {
         return
       }
@@ -351,7 +390,7 @@ export default {
       }
       this.pullStart = null
 
-      this.translateDuration = 300
+      this.translateDuration = 200
 
       if (this.pullRefreshState === PULL_REFRESH_STATE_HOLDING) {
         this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
@@ -548,10 +587,14 @@ export default {
     min-height: 100%;
     min-width: 100%;
     overflow: hidden;
+    transform: translateZ(0);
 
     .#{$prefix}-scroll-view.scroll-x & {
       display: inline-block;
       vertical-align: top;
+    }
+
+    .#{$prefix}-scroll-view.scroll-x:not(.scroll-y) & {
       height: 100%;
     }
   }
@@ -561,12 +604,13 @@ export default {
     min-height: 100%;
     min-width: 100%;
 
-    .#{$prefix}-scroll-view.scroll-x & {
+    .#{$prefix}-scroll-view.scroll-x:not(.scroll-y) & {
       height: 100%;
     }
   }
 
-  &_pull-refresh {
+  &_pull-refresh,
+  &_lower-loading {
     position: absolute;
     top: 0;
     left: 0;

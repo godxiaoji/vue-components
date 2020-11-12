@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/godxiaoji/vfox/compare/v1.4.2...v1.4.3) (2020-11-12)
+
+
+### Bug Fixes
+
+* 加入picker及其相关组件 ([42ffa3d](https://github.com/godxiaoji/vfox/commit/42ffa3d4d1cd44e874d1f65550e3ed8a31324440))
+
 ## [1.4.2](https://github.com/godxiaoji/vfox/compare/v1.4.1...v1.4.2) (2020-11-07)
 
 

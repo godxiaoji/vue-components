@@ -71,3 +71,7 @@ API 列表，参照微信小程序，持续更新。
 ## URL
 
 [queryString](./apis/README.URL.md#queryString)
+
+## Picker
+
+[showPicker](./apis/README.Picker.md#showPicker)

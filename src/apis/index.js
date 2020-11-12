@@ -13,6 +13,7 @@ import {
 } from './LocalStorage'
 import { pageScrollTo, elementScrollTo } from './Scroll'
 import { queryString } from './URL'
+import { showPicker } from './Picker'
 
 export {
   createIntersectionObserver,
@@ -32,5 +33,6 @@ export {
   pageScrollTo,
   elementScrollTo,
   previewImage,
-  queryString
+  queryString,
+  showPicker
 }

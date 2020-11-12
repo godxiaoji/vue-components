@@ -200,6 +200,27 @@ export function isStringArray(object) {
 }
 
 /**
+ * 是否只存在数值或者字符串的数组
+ * @param {any} object 值
+ */
+export function isStringNumberMixArray(object) {
+  let is = false
+
+  if (isArray(object)) {
+    is = true
+
+    for (let i = 0; i < object.length; i++) {
+      if (!(isString(object[i]) || isNumber(object[i]))) {
+        is = false
+        break
+      }
+    }
+  }
+
+  return is
+}
+
+/**
  * 是否相同的数组
  * @param {Array} a 数组a
  * @param {Array} b 数组b

@@ -1,11 +1,20 @@
 import Exception from '../helpers/exception'
-import { isObject, inArray, cloneData } from '../helpers/util'
+import {
+  isObject,
+  inArray,
+  isFunction,
+  isStringNumberMixArray,
+  isString,
+  isNumber
+} from '../helpers/util'
 import {
   notNullValidator,
   stringArrayValidator,
   getType,
   elementValidator
 } from '../helpers/validator'
+
+import { MODE_NAMES as SELECT_MODE_NAMES } from '../components/Cascader/util'
 
 export const apiRules = {
   /**
@@ -62,6 +71,36 @@ export const apiRules = {
     maskClosable: {
       type: Boolean,
       default: false
+    }
+  },
+  showPicker: {
+    title: {
+      type: String,
+      default: null
+    },
+    options: {
+      type: Array,
+      required: true
+    },
+    value: {
+      validator(value) {
+        return (
+          isStringNumberMixArray(value) || isString(value) || isNumber(value)
+        )
+      },
+      default() {
+        return []
+      }
+    },
+    mode: {
+      enums: SELECT_MODE_NAMES,
+      default: SELECT_MODE_NAMES[0]
+    },
+    fieldNames: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   previewImage: {
@@ -252,6 +291,19 @@ export const parseParamsByRules = function(options, apiName) {
         } else {
           ret[k] = option
         }
+      } else if (typeof rule.type() === 'object') {
+        // object array
+        if (getType(rule.type()) === getType(option)) {
+          ret[k] = option
+        } else {
+          throw new Exception(
+            `param0.${k} should be ${getType(rule.type())} instead of ${getType(
+              option
+            )}`,
+            PARAM_ERROR,
+            apiName
+          )
+        }
       } else if (rule.type(option) !== option) {
         throw new Exception(
           `param0.${k} should be ${getType(rule.type())} instead of ${getType(
@@ -265,7 +317,7 @@ export const parseParamsByRules = function(options, apiName) {
         ret[k] = option
       }
     } else if (rule.default) {
-      ret[k] = cloneData(rule.default)
+      ret[k] = isFunction(rule.default) ? rule.default() : rule.default
     }
   }
 

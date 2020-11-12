@@ -46,8 +46,7 @@ import {
   inArray,
   isArray,
   cloneData,
-  isStringArray,
-  isNumberArray,
+  isStringNumberMixArray,
   isString,
   isNumber,
   isObject
@@ -137,8 +136,7 @@ export default {
     value: {
       validator(value) {
         return (
-          isStringArray(value) ||
-          isNumberArray(value) ||
+          isStringNumberMixArray(value) ||
           isString(value) ||
           isNumber(value)
         )

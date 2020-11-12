@@ -10,6 +10,19 @@
       <div :class="[prefix + '-nav-bar_layout']">
         <div :class="[prefix + '-nav-bar_left']">
           <slot name="left" v-if="$slots.left"></slot>
+          <template v-else-if="leftButtons.length > 0">
+            <fx-button-group :shape="buttonShape" pattern="borderless">
+              <fx-button
+                :class="[prefix + '-nav-bar_button']"
+                :type="item.type || 'default'"
+                :icon="item.icon"
+                v-for="(item, index) in leftButtons"
+                :key="index"
+                @click="onLeftIconClick(item, index)"
+                >{{ item.text }}</fx-button
+              >
+            </fx-button-group>
+          </template>
           <template v-else>
             <fx-button-group :shape="buttonShape" pattern="borderless">
               <fx-button
@@ -48,7 +61,7 @@
             >
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
-                type="default"
+                :type="item.type || 'default'"
                 :icon="item.icon"
                 v-for="(item, index) in rightButtons"
                 :key="index"
@@ -66,6 +79,24 @@
 <script>
 import { SDKKey } from '../../config'
 import { isArray, isString } from '../../helpers/util'
+
+function validateButtons(val) {
+  if (isArray(val)) {
+    if (val.length === 0) {
+      return true
+    }
+
+    for (let i = 0; i < val.length; i++) {
+      if (!(isString(val[i].text) && isString(val[i].icon))) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  return false
+}
 
 export default {
   name: SDKKey + '-nav-bar',
@@ -91,23 +122,17 @@ export default {
       type: Boolean,
       default: false
     },
+    leftButtons: {
+      validator(val) {
+        return validateButtons(val)
+      },
+      default() {
+        return []
+      }
+    },
     rightButtons: {
       validator(val) {
-        if (isArray(val)) {
-          if (val.length === 0) {
-            return true
-          }
-
-          for (let i = 0; i < val.length; i++) {
-            if (!(isString(val[i].text) && isString(val[i].icon))) {
-              return false
-            }
-          }
-
-          return true
-        }
-
-        return false
+        return validateButtons(val)
       },
       default() {
         return []
@@ -136,6 +161,13 @@ export default {
     },
     onBackHome() {
       this.$emit('home-click', {})
+    },
+    onLeftIconClick(item, index) {
+      this.$emit('left-button-click', {
+        icon: item.icon,
+        text: item.text,
+        index
+      })
     },
     onRightIconClick(item, index) {
       this.$emit('right-button-click', {

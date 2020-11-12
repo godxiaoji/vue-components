@@ -18,6 +18,8 @@ import FormItem from './FormItem'
 import Cascader from './Cascader'
 import Rate from './Rate'
 import Stepper from './Stepper'
+import PickerView from './PickerView'
+import Picker from './Picker'
 
 /* Feedback */
 import Toast from './Toast'
@@ -48,7 +50,6 @@ import Cell from './Cell'
 import Group from './Group'
 import Row from './Row'
 import Col from './Col'
-
 
 /* Other */
 import Copy from './Copy'
@@ -97,5 +98,7 @@ export {
   Group,
   Drawer,
   ButtonGroup,
-  NavBar
+  NavBar,
+  PickerView,
+  Picker
 }

@@ -84,6 +84,10 @@ export default {
   updated() {},
   attached() {},
   methods: {
+    onMaskClick() {
+      this.$emit('mask-click', {})
+      this.hide()
+    },
     onCloseClick() {
       this.$emit('close-click', {})
       this.hide()

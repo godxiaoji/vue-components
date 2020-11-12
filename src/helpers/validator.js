@@ -5,7 +5,8 @@ import {
   isNumber,
   isSymbol,
   isStringArray,
-  isElement
+  isElement,
+  isArray
 } from './util'
 
 const emptys = ['null', 'undefined', 'NaN']
@@ -88,13 +89,15 @@ export function getType(obj) {
       // 如果是校验器
       return obj._type
     }
-    return typeof obj
+    return 'custom type'
   } else if (isSymbol(obj)) {
     return 'symbol'
   } else if (isString(obj)) {
     return typeof obj
   } else if (inArray(obj + '', emptys)) {
     return obj + ''
+  } else if (isArray(obj)) {
+    return 'array'
   }
 
   return typeof obj

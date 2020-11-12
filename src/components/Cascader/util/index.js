@@ -11,7 +11,13 @@ import {
   getDate
 } from './date'
 import { parseRegionList } from './region'
-import { cloneData } from '../../../helpers/util'
+import {
+  cloneData,
+  isArray,
+  isNumber,
+  isObject,
+  isString
+} from '../../../helpers/util'
 
 export { dateString2Array, timeString2Array, datetimeString2Array, getDate }
 
@@ -55,7 +61,7 @@ export function parseDropdownList(mode, index, parent) {
   return []
 }
 
-export function array2String(labels, mode, separator = '') {
+export function array2String(labels, mode, separator = '/') {
   if (mode === 'date') {
     return labels.join('-')
   } else if (mode === 'time') {
@@ -67,6 +73,37 @@ export function array2String(labels, mode, separator = '') {
   }
 
   return labels.join(separator)
+}
+
+export function string2Array(value, mode, separator = '/') {
+  let values
+
+  if (value == null) {
+    return []
+  } else if (isArray(value)) {
+    values = value
+  } else if (mode === 'date') {
+    values = value.split('-')
+  } else if (mode === 'time') {
+    values = value.split(':')
+  } else if (mode === 'datetime') {
+    const matched = /^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/.exec(
+      value
+    )
+    if (matched && matched[0]) {
+      values = matched.splice(1, 6)
+    } else {
+      values = []
+    }
+  } else if (isNumber(value)) {
+    values = [value]
+  } else if (!value) {
+    values = []
+  } else {
+    values = value.split(separator)
+  }
+
+  return values
 }
 
 // function getFirstSelected(mode, values = [], parent) {
@@ -110,3 +147,49 @@ export function getDefaultSelecteds(mode) {
 
   return []
 }
+
+export function parseOptions(options, fieldNames) {
+  const newOptions = []
+
+  if (isArray(options)) {
+    options.forEach(option => {
+      if (isArray(option)) {
+        // 二维数组
+        const subOptions = parseOptions(option, fieldNames)
+
+        if (subOptions.length > 0) {
+          newOptions.push(subOptions)
+        }
+      } else if (isNumber(option) || isString(option)) {
+        // 纯数值或者字符串
+        newOptions.push({
+          label: option.toString(),
+          value: option,
+          disabled: false
+        })
+      } else if (
+        isObject(option) &&
+        (isNumber(option[fieldNames.value]) ||
+          isString(option[fieldNames.value]))
+      ) {
+        newOptions.push({
+          label:
+            option[fieldNames.label] == null
+              ? option[fieldNames.value]
+              : option[fieldNames.label],
+          value: option[fieldNames.value],
+          disabled: option.disabled ? true : false,
+          children: parseOptions(option[fieldNames.children], fieldNames)
+        })
+      }
+    })
+  }
+
+  return newOptions
+}
+
+export function getDefaultFieldNames() {
+  return cloneData({ label: 'label', value: 'value', children: 'children' })
+}
+
+export const MODE_NAMES = ['multiSelector', 'date', 'time', 'datetime', 'region']

@@ -21,7 +21,7 @@
 
 [Image](./components/README.Image.md)
 
-## <a name="表单组件">表单组件</a>
+## <a name="Form">表单组件</a>
 
 [Form](./components/README.Form.md)
 
@@ -44,6 +44,10 @@
 [Switch](./components/README.Switch.md)
 
 [Stepper](./components/README.Stepper.md)
+
+[PickerView](./components/README.PickerView.md)
+
+[Picker](./components/README.Picker.md)
 
 ## <a name="Feedback">反馈组件</a>
 

@@ -69,6 +69,10 @@ export function frameTo(options) {
 
   if (from !== to) {
     step()
+  } else {
+    if (isFunction(complete)) {
+      complete({ current: to })
+    }
   }
 
   return new AnimationFrameTask(ref)

@@ -4,29 +4,38 @@
     :style="{ zIndex }"
     v-show="isShow"
   >
-    <div :class="[prefix + '-notify_inner', typeClassName]" :style="styles">
-      <template v-if="title">
-        <icon v-if="icon" :class-name="icon" :style="iconStyle"></icon>
-        <span>{{ title }}</span>
-      </template>
-      <slot v-else></slot>
-    </div>
+    <notice-bar
+      :class="[prefix + '-notify_inner']"
+      :type="type"
+      :left-icon="icon"
+      :title="title"
+      :color="color"
+      :background-color="backgroundColor"
+      :mode="closable ? 'closable' : 'default'"
+      @close-click="onClose"
+    />
   </div>
 </template>
 
 <script>
-import Icon from '../Icon'
-import { inArray } from '../../helpers/util'
+import NoticeBar from '../NoticeBar'
 import { SDKKey } from '../../config'
 import popupMixin from '../util/popup-mixin'
 
-const TYPE_NAMES = ['primary', 'success', 'warning', 'danger']
-
 export default {
   name: SDKKey + '-notify',
-  components: { Icon },
+  components: { NoticeBar },
   mixins: [popupMixin],
+  provide() {
+    return {
+      appNotify: this
+    }
+  },
   props: {
+    closable: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: null
@@ -53,39 +62,17 @@ export default {
     // 类型
     type: {
       type: String,
-      default: TYPE_NAMES[0]
+      default: 'primary'
     }
   },
   data() {
     return { prefix: SDKKey }
   },
   watch: {},
-  computed: {
-    styles() {
-      const obj = {}
-
-      if (this.backgroundColor) obj.backgroundColor = this.backgroundColor
-      if (this.color) obj.color = this.color
-
-      return obj
-    },
-    iconStyle() {
-      const obj = {}
-
-      if (this.color) obj.fill = this.color
-
-      return obj
-    },
-    // 计算属性的 getter
-    typeClassName() {
-      return (
-        'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
-      )
-    }
-  },
+  computed: {},
   created() {},
   beforeDestroy() {
-    this.clearDurationTimer()
+    this.removeAutoClose()
   },
   methods: {
     setAutoClose() {
@@ -95,15 +82,32 @@ export default {
         }, this.duration)
       }
     },
-    /**
-     * 清除关闭定时器
-     */
-    clearDurationTimer() {
+    removeAutoClose() {
       clearTimeout(this.durationTimer)
     },
     show() {
-      this._doShow()
-      this.setAutoClose()
+      const isSuccess = this._doShow(() => {
+        this.$emit('shown', {})
+      })
+
+      if (isSuccess) {
+        this.$emit('show', {})
+        this.setAutoClose()
+      }
+    },
+    hide(source = 'active') {
+      const isSuccess = this._doHide(() => {
+        this.$emit('hidden', { source })
+      })
+
+      if (isSuccess) {
+        this.$emit('hide', { source })
+        this.removeAutoClose()
+      }
+    },
+    onClose() {
+      this.$emit('close-click', {})
+      this.hide('active')
     }
   }
 }
@@ -123,41 +127,9 @@ export default {
 .#{$prefix}-notify {
   &_inner {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
-    line-height: 24px;
-    word-break: break-all;
-    word-wrap: break-word;
-    padding: 12px 0;
-    overflow: hidden;
-    color: #fff;
-    background-color: $primary-color;
     transform: translate3d(0, calc(-100%), 0);
     transition: all 0.2s;
     opacity: 0;
-
-    &.type--success {
-      background-color: $success-color;
-    }
-
-    &.type--warning {
-      background-color: $warning-color;
-    }
-
-    &.type--danger {
-      background-color: $danger-color;
-    }
-
-    .#{$prefix}-icon {
-      --size: 21px;
-      --color: #fff;
-
-      & + * {
-        margin-left: 8px;
-      }
-    }
   }
 
   &.visible {

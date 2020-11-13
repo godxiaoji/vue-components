@@ -75,7 +75,7 @@
 </fx-flat-list>
 ```
 
-也可以传入 icon，比如常见的搜索
+也可以传入 [Icon](./README.Icon.md)，比如常见的搜索
 
 ### 后置
 

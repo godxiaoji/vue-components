@@ -50,6 +50,7 @@ import Cell from './Cell'
 import Group from './Group'
 import Row from './Row'
 import Col from './Col'
+import NoticeBar from './NoticeBar'
 
 /* Other */
 import Copy from './Copy'
@@ -100,5 +101,6 @@ export {
   ButtonGroup,
   NavBar,
   PickerView,
-  Picker
+  Picker,
+  NoticeBar
 }

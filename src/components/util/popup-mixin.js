@@ -31,8 +31,6 @@ export default {
   mounted() {
     if (this.visible) {
       this.show()
-    } else {
-      this.hide()
     }
   },
   methods: {
@@ -47,6 +45,10 @@ export default {
     noop() {},
 
     _doShow(callback) {
+      if (this.isShowing) {
+        return false
+      }
+      this.isHiding = false
       this.isShowing = true
 
       clearTimeout(this.visibleTimer)
@@ -58,10 +60,10 @@ export default {
       this.isShow = true
 
       this.visibleTimer = setTimeout(() => {
-        this.isShowing = false
         this.visible2 = true
 
         this.visibleTimer = setTimeout(() => {
+          this.isShowing = false
           if (isFunction(callback)) {
             callback()
           }
@@ -71,19 +73,24 @@ export default {
       if (!this.visible) {
         this.$emit('update:visible', true)
       }
+
+      return true
     },
     show() {
-      this._doShow(() => {
+      const isSuccess = this._doShow(() => {
         this.$emit('shown', {})
       })
 
-      this.$emit('show', {})
+      if (isSuccess) {
+        this.$emit('show', {})
+      }
     },
     _doHide(callback) {
       if (this.isHiding) {
         return false
       }
       this.isHiding = true
+      this.isShowing = false
 
       removeClassName(document.body, SDKKey + '-overflow-hidden')
       this.visible2 = false

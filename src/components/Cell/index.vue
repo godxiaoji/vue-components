@@ -199,59 +199,19 @@ export default {
   }
 
   .#{$prefix}-input {
-    --height: 32px;
+    --input-height: 32px;
     border-left-width: 0;
     border-right-width: 0;
     border-top-color: transparent;
     border-bottom-color: transparent;
-
-    &_prepend {
-      padding: 0 16px 0 0;
-    }
-
-    &_append {
-      padding: 0 0 0 16px;
-    }
+    padding: 0;
 
     &_input {
-      padding: 0;
       text-align: right;
-    }
-
-    &_clear {
-      margin: 0 0 0 16px;
     }
 
     &[disabled] {
       background-color: transparent;
-    }
-  }
-
-  .#{$prefix}-select {
-    --height: 32px;
-
-    &_field {
-      border: none;
-      padding: 0;
-    }
-
-    &_text {
-      text-align: right;
-      line-height: 32px;
-    }
-  }
-
-  .#{$prefix}-cascader {
-    --height: 32px;
-
-    &_field {
-      border: none;
-      padding: 0;
-    }
-
-    &_text {
-      text-align: right;
-      line-height: 32px;
     }
   }
 

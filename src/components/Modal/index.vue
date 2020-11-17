@@ -6,12 +6,14 @@
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-modal_box']" :style="boxStyles">
-      <slot></slot>
+      <div :class="[prefix + '-modal_box-inner']">
+        <slot></slot>
+      </div>
       <i
         v-if="showClose"
         :class="[prefix + '-modal_close']"
         @click="onCloseClick"
-        ><icon class-name="CloseOutlined"></icon
+        ><icon class-name="CloseCircleFilled"></icon
       ></i>
     </div>
   </div>
@@ -79,12 +81,17 @@ export default {
   &_box {
     width: 400px;
     box-sizing: border-box;
-    border-radius: 4px;
-    background-color: #fff;
     transform: scale(0);
     transition: all 0.2s;
     opacity: 0;
     position: relative;
+  }
+
+  &_box-inner {
+    min-height: 100px;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
   }
 
   &.visible {
@@ -97,12 +104,10 @@ export default {
   &_close {
     position: absolute;
     left: 50%;
-    bottom: -56px;
-    margin: 0 0 0 -20px;
-    background-color: rgba($color: $black-color, $alpha: 0.65);
-    border: 2px solid #fff;
-    width: 40px;
-    height: 40px;
+    bottom: -50px;
+    margin: 0 0 0 -16px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -111,8 +116,8 @@ export default {
     cursor: pointer;
 
     .#{$prefix}-icon {
-      --size: 24px;
-      --color: #fff;
+      --size: 32px;
+      --color: #{$title-color};
     }
   }
 }

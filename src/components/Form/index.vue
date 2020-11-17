@@ -6,7 +6,6 @@
 
 <script>
 import { inArray, isUndefined } from '../../helpers/util'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 
 export default {
@@ -98,25 +97,16 @@ export default {
         }
       })
 
-      this.$emit(
-        e.type,
-        new CustomEvent(e, {
-          value
-        })
-      )
+      this.$emit(e.type, {
+        value
+      })
 
       const validateEmit = vaild => {
         const type = 'validate-submit'
-        this.$emit(
-          type,
-          new CustomEvent(
-            { type },
-            {
-              vaild,
-              value
-            }
-          )
-        )
+        this.$emit(type, {
+          vaild,
+          value
+        })
       }
 
       this.validate(value)
@@ -144,34 +134,40 @@ export default {
 
     onReset(e) {
       const inputEls = e.target.elements
-      const value = {}
-      const uids = []
 
-      inputEls.forEach(el => {
-        const _ac = el._app_component
+      setTimeout(() => {
+        const value = {}
+        const uids = []
 
-        if (
-          _ac &&
-          _ac._uid &&
-          !inArray(_ac._uid, uids) // 主要用于排重checbox等多选的情况
-        ) {
-          // 获取配套表单组件
-          uids.push(_ac._uid)
+        inputEls.forEach(el => {
+          const _ac = el._app_component
 
-          if (_ac.reset) {
-            _ac.reset()
+          if (
+            _ac &&
+            _ac._uid &&
+            !inArray(_ac._uid, uids) // 主要用于排重checbox等多选的情况
+          ) {
+            // 获取配套表单组件
+            uids.push(_ac._uid)
+
+            if (_ac.reset) {
+              _ac.reset()
+            }
+
+            if (_ac.formName || _ac.name) {
+              value[_ac.formName || _ac.name] = _ac.hookFormValue
+                ? _ac.hookFormValue()
+                : _ac.formValue
+            }
+          } else {
+            // 原生组件
           }
-        } else {
-          // 原生组件
-        }
-      })
+        })
 
-      this.$emit(
-        e.type,
-        new CustomEvent(e, {
+        this.$emit(e.type, {
           value
         })
-      )
+      }, 17)
     }
   }
 }

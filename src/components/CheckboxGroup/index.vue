@@ -5,15 +5,14 @@
 </template>
 
 <script>
-import { CustomEvent } from '../../helpers/events'
+import {
+  isStringNumberMixArray,
+  cloneData,
+  isSameArray,
+  inArray
+} from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
-import {
-  isStringArray,
-  isNumberArray,
-  cloneData,
-  isSameArray
-} from '../../helpers/util'
 
 export default {
   name: SDKKey + '-checkbox-group',
@@ -30,7 +29,7 @@ export default {
     },
     value: {
       validator(value) {
-        return isStringArray(value) || isNumberArray(value)
+        return isStringNumberMixArray(value)
       },
       default() {
         return []
@@ -45,7 +44,8 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: []
+      formValue: [],
+      appChildren: []
     }
   },
   model: {
@@ -54,9 +54,7 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {
-    this._app_checkbox_group = true
-  },
+  created() {},
   ready() {},
   mounted() {},
   updated() {},
@@ -65,47 +63,82 @@ export default {
     updateValue() {
       const value = this.formValue.slice(0, 0)
 
-      this.$children.forEach(vm => {
-        if (vm._app_checkbox_item && vm.getInputChecked() === true) {
-          value.push(cloneData(vm.value))
+      for (let i = 0; i < this.appChildren.length; i++) {
+        const child = this.appChildren[i]
+
+        if (child.getInputChecked()) {
+          value.push(cloneData(child.value))
         }
-      })
+      }
 
       this.formValue = value
 
       if (!isSameArray(value, this.value)) {
-        this.$emit('_change', value)
+        this.$emit('_change', this.hookFormValue())
       }
     },
 
-    onChange(e) {
+    onChange() {
       this.updateValue()
 
       const type = 'change'
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          { type, currentTarget: this.$el, target: e.target },
-          {
-            value: this.hookFormValue()
-          }
-        )
-      )
+      this.$emit(type, {
+        value: this.hookFormValue()
+      })
 
-      this.validateAfterEventTrigger(e.type, this.formValue)
+      this.validateAfterEventTrigger(type, this.hookFormValue())
     },
 
     hookFormValue() {
       return cloneData(this.formValue)
     },
 
+    addChild(vm) {
+      if (
+        !inArray(
+          vm._uid,
+          this.appChildren.map(({ _uid }) => {
+            return _uid
+          })
+        )
+      ) {
+        this.appChildren.push(vm)
+      }
+    },
+
+    removeChild(vm) {
+      const index = this.appChildren
+        .map(({ _uid }) => {
+          return _uid
+        })
+        .indexOf(vm._uid)
+
+      if (index !== -1) {
+        this.appChildren.splice(index, 1)
+      }
+    },
+
     reset() {
-      this.$children.forEach(vm => {
-        if (vm._app_checkbox_item) {
-          vm.reset()
+      const value = this.formValue.slice(0, 0)
+
+      for (let i = 0; i < this.appChildren.length; i++) {
+        const child = this.appChildren[i]
+
+        if (child.getInputChecked()) {
+          value.push(cloneData(child.value))
         }
-      })
+      }
+
+      this.formValue = value
+
+      if (!isSameArray(value, this.value)) {
+        this.$emit('_change', this.hookFormValue())
+      }
+
+      this.$emit('reset', { name: this.formName, value: this.hookFormValue() })
+
+      return this.hookFormValue()
     }
   }
 }

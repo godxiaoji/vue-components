@@ -51,6 +51,7 @@ import Group from './Group'
 import Row from './Row'
 import Col from './Col'
 import NoticeBar from './NoticeBar'
+import Divider from './Divider'
 
 /* Other */
 import Copy from './Copy'
@@ -102,5 +103,6 @@ export {
   NavBar,
   PickerView,
   Picker,
-  NoticeBar
+  NoticeBar,
+  Divider
 }

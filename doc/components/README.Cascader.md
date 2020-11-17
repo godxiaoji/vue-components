@@ -4,17 +4,17 @@
 
 ## Props
 
-| 属性            | 类型              | 默认值                                                   | 必填 | 说明                                                                            |
-| --------------- | ----------------- | -------------------------------------------------------- | ---- | ------------------------------------------------------------------------------- |
-| name            | string            |                                                          | 否   | [form](./README.Form.md) 的标识                                                 |
-| default-mode    | string            |                                                          | 否   | 初始化内置选择器 date / time / datetime，为了防止逻辑混乱，组件创建后不支持更改 |
-| options         | array             | []                                                       | 否   | 数据集                                                                          |
-| value / v-modal | string[]/number[] | []                                                       | 否   | 默认的选中项                                                                    |
-| border          | boolean           | true                                                     | 否   | 是否显示边框                                                                    |
-| placeholder     | string            | '请选择'                                                 | 否   | 未进行选择时的提示                                                              |
-| disabled        | boolean           | false                                                    | 否   | 是否被禁用                                                                      |
-| separator       | string            | '/'                                                      | 否   | 分隔符                                                                          |
-| field-names     | object            | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key                                |
+| 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                                                                    |
+| ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------- |
+| name              | string                          |                                                          | 否   | [form](./README.Form.md) 的标识                                                          |
+| placeholder       | string                          |                                                  | 否   | 未进行选择时的提示                                                                      | name | string |  | 否 | [form](./README.Form.md) 的标识 |
+| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，可选值： 'date', 'time', ' datetime, 'region'，设置后会采用内置 options |
+| options           | array                           | []                                                       | 否   | 数据集                                                                                  |
+| value/v-modal     | string/number/string[]/number[] | []                                                       | 否   | 设置选中项                                                                              |
+| format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                                                              |
+| disabled          | boolean                         | false                                                    | 否   | 是否被禁用                                                                              |
+| initial-separator | string                          | '/'                                                      | 否   | 分隔符                                                                                  |
+| field-names       | object                          | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key                                       |
 
 ### mode 的合法值
 
@@ -90,36 +90,29 @@ Vfox.addRegionData(regionData)
 [ 'zaolei', 'lvzao' ]
 ```
 
-## CSS
-
-| 属性             | 默认值               | 说明           |
-| ---------------- | -------------------- | -------------- |
-| --color          | #09bb07              | 主色调         |
-| --dropdown-color | rgba(9, 187, 7, 0.1) | 下拉菜单主色调 |
-
 ## Events
 
-| 事件              | 描述                    | 回调函数参数                                                     |
-| ----------------- | ----------------------- | ---------------------------------------------------------------- |
-| change            | 选中值发生变化时触发    | CustomEvent，可通过 event.details.value 取值                     |
-| visibility-change | 下拉框出现/隐藏时触发   | CustomEvent，event.details.visibility = true(显示) / false(隐藏) |
-| blur              | 当 input 失去焦点时触发 | FocusEvent                                                       |
-| focus             | 当 input 获得焦点时触发 | FocusEvent                                                       |
+| 事件              | 描述                    | 回调函数参数                                         |
+| ----------------- | ----------------------- | ---------------------------------------------------- |
+| change            | 选中值发生变化时触发    | { value: array, valueString: string, date?: Date }   |
+| visibility-change | 下拉框出现/隐藏时触发   | { visibility } visibility = true(显示) / false(隐藏) |
+| blur              | 当 input 失去焦点时触发 | FocusEvent                                           |
+| focus             | 当 input 获得焦点时触发 | FocusEvent                                           |
 
-### prop mode = date / time / datetime 模式下， change 事件的 event.details
+### prop mode = date / time / datetime 模式下， change 事件的回调参数
 
-| 值     | 类型              | 说明                                                        |
-| ------ | ----------------- | ----------------------------------------------------------- |
-| value  | string            | 格式化后的数值，如：1, "a/b", "北京市/北京市/东城区"        |
-| values | number[]/string[] | 数组形式，如：[1]，["a", "b"]，["北京市","北京市","东城区"] |
+| 值          | 类型     | 说明                              |
+| ----------- | -------- | --------------------------------- |
+| valueString | string   | 常用格式，如 2020-02-14 00:00:00  |
+| value       | string[] | 数组形式，如 ["2020", "02", "14"] |
+| date        | Date     | 时间对应的 Date 实例              |
 
-### prop mode = date / time / datetime 模式下， change 事件的 event.details
+### prop mode 在其他模式下， change 事件回调参数
 
-| 值     | 类型     | 说明                              |
-| ------ | -------- | --------------------------------- |
-| value  | string   | 常用格式，如 2020-02-14 00:00:00  |
-| values | string[] | 数组形式，如 ["2020", "02", "14"] |
-| date   | Date     | 时间对应的 Date 实例              |
+| 值          | 类型              | 说明                                                        |
+| ----------- | ----------------- | ----------------------------------------------------------- |
+| valueString | string            | 格式化后的数值，如：1, "a/b", "北京市/北京市/东城区"        |
+| value       | number[]/string[] | 数组形式，如：[1]，["a", "b"]，["北京市","北京市","东城区"] |
 
 ## Slots
 

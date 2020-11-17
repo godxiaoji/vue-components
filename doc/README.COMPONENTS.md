@@ -91,6 +91,8 @@
 
 [NoticeBar](./components/README.NoticeBar.md)
 
+[Divider](./components/README.Divider.md)
+
 ## <a name="Other">其他组件</a>
 
 [Copy](./components/README.Copy.md)

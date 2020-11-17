@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import { CustomEvent } from '../../helpers/events'
-import { cloneData, isString, isNumber } from '../../helpers/util'
+import { cloneData, isString, isNumber, inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 
@@ -27,7 +26,7 @@ export default {
       validator(value) {
         return isString(value) || isNumber(value)
       },
-      default: ''
+      default: null
     },
     inline: {
       type: Boolean,
@@ -38,7 +37,8 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: ''
+      formValue: '',
+      appChildren: []
     }
   },
   model: {
@@ -47,25 +47,22 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {
-    this._app_radio_group = true
-  },
+  created() {},
   ready() {},
   mounted() {},
   updated() {},
   attached() {},
   methods: {
-    updateValue() {
+    updateValue(vm) {
       let value = ''
 
-      for (let i = 0; i < this.$children.length; i++) {
-        const vm = this.$children[i]
+      for (let i = 0; i < this.appChildren.length; i++) {
+        const child = this.appChildren[i]
 
-        if (vm._app_radio_item) {
-          if (vm.getInputChecked()) {
-            value = cloneData(vm.value)
-            break
-          }
+        if (child._uid === vm._uid) {
+          value = cloneData(vm.value)
+        } else if (child.getInputChecked()) {
+          child.setChecked(false)
         }
       }
 
@@ -76,34 +73,56 @@ export default {
       }
     },
 
-    onChange(e) {
-      this.updateValue()
+    onChange(vm) {
+      this.updateValue(vm)
 
       const type = 'change'
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          { type, currentTarget: this.$el, target: e.target },
-          {
-            value: this.hookFormValue()
-          }
-        )
-      )
+      this.$emit(type, {
+        value: this.hookFormValue()
+      })
 
-      this.validateAfterEventTrigger(e.type, this.formValue)
+      this.validateAfterEventTrigger(type, this.hookFormValue())
     },
 
-    hookFormValue() {
-      return cloneData(this.formValue)
+    addChild(vm) {
+      if (
+        !inArray(
+          vm._uid,
+          this.appChildren.map(({ _uid }) => {
+            return _uid
+          })
+        )
+      ) {
+        this.appChildren.push(vm)
+      }
+    },
+
+    removeChild(vm) {
+      const index = this.appChildren
+        .map(({ _uid }) => {
+          return _uid
+        })
+        .indexOf(vm._uid)
+
+      if (index !== -1) {
+        this.appChildren.splice(index, 1)
+      }
     },
 
     reset() {
-      this.$children.forEach(vm => {
-        if (vm._app_radio_item) {
-          vm.reset()
+      let value = ''
+
+      for (let i = 0; i < this.appChildren.length; i++) {
+        const child = this.appChildren[i]
+
+        if (child.getInputChecked()) {
+          value = cloneData(child.value)
+          break
         }
-      })
+      }
+
+      return this._reset(value)
     }
   }
 }

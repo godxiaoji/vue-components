@@ -20,8 +20,7 @@
         :class="[prefix + '-radio_checked-icon']"
         class-name="CheckCircleFilled"
       ></icon>
-
-      <span :class="[prefix + '-radio_text']">
+      <span :class="[prefix + '-radio_text']" v-if="$slots.default">
         <slot></slot>
       </span>
     </div>
@@ -31,6 +30,7 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
+import { isString, isNumber } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-radio',
@@ -42,8 +42,8 @@ export default {
   },
   props: {
     value: {
-      validator(value) {
-        return value != null
+      validator(val) {
+        return isString(val) || isNumber(val)
       },
       default: ''
     },
@@ -87,84 +87,57 @@ export default {
         return
       }
 
-      const inputEl = this.getInputEl()
+      const $input = this.getInputEl()
       const checked = !!this.checked
 
-      if (checked !== inputEl.checked) {
-        inputEl.checked = checked
-
-        this.callParent({
-          target: inputEl
-        })
+      if (checked !== $input.checked) {
+        $input.checked = checked
       }
     }
   },
   created() {
-    this._app_radio_item = true
+    this.appRadioGroup && this.appRadioGroup.addChild(this)
   },
   ready() {},
   mounted() {
-    const inputEl = this.getInputEl()
-    let checked
+    const $input = this.getInputEl()
 
+    let checked
     if (this.appRadioGroup) {
-      checked = this.value === this.appRadioGroup.value
+      checked = this.appRadioGroup.value == this.value
     } else {
       checked = !!this.checked
     }
 
-    if (checked !== inputEl.checked) {
-      inputEl.defaultChecked = checked
-      inputEl.checked = checked
+    if (checked !== $input.checked) {
+      $input.defaultChecked = checked
+      $input.checked = checked
     }
 
-    if (this.appRadioGroup) {
-      inputEl._app_component = this.appRadioGroup
-
-      if (inputEl.checked) {
-        this.appRadioGroup.updateValue()
-      }
-    }
-
-    inputEl._app_type = 'radio'
+    $input._app_component = this.appRadioGroup || this
+    $input._app_type = 'radio'
   },
   updated() {},
   attached() {},
+  beforeDestroy() {
+    this.appRadioGroup && this.appRadioGroup.removeChild(this)
+  },
   methods: {
     onChange(e) {
-      this.modelChange(this.getInputChecked())
-
-      this.callParent(e)
-    },
-    /**
-     * v-modal checked 的值跟input对齐
-     */
-    modelChange(inputChecked) {
-      const checked = !!this.checked
-
-      if (checked !== inputChecked) {
-        this.$emit('_change', inputChecked)
+      if (this.appRadioGroup) {
+        this.appRadioGroup.onChange(this)
+      } else {
+        this.$emit('_change', e.target.checked)
       }
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
     },
     getInputChecked() {
-      return this.getInputEl().checked
+      return !!this.getInputEl().checked
     },
-    callParent(e) {
-      this.appRadioGroup && this.appRadioGroup.onChange(e)
-    },
-    reset() {
-      const inputEl = this.getInputEl()
-
-      if (inputEl.checked !== inputEl.defaultChecked) {
-        this.modelChange((inputEl.checked = inputEl.defaultChecked))
-
-        this.callParent({
-          target: inputEl
-        })
-      }
+    setChecked(checked = true) {
+      this.getInputEl().checked = checked
     }
   }
 }
@@ -174,7 +147,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-radio {
-  --color: #{$primary-color};
+  --radio-color: #{$border-color};
+  --radio-active-color: #{$primary-color};
 
   display: inline-flex;
   flex-direction: column;
@@ -200,13 +174,12 @@ export default {
   &_icon,
   &_checked-icon {
     --size: 24px;
-    margin-right: 12px;
-    --color: #{$border-color};
+    --color: var(--radio-color);
   }
 
   &_checked-icon {
     display: none;
-    --color: #{$primary-color};
+    --color: var(--radio-active-color);
   }
 
   &_input {
@@ -228,6 +201,7 @@ export default {
   &_text {
     display: block;
     line-height: 1;
+    margin-left: 12px;
   }
 
   &[disabled] {

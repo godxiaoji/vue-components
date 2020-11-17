@@ -125,8 +125,6 @@ export default {
     prop: 'value',
     event: '_change'
   },
-  created() {},
-  beforeDestroy() {},
   methods: {
     onCancelClick() {
       this.$emit('cancel', {})

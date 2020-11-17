@@ -20,11 +20,11 @@
 
 ## Events
 
-| 事件        | 描述               | 回调函数参数                                 |
-| ----------- | ------------------ | -------------------------------------------- |
-| change      | 当绑定值变化时触发 | CustomEvent，可通过 event.details.value 取值 |
-| input       | 输入框输入时触发   | CustomEvent，可通过 event.details.value 取值 |
-| focus       | 输入框聚焦时触发   | FocusEvent                                   |
-| blur        | 输入框失焦时触发   | FocusEvent                                   |
-| plus-click  | 点击增加按钮时触发 | CustomEvent                                  |
-| minus-click | 点击减少按钮时触发 | CustomEvent                                  |
+| 事件        | 描述               | 回调函数参数 |
+| ----------- | ------------------ | ------------ |
+| change      | 当绑定值变化时触发 | { value }    |
+| input       | 输入框输入时触发   | { value }    |
+| focus       | 输入框聚焦时触发   | FocusEvent   |
+| blur        | 输入框失焦时触发   | FocusEvent   |
+| plus-click  | 点击增加按钮时触发 | {}           |
+| minus-click | 点击减少按钮时触发 | {}           |

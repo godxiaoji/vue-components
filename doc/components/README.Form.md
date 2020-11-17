@@ -40,13 +40,13 @@
 
 ## FormEvents
 
-| 事件            | 描述                               | 回调函数参数                                                               |
-| --------------- | ---------------------------------- | -------------------------------------------------------------------------- |
-| submit          | 携带 form 中的数据触发 submit 事件 | CustomEvent，其中 event.details = { value : {'name': 'value'} }            |
-| reset           | 表单重置时会触发 reset 事件        | CustomEvent                                                                |
-| validate-submit | 有检验情况下，表单 submit 触发时   | CustomEvent，其中 event.details = { vaild: true, value : {'name': 'value'} |
+| 事件            | 描述                               | 回调函数参数                             |
+| --------------- | ---------------------------------- | ---------------------------------------- |
+| submit          | 携带 form 中的数据触发 submit 事件 | { value : {'name': 'value'} }            |
+| reset           | 表单重置时会触发 reset 事件        | {}                                       |
+| validate-submit | 有检验情况下，表单 submit 触发时   | { vaild: true, value : {'name': 'value'} |
 
-### event.details.value 的值
+### 回调参数 value 的结构
 
 该数据汇集了所有设置 name 的表单标签数据（含原生标签），部分数据类型是 Array，如：`checbox`，`select multiple`等
 

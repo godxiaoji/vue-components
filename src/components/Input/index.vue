@@ -61,7 +61,6 @@
 import Icon from '../Icon'
 import { inArray, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
-import { CustomEvent } from '../../helpers/events'
 import formMixin from '../util/form-mixin'
 import { formatInputDigit, formatInputNumber } from '../../helpers/input'
 
@@ -130,7 +129,8 @@ export default {
 
       formValue: '',
 
-      focus2: false
+      focus2: false,
+      inputField: true
     }
   },
   computed: {
@@ -276,15 +276,9 @@ export default {
       if (isChange) {
         const type = 'input'
 
-        this.$emit(
-          type,
-          new CustomEvent(
-            { type, target: this.getInputEl(), currentTarget: this.$el },
-            {
-              value
-            }
-          )
-        )
+        this.$emit(type, {
+          value
+        })
       }
     },
     onFocus(e) {
@@ -298,15 +292,9 @@ export default {
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
     onChange(e) {
-      this.$emit(
-        e.type,
-        new CustomEvent(
-          { type: e.type, target: e.target, currentTarget: this.$el },
-          {
-            value: this.formValue
-          }
-        )
-      )
+      this.$emit(e.type, {
+        value: this.formValue
+      })
 
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
@@ -317,7 +305,7 @@ export default {
       )
     },
     reset() {
-      this._input(this.getInputEl().defaultValue)
+      return this._reset(this.getInputEl().value)
     },
     onClear() {
       this._input('')
@@ -330,11 +318,13 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-input {
-  --height: 48px;
-  --font-size: 17px;
-  --icon-size: 18px;
+  --input-height: 48px;
+  --input-font-size: 17px;
+  --input-icon-size: 18px;
+  --input-color: #{$title-color};
+  --input-secondary-color: #{$font3-color};
 
-  height: var(--height);
+  height: var(--input-height);
   width: 100%;
   position: relative;
   display: flex;
@@ -342,34 +332,34 @@ export default {
 
   border: 1px solid $border-color;
   box-sizing: border-box;
-  font-size: var(--font-size);
+  padding: 0 16px;
+  font-size: var(--input-font-size);
   background-color: #fff;
-  color: $title-color;
+  color: var(--input-color);
+
+  .#{$prefix}-icon {
+    --size: var(--input-icon-size);
+    --color: var(--input-secondary-color);
+  }
 
   &[disabled] {
     background-color: $background2-color;
-    color: $font3-color;
+    --input-color: #{$font3-color};
     -webkit-text-fill-color: $font3-color;
     opacity: 1;
   }
 
-  .#{$prefix}-icon {
-    --size: var(--icon-size);
-  }
-
-  &_clear {
-    --color: #{$font3-color};
-    margin: 0 16px 0 0;
-  }
-
   &_prepend,
   &_append {
-    padding: 0 0 0 16px;
-    color: $font2-color;
+    display: flex;
+    align-items: center;
+    padding: 0 8px 0 0;
+    color: $font3-color;
   }
 
-  &_append {
-    padding: 0 16px 0 0;
+  &_append,
+  &_clear {
+    padding: 0 0 0 8px;
   }
 
   &_input {
@@ -381,10 +371,10 @@ export default {
     border: none;
     width: 100%;
     height: 100%;
-    line-height: calc(var(--height) - 2px);
+    line-height: calc(var(--input-height) - 2px);
     width: 100%;
-    padding: 0 16px;
-    font-size: var(--font-size);
+    padding: 0;
+    font-size: var(--input-font-size);
     cursor: pointer;
     color: $title-color;
     background: none;
@@ -400,25 +390,17 @@ export default {
       display: none;
     }
 
+    &.placeholder,
     &::-webkit-input-placeholder {
       color: $font3-color;
     }
 
-    &:disabled,
-    &:disabled:hover {
+    &:disabled {
       color: $font3-color;
       -webkit-text-fill-color: $font3-color;
       opacity: 1;
       cursor: not-allowed;
       user-select: none;
-    }
-
-    .#{$prefix}-input.has--prepend & {
-      padding-left: 6px;
-    }
-
-    .#{$prefix}-input.has--append & {
-      padding-right: 6px;
     }
   }
 

@@ -11,7 +11,7 @@
         prefix + '-rate_item',
         { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }
       ]"
-      v-for="num in size"
+      v-for="num in max"
       :key="num"
       @click="onItemClick(num)"
     >
@@ -28,12 +28,20 @@
 
 <script>
 import Icon from '../Icon'
-import { CustomEvent } from '../../helpers/events'
-import { rangeInteger, inArray, capitalize, isInteger } from '../../helpers/util'
+import { inArray, capitalize, isInteger, isNumeric } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 
 const ALLOW_ICONS = ['star', 'heart']
+
+function isIntegerOrHalf(val) {
+  if (isNumeric(val)) {
+    if (isInteger(val) || (parseFloat(val) * 10) % 5 === 0) {
+      return true
+    }
+  }
+  return false
+}
 
 export default {
   name: SDKKey + '-rate',
@@ -51,12 +59,14 @@ export default {
       default: ALLOW_ICONS[0]
     },
     value: {
-      type: Number,
-      default: 0
-    },
-    size: {
       validator(val) {
-        return isInteger(val)
+        return isIntegerOrHalf(val)
+      },
+      default: null
+    },
+    count: {
+      validator(val) {
+        return isInteger(parseFloat(val)) && parseFloat(val) > 0
       },
       default: 5
     },
@@ -112,17 +122,23 @@ export default {
       }
 
       return styles
+    },
+    max() {
+      const count = parseFloat(this.count)
+      return isInteger(count) && count > 0 ? count : 5
     }
   },
   watch: {
     value() {
       this.updateValue()
+    },
+    max(val) {
+      if (val < this.defaultValue) {
+        this.defaultValue = 0
+      }
     }
   },
   created() {
-    this._app_rate = true
-
-    this.formValue = this.value
     this.updateValue()
 
     this.defaultValue = this.formValue
@@ -167,45 +183,43 @@ export default {
 
         this.$emit('_change', value)
 
-        const type = 'change'
-
-        this.$emit(
-          type,
-          new CustomEvent(
-            {
-              type,
-              currentTarget: this.$el,
-              target: this.getInputEl()
-            },
-            {
-              value
-            }
-          )
-        )
-
-        this.validateAfterEventTrigger(type, this.formValue)
+        this.eventEmit('change')
       }
     },
 
+    eventEmit(type) {
+      const value = this.formValue
+
+      this.$emit(type, {
+        value
+      })
+      this.validateAfterEventTrigger(type, value)
+    },
+
     updateValue() {
-      if (this.value === this.formValue) {
+      if (!isIntegerOrHalf(this.value)) {
         return
       }
 
-      const times = this.allowHalf ? 5 : 10
+      const value = parseFloat(this.value)
 
-      const value =
-        rangeInteger(this.value * times, 0, Math.floor(this.size) * times) / times
+      if (value === this.formValue) {
+        return
+      }
 
-      if (value !== this.value) {
-        this.$emit('_change', value)
+      if (value < 0 || value > this.max) {
+        return
+      }
+
+      if (!this.allowHalf && !isInteger(value)) {
+        return
       }
 
       this.formValue = value
     },
 
     reset() {
-      this._change(this.defaultValue)
+      return this._reset(this.defaultValue)
     }
   }
 }
@@ -215,15 +229,19 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-rate {
-  --item-size: 24px;
+  --rate-size: 24px;
+  --rate-color: #{$border-color};
+  --rate-active-color: #{$danger-color};
+
   display: flex;
   align-items: center;
   height: 32px;
 
   &_item {
-    width: var(--item-size);
-    height: var(--item-size);
-    margin-right: 6px;
+    width: var(--rate-size);
+    height: var(--rate-size);
+    font-size: var(--rate-size);
+    margin-right: 0.2em;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -264,9 +282,10 @@ export default {
   }
 
   .#{$prefix}-icon {
-    --size: var(--item-size);
-    --color: #{$border-color};
+    --size: var(--rate-size);
+    --color: var(--rate-color);
     flex-shrink: 0;
+    display: block;
   }
 
   &_icon {
@@ -283,7 +302,7 @@ export default {
     height: 100%;
 
     .#{$prefix}-icon {
-      --color: #{$danger-color};
+      --color: var(--rate-active-color);
     }
   }
 
@@ -304,15 +323,11 @@ export default {
   }
 
   &.disabled {
+    opacity: 0.2;
+
     .#{$prefix}-rate {
       &_item {
         cursor: not-allowed;
-      }
-
-      &_active-icon {
-        .#{$prefix}-icon {
-          --color: #{$border-color};
-        }
       }
     }
   }

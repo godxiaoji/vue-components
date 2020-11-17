@@ -1,7 +1,7 @@
 <template>
   <drawer ref="drawer" title="请选择" :visible="true">
     <div
-      :class="[prefix + '-select_options', { mobile: isMobile }]"
+      :class="[prefix + '-select_options']"
       @mousedown.prevent="onDropdownTap"
       @scroll.stop="onDropdownTap"
     >
@@ -22,7 +22,6 @@
 <script>
 import Drawer from '../Drawer'
 import { SDKKey } from '../../config'
-import { isMobile } from '../../helpers/device'
 
 export default {
   name: SDKKey + '-select-drawer',
@@ -37,8 +36,7 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-      isMobile
+      prefix: SDKKey
     }
   },
   computed: {},

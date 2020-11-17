@@ -20,7 +20,7 @@
         :class="[prefix + '-checkbox_checked-icon']"
         class-name="CheckSquareFilled"
       ></icon>
-      <span :class="[prefix + '-checkbox_text']">
+      <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
         <slot></slot>
       </span>
     </div>
@@ -30,7 +30,7 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
-import { inArray } from '../../helpers/util'
+import { inArray, isString, isNumber } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-checkbox',
@@ -42,8 +42,8 @@ export default {
   },
   props: {
     value: {
-      validator(value) {
-        return value != null
+      validator(val) {
+        return isString(val) || isNumber(val)
       },
       default: ''
     },
@@ -90,84 +90,57 @@ export default {
         return
       }
 
-      const inputEl = this.getInputEl()
+      const $input = this.getInputEl()
       const checked = !!this.checked
 
-      if (checked !== inputEl.checked) {
-        inputEl.checked = checked
-
-        this.callParent({
-          target: inputEl
-        })
+      if (checked !== $input.checked) {
+        $input.checked = checked
       }
     }
   },
   created() {
-    this._app_checkbox_item = true
+    this.appCheckboxGroup && this.appCheckboxGroup.addChild(this)
   },
   ready() {},
   mounted() {
-    const inputEl = this.getInputEl()
-    let checked
+    const $input = this.getInputEl()
 
+    let checked
     if (this.appCheckboxGroup) {
       checked = inArray(this.value, this.appCheckboxGroup.value)
     } else {
       checked = !!this.checked
     }
 
-    if (checked !== inputEl.checked) {
-      inputEl.defaultChecked = checked
-      inputEl.checked = checked
+    if (checked !== $input.checked) {
+      $input.defaultChecked = checked
+      $input.checked = checked
     }
 
-    if (this.appCheckboxGroup) {
-      inputEl._app_component = this.appCheckboxGroup
-
-      if (inputEl.checked) {
-        this.appCheckboxGroup.updateValue()
-      }
-    }
-
-    inputEl._app_type = 'checkbox'
+    $input._app_component = this.appCheckboxGroup || this
+    $input._app_type = 'checkbox'
   },
   updated() {},
   attached() {},
+  beforeDestroy() {
+    this.appCheckboxGroup && this.appCheckboxGroup.removeChild(this)
+  },
   methods: {
     onChange(e) {
-      this.modelChange(this.getInputChecked())
-
-      this.callParent(e)
-    },
-    /**
-     * v-modal checked 的值跟input对齐
-     */
-    modelChange(inputChecked) {
-      const checked = !!this.checked
-
-      if (checked !== inputChecked) {
-        this.$emit('_change', inputChecked)
+      if (this.appCheckboxGroup) {
+        this.appCheckboxGroup.onChange(this)
+      } else {
+        this.$emit('_change', e.target.checked)
       }
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild
     },
     getInputChecked() {
-      return this.getInputEl().checked
+      return !!this.getInputEl().checked
     },
-    callParent(e) {
-      this.appCheckboxGroup && this.appCheckboxGroup.onChange(e)
-    },
-    reset() {
-      const inputEl = this.getInputEl()
-
-      if (inputEl.checked !== inputEl.defaultChecked) {
-        this.modelChange((inputEl.checked = inputEl.defaultChecked))
-
-        this.callParent({
-          target: inputEl
-        })
-      }
+    setChecked(checked = true) {
+      this.getInputEl().checked = checked
     }
   }
 }
@@ -177,7 +150,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-checkbox {
-  --color: #{$primary-color};
+  --checkbox-color: #{$border-color};
+  --checkbox-active-color: #{$primary-color};
 
   display: inline-flex;
   flex-direction: column;
@@ -203,13 +177,12 @@ export default {
   &_icon,
   &_checked-icon {
     --size: 24px;
-    margin-right: 12px;
-    --color: #{$border-color};
+    --color: var(--checkbox-color);
   }
 
   &_checked-icon {
     display: none;
-    --color: #{$primary-color};
+    --color: var(--checkbox-active-color);
   }
 
   &_input {
@@ -233,6 +206,7 @@ export default {
   &_text {
     display: block;
     line-height: 1;
+    margin-left: 12px;
   }
 
   &[disabled] {

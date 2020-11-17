@@ -1,18 +1,16 @@
 <template>
-  <div
-    :class="[
-      prefix + '-select',
-      { focus: focus, disabled: disabled, mobile: isMobile }
-    ]"
-  >
-    <div :class="[prefix + '-select_field']" @mouseup="onBoxClick">
-      <div :class="[prefix + '-select_text', { placeholder: !formLabel }]">
+  <div :class="[prefix + '-select', { focus, disabled }]">
+    <div
+      :class="[prefix + '-input', { focus }]"
+      :disabled="disabled"
+      @mouseup="onBoxClick"
+    >
+      <div :class="[prefix + '-input_input', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
       </div>
-      <icon
-        :class="[prefix + '-select_unfold-icon', { 'arrow--down': !isMobile }]"
-        :class-name="isMobile ? 'RightOutlined' : 'DownOutlined'"
-      ></icon>
+      <div :class="[prefix + '-input_append']">
+        <icon class-name="RightOutlined"></icon>
+      </div>
       <input
         :class="[prefix + '-select_input']"
         type="text"
@@ -32,44 +30,12 @@
 import Vue from 'vue'
 import SelectDrawer from './Drawer.vue'
 import Icon from '../Icon'
-import { CustomEvent } from '../../helpers/events'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { createPopup } from '../../helpers/popup'
 import formMixin from '../util/form-mixin'
-import { isMobile } from '../../helpers/device'
 
 const VISIBILITY_CHANGE_TYPE = 'visibility-change'
-
-// function createSelectPicker(parent, alignRight = false) {
-//   let picker
-
-//   if (isMobile) {
-//     picker = createDrawer()
-//   } else {
-//     picker = createPicker(parent.$el, {
-//       minWidth: false,
-//       align: alignRight ? 'right' : 'left'
-//     })
-//   }
-
-//   const Comp = Vue.extend({
-//     extends: SelectDrawer,
-//     created() {
-//       this.$parent = parent
-//     }
-//   })
-
-//   const app = new Comp({
-//     propsData: {
-//       options: parent.options2
-//     }
-//   }).$mount(picker.$mount)
-
-//   picker.app = app
-
-//   return picker
-// }
 
 function createSelectPicker(parent) {
   const { $wrapper } = createPopup()
@@ -143,7 +109,6 @@ export default {
   data() {
     return {
       prefix: SDKKey,
-      isMobile,
 
       focus: false,
       formValue: '',
@@ -274,18 +239,9 @@ export default {
             this.picker = createSelectPicker(this, !!this.appFormItem)
           }
 
-          this.$emit(
-            VISIBILITY_CHANGE_TYPE,
-            new CustomEvent(
-              {
-                type: VISIBILITY_CHANGE_TYPE,
-                currentTarget: this.$el
-              },
-              {
-                visibility: true
-              }
-            )
-          )
+          this.$emit(VISIBILITY_CHANGE_TYPE, {
+            visibility: true
+          })
         }
       }
     },
@@ -297,18 +253,9 @@ export default {
 
       this.$emit(e.type, e)
 
-      this.$emit(
-        VISIBILITY_CHANGE_TYPE,
-        new CustomEvent(
-          {
-            type: VISIBILITY_CHANGE_TYPE,
-            currentTarget: this.$el
-          },
-          {
-            visibility: false
-          }
-        )
-      )
+      this.$emit(VISIBILITY_CHANGE_TYPE, {
+        visibility: false
+      })
     },
     getInputEl() {
       return this.$el && this.$el.firstElementChild.lastElementChild
@@ -351,25 +298,13 @@ export default {
 
       this.validateAfterEventTrigger(type, this.formValue)
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          {
-            type,
-            currentTarget: this.$el,
-            target: this.getInputEl()
-          },
-          {
-            value
-          }
-        )
-      )
+      this.$emit(type, {
+        value
+      })
     },
 
     reset() {
-      if (this.formValue !== this.defaultValue) {
-        this.onChange(this.defaultValue)
-      }
+      return this._reset(this.getInputEl().value)
     }
   }
 }
@@ -379,59 +314,9 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-select {
-  --height: 48px;
-  --font-size: 17px;
-  --icon-size: 20px;
-  --padding-left-right: 16px;
-  --color: #{$primary-color};
-  --placeholder-color: #{$font3-color};
-
-  display: inline-flex;
+  display: flex;
   width: 100%;
-  height: var(--height);
-  font-size: var(--font-size);
   position: relative;
-
-  &_field {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    border: 1px solid $border-color;
-    overflow: hidden;
-    box-sizing: border-box;
-    position: relative;
-    padding: 0 16px;
-    background-color: #fff;
-
-    &:hover {
-      border-color: var(--color);
-    }
-  }
-
-  &_text,
-  &_input {
-    flex-grow: 1;
-    box-sizing: border-box;
-    padding: 0;
-    font-size: var(--font-size);
-    color: $title-color;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-break: break-all;
-    height: 100%;
-    line-height: calc(var(--height) - 2px);
-    display: block;
-    margin: 0;
-    border: none;
-    width: 0;
-
-    &.placeholder {
-      color: var(--placeholder-color);
-    }
-  }
 
   &_input {
     position: absolute;
@@ -440,52 +325,12 @@ export default {
     width: 100%;
     height: 100%;
     opacity: 0;
-
-    &::-webkit-input-placeholder {
-      color: var(--placeholder-color);
-    }
+    margin: 0;
+    padding: 0;
+    border: none;
 
     &:disabled {
       cursor: not-allowed;
-    }
-  }
-
-  &_unfold-icon {
-    display: block;
-    --size: var(--icon-size);
-    --color: #{$font-color};
-    transition: all 0.2s;
-    flex-shrink: 0;
-    margin-left: 5px;
-  }
-
-  &.focus {
-    .#{$prefix}-select {
-      &_field {
-        border-color: var(--color);
-      }
-      &_unfold-icon.arrow--down {
-        transform: rotate(180deg);
-      }
-      &_dropdown {
-        display: block;
-      }
-    }
-  }
-
-  &.disabled {
-    .#{$prefix}-select {
-      &_field,
-      &_field:hover {
-        background-color: $background2-color;
-        border-color: $border-color;
-        cursor: not-allowed;
-      }
-
-      &_text,
-      &_text.placeholder {
-        color: $font3-color;
-      }
     }
   }
 
@@ -529,9 +374,5 @@ export default {
       cursor: not-allowed;
     }
   }
-}
-
-.#{$prefix}-select_options.mobile {
-  height: 100%;
 }
 </style>

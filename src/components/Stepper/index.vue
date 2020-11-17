@@ -31,7 +31,6 @@
 
 <script>
 import FxButton from '../Button'
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 import {
@@ -151,10 +150,7 @@ export default {
         type = 'minus-click'
       }
 
-      this.$emit(
-        type,
-        new CustomEvent({ type, target: e.target, currentTarget: this.$el }, {})
-      )
+      this.$emit(type, {})
     },
     getRangeNumber(value) {
       value = this.formateNumber(value)
@@ -219,31 +215,19 @@ export default {
 
       e.target.value = value
 
-      this.$emit(
-        e.type,
-        new CustomEvent(
-          { type: e.type, target: e.target, currentTarget: this.$el },
-          {
-            value
-          }
-        )
-      )
+      this.$emit(e.type, {
+        value
+      })
     },
     reset() {
-      this.updateValue(this.defaultValue)
+      return this._reset(this.getInputEl().value)
     },
     _change(value) {
       const type = 'change'
 
-      this.$emit(
-        type,
-        new CustomEvent(
-          { type, target: this.getInputEl(), currentTarget: this.$el },
-          {
-            value
-          }
-        )
-      )
+      this.$emit(type, {
+        value
+      })
 
       this.validateAfterEventTrigger(type, value)
     }

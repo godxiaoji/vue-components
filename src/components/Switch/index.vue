@@ -4,20 +4,18 @@
       :class="[prefix + '-switch_checkbox']"
       type="checkbox"
       :disabled="disabled"
-      :style="[switchColor]"
       @change="onChange"
     />
     <input
       type="hidden"
       :disabled="disabled"
       :name="formName"
-      :value="formChecked"
+      :value="formValue"
     />
   </label>
 </template>
 
 <script>
-import { CustomEvent } from '../../helpers/events'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 
@@ -25,13 +23,9 @@ export default {
   name: SDKKey + '-switch',
   mixins: [formMixin],
   props: {
-    checked: {
+    value: {
       type: Boolean,
       default: false
-    },
-    color: {
-      type: String,
-      default: ''
     },
     name: {
       type: String,
@@ -43,97 +37,63 @@ export default {
     }
   },
   model: {
-    prop: 'checked',
+    prop: 'value',
     event: '_change'
   },
   data() {
     return {
       prefix: SDKKey,
 
-      formChecked: false
+      formValue: false
     }
   },
-  computed: {
-    switchColor() {
-      if (this.color && this.formChecked) {
-        return {
-          'background-color': this.color
-        }
-      }
-      return null
-    },
-    formValue() {
-      return this.formChecked
-    }
-  },
+  computed: {},
   watch: {
-    checked(val) {
+    value(val) {
       val = !!val
 
-      if (val !== this.formChecked) {
-        const $el = this.$el
-        $el.checked = this.formChecked = val
-
-        this.$emit(
-          'change',
-          new CustomEvent(
-            { type: 'change', target: $el, currentTarget: $el },
-            {
-              value: val
-            }
-          )
-        )
+      if (val !== this.formValue) {
+        this.getInputEl().checked = this.formValue = val
       }
     }
   },
   created() {
-    this.formChecked = !!this.checked
+    this.formValue = !!this.value
   },
   ready() {},
   mounted() {
     const $el = this.$el
-    const checked = !!this.checked
 
     $el.lastElementChild._app_component = this
     $el.lastElementChild._app_type = 'switch'
-    $el.firstElementChild.defaultChecked = checked
-    $el.firstElementChild.checked = checked
+    $el.firstElementChild.defaultChecked = this.formValue
+    $el.firstElementChild.checked = this.formValue
   },
   updated() {},
   attached() {},
   methods: {
     onChange(e) {
-      this._change(e.target.checked)
+      const value = !!e.target.checked
+
+      this.formValue = value
+
+      if (this.value !== value) {
+        this.$emit('_change', value)
+      }
+
+      this.eventEmit('change', value)
     },
     reset() {
-      const $input = this.getInputEl()
-      if ($input.defaultChecked !== $input.checked) {
-        this._change($input.defaultChecked)
-      }
+      return this._reset(this.getInputEl().checked)
+    },
+    eventEmit(type, value) {
+      this.$emit(type, {
+        value
+      })
+      this.validateAfterEventTrigger(type, value)
     },
     getInputEl() {
       return this.$el.firstElementChild
-    },
-    _change(checked) {
-      this.formChecked = checked
-
-      if (this.checked !== checked) {
-        this.$emit('_change', checked)
-      }
-
-      const type = 'change'
-
-      this.$emit(
-        type,
-        new CustomEvent(
-          { type, target: this.$el.lastElementChild, currentTarget: this.$el },
-          {
-            value: checked
-          }
-        )
-      )
-
-      this.validateAfterEventTrigger(type, checked)
     }
   }
 }
@@ -143,18 +103,19 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-switch {
-  --color: #{$primary-color};
-  --font-size: 32px;
-  height: 32px;
+  --switch-on-color: #{$primary-color};
+  --switch-off-color: #{$border-color};
+  --switch-size: 32px;
+  height: var(--switch-size);
 
   &_checkbox {
     position: relative;
     width: 1.875em;
     height: 1em;
-    background: $border-color;
+    background: var(--switch-off-color);
     border: 0;
     border-radius: 1em;
-    font-size: var(--font-size);
+    font-size: var(--switch-size);
     outline: 0;
     cursor: pointer;
     transition: all 0.2s linear;
@@ -164,7 +125,7 @@ export default {
     appearance: none;
 
     &:checked {
-      background-color: var(--color);
+      background-color: var(--switch-on-color);
     }
 
     &::after {
@@ -176,7 +137,6 @@ export default {
       background: #fff;
       border-radius: 100%;
       transition: all 0.2s linear;
-      border: 1px solid $divider-color;
       box-sizing: border-box;
       content: '';
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12),

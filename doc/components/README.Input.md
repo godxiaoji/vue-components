@@ -37,8 +37,8 @@
 
 | 事件   | 描述                   | 回调函数参数                                 |
 | ------ | ---------------------- | -------------------------------------------- |
-| input  | 输入值改变时触发       | CustomEvent，可通过 event.details.value 取值 |
-| change | 输入值改变且失焦后触发 | CustomEvent，可通过 event.details.value 取值 |
+| input  | 输入值改变时触发       | { value } |
+| change | 输入值改变且失焦后触发 | { value } |
 | focus  | 获取焦点时触发         | FocusEvent                                   |
 | blur   | 移出焦点时触发         | FocusEvent                                   |
 

@@ -243,7 +243,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-notice-bar {
-  --notice-bar-color: #{$warning-color};
+  // --notice-bar-color: #{$warning-color};
+  --notice-bar-color: #db8f02;
   --notice-bar-background-color: #{$warning-background-color};
 
   position: relative;

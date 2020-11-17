@@ -25,7 +25,7 @@
 | scroll         | 滚动时触发           | { scrollLeft, scrollTop, scrollHeight, scrollWidth }                                                   |
 | refreshing     | 下拉刷新时触发       | ({ pullDirection: string }, done: Function) 其中 pullDirection 指下拉的方向，done 指刷新完毕回调的函数 |
 
-### recycle-change 的 event.details 项
+### recycle-change 的参数
 
 | 值       | 类型    | 说明                                           |
 | -------- | ------- | ---------------------------------------------- |

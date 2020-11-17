@@ -16,13 +16,14 @@
 
 ## CSS
 
-| 属性    | 默认值  | 说明   |
-| ------- | ------- | ------ |
-| --color | #09bb07 | 主色调 |
+| 属性                        | 默认值                               | 说明         |
+| --------------------------- | ------------------------------------ | ------------ |
+| --slider-track-active-color | <font color="#1890ff">#1890ff</font> | 轨道激活色   |
+| --slider-track-color        | <font color="#dadadc">#dadadc</font> | 轨道未激活色 |
 
 ## Events
 
 | 事件   | 描述                     | 回调函数参数                                 |
 | ------ | ------------------------ | -------------------------------------------- |
-| input  | 拖动过程中触发的事件     | CustomEvent，可通过 event.details.value 取值 |
-| change | 完成一次拖动后触发的事件 | CustomEvent，可通过 event.details.value 取值 |
+| input  | 拖动过程中触发的事件     | { value } |
+| change | 完成一次拖动后触发的事件 | { value } |

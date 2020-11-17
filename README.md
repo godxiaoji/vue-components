@@ -2,7 +2,7 @@
 
 移动端 Vue 组件集合。
 
-这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 48k(Gzip)的大小。
+这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 52k(Gzip)的大小。
 
 ## Install
 
@@ -32,7 +32,7 @@ import 'vfox/dist/index.css'
 
 ```
 
-注：由于地区涉及的数据较大，使用`Cascader`组件的地区选择器时，需要额外引入地区数据。
+注：由于地区涉及的数据较大，使用`Cascader`、`PickerView`和`Picker`组件的地区选择器时，需要额外引入地区数据。
 
 ```
 import regionData from 'vfox/data/region'
@@ -61,7 +61,7 @@ import { showToast } from 'vfox'
 
 showToast({
   title: '成功',
-  icon: 'success',
+  type: 'success',
   duration: 2000
 })
 ```

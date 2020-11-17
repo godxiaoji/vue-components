@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/godxiaoji/vfox/compare/v1.4.4...v1.4.5) (2020-11-17)
+
+
+### Bug Fixes
+
+* 优化表单组件 ([29e31ff](https://github.com/godxiaoji/vfox/commit/29e31ff7ea6add555e90d3b210a8fd9261979ed8))
+
 ## [1.4.4](https://github.com/godxiaoji/vfox/compare/v1.4.3...v1.4.4) (2020-11-13)
 
 

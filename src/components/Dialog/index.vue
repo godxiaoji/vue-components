@@ -8,8 +8,8 @@
     @shown="onShown"
     @hide="onHide"
     @hidden="onHidden"
-    @mask-click="onMaskClick"
-    ref="modal"
+    @cancel="onCancel"
+    ref="popup"
   >
     <div :class="[prefix + '-dialog_header']" v-if="title != null">
       {{ title }}
@@ -49,15 +49,13 @@
 import FxButton from '../Button'
 import Modal from '../Modal'
 import { SDKKey } from '../../config'
+import popupExtendMixin from '../util/popup-extend-mixin'
 
 export default {
   name: SDKKey + '-dialog',
   components: { FxButton, Modal },
+  mixins: [popupExtendMixin],
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String,
       default: null
@@ -84,56 +82,17 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, visible2: false }
+    return { prefix: SDKKey }
   },
-  watch: {
-    visible: {
-      immediate: true,
-      handler(val) {
-        if (this.visible2 != val) {
-          this.visible2 = val
-        }
-      }
-    },
-    visible2: {
-      handler(val) {
-        if (this.visible != val) {
-          this.$emit('update:visible', val)
-        }
-      }
-    }
-  },
+  watch: {},
   created() {},
   beforeDestroy() {},
   methods: {
-    onCancelClick() {
-      this.$emit('cancel', { confirm: false, cancel: true })
-
-      this.visible2 = false
-    },
     onConfirmClick() {
-      this.$emit('confirm', { confirm: true, cancel: false })
+      this.$emit('confirm', {})
+      this.afterConfirm({})
 
       this.visible2 = false
-    },
-    onMaskClick() {
-      this.$emit('cancel', { confirm: false, cancel: true, maskClick: true })
-    },
-    onShow(res) {
-      this.$emit('show', res)
-    },
-    onShown(res) {
-      this.$emit('shown', res)
-    },
-    onHide(res) {
-      this.$emit('hide', res)
-    },
-    onHidden(res) {
-      this.$emit('hidden', res)
-    },
-    destroy() {
-      this.$refs.modal.destroy()
-      this.$destroy()
     }
   }
 }
@@ -178,6 +137,7 @@ export default {
       word-break: break-all;
       word-wrap: break-word;
       text-align: center;
+      white-space: pre-line;
     }
   }
 

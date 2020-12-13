@@ -41,12 +41,12 @@ export default {
 
     indicatorColor: {
       type: String,
-      default: 'rgba(4, 10, 19, .45)'
+      default: null
     },
 
     indicatorActiveColor: {
       type: String,
-      default: '#1890ff'
+      default: null
     },
 
     autoplay: {
@@ -248,6 +248,11 @@ export default {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    background-color: rgba($color: $black-color, $alpha: 0.45);
+
+    &.active {
+      background-color: $primary-color;
+    }
   }
 
   &_list {

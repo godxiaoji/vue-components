@@ -354,12 +354,21 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 8px 0 0;
-    color: $font3-color;
+    color: var(--input-secondary-color);
   }
 
   &_append,
-  &_clear {
+  &_clear,
+  &_arrow {
     padding: 0 0 0 8px;
+  }
+
+  &.has--value {
+    .#{$prefix}-input {
+      &_arrow {
+        --color: var(--input-color);
+      }
+    }
   }
 
   &_input {
@@ -406,6 +415,22 @@ export default {
 
   &.focus {
     border-color: $primary-color;
+  }
+
+  &_cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 </style>

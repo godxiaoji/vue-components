@@ -22,11 +22,9 @@
 import Icon from '../Icon'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
+import { getPropValidation, getPropValue } from '../../helpers/validator'
 
-const SIZE_NAMES = ['default', 'small']
 const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
-const PATTERN_NAMES = ['default', 'solid', 'dashed', 'borderless']
-const SHAPE_NAMES = ['default', 'round', 'circle', 'square']
 const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
 
 export default {
@@ -41,30 +39,15 @@ export default {
     }
   },
   props: {
-    size: {
-      validator(val) {
-        return inArray(val, SIZE_NAMES)
-      },
-      default: SIZE_NAMES[0]
-    },
+    size: getPropValidation('buttonSize'),
     type: {
       validator(val) {
         return inArray(val, TYPE_NAMES)
       },
       default: TYPE_NAMES[0]
     },
-    pattern: {
-      validator(val) {
-        return inArray(val, PATTERN_NAMES)
-      },
-      default: PATTERN_NAMES[0]
-    },
-    shape: {
-      validator(val) {
-        return inArray(val, SHAPE_NAMES)
-      },
-      default: SHAPE_NAMES[0]
-    },
+    pattern: getPropValidation('buttonPattern'),
+    shape: getPropValidation('buttonShape'),
     loading: {
       type: Boolean,
       default: false
@@ -104,9 +87,7 @@ export default {
         'pattern--' +
         (this.appButtonGroupSubOptions
           ? this.appButtonGroupSubOptions.pattern
-          : inArray(this.pattern, PATTERN_NAMES)
-          ? this.pattern
-          : PATTERN_NAMES[0])
+          : getPropValue('buttonPattern', this.pattern))
       )
     },
     sizeClassName() {
@@ -114,9 +95,7 @@ export default {
         'size--' +
         (this.appButtonGroupSubOptions
           ? this.appButtonGroupSubOptions.size
-          : inArray(this.size, SIZE_NAMES)
-          ? this.size
-          : SIZE_NAMES[0])
+          : getPropValue('buttonSize', this.size))
       )
     },
     shapeClassName() {
@@ -124,9 +103,7 @@ export default {
         'shape--' +
         (this.appButtonGroupSubOptions
           ? this.appButtonGroupSubOptions.shape
-          : inArray(this.shape, SHAPE_NAMES)
-          ? this.shape
-          : SHAPE_NAMES[0])
+          : getPropValue('buttonShape', this.shape))
       )
     },
     realFormType() {
@@ -161,7 +138,8 @@ export default {
 .#{$prefix}-button {
   --button-font-color: #fff;
   --button-border-color: transparent;
-  --button-icon-size: 21px;
+  --button-icon-size: 18px;
+  --button-size: 48px;
 
   display: inline-flex;
   flex-grow: 1;
@@ -172,11 +150,10 @@ export default {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  min-width: 72px;
-  height: 48px;
-  padding: 0 12px;
+  height: var(--button-size);
+  padding: 0 18px;
   font-size: 17px;
-  line-height: 23.8px;
+  line-height: 24px;
   border: 1px solid var(--button-border-color);
   background: #fff;
   font-weight: 500;
@@ -214,7 +191,7 @@ export default {
   }
 
   &:not(:disabled):active::after {
-    background-color: rgba(0, 0, 0, 0.16);
+    background-color: rgba($color: $black-color, $alpha: 0.16);
   }
 
   + .#{$prefix}-button {
@@ -224,22 +201,34 @@ export default {
   .#{$prefix}-icon {
     --color: var(--button-font-color);
     --size: var(--button-icon-size);
-    margin: 0 10px 0 -1px;
   }
 
   &.shape--round {
-    border-radius: 24px;
+    border-radius: calc(var(--button-size) / 2);
+  }
+
+  &.shape--round,
+  &.shape--rectangle {
+    .#{$prefix}-icon {
+      margin: 0 10px 0 -1px;
+    }
   }
 
   &.shape--square,
   &.shape--circle {
-    width: 48px;
-    min-width: 48px;
-    flex: 0;
+    width: var(--button-size);
+    flex-grow: 0;
+    flex-shrink: 0;
     padding: 0;
 
-    .#{$prefix}-icon {
-      margin: 0;
+    --button-icon-size: 21px;
+
+    &.size--middle {
+      --button-icon-size: 20px;
+    }
+
+    &.size--small {
+      --button-icon-size: 16px;
     }
 
     span {
@@ -251,15 +240,35 @@ export default {
     border-radius: 24px;
   }
 
+  &.size--middle {
+    --button-size: 40px;
+    line-height: 22px;
+    font-size: 16px;
+    --button-icon-size: 17px;
+
+    &::before {
+      height: 10px;
+    }
+
+    &.shape--round,
+    &.shape--rectangle {
+      .#{$prefix}-icon {
+        margin: 0 8px 0 -1px;
+      }
+    }
+  }
+
   &.size--small {
-    min-width: 60px;
-    height: 32px;
-    padding: 0 8px;
-    line-height: 16.8px;
+    --button-size: 28px;
+    line-height: 17px;
     font-size: 12px;
-    border-radius: 2px;
-    --button-icon-size: 18px;
+    --button-icon-size: 14px;
     // border-width: 0;
+
+    &.shape--square,
+    &.shape--rectangle {
+      border-radius: 2px;
+    }
 
     &::before {
       height: 8px;
@@ -269,31 +278,10 @@ export default {
     //   border-width: 1px;
     // }
 
-    .#{$prefix}-icon {
-      margin: 0 4px 0 0;
-    }
-
-    &.shape--round {
-      border-radius: 16px;
-    }
-
-    &.shape--circle {
-      border-radius: 16px;
-      width: 32px;
-      min-width: 32px;
-      padding: 0;
-    }
-
-    &.shape--square {
-      width: 32px;
-      min-width: 32px;
-      padding: 0;
-    }
-
-    &.shape--square,
-    &.shape--circle {
+    &.shape--round,
+    &.shape--rectangle {
       .#{$prefix}-icon {
-        margin: 0;
+        margin: 0 4px 0 0;
       }
     }
   }
@@ -334,7 +322,7 @@ export default {
     &.ghost {
       background-color: #fff;
       --button-font-color: #{$primary-color};
-      --button-border-color: #{$primary-color};
+      --button-border-color: #{$primary-border-color};
     }
 
     &.ghost {
@@ -351,7 +339,7 @@ export default {
     &.ghost {
       background-color: #fff;
       --button-font-color: #{$success-color};
-      --button-border-color: #{$success-color};
+      --button-border-color: #{$success-border-color};
     }
 
     &.ghost {
@@ -368,7 +356,7 @@ export default {
     &.ghost {
       background-color: #fff;
       --button-font-color: #{$warning-color};
-      --button-border-color: #{$warning-color};
+      --button-border-color: #{$warning-border-color};
     }
 
     &.ghost {
@@ -385,7 +373,7 @@ export default {
     &.ghost {
       background-color: #fff;
       --button-font-color: #{$danger-color};
-      --button-border-color: #{$danger-color};
+      --button-border-color: #{$danger-border-color};
     }
 
     &.ghost {
@@ -400,13 +388,13 @@ export default {
       transform: translate3d(0, -50%, 0) scaleX(0.5);
     }
 
-    &::after {
-      left: -50%;
-      right: -50%;
-      top: -50%;
-      bottom: -50%;
-      transform: scale(0.5);
-    }
+    // &::after {
+    //   left: -50%;
+    //   right: -50%;
+    //   top: -50%;
+    //   bottom: -50%;
+    //   transform: scale(0.5);
+    // }
   }
 }
 
@@ -416,13 +404,13 @@ export default {
       transform: translate3d(0, -50%, 0) scaleX($one-third);
     }
 
-    &::after {
-      left: -100%;
-      right: -100%;
-      top: -100%;
-      bottom: -100%;
-      transform: scale($one-third);
-    }
+    // &::after {
+    //   left: -100%;
+    //   right: -100%;
+    //   top: -100%;
+    //   bottom: -100%;
+    //   transform: scale($one-third);
+    // }
   }
 }
 </style>

@@ -8,15 +8,15 @@
 import {
   isStringNumberMixArray,
   cloneData,
-  isSameArray,
-  inArray
+  isSameArray
 } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
+import groupMixin from '../util/group-mixin'
 
 export default {
   name: SDKKey + '-checkbox-group',
-  mixins: [formMixin],
+  mixins: [formMixin, groupMixin],
   provide() {
     return {
       appCheckboxGroup: this
@@ -44,8 +44,7 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: [],
-      appChildren: []
+      formValue: []
     }
   },
   model: {
@@ -63,13 +62,11 @@ export default {
     updateValue() {
       const value = this.formValue.slice(0, 0)
 
-      for (let i = 0; i < this.appChildren.length; i++) {
-        const child = this.appChildren[i]
-
+      this.childrenForEach(child => {
         if (child.getInputChecked()) {
           value.push(cloneData(child.value))
         }
-      }
+      })
 
       this.formValue = value
 
@@ -94,47 +91,8 @@ export default {
       return cloneData(this.formValue)
     },
 
-    addChild(vm) {
-      if (
-        !inArray(
-          vm._uid,
-          this.appChildren.map(({ _uid }) => {
-            return _uid
-          })
-        )
-      ) {
-        this.appChildren.push(vm)
-      }
-    },
-
-    removeChild(vm) {
-      const index = this.appChildren
-        .map(({ _uid }) => {
-          return _uid
-        })
-        .indexOf(vm._uid)
-
-      if (index !== -1) {
-        this.appChildren.splice(index, 1)
-      }
-    },
-
     reset() {
-      const value = this.formValue.slice(0, 0)
-
-      for (let i = 0; i < this.appChildren.length; i++) {
-        const child = this.appChildren[i]
-
-        if (child.getInputChecked()) {
-          value.push(cloneData(child.value))
-        }
-      }
-
-      this.formValue = value
-
-      if (!isSameArray(value, this.value)) {
-        this.$emit('_change', this.hookFormValue())
-      }
+      this.updateValue()
 
       this.$emit('reset', { name: this.formName, value: this.hookFormValue() })
 

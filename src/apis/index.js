@@ -1,6 +1,5 @@
 import { createIntersectionObserver } from './IntersectionObserver'
 import { createSelectorQuery } from './SelectorQuery'
-import { showDialog } from './Dialog'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import { showNotify, hideNotify } from './Notify'
 import { previewImage } from './PreviewImage'
@@ -13,7 +12,16 @@ import {
 } from './LocalStorage'
 import { pageScrollTo, elementScrollTo } from './Scroll'
 import { queryString } from './URL'
-import { showPicker } from './Picker'
+import {
+  showPicker,
+  showCascader,
+  showCalendar,
+  showActionSheet,
+  showPopover,
+  showPopMenu,
+  showPopDialog,
+  showDialog
+} from './Popup'
 
 export {
   createIntersectionObserver,
@@ -34,5 +42,11 @@ export {
   elementScrollTo,
   previewImage,
   queryString,
-  showPicker
+  showPicker,
+  showCascader,
+  showCalendar,
+  showActionSheet,
+  showPopover,
+  showPopMenu,
+  showPopDialog
 }

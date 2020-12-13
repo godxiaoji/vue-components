@@ -28,6 +28,7 @@ import Icon from '../Icon'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
+import Exception from '../../helpers/exception'
 
 export default {
   name: SDKKey + '-tabs',
@@ -116,7 +117,13 @@ export default {
     updateValue() {
       if (!this.updateActive(this.value)) {
         this.$emit('_change', this.value2)
-        console.error('Invalid prop: "value" is not in "options".')
+        console.error(
+          new Exception(
+            '"value" is not in "options".',
+            Exception.TYPE.PROP_ERROR,
+            'Tabs'
+          )
+        )
       }
     },
 

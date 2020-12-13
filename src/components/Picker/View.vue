@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-picker-view', { disabled }]" ref="picker">
+  <div :class="[prefix + '-picker-view']" ref="picker">
     <div :class="[prefix + '-picker-view_cols']">
       <div
         :class="[prefix + '-picker-view_col']"
@@ -27,58 +27,58 @@
         </ul>
       </div>
     </div>
-    <input
-      type="hidden"
-      :name="formName"
-      :value="formValueString"
-      :disabled="disabled"
-    />
-    <div :class="[prefix + '-picker-view_disabled']" v-if="disabled"></div>
   </div>
 </template>
 
 <script>
 import { frameTo } from '../../helpers/animation'
 import { SDKKey } from '../../config'
-import formMixin from '../util/form-mixin'
-import pickerMixin from '../util/picker-mixin'
+import mulitSelectorMixin from '../util/mulit-selector/mixin'
 
 export default {
   name: SDKKey + '-picker-view',
   components: {},
-  mixins: [pickerMixin, formMixin],
+  mixins: [mulitSelectorMixin],
   props: {},
   data() {
     return {
-      prefix: SDKKey
+      prefix: SDKKey,
+      itemHeight: 48,
+      picker: true
     }
   },
   computed: {},
   watch: {},
-  mounted() {
-    const $input = this.getInputEl()
+  created() {
+    this.formLabel = this.cacheLabel
+    this.formValue = this.cacheValue
 
-    $input._app_component = this
-    $input._app_type = 'picker'
+    // 需要立即同步好数据
+    this.$emit('_change', this.hookFormValue())
   },
+  mounted() {},
   updated() {},
   attached() {},
   methods: {
-    getInputEl() {
-      return this.$el && this.$el.lastElementChild
+    onChange() {
+      this.$emit('_change', this.hookFormValue())
+      this.$emit('change', this.getDetail())
     },
 
-    afterUpdate(menuGroup) {
-      // 设置默认值
-      const lastGroup = menuGroup[menuGroup.length - 1]
-      for (let i = 0; i < lastGroup.length; i++) {
-        if (lastGroup[i].selected) {
-          this.formValue = lastGroup[i].values
-          this.formLabel = lastGroup[i].labels
-          break
-        }
-      }
+    hookFormValue() {
+      const { value, valueString } = this.getDetail()
+      return this.formatString ? valueString : value
+    },
 
+    afterUpdate() {
+      this.formLabel = this.cacheLabel
+      this.formValue = this.cacheValue
+
+      // 把选择数据展示在选择框内
+      this.updatePos()
+    },
+
+    updatePos() {
       this.$nextTick(() => {
         // 把选择数据展示在选择框内
         const $picker = this.$refs.picker
@@ -88,7 +88,8 @@ export default {
           const $firstList = $lists[0]
 
           if ($firstList && $firstList.firstElementChild) {
-            const itemHeight = $firstList.firstElementChild.clientHeight
+            const itemHeight =
+              $firstList.firstElementChild.clientHeight || this.itemHeight
             const $selecteds = $picker.querySelectorAll('[selected]')
             $selecteds.forEach(($selected, index) => {
               const itemIndex = parseInt($selected.dataset.index)
@@ -109,7 +110,7 @@ export default {
       clearTimeout($list.scrollTimer)
 
       const $items = $list.children
-      const itemHeight = $list.firstElementChild.clientHeight
+      const itemHeight = $list.firstElementChild.clientHeight || this.itemHeight
       const groupIndex = parseInt($list.dataset.index)
       let current = Math.round($list.scrollTop / itemHeight)
       let oldSelectIndex = 0
@@ -180,26 +181,15 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-picker-view {
+  flex-grow: 1;
   position: relative;
   background: #fff;
   color: $title-color;
-
-  &.disabled {
-    opacity: 0.2;
-  }
-
-  &_disabled {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    cursor: not-allowed;
-  }
+  --pick-view-item-height: 48px;
 
   &_cols {
     width: 100%;
-    height: 250px;
+    height: calc(var(--pick-view-item-height) * 5);
     display: flex;
     flex-wrap: nowrap;
   }
@@ -212,7 +202,7 @@ export default {
     &::before {
       content: '';
       position: absolute;
-      top: 100px;
+      top: calc(var(--pick-view-item-height) * 2);
       left: 0;
       height: 0;
       width: 100%;
@@ -223,7 +213,7 @@ export default {
     &::after {
       content: '';
       position: absolute;
-      bottom: 100px;
+      bottom: calc(var(--pick-view-item-height) * 2);
       left: 0;
       height: 0;
       width: 100%;
@@ -250,9 +240,9 @@ export default {
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
-    height: 50px;
-    line-height: 50px;
-    font-size: 16px;
+    height: var(--pick-view-item-height);
+    line-height: var(--pick-view-item-height);
+    font-size: 17px;
     color: $font3-color;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -261,11 +251,11 @@ export default {
     text-align: center;
 
     &:first-child {
-      margin-top: 100px;
+      margin-top: calc(var(--pick-view-item-height) * 2);
     }
 
     &:last-child {
-      margin-bottom: 100px;
+      margin-bottom: calc(var(--pick-view-item-height) * 2);
     }
 
     &.selected {

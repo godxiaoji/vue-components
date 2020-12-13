@@ -1,20 +1,42 @@
 <template>
-  <div :class="[prefix + '-form-item']">
+  <div :class="[prefix + '-form-item']" @click="onClick">
     <cell :label="label" :description="errMsg" :required="required">
-      <slot></slot>
+      <slot>
+        <div :class="[prefix + '-input']">
+          <div
+            :class="[prefix + '-input_input', { placeholder: !valueString2 }]"
+          >
+            {{ valueString2 || placeholder }}
+          </div>
+          <div :class="[prefix + '-input_append']">
+            <icon
+              class-name="RightOutlined"
+              :class="[prefix + '-form-item_icon']"
+            ></icon>
+          </div>
+          <input type="hidden" ref="input" :name="name" :value="valueString2" />
+        </div>
+      </slot>
     </cell>
   </div>
 </template>
 
 <script>
 import Cell from '../Cell'
+import Icon from '../Icon'
 import Schema from 'async-validator'
 import { SDKKey } from '../../config'
-import { isArray, isBoolean, isNumber } from '../../helpers/util'
+import {
+  isArray,
+  isBoolean,
+  isNumber,
+  isFunction,
+  isString
+} from '../../helpers/util'
 
 export default {
   name: SDKKey + '-form-item',
-  components: { Cell },
+  components: { Cell, Icon },
   provide() {
     return {
       appFormItem: this
@@ -35,12 +57,49 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    // 自身作为输入
+    value: {
+      validator(val) {
+        return isNumber(val) || isString(val)
+      },
+      default: ''
+    },
+    valueString: {
+      type: String,
+      default: null
+    },
+    getValueString: {
+      type: Function,
+      default: null
+    },
+    placeholder: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return { prefix: SDKKey, errMsg: '' }
   },
-  computed: {},
+  computed: {
+    valueString2() {
+      if (isFunction(this.getValueString)) {
+        return this.getValueString(this.value)
+      } else if (isString(this.valueString)) {
+        return this.valueString
+      }
+
+      return (this.value && this.value.toString()) || ''
+    }
+  },
+  watch: {
+    value: {
+      immediate: false,
+      handler(val) {
+        this.validateAfterEventTrigger('change', val)
+      }
+    }
+  },
   created() {
     this._form_item = true
 
@@ -160,6 +219,10 @@ export default {
       this.errMsg = ''
 
       return Promise.resolve(true)
+    },
+
+    onClick(e) {
+      this.$emit(e.type, e)
     }
   }
 }

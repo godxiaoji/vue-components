@@ -1,0 +1,298 @@
+<template>
+  <drawer
+    :class="[prefix + '-cascader-popup']"
+    ref="popup"
+    :title="title2"
+    placement="right"
+    :visible.sync="visible2"
+    @show="onShow"
+    @shown="onShown"
+    @hide="onHide"
+    @hidden="onHidden"
+    @cancel="onCancel"
+  >
+    <div ref="dropdown" :class="[prefix + '-cascader_groups']">
+      <div
+        :class="[prefix + '-cascader_group', prefix + '-vertical-hairline']"
+        v-for="(list, listIndex) in cols"
+        :key="listIndex"
+      >
+        <ul :class="[prefix + '-cascader_list']" :data-index="listIndex">
+          <li
+            :class="[
+              prefix + '-cascader_item',
+              prefix + '-horizontal-hairline',
+              {
+                selected: item.selected,
+                disabled: item.disabled
+              }
+            ]"
+            v-for="(item, index) in list"
+            :key="item.value"
+            :data-index="index"
+            @click="onItemClick($event, item)"
+          >
+            <span :class="[prefix + '-cascader_item-text']">
+              {{ item.label }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </drawer>
+</template>
+
+<script>
+import Drawer from '../Drawer'
+import { SDKKey } from '../../config'
+import { array2String, getDefaultDetail } from '../util/mulit-selector'
+import { frameTo } from '../../helpers/animation'
+import mulitSelectorMixin from '../util/mulit-selector/mixin'
+import popupExtendMixin from '../util/popup-extend-mixin'
+import { isSameArray } from '../../helpers/util'
+
+export default {
+  name: SDKKey + '-cascader-popup',
+  mixins: [popupExtendMixin, mulitSelectorMixin],
+  components: { Drawer },
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      prefix: SDKKey,
+
+      detail: getDefaultDetail(),
+
+      cascader: true
+    }
+  },
+  computed: {
+    title2() {
+      if (this.cacheLabel[0]) {
+        return array2String(this.cacheLabel, this.mode, this.separator)
+      }
+
+      return this.title || ' '
+    }
+  },
+  watch: {
+    visible2: {
+      handler(val) {
+        if (val) {
+          this.update(this.formValue)
+        }
+      }
+    }
+  },
+  model: {
+    prop: 'value',
+    event: '_change'
+  },
+  methods: {
+    afterUpdate() {
+      this.$nextTick(() => {
+        const $dropdown = this.$refs.dropdown
+
+        if (!$dropdown) {
+          return
+        }
+
+        const $lists = $dropdown.querySelectorAll(`.${SDKKey}-cascader_list`)
+        const $selecteds = $dropdown.querySelectorAll('.selected')
+
+        if ($lists[1]) {
+          let $next
+          if ($lists.length > $selecteds.length) {
+            // 还有未选择
+            $next = $lists[$selecteds.length]
+          } else {
+            // 选择完毕
+            $next = $lists[$lists.length - 1]
+          }
+
+          $next = $next.parentNode
+          const $groups = $next.parentNode
+
+          let to
+
+          if ($next.offsetWidth >= document.documentElement.offsetWidth * 0.9) {
+            to = $next.offsetLeft
+          } else {
+            to = $next.offsetLeft - ($groups.offsetWidth - $next.offsetWidth)
+          }
+
+          if (to >= 0) {
+            frameTo({
+              from: $groups.scrollLeft,
+              to,
+              duration: 100,
+              progress(res) {
+                $groups.scrollLeft = res.current
+              }
+            })
+          }
+
+          // $next.scrollIntoView(
+          //   $next.offsetWidth < document.documentElement.offsetWidth
+          // )
+        } else {
+          $dropdown.scrollLeft = 0
+        }
+
+        $lists.forEach(($list, index) => {
+          if ($selecteds[index]) {
+            frameTo({
+              from: $list.scrollTop,
+              to: $selecteds[index].offsetTop,
+              duration: 100,
+              progress(res) {
+                $list.scrollTop = res.current
+              }
+            })
+          } else {
+            $list.scrollTop = 0
+          }
+        })
+      })
+    },
+
+    /**
+     * 选项点击
+     */
+    onItemClick(e, item) {
+      if (item.disabled) {
+        return
+      }
+
+      if (item.hasChildren) {
+        this.update(item.values)
+      } else {
+        if (!isSameArray(this.formValue, item.values)) {
+          this.formValue = item.values
+          this.formLabel = item.labels
+
+          this.select()
+
+          this.$emit('_change', this.hookFormValue())
+          this.$emit('change', this.getDetail())
+          this.afterChange(this.getDetail())
+        } else {
+          this.select()
+        }
+
+        this.visible2 = false
+      }
+    },
+
+    select() {
+      const selectDetail = this.getDetail()
+      this.$emit('select', selectDetail)
+      this.afterSelect(selectDetail)
+    },
+
+    afterSelect() {},
+
+    afterChange() {},
+
+    hookFormValue() {
+      const { value, valueString } = this.getDetail()
+      return this.formatString ? valueString : value
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import '../component.module.scss';
+
+.#{$prefix}-cascader {
+  &_groups {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+  }
+
+  &_group {
+    position: relative;
+    height: 100%;
+    min-width: 60px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    vertical-align: top;
+    color: $font2-color;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: '';
+    }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  &_group:last-child {
+    color: $title-color;
+  }
+
+  &_list {
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &_item {
+    padding: 0 0 0 12px;
+    font-size: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+
+    &.selected {
+      color: $primary-color;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      width: 100%;
+      bottom: 0;
+    }
+
+    &.disabled {
+      color: $font3-color;
+      cursor: not-allowed;
+    }
+
+    &-text {
+      height: 44px;
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      box-sizing: border-box;
+      padding-right: 12px;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+</style>

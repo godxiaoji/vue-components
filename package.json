@@ -36,6 +36,7 @@
   "dependencies": {
     "@godxiaoji/url-handler": "^1.0.3",
     "async-validator": "^3.4.0",
+    "dayjs": "^1.9.7",
     "mslide": "^1.2.1"
   },
   "devDependencies": {
@@ -57,7 +58,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "sass": "^1.27.1",
     "sass-loader": "^10.0.4",
-    "semantic-release": "^17.2.1",
+    "semantic-release": "^17.3.0",
     "svg-sprite-loader": "^5.0.0",
     "vue-loader": "^15.9.4",
     "vue-template-compiler": "^2.6.11",

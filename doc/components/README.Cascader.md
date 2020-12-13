@@ -1,22 +1,22 @@
 # Cascader
 
-级联选择器。
+级联选择器。可以配合 [Form](./README.Form.md) 和 [FormItem](./README.FormItem.md) 使用。
 
 ## Props
 
 | 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                                                                    |
 | ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------- |
-| name              | string                          |                                                          | 否   | [form](./README.Form.md) 的标识                                                          |
-| placeholder       | string                          |                                                  | 否   | 未进行选择时的提示                                                                      | name | string |  | 否 | [form](./README.Form.md) 的标识 |
+| name              | string                          |                                                          | 否   | [form](./README.Form.md) 的标识                                                         |
+| placeholder       | string                          |                                                          | 否   | 没有选中值的提示，也会用在弹窗标题上                                                    |
+| disabled          | boolean                         | false                                                    | 否   | 是否禁用                                                                                |
 | initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，可选值： 'date', 'time', ' datetime, 'region'，设置后会采用内置 options |
 | options           | array                           | []                                                       | 否   | 数据集                                                                                  |
-| value/v-modal     | string/number/string[]/number[] | []                                                       | 否   | 设置选中项                                                                              |
+| v-modal           | string/number/string[]/number[] | []                                                       | 否   | 选中值                                                                                  |
 | format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                                                              |
-| disabled          | boolean                         | false                                                    | 否   | 是否被禁用                                                                              |
 | initial-separator | string                          | '/'                                                      | 否   | 分隔符                                                                                  |
 | field-names       | object                          | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key                                       |
 
-### mode 的合法值
+### <a name="mode">mode 的合法值</a>
 
 | 值       | 说明           |
 | -------- | -------------- |
@@ -34,7 +34,7 @@ import regionData from 'vfox/data/region'
 Vfox.addRegionData(regionData)
 ```
 
-### options 的结构
+### <a name="options">options 的结构</a>
 
 ```
 [
@@ -84,42 +84,34 @@ Vfox.addRegionData(regionData)
 ]
 ```
 
-### value 的结构
+### <a name="value">value 的结构</a>
 
 ```
 [ 'zaolei', 'lvzao' ]
 ```
 
+当 formatString 为 true 时，根据分割线 `/` 返回：
+
+```
+zaolei/lvzao
+```
+
 ## Events
 
-| 事件              | 描述                    | 回调函数参数                                         |
-| ----------------- | ----------------------- | ---------------------------------------------------- |
-| change            | 选中值发生变化时触发    | { value: array, valueString: string, date?: Date }   |
-| visibility-change | 下拉框出现/隐藏时触发   | { visibility } visibility = true(显示) / false(隐藏) |
-| blur              | 当 input 失去焦点时触发 | FocusEvent                                           |
-| focus             | 当 input 获得焦点时触发 | FocusEvent                                           |
+| 事件   | 描述                        | 回调函数参数                                                                     |
+| ------ | --------------------------- | -------------------------------------------------------------------------------- |
+| select | 选择后触发                  | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| change | 选择后 value 发生改变时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| show   | 展示时触发                  | {}                                                                               |
+| shown  | 展示且动画结束后触发        | {}                                                                               |
+| hide   | 隐藏时触发                  | {}                                                                               |
+| hidden | 隐藏且动画结束后触发        | {}                                                                               |
 
-### prop mode = date / time / datetime 模式下， change 事件的回调参数
+### change 等回调参数的 detail 结构
 
-| 值          | 类型     | 说明                              |
-| ----------- | -------- | --------------------------------- |
-| valueString | string   | 常用格式，如 2020-02-14 00:00:00  |
-| value       | string[] | 数组形式，如 ["2020", "02", "14"] |
-| date        | Date     | 时间对应的 Date 实例              |
-
-### prop mode 在其他模式下， change 事件回调参数
-
-| 值          | 类型              | 说明                                                        |
-| ----------- | ----------------- | ----------------------------------------------------------- |
-| valueString | string            | 格式化后的数值，如：1, "a/b", "北京市/北京市/东城区"        |
-| value       | number[]/string[] | 数组形式，如：[1]，["a", "b"]，["北京市","北京市","东城区"] |
-
-## Slots
-
-### 前置元素
-
-```
-<fx-cascader>
-  <template #prepend>性别</template>
-</fx-cascader>
-```
+| 值          | 类型              | 说明                 |
+| ----------- | ----------------- | -------------------- |
+| value       | number[]/string[] | ["zaolei", "lunzao"] |
+| valueString | string            | "zaolei/lunzao"      |
+| label       | string[]          | ["藻类", "轮藻"]     |
+| labelString | string            | "藻类/轮藻"          |

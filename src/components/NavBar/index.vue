@@ -149,7 +149,7 @@ export default {
   watch: {},
   computed: {
     buttonShape() {
-      return this.iconOnly ? 'square' : 'default'
+      return this.iconOnly ? 'square' : 'rectangle'
     }
   },
   created() {},
@@ -196,7 +196,7 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-nav-bar {
-  --nav-bar-height: 48px;
+  --nav-bar-height: 52px;
 
   position: relative;
   height: var(--nav-bar-height);

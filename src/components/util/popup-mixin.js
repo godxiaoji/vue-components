@@ -1,5 +1,5 @@
 import { defaultZIndex, getNewZIndex } from '../../helpers/popup'
-import { isFunction } from '../../helpers/util'
+import { cloneData, isFunction } from '../../helpers/util'
 import { addClassName, removeClassName, removeEl } from '../../helpers/dom'
 import { SDKKey } from '../../config'
 
@@ -8,6 +8,14 @@ export default {
     visible: {
       type: Boolean,
       default: false
+    },
+    maskClosable: {
+      type: Boolean,
+      default: true
+    },
+    showMask: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {},
@@ -16,7 +24,8 @@ export default {
       isShow: false,
       visible2: false,
       zIndex: defaultZIndex,
-      forbidScroll: true
+      forbidScroll: true,
+      top: 0
     }
   },
   watch: {
@@ -29,18 +38,41 @@ export default {
     }
   },
   mounted() {
+    document.body.append(this.$el)
+
     if (this.visible) {
       this.show()
     }
   },
+  destroyed() {
+    removeEl(this.$el)
+  },
   methods: {
     onMaskClick() {
-      if (this.isShowing) {
+      if (!this.maskClosable) {
+        return
+      }
+      this.customCancel('maskClick')
+    },
+
+    onCloseClick() {
+      this.customCancel('closeClick')
+    },
+
+    onCancelClick() {
+      this.customCancel('cancelClick')
+    },
+
+    customCancel(key, focus = false) {
+      if (this.isShowing && !focus) {
         return
       }
 
-      this.hide()
+      this.$emit('cancel', { [key]: true })
+      this.hide({ cancel: true, [key]: true }, this.afterCancel)
     },
+
+    afterCancel() {},
 
     noop() {},
 
@@ -54,7 +86,13 @@ export default {
       clearTimeout(this.visibleTimer)
 
       this.forbidScroll &&
+        this.showMask &&
         addClassName(document.body, SDKKey + '-overflow-hidden')
+
+      if (!this.showMask) {
+        this.$el.style.position = 'absolute'
+        this.$el.style.top = document.documentElement.scrollTop + 'px'
+      }
 
       this.zIndex = getNewZIndex()
       this.isShow = true
@@ -83,8 +121,10 @@ export default {
 
       if (isSuccess) {
         this.$emit('show', {})
+        this.afterShow()
       }
     },
+    afterShow() {},
     _doHide(callback) {
       if (this.isHiding) {
         return false
@@ -99,6 +139,8 @@ export default {
       this.visibleTimer = setTimeout(() => {
         this.isShow = false
         this.isHiding = false
+        this.$el.style.position = ''
+        this.$el.style.top = ''
 
         if (isFunction(callback)) {
           callback()
@@ -111,34 +153,17 @@ export default {
 
       return true
     },
-    hide(source = 'active') {
+    hide(res, beforeHideFn) {
       const isSuccess = this._doHide(() => {
-        this.$emit('hidden', { source })
+        this.$emit('hidden', res)
+        this.afterHidden()
       })
 
       if (isSuccess) {
-        this.$emit('hide', { source })
+        if (beforeHideFn) beforeHideFn(cloneData(res))
+        this.$emit('hide', res)
       }
     },
-    close(source = 'active') {
-      if (this.isClosing) {
-        return
-      }
-      this.isClosing = true
-
-      const isSuccess = this._doHide(() => {
-        this.destroy()
-        this.$emit('closed', { source })
-      })
-
-      if (isSuccess) {
-        this.$emit('close', { source })
-      }
-    },
-    destroy() {
-      this.$destroy()
-
-      removeEl(this.$el)
-    }
+    afterHidden() {}
   }
 }

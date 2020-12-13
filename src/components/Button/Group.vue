@@ -15,10 +15,7 @@
 <script>
 import { SDKKey } from '../../config'
 import { inArray } from '../../helpers/util'
-
-const SIZE_NAMES = ['default', 'small']
-const PATTERN_NAMES = ['default', 'solid', 'dashed', 'borderless']
-const SHAPE_NAMES = ['default', 'round', 'circle', 'square']
+import { getPropValidation, getPropValue } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-button-group',
@@ -30,24 +27,9 @@ export default {
     }
   },
   props: {
-    size: {
-      validator(val) {
-        return inArray(val, SIZE_NAMES)
-      },
-      default: SIZE_NAMES[0]
-    },
-    pattern: {
-      validator(val) {
-        return inArray(val, PATTERN_NAMES)
-      },
-      default: PATTERN_NAMES[0]
-    },
-    shape: {
-      validator(val) {
-        return inArray(val, SHAPE_NAMES)
-      },
-      default: SHAPE_NAMES[0]
-    }
+    size: getPropValidation('buttonSize'),
+    pattern: getPropValidation('buttonPattern'),
+    shape: getPropValidation('buttonShape')
   },
   data() {
     return {
@@ -56,9 +38,9 @@ export default {
       buttonIds: [],
 
       subOptions: {
-        pattern: PATTERN_NAMES[0],
-        size: SIZE_NAMES[0],
-        shape: SHAPE_NAMES[0]
+        pattern: '',
+        size: '',
+        shape: ''
       }
     }
   },
@@ -67,25 +49,19 @@ export default {
     size: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.size = inArray(newVal, SIZE_NAMES)
-          ? newVal
-          : SIZE_NAMES[0]
+        this.subOptions.size = getPropValue('buttonSize', newVal)
       }
     },
     pattern: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.pattern = inArray(newVal, PATTERN_NAMES)
-          ? newVal
-          : PATTERN_NAMES[0]
+        this.subOptions.pattern = getPropValue('buttonPattern', newVal)
       }
     },
     shape: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.shape = inArray(newVal, SHAPE_NAMES)
-          ? newVal
-          : SHAPE_NAMES[0]
+        this.subOptions.shape = getPropValue('buttonShape', newVal)
       }
     }
   },

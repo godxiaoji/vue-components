@@ -1,7 +1,7 @@
 import { isUndefined, objectForEach } from './helpers/util'
 import * as Components from './components'
 import * as Apis from './apis'
-import { addData as _addRegionData } from './components/Cascader/util/region'
+import { addData as _addRegionData } from './components/util/mulit-selector/region'
 import { SDKKey } from './config'
 
 const Vfox = {

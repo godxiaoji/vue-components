@@ -156,10 +156,7 @@ export default {
       })
     },
     onPreviewClick() {
-      this.hide()
-    },
-    onCloseClick() {
-      this.hide()
+      this.customCancel('previewClick')
     }
   }
 }

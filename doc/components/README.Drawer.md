@@ -10,7 +10,7 @@
 | ------------ | ------- | -------- | ---- | -------------------------------------------------- |
 | visible.sync | boolean | false    | 否   | 是否显示                                           |
 | title        | string  |          | 否   | 标题，设置标题后展示头部栏                         |
-| align        | string  | 'bottom' | 否   | 从哪展开，可选值：'bottom', 'top', 'left', 'right' |
+| placement        | string  | 'bottom' | 否   | 从哪展开，可选值：'bottom', 'top', 'left', 'right' |
 | show-close   | boolean | false    | 否   | 是否显示关闭按钮，显示按钮后展示头部栏             |
 
 ## Events
@@ -25,7 +25,7 @@
 ## Slots
 
 ```
-<fx-drawer title="菜单" align="right">
+<fx-drawer title="菜单" placement="right">
   <fx-tabs />
 </fx-drawer>
 ```

@@ -28,12 +28,8 @@ export function baseShow(object, apiName, componentOptions) {
     const Comp = Vue.extend({
       extends: componentOptions,
       methods: {
-        setAutoClose() {
-          if (this.duration > 0) {
-            this.durationTimer = setTimeout(() => {
-              this.close('auto')
-            }, this.duration)
-          }
+        afterHidden() {
+          this.$destroy()
         }
       },
       destroyed() {
@@ -58,7 +54,7 @@ export function baseShow(object, apiName, componentOptions) {
 
 function clear(key) {
   if ($refs[key]) {
-    $refs[key].close()
+    $refs[key].close('clear')
   }
 }
 

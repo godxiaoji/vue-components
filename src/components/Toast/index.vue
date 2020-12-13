@@ -81,24 +81,26 @@ export default {
   },
   created() {},
   beforeDestroy() {
-    this.clearDurationTimer()
+    this.removeAutoClose()
   },
   methods: {
     setAutoClose() {
       if (this.duration > 0) {
         this.durationTimer = setTimeout(() => {
-          this.hide('auto')
+          this.close('auto')
         }, this.duration)
       }
     },
-    /**
-     * 清除关闭定时器
-     */
-    clearDurationTimer() {
+    close(source) {
+      this.customCancel(source, true)
+    },
+    afterCancel() {
+      this.removeAutoClose()
+    },
+    removeAutoClose() {
       clearTimeout(this.durationTimer)
     },
-    show() {
-      this._doShow()
+    afterShow() {
       this.setAutoClose()
     }
   }

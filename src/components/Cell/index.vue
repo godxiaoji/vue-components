@@ -2,11 +2,12 @@
   <div
     :class="[
       prefix + '-cell',
-      { clickable, 'has--icon': !!icon },
+      { clickable, 'has--icon': !!icon, disabled: !!disabled },
       prefix + '-horizontal-hairline'
     ]"
     @click="onClick"
   >
+    <div :class="[prefix + '-cell_cover']"></div>
     <div :class="[prefix + '-cell_inner']">
       <i :class="[prefix + '-cell_icon']" v-if="icon">
         <icon :class-name="icon"></icon>
@@ -69,6 +70,10 @@ export default {
         return inArray(val, LINK_ICON_NAMES)
       },
       default: LINK_ICON_NAMES[0]
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -93,7 +98,9 @@ export default {
   attached() {},
   methods: {
     onClick(e) {
-      this.$emit(e.type, e)
+      if (!this.disabled) {
+        this.$emit(e.type, e)
+      }
     }
   }
 }
@@ -103,14 +110,27 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-cell {
-  --left-color: #{$title-color};
-  --right-color: #{$font-color};
+  --cell-label-color: #{$title-color};
+  --cell-content-color: #{$font-color};
+  --cell-description-color: #{$font2-color};
   min-height: 48px;
   background-color: #fff;
+  position: relative;
 
   + .#{$prefix}-cell::before {
     content: '';
     margin-left: 16px;
+  }
+
+  &_cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: $black-color, $alpha: 0.16);
+    z-index: 0;
+    display: none;
   }
 
   &_inner {
@@ -129,9 +149,8 @@ export default {
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 32px;
-    color: var(--left-color);
+    color: var(--cell-label-color);
     font-size: 17px;
-    font-weight: 400;
     padding-right: 12px;
   }
 
@@ -143,7 +162,7 @@ export default {
     width: 100%;
     line-height: 20px;
     font-size: 14px;
-    color: $font2-color;
+    color: var(--cell-description-color);
     margin: 0 0 4px 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -156,10 +175,10 @@ export default {
   }
 
   &_content {
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 0;
     font-size: 17px;
-    font-weight: 400;
-    color: var(--right-color);
+    color: var(--cell-content-color);
     min-height: 32px;
     line-height: 32px;
     display: flex;
@@ -175,7 +194,7 @@ export default {
 
     .#{$prefix}-icon {
       --size: 18px;
-      --color: var(--left-color);
+      --color: var(--cell-label-color);
     }
   }
 
@@ -187,47 +206,62 @@ export default {
 
     .#{$prefix}-icon {
       --size: 18px;
-      --color: var(--right-color);
+      --color: var(--cell-content-color);
     }
   }
 
-  &.clickable {
+  &:not(.disabled).clickable {
     cursor: pointer;
     &:active {
-      background-color: $background-color;
+      .#{$prefix}-cell_cover {
+        display: block;
+      }
     }
   }
 
-  .#{$prefix}-input {
-    --input-height: 32px;
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-    padding: 0;
-
-    &_input {
-      text-align: right;
-    }
-
-    &[disabled] {
-      background-color: transparent;
-    }
+  &.disabled {
+    --cell-label-color: #{$font3-color};
+    --cell-content-color: #{$font3-color};
+    --cell-description-color: #{$font3-color};
+    cursor: not-allowed;
   }
 
-  .#{$prefix}-radio-group {
-    justify-content: flex-end;
+  .#{$prefix} {
+    &-input {
+      --input-height: 32px;
+      border-left-width: 0;
+      border-right-width: 0;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      padding: 0;
 
-    &.vertical .#{$prefix}-radio_box {
+      &_input {
+        text-align: right;
+      }
+
+      &[disabled] {
+        background-color: transparent;
+      }
+    }
+
+    &-radio-group {
       justify-content: flex-end;
+
+      &.vertical .#{$prefix}-radio_box {
+        justify-content: flex-end;
+      }
     }
-  }
 
-  .#{$prefix}-checkbox-group {
-    justify-content: flex-end;
-
-    &.vertical .#{$prefix}-checkbox_box {
+    &-checkbox-group {
       justify-content: flex-end;
+
+      &.vertical .#{$prefix}-checkbox_box {
+        justify-content: flex-end;
+      }
+    }
+
+    &-picker-view {
+      margin: -8px 0;
     }
   }
 }

@@ -3,7 +3,7 @@ export function appendToBody($el) {
 }
 
 export function removeEl($el) {
-  $el.parentNode.removeChild($el)
+  $el.parentNode && $el.parentNode.removeChild($el)
 }
 
 export function addClassName($el, className) {

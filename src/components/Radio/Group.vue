@@ -5,13 +5,14 @@
 </template>
 
 <script>
-import { cloneData, isString, isNumber, inArray } from '../../helpers/util'
+import { cloneData, isString, isNumber } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
+import groupMixin from '../util/group-mixin'
 
 export default {
   name: SDKKey + '-radio-group',
-  mixins: [formMixin],
+  mixins: [formMixin, groupMixin],
   provide() {
     return {
       appRadioGroup: this
@@ -37,8 +38,7 @@ export default {
     return {
       prefix: SDKKey,
 
-      formValue: '',
-      appChildren: []
+      formValue: ''
     }
   },
   model: {
@@ -83,31 +83,6 @@ export default {
       })
 
       this.validateAfterEventTrigger(type, this.hookFormValue())
-    },
-
-    addChild(vm) {
-      if (
-        !inArray(
-          vm._uid,
-          this.appChildren.map(({ _uid }) => {
-            return _uid
-          })
-        )
-      ) {
-        this.appChildren.push(vm)
-      }
-    },
-
-    removeChild(vm) {
-      const index = this.appChildren
-        .map(({ _uid }) => {
-          return _uid
-        })
-        .indexOf(vm._uid)
-
-      if (index !== -1) {
-        this.appChildren.splice(index, 1)
-      }
     },
 
     reset() {

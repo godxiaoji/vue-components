@@ -205,7 +205,7 @@ export default {
     background: #ffffff;
     border: 1px solid $divider-color;
     box-sizing: border-box;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.02);
+    box-shadow: 0px 4px 8px rgba($color: $black-color, $alpha: 0.12), 0px 1px 2px rgba($color: $black-color, $alpha: 0.02);
     display: flex;
     align-items: center;
     justify-content: center;

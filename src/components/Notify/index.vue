@@ -78,36 +78,25 @@ export default {
     setAutoClose() {
       if (this.duration > 0) {
         this.durationTimer = setTimeout(() => {
-          this.hide('auto')
+          this.close('auto')
         }, this.duration)
       }
+    },
+    close(source) {
+      this.customCancel(source, true)
+    },
+    afterCancel() {
+      this.removeAutoClose()
     },
     removeAutoClose() {
       clearTimeout(this.durationTimer)
     },
-    show() {
-      const isSuccess = this._doShow(() => {
-        this.$emit('shown', {})
-      })
-
-      if (isSuccess) {
-        this.$emit('show', {})
-        this.setAutoClose()
-      }
-    },
-    hide(source = 'active') {
-      const isSuccess = this._doHide(() => {
-        this.$emit('hidden', { source })
-      })
-
-      if (isSuccess) {
-        this.$emit('hide', { source })
-        this.removeAutoClose()
-      }
+    afterShow() {
+      this.setAutoClose()
     },
     onClose() {
       this.$emit('close-click', {})
-      this.hide('active')
+      this.close('activeClick')
     }
   }
 }

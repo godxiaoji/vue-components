@@ -1,20 +1,17 @@
 import Exception from '../helpers/exception'
-import {
-  isObject,
-  inArray,
-  isFunction,
-  isStringNumberMixArray,
-  isString,
-  isNumber
-} from '../helpers/util'
+import { isObject, inArray, isFunction } from '../helpers/util'
 import {
   notNullValidator,
   stringArrayValidator,
   getType,
-  elementValidator
+  elementValidator,
+  calendarValueValidator,
+  getPropValidation,
+  arrayValueValidator
 } from '../helpers/validator'
 
-import { MODE_NAMES as SELECT_MODE_NAMES } from '../components/Cascader/util'
+import { MODE_NAMES as SELECT_MODE_NAMES } from '../components/util/mulit-selector'
+import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '../components/Calendar/util'
 
 export const apiRules = {
   /**
@@ -75,19 +72,14 @@ export const apiRules = {
   },
   showPicker: {
     title: {
-      type: String,
-      default: null
+      type: String
     },
     options: {
       type: Array,
       required: true
     },
     value: {
-      validator(value) {
-        return (
-          isStringNumberMixArray(value) || isString(value) || isNumber(value)
-        )
-      },
+      validator: arrayValueValidator,
       default() {
         return []
       }
@@ -100,6 +92,85 @@ export const apiRules = {
       type: Object,
       default() {
         return {}
+      }
+    }
+  },
+  showCascader: {
+    title: {
+      type: String
+    },
+    options: {
+      type: Array,
+      required: true
+    },
+    value: {
+      validator: arrayValueValidator,
+      default() {
+        return []
+      }
+    },
+    mode: {
+      enums: SELECT_MODE_NAMES,
+      default: SELECT_MODE_NAMES[0]
+    },
+    fieldNames: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  },
+  showCalendar: {
+    title: {
+      type: String,
+      default: '选择日期'
+    },
+    showConfirm: {
+      type: Boolean
+    },
+    showClose: {
+      type: Boolean
+    },
+    value: {
+      validator: calendarValueValidator
+    },
+    minDate: {
+      type: Date
+    },
+    maxDate: {
+      type: Date
+    },
+    type: {
+      enums: CALENDAR_TYPE_NAMES,
+      default: CALENDAR_TYPE_NAMES[0]
+    },
+    allowSameDay: {
+      type: Boolean,
+      default: false
+    },
+    maxRange: {
+      type: Number
+    },
+    dayHandler: {
+      type: Function
+    }
+  },
+  showActionSheet: {
+    title: {
+      type: String,
+      default: null
+    },
+    showCancel: {
+      type: Boolean,
+      default: false
+    },
+    cancelText: {
+      type: String
+    },
+    options: {
+      type: Array,
+      default() {
+        return []
       }
     }
   },
@@ -183,6 +254,10 @@ export const apiRules = {
     color: {
       type: String,
       default: null
+    },
+    closable: {
+      type: Boolean,
+      default: false
     }
   },
   hideNotify: {},
@@ -241,6 +316,45 @@ export const apiRules = {
     duration: {
       type: Number,
       default: 300
+    }
+  },
+  showPopover: {
+    selector: getPropValidation('selector'),
+    content: {
+      type: String,
+      default: ''
+    },
+    placement: getPropValidation('placement')
+  },
+  showPopDialog: {
+    selector: getPropValidation('selector'),
+    content: {
+      type: String,
+      default: '',
+      required: true
+    },
+    placement: getPropValidation('placement'),
+    showCancel: {
+      type: Boolean,
+      default: true
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    },
+    confirmText: {
+      type: String,
+      default: '确定'
+    }
+  },
+  showPopMenu: {
+    selector: getPropValidation('selector'),
+    placement: getPropValidation('placement'),
+    options: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   }
 }

@@ -221,6 +221,27 @@ export function isStringNumberMixArray(object) {
 }
 
 /**
+ * 是否Date[]
+ * @param {any} object 值
+ */
+export function isDateArray(object) {
+  let is = false
+
+  if (isArray(object)) {
+    is = true
+
+    for (let i = 0; i < object.length; i++) {
+      if (!isDate(object[i])) {
+        is = false
+        break
+      }
+    }
+  }
+
+  return is
+}
+
+/**
  * 是否相同的数组
  * @param {Array} a 数组a
  * @param {Array} b 数组b
@@ -228,7 +249,7 @@ export function isStringNumberMixArray(object) {
 export function isSameArray(a, b) {
   if (a.length === b.length) {
     for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) {
+      if (a[i] != b[i]) {
         return false
       }
     }
@@ -257,20 +278,11 @@ function hasOwnProperty(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key)
 }
 
-export function objectKeys(object) {
-  const keys = []
-
-  if (isObject(object)) {
-    for (const k in object) {
-      if (hasOwnProperty(object, k)) {
-        keys.push(k)
-      }
-    }
-  }
-
-  return keys
-}
-
+/**
+ * 对象遍历
+ * @param {Object} object 对象
+ * @param {Function} callback 遍历回调
+ */
 export function objectForEach(object, callback) {
   if (isObject(object)) {
     for (const k in object) {

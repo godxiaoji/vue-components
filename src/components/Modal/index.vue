@@ -33,10 +33,6 @@ export default {
       type: String,
       default: ''
     },
-    maskClosable: {
-      type: Boolean,
-      default: false
-    },
     showClose: {
       type: Boolean,
       default: true
@@ -59,18 +55,7 @@ export default {
   created() {},
   mounted() {},
   beforeDestroy() {},
-  methods: {
-    onMaskClick() {
-      if (this.maskClosable) {
-        this.$emit('mask-click', {})
-        this.hide()
-      }
-    },
-    onCloseClick() {
-      this.$emit('close-click', {})
-      this.hide()
-    }
-  }
+  methods: {}
 }
 </script>
 

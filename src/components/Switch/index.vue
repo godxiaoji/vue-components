@@ -139,8 +139,8 @@ export default {
       transition: all 0.2s linear;
       box-sizing: border-box;
       content: '';
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12),
-        0px 1px 2px rgba(0, 0, 0, 0.02);
+      box-shadow: 0px 4px 4px rgba($color: $black-color, $alpha: 0.12),
+        0px 1px 2px rgba($color: $black-color, $alpha: 0.02);
     }
 
     &:checked::after {

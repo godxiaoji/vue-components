@@ -11,7 +11,6 @@
         alignClassName,
         { 'has--header': hasHeader }
       ]"
-      @mousedown.prevent="noop"
     >
       <div
         v-show="hasHeader"
@@ -25,7 +24,7 @@
             shape="square"
             icon="CloseOutlined"
             pattern="borderless"
-            @click="onCloseClick()"
+            @click="onCloseClick"
           ></fx-button>
         </div>
       </div>
@@ -38,10 +37,8 @@
 
 <script>
 import { SDKKey } from '../../config'
-import { inArray } from '../../helpers/util'
 import popupMixin from '../util/popup-mixin'
-
-const DRAWER_ALIGNS = ['bottom', 'top', 'left', 'right']
+import { getPropValidation, getPropValue } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-drawer',
@@ -51,12 +48,7 @@ export default {
       type: String,
       default: null
     },
-    align: {
-      validator(val) {
-        return inArray(val, DRAWER_ALIGNS)
-      },
-      default: DRAWER_ALIGNS[0]
-    },
+    placement: getPropValidation('placement'),
     showClose: {
       type: Boolean,
       default: false
@@ -69,30 +61,13 @@ export default {
   },
   computed: {
     alignClassName() {
-      return (
-        'align--' +
-        (inArray(this.align, DRAWER_ALIGNS) ? this.align : DRAWER_ALIGNS[0])
-      )
+      return 'placement--' + getPropValue('placement', this.placement)
     },
     hasHeader() {
       return this.title != null || this.showClose
     }
   },
-  watch: {},
-  created() {},
-  ready() {},
-  updated() {},
-  attached() {},
-  methods: {
-    onMaskClick() {
-      this.$emit('mask-click', {})
-      this.hide()
-    },
-    onCloseClick() {
-      this.$emit('close-click', {})
-      this.hide()
-    }
-  }
+  methods: {}
 }
 </script>
 
@@ -106,34 +81,33 @@ export default {
     bottom: 0;
     width: 100%;
     border: none;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 0;
-    transform: translate3d(0, 100vh, 0);
+    transform: translate3d(0, 100%, 0);
     transition: transform 0.2s;
     background-color: #fff;
-    height: 360px;
+    min-height: 100px;
 
-    &.align--left,
-    &.align--right {
+    &.placement--left,
+    &.placement--right {
       min-width: 100px;
       max-width: 90%;
+      min-height: auto;
       width: auto;
       height: 100%;
       top: 0;
-      transform: translate3d(-100vw, 0, 0);
+      transform: translate3d(-100%, 0, 0);
     }
 
-    &.align--right {
+    &.placement--right {
       left: auto;
       right: 0;
-      transform: translate3d(100vw, 0, 0);
+      transform: translate3d(100%, 0, 0);
     }
 
-    &.align--top {
+    &.placement--top {
       top: 0;
       bottom: auto;
-      transform: translate3d(0, -100vh, 0);
-      height: 260px;
+      transform: translate3d(0, -100%, 0);
     }
   }
 
@@ -152,23 +126,32 @@ export default {
     height: 48px;
     box-sizing: border-box;
     display: flex;
+    position: relative;
   }
 
   &_title {
     flex: 1;
     font-size: 17px;
+    font-weight: 500;
     line-height: 48px;
     height: 48px;
-    font-weight: 500;
     color: $title-color;
-    padding: 0 0 0 12px;
+    padding: 0 12px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
+
+    .#{$prefix}-drawer_inner.placement--top &,
+    .#{$prefix}-drawer_inner.placement--bottom & {
+      text-align: center;
+    }
   }
 
   &_close.type--default {
+    position: absolute;
+    top: 0;
+    right: 0;
     flex-shrink: 0;
     border-radius: 0;
     --button-font-color: #{$font3-color};
@@ -179,7 +162,7 @@ export default {
     flex-grow: 1;
 
     .#{$prefix}-drawer_inner.has--header & {
-      height: calc(100% - 48px);
+      height: calc(100% - 40px);
     }
   }
 

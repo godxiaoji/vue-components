@@ -1,10 +1,3 @@
-# [1.5.0](https://github.com/godxiaoji/vfox/compare/v1.4.5...v1.5.0) (2020-12-13)
-
-
-### Features
-
-* 新增Calendar ActionSheet Dropdown Popover Collapse等组件 ([ee71792](https://github.com/godxiaoji/vfox/commit/ee7179290a6177cc7156b0b6489c40465a810c1f))
-
 ## [1.4.5](https://github.com/godxiaoji/vfox/compare/v1.4.4...v1.4.5) (2020-11-17)
 
 

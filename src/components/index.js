@@ -37,7 +37,7 @@ import ActionSheet from './ActionSheet'
 import PopDialog from './Popover/Dialog.vue'
 
 /* Navigation */
-import Tabs from './Tabs'
+import Tab from './Tab'
 import BackTop from './BackTop'
 import NavBar from './NavBar'
 import PopMenu from './Popover/Menu.vue'
@@ -54,7 +54,7 @@ import SkeletonTitle from './Skeleton/Title.vue'
 import SkeletonParagraph from './Skeleton/Paragraph.vue'
 import SkeletonButton from './Skeleton/Button.vue'
 import SkeletonImage from './Skeleton/Image.vue'
-import PreviewImage from './PreviewImage'
+import ImagePreview from './ImagePreview'
 import Cell from './Cell'
 import Group from './Group'
 import Row from './Row'
@@ -63,6 +63,8 @@ import NoticeBar from './NoticeBar'
 import Divider from './Divider'
 import Collapse from './Collapse'
 import CollapseItem from './Collapse/Item.vue'
+import TabView from './Tab/View.vue'
+import TabViewItem from './Tab/ViewItem.vue'
 
 /* Other */
 import Copy from './Copy'
@@ -95,7 +97,7 @@ export {
   FlatList,
   Row,
   Col,
-  Tabs,
+  Tab,
   Empty,
   Skeleton,
   SkeletonAvatar,
@@ -103,7 +105,7 @@ export {
   SkeletonParagraph,
   SkeletonButton,
   SkeletonImage,
-  PreviewImage,
+  ImagePreview,
   Cell,
   Dialog,
   Stepper,
@@ -126,5 +128,7 @@ export {
   PopDialog,
   Collapse,
   CollapseItem,
-  Dropdown
+  Dropdown,
+  TabView,
+  TabViewItem
 }

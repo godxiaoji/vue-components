@@ -1,4 +1,4 @@
-# PreviewImage
+# ImagePreview
 
 ## <a name="previewImage">Vue.prototype.\$previewImage(object)</a>
 

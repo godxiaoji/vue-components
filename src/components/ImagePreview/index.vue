@@ -21,7 +21,7 @@
             :mode="'aspectFit'"
             @load="onImageLoad"
             :style="{ width: item.width + 'px', height: item.height + 'px' }"
-          ></fx-image>
+          />
         </div>
       </swiper-item>
     </swiper>
@@ -49,7 +49,7 @@ import { isStringArray } from '../../helpers/util'
 import popupMixin from '../util/popup-mixin'
 
 export default {
-  name: SDKKey + '-preview-image',
+  name: SDKKey + '-image-preview',
   components: { FxButton, Swiper, SwiperItem, FxImage },
   mixins: [popupMixin],
   props: {

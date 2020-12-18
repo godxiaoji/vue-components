@@ -1,19 +1,25 @@
 <template>
-  <div :class="[prefix + '-swiper']">
-    <div :class="[prefix + '-swiper_list']">
+  <div
+    :class="[prefix + '-swiper', { vertical: direction === 'y' }]"
+    @click="onClick"
+  >
+    <div :class="[prefix + '-swiper_list']" ref="list">
       <slot></slot>
     </div>
-    <div :class="[prefix + '-swiper_pagination']" v-show="indicatorDots">
+    <div
+      :class="[prefix + '-swiper_indicators', { vertical: direction === 'y' }]"
+      v-show="indicatorDots"
+    >
       <span
-        v-for="(item, index) in pagination"
+        v-for="item in pagination"
         :key="item.index"
         :class="[
-          prefix + '-swiper_pagination-bullet',
-          { active: index === slideCurrent }
+          prefix + '-swiper_indicator',
+          { active: item.index === index }
         ]"
         :style="{
           background:
-            index === slideCurrent ? indicatorActiveColor : indicatorColor
+            item.index === index ? indicatorActiveColor : indicatorColor
         }"
       ></span>
     </div>
@@ -21,8 +27,26 @@
 </template>
 
 <script>
-import MSlide from 'mslide'
 import { SDKKey } from '../../config'
+import { resizeDetector } from '../../helpers/dom'
+import Exception from '../../helpers/exception'
+import {
+  camelCase2KebabCase,
+  isNumber,
+  isUndefined,
+  objectForEach
+} from '../../helpers/util'
+
+import { touchEvent } from '../../helpers/events'
+
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 // export
 export default {
@@ -61,10 +85,10 @@ export default {
 
     duration: {
       type: Number,
-      default: 500
+      default: null
     },
 
-    circular: {
+    initialCircular: {
       type: Boolean,
       default: false
     },
@@ -74,155 +98,543 @@ export default {
       default: 0
     },
 
-    previousMargin: {
-      type: Number,
-      default: 0
-    },
-
-    nextMargin: {
-      type: Number,
-      default: 0
+    initialVertical: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       prefix: SDKKey,
 
-      slideCurrent: 0,
-      globalOptions: {},
-      pagination: []
+      index: 0,
+      pagination: [],
+      $items: [],
+
+      direction: 'x',
+      directionGroup: [],
+
+      prevCircular: false,
+      circular: false,
+
+      transSize: 0
     }
   },
-  ready() {
-    if (!this.swiper) {
-      this.mountInstance()
-    }
+  created() {
+    this.circular = !!this.initialCircular
   },
   mounted() {
-    if (!this.swiper) {
-      this.mountInstance()
+    addListeners(this.$el, this)
+
+    this.updateSlide()
+
+    if (this.activeIndex !== 0) {
+      this.swipeTo(this.activeIndex)
     }
-  },
-  activated() {
-    this.update()
+
+    this.offResizeDetector = resizeDetector(this.$el, () => {
+      this.update(50)
+    })
   },
   beforeDestroy() {
-    this.$nextTick(function() {
-      if (this.swiper) {
-        this.swiper.destroy && this.swiper.destroy()
-        delete this.swiper
-      }
-    })
+    clearTimeout(this.updateTimer)
+    clearTimeout(this.durationTimer)
+    this.stop()
+    this.$items = []
+    removeListeners(this.$el, this)
+    this.offResizeDetector()
   },
   watch: {
     /**
      * 外部修改索引可以旋转
      */
     activeIndex(val) {
-      if (this.swiper) {
-        this.swiper.to(val)
+      this.swipeTo(val)
+    },
+    autoplay(val) {
+      if (val) {
+        this.start()
+      } else {
+        this.stop()
       }
     },
-    autoplay() {
-      this.updateSlide()
-    },
     interval() {
-      this.updateSlide()
-    },
-    duration() {
-      this.updateSlide()
-    },
-    circular() {
-      this.updateSlide()
+      this.start()
     }
   },
   methods: {
-    update() {
-      clearTimeout(this.updateTimer)
-
-      this.updateTimer = setTimeout(() => {
-        if (this.swiper) {
-          this.swiper.refresh && this.swiper.refresh()
+    /**
+     * 切换到
+     * @param {Number} activeIndex 索引
+     */
+    swipeTo(activeIndex) {
+      if (
+        isNumber(activeIndex) &&
+        activeIndex >= 0 &&
+        activeIndex < this.$items.length
+      ) {
+        if (activeIndex !== this.index) {
+          this.to(activeIndex)
         }
+      } else {
+        console.error(
+          new Exception(
+            '"activeIndex"不在范围内',
+            Exception.TYPE.PROP_ERROR,
+            'Swiper'
+          )
+        )
+      }
+    },
+    /**
+     * 跳转到上一项
+     */
+    prev() {
+      this.to(this.circular ? this.getCircleIndex(-1) : this.index - 1)
+    },
+    /**
+     * 跳转到下一项
+     */
+    next() {
+      this.to(this.circular ? this.getCircleIndex(1) : this.index + 1)
+    },
 
-        const pagination = []
+    /**
+     * 事件
+     * @param {Event} e
+     */
+    handleEvent(e) {
+      switch (e.type) {
+        case touchstart:
+          this.onTouchStart(e)
+          break
+        case touchmove:
+          this.onTouchMove(e)
+          break
+        case touchend:
+          this.onTouchEnd(e)
+          break
+        default:
+          break
+      }
+    },
 
-        this.$el
-          .querySelectorAll(`.${SDKKey}-swiper-item`)
-          .forEach(($item, k) => {
-            $item.style.paddingLeft = this.previousMargin + 'px'
-            $item.style.paddingRight = this.nextMargin + 'px'
+    update(lazy = 17) {
+      if (!this.isInit) {
+        return
+      }
 
-            pagination.push({
-              index: k
-            })
-          })
-
-        this.pagination = pagination
-      }, 17)
+      clearTimeout(this.updateTimer)
+      this.updateTimer = setTimeout(() => {
+        this.refresh()
+      }, lazy)
     },
     updateSlide() {
-      if (this.swiper) {
-        const options = {}
+      this.isInit = true
+      // 设置方向
+      if (this.initialVertical) {
+        this.direction = 'y'
+        this.directionGroup = ['Y', 'X', 'Height', 'Width']
+      } else {
+        this.direction = 'x'
+        this.directionGroup = ['X', 'Y', 'Width', 'Height']
+      }
 
-        // 自动播放
-        options.autoPlay = this.autoplay ? true : false
-        options.interval = this.interval
+      this.setItems()
+      this.updateSlideLoop()
 
-        // 滑动动画时长
-        options.duration = this.duration
-        // 是否采用衔接滑动
-        options.loop = this.circular
-
-        this.swiper.updateOptions(options)
+      if (this.autoplay) {
+        this.start()
       }
     },
-    mergeOptions() {
-      const options = {}
-
-      options.selector = this.$el
-      // 当前所在滑块的 index
-      options.index = this.activeIndex
-      // // 同时显示的滑块数量
-
-      options.onBeforeSlide = (index, fromIndex) => {
-        if (index !== fromIndex) {
-          // 排重
-
-          this.$emit('update:activeIndex', index)
-          const type = 'change'
-          this.$emit(type, {
-            activeIndex: index
-          })
-        }
-
-        this.slideCurrent = index
-      }
-
-      options.onSlide = index => {
-        const type = 'changed'
-
-        this.$emit(type, {
+    onBeforeSlide(index, fromIndex) {
+      if (index !== fromIndex) {
+        // 排重
+        this.$emit('update:activeIndex', index)
+        this.$emit('change', {
           activeIndex: index
         })
       }
 
-      options.onClick = e => {
+      this.index = index
+    },
+    onSlide(index) {
+      this.$emit('animated', {
+        activeIndex: index
+      })
+    },
+
+    onClick(e) {
+      if (!this.horizontal) {
         this.$emit(e.type, e)
       }
+    },
 
-      // window.console.log(options);
-      return Object.assign({}, this.globalOptions, options)
+    // 滑动开始事件-记录坐标
+    onTouchStart(e) {
+      // 禁止图片拖拽
+      if (e.target.tagName === 'IMG') {
+        e.target.ondragstart = function() {
+          return false
+        }
+      }
+      // e.preventDefault()
+      const touch = getTouch(e)
+
+      if (this.playing) {
+        return
+      }
+
+      // 清除幻灯片
+      this.stop()
+
+      this.inMove = true
+
+      delete this.horizontal
+      // 记录坐标
+
+      this.touchCoords = {
+        startX: touch.pageX,
+        startY: touch.pageY,
+        timeStamp: e.timeStamp
+      }
     },
-    mountInstance() {
-      this.slideCurrent = this.activeIndex
-      const swiperOptions = this.mergeOptions()
-      this.swiper = new MSlide(swiperOptions)
-      this.updateSlide()
-      this.bindEvents()
-      // this.$emit('ready', this.swiper)
+    /**
+     * 滑动过程事件-判断横竖向，跟随滑动
+     */
+    onTouchMove(e) {
+      if (!this.inMove || !this.touchCoords) {
+        return
+      }
+
+      const touch = getTouch(e)
+      const coords = this.touchCoords
+      coords.stopX = touch.pageX
+      coords.stopY = touch.pageY
+
+      let offsetX = coords.startX - coords.stopX
+      let offsetY = coords.startY - coords.stopY
+
+      if (this.direction === 'y') {
+        // 垂直
+        offsetX = [offsetY, (offsetY = offsetX)][0]
+      }
+
+      const absX = Math.abs(offsetX)
+      const absY = Math.abs(offsetY)
+
+      if (!isUndefined(this.horizontal)) {
+        // 首次
+        if (offsetX !== 0) {
+          // bug hack
+          e.preventDefault()
+        }
+      } else {
+        // 首次move确认是否水平移动
+        if (absX > absY) {
+          this.horizontal = true
+          if (offsetX !== 0) {
+            e.preventDefault()
+          }
+        } else {
+          delete this.touchCoords
+          this.horizontal = false
+          return
+        }
+      }
+
+      const itemSize = this.itemSize
+      const active = this.index
+      let transSize = active * itemSize
+
+      if (
+        !this.circular &&
+        ((active === 0 && offsetX < 0) ||
+          (active === this.getLastIndex() && offsetX > 0))
+      ) {
+        transSize += Math.ceil(offsetX / Math.log(Math.abs(offsetX)))
+      } else {
+        transSize += offsetX
+      }
+
+      if (absX < itemSize) {
+        if (coords.offset == null || offsetX > 0 !== coords.offset) {
+          this.updateSlideLoop(offsetX)
+          coords.offset = offsetX > 0
+        }
+
+        this.listMove(-transSize)
+      }
     },
-    bindEvents() {}
+    /**
+     * 滑动结束事件-滑到指定位置，重置状态
+     */
+    onTouchEnd(e) {
+      if (!this.inMove) {
+        return
+      }
+
+      this.inMove = false
+
+      if (this.touchCoords) {
+        const coords = this.touchCoords
+
+        const itemSize = this.itemSize
+        const offsetX =
+          this.direction === 'x'
+            ? coords.startX - coords.stopX
+            : coords.startY - coords.stopY
+        let absX = Math.abs(offsetX)
+        const active = this.index
+
+        let transIndex
+
+        if (!isNaN(absX) && absX !== 0) {
+          if (absX > itemSize) {
+            absX = itemSize
+          }
+          if (absX >= 80 || e.timeStamp - coords.timeStamp < 200) {
+            if (offsetX > 0) {
+              transIndex = active + 1
+            } else {
+              transIndex = active - 1
+            }
+          } else {
+            transIndex = active
+          }
+
+          this.to(transIndex)
+          delete this.touchCoords
+        }
+      }
+      this.resetStatus()
+    },
+    // 获取滑动距离值
+    getTransVal(size) {
+      return (
+        'translate3d(' +
+        (this.direction === 'x'
+          ? size + 'px, 0px, 0px'
+          : '0px, ' + size + 'px, 0px') +
+        ')'
+      )
+    },
+    getLastIndex() {
+      return this.$items.length - 1
+    },
+    // 获取循环的索引
+    getCircleIndex(step) {
+      const length = this.$items.length
+      return (this.index + length + (step % length)) % length
+    },
+    // 恢复滑动状态
+    resetStatus() {
+      if (this.autoplay) {
+        this.start()
+      }
+    },
+    // 到指定项
+    to(toIndex) {
+      const lastIndex = this.getLastIndex()
+      let slideIndex = toIndex
+
+      if (lastIndex < 0) {
+        return
+      }
+
+      if (toIndex >= 0 && toIndex <= lastIndex && toIndex != this.index) {
+        this.slide(toIndex, slideIndex)
+      } else {
+        if (this.circular) {
+          if (toIndex < 0) {
+            slideIndex = -1
+            toIndex = lastIndex
+          } else if (toIndex > lastIndex) {
+            slideIndex = lastIndex + 1
+            toIndex = 0
+          }
+        } else {
+          toIndex = this.index
+        }
+
+        this.slide(toIndex, slideIndex)
+      }
+    },
+    listMove(transSize, duration = 0) {
+      const listStyle = this.$refs.list.style
+
+      // 滑动模式
+      listStyle.transitionDuration = duration + 'ms'
+      listStyle.transform = this.getTransVal(transSize)
+      this.transSize = transSize
+    },
+    // 滑动实现
+    slide(toIndex, slideIndex) {
+      if (this.playing) {
+        return
+      }
+
+      if (!this.circular) {
+        slideIndex = toIndex
+      }
+
+      this.playing = true
+
+      const fromIndex = this.index
+      const transSize = -this.itemSize * slideIndex
+      const transSizeOffset = this.transSize - transSize
+
+      if (fromIndex !== slideIndex) {
+        this.updateSlideLoop(transSizeOffset)
+      }
+
+      this.onBeforeSlide(toIndex, fromIndex)
+      if (toIndex !== fromIndex) {
+        // this.onChange(toIndex, fromIndex)
+      }
+
+      let duration = this.duration
+
+      if (duration == null) {
+        duration = Math.abs(transSizeOffset)
+        duration = Math.max(100, Math.min(800, duration))
+      }
+
+      this.listMove(transSize, duration)
+
+      clearTimeout(this.durationTimer)
+      this.durationTimer = setTimeout(() => {
+        this.playing = false
+
+        this.listMove(transSize, 0)
+
+        // 滑动回调
+        this.onSlide(toIndex, fromIndex)
+
+        this.updateSlideLoop()
+      }, duration + 17)
+    },
+    updateSlideLoop(offset) {
+      if (!this.circular) {
+        return
+      }
+
+      const slideIndex = this.index
+      const lastIndex = this.getLastIndex()
+      const itemCount = lastIndex + 1
+
+      this.$items.forEach(($item, index) => {
+        if (offset < 0) {
+          if (slideIndex === 0 && index === lastIndex) {
+            $item.style.transform = this.getTransVal(-this.itemSize * itemCount)
+          } else {
+            $item.style.transform = null
+          }
+        } else if (offset > 0) {
+          if (slideIndex === lastIndex && index === 0) {
+            $item.style.transform = this.getTransVal(this.itemSize * itemCount)
+          } else {
+            $item.style.transform = null
+          }
+        } else {
+          if (slideIndex === 0 && index === lastIndex) {
+            $item.style.transform = this.getTransVal(-this.itemSize * itemCount)
+          } else if (slideIndex === lastIndex && index === 0) {
+            $item.style.transform = this.getTransVal(this.itemSize * itemCount)
+          } else {
+            $item.style.transform = null
+          }
+        }
+      })
+
+      if (offset == null) {
+        this.listMove(-this.itemSize * slideIndex)
+      }
+    },
+    // 刷新
+    refresh() {
+      if (this._isDestroyed) {
+        return
+      }
+
+      this.setItems()
+      const last = this.getLastIndex()
+      if (this.index > last) {
+        this.to(last)
+      }
+    },
+    resetItems() {
+      return (this.$items = [].slice.call(
+        this.$refs.list.querySelectorAll(`.${SDKKey}-swiper-item`),
+        0
+      ))
+    },
+    // 设置列表项
+    setItems() {
+      this.resetItems()
+
+      this.setSlideStyle()
+    },
+    // 设置滑动属性
+    setSlideStyle() {
+      // 设置滑动样式属性
+      const sizeName = this.directionGroup[2]
+      const itemSize = this.$el['client' + sizeName]
+
+      this.itemSize = itemSize
+      this.$el.style['overflow' + this.directionGroup[0]] = 'hidden'
+
+      const styleObj = {
+        '--webkit-backface-visibility': 'hidden',
+        '--webkit-perspective': '1000'
+      }
+
+      styleObj[sizeName.toLowerCase()] = itemSize * this.$items.length + 'px'
+      styleObj.transition = `transform 0ms ease-out`
+      // styleObj.transition = `transform 0ms cubic-bezier(0.4, 0.0, 0.2, 1)`
+
+      const cssTextArr = []
+
+      objectForEach(styleObj, (v, k) => {
+        cssTextArr.push(`${camelCase2KebabCase(k)}: ${v}`)
+      })
+
+      this.$refs.list.style.cssText = cssTextArr.join('; ')
+      this.listMove(-itemSize * this.index)
+
+      const pagination = []
+
+      this.$items.forEach(($item, i) => {
+        $item.dataset.index = i
+
+        let cssText = `${sizeName.toLowerCase()}: ${itemSize}px;`
+
+        if (this.direction === 'x') {
+          // 左右滑动
+          cssText += 'float: left;'
+        }
+
+        $item.style.cssText = cssText
+
+        pagination.push({
+          index: i
+        })
+      })
+
+      this.pagination = pagination
+    },
+    // 开始幻灯片
+    start() {
+      this.stop()
+      this.autoTimer = setInterval(() => {
+        this.to(this.getCircleIndex(1))
+      }, this.interval)
+    },
+    // 结束幻灯片
+    stop() {
+      clearTimeout(this.autoTimer)
+      this.autoTimer = null
+    }
   }
 }
 </script>
@@ -234,24 +646,34 @@ export default {
   position: relative;
   box-sizing: border-box;
 
-  &_pagination {
+  &_indicators {
     position: absolute;
-    left: 0;
-    bottom: 20px;
+    left: 50%;
+    bottom: 6px;
     text-align: center;
-    width: 100%;
+    transform: translate3d(-50%, 0, 0);
+    display: flex;
+
+    &.vertical {
+      left: 6px;
+      top: 50%;
+      bottom: auto;
+      transform: translate3d(0, -50%, 0);
+      flex-direction: column;
+    }
   }
 
-  &_pagination-bullet {
-    display: inline-block;
-    margin: 0 5px;
-    width: 10px;
-    height: 10px;
+  &_indicator {
+    display: block;
+    margin: 2px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background-color: rgba($color: $black-color, $alpha: 0.45);
+    background-color: rgba($color: #fff, $alpha: 0.4);
+    box-sizing: border-box;
 
     &.active {
-      background-color: $primary-color;
+      background-color: #fff;
     }
   }
 

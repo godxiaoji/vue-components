@@ -13,5 +13,5 @@
 
 | 属性                   | 默认值                               | 说明       |
 | ---------------------- | ------------------------------------ | ---------- |
-| --divider-font-color | <font color="#c0c1c4">#c0c1c4</font> | 文本颜色   |
-| --divider-border-color | <font color="#e6e7e8">#e6e7e8</font> | 分割线颜色 |
+| --divider-font-color   | <font color="#bfbfbf">#bfbfbf</font> | 文本颜色   |
+| --divider-border-color | <font color="#e7e7e7">#e7e7e7</font> | 分割线颜色 |

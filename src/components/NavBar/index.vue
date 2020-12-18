@@ -11,7 +11,11 @@
         <div :class="[prefix + '-nav-bar_left']">
           <slot name="left" v-if="$slots.left"></slot>
           <template v-else-if="leftButtons.length > 0">
-            <fx-button-group :shape="buttonShape" pattern="borderless">
+            <fx-button-group
+              :class="[prefix + '-nav-bar_button-group']"
+              :shape="buttonShape"
+              pattern="borderless"
+            >
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 :type="item.type || 'default'"
@@ -24,7 +28,11 @@
             </fx-button-group>
           </template>
           <template v-else>
-            <fx-button-group :shape="buttonShape" pattern="borderless">
+            <fx-button-group
+              :class="[prefix + '-nav-bar_button-group']"
+              :shape="buttonShape"
+              pattern="borderless"
+            >
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 type="default"
@@ -55,6 +63,7 @@
           <slot name="right" v-if="$slots.right"></slot>
           <template v-else>
             <fx-button-group
+              :class="[prefix + '-nav-bar_button-group']"
               :shape="buttonShape"
               pattern="borderless"
               v-if="rightButtons.length > 0"
@@ -256,8 +265,14 @@ export default {
     right: 0;
   }
 
+  &_button-group {
+    height: 100%;
+    max-height: 64px;
+  }
+
   &_button {
     border-radius: 0;
+    height: 100%;
   }
 }
 </style>

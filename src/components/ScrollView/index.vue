@@ -10,9 +10,6 @@
     ]"
     ref="scroll"
     @scroll="onScroll"
-    @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
-    @touchend="onTouchEnd"
   >
     <div :class="[prefix + '-scroll-view_inner']">
       <div :class="[prefix + '-scroll-view_content']" :style="contentStyles">
@@ -41,7 +38,7 @@
                     : 'CircleOutlined'
                 "
                 :spin="pullRefreshState === PULL_REFRESH_STATE_REFRESHING"
-              ></icon>
+              />
               <span>{{
                 pullRefreshState === PULL_REFRESH_STATE_REFRESHING
                   ? '正在刷新'
@@ -64,8 +61,9 @@
             :class="[prefix + '-scroll-view_lower-loading-indicator']"
             :style="indicatorStyles"
           >
-            <icon :class-name="'LoadingOutlined'" :spin="true"></icon
-            ><span>正在加载</span>
+            <icon :class-name="'LoadingOutlined'" :spin="true" /><span
+              >正在加载</span
+            >
           </div>
         </div>
       </div>
@@ -77,6 +75,16 @@
 import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { inArray, isArray, isString, isStringArray } from '../../helpers/util'
+import { touchEvent } from '../../helpers/events'
+
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 const SCROLL_STATE_CENTER = 0
 const SCROLL_STATE_UPPER = 1
@@ -202,13 +210,17 @@ export default {
     this._prevY = 0
     this._prevX = 0
 
+    addListeners(this.$el, this)
+
     // 处理初始化设置的滚动位置
     this.updateScroll()
     this.scrollIntoIdView(this.scrollIntoView)
   },
   updated() {},
   attached() {},
-  beforeDestroy() {},
+  beforeDestroy() {
+    removeListeners(this.$el, this)
+  },
   watch: {
     scrollLeft() {
       this.updateScroll()
@@ -241,7 +253,45 @@ export default {
       this.pullDistance = 0
     },
 
+    /**
+     * 事件
+     * @param {Event} e
+     */
+    handleEvent(e) {
+      switch (e.type) {
+        case touchstart:
+          this.onTouchStart(e)
+          break
+        case touchmove:
+          this.onTouchMove(e)
+          break
+        case touchend:
+          this.onTouchEnd(e)
+          break
+        default:
+          break
+      }
+    },
+
     onTouchStart(e) {
+      const { pageX, pageY } = getTouch(e)
+      const $scroll = this.$refs.scroll
+      const {
+        scrollHeight,
+        scrollTop,
+        clientHeight,
+        scrollLeft,
+        scrollWidth,
+        clientWidth
+      } = $scroll
+
+      this.touchCoords = {
+        pageX,
+        pageY,
+        scrollY: this.scrollY && scrollHeight > clientHeight,
+        scrollX: this.scrollX && scrollWidth > clientWidth
+      }
+
       if (this.lowerLoading) {
         return
       }
@@ -265,22 +315,20 @@ export default {
       // 猜想可能刷新的方向，0-4个都有可能
       const directions = []
 
-      const $scroll = this.$refs.scroll
-
-      if ($scroll.scrollTop === 0 && inArray('down', allowPullDirections)) {
+      if (scrollTop === 0 && inArray('down', allowPullDirections)) {
         directions.push('down')
       }
       if (
-        $scroll.scrollTop + $scroll.offsetHeight >= $scroll.scrollHeight &&
+        scrollTop + clientHeight >= scrollHeight &&
         inArray('up', allowPullDirections)
       ) {
         directions.push('up')
       }
-      if ($scroll.scrollLeft === 0 && inArray('right', allowPullDirections)) {
+      if (scrollLeft === 0 && inArray('right', allowPullDirections)) {
         directions.push('right')
       }
       if (
-        $scroll.scrollLeft + $scroll.offsetWidth >= $scroll.scrollWidth &&
+        scrollLeft + clientWidth >= scrollWidth &&
         inArray('left', allowPullDirections)
       ) {
         directions.push('left')
@@ -288,34 +336,56 @@ export default {
 
       if (directions[0]) {
         // 只要命中一个方向
-        const { pageX, pageY } = e.targetTouches[0]
-
-        this.pullStart = { pageX, pageY, directions }
+        this.touchCoords.directions = directions
       }
     },
 
     onTouchMove(e) {
-      if (!this.pullStart) {
+      if (!this.touchCoords) {
         return
       }
 
-      const { pageX, pageY } = e.targetTouches[0]
-      const offsetX = pageX - this.pullStart.pageX
-      const offsetY = pageY - this.pullStart.pageY
+      // 处理滑动穿透
+      const coords = this.touchCoords
+      const { pageX, pageY } = getTouch(e)
+      const offsetX = pageX - coords.pageX
+      const offsetY = pageY - coords.pageY
+      const y = this._isToLowerOrUpperY
+      const x = this._isToLowerOrUpperX
 
-      let pullDirection = this.pullStart.direction
+      if (
+        coords.stop ||
+        (coords.scrollY &&
+          (y === SCROLL_STATE_CENTER ||
+            (y === SCROLL_STATE_UPPER && offsetY < 0) ||
+            (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
+        (coords.scrollX &&
+          (x === SCROLL_STATE_CENTER ||
+            (x === SCROLL_STATE_UPPER && offsetX < 0) ||
+            (x === SCROLL_STATE_LOWER && offsetX > 0)))
+      ) {
+        coords.stop = true
+        e.stopPropagation()
+      }
+
+      // 处理下拉刷新
+      if (!coords.directions) {
+        return
+      }
+
+      let pullDirection = coords.direction
 
       if (!pullDirection) {
         // 如果可能存在两个方向，继续验证会走的方向
         if (Math.abs(offsetY) >= Math.abs(offsetX)) {
-          this.pullStart.directions = this.pullStart.directions.filter(v => {
+          coords.directions = coords.directions.filter(v => {
             return (
               inArray(v, ['up', 'down']) &&
               ((v === 'down' && offsetY > 0) || (v === 'up' && offsetY < 0))
             )
           })
         } else {
-          this.pullStart.directions = this.pullStart.directions.filter(v => {
+          coords.directions = coords.directions.filter(v => {
             return (
               inArray(v, ['left', 'right']) &&
               ((v === 'right' && offsetX > 0) || (v === 'left' && offsetX < 0))
@@ -323,17 +393,17 @@ export default {
           })
         }
 
-        this.pullStart.direction = pullDirection = this.pullStart.directions[0]
+        coords.direction = pullDirection = coords.directions[0]
       }
 
       if (!pullDirection) {
-        this.pullStart = null
+        delete coords.directions
         return
       }
 
       e.preventDefault()
 
-      if (!this.pullStart.safeArea) {
+      if (!coords.safeArea) {
         const safeArea = {
           top: 0,
           bottom: 0,
@@ -345,15 +415,15 @@ export default {
         if (inArray(pullDirection, ['up', 'down'])) {
           safeArea.left = $scroll.scrollLeft
           safeArea.right =
-            $scroll.scrollWidth - $scroll.scrollLeft - $scroll.offsetWidth
+            $scroll.scrollWidth - $scroll.scrollLeft - $scroll.clientWidth
         } else {
           safeArea.top = $scroll.scrollTop
           safeArea.bottom =
-            $scroll.scrollHeight - $scroll.scrollTop - $scroll.offsetHeight
+            $scroll.scrollHeight - $scroll.scrollTop - $scroll.clientHeight
         }
 
         this.pullIndicatorSafeArea = safeArea
-        this.pullStart.safeArea = safeArea
+        coords.safeArea = safeArea
       }
 
       this.pullDirection = pullDirection
@@ -385,10 +455,10 @@ export default {
     },
 
     onTouchEnd() {
-      if (!this.pullStart) {
+      if (!this.touchCoords) {
         return
       }
-      this.pullStart = null
+      this.touchCoords = null
 
       this.translateDuration = 200
 
@@ -556,7 +626,6 @@ export default {
 
       this._prevY = scrollTop
       this._prevX = scrollLeft
-      // window.console.log(e);
     }
   }
 }

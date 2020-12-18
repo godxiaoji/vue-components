@@ -32,7 +32,7 @@
                 { 'has--icon': item.icon }
               ]"
             >
-              <icon v-if="item.icon" :class-name="item.icon"></icon>
+              <icon v-if="item.icon" :class-name="item.icon"/>
               <span>{{ item.name }}</span>
             </div>
           </li>

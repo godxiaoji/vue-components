@@ -112,18 +112,13 @@ export default {
         border-right-color: transparent;
         margin-right: -1px;
 
-        &.shape--square,
-        &.shape--circle {
-          width: 54px;
-          min-width: 54px;
+        &.size--small {
+          padding: 0 12px;
         }
 
-        &.size--small {
-          &.shape--square,
-          &.shape--circle {
-            width: 40px;
-            min-width: 40px;
-          }
+        &.shape--round,
+        &.shape--circle {
+          padding-left: 16px;
         }
       }
 
@@ -138,17 +133,15 @@ export default {
           content: '';
         }
 
-        &.shape--square,
-        &.shape--circle {
-          width: 54px;
-          min-width: 54px;
-          padding-left: 1px;
+        &.size--small {
+          padding: 0 12px;
         }
+      }
 
-        &.shape--square.size--small,
-        &.shape--circle.size--small {
-          width: 40px;
-          min-width: 40px;
+      &:last-child {
+        &.shape--round,
+        &.shape--circle {
+          padding-right: 16px;
         }
       }
     }

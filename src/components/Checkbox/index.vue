@@ -15,11 +15,11 @@
       <icon
         :class="[prefix + '-checkbox_icon']"
         class-name="BorderOutlined"
-      ></icon>
+      />
       <icon
         :class="[prefix + '-checkbox_checked-icon']"
         class-name="CheckSquareFilled"
-      ></icon>
+      />
       <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -152,12 +152,13 @@ export default {
 .#{$prefix}-checkbox {
   --checkbox-color: #{$border-color};
   --checkbox-active-color: #{$primary-color};
+  --checkbox-font-color: #{$title-color};
 
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   font-size: 17px;
-  color: $title-color;
+  color: var(--checkbox-font-color);
   text-align: left;
   position: relative;
 

@@ -132,6 +132,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-action-sheet {
+  --action-sheet-highlight-color: #{$danger-color};
+
   .#{$prefix}-select {
     &_item-inner {
       height: auto;
@@ -150,7 +152,7 @@ export default {
       }
 
       &.highlight span {
-        color: $danger-color;
+        color: var(--action-sheet-highlight-color);
       }
     }
   }

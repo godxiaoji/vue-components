@@ -27,7 +27,7 @@
       :format-string="formatString"
       :options="options"
       :field-names="fieldNames"
-    ></picker-view>
+    />
   </drawer>
 </template>
 

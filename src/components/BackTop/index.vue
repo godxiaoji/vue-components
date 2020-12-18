@@ -6,7 +6,7 @@
     @click="onClick"
   >
     <slot>
-      <icon class-name="UpCircleOutlined"></icon>
+      <icon class-name="UpCircleOutlined" />
     </slot>
   </div>
 </template>

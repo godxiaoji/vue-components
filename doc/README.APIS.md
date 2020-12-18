@@ -1,6 +1,6 @@
 # APIs
 
-API 列表，参照微信小程序，持续更新。
+API 列表，持续更新。
 
 ## LocalStorage
 
@@ -54,24 +54,36 @@ API 列表，参照微信小程序，持续更新。
 
 [hideLoading](./apis/README.Toast.md#hideLoading)
 
-## Dialog
-
-[showDialog](./apis/README.Dialog.md#showDialog)
-
 ## Scroll
 
 [pageScrollTo](./apis/README.Scroll.md#pageScrollTo)
 
 [elementScrollTo](./apis/README.Scroll.md#elementScrollTo)
 
-## PreviewImage
+## Preview
 
-[previewImage](./apis/README.PreviewImage.md#previewImage)
+[previewImage](./apis/README.Preview.md#previewImage)
 
 ## URL
 
 [queryString](./apis/README.URL.md#queryString)
 
-## Picker
+## Modal
 
-[showPicker](./apis/README.Picker.md#showPicker)
+[showDialog](./apis/README.Modal.md#showDialog)
+
+## Drawer
+
+[showPicker](./apis/README.Drawer.md#showPicker)
+
+[showCascader](./apis/README.Drawer.md#showCascader)
+
+[showActionSheet](./apis/README.Drawer.md#showActionSheet)
+
+# Popover
+
+[showPopover](./apis/README.Popover.md#showPopover)
+
+[showPopDialog](./apis/README.Popover.md#showPopDialog)
+
+[showPopMenu](./apis/README.Popover.md#showPopMenu)

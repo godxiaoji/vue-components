@@ -115,6 +115,7 @@ export default {
 .#{$prefix}-badge {
   display: inline-block;
   position: relative;
+  vertical-align: top;
   --background-color: #{$danger-color};
   --border-color: #fff;
   --color: #fff;

@@ -156,7 +156,7 @@ const MAP = {
     default: 'rectangle'
   },
   buttonPattern: {
-    enums: ['default', 'solid', 'dashed', 'borderless'],
+    enums: ['default', 'solid', 'dashed', 'borderless', 'gradient'],
     default: 'default'
   },
   selector: {

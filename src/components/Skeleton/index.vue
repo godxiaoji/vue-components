@@ -133,6 +133,7 @@ export default {
 
 <style lang="scss">
 @import '../component.module.scss';
+@import './index.module.scss';
 
 .#{$prefix}-skeleton {
   &_layout {

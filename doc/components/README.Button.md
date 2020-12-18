@@ -12,7 +12,7 @@
 | shape     | string  | 'default' | 否   | 按钮形状                                                 |
 | ghost     | boolean | false     | 否   | 是否使用幽灵按钮，幽灵按钮将按钮的内容反色，背景变为透明 |
 | disabled  | boolean | false     | 否   | 是否禁用                                                 |
-| icon      | string  |           | 否   | 设置 [Icon](./README.Icon.md) 图标                              |
+| icon      | string  |           | 否   | 设置 [Icon](./README.Icon.md) 图标                       |
 | loading   | boolean | false     | 否   | 名称前是否带 loading 图标，优先级大于 icon               |
 | form-type | string  |           | 否   | 'submit' / 'reset'                                       |
 
@@ -25,13 +25,13 @@
 
 ### type 的合法值
 
-| 值      | 说明                                      |
-| ------- | ----------------------------------------- |
-| primary | <font color=#1890ff>主要</font>           |
-| default | <font color=rgb(4,10,19,0.04)>次要</font> |
-| success | <font color=#52c41a>成功</font>           |
-| warning | <font color=#faad14>警告</font>           |
-| danger  | <font color=#ff4d4f>危险</font>           |
+| 值      | 说明                            |
+| ------- | ------------------------------- |
+| primary | <font color=#1890ff>主要</font> |
+| default | <font color=#262626>次要</font> |
+| success | <font color=#52c41a>成功</font> |
+| warning | <font color=#faad14>警告</font> |
+| danger  | <font color=#ff4d4f>危险</font> |
 
 ### pattern 的合法值
 
@@ -41,15 +41,16 @@
 | solid      | 细线按钮   |
 | dashed     | 虚线按钮   |
 | borderless | 无边框按钮 |
+| gradient   | 渐变       |
 
 ### shape 的合法值
 
-| 值      | 说明                                 |
-| ------- | ------------------------------------ |
-| default | 默认按钮                             |
-| round   | 圆角按钮                             |
-| circle  | 圆圈按钮，搭配图标使用，不显示文字   |
-| square  | 正方形按钮，搭配图标使用，不显示文字 |
+| 值        | 说明                                 |
+| --------- | ------------------------------------ |
+| rectangle | 长方形按钮，小圆角                   |
+| round     | 半圆角按钮                             |
+| circle    | 圆圈按钮，搭配图标使用，不显示文字   |
+| square    | 正方形按钮，小圆角，搭配图标使用，不显示文字 |
 
 ### form-type 的合法值
 

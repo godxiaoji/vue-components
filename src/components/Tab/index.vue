@@ -1,9 +1,14 @@
 <template>
-  <div :class="[prefix + '-tabs', { vertical }]">
-    <ul :class="[prefix + '-tabs_list']" ref="list">
+  <div
+    :class="[
+      prefix + '-tab',
+      { vertical, 'no--scroll': options2.length <= scrollThreshold }
+    ]"
+  >
+    <ul :class="[prefix + '-tab_list']" ref="list">
       <li
         :class="[
-          prefix + '-tabs_item',
+          prefix + '-tab_item',
           {
             active: index === activeIndex,
             'active-prev': index === activeIndex - 1,
@@ -14,8 +19,8 @@
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <div :class="[prefix + '-tabs_item-inner']">
-          <icon v-if="item.icon" :class-name="item.icon"></icon>
+        <div :class="[prefix + '-tab_item-inner']">
+          <icon v-if="item.icon" :class-name="item.icon" />
           <span>{{ item.label }}</span>
         </div>
       </li>
@@ -31,7 +36,7 @@ import { frameTo } from '../../helpers/animation'
 import Exception from '../../helpers/exception'
 
 export default {
-  name: SDKKey + '-tabs',
+  name: SDKKey + '-tab',
   components: { Icon },
   props: {
     options: {
@@ -72,6 +77,10 @@ export default {
     vertical: {
       type: Boolean,
       default: false
+    },
+    scrollThreshold: {
+      type: Number,
+      default: 4
     }
   },
   data() {
@@ -121,7 +130,7 @@ export default {
           new Exception(
             '"value" is not in "options".',
             Exception.TYPE.PROP_ERROR,
-            'Tabs'
+            'Tab'
           )
         )
       }
@@ -264,9 +273,10 @@ export default {
 <style lang="scss">
 @import '../component.module.scss';
 
-.#{$prefix}-tabs {
-  --active-color: #{$title-color};
-  --default-color: #{$font-color};
+.#{$prefix}-tab {
+  --tab-active-color: #{$title-color};
+  --tab-color: #{$font-color};
+  background-color: #fff;
 
   &_list {
     padding: 0;
@@ -277,7 +287,6 @@ export default {
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
-    background-color: #fff;
     position: relative;
   }
 
@@ -291,7 +300,11 @@ export default {
     padding: 0 16px;
     position: relative;
     box-sizing: border-box;
-    color: var(--default-color);
+    color: var(--tab-color);
+
+    &:active {
+      background-color: rgba($color: $black-color, $alpha: 0.16);
+    }
 
     &-inner {
       display: inline-flex;
@@ -325,33 +338,49 @@ export default {
     }
 
     &.active {
-      color: var(--active-color);
+      color: var(--tab-active-color);
       font-weight: 700;
 
-      .#{$prefix}-tabs_item-inner::before {
+      .#{$prefix}-tab_item-inner::before {
         content: '';
+      }
+    }
+  }
+
+  &.no--scroll {
+    .#{$prefix}-tab {
+      &_list {
+        display: flex;
+      }
+
+      &_item {
+        flex: 1;
+        padding: 0;
       }
     }
   }
 
   &.vertical {
     height: 100%;
-    background: none;
+    background-color: $background-color;
 
-    .#{$prefix}-tabs {
+    .#{$prefix}-tab {
       &_list {
-        height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
+        max-height: 100%;
+        height: auto;
+        background-color: #fff;
       }
 
       &_item {
         display: flex;
         height: 48px;
         cursor: pointer;
+        background-color: $background-color;
 
         &.active {
-          background-color: transparent;
+          background-color: #fff;
         }
 
         &.active-prev {
@@ -363,9 +392,15 @@ export default {
         }
       }
     }
-  }
-}
 
-@media screen and (max-width: 575px) {
+    &.no--scroll {
+      .#{$prefix}-tab {
+        &_list {
+          flex-direction: column;
+          height: 100%;
+        }
+      }
+    }
+  }
 }
 </style>

@@ -216,7 +216,7 @@ export default {
     },
     onScroll(res) {
       const scrollSize = res[this.scrollX ? 'scrollLeft' : 'scrollTop']
-      //   console.log(e)
+
       if (this.scrollCount > 10) {
         // 每轮询10次更新一次
         this.scrollCount = 0

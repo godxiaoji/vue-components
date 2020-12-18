@@ -1,3 +1,4 @@
+import { isIOS, isMobile } from './device'
 import { objectForEach, isFunction } from './util'
 // import Exception from './exception'
 
@@ -120,5 +121,64 @@ export function removeScrollEvent(callback) {
     if (scrollCallbacks.length === 0) {
       document.removeEventListener('scroll', onScroll, false)
     }
+  }
+}
+
+export function init() {
+  if (isMobile) {
+    if (isIOS) {
+      console.log('support active')
+      document.addEventListener('touchstart', function() {}, false)
+    }
+  }
+}
+
+let passiveSupported = false
+try {
+  let options = Object.defineProperty({}, 'passive', {
+    get: function() {
+      return (passiveSupported = true)
+    }
+  })
+  window.addEventListener('test', null, options)
+} catch (err) {
+  // 此处不需要任何操作
+}
+
+const touchOptions = {
+  touchstart: isMobile ? 'touchstart' : 'mousedown',
+  touchmove: isMobile ? 'touchmove' : 'mousemove',
+  touchend: isMobile ? 'touchend' : 'mouseup',
+  options: passiveSupported ? { passive: false } : false
+}
+
+export const touchEvent = {
+  touchstart: touchOptions.touchstart,
+  touchmove: touchOptions.touchmove,
+  touchend: touchOptions.touchend,
+  addListeners($el, ref) {
+    $el.addEventListener(touchOptions.touchstart, ref, touchOptions.options)
+    $el.addEventListener(touchOptions.touchmove, ref, touchOptions.options)
+    $el.addEventListener(touchOptions.touchend, ref, touchOptions.options)
+  },
+  removeListeners($el, ref) {
+    $el.removeEventListener(touchOptions.touchstart, ref, touchOptions.options)
+    $el.removeEventListener(touchOptions.touchmove, ref, touchOptions.options)
+    $el.removeEventListener(touchOptions.touchend, ref, touchOptions.options)
+  },
+  getTouch(e) {
+    let touch
+
+    if (isMobile) {
+      if (e.type === 'mousedown') {
+        return
+      }
+      touch = e.targetTouches[0]
+    } else {
+      // mousedown
+      touch = e
+    }
+
+    return touch
   }
 }

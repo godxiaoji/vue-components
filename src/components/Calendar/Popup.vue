@@ -21,7 +21,7 @@
       :allow-same-day="allowSameDay"
       :max-range="maxRange"
       :day-handler="dayHandler"
-    ></calendar-view>
+    />
     <div :class="[prefix + '-calendar-popup_confirm']" v-if="showConfirm">
       <fx-button
         type="primary"

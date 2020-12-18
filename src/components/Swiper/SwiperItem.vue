@@ -18,17 +18,17 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  ready() {
-    this.update()
-  },
   mounted() {
     this.update()
   },
-  updated() {
+  destroyed() {
     this.update()
   },
-  attached() {
-    this.update()
+  updated() {
+    if (this.$el.offsetWidth === 0 || this.$el.offsetHeight === 0) {
+      // 解决默认 hidden 的问题
+      this.update()
+    }
   },
   methods: {
     update() {

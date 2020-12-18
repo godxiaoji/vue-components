@@ -26,7 +26,7 @@
 
 ```
 <fx-drawer title="菜单" placement="right">
-  <fx-tabs />
+  <fx-tab />
 </fx-drawer>
 ```
 

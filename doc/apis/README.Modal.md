@@ -1,4 +1,4 @@
-# Dialog
+# Modal
 
 ## <a name="showDialog">Vue.prototype.\$showDialog(object)</a>
 

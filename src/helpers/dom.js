@@ -45,5 +45,6 @@ export function resizeDetector($el, callback) {
     if (object.contentDocument) {
       object.contentDocument.defaultView.removeEventListener('resize', resizeFn)
     }
+    removeEl(object)
   }
 }

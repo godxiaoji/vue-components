@@ -25,7 +25,8 @@ export default {
     },
     // 设置段落占位图的行数
     row: {
-      type: Number
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -65,6 +66,7 @@ export default {
 
 <style lang="scss">
 @import '../component.module.scss';
+@import './index.module.scss';
 
 .#{$prefix}-skeleton-paragraph {
   overflow: hidden;
@@ -87,7 +89,7 @@ export default {
 
   &.animated {
     & li {
-      animation: #{$prefix}-skeleton-loading 1.4s ease infinite;
+      @include skeleton-animation;
     }
   }
 }

@@ -41,6 +41,7 @@ export default {
 
 <style lang="scss">
 @import '../component.module.scss';
+@import './index.module.scss';
 
 .#{$prefix}-skeleton-image {
   display: block;
@@ -50,7 +51,7 @@ export default {
   @include skeleton-background;
 
   &.animated {
-    animation: #{$prefix}-skeleton-loading 1.4s ease infinite;
+    @include skeleton-animation;
   }
 }
 </style>

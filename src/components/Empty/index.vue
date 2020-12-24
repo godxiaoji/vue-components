@@ -56,6 +56,8 @@ export default {
 @import '../component.module.scss';
 
 .#{$prefix}-empty {
+  --empty-font-color: #{$font2-color};
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,7 +71,7 @@ export default {
   }
 
   &_description {
-    color: $font2-color;
+    color: var(--empty-font-color);
     text-align: center;
     word-break: break-all;
     word-wrap: break-word;

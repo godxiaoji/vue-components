@@ -4,15 +4,14 @@
 
 ## Props
 
-| 属性          | 类型    | 默认值   | 必填 | 说明                                            |
-| ------------- | ------- | -------- | ---- | ----------------------------------------------- |
-| title         | string  | ''       | 否   | 标题                                            |
-| fixed-top     | boolean | false    | 否   | 是否固定顶部                                    |
-| show-back     | boolean | false    | 否   | 是否展示返回按钮                                |
-| show-home     | boolean | false    | 否   | 是否展示首页按钮                                |
-| right-buttons | array   | []       |      | 右侧按钮列表                                    |
-| icon-only     | boolean | true    | 否   | 是否展示纯图标按钮                                |
-
+| 属性          | 类型    | 默认值 | 必填 | 说明               |
+| ------------- | ------- | ------ | ---- | ------------------ |
+| title         | string  | ''     | 否   | 标题               |
+| fixed-top     | boolean | false  | 否   | 是否固定顶部       |
+| show-back     | boolean | false  | 否   | 是否展示返回按钮   |
+| show-home     | boolean | false  | 否   | 是否展示首页按钮   |
+| right-buttons | array   | []     |      | 右侧按钮列表       |
+| icon-only     | boolean | true   | 否   | 是否展示纯图标按钮 |
 
 ### right-buttons 的结构
 
@@ -21,6 +20,12 @@
   { icon: 'MenuOutlined', text: '菜单' }
 ]
 ```
+
+## CSS
+
+| 属性             | 默认值 | 说明     |
+| ---------------- | ------ | -------- |
+| --nav-bar-height | 52px   | 导航高度 |
 
 ## Events
 

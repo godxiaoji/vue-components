@@ -3,11 +3,11 @@
     <slot>
       <div :class="[prefix + '-skeleton_layout']">
         <div :class="[prefix + '-skeleton_layout-left']" v-if="avatar">
-          <skeleton-avatar></skeleton-avatar>
+          <skeleton-avatar />
         </div>
         <div :class="[prefix + '-skeleton_layout-right']">
-          <skeleton-title></skeleton-title>
-          <skeleton-paragraph></skeleton-paragraph>
+          <skeleton-title />
+          <skeleton-paragraph />
         </div>
       </div>
     </slot>

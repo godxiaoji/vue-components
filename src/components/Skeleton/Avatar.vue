@@ -31,7 +31,8 @@ export default {
     shape: {
       validator(val) {
         return inArray(val, AVATAR_SHAPE_NAMES)
-      }
+      },
+      default: null
     }
   },
   data() {
@@ -71,6 +72,7 @@ export default {
 
 <style lang="scss">
 @import '../component.module.scss';
+@import './index.module.scss';
 
 .#{$prefix}-skeleton-avatar {
   display: block;
@@ -88,7 +90,7 @@ export default {
   }
 
   &.animated {
-    animation: #{$prefix}-skeleton-loading 1.4s ease infinite;
+    @include skeleton-animation;
   }
 }
 </style>

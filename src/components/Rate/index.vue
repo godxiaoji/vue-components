@@ -16,10 +16,10 @@
       @click="onItemClick(num)"
     >
       <div :class="[prefix + '-rate_icon']">
-        <icon :class-name="defaultIcon"></icon>
+        <icon :class-name="defaultIcon" />
       </div>
       <div :class="[prefix + '-rate_active-icon']">
-        <icon :class-name="activeIcon" :style="iconStyles"></icon>
+        <icon :class-name="activeIcon" :style="iconStyles"/>
       </div>
       <i :class="[prefix + '-rate_half']" @click.stop="onHalfClick(num)"></i>
     </div>

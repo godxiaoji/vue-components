@@ -198,6 +198,7 @@ export default {
     opacity: 0;
     transition: transform 0.2s;
     overflow: hidden;
+    transform: translateZ(0);
   }
 
   &_content {
@@ -206,6 +207,7 @@ export default {
     min-height: 40px;
     min-width: 40px;
     background-color: #fff;
+    border-radius: 4px;
     color: $title-color;
   }
 

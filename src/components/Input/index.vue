@@ -50,7 +50,7 @@
       :class="[prefix + '-input_clear']"
       class-name="CloseCircleFilled"
       @click.native.prevent="onClear"
-    ></icon>
+    />
     <div :class="[prefix + '-input_append']" v-if="hasAppend">
       <slot name="append"></slot>
     </div>

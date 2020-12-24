@@ -6,7 +6,7 @@
     @click="onClick"
   >
     <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
-      <icon :class-name="leftIcon" :style="iconStyle"></icon>
+      <icon :class-name="leftIcon" :style="iconStyle"/>
     </div>
     <div :class="[prefix + '-notice-bar_content']">
       <div
@@ -22,7 +22,7 @@
       :class="[prefix + '-notice-bar_right-icon']"
       @click="onRightIconClick"
     >
-      <icon :class-name="rightIcon2" :style="iconStyle"></icon>
+      <icon :class-name="rightIcon2" :style="iconStyle"/>
     </div>
   </div>
 </template>

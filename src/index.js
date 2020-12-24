@@ -3,6 +3,7 @@ import * as Components from './components'
 import * as Apis from './apis'
 import { addData as _addRegionData } from './components/util/mulit-selector/region'
 import { SDKKey } from './config'
+import { init as initEvent } from './helpers/events'
 
 const Vfox = {
   install(Vue) {
@@ -22,6 +23,8 @@ const Vfox = {
     Vue.prototype.$createSelectorQuery = function createSelectorQuery() {
       return Apis.createSelectorQuery().in(this.$el)
     }
+
+    initEvent()
   },
   /**
    * 地区数据

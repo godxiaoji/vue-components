@@ -2,7 +2,7 @@ import { createIntersectionObserver } from './IntersectionObserver'
 import { createSelectorQuery } from './SelectorQuery'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import { showNotify, hideNotify } from './Notify'
-import { previewImage } from './PreviewImage'
+import { previewImage } from './Preview'
 import {
   getStorageInfo,
   getStorage,

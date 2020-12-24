@@ -12,8 +12,8 @@
     :type="realFormType"
     @click="onClick"
   >
-    <icon v-if="loading" class-name="LoadingOutlined" :spin="true"></icon>
-    <icon v-else-if="icon" :class-name="icon"></icon>
+    <icon v-if="loading" class-name="LoadingOutlined" :spin="true" />
+    <icon v-else-if="icon" :class-name="icon" />
     <span><slot>按钮</slot></span>
   </button>
 </template>
@@ -138,7 +138,7 @@ export default {
 .#{$prefix}-button {
   --button-font-color: #fff;
   --button-border-color: transparent;
-  --button-icon-size: 18px;
+  --button-icon-size: 20px;
   --button-size: 48px;
 
   display: inline-flex;
@@ -151,7 +151,7 @@ export default {
   outline: none;
   cursor: pointer;
   height: var(--button-size);
-  padding: 0 18px;
+  padding: 0 11px;
   font-size: 17px;
   line-height: 24px;
   border: 1px solid var(--button-border-color);
@@ -162,6 +162,7 @@ export default {
   position: relative;
   overflow: hidden;
   -webkit-appearance: none;
+  transform: translateZ(0);
 
   span {
     word-break: break-word;
@@ -199,6 +200,7 @@ export default {
   }
 
   .#{$prefix}-icon {
+    flex-shrink: 0;
     --color: var(--button-font-color);
     --size: var(--button-icon-size);
   }
@@ -210,25 +212,23 @@ export default {
   &.shape--round,
   &.shape--rectangle {
     .#{$prefix}-icon {
-      margin: 0 10px 0 -1px;
+      margin: 0 8px 0 -2px;
     }
   }
 
   &.shape--square,
   &.shape--circle {
-    width: var(--button-size);
     flex-grow: 0;
     flex-shrink: 0;
-    padding: 0;
 
-    --button-icon-size: 21px;
+    --button-icon-size: 24px;
 
     &.size--middle {
       --button-icon-size: 20px;
     }
 
     &.size--small {
-      --button-icon-size: 16px;
+      --button-icon-size: 18px;
     }
 
     span {
@@ -242,9 +242,19 @@ export default {
 
   &.size--middle {
     --button-size: 40px;
-    line-height: 22px;
-    font-size: 16px;
-    --button-icon-size: 17px;
+    line-height: 21px;
+    font-size: 15px;
+    --button-icon-size: 18px;
+
+    &.shape--square,
+    &.shape--circle {
+      padding: 0 9px;
+    }
+
+    &.shape--square,
+    &.shape--rectangle {
+      border-radius: 3px;
+    }
 
     &::before {
       height: 10px;
@@ -253,7 +263,7 @@ export default {
     &.shape--round,
     &.shape--rectangle {
       .#{$prefix}-icon {
-        margin: 0 8px 0 -1px;
+        margin: 0 4px 0 -2px;
       }
     }
   }
@@ -262,16 +272,17 @@ export default {
     --button-size: 28px;
     line-height: 17px;
     font-size: 12px;
-    --button-icon-size: 14px;
+    --button-icon-size: 16px;
     // border-width: 0;
+
+    &.shape--square,
+    &.shape--circle {
+      padding: 0 4px;
+    }
 
     &.shape--square,
     &.shape--rectangle {
       border-radius: 2px;
-    }
-
-    &::before {
-      height: 8px;
     }
 
     // &::after {
@@ -281,7 +292,7 @@ export default {
     &.shape--round,
     &.shape--rectangle {
       .#{$prefix}-icon {
-        margin: 0 4px 0 0;
+        margin: 0 2px 0 -2px;
       }
     }
   }
@@ -325,6 +336,15 @@ export default {
       --button-border-color: #{$primary-border-color};
     }
 
+    &.pattern--gradient {
+      background-image: linear-gradient(
+        90deg,
+        $primary-border-color 0%,
+        $primary-color 100%
+      );
+      --button-border-color: transparent;
+    }
+
     &.ghost {
       background-color: transparent;
     }
@@ -340,6 +360,15 @@ export default {
       background-color: #fff;
       --button-font-color: #{$success-color};
       --button-border-color: #{$success-border-color};
+    }
+
+    &.pattern--gradient {
+      background-image: linear-gradient(
+        90deg,
+        $success-border-color 0%,
+        $success-color 100%
+      );
+      --button-border-color: transparent;
     }
 
     &.ghost {
@@ -359,6 +388,15 @@ export default {
       --button-border-color: #{$warning-border-color};
     }
 
+    &.pattern--gradient {
+      background-image: linear-gradient(
+        90deg,
+        $warning-border-color 0%,
+        $warning-color 100%
+      );
+      --button-border-color: transparent;
+    }
+
     &.ghost {
       background-color: transparent;
     }
@@ -374,6 +412,15 @@ export default {
       background-color: #fff;
       --button-font-color: #{$danger-color};
       --button-border-color: #{$danger-border-color};
+    }
+
+    &.pattern--gradient {
+      background-image: linear-gradient(
+        90deg,
+        $danger-border-color 0%,
+        $danger-color 100%
+      );
+      --button-border-color: transparent;
     }
 
     &.ghost {

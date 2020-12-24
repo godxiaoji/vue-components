@@ -12,7 +12,7 @@
             <icon
               class-name="RightOutlined"
               :class="[prefix + '-form-item_icon']"
-            ></icon>
+            />
           </div>
           <input type="hidden" ref="input" :name="name" :value="valueString2" />
         </div>

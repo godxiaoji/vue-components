@@ -14,7 +14,7 @@
         :class="[prefix + '-toast_icon']"
         :class-name="iconName"
         :spin="type === 'loading'"
-      ></icon>
+      />
       <div :class="[prefix + '-toast_text']">
         {{ title }}
       </div>

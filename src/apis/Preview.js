@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import PreviewImage from '../components/PreviewImage'
+import ImagePreview from '../components/ImagePreview'
 import { createPopup } from '../helpers/popup'
 import { isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
@@ -25,7 +25,7 @@ export function previewImage(object) {
       $ref.show()
     } else {
       const Comp = Vue.extend({
-        extends: PreviewImage,
+        extends: ImagePreview,
         methods: {}
       })
 

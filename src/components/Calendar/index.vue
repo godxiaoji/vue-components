@@ -18,7 +18,7 @@
       <icon
         :class="[prefix + '-input_arrow']"
         class-name="RightOutlined"
-      ></icon>
+      />
       <input
         :class="[prefix + '-input_cover']"
         type="text"

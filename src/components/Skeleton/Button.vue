@@ -71,6 +71,7 @@ export default {
 
 <style lang="scss">
 @import '../component.module.scss';
+@import './index.module.scss';
 
 .#{$prefix}-skeleton-button {
   display: block;
@@ -89,7 +90,7 @@ export default {
   }
 
   &.animated {
-    animation: #{$prefix}-skeleton-loading 1.4s ease infinite;
+    @include skeleton-animation;
   }
 }
 </style>

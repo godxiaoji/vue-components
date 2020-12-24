@@ -9,6 +9,12 @@
 | description | string |           | 否   | 描述文字                                                  |
 | type        | string | 'default' | 否   | 图片类型，可选 'default' / 'error' / 'network' / 'search' |
 
+## CSS
+
+| 属性               | 默认值                             | 说明   |
+| ------------------ | ---------------------------------- | ------ |
+| --empty-font-color | <font color=#8c8c8c>#8c8c8c</font> | 文本色 |
+
 ## Slots
 
 ### 底部（default）

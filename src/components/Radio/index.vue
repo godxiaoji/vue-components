@@ -15,11 +15,11 @@
       <icon
         :class="[prefix + '-radio_icon']"
         class-name="CircleOutlined"
-      ></icon>
+      />
       <icon
         :class="[prefix + '-radio_checked-icon']"
         class-name="CheckCircleFilled"
-      ></icon>
+      />
       <span :class="[prefix + '-radio_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -149,12 +149,13 @@ export default {
 .#{$prefix}-radio {
   --radio-color: #{$border-color};
   --radio-active-color: #{$primary-color};
+  --radio-font-color: #{$title-color};
 
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   font-size: 17px;
-  color: $title-color;
+  color: var(--radio-font-color);
   text-align: left;
   position: relative;
 

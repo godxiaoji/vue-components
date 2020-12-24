@@ -1,9 +1,14 @@
 <template>
-  <div :class="[prefix + '-tabs', { vertical }]">
-    <ul :class="[prefix + '-tabs_list']" ref="list">
+  <div
+    :class="[
+      prefix + '-tab',
+      { vertical, 'no--scroll': options2.length <= scrollThreshold }
+    ]"
+  >
+    <ul :class="[prefix + '-tab_list']" ref="list">
       <li
         :class="[
-          prefix + '-tabs_item',
+          prefix + '-tab_item',
           {
             active: index === activeIndex,
             'active-prev': index === activeIndex - 1,
@@ -14,10 +19,13 @@
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <div :class="[prefix + '-tabs_item-inner']">
-          <icon v-if="item.icon" :class-name="item.icon"></icon>
-          <span>{{ item.label }}</span>
-        </div>
+        <badge
+          :class="[prefix + '-tab_item-inner']"
+          :content="item.badge != null ? item.badge : 0"
+        >
+          <icon v-if="item.icon" :class-name="item.icon" />
+          <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
+        </badge>
       </li>
     </ul>
   </div>
@@ -25,14 +33,15 @@
 
 <script>
 import Icon from '../Icon'
+import Badge from '../Badge'
 import { isNumber, isString, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
 import Exception from '../../helpers/exception'
 
 export default {
-  name: SDKKey + '-tabs',
-  components: { Icon },
+  name: SDKKey + '-tab',
+  components: { Icon, Badge },
   props: {
     options: {
       validator(value) {
@@ -72,6 +81,10 @@ export default {
     vertical: {
       type: Boolean,
       default: false
+    },
+    scrollThreshold: {
+      type: Number,
+      default: 4
     }
   },
   data() {
@@ -121,7 +134,7 @@ export default {
           new Exception(
             '"value" is not in "options".',
             Exception.TYPE.PROP_ERROR,
-            'Tabs'
+            'Tab'
           )
         )
       }
@@ -264,12 +277,13 @@ export default {
 <style lang="scss">
 @import '../component.module.scss';
 
-.#{$prefix}-tabs {
-  --active-color: #{$title-color};
-  --default-color: #{$font-color};
+.#{$prefix}-tab {
+  --tab-active-color: #{$title-color};
+  --tab-color: #{$font-color};
+  background-color: #fff;
 
   &_list {
-    padding: 0;
+    padding: 0 4px;
     margin: 0;
     width: 100%;
     height: 36px;
@@ -277,7 +291,6 @@ export default {
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
-    background-color: #fff;
     position: relative;
   }
 
@@ -286,24 +299,29 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 
     font-size: 16px;
-    padding: 0 16px;
+    line-height: 20px;
+    font-weight: 500;
+    padding: 0 12px;
     position: relative;
     box-sizing: border-box;
-    color: var(--default-color);
+    color: var(--tab-color);
+
+    &:active {
+      background-color: rgba($color: $black-color, $alpha: 0.16);
+    }
 
     &-inner {
-      display: inline-flex;
-      align-items: center;
-      height: 22px;
+      display: inline-block;
+      vertical-align: middle;
       position: relative;
 
       &::before {
         content: none;
         position: absolute;
-        top: 0;
-        bottom: 0;
+        top: -1px;
         left: -4px;
         width: 16px;
         height: 16px;
@@ -315,43 +333,72 @@ export default {
           rgba(24, 144, 255, 0.05) 86.5%
         );
       }
+    }
 
-      span {
-        flex: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
+    &-text {
+      display: block;
+      word-break: break-all;
+      white-space: pre-wrap;
     }
 
     &.active {
-      color: var(--active-color);
+      color: var(--tab-active-color);
       font-weight: 700;
 
-      .#{$prefix}-tabs_item-inner::before {
+      .#{$prefix}-tab_item-inner::before {
         content: '';
+      }
+    }
+  }
+
+  &.no--scroll:not(.vertical) {
+    .#{$prefix}-tab {
+      &_list {
+        display: flex;
+        padding: 0;
+      }
+
+      &_item {
+        flex: 1;
+        padding: 0;
+
+        &-text {
+          flex-grow: 1;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
       }
     }
   }
 
   &.vertical {
     height: 100%;
-    background: none;
+    background-color: $background-color;
 
-    .#{$prefix}-tabs {
+    .#{$prefix}-tab {
       &_list {
-        height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
+        max-height: 100%;
+        height: auto;
+        background-color: #fff;
+        padding: 0;
       }
 
       &_item {
         display: flex;
-        height: 48px;
+        min-height: 40px;
         cursor: pointer;
+        background-color: $background-color;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 10px 12px;
+        justify-content: flex-start;
 
         &.active {
-          background-color: transparent;
+          background-color: #fff;
         }
 
         &.active-prev {
@@ -361,11 +408,23 @@ export default {
         &.active-next {
           border-radius: 0 4px 0 0;
         }
+
+        &-inner {
+          height: auto;
+        }
+      }
+    }
+
+    &.no--scroll {
+      .#{$prefix}-tab {
+
+        &_list {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
       }
     }
   }
-}
-
-@media screen and (max-width: 575px) {
 }
 </style>

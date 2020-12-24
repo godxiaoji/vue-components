@@ -11,7 +11,7 @@
 | options       | array   |        | 否   | 选项列表                   |
 | mask-closable | boolean | true   | 否   | 点击蒙层是否触发关闭操作   |
 | show-cancel   | boolean | true   | 否   | 是否显示取消按钮           |
-| cancelText    | string  | '取消' | 否   | 取消按钮的文本             |
+| cancel-text   | string  | '取消' | 否   | 取消按钮的文本             |
 
 ### options 的结构
 
@@ -32,6 +32,12 @@
   }
 ]
 ```
+
+## CSS
+
+| 属性                           | 默认值                             | 说明     |
+| ------------------------------ | ---------------------------------- | -------- |
+| --action-sheet-highlight-color | <font color=#ff4d4f>#ff4d4f</font> | 高亮颜色 |
 
 ## Events
 

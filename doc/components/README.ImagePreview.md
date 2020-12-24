@@ -1,4 +1,4 @@
-# PreviewImage
+# ImagePreview
 
 预览图片。
 

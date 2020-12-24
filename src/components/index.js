@@ -37,10 +37,17 @@ import ActionSheet from './ActionSheet'
 import PopDialog from './Popover/Dialog.vue'
 
 /* Navigation */
-import Tabs from './Tabs'
+import Tab from './Tab'
 import BackTop from './BackTop'
 import NavBar from './NavBar'
 import PopMenu from './Popover/Menu.vue'
+import TabView from './Tab/View.vue'
+import TabViewItem from './Tab/ViewItem.vue'
+import Sticky from './Sticky'
+import StickyView from './Sticky/View.vue'
+import StickyViewItem from './Sticky/ViewItem.vue'
+import ScrollTab from './Tab/Scroll.vue'
+import ScrollTabItem from './Tab/ScrollItem.vue'
 
 /* Show */
 import ScrollView from './ScrollView'
@@ -54,7 +61,7 @@ import SkeletonTitle from './Skeleton/Title.vue'
 import SkeletonParagraph from './Skeleton/Paragraph.vue'
 import SkeletonButton from './Skeleton/Button.vue'
 import SkeletonImage from './Skeleton/Image.vue'
-import PreviewImage from './PreviewImage'
+import ImagePreview from './ImagePreview'
 import Cell from './Cell'
 import Group from './Group'
 import Row from './Row'
@@ -95,7 +102,7 @@ export {
   FlatList,
   Row,
   Col,
-  Tabs,
+  Tab,
   Empty,
   Skeleton,
   SkeletonAvatar,
@@ -103,7 +110,7 @@ export {
   SkeletonParagraph,
   SkeletonButton,
   SkeletonImage,
-  PreviewImage,
+  ImagePreview,
   Cell,
   Dialog,
   Stepper,
@@ -126,5 +133,12 @@ export {
   PopDialog,
   Collapse,
   CollapseItem,
-  Dropdown
+  Dropdown,
+  TabView,
+  TabViewItem,
+  Sticky,
+  StickyView,
+  StickyViewItem,
+  ScrollTab,
+  ScrollTabItem
 }

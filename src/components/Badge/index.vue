@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { rangeInteger } from '../../helpers/util'
+import { isNumber, isString, rangeInteger } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
 
@@ -18,8 +18,10 @@ export default {
   components: {},
   props: {
     // 消息条数
-    count: {
-      type: Number,
+    content: {
+      validator(val) {
+        return isString(val) || isNumber(val)
+      },
       default: 0
     },
     // 最大完全显示消息条数
@@ -51,32 +53,40 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, count2: 0 }
+    return { prefix: SDKKey, content2: 0 }
   },
   watch: {
-    count: {
+    content: {
       handler(val) {
         this.frameTask && this.frameTask.stop()
 
-        const currentIsShow = this.showZero || this.count2 > 0
+        if (isString(val)) {
+          this.content2 = val
+          return
+        }
+        if (!isNumber(val)) {
+          return
+        }
+
+        const currentIsShow = this.showZero || this.content2 > 0
         const isReadyToHide = !this.showZero && val === 0
 
         if (!currentIsShow || isReadyToHide) {
-          this.count2 = val
+          this.content2 = val
         } else {
           const to = rangeInteger(val, 0, this.maxCount)
 
           this.frameTask = frameTo({
-            from: this.count2,
+            from: this.content2,
             to,
-            duration: Math.min(Math.abs(to - this.count2) * 50, 1000),
+            duration: Math.min(Math.abs(to - this.content2) * 50, 1000),
             progress: ({ current, frameIndex }) => {
               if (frameIndex % 3 === 0) {
-                this.count2 = Math.round(current)
+                this.content2 = Math.round(current)
               }
             },
             complete: ({ current }) => {
-              this.count2 = current
+              this.content2 = current
             }
           })
         }
@@ -85,21 +95,35 @@ export default {
   },
   computed: {
     showCount() {
-      if (this.count > this.maxCount && this.count2 === this.maxCount) {
-        return this.count2 + '+'
+      if (isString(this.content2)) {
+        return this.content2
       }
-      return this.count2.toString()
+
+      if (this.content > this.maxCount && this.content2 === this.maxCount) {
+        return this.content2 + '+'
+      }
+      return this.content2.toString()
     },
     styles() {
       return {
-        transform: `translate3d(${this.offset[0]}px, ${
-          this.offset[1]
-        }px, 0px) scale(${this.showZero || this.count > 0 ? 1 : 0})`
+        transform: `translate3d(50%, -50%, 0px) scale(${
+          (isString(this.content) && this.content) ||
+          this.showZero ||
+          this.content > 0
+            ? 1
+            : 0
+        })`,
+        right: `${-this.offset[0]}px`,
+        top: `${this.offset[1]}px`
       }
     }
   },
   created() {
-    this.count2 = rangeInteger(this.count, 0, this.maxCount)
+    if (isString(this.content)) {
+      this.content2 = this.content
+    } else if (isNumber(this.content)) {
+      this.content2 = rangeInteger(this.content, 0, this.maxCount)
+    }
   },
   mounted() {},
   destroyed() {
@@ -115,25 +139,24 @@ export default {
 .#{$prefix}-badge {
   display: inline-block;
   position: relative;
-  --background-color: #{$danger-color};
-  --border-color: #fff;
-  --color: #fff;
+  vertical-align: top;
+  --badge-background-color: #{$danger-color};
+  --badge-color: #fff;
 
   &_num {
     position: absolute;
-    right: -9px;
-    top: -9px;
-    height: 18px;
-    min-width: 18px;
+    height: 15px;
+    line-height: 15px;
+    min-width: 15px;
     display: inline-flex;
     align-items: center;
     padding: 0 4px;
-    border-radius: 9px;
+    border-radius: 7.5px;
     box-sizing: border-box;
-    font-size: 12px;
-    color: var(--color);
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--badge-color);
+    background-color: var(--badge-background-color);
     transform: scale(0);
   }
 
@@ -145,8 +168,8 @@ export default {
     width: 10px;
     border-radius: 5px;
     box-sizing: border-box;
-    color: var(--color);
-    background-color: var(--background-color);
+    color: var(--badge-color);
+    background-color: var(--badge-background-color);
     border: 1px solid var(--border-color);
     transform: scale(0);
   }

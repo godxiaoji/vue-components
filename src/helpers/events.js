@@ -1,5 +1,5 @@
 import { isIOS, isMobile } from './device'
-import { objectForEach, isFunction } from './util'
+import { objectForEach, isFunction, isArray } from './util'
 // import Exception from './exception'
 
 // export function getAppTarget(el) {
@@ -87,39 +87,73 @@ export function getDataset(object) {
   return dataset
 }
 
-let scrollCallbacks = []
+let euid = 0
+
+const scrollCallbacks = {}
 
 function onScroll(e) {
-  scrollCallbacks.forEach(callback => {
-    callback.call(callback, e)
-  })
+  let target = e.target
+
+  if (target._euid && scrollCallbacks[target._euid]) {
+    const callbacks = scrollCallbacks[target._euid]
+    if (target === document) {
+      target = document.documentElement
+    }
+
+    callbacks.forEach(callback => {
+      callback.call(callback, e, target)
+    })
+  }
 }
 
-export function addScrollEvent(callback) {
-  if (scrollCallbacks.length === 0) {
-    document.addEventListener('scroll', onScroll, false)
+export function addScrollEvent(callback, target = document) {
+  if (!isFunction(callback)) {
+    return
   }
 
-  if (isFunction(callback)) {
-    scrollCallbacks.push(callback)
+  if (target === document.documentElement) {
+    target = document
   }
+
+  if (!target._euid) {
+    target._euid = ++euid
+  }
+  const id = target._euid
+
+  if (!scrollCallbacks[id]) {
+    scrollCallbacks[id] = []
+    target.addEventListener('scroll', onScroll, false)
+  }
+
+  scrollCallbacks[id].push(callback)
 }
 
-export function removeScrollEvent(callback) {
+export function removeScrollEvent(callback, target = document) {
+  if (target === document.documentElement) {
+    target = document
+  }
+
+  if (!isArray(scrollCallbacks[target._euid])) {
+    return
+  }
+
+  const id = target._euid
+  const callbacks = scrollCallbacks[id]
   let index = -1
 
-  for (let i = 0; i < scrollCallbacks.length; i++) {
-    if (scrollCallbacks[i] == callback) {
+  for (let i = 0; i < callbacks.length; i++) {
+    if (callbacks[i] == callback) {
       index = i
       break
     }
   }
 
   if (index >= 0) {
-    scrollCallbacks.splice(index, 1)
+    callbacks.splice(index, 1)
 
-    if (scrollCallbacks.length === 0) {
-      document.removeEventListener('scroll', onScroll, false)
+    if (callbacks.length === 0) {
+      target.removeEventListener('scroll', onScroll, false)
+      delete scrollCallbacks[id]
     }
   }
 }
@@ -127,7 +161,7 @@ export function removeScrollEvent(callback) {
 export function init() {
   if (isMobile) {
     if (isIOS) {
-      console.log('support active')
+      // console.log('support active')
       document.addEventListener('touchstart', function() {}, false)
     }
   }

@@ -1,3 +1,7 @@
+import { isElement, isNumber, isString } from './util'
+
+const docEl = document.documentElement
+
 export function appendToBody($el) {
   document.body.appendChild($el)
 }
@@ -47,4 +51,61 @@ export function resizeDetector($el, callback) {
     }
     removeEl(object)
   }
+}
+
+export function getRelativeOffset($el, $relativeEl = document) {
+  if ($el === document) {
+    return { offsetTop: 0, offsetLeft: 0 }
+  }
+
+  let offsetTop = $el.offsetTop
+  let offsetLeft = $el.offsetLeft
+
+  if ($el.offsetParent && $el.offsetParent !== $relativeEl) {
+    const parent = getRelativeOffset($el.offsetParent, $relativeEl)
+
+    offsetTop += parent.offsetTop
+    offsetLeft += parent.offsetLeft
+  }
+
+  return { offsetTop, offsetLeft }
+}
+
+/**
+ * 获取长度值
+ * @param {Number|String} size 10 10vw 10vh 10px
+ * @param {Number} defaultValue
+ */
+export function getSizeValue(size, defaultValue = 0) {
+  if (isNumber(size)) {
+    return size
+  } else if (isString(size)) {
+    const matches = size.match(/^([\d.]+)((px)|(vw)|(vh)|)$/)
+
+    if (matches) {
+      size = parseFloat(matches[1])
+
+      if (matches[2] === 'vw') {
+        size *= docEl.clientWidth / 100
+      } else if (matches[2] === 'vh') {
+        size *= docEl.clientHeight / 100
+      }
+
+      return size
+    }
+  }
+
+  return defaultValue
+}
+
+export function querySelector(selector) {
+  if (isElement(selector)) {
+    return selector
+  } else if (isString(selector)) {
+    return document.querySelector(selector)
+  } else if (selector === document) {
+    return docEl
+  }
+
+  return null
 }

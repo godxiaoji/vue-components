@@ -41,6 +41,13 @@ import Tab from './Tab'
 import BackTop from './BackTop'
 import NavBar from './NavBar'
 import PopMenu from './Popover/Menu.vue'
+import TabView from './Tab/View.vue'
+import TabViewItem from './Tab/ViewItem.vue'
+import Sticky from './Sticky'
+import StickyView from './Sticky/View.vue'
+import StickyViewItem from './Sticky/ViewItem.vue'
+import ScrollTab from './Tab/Scroll.vue'
+import ScrollTabItem from './Tab/ScrollItem.vue'
 
 /* Show */
 import ScrollView from './ScrollView'
@@ -63,8 +70,6 @@ import NoticeBar from './NoticeBar'
 import Divider from './Divider'
 import Collapse from './Collapse'
 import CollapseItem from './Collapse/Item.vue'
-import TabView from './Tab/View.vue'
-import TabViewItem from './Tab/ViewItem.vue'
 
 /* Other */
 import Copy from './Copy'
@@ -130,5 +135,10 @@ export {
   CollapseItem,
   Dropdown,
   TabView,
-  TabViewItem
+  TabViewItem,
+  Sticky,
+  StickyView,
+  StickyViewItem,
+  ScrollTab,
+  ScrollTabItem
 }

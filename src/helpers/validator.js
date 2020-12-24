@@ -15,6 +15,7 @@ import {
   isStringNumberMixArray
 } from './util'
 import dayjs from 'dayjs'
+import { getSizeValue } from './dom'
 
 const emptys = ['null', 'undefined', 'NaN']
 
@@ -132,15 +133,27 @@ export function getType(obj) {
   return typeof obj
 }
 
-function selectorValidator(value) {
+export function selectorValidator(value) {
   return isString(value) || isElement(value)
 }
 selectorValidator._type = 'element Or string'
+
+export function eventSelectorValidator(value) {
+  // 这个值必须匹配下列字符串中的一个
+  return isString(value) || isElement(value) || value === document
+}
+eventSelectorValidator._type = 'element, document Or string'
 
 export function arrayValueValidator(value) {
   return isStringNumberMixArray(value) || isString(value) || isNumber(value)
 }
 arrayValueValidator._type = 'number, string, number[] or string[]'
+
+export function sizeValidator(value) {
+  const size = getSizeValue(value, null)
+
+  return size !== null
+}
 
 const MAP = {
   placement: {

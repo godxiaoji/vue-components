@@ -6,7 +6,6 @@
       <tab
         :options="tabList"
         v-model="activeIndex"
-        :scroll="false"
         :vertical="vertical"
         :scroll-threshold="scrollThreshold"
       />

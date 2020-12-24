@@ -1,3 +1,20 @@
+# [1.6.0](https://github.com/godxiaoji/vfox/compare/v1.5.0...v1.6.0) (2020-12-24)
+
+
+### Bug Fixes
+
+* add TabView ([d02d169](https://github.com/godxiaoji/vfox/commit/d02d1695714d0a13170c9790f8cf7bb99faf0086))
+
+
+### Features
+
+* add Sticky ScrollTab et ([8114331](https://github.com/godxiaoji/vfox/commit/811433189d0ae7acc6081acab12985b5b0819006))
+
+
+### Reverts
+
+* Revert "chore(release): 1.5.0 [skip ci]" ([e415670](https://github.com/godxiaoji/vfox/commit/e4156702c6d82d3b4f89021897e4a2dbbe2ae0b3))
+
 ## [1.4.5](https://github.com/godxiaoji/vfox/compare/v1.4.4...v1.4.5) (2020-11-17)
 
 

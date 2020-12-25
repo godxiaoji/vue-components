@@ -1,10 +1,12 @@
 # Vfox
 
-移动端 Vue 组件集合。
+移动端 Vue 组件库。
 
-这是个造轮子工程。特点就是在提供较多的组件和 Api 下保持 52k(Gzip)的大小。
+[Demo](https://cdn.fox2.cn/vfox/)
 
-## Install
+[Docs](https://cdn.fox2.cn/vfox-docs/)
+
+## 安装
 
 ### CDN
 
@@ -15,13 +17,15 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vfox/dist/index.js"></script>
 ```
 
-### Mount
+### NPM
 
 ```
 npm i vfox -S
 ```
 
-#### 全局注册
+## 引入
+
+### 全局注册
 
 ```
 import Vue from 'vue'
@@ -32,7 +36,7 @@ import 'vfox/dist/index.css'
 
 ```
 
-注：由于地区涉及的数据较大，使用`Cascader`、`PickerView`和`Picker`组件的地区选择器时，需要额外引入地区数据。
+注：由于地区涉及的数据较大，使用 `Cascader` 、 `PickerView` 和 `Picker` 组件的地区选择器时，需要额外引入地区数据。
 
 ```
 import regionData from 'vfox/data/region'
@@ -40,7 +44,7 @@ import regionData from 'vfox/data/region'
 Vfox.addRegionData(regionData)
 ```
 
-#### 局部注册
+### 局部注册
 
 ```
 import 'vfox/dist/index.css'
@@ -53,7 +57,7 @@ export default {
 }
 ```
 
-#### 函数调用
+### 函数调用
 
 ```
 import 'vfox/dist/index.css'
@@ -65,16 +69,3 @@ showToast({
   duration: 2000
 })
 ```
-
-其中接口`createIntersectionObserver`，`createSelectorQuery`单独使用需要传入组件本身
-
-```
-const query = createSelectorQuery().in(this)
-const io = createIntersectionObserver(this, options)
-```
-
-## Documents
-
-[Components 组件](./doc/README.COMPONENTS.md)
-
-[APIs 接口](./doc/README.APIS.md)

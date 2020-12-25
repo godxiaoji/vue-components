@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/godxiaoji/vfox/compare/v1.6.0...v1.6.1) (2020-12-25)
+
+
+### Bug Fixes
+
+* 删除IntersectionObserver和createSelectorQuery相关 ([45f9178](https://github.com/godxiaoji/vfox/commit/45f9178476976965d24d0da91fa96b02c0efc8fb))
+
 # [1.6.0](https://github.com/godxiaoji/vfox/compare/v1.5.0...v1.6.0) (2020-12-24)
 
 

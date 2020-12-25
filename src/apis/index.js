@@ -1,5 +1,5 @@
-import { createIntersectionObserver } from './IntersectionObserver'
-import { createSelectorQuery } from './SelectorQuery'
+// import { createIntersectionObserver } from './IntersectionObserver'
+// import { createSelectorQuery } from './SelectorQuery'
 import { showToast, showLoading, hideLoading, hideToast } from './Toast'
 import { showNotify, hideNotify } from './Notify'
 import { previewImage } from './Preview'
@@ -24,8 +24,8 @@ import {
 } from './Popup'
 
 export {
-  createIntersectionObserver,
-  createSelectorQuery,
+  // createIntersectionObserver,
+  // createSelectorQuery,
   showToast,
   showLoading,
   hideLoading,

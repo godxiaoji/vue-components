@@ -3,8 +3,8 @@
     <div :class="[prefix + '-scroll-tab_sidebar']">
       <sticky
         ref="sidebar"
-        :offset-top="offsetTop"
-        :offset-bottom="offsetBottom"
+        :offset-top="stickyOffsetTop"
+        :offset-bottom="stickyOffsetBottom"
       >
         <tab
           :options="tabList"
@@ -16,7 +16,7 @@
     </div>
     <div :class="[prefix + '-scroll-tab_body']">
       <sticky-view
-        :offset-top="offsetTop"
+        :offset-top="stickyOffsetTop"
         ref="body"
         v-model="activeIndex"
         @reset-items="onResetItems"
@@ -34,24 +34,18 @@ import Sticky from '../Sticky'
 import StickyView from '../Sticky/View.vue'
 import { SDKKey } from '../../config'
 import { querySelector } from '../../helpers/dom'
-import { isNumber, isString } from '../../helpers/util'
+import { sizeValidator } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-scroll-tab',
   components: { Tab, Sticky, StickyView },
   props: {
-    offsetTop: {
-      validator(value) {
-        // 这个值必须匹配下列字符串中的一个
-        return isNumber(value) || isString(value)
-      },
+    stickyOffsetTop: {
+      validator: sizeValidator,
       default: 0
     },
-    offsetBottom: {
-      validator(value) {
-        // 这个值必须匹配下列字符串中的一个
-        return isNumber(value) || isString(value)
-      },
+    stickyOffsetBottom: {
+      validator: sizeValidator,
       default: 0
     }
   },

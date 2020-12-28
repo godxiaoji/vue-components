@@ -48,6 +48,8 @@ import StickyView from './Sticky/View.vue'
 import StickyViewItem from './Sticky/ViewItem.vue'
 import ScrollTab from './Tab/Scroll.vue'
 import ScrollTabItem from './Tab/ScrollItem.vue'
+import IndexView from './IndexView'
+import IndexViewItem from './IndexView/Item.vue'
 
 /* Show */
 import ScrollView from './ScrollView'
@@ -140,5 +142,7 @@ export {
   StickyView,
   StickyViewItem,
   ScrollTab,
-  ScrollTabItem
+  ScrollTabItem,
+  IndexView,
+  IndexViewItem
 }

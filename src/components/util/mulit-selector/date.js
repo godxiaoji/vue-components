@@ -1,17 +1,4 @@
-const dayCountMap = {
-  '1': 31,
-  '2': 28,
-  '3': 31,
-  '4': 30,
-  '5': 31,
-  '6': 30,
-  '7': 31,
-  '8': 31,
-  '9': 30,
-  '10': 31,
-  '11': 30,
-  '12': 31
-}
+import dayjs from 'dayjs'
 
 export function dateString2Array(string) {
   return string.match(/^(\d+)-(\d+)-(\d+)$/).splice(1, 3)
@@ -25,28 +12,6 @@ export function datetimeString2Array(string) {
   return string.match(/^(\d+)-(\d+)-(\d+)\s(\d+):(\d+):(\d+)$/).splice(1, 6)
 }
 
-function getDayCount(year, month) {
-  let dayCount = dayCountMap[month]
-
-  if (month === 2 && isLeapYear(year)) {
-    dayCount = 29
-  }
-
-  return dayCount
-}
-
-/**
- * 是否闰年
- * @param {number} year
- */
-function isLeapYear(year) {
-  return (year % 4 == 0 && year % 100 !== 0) || year % 400 == 0
-}
-
-function getYear() {
-  return new Date().getFullYear()
-}
-
 function num2Str(num) {
   return num >= 10 ? num.toString() : '0' + num
 }
@@ -57,7 +22,7 @@ export function parseDateList(index, parent, options = {}) {
 
   if (index === 0) {
     // 年
-    const year = getYear()
+    const year = new Date().getFullYear()
     const min = year - 100
     const max = year
 
@@ -77,13 +42,7 @@ export function parseDateList(index, parent, options = {}) {
     const min = 1
     const max = 12
 
-    const d = new Date()
-    d.setFullYear(parseInt(parent.values[0]))
-    d.setDate(1)
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    d.setMilliseconds(0)
+    const d = dayjs(parent.values[0]).toDate()
 
     for (let i = min; i <= max; i++) {
       d.setMonth(i - 1)
@@ -103,19 +62,11 @@ export function parseDateList(index, parent, options = {}) {
     }
   } else if (index === 2) {
     // 日
+    let d = dayjs(parent.values.join('-'))
     const min = 1
-    const max = getDayCount(
-      parseInt(parent.values[0]),
-      parseInt(parent.values[1])
-    )
+    const max = d.daysInMonth()
 
-    const d = new Date()
-    d.setFullYear(parseInt(parent.values[0]))
-    d.setMonth(parseInt(parent.values[1]) - 1)
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    d.setMilliseconds(0)
+    d = d.toDate()
 
     for (let i = min; i <= max; i++) {
       d.setDate(i)
@@ -171,27 +122,6 @@ export function parseDatetimeList(index, parent) {
   } else {
     return parseTimeList(index - 3)
   }
-}
-
-export function getDate(values) {
-  const d = new Date()
-
-  if (values[0]) {
-    d.setFullYear(parseInt(values[0]))
-  }
-  if (values[1]) {
-    d.setMonth(parseInt(values[1]) - 1)
-  }
-  if (values[2]) {
-    d.setDate(parseInt(values[2]))
-  }
-
-  d.setHours(values[3] ? parseInt(values[3]) : 0)
-  d.setMinutes(values[4] ? parseInt(values[4]) : 0)
-  d.setSeconds(values[5] ? parseInt(values[5]) : 0)
-  d.setMilliseconds(0)
-
-  return d
 }
 
 export function getDateValues() {

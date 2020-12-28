@@ -162,7 +162,7 @@ export default {
     flex-grow: 1;
 
     .#{$prefix}-drawer_inner.has--header & {
-      height: calc(100% - 40px);
+      height: calc(100% - 48px);
     }
   }
 

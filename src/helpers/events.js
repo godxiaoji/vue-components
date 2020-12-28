@@ -194,11 +194,19 @@ export const touchEvent = {
     $el.addEventListener(touchOptions.touchstart, ref, touchOptions.options)
     $el.addEventListener(touchOptions.touchmove, ref, touchOptions.options)
     $el.addEventListener(touchOptions.touchend, ref, touchOptions.options)
+
+    if (touchOptions.touchend === 'mouseup') {
+      $el.addEventListener('mouseleave', ref, touchOptions.options)
+    }
   },
   removeListeners($el, ref) {
     $el.removeEventListener(touchOptions.touchstart, ref, touchOptions.options)
     $el.removeEventListener(touchOptions.touchmove, ref, touchOptions.options)
     $el.removeEventListener(touchOptions.touchend, ref, touchOptions.options)
+
+    if (touchOptions.touchend === 'mouseup') {
+      $el.removeEventListener('mouseleave', ref, touchOptions.options)
+    }
   },
   getTouch(e) {
     let touch

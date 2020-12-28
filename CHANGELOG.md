@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/godxiaoji/vfox/compare/v1.6.1...v1.6.2) (2020-12-28)
+
+
+### Bug Fixes
+
+* update IndexView ([bda39ff](https://github.com/godxiaoji/vfox/commit/bda39ff9b4dfccaaa7c6b1ca12fb1e25fffba194))
+
 ## [1.6.1](https://github.com/godxiaoji/vfox/compare/v1.6.0...v1.6.1) (2020-12-25)
 
 

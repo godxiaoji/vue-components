@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/godxiaoji/vfox/compare/v1.6.2...v1.6.3) (2020-12-29)
+
+
+### Bug Fixes
+
+* 优化组件引用 ([7665bac](https://github.com/godxiaoji/vfox/commit/7665bac14ead1ec50df598a93fe29cc5d78b6595))
+
 ## [1.6.2](https://github.com/godxiaoji/vfox/compare/v1.6.1...v1.6.2) (2020-12-28)
 
 

@@ -7,7 +7,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "jest",
+    "test:unit": "jest --detectOpenHandles",
     "build": "webpack --config=./webpack.config.js",
     "lint": "eslint --fix ./src/**/*.js",
     "semantic-release": "semantic-release"
@@ -41,7 +41,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/runtime-corejs3": "^7.12.5",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/github": "^7.1.1",

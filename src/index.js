@@ -15,14 +15,14 @@ const Vfox = {
       Vue.prototype[`$${apiName}`] = api
     })
 
-    Vue.prototype.$createIntersectionObserver = function createIntersectionObserver(
-      options
-    ) {
-      return Apis.createIntersectionObserver(this.$el, options)
-    }
-    Vue.prototype.$createSelectorQuery = function createSelectorQuery() {
-      return Apis.createSelectorQuery().in(this.$el)
-    }
+    // Vue.prototype.$createIntersectionObserver = function createIntersectionObserver(
+    //   options
+    // ) {
+    //   return Apis.createIntersectionObserver(this.$el, options)
+    // }
+    // Vue.prototype.$createSelectorQuery = function createSelectorQuery() {
+    //   return Apis.createSelectorQuery().in(this.$el)
+    // }
 
     initEvent()
   },

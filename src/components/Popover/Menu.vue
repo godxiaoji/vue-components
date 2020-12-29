@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Popover from './index.vue'
-import Icon from '../Icon'
+import Popover from './Popover.vue'
+import Icon from '../Icon/Icon.vue'
 import { cloneData, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 

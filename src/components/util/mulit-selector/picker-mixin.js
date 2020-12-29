@@ -1,4 +1,4 @@
-import Icon from '../../Icon'
+import Icon from '../../Icon/Icon.vue'
 import { initPickerPopup } from '../../../helpers/popup'
 import formMixin from '../form-mixin'
 import mulitSelectorPropsMixin from './props-mixin'

@@ -23,7 +23,7 @@
 
 <script>
 import Cell from '../Cell'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon.vue'
 import Schema from 'async-validator'
 import { SDKKey } from '../../config'
 import {

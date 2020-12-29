@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Popover from './index.vue'
+import Popover from './Popover.vue'
 import FxButton from '../Button'
 import FxButtonGroup from '../Button/Group.vue'
 import { SDKKey } from '../../config'

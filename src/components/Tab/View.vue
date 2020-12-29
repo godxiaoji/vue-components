@@ -25,7 +25,7 @@
 
 <script>
 import Tab from '../Tab'
-import { Swiper } from '../Swiper'
+import Swiper from '../Swiper/Swiper.vue'
 import { SDKKey } from '../../config'
 
 export default {

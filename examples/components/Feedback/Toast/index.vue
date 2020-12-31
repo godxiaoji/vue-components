@@ -16,7 +16,7 @@
       <fx-cell
         label="成功"
         clickable
-        @click="onShowToast({ title: '提示文本', type: 'success' })"
+        @click="onShowToast({ title: '成功文本', type: 'success' })"
       ></fx-cell>
       <fx-cell
         label="失败"

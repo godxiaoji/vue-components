@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar should render prop title="NavBar" correctly 1`] = `
+<div class="fx-nav-bar">
+  <div class="fx-nav-bar_inner fx-horizontal-hairline">
+    <div class="fx-nav-bar_layout">
+      <div class="fx-nav-bar_left"><button type="button" class="fx-button type--default size--large pattern--borderless shape--square fx-nav-bar_button-group">
+          <!----> <span>按钮</span>
+        </button></div>
+      <div class="fx-nav-bar_title">
+        NavBar
+      </div>
+      <div class="fx-nav-bar_right">
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>
+`;

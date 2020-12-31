@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Drawer should render prop title="Drawer" correctly 1`] = `
+<div class="fx-drawer fx-popup" style="z-index: 2000; display: none;">
+  <div class="fx-mask"></div>
+  <div class="fx-drawer_inner placement--bottom has--header">
+    <div class="fx-drawer_header fx-horizontal-hairline">
+      <div class="fx-drawer_header-inner">
+        <div class="fx-drawer_title">Drawer</div>
+        <!---->
+      </div>
+    </div>
+    <div class="fx-drawer_body"></div>
+  </div>
+</div>
+`;

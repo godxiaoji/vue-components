@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PopDialog should render default correctly 1`] = `
+<div class="fx-popover fx-pop-dialog fx-popup" style="z-index: 2000; display: none;" title="title">
+  <div class="fx-mask"></div>
+  <div class="fx-popover_inner" style="left: 0px; top: 0px; max-width: -16px; max-height: -16px;"><i class="fx-popover_arrow" style="left: 200vw; top: 200vh;"></i>
+    <div class="fx-popover_content">
+      <div class="fx-pop-dialog_body">
+        <div class="fx-popover_text">content</div>
+      </div>
+      <div class="fx-pop-dialog_footer fx-horizontal-hairline">
+        <div class="fx-button-group size--middle pattern--borderless shape--rectangle count--1 fx-pop-dialog_footer-inner"><button type="button" class="fx-button type--default size--middle pattern--borderless shape--rectangle">
+            <!----> <span>
+            取消
+          </span>
+          </button> <button type="button" class="fx-button type--primary size--middle pattern--borderless shape--rectangle">
+            <!----> <span>
+            确定
+          </span>
+          </button></div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`PopDialog should render prop showCancel=false correctly 1`] = `
+<div class="fx-popover fx-pop-dialog fx-popup" style="z-index: 2000; display: none;" title="title">
+  <div class="fx-mask"></div>
+  <div class="fx-popover_inner" style="left: 0px; top: 0px; max-width: -16px; max-height: -16px;"><i class="fx-popover_arrow" style="left: 200vw; top: 200vh;"></i>
+    <div class="fx-popover_content">
+      <div class="fx-pop-dialog_body">
+        <div class="fx-popover_text">content</div>
+      </div>
+      <div class="fx-pop-dialog_footer fx-horizontal-hairline">
+        <div class="fx-button-group size--middle pattern--borderless shape--rectangle count--1 fx-pop-dialog_footer-inner">
+          <!----> <button type="button" class="fx-button type--primary size--middle pattern--borderless shape--rectangle">
+            <!----> <span>
+            确定
+          </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

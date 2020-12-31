@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge should render prop content=1 correctly 1`] = `<div class="fx-badge">content <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</span></div>`;

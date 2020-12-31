@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActionSheet should render default slot correctly 1`] = `
+exports[`ActionSheet should render props set options correctly 1`] = `
 <div class="fx-drawer fx-popup fx-action-sheet" style="z-index: 2000; display: none;">
   <div class="fx-mask"></div>
   <div class="fx-drawer_inner placement--bottom">

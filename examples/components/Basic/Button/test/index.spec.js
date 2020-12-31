@@ -1,12 +1,14 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Button from '../../../../../src/components/Button'
+import Button from '@/components/Button'
 
 describe('Button', () => {
   test('should render default slot correctly', () => {
     const wrapper = mount(Button, {
-      slots: '主要'
+      slots: {
+        default: 'content'
+      }
     })
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -14,9 +16,11 @@ describe('Button', () => {
 
   test('should render add icon correctly', () => {
     const wrapper = mount(Button, {
-      slots: '编辑',
       propsData: {
         icon: 'EditOutlined'
+      },
+      slots: {
+        default: 'content'
       }
     })
 

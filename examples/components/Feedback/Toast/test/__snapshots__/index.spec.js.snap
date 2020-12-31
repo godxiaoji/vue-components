@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast should render default correctly 1`] = `
+<div class="fx-toast fx-popup" style="z-index: 2000; display: none;">
+  <div class="fx-toast_box">
+    <!---->
+    <div class="fx-toast_text">
+      提示文本
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Toast should render prop type="fail" correctly 1`] = `
+<div class="fx-toast fx-popup" style="z-index: 2000; display: none;">
+  <div class="fx-toast_box has--icon"><svg aria-hidden="true" class="fx-icon fx-toast_icon">
+      <use xlink:href="#icon-CloseCircleOutlined"></use>
+    </svg>
+    <div class="fx-toast_text">
+      失败文本
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Toast should render prop type="loading" correctly 1`] = `
+<div class="fx-toast fx-popup" style="z-index: 2000; display: none;">
+  <div class="fx-toast_box has--icon"><svg aria-hidden="true" class="fx-icon spin fx-toast_icon">
+      <use xlink:href="#icon-LoadingOutlined"></use>
+    </svg>
+    <div class="fx-toast_text">
+      加载文本
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Toast should render prop type="success" correctly 1`] = `
+<div class="fx-toast fx-popup" style="z-index: 2000; display: none;">
+  <div class="fx-toast_box has--icon"><svg aria-hidden="true" class="fx-icon fx-toast_icon">
+      <use xlink:href="#icon-CheckCircleOutlined"></use>
+    </svg>
+    <div class="fx-toast_text">
+      成功文本
+    </div>
+  </div>
+</div>
+`;

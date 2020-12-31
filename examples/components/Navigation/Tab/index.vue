@@ -137,7 +137,7 @@ export default {
 @import '../../../../src/components/component.module.scss';
 
 .tab-box {
-  background-color: #f7f7f7;
+  background-color: $background-color;
   border-top: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
 }

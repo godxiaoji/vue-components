@@ -2,7 +2,7 @@
 
 import { mount } from '@vue/test-utils'
 
-import ActionSheet from '../../../../../src/components/ActionSheet'
+import ActionSheet from '@/components/ActionSheet'
 
 const options = [
   {
@@ -17,7 +17,7 @@ const options = [
 ]
 
 describe('ActionSheet', () => {
-  test('should render default slot correctly', () => {
+  test('should render props set options correctly', () => {
     const wrapper = mount(ActionSheet, {
       propsData: {
         options

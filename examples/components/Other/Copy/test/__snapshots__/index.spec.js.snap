@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Copy should render prop text="content" correctly 1`] = `
+<div class="fx-copy"><input type="text" class="fx-copy_input">
+  <div class="fx-copy_box">content</div>
+</div>
+`;

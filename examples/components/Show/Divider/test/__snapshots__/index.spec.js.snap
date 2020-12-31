@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider should render default correctly 1`] = `
+<div class="fx-divider fx-horizontal-hairline">
+  <!---->
+</div>
+`;
+
+exports[`Divider should render prop dashed=true correctly 1`] = `<div class="fx-divider fx-horizontal-hairline has--title border--dashed"><span>title</span></div>`;
+
+exports[`Divider should render prop title="title" correctly 1`] = `<div class="fx-divider fx-horizontal-hairline has--title"><span>title</span></div>`;

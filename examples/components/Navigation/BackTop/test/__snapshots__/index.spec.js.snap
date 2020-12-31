@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackTop should render default correctly 1`] = `
+<div class="fx-back-top" style="transform: translate3d(0px, 0px, 0px); display: none;"><svg aria-hidden="true" class="fx-icon">
+    <use xlink:href="#icon-UpCircleOutlined"></use>
+  </svg></div>
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab should render prop text="content" correctly 1`] = `
+<div class="fx-tab no--scroll">
+  <ul class="fx-tab_list">
+    <li class="fx-tab_item active">
+      <div class="fx-badge fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">空调</span> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</span>
+      </div>
+    </li>
+    <li class="fx-tab_item active-next">
+      <div class="fx-badge fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">冰箱</span> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</span>
+      </div>
+    </li>
+    <li class="fx-tab_item">
+      <div class="fx-badge fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">洗衣机</span> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</span>
+      </div>
+    </li>
+    <li class="fx-tab_item">
+      <div class="fx-badge fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">热水器</span> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</span>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

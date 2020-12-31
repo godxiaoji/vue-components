@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/godxiaoji/vfox/compare/v1.6.3...v1.6.4) (2020-12-31)
+
+
+### Bug Fixes
+
+* 修复样式错误bug ([f4e010e](https://github.com/godxiaoji/vfox/commit/f4e010eedabe71f18acb5b53d8aa42f43e863f46))
+
 ## [1.6.3](https://github.com/godxiaoji/vfox/compare/v1.6.2...v1.6.3) (2020-12-29)
 
 

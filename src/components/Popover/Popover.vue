@@ -1,22 +1,18 @@
 <template>
   <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
+    :class="[prefix + '-popover', prefix + '-popup', { visible: visible2, 'no--mask': !showMask }]"
     :style="{ zIndex }"
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
+      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
       <div :class="[prefix + '-popover_content']">
         <slot>
           <div :class="[prefix + '-popover_text']">{{ content }}</div>
         </slot>
       </div>
     </div>
-    <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
   </div>
 </template>
 
@@ -113,9 +109,7 @@ export default {
       })
     },
     updatePos() {
-      const $target = isElement(this.selector)
-        ? this.selector
-        : document.querySelector(this.selector)
+      const $target = isElement(this.selector) ? this.selector : document.querySelector(this.selector)
 
       if (!$target) {
         return
@@ -139,12 +133,13 @@ export default {
         } else if (pos.l + iw > dw - padding) {
           pos.l -= pos.l + iw - (dw - padding)
         }
+        pos.al = pos.al - pos.l
 
         if (placement === 'bottom') {
-          pos.at = rect.bottom + 3
+          pos.at = -4
           pos.t = rect.bottom + 7
         } else {
-          pos.ab = dh - rect.top + 3
+          pos.ab = -4
           pos.b = dh - rect.top + 7
         }
       } else {
@@ -156,12 +151,13 @@ export default {
         } else if (pos.t + ih > dh - padding) {
           pos.t -= pos.t + ih - (dh - padding)
         }
+        pos.at = pos.at - pos.t
 
         if (placement === 'right') {
-          pos.al = rect.right + 3
+          pos.al = -4
           pos.l = rect.right + 7
         } else {
-          pos.ar = dw - rect.left + 3
+          pos.ar = -4
           pos.r = dw - rect.left + 7
         }
       }
@@ -197,7 +193,6 @@ export default {
     box-shadow: 0 0 8px rgba($color: $black-color, $alpha: 0.1);
     opacity: 0;
     transition: transform 0.2s;
-    overflow: hidden;
     transform: translateZ(0);
   }
 
@@ -209,6 +204,8 @@ export default {
     background-color: #fff;
     border-radius: 4px;
     color: $title-color;
+    transform: translateZ(0);
+    overflow: hidden;
   }
 
   &_text {

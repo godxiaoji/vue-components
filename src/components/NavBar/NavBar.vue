@@ -1,21 +1,11 @@
 <template>
   <div :class="[prefix + '-nav-bar']">
-    <div
-      :class="[
-        prefix + '-nav-bar_inner',
-        prefix + '-horizontal-hairline',
-        { fixed: fixedTop }
-      ]"
-    >
+    <div :class="[prefix + '-nav-bar_inner', prefix + '-horizontal-hairline', { fixed: fixedTop }]">
       <div :class="[prefix + '-nav-bar_layout']">
         <div :class="[prefix + '-nav-bar_left']">
           <slot name="left" v-if="$slots.left"></slot>
           <template v-else-if="leftButtons.length > 0">
-            <fx-button-group
-              :class="[prefix + '-nav-bar_button-group']"
-              :shape="buttonShape"
-              pattern="borderless"
-            >
+            <fx-button-group :class="[prefix + '-nav-bar_button-group']" :shape="buttonShape" pattern="borderless">
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 :type="item.type || 'default'"
@@ -28,11 +18,7 @@
             </fx-button-group>
           </template>
           <template v-else>
-            <fx-button-group
-              :class="[prefix + '-nav-bar_button-group']"
-              :shape="buttonShape"
-              pattern="borderless"
-            >
+            <fx-button-group :class="[prefix + '-nav-bar_button-group']" :shape="buttonShape" pattern="borderless">
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 type="default"
@@ -52,11 +38,7 @@
             </fx-button-group>
           </template>
         </div>
-        <div
-          :class="[prefix + '-nav-bar_title']"
-          @mousedown="onTitleStart"
-          @touchstart="onTitleStart"
-        >
+        <div :class="[prefix + '-nav-bar_title']" @mousedown="onTitleStart" @touchstart="onTitleStart">
           {{ title }}
         </div>
         <div :class="[prefix + '-nav-bar_right']">
@@ -86,6 +68,8 @@
 </template>
 
 <script>
+import FxButton from '../Button'
+import FxButtonGroup from '../Button'
 import { SDKKey } from '../../config'
 import { isArray, isString } from '../../helpers/util'
 
@@ -109,7 +93,7 @@ function validateButtons(val) {
 
 export default {
   name: SDKKey + '-nav-bar',
-  components: {},
+  components: { FxButton, FxButtonGroup },
   props: {
     // 标题
     title: {

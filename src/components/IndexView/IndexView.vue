@@ -236,10 +236,11 @@ export default {
     li {
       padding: 0 0 0 10px;
       text-align: center;
-      height: 14px;
-      line-height: 14px;
+      height: 18px;
+      line-height: 18px;
       font-size: 10px;
       color: $font3-color;
+      font-weight: 500;
       cursor: pointer;
 
       &.active {

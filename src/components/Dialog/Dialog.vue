@@ -21,23 +21,11 @@
       <slot v-else></slot>
     </div>
     <div :class="[prefix + '-dialog_footer', prefix + '-horizontal-hairline']">
-      <fx-button-group
-        :class="[prefix + '-dialog_footer-inner']"
-        pattern="borderless"
-      >
-        <fx-button
-          v-if="showCancel"
-          :class="[prefix + '-dialog_button']"
-          type="default"
-          @click="onCancelClick"
-        >
+      <fx-button-group :class="[prefix + '-dialog_footer-inner']" pattern="borderless">
+        <fx-button v-if="showCancel" :class="[prefix + '-dialog_button']" type="default" @click="onCancelClick">
           {{ cancelText }}
         </fx-button>
-        <fx-button
-          :class="[prefix + '-dialog_button']"
-          type="primary"
-          @click="onConfirmClick"
-        >
+        <fx-button :class="[prefix + '-dialog_button']" type="primary" @click="onConfirmClick">
           {{ confirmText }}
         </fx-button>
       </fx-button-group>
@@ -46,14 +34,15 @@
 </template>
 
 <script>
-import FxButton from '../Button'
-import Modal from '../Modal'
+import FxButton from '../Button/Button.vue'
+import FxButtonGroup from '../Button/Group.vue'
+import Modal from '../Modal/Modal.vue'
 import { SDKKey } from '../../config'
 import popupExtendMixin from '../util/popup-extend-mixin'
 
 export default {
   name: SDKKey + '-dialog',
-  components: { FxButton, Modal },
+  components: { FxButton, FxButtonGroup, Modal },
   mixins: [popupExtendMixin],
   props: {
     title: {

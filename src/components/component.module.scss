@@ -61,9 +61,8 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
-    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
 input,
@@ -148,6 +147,11 @@ textarea {
     border-color: $divider-color;
     border-width: 1px 0 0 0;
     border-style: solid;
+    transform-origin: 0 0;
+  }
+
+  &::after {
+    transform-origin: 0 100%;
   }
 }
 
@@ -157,6 +161,10 @@ textarea {
     height: 100%;
     width: 1px;
     border-width: 0 1px 0 0;
+  }
+
+  &::after {
+    transform-origin: 100% 0;
   }
 }
 

@@ -11,6 +11,8 @@
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
+      
+    <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
       <div :class="[prefix + '-popover_content']">
         <ul
           :class="[prefix + '-select_list', prefix + '-pop-menu_list']"
@@ -39,7 +41,6 @@
         </ul>
       </div>
     </div>
-    <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
   </div>
 </template>
 

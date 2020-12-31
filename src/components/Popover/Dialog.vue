@@ -11,21 +11,13 @@
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
+      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
       <div :class="[prefix + '-popover_content']">
         <div :class="[prefix + '-pop-dialog_body']">
           <div :class="[prefix + '-popover_text']">{{ content }}</div>
         </div>
-        <div
-          :class="[
-            prefix + '-pop-dialog_footer',
-            prefix + '-horizontal-hairline'
-          ]"
-        >
-          <fx-button-group
-            :class="[prefix + '-pop-dialog_footer-inner']"
-            pattern="borderless"
-            size="middle"
-          >
+        <div :class="[prefix + '-pop-dialog_footer', prefix + '-horizontal-hairline']">
+          <fx-button-group :class="[prefix + '-pop-dialog_footer-inner']" pattern="borderless" size="middle">
             <fx-button v-if="showCancel" type="default" @click="onCancelClick">
               {{ cancelText }}
             </fx-button>
@@ -36,13 +28,12 @@
         </div>
       </div>
     </div>
-    <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
   </div>
 </template>
 
 <script>
 import Popover from './Popover.vue'
-import FxButton from '../Button'
+import FxButton from '../Button/Button.vue'
 import FxButtonGroup from '../Button/Group.vue'
 import { SDKKey } from '../../config'
 

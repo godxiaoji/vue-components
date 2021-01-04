@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cascader should render prop set options correctly 1`] = `
+<div class="fx-cascader">
+  <div class="fx-input">
+    <div class="fx-input_input placeholder">
+
+    </div> <svg aria-hidden="true" class="fx-icon fx-input_arrow">
+      <use xlink:href="#icon-RightOutlined"></use>
+    </svg> <input type="text" readonly="readonly" name="" class="fx-input_cover" value="">
+  </div>
+</div>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render default correctly 1`] = `
+<label class="fx-input">
+  <!----> <input name="" type="text" inputmode="text" placeholder="" maxlength="140" class="fx-input_input" value="">
+  <!---->
+  <!---->
+</label>
+`;

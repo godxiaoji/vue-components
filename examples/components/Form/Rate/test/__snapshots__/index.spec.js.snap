@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rate should render default correctly 1`] = `
+<div class="fx-rate"><input name="" type="hidden" value="0">
+  <div class="fx-rate_item">
+    <div class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarOutlined"></use>
+      </svg></div>
+    <div class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarFilled"></use>
+      </svg></div> <i class="fx-rate_half"></i>
+  </div>
+  <div class="fx-rate_item">
+    <div class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarOutlined"></use>
+      </svg></div>
+    <div class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarFilled"></use>
+      </svg></div> <i class="fx-rate_half"></i>
+  </div>
+  <div class="fx-rate_item">
+    <div class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarOutlined"></use>
+      </svg></div>
+    <div class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarFilled"></use>
+      </svg></div> <i class="fx-rate_half"></i>
+  </div>
+  <div class="fx-rate_item">
+    <div class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarOutlined"></use>
+      </svg></div>
+    <div class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarFilled"></use>
+      </svg></div> <i class="fx-rate_half"></i>
+  </div>
+  <div class="fx-rate_item">
+    <div class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarOutlined"></use>
+      </svg></div>
+    <div class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+        <use xlink:href="#icon-StarFilled"></use>
+      </svg></div> <i class="fx-rate_half"></i>
+  </div>
+</div>
+`;

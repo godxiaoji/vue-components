@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid Col should render default slot correctly 1`] = `<div class="fx-col fx-col-24">content</div>`;
+
+exports[`Grid Row & Col should render default correctly 1`] = `
+<div class="fx-row">
+  <div class="fx-col fx-col-24">content</div>
+</div>
+`;
+
+exports[`Grid Row should render default correctly 1`] = `<div class="fx-row"></div>`;

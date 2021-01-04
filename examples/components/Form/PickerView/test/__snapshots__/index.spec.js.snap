@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PickerView should render prop set options correctly 1`] = `
+<div class="fx-picker-view">
+  <div class="fx-picker-view_cols">
+    <div class="fx-picker-view_col">
+      <ul data-index="0" class="fx-picker-view_list">
+        <li selected="selected" data-index="0" class="fx-picker-view_item selected">
+          空调
+        </li>
+        <li data-index="1" class="fx-picker-view_item">
+          冰箱
+        </li>
+        <li data-index="2" class="fx-picker-view_item">
+          洗衣机
+        </li>
+        <li data-index="3" class="fx-picker-view_item">
+          厨卫大电
+        </li>
+        <li data-index="4" class="fx-picker-view_item">
+          厨卫小电
+        </li>
+        <li data-index="5" class="fx-picker-view_item">
+          生活电器
+        </li>
+      </ul>
+    </div>
+    <div class="fx-picker-view_col">
+      <ul data-index="1" class="fx-picker-view_list">
+        <li selected="selected" data-index="0" class="fx-picker-view_item selected">
+          家用空调
+        </li>
+        <li data-index="1" class="fx-picker-view_item">
+          厨房空调
+        </li>
+      </ul>
+    </div>
+    <div class="fx-picker-view_col">
+      <ul data-index="2" class="fx-picker-view_list">
+        <li selected="selected" data-index="0" class="fx-picker-view_item selected">
+          挂式空调
+        </li>
+        <li data-index="1" class="fx-picker-view_item">
+          柜式空调
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

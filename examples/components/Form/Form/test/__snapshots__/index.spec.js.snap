@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form Form should render default correctly 1`] = `<form class="fx-form"></form>`;
+
+exports[`Form FormItem should render default correctly 1`] = `
+<div class="fx-form-item">
+  <div class="fx-cell fx-horizontal-hairline">
+    <div class="fx-cell_cover"></div>
+    <div class="fx-cell_inner">
+      <!---->
+      <div class="fx-cell_label">
+
+        <!---->
+      </div>
+      <div class="fx-cell_content">
+        <div class="fx-input">
+          <div class="fx-input_input placeholder">
+
+          </div>
+          <div class="fx-input_append"><svg aria-hidden="true" class="fx-icon fx-form-item_icon">
+              <use xlink:href="#icon-RightOutlined"></use>
+            </svg></div> <input type="hidden" name="test">
+        </div>
+      </div>
+      <!---->
+      <!---->
+    </div>
+  </div>
+</div>
+`;

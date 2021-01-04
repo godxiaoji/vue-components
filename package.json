@@ -81,7 +81,6 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "sideEffects": false,
   "browserslist": [
     "> 1%",
     "not ie <= 11",

@@ -1,3 +1,10 @@
+## [1.6.5](https://github.com/godxiaoji/vfox/compare/v1.6.4...v1.6.5) (2021-01-04)
+
+
+### Bug Fixes
+
+* remove sideEffects ([cb9dff7](https://github.com/godxiaoji/vfox/commit/cb9dff78cc4c9116ad4e29f42351ea05a430fc82))
+
 ## [1.6.4](https://github.com/godxiaoji/vfox/compare/v1.6.3...v1.6.4) (2020-12-31)
 
 

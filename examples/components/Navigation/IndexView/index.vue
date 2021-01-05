@@ -4,7 +4,6 @@
       <!-- <div class="scroll-tab-header">占位头部</div> -->
       <fx-index-view
         class="scroll-tab-boxs"
-        v-model="activeIndex"
         :stickyOffsetTop="offsetTop"
         @change="onChange"
       >
@@ -26,7 +25,6 @@ export default {
   props: {},
   data() {
     return {
-      activeIndex: 0,
       offsetTop: 52,
       indexList: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     }

@@ -16,7 +16,6 @@ import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-group',
-  components: {},
   props: {
     title: {
       type: String,
@@ -29,15 +28,7 @@ export default {
   },
   data() {
     return { prefix: SDKKey }
-  },
-  computed: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

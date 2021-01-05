@@ -37,6 +37,10 @@ function show(object, apiName, getComp) {
         propsData.initialMode = propsData.mode
         delete propsData.mode
       }
+      if (propsData.value) {
+        propsData.modelValue = propsData.value
+        delete propsData.value
+      }
 
       const Comp = Vue.extend(getComp(done))
 

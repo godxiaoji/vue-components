@@ -2,7 +2,7 @@
   <div>
     <fx-group title="基础用法">
       <fx-input type="text" placeholder="请输入文本" />
-      <fx-input type="text" value="禁用" :disabled="true" />
+      <fx-input type="text" modelValue="禁用" :disabled="true" />
     </fx-group>
     <fx-group title="与 Cell 组合">
       <fx-cell label="文本">
@@ -34,28 +34,18 @@
     </fx-group>
     <fx-group title="其他">
       <fx-cell label="只读">
-        <fx-input type="text" value="只读文本" :readonly="true" />
+        <fx-input type="text" modelValue="只读文本" :readonly="true" />
       </fx-cell>
       <fx-cell label="禁用">
-        <fx-input type="text" value="只读文本" :disabled="true" />
+        <fx-input type="text" modelValue="只读文本" :disabled="true" />
       </fx-cell>
       <fx-cell label="可清除">
-        <fx-input
-          type="text"
-          placeholder="请输入文本"
-          value="文本内容"
-          :show-clear="true"
-        />
+        <fx-input type="text" placeholder="请输入文本" modelValue="文本内容" :show-clear="true" />
       </fx-cell>
     </fx-group>
     <fx-group title="input 事件监听">
       <fx-cell label="文本">
-        <fx-input
-          type="text"
-          placeholder="请输入文本"
-          :show-clear="true"
-          @input="onInput"
-        />
+        <fx-input type="text" placeholder="请输入文本" :show-clear="true" v-model="value" @input="onInput" />
       </fx-cell>
     </fx-group>
   </div>
@@ -66,7 +56,7 @@ export default {
   name: 'Input',
   props: {},
   data() {
-    return {}
+    return { value: '' }
   },
   methods: {
     onInput({ value }) {
@@ -75,5 +65,3 @@ export default {
   }
 }
 </script>
-
-

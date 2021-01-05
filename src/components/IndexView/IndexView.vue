@@ -16,7 +16,7 @@
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
-        v-model="activeIndex"
+        :activeIndex.sync="activeIndex"
         @reset-items="onResetItems"
         @change="onChange"
       >
@@ -34,14 +34,7 @@ import { sizeValidator } from '../../helpers/validator'
 import { touchEvent } from '../../helpers/events'
 import { rangeInteger } from '../../helpers/util'
 
-const {
-  touchstart,
-  touchmove,
-  touchend,
-  addListeners,
-  removeListeners,
-  getTouch
-} = touchEvent
+const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
 
 export default {
   name: SDKKey + '-index-view',
@@ -61,17 +54,11 @@ export default {
       indexList: []
     }
   },
-  computed: {},
-  watch: {},
-  created() {},
-  ready() {},
   mounted() {
     this.resetContainer(document)
 
     addListeners(this.$refs.list, this)
   },
-  updated() {},
-  attached() {},
   destroyed() {},
   beforeDestroy() {
     removeListeners(this.$refs.list, this)
@@ -144,11 +131,9 @@ export default {
         clearTimeout(this.changeTimer)
         this.coords.isChange = true
 
-        this.activeIndex = rangeInteger(
-          current + offsetCount,
-          0,
-          this.indexList.length - 1
-        )
+        this.changeTimer = this.changeTimer = setTimeout(() => {
+          this.activeIndex = rangeInteger(current + offsetCount, 0, this.indexList.length - 1)
+        }, 100)
       }
 
       e.stopPropagation()
@@ -190,18 +175,18 @@ export default {
 
     /**
      * 滚动到第index个
-     * @param {Number} index
+     * @param {Object} options
      */
-    scrollToIndex(index) {
-      this.$refs.body.scrollToIndex(index)
+    scrollToIndex(options) {
+      this.$refs.body.scrollToIndex(options)
     },
 
     /**
      * 滚到到指定位置
-     * @param {Number} scrollTop
+     * @param {Object} options
      */
-    scrollTo(scrollTop) {
-      this.$refs.body.scrollTo(scrollTop)
+    scrollToOffset(options) {
+      this.$refs.body.scrollToOffset(options)
     }
   }
 }

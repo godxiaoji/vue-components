@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { inArray, isArray, isString, isStringArray } from '../../helpers/util'
 import { touchEvent } from '../../helpers/events'
@@ -203,7 +203,6 @@ export default {
       }
     }
   },
-  ready() {},
   mounted() {
     this._isToLowerOrUpperY = SCROLL_STATE_UPPER
     this._isToLowerOrUpperX = SCROLL_STATE_UPPER
@@ -216,8 +215,6 @@ export default {
     this.updateScroll()
     this.scrollIntoIdView(this.scrollIntoView)
   },
-  updated() {},
-  attached() {},
   beforeDestroy() {
     removeListeners(this.$el, this)
   },

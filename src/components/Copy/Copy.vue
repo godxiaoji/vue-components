@@ -10,7 +10,6 @@ import { SDKKey } from '../../config'
 
 export default {
   name: SDKKey + '-copy',
-  components: {},
   props: {
     // 需要复制的文本
     text: {
@@ -21,11 +20,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
-  computed: {},
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
   methods: {
     /**
      * 复制

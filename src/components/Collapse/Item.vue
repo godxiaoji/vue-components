@@ -65,7 +65,6 @@ export default {
       contentHeight: 0
     }
   },
-  computed: {},
   created() {
     this.appCollapse && this.appCollapse.addChild(this)
   },

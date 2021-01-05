@@ -31,7 +31,6 @@ export default {
 
     this.update()
   },
-  beforeDestroy() {},
   destroyed() {
     this.update()
   },

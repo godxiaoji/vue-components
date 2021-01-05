@@ -1,16 +1,8 @@
 <template>
   <div :class="[prefix + '-rate', { disabled, readonly }]">
-    <input
-      :name="formName"
-      type="hidden"
-      :value="formValue"
-      :disabled="disabled"
-    />
+    <input :name="formName" type="hidden" :value="formValue" :disabled="disabled" />
     <div
-      :class="[
-        prefix + '-rate_item',
-        { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }
-      ]"
+      :class="[prefix + '-rate_item', { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }]"
       v-for="num in max"
       :key="num"
       @click="onItemClick(num)"
@@ -19,7 +11,7 @@
         <icon :class-name="defaultIcon" />
       </div>
       <div :class="[prefix + '-rate_active-icon']">
-        <icon :class-name="activeIcon" :style="iconStyles"/>
+        <icon :class-name="activeIcon" :style="iconStyles" />
       </div>
       <i :class="[prefix + '-rate_half']" @click.stop="onHalfClick(num)"></i>
     </div>
@@ -27,7 +19,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { inArray, capitalize, isInteger, isNumeric } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
@@ -58,7 +50,7 @@ export default {
       },
       default: ALLOW_ICONS[0]
     },
-    value: {
+    modelValue: {
       validator(val) {
         return isIntegerOrHalf(val)
       },
@@ -95,22 +87,14 @@ export default {
       defaultValue: 0
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   computed: {
     defaultIcon() {
-      const icon = inArray(this.pattern, ALLOW_ICONS)
-        ? this.pattern
-        : ALLOW_ICONS[0]
+      const icon = inArray(this.pattern, ALLOW_ICONS) ? this.pattern : ALLOW_ICONS[0]
 
       return capitalize(icon) + 'Outlined'
     },
     activeIcon() {
-      const icon = inArray(this.pattern, ALLOW_ICONS)
-        ? this.pattern
-        : ALLOW_ICONS[0]
+      const icon = inArray(this.pattern, ALLOW_ICONS) ? this.pattern : ALLOW_ICONS[0]
 
       return capitalize(icon) + 'Filled'
     },
@@ -129,7 +113,7 @@ export default {
     }
   },
   watch: {
-    value() {
+    modelValue() {
       this.updateValue()
     },
     max(val) {
@@ -143,15 +127,12 @@ export default {
 
     this.defaultValue = this.formValue
   },
-  ready() {},
   mounted() {
     const inputEl = this.getInputEl()
 
     inputEl._app_component = this
     inputEl._app_type = 'rate'
   },
-  updated() {},
-  attached() {},
   methods: {
     onHalfClick(num) {
       if (this.readonly || this.disabled) {
@@ -197,11 +178,11 @@ export default {
     },
 
     updateValue() {
-      if (!isIntegerOrHalf(this.value)) {
+      if (!isIntegerOrHalf(this.modelValue)) {
         return
       }
 
-      const value = parseFloat(this.value)
+      const value = parseFloat(this.modelValue)
 
       if (value === this.formValue) {
         return

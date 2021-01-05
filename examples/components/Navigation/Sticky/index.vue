@@ -3,7 +3,7 @@
     <fx-group title="Sticky View">
       <fx-sticky-view
         class="sticky-box"
-        v-model="activeIndex"
+        :activeIndex.sync="activeIndex"
         @change="onChange"
       >
         <fx-sticky-view-item name="Sticky 1">

@@ -4,8 +4,13 @@
       <div :class="[prefix + '-nav-bar_layout']">
         <div :class="[prefix + '-nav-bar_left']">
           <slot name="left" v-if="$slots.left"></slot>
-          <template v-else-if="leftButtons.length > 0">
-            <fx-button-group :class="[prefix + '-nav-bar_button-group']" :shape="buttonShape" pattern="borderless">
+          <fx-button-group
+            v-else-if="leftButtons.length > 0 || showBack || showHome"
+            :class="[prefix + '-nav-bar_button-group']"
+            :shape="buttonShape"
+            pattern="borderless"
+          >
+            <template v-if="leftButtons.length > 0">
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 :type="item.type || 'default'"
@@ -15,10 +20,8 @@
                 @click="onLeftIconClick(item, index)"
                 >{{ item.text }}</fx-button
               >
-            </fx-button-group>
-          </template>
-          <template v-else>
-            <fx-button-group :class="[prefix + '-nav-bar_button-group']" :shape="buttonShape" pattern="borderless">
+            </template>
+            <template v-else>
               <fx-button
                 :class="[prefix + '-nav-bar_button']"
                 type="default"
@@ -35,8 +38,8 @@
                 @click="onBackHome"
                 >首页</fx-button
               >
-            </fx-button-group>
-          </template>
+            </template>
+          </fx-button-group>
         </div>
         <div :class="[prefix + '-nav-bar_title']" @mousedown="onTitleStart" @touchstart="onTitleStart">
           {{ title }}
@@ -69,7 +72,7 @@
 
 <script>
 import FxButton from '../Button'
-import FxButtonGroup from '../Button'
+import FxButtonGroup from '../ButtonGroup'
 import { SDKKey } from '../../config'
 import { isArray, isString } from '../../helpers/util'
 
@@ -139,15 +142,11 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
   computed: {
     buttonShape() {
       return this.iconOnly ? 'square' : 'rectangle'
     }
   },
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
   methods: {
     onBack() {
       this.$emit('back-click', {})

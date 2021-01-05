@@ -58,21 +58,13 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
-import { inArray, isString, isNumber } from '../../helpers/util'
+import Icon from '../Icon'
+import { inArray, isStringNumberMix } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 import { formatInputDigit, formatInputNumber } from '../../helpers/input'
 
-const TYPE_NAMES = [
-  'text',
-  'number',
-  'digit',
-  'tel',
-  'password',
-  'search',
-  'textarea'
-]
+const TYPE_NAMES = ['text', 'number', 'digit', 'tel', 'password', 'search', 'textarea']
 
 export default {
   name: SDKKey + '-input',
@@ -84,9 +76,7 @@ export default {
       default: ''
     },
     maxlength: {
-      validator(value) {
-        return isString(value) || isNumber(value)
-      },
+      type: Number,
       default: 140
     },
     placeholder: {
@@ -97,10 +87,8 @@ export default {
       type: String,
       default: 'text'
     },
-    value: {
-      validator(value) {
-        return isString(value) || isNumber(value)
-      },
+    modelValue: {
+      validator: isStringNumberMix,
       default: null
     },
     disabled: {
@@ -177,11 +165,11 @@ export default {
     }
   },
   model: {
-    prop: 'value',
+    prop: 'modelValue',
     event: '_input'
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (val != this.formValue) {
         this.updateValue(val)
       }
@@ -196,8 +184,6 @@ export default {
       }
     }
   },
-  created() {},
-  ready() {},
   mounted() {
     if (this.$scopedSlots.prepend) {
       this.hasPrepend = true
@@ -206,7 +192,7 @@ export default {
       this.hasAppend = true
     }
 
-    this.updateValue(this.value == null ? '' : this.value)
+    this.updateValue(this.modelValue == null ? '' : this.modelValue)
 
     const $input = this.getInputEl()
 
@@ -218,8 +204,6 @@ export default {
 
     $input._app_component = this
   },
-  updated() {},
-  attached() {},
   methods: {
     onCompositionStart() {
       this.isComposition = true
@@ -256,7 +240,7 @@ export default {
         isChange = true
       }
 
-      if (value != this.value) {
+      if (value != this.modelValue) {
         this.$emit('_input', this.formValue)
       }
 
@@ -299,10 +283,7 @@ export default {
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
     getInputEl() {
-      return (
-        (this.$el && this.$el.querySelector('input')) ||
-        this.$el.querySelector('textarea')
-      )
+      return (this.$el && this.$el.querySelector('input')) || this.$el.querySelector('textarea')
     },
     reset() {
       return this._reset(this.getInputEl().value)

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import popupMixin from '../util/popup-mixin'
 import { isUndefined } from '../../helpers/util'
@@ -67,7 +67,6 @@ export default {
   data() {
     return { prefix: SDKKey, forbidScroll: false }
   },
-  watch: {},
   computed: {
     iconName() {
       if (this.icon) {
@@ -79,7 +78,6 @@ export default {
       return null
     }
   },
-  created() {},
   beforeDestroy() {
     this.removeAutoClose()
   },

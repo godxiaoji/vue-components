@@ -10,7 +10,7 @@
   >
     <div :class="[prefix + '-mask']"></div>
     <swiper
-      :active-index.sync="activeIndex"
+      :activeIndex.sync="activeIndex"
       @click="onPreviewClick"
       @change="onSwiperChange"
     >
@@ -73,7 +73,6 @@ export default {
   data() {
     return { prefix: SDKKey, activeIndex: 0, images: [], visible2: false }
   },
-  computed: {},
   watch: {
     urls: {
       immediate: true,
@@ -115,7 +114,6 @@ export default {
   created() {
     this.updateCurrent(this.current)
   },
-  beforeDestroy() {},
   methods: {
     updateCurrent(val) {
       let hasUrl = false

@@ -1,25 +1,16 @@
 <template>
-  <label
-    :class="[prefix + '-checkbox', prefix + '-horizontal-hairline']"
-    :disabled="disabled"
-  >
+  <label :class="[prefix + '-checkbox', prefix + '-horizontal-hairline']" :disabled="disabled">
     <input
       :class="[prefix + '-checkbox_input']"
       type="checkbox"
       :name="formName"
-      :value="valueString"
+      :value="value"
       :disabled="disabled"
       @change="onChange"
     />
     <div :class="[prefix + '-checkbox_box']">
-      <icon
-        :class="[prefix + '-checkbox_icon']"
-        class-name="BorderOutlined"
-      />
-      <icon
-        :class="[prefix + '-checkbox_checked-icon']"
-        class-name="CheckSquareFilled"
-      />
+      <icon :class="[prefix + '-checkbox_icon']" class-name="BorderOutlined" />
+      <icon :class="[prefix + '-checkbox_checked-icon']" class-name="CheckSquareFilled" />
       <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -28,9 +19,9 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
-import { inArray, isString, isNumber } from '../../helpers/util'
+import { inArray, isStringNumberMix } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-checkbox',
@@ -42,9 +33,7 @@ export default {
   },
   props: {
     value: {
-      validator(val) {
-        return isString(val) || isNumber(val)
-      },
+      validator: isStringNumberMix,
       default: ''
     },
     checked: {
@@ -75,9 +64,6 @@ export default {
       }
 
       return this.name || ''
-    },
-    valueString() {
-      return this.value.toString()
     }
   },
   model: {
@@ -101,13 +87,12 @@ export default {
   created() {
     this.appCheckboxGroup && this.appCheckboxGroup.addChild(this)
   },
-  ready() {},
   mounted() {
     const $input = this.getInputEl()
 
     let checked
     if (this.appCheckboxGroup) {
-      checked = inArray(this.value, this.appCheckboxGroup.value)
+      checked = inArray(this.value, this.appCheckboxGroup.modelValue)
     } else {
       checked = !!this.checked
     }
@@ -120,8 +105,6 @@ export default {
     $input._app_component = this.appCheckboxGroup || this
     $input._app_type = 'checkbox'
   },
-  updated() {},
-  attached() {},
   beforeDestroy() {
     this.appCheckboxGroup && this.appCheckboxGroup.removeChild(this)
   },
@@ -192,14 +175,10 @@ export default {
     top: 0;
     opacity: 0;
 
-    &:not([disabled]):checked
-      + .#{$prefix}-checkbox_box
-      .#{$prefix}-checkbox_icon {
+    &:not([disabled]):checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_icon {
       display: none;
     }
-    &:not([disabled]):checked
-      + .#{$prefix}-checkbox_box
-      .#{$prefix}-checkbox_checked-icon {
+    &:not([disabled]):checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_checked-icon {
       display: block;
     }
   }

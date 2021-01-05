@@ -61,12 +61,6 @@ export default {
       return null
     }
   },
-  watch: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   methods: {
     onClick(e) {
       this.$emit(e.type, e)

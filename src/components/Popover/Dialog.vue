@@ -60,7 +60,6 @@ export default {
       default: '确定'
     }
   },
-  computed: {},
   methods: {
     onConfirmClick() {
       this.$emit('confirm', {})

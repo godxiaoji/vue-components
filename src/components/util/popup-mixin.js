@@ -18,7 +18,6 @@ export default {
       default: true
     }
   },
-  computed: {},
   data() {
     return {
       isShow: false,

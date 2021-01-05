@@ -21,7 +21,7 @@
     </nav-bar>
     <picker-view
       ref="view"
-      :value="value"
+      :modelValue="modelValue"
       :initial-mode="initialMode"
       :initial-separator="initialSeparator"
       :format-string="formatString"
@@ -58,7 +58,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         this.updateValue(val)
       }
@@ -72,7 +72,7 @@ export default {
     }
   },
   model: {
-    prop: 'value',
+    prop: 'modelValue',
     event: '_change'
   },
   methods: {

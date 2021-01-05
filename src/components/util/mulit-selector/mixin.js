@@ -36,7 +36,7 @@ export default {
     }
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.updateValue(val)
     },
     options() {
@@ -47,7 +47,7 @@ export default {
     }
   },
   model: {
-    prop: 'value',
+    prop: 'modelValue',
     event: '_change'
   },
   created() {
@@ -58,7 +58,7 @@ export default {
     // 初始化分隔符
     this.separator = this.initialSeparator
     // 初始化value
-    this.updateOptions(this.value)
+    this.updateOptions(this.modelValue)
   },
   methods: {
     updateValue(val, forceUpdate = false) {

@@ -46,7 +46,7 @@
 
 <script>
 import Popover from './Popover.vue'
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { cloneData, isArray, isObject } from '../../helpers/util'
 import { SDKKey } from '../../config'
 

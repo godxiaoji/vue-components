@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import CalendarPopup from './Popup.vue'
 import { SDKKey } from '../../config'
 import { initPickerPopup } from '../../helpers/popup'
 import formMixin from '../util/form-mixin'
-import propsMixin from './props-mixin'
+import mixin from './mixin'
 import {
   cloneDetail,
   getDefaultDetail,
@@ -51,7 +51,7 @@ import dayjs from 'dayjs'
 export default {
   name: SDKKey + '-calendar',
   components: { Icon },
-  mixins: [propsMixin, formMixin],
+  mixins: [mixin, formMixin],
   props: {
     disabled: {
       type: Boolean,
@@ -67,11 +67,11 @@ export default {
     },
     popupShowConfirm: {
       type: Boolean,
-      value: false
+      default: false
     },
     popupShowClose: {
       type: Boolean,
-      value: false
+      default: false
     }
   },
   data() {
@@ -85,7 +85,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         if (!isUndefined(this._changeValue) && this._changeValue == val) {
           //
@@ -97,12 +97,8 @@ export default {
       }
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   created() {
-    this.updateValue(this.value)
+    this.updateValue(this.modelValue)
     this.defaultDetail = cloneDetail(this.detail)
   },
   mounted() {
@@ -127,7 +123,7 @@ export default {
         },
         [
           { propName: 'initialType', parentName: 'initialType', watch: false },
-          { propName: 'value', parentName: 'value', watch: false },
+          { propName: 'modelValue', parentName: 'modelValue', watch: false },
           { propName: 'minDate', parentName: 'minDate', watch: true },
           { propName: 'maxDate', parentName: 'maxDate', watch: true },
           { propName: 'allowSameDay', parentName: 'allowSameDay', watch: true },

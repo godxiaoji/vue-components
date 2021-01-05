@@ -5,11 +5,7 @@
 </template>
 
 <script>
-import {
-  isStringNumberMixArray,
-  cloneData,
-  isSameArray
-} from '../../helpers/util'
+import { isStringNumberMixArray, cloneData, isSameArray, isArray, inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 import groupMixin from '../util/group-mixin'
@@ -27,9 +23,9 @@ export default {
       type: String,
       default: ''
     },
-    value: {
-      validator(value) {
-        return isStringNumberMixArray(value)
+    modelValue: {
+      validator(val) {
+        return isStringNumberMixArray(val)
       },
       default() {
         return []
@@ -47,17 +43,24 @@ export default {
       formValue: []
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
+  watch: {
+    modelValue: {
+      handler(val) {
+        if (isArray(val) && !isSameArray(val, this.formValue)) {
+          let formValue = []
+
+          this.childrenForEach(child => {
+            const checked = inArray(child.value, val)
+            child.setChecked(checked)
+
+            checked && formValue.push(child.value)
+          })
+
+          this.formValue = formValue
+        }
+      }
+    }
   },
-  computed: {},
-  watch: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   methods: {
     updateValue() {
       const value = this.formValue.slice(0, 0)
@@ -70,7 +73,7 @@ export default {
 
       this.formValue = value
 
-      if (!isSameArray(value, this.value)) {
+      if (!isSameArray(value, this.modelValue)) {
         this.$emit('_change', this.hookFormValue())
       }
     },

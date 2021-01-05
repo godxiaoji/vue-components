@@ -14,7 +14,6 @@ export default {
       default: null
     }
   },
-  props: {},
   data() {
     return { prefix: SDKKey }
   },

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { inArray, capitalize } from '../../helpers/util'
 
@@ -88,14 +88,11 @@ export default {
       )}Outlined`
     }
   },
-  ready() {},
   mounted() {
     if (this.$scopedSlots.default) {
       this.hasContent = true
     }
   },
-  updated() {},
-  attached() {},
   methods: {
     onClick(e) {
       if (!this.disabled) {

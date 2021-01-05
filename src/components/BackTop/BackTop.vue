@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { pageScrollTo } from '../../apis/Scroll'
 import { addScrollEvent, removeScrollEvent } from '../../helpers/events'
@@ -53,16 +53,11 @@ export default {
       }
     }
   },
-  watch: {},
   created() {
     this.scrollTop = document.documentElement.scrollTop
 
     addScrollEvent(this.onScroll)
   },
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   beforeDestroy() {
     removeScrollEvent(this.onScroll)
   },

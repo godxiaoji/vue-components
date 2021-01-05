@@ -1,14 +1,14 @@
 # Switch 开关选择器
 
-- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项)  使用。
+- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项) 使用。
 
 ## Props
 
-| 属性              | 类型    | 默认值 | 必填 | 说明                            |
-| ----------------- | ------- | ------ | ---- | ------------------------------- |
-| name              | string  |        | 否   | [Form](./Form.md) 的标识 |
-| disabled          | boolean | false  | 否   | 是否禁用                        |
-| value / v-model | boolean | false  | 否   | 是否开启                        |
+| 属性     | 类型    | 默认值 | 必填 | 说明                     |
+| -------- | ------- | ------ | ---- | ------------------------ |
+| name     | string  |        | 否   | [Form](./Form.md) 的标识 |
+| disabled | boolean | false  | 否   | 是否禁用                 |
+| v-model  | boolean | false  | 否   | 是否开启                 |
 
 ## CSS
 

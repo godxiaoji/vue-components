@@ -29,16 +29,7 @@ export default {
     return {
       prefix: SDKKey
     }
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

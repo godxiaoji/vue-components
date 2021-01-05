@@ -157,6 +157,10 @@ export function isEmptyObject(object) {
   return !has
 }
 
+export function isStringNumberMix(value) {
+  return isString(value) || isNumber(value)
+}
+
 /**
  * 是否Number[]
  * @param {any} object 值

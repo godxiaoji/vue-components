@@ -1,17 +1,7 @@
 <template>
   <label :class="[prefix + '-switch']">
-    <input
-      :class="[prefix + '-switch_checkbox']"
-      type="checkbox"
-      :disabled="disabled"
-      @change="onChange"
-    />
-    <input
-      type="hidden"
-      :disabled="disabled"
-      :name="formName"
-      :value="formValue"
-    />
+    <input :class="[prefix + '-switch_checkbox']" type="checkbox" :disabled="disabled" @change="onChange" />
+    <input type="hidden" :disabled="disabled" :name="formName" :value="formValue" />
   </label>
 </template>
 
@@ -23,7 +13,7 @@ export default {
   name: SDKKey + '-switch',
   mixins: [formMixin],
   props: {
-    value: {
+    modelValue: {
       type: Boolean,
       default: false
     },
@@ -36,10 +26,6 @@ export default {
       default: false
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   data() {
     return {
       prefix: SDKKey,
@@ -47,9 +33,8 @@ export default {
       formValue: false
     }
   },
-  computed: {},
   watch: {
-    value(val) {
+    modelValue(val) {
       val = !!val
 
       if (val !== this.formValue) {
@@ -58,9 +43,8 @@ export default {
     }
   },
   created() {
-    this.formValue = !!this.value
+    this.formValue = !!this.modelValue
   },
-  ready() {},
   mounted() {
     const $el = this.$el
 
@@ -69,15 +53,13 @@ export default {
     $el.firstElementChild.defaultChecked = this.formValue
     $el.firstElementChild.checked = this.formValue
   },
-  updated() {},
-  attached() {},
   methods: {
     onChange(e) {
       const value = !!e.target.checked
 
       this.formValue = value
 
-      if (this.value !== value) {
+      if (this.modelValue !== value) {
         this.$emit('_change', value)
       }
 

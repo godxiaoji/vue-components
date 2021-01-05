@@ -2,9 +2,9 @@
   <div
     :class="[
       prefix + '-button-group',
-      'size--' + size,
-      'pattern--' + pattern,
-      'shape--' + shape,
+      'size--' + subOptions.size,
+      'pattern--' + subOptions.pattern,
+      'shape--' + subOptions.shape,
       'count--' + (buttonIds.length || 1)
     ]"
   >
@@ -15,11 +15,10 @@
 <script>
 import { SDKKey } from '../../config'
 import { inArray } from '../../helpers/util'
-import { getPropValidation, getPropValue } from '../../helpers/validator'
+import { createEnumsValidator, getEnumsValue } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-button-group',
-  components: {},
   provide() {
     return {
       appButtonGroupSubOptions: this.subOptions,
@@ -27,9 +26,18 @@ export default {
     }
   },
   props: {
-    size: getPropValidation('buttonSize'),
-    pattern: getPropValidation('buttonPattern'),
-    shape: getPropValidation('buttonShape')
+    size: {
+      validator: createEnumsValidator('buttonSize'),
+      default: null
+    },
+    pattern: {
+      validator: createEnumsValidator('buttonPattern'),
+      default: null
+    },
+    shape: {
+      validator: createEnumsValidator('buttonShape'),
+      default: null
+    }
   },
   data() {
     return {
@@ -44,33 +52,26 @@ export default {
       }
     }
   },
-  computed: {},
   watch: {
     size: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.size = getPropValue('buttonSize', newVal)
+        this.subOptions.size = getEnumsValue('buttonSize', newVal)
       }
     },
     pattern: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.pattern = getPropValue('buttonPattern', newVal)
+        this.subOptions.pattern = getEnumsValue('buttonPattern', newVal)
       }
     },
     shape: {
       immediate: true,
       handler(newVal) {
-        this.subOptions.shape = getPropValue('buttonShape', newVal)
+        this.subOptions.shape = getEnumsValue('buttonShape', newVal)
       }
     }
   },
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
-  beforeDestroy() {},
   methods: {
     addButton(uid) {
       if (!inArray(uid, this.buttonIds)) {

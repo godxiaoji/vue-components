@@ -19,13 +19,9 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
-import { inArray } from '../../helpers/util'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
-import { getPropValidation, getPropValue } from '../../helpers/validator'
-
-const TYPE_NAMES = ['default', 'primary', 'warning', 'danger', 'success']
-const FORM_TYPE_NAMES = ['button', 'submit', 'reset']
+import { createEnumsValidator, getEnumsValue } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-button',
@@ -39,15 +35,26 @@ export default {
     }
   },
   props: {
-    size: getPropValidation('buttonSize'),
-    type: {
-      validator(val) {
-        return inArray(val, TYPE_NAMES)
-      },
-      default: TYPE_NAMES[0]
+    size: {
+      validator: createEnumsValidator('buttonSize'),
+      default: null
     },
-    pattern: getPropValidation('buttonPattern'),
-    shape: getPropValidation('buttonShape'),
+    type: {
+      validator: createEnumsValidator('buttonType'),
+      default: null
+    },
+    pattern: {
+      validator: createEnumsValidator('buttonPattern'),
+      default: null
+    },
+    shape: {
+      validator: createEnumsValidator('buttonShape'),
+      default: null
+    },
+    formType: {
+      validator: createEnumsValidator('buttonFormType'),
+      default: null
+    },
     loading: {
       type: Boolean,
       default: false
@@ -55,12 +62,6 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    formType: {
-      validator(val) {
-        return inArray(val, FORM_TYPE_NAMES)
-      },
-      default: FORM_TYPE_NAMES[0]
     },
     icon: {
       type: String,
@@ -78,52 +79,42 @@ export default {
   }, // 计算属性的 getter
   computed: {
     typeClassName() {
-      return (
-        'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
-      )
+      return 'type--' + getEnumsValue('buttonType', this.type)
     },
     patternClassName() {
       return (
         'pattern--' +
-        (this.appButtonGroupSubOptions
-          ? this.appButtonGroupSubOptions.pattern
-          : getPropValue('buttonPattern', this.pattern))
+        getEnumsValue(
+          'buttonPattern',
+          this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.pattern : this.pattern
+        )
       )
     },
     sizeClassName() {
       return (
         'size--' +
-        (this.appButtonGroupSubOptions
-          ? this.appButtonGroupSubOptions.size
-          : getPropValue('buttonSize', this.size))
+        getEnumsValue('buttonSize', this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.size : this.size)
       )
     },
     shapeClassName() {
       return (
         'shape--' +
-        (this.appButtonGroupSubOptions
-          ? this.appButtonGroupSubOptions.shape
-          : getPropValue('buttonShape', this.shape))
+        getEnumsValue('buttonShape', this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.shape : this.shape)
       )
     },
     realFormType() {
-      return inArray(this.formType, FORM_TYPE_NAMES)
-        ? this.formType
-        : FORM_TYPE_NAMES[0]
+      return getEnumsValue('buttonFormType', this.formType)
     }
   },
   created() {
     this.appButtonGroup && this.appButtonGroup.addButton(this._uid)
   },
-  ready() {},
   mounted() {
     this.$el._app_type = 'button'
   },
   destroyed() {
     this.appButtonGroup && this.appButtonGroup.removeButton(this._uid)
   },
-  updated() {},
-  attached() {},
   methods: {
     onClick(e) {
       this.$emit(e.type, e)
@@ -337,11 +328,7 @@ export default {
     }
 
     &.pattern--gradient {
-      background-image: linear-gradient(
-        90deg,
-        $primary-border-color 0%,
-        $primary-color 100%
-      );
+      background-image: linear-gradient(90deg, $primary-border-color 0%, $primary-color 100%);
       --button-border-color: transparent;
     }
 
@@ -363,11 +350,7 @@ export default {
     }
 
     &.pattern--gradient {
-      background-image: linear-gradient(
-        90deg,
-        $success-border-color 0%,
-        $success-color 100%
-      );
+      background-image: linear-gradient(90deg, $success-border-color 0%, $success-color 100%);
       --button-border-color: transparent;
     }
 
@@ -389,11 +372,7 @@ export default {
     }
 
     &.pattern--gradient {
-      background-image: linear-gradient(
-        90deg,
-        $warning-border-color 0%,
-        $warning-color 100%
-      );
+      background-image: linear-gradient(90deg, $warning-border-color 0%, $warning-color 100%);
       --button-border-color: transparent;
     }
 
@@ -415,11 +394,7 @@ export default {
     }
 
     &.pattern--gradient {
-      background-image: linear-gradient(
-        90deg,
-        $danger-border-color 0%,
-        $danger-color 100%
-      );
+      background-image: linear-gradient(90deg, $danger-border-color 0%, $danger-color 100%);
       --button-border-color: transparent;
     }
 

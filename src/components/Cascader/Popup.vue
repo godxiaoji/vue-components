@@ -88,10 +88,6 @@ export default {
       }
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   methods: {
     afterUpdate() {
       this.$nextTick(() => {

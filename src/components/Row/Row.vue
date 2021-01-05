@@ -103,12 +103,6 @@ export default {
       }
     }
   },
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
-  beforeDestroy() {},
   methods: {
     onClick(e) {
       this.$emit(e.type, e)

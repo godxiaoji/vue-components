@@ -3,7 +3,7 @@ import { arrayValueValidator } from '../../../helpers/validator'
 
 export default {
   props: {
-    value: {
+    modelValue: {
       validator: arrayValueValidator,
       default() {
         return ''

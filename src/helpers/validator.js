@@ -10,8 +10,6 @@ import {
   isDate,
   isDateArray,
   isNumberArray,
-  cloneData,
-  isObject,
   isStringNumberMixArray
 } from './util'
 import dayjs from 'dayjs'
@@ -140,7 +138,7 @@ selectorValidator._type = 'element Or string'
 
 export function eventSelectorValidator(value) {
   // 这个值必须匹配下列字符串中的一个
-  return isString(value) || isElement(value) || value === document
+  return selectorValidator(value) || value === document
 }
 eventSelectorValidator._type = 'element, document Or string'
 
@@ -155,64 +153,35 @@ export function sizeValidator(value) {
   return size !== null
 }
 
-const MAP = {
-  placement: {
-    enums: ['bottom', 'top', 'left', 'right'],
-    default: 'bottom'
-  },
-  buttonSize: {
-    enums: ['large', 'middle', 'small'],
-    default: 'large'
-  },
-  buttonShape: {
-    enums: ['rectangle', 'round', 'circle', 'square'],
-    default: 'rectangle'
-  },
-  buttonPattern: {
-    enums: ['default', 'solid', 'dashed', 'borderless', 'gradient'],
-    default: 'default'
-  },
-  selector: {
-    validator: selectorValidator,
-    requird: true
-  }
+const ENUM_MAP = {
+  placement: ['bottom', 'top', 'left', 'right'],
+  buttonSize: ['large', 'middle', 'small'],
+  buttonShape: ['rectangle', 'round', 'circle', 'square'],
+  buttonPattern: ['default', 'solid', 'dashed', 'borderless', 'gradient'],
+  buttonType: ['default', 'primary', 'warning', 'danger', 'success'],
+  buttonFormType: ['button', 'submit', 'reset']
 }
 
-export function getPropValidation(propName) {
-  const rule = MAP[propName]
+export function createEnumsValidator(propName) {
+  const rule = ENUM_MAP[propName]
 
-  if (rule.enums) {
-    const validator = function(value) {
-      return inArray(value, rule.enums)
-    }
-    validator._type = `in [${rule.enums
-      .map(v => {
-        return `"${v}"`
-      })
-      .join(', ')}]`
-
-    return {
-      validator,
-      default: isObject(rule.default)
-        ? function() {
-            return cloneData(rule.default)
-          }
-        : rule.default
-    }
-  } else if (rule.validator) {
-    return rule
+  const validator = function(value) {
+    return inArray(value, rule)
   }
+  validator._type = `in [${rule
+    .map(v => {
+      return `"${v}"`
+    })
+    .join(', ')}]`
+
+  return validator
 }
 
-export function getPropValue(propName, value) {
-  const rule = MAP[propName]
+export function getEnumsValue(propName, value) {
+  const rule = ENUM_MAP[propName]
 
-  if (rule.enums) {
-    if (inArray(value, rule.enums)) {
-      return value
-    }
-    return rule.default
+  if (inArray(value, rule)) {
+    return value
   }
-
-  return null
+  return rule[0]
 }

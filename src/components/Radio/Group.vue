@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { cloneData, isString, isNumber } from '../../helpers/util'
+import { cloneData, isStringNumberMix } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
 import groupMixin from '../util/group-mixin'
@@ -23,10 +23,8 @@ export default {
       type: String,
       default: ''
     },
-    value: {
-      validator(value) {
-        return isString(value) || isNumber(value)
-      },
+    modelValue: {
+      validator: isStringNumberMix,
       default: null
     },
     inline: {
@@ -41,17 +39,30 @@ export default {
       formValue: ''
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
+  watch: {
+    modelValue: {
+      handler(val) {
+        if (val != this.formValue) {
+          let formValue = ''
+          let hasChecked = false
+
+          this.childrenForEach(child => {
+            const checked = child.value == val
+
+            if (checked && !hasChecked) {
+              hasChecked = true
+              formValue = child.value
+              child.setChecked(true)
+            } else {
+              child.setChecked(false)
+            }
+          })
+
+          this.formValue = formValue
+        }
+      }
+    }
   },
-  computed: {},
-  watch: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   methods: {
     updateValue(vm) {
       let value = ''
@@ -68,7 +79,7 @@ export default {
 
       this.formValue = value
 
-      if (value !== this.value) {
+      if (value !== this.modelValue) {
         this.$emit('_change', value)
       }
     },

@@ -23,7 +23,7 @@ describe('Switch', () => {
   test('should render prop value=true correctly', () => {
     const wrapper = mount(Switch, {
       propsData: {
-        value: true
+        modelValue: true
       }
     })
 

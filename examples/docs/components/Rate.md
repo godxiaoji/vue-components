@@ -2,15 +2,15 @@
 
 ## Props
 
-| 属性            | 类型    | 默认值 | 必填 | 说明                             |
-| --------------- | ------- | ------ | ---- | -------------------------------- |
-| value / v-model | number  |        | 否   |
-| name            | string  |        | 否   | [Form](./Form.md) 的标识         |
-| count           | number  | 5      | 否   | 有 count 个星星，只支持 > 0 整数 |
-| pattern         | string  | ‘star  | 否   | 图标款式，可选 'star' / 'heart'  |
-| allow-half      | boolean | false  | 否   | 是否允许半选                     |
-| disabled        | boolean | false  | 否   | 是否禁用                         |
-| readonly        | boolean | false  | 否   | 是否为只读状态                   |
+| 属性       | 类型    | 默认值 | 必填 | 说明                             |
+| ---------- | ------- | ------ | ---- | -------------------------------- |
+| v-model    | number  |        | 否   |
+| name       | string  |        | 否   | [Form](./Form.md) 的标识         |
+| count      | number  | 5      | 否   | 有 count 个星星，只支持 > 0 整数 |
+| pattern    | string  | ‘star  | 否   | 图标款式，可选 'star' / 'heart'  |
+| allow-half | boolean | false  | 否   | 是否允许半选                     |
+| disabled   | boolean | false  | 否   | 是否禁用                         |
+| readonly   | boolean | false  | 否   | 是否为只读状态                   |
 
 ## CSS
 

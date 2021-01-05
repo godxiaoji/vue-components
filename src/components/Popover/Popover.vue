@@ -20,21 +20,25 @@
 import { cloneData, isElement } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import popupMixin from '../util/popup-mixin'
-import { getPropValidation, getPropValue } from '../../helpers/validator'
+import { selectorValidator, createEnumsValidator, getEnumsValue } from '../../helpers/validator'
 
 const DEFAULT_POS = { t: null, l: null, at: null, al: null, show: false }
 
 export default {
   name: SDKKey + '-popover',
   mixins: [popupMixin],
-  components: {},
   props: {
-    selector: getPropValidation('selector'),
+    selector: {
+      validator: selectorValidator,
+      requird: true
+    },
     content: {
       type: String,
       default: ''
     },
-    placement: getPropValidation('placement')
+    placement: {
+      validator: createEnumsValidator('placement')
+    }
   },
   data() {
     return {
@@ -116,7 +120,7 @@ export default {
       }
 
       const padding = 8
-      const placement = getPropValue('placement', this.placement)
+      const placement = getEnumsValue('placement', this.placement)
 
       const rect = $target.getBoundingClientRect()
       const { clientWidth: iw, clientHeight: ih } = this.$refs.inner

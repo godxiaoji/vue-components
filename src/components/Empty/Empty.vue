@@ -19,7 +19,6 @@ const TYPE_NAMES = ['default', 'error', 'network', 'search']
 
 export default {
   name: SDKKey + '-empty',
-  components: {},
   props: {
     // 描述文字
     description: {
@@ -37,18 +36,13 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
   computed: {
     imageUrl() {
       return `https://cdn.fox2.cn/vfox/empty/${
         inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
       }@2x.png`
     }
-  },
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

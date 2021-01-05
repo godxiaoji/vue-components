@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import popupMixin from '../util/popup-mixin'
 
@@ -51,11 +51,7 @@ export default {
 
       return styles
     }
-  },
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

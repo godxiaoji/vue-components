@@ -1,21 +1,8 @@
 <template>
-  <div
-    :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
-    :style="{ zIndex }"
-    v-show="isShow"
-  >
+  <div :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]" :style="{ zIndex }" v-show="isShow">
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div
-      :class="[
-        prefix + '-drawer_inner',
-        alignClassName,
-        { 'has--header': hasHeader }
-      ]"
-    >
-      <div
-        v-show="hasHeader"
-        :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
-      >
+    <div :class="[prefix + '-drawer_inner', alignClassName, { 'has--header': hasHeader }]">
+      <div v-show="hasHeader" :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']">
         <div :class="[prefix + '-drawer_header-inner']">
           <div :class="[prefix + '-drawer_title']">{{ title }}</div>
           <fx-button
@@ -38,7 +25,7 @@
 <script>
 import { SDKKey } from '../../config'
 import popupMixin from '../util/popup-mixin'
-import { getPropValidation, getPropValue } from '../../helpers/validator'
+import { createEnumsValidator, getEnumsValue } from '../../helpers/validator'
 
 export default {
   name: SDKKey + '-drawer',
@@ -48,7 +35,9 @@ export default {
       type: String,
       default: null
     },
-    placement: getPropValidation('placement'),
+    placement: {
+      validator: createEnumsValidator('placement')
+    },
     showClose: {
       type: Boolean,
       default: false
@@ -61,13 +50,12 @@ export default {
   },
   computed: {
     alignClassName() {
-      return 'placement--' + getPropValue('placement', this.placement)
+      return 'placement--' + getEnumsValue('placement', this.placement)
     },
     hasHeader() {
       return this.title != null || this.showClose
     }
-  },
-  methods: {}
+  }
 }
 </script>
 

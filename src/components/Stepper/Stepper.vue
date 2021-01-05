@@ -33,12 +33,7 @@
 import FxButton from '../Button'
 import { SDKKey } from '../../config'
 import formMixin from '../util/form-mixin'
-import {
-  rangeInteger,
-  rangeNumber,
-  isString,
-  isNumber
-} from '../../helpers/util'
+import { isStringNumberMix, rangeInteger, rangeNumber } from '../../helpers/util'
 import { formatInputNumber } from '../../helpers/input'
 
 export default {
@@ -46,11 +41,9 @@ export default {
   mixins: [formMixin],
   components: { FxButton },
   props: {
-    value: {
-      validator(value) {
-        return isString(value) || isNumber(value)
-      },
-      default: ''
+    modelValue: {
+      validator: isStringNumberMix,
+      default: null
     },
     color: {
       type: String,
@@ -101,10 +94,6 @@ export default {
       default: null
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   data() {
     return {
       prefix: SDKKey,
@@ -113,13 +102,12 @@ export default {
       formValue: '1'
     }
   },
-  computed: {},
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
-        if (val != parseFloat(this.formValue)) {
-          this.updateValue(val)
+        if (parseFloat(val) !== parseFloat(this.formValue)) {
+          this.updateValue(val, false)
         }
       }
     }
@@ -127,7 +115,6 @@ export default {
   created() {
     this.defaultValue = this.formValue
   },
-  ready() {},
   mounted() {
     const $input = this.getInputEl()
 
@@ -136,8 +123,6 @@ export default {
     $input.value = this.formValue
     $input.defaultValue = this.formValue
   },
-  updated() {},
-  attached() {},
   methods: {
     doStep(e, isPlus = true) {
       const step = parseFloat(this.step)
@@ -172,21 +157,22 @@ export default {
       return value.toString()
     },
 
-    updateValue(value) {
+    updateValue(value, eventChange = true) {
       value = this.getRangeNumber(value)
 
       if (value !== this.formValue) {
         this.formValue = value
-        this._change(value)
+        if (eventChange) {
+          this._change(value)
+        }
       }
 
       const $input = this.getInputEl()
-
-      if ($input && $input.value != parseFloat(value)) {
+      if ($input) {
         $input.value = value
       }
 
-      if (value !== this.value) {
+      if (value !== this.modelValue) {
         this.$emit('_change', value)
       }
 
@@ -205,10 +191,7 @@ export default {
       this.updateValue(e.target.value)
     },
     formateNumber(value) {
-      return formatInputNumber(
-        value,
-        !this.allowDecimal ? 0 : this.decimalLength
-      )
+      return formatInputNumber(value, !this.allowDecimal ? 0 : this.decimalLength)
     },
     onInput(e) {
       const value = this.formateNumber(e.target.value)

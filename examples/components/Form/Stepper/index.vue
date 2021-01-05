@@ -23,7 +23,7 @@
         <fx-stepper :decimal-length="1" :step="0.2" />
       </fx-cell>
       <fx-cell label="change事件监听">
-        <fx-stepper @change="onChange" />
+        <fx-stepper @change="onChange" v-model="value" />
       </fx-cell>
       <fx-cell label="其他事件监听">
         <fx-stepper
@@ -43,7 +43,7 @@ export default {
   name: 'Stepper',
   props: {},
   data() {
-    return {}
+    return { value: '1' }
   },
   methods: {
     onChange({ value }) {
@@ -67,5 +67,3 @@ export default {
   }
 }
 </script>
-
-

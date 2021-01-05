@@ -39,13 +39,13 @@ import Drawer from '../Drawer'
 import FxButton from '../Button'
 import { SDKKey } from '../../config'
 import popupExtendMixin from '../util/popup-extend-mixin'
-import propsMixin from './props-mixin'
+import mixin from './mixin'
 import { getDefaultDetail, cloneDetail } from './util'
 
 export default {
   name: SDKKey + '-calendar-popup',
   components: { CalendarView, Drawer, FxButton },
-  mixins: [popupExtendMixin, propsMixin],
+  mixins: [popupExtendMixin, mixin],
   provide() {
     return {
       appCalendarPopup: this
@@ -54,15 +54,15 @@ export default {
   props: {
     title: {
       type: String,
-      value: null
+      default: null
     },
     showConfirm: {
       type: Boolean,
-      value: false
+      default: false
     },
     showClose: {
       type: Boolean,
-      value: false
+      default: false
     }
   },
   data() {
@@ -73,15 +73,11 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         this.updateValue(val)
       }
     }
-  },
-  model: {
-    prop: 'value',
-    event: '_change'
   },
   methods: {
     // updateValue(val) {

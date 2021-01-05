@@ -9,10 +9,10 @@
     </fx-group>
     <fx-group title="禁用">
       <fx-cell label="关"><fx-switch disabled/></fx-cell>
-      <fx-cell label="开"><fx-switch disabled :value="true"/></fx-cell>
+      <fx-cell label="开"><fx-switch disabled :modelValue="true"/></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="change"><fx-switch @change="onChange"/></fx-cell>
+      <fx-cell label="change"><fx-switch v-model="value" @change="onChange"/></fx-cell>
     </fx-group>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   name: 'DemoSwitch',
   props: {},
   data() {
-    return {}
+    return { value: false }
   },
   methods: {
     onChange({ value }) {

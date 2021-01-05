@@ -73,9 +73,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
-  created() {},
-  beforeDestroy() {},
   methods: {
     onConfirmClick() {
       this.$emit('confirm', {})

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
 import { inArray } from '../../helpers/util'
 import { SDKKey } from '../../config'
@@ -96,7 +96,6 @@ export default {
       }
     }
   },
-  ready() {},
   mounted() {
     if (this.src) {
       this.loading = true
@@ -109,8 +108,6 @@ export default {
       }
     }
   },
-  updated() {},
-  attached() {},
   beforeDestroy() {
     removeComponentFromLazy(this)
   },

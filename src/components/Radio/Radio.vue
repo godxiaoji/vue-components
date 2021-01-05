@@ -1,8 +1,5 @@
 <template>
-  <label
-    :class="[prefix + '-radio', prefix + '-horizontal-hairline']"
-    :disabled="disabled"
-  >
+  <label :class="[prefix + '-radio', prefix + '-horizontal-hairline']" :disabled="disabled">
     <input
       :class="[prefix + '-radio_input']"
       type="radio"
@@ -12,14 +9,8 @@
       @change="onChange"
     />
     <div :class="[prefix + '-radio_box']">
-      <icon
-        :class="[prefix + '-radio_icon']"
-        class-name="CircleOutlined"
-      />
-      <icon
-        :class="[prefix + '-radio_checked-icon']"
-        class-name="CheckCircleFilled"
-      />
+      <icon :class="[prefix + '-radio_icon']" class-name="CircleOutlined" />
+      <icon :class="[prefix + '-radio_checked-icon']" class-name="CheckCircleFilled" />
       <span :class="[prefix + '-radio_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -28,9 +19,9 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
-import { isString, isNumber } from '../../helpers/util'
+import { isStringNumberMix } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-radio',
@@ -42,9 +33,7 @@ export default {
   },
   props: {
     value: {
-      validator(val) {
-        return isString(val) || isNumber(val)
-      },
+      validator: isStringNumberMix,
       default: ''
     },
     checked: {
@@ -98,13 +87,12 @@ export default {
   created() {
     this.appRadioGroup && this.appRadioGroup.addChild(this)
   },
-  ready() {},
   mounted() {
     const $input = this.getInputEl()
 
     let checked
     if (this.appRadioGroup) {
-      checked = this.appRadioGroup.value == this.value
+      checked = this.appRadioGroup.modelValue == this.value
     } else {
       checked = !!this.checked
     }
@@ -117,8 +105,6 @@ export default {
     $input._app_component = this.appRadioGroup || this
     $input._app_type = 'radio'
   },
-  updated() {},
-  attached() {},
   beforeDestroy() {
     this.appRadioGroup && this.appRadioGroup.removeChild(this)
   },
@@ -192,9 +178,7 @@ export default {
     &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
       display: none;
     }
-    &:not([disabled]):checked
-      + .#{$prefix}-radio_box
-      .#{$prefix}-radio_checked-icon {
+    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_checked-icon {
       display: block;
     }
   }

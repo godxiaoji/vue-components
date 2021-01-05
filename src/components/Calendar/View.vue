@@ -75,7 +75,7 @@ import { SDKKey } from '../../config'
 import dayjs from 'dayjs'
 import { isDate } from '../../helpers/util'
 import { showToast } from '../../apis/Toast'
-import propsMixin from './props-mixin'
+import mixin from './mixin'
 import { DEFAULT_MONTH_RANGE, getDetail, parseValues, TYPE_NAMES } from './util'
 import { isSameArray, inArray } from '../../helpers/util'
 import Exception from '../../helpers/exception'
@@ -101,9 +101,7 @@ export default {
       default: null
     }
   },
-  components: {},
-  mixins: [propsMixin],
-  props: {},
+  mixins: [mixin],
   data() {
     return {
       prefix: SDKKey,
@@ -133,7 +131,6 @@ export default {
       maxTimestamp: 0
     }
   },
-  computed: {},
   watch: {
     minDate: {
       handler() {
@@ -151,10 +148,6 @@ export default {
       }
     }
   },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
   created() {
     this.type = inArray(this.initialType, TYPE_NAMES)
       ? this.initialType
@@ -164,7 +157,7 @@ export default {
 
     this.updateOptions()
     this.updateValue(
-      this.parseValues(popup && popup.value != null ? popup.value : this.value)
+      this.parseValues(popup && popup.modelValue != null ? popup.modelValue : this.modelValue)
     )
 
     if (popup) {
@@ -176,8 +169,6 @@ export default {
     }
   },
   beforeMount() {},
-  updated() {},
-  attached() {},
   methods: {
     reset() {
       clearTimeout(this.updateOptionsTimer)
@@ -208,10 +199,10 @@ export default {
             const { rangeCount, hasDisabled } = this.getRangeInfo(start, end)
 
             if (hasDisabled) {
-              printError('"value"值的范围包含有禁用的天数.')
+              printError('"modelValue"值的范围包含有禁用的天数.')
             } else if (rangeCount > this.maxRange) {
               printError(
-                `"value"值得范围有${rangeCount}天，不能超过${this.maxRange}天.`
+                `"modelValue"值得范围有${rangeCount}天，不能超过${this.maxRange}天.`
               )
             } else {
               this.start = start
@@ -219,7 +210,7 @@ export default {
               this.updateStates()
             }
           } else {
-            printError(`"value"值不在可选范围内.`)
+            printError(`"modelValue"值不在可选范围内.`)
           }
         } else {
           const select = this.getSelectedInfo(values[0])
@@ -229,7 +220,7 @@ export default {
             this.setSelected('end', null)
             this.updateStates()
           } else {
-            printError(`"value"值不在可选范围内.`)
+            printError(`"modelValue"值不在可选范围内.`)
           }
         }
       }

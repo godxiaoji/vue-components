@@ -37,9 +37,7 @@ import mulitSelectorMixin from '../util/mulit-selector/mixin'
 
 export default {
   name: SDKKey + '-picker-view',
-  components: {},
   mixins: [mulitSelectorMixin],
-  props: {},
   data() {
     return {
       prefix: SDKKey,
@@ -47,8 +45,6 @@ export default {
       picker: true
     }
   },
-  computed: {},
-  watch: {},
   created() {
     this.formLabel = this.cacheLabel
     this.formValue = this.cacheValue
@@ -56,9 +52,6 @@ export default {
     // 需要立即同步好数据
     this.$emit('_change', this.hookFormValue())
   },
-  mounted() {},
-  updated() {},
-  attached() {},
   methods: {
     onChange() {
       this.$emit('_change', this.hookFormValue())

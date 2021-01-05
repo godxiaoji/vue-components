@@ -21,17 +21,11 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  computed: {},
-  watch: {},
   created() {
     this._app_form = true
 
     this.formList = []
   },
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   methods: {
     onSubmit(e) {
       const inputEls = e.target.elements

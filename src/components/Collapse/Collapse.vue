@@ -41,19 +41,14 @@ export default {
     prop: 'activeNames',
     event: '_change'
   },
-  computed: {},
   watch: {
     activeNames(val) {
       this.updateValue(val)
     }
   },
-  created() {},
-  ready() {},
   mounted() {
     this.updateValue(this.activeNames)
   },
-  updated() {},
-  attached() {},
   methods: {
     updateValue(val) {
       if (isArray(val) && isSameArray(val, this.activeNames2)) {

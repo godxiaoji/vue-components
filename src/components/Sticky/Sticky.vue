@@ -18,7 +18,6 @@ import {
 
 export default {
   name: SDKKey + '-sticky',
-  components: {},
   props: {
     containSelector: {
       validator: eventSelectorValidator,
@@ -41,10 +40,6 @@ export default {
       width: null,
       fixed: false
     }
-  },
-  model: {
-    prop: 'activeIndex',
-    event: '_change'
   },
   computed: {
     styles() {
@@ -76,9 +71,6 @@ export default {
       return styles
     }
   },
-  watch: {},
-  created() {},
-  ready() {},
   mounted() {
     this.resetContainer(this.containSelector)
   },

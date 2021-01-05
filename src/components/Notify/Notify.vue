@@ -68,9 +68,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
-  computed: {},
-  created() {},
   beforeDestroy() {
     this.removeAutoClose()
   },

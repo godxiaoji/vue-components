@@ -1,22 +1,10 @@
 <template>
   <div :class="[prefix + '-tab-view', { vertical: initialVertical }]">
-    <div
-      :class="[prefix + '-tab-view_header', prefix + '-horizontal-hairline']"
-    >
-      <tab
-        :options="tabList"
-        v-model="activeIndex"
-        :vertical="vertical"
-        :scroll-threshold="scrollThreshold"
-      />
+    <div :class="[prefix + '-tab-view_header', prefix + '-horizontal-hairline']">
+      <tab :options="tabList" v-model="activeIndex" :vertical="vertical" :scroll-threshold="scrollThreshold" />
     </div>
     <div :class="[prefix + '-tab-view_body']" ref="list">
-      <swiper
-        :activeIndex.sync="activeIndex"
-        @change="onChange"
-        ref="swiper"
-        :initial-vertical="vertical"
-      >
+      <swiper :activeIndex.sync="activeIndex" @change="onChange" ref="swiper" :initial-vertical="vertical">
         <slot></slot>
       </swiper>
     </div>
@@ -62,18 +50,13 @@ export default {
       vertical: false
     }
   },
-  computed: {},
-  watch: {},
   created() {
     this.vertical = !!this.initialVertical
   },
-  ready() {},
   mounted() {
     this.isInit = true
     this.update()
   },
-  updated() {},
-  attached() {},
   destroyed() {},
   methods: {
     update() {
@@ -93,10 +76,7 @@ export default {
 
       const $newItems = []
 
-      const $items = [].slice.call(
-        this.$refs.list.querySelectorAll(`.${SDKKey}-tab-view-item`),
-        0
-      )
+      const $items = [].slice.call(this.$refs.list.querySelectorAll(`.${SDKKey}-tab-view-item`), 0)
 
       $items.forEach($item => {
         if ($item._app_name === 'tab-view-item') {
@@ -124,10 +104,7 @@ export default {
 
           const $firstChild = $viewItem.firstElementChild
 
-          if (
-            $firstChild &&
-            $firstChild.className.indexOf(`${SDKKey}-scroll-view`) !== -1
-          ) {
+          if ($firstChild && $firstChild.className.indexOf(`${SDKKey}-scroll-view`) !== -1) {
             // ScrollView
             $firstChild.scrollTo({
               top: 0,

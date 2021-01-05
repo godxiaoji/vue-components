@@ -14,10 +14,13 @@ export default {
       return this.name || ''
     }
   },
+  model: {
+    prop: 'modelValue',
+    event: '_change'
+  },
   methods: {
     validateAfterEventTrigger(type, value) {
-      this.appFormItem &&
-        this.appFormItem.validateAfterEventTrigger(type, value)
+      this.appFormItem && this.appFormItem.validateAfterEventTrigger(type, value)
     },
     hookFormValue() {
       return cloneData(this.formValue)

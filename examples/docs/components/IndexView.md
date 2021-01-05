@@ -12,6 +12,13 @@
 | ------ | ---------- | -------------------------- |
 | change | 切换时触发 | { activeIndex } 当前项索引 |
 
+## Methods
+
+| 方法名         | 说明                                                    | 参数                         |
+| -------------- | ------------------------------------------------------- | ---------------------------- |
+| scrollToIndex  | 将位于指定位置的 `IndexViewItem` 滚动到可视区的指定位置 | ({ index: number }) => void  |
+| scrollToOffset | 滚动列表到指定的偏移，单位 px                           | ({ offset: number }) => void |
+
 ## IndexView Slots
 
 注：其中只可放置 [IndexViewItem](./IndexView.md#indexviewitem-索引子项) 组件，否则会导致未定义的行为。

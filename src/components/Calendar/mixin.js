@@ -5,7 +5,7 @@ import { calendarValueValidator } from '../../helpers/validator'
 
 export default {
   props: {
-    value: {
+    modelValue: {
       validator: calendarValueValidator,
       default() {
         return []
@@ -52,5 +52,9 @@ export default {
       },
       default: 0
     }
+  },
+  model: {
+    prop: 'modelValue',
+    event: '_change'
   }
 }

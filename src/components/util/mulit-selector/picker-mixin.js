@@ -39,14 +39,14 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         this.updateValue(val)
       }
     }
   },
   model: {
-    prop: 'value',
+    prop: 'modelValue',
     event: '_change'
   },
   created() {
@@ -57,7 +57,7 @@ export default {
     // 初始化分隔符
     this.separator = this.initialSeparator
 
-    this.updateValue(this.value)
+    this.updateValue(this.modelValue)
     this.defaultDetail = cloneData(this.detail)
   },
   mounted() {
@@ -88,7 +88,7 @@ export default {
             watch: false
           },
           { propName: 'formatString', parentName: 'formatString', watch: true },
-          { propName: 'value', parentName: 'formValue', watch: false },
+          { propName: 'modelValue', parentName: 'formValue', watch: false },
           { propName: 'title', parentName: 'placeholder', watch: true },
           { propName: 'options', parentName: 'options', watch: true },
           { propName: 'fieldNames', parentName: 'fieldNames', watch: true }

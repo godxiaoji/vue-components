@@ -1,20 +1,20 @@
 # Input 输入框
 
-- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项)  使用。
+- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项) 使用。
 
 ## Props
 
-| 属性            | 类型           | 默认值 | 必填 | 说明                     |
-| --------------- | -------------- | ------ | ---- | ------------------------ |
-| value / v-model | string, number | ''     | 否   |
-| name            | string         |        | 否   | [Form](./Form.md) 的标识 |
-| type            | string         | 'text' | 否   | 类型                     |
-| placeholder     | string         |        | 否   | 输入框为空时占位符       |
-| disabled        | boolean        | false  | 否   | 是否禁用                 |
-| readonly        | boolean        | false  | 否   | 是否只读                 |
-| maxlength       | number, string | 140    | 否   | 最大长度                 |
-| focus           | boolean        | false  | 否   | 是否获取焦点             |
-| show-clear      | boolean        | false  | 否   | 是否展示清除图标         |
+| 属性        | 类型           | 默认值 | 必填 | 说明                     |
+| ----------- | -------------- | ------ | ---- | ------------------------ |
+| v-model     | string, number | ''     | 否   |
+| name        | string         |        | 否   | [Form](./Form.md) 的标识 |
+| type        | string         | 'text' | 否   | 类型                     |
+| placeholder | string         |        | 否   | 输入框为空时占位符       |
+| disabled    | boolean        | false  | 否   | 是否禁用                 |
+| readonly    | boolean        | false  | 否   | 是否只读                 |
+| maxlength   | number, string | 140    | 否   | 最大长度                 |
+| focus       | boolean        | false  | 否   | 是否获取焦点             |
+| show-clear  | boolean        | false  | 否   | 是否展示清除图标         |
 
 ### type 的合法值
 

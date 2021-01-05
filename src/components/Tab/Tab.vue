@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="[
-      prefix + '-tab',
-      { vertical, 'no--scroll': options2.length <= scrollThreshold }
-    ]"
-  >
+  <div :class="[prefix + '-tab', { vertical, 'no--scroll': options2.length <= scrollThreshold }]">
     <ul :class="[prefix + '-tab_list']" ref="list">
       <li
         :class="[
@@ -19,10 +14,7 @@
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <badge
-          :class="[prefix + '-tab_item-inner']"
-          :content="item.badge != null ? item.badge : 0"
-        >
+        <badge :class="[prefix + '-tab_item-inner']" :content="item.badge != null ? item.badge : 0">
           <icon v-if="item.icon" :class-name="item.icon" />
           <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
         </badge>
@@ -32,9 +24,9 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import Badge from '../Badge'
-import { isNumber, isString, isArray, isObject } from '../../helpers/util'
+import { isNumber, isString, isArray, isObject, isStringNumberMix } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
 import Exception from '../../helpers/exception'
@@ -65,10 +57,7 @@ export default {
       }
     },
     value: {
-      validator(value) {
-        // 这个值必须匹配下列字符串中的一个
-        return isNumber(value) || isString(value)
-      },
+      validator: isStringNumberMix,
       default: ''
     },
     fieldNames: {
@@ -103,7 +92,6 @@ export default {
     prop: 'value',
     event: '_change'
   },
-  computed: {},
   watch: {
     value() {
       this.updateValue()
@@ -118,25 +106,16 @@ export default {
   created() {
     this.updateOptions()
   },
-  ready() {},
   mounted() {
     this.isMounted = true
     this.updatePos()
   },
-  updated() {},
-  attached() {},
   destroyed() {},
   methods: {
     updateValue() {
       if (!this.updateActive(this.value)) {
         this.$emit('_change', this.value2)
-        console.error(
-          new Exception(
-            '"value" is not in "options".',
-            Exception.TYPE.PROP_ERROR,
-            'Tab'
-          )
-        )
+        console.error(new Exception('"value" is not in "options".', Exception.TYPE.PROP_ERROR, 'Tab'))
       }
     },
 
@@ -168,13 +147,9 @@ export default {
               label: item,
               value: item
             }
-          } else if (
-            isObject(item) &&
-            (isString(item[valueName]) || isNumber(item[valueName]))
-          ) {
+          } else if (isObject(item) && (isString(item[valueName]) || isNumber(item[valueName]))) {
             option = {
-              label:
-                item[labelName] == null ? item[valueName] : item[labelName],
+              label: item[labelName] == null ? item[valueName] : item[labelName],
               value: item[valueName],
               icon: isString(item.icon) && item.icon ? item.icon : null
             }
@@ -239,8 +214,7 @@ export default {
         scrollOffset = $activeItem['offset' + directionKey]
       } else {
         scrollOffset = Math.min(
-          $activeItem['offset' + directionKey] -
-            ($list['offset' + sizeKey] - $activeItem['offset' + sizeKey]) / 2,
+          $activeItem['offset' + directionKey] - ($list['offset' + sizeKey] - $activeItem['offset' + sizeKey]) / 2,
           $list['scroll' + sizeKey] - $list['offset' + sizeKey]
         )
       }
@@ -327,11 +301,7 @@ export default {
         height: 16px;
         z-index: 0;
         border-radius: 50%;
-        background: linear-gradient(
-          145deg,
-          rgba(24, 144, 255, 0.3) 13.5%,
-          rgba(24, 144, 255, 0.05) 86.5%
-        );
+        background: linear-gradient(145deg, rgba(24, 144, 255, 0.3) 13.5%, rgba(24, 144, 255, 0.05) 86.5%);
       }
     }
 
@@ -417,7 +387,6 @@ export default {
 
     &.no--scroll {
       .#{$prefix}-tab {
-
         &_list {
           display: flex;
           flex-direction: column;

@@ -11,7 +11,6 @@ import { paragraphDefaultRow } from './util'
 
 export default {
   name: SDKKey + '-skeleton-paragraph',
-  components: {},
   inject: {
     skeletonSubOptions: {
       default: null
@@ -32,7 +31,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
   computed: {
     useAnimation() {
       if (this.skeletonSubOptions) {
@@ -56,11 +54,7 @@ export default {
 
       return isNumber(row) ? row : paragraphDefaultRow
     }
-  },
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

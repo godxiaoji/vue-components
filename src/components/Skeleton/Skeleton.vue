@@ -125,9 +125,7 @@ export default {
     if (this.$scopedSlots.default) {
       this.hasSlot = true
     }
-  },
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

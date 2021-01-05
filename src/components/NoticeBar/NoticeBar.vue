@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import { SDKKey } from '../../config'
 import { inArray } from '../../helpers/util'
 
@@ -158,7 +158,6 @@ export default {
       )
     }
   },
-  created() {},
   mounted() {
     if (this.marquee) {
       this.startMarquee()

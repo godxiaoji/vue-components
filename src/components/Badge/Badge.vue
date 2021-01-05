@@ -2,26 +2,21 @@
   <div :class="[prefix + '-badge', { animated: !!animated }]">
     <slot></slot>
     <i v-if="dot" :class="[prefix + '-badge_dot']" :style="styles"></i>
-    <span v-else :class="[prefix + '-badge_num']" :style="styles">{{
-      showCount
-    }}</span>
+    <span v-else :class="[prefix + '-badge_num']" :style="styles">{{ showCount }}</span>
   </div>
 </template>
 
 <script>
-import { isNumber, isString, rangeInteger } from '../../helpers/util'
+import { isNumber, isString, isStringNumberMix, rangeInteger } from '../../helpers/util'
 import { SDKKey } from '../../config'
 import { frameTo } from '../../helpers/animation'
 
 export default {
   name: SDKKey + '-badge',
-  components: {},
   props: {
     // 消息条数
     content: {
-      validator(val) {
-        return isString(val) || isNumber(val)
-      },
+      validator: isStringNumberMix,
       default: 0
     },
     // 最大完全显示消息条数
@@ -107,11 +102,7 @@ export default {
     styles() {
       return {
         transform: `translate3d(50%, -50%, 0px) scale(${
-          (isString(this.content) && this.content) ||
-          this.showZero ||
-          this.content > 0
-            ? 1
-            : 0
+          (isString(this.content) && this.content) || this.showZero || this.content > 0 ? 1 : 0
         })`,
         right: `${-this.offset[0]}px`,
         top: `${this.offset[1]}px`
@@ -125,11 +116,9 @@ export default {
       this.content2 = rangeInteger(this.content, 0, this.maxCount)
     }
   },
-  mounted() {},
   destroyed() {
     this.frameTask && this.frameTask.stop()
-  },
-  methods: {}
+  }
 }
 </script>
 

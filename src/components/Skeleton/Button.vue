@@ -15,7 +15,6 @@ import { BUTTON_SHAPE_NAMES } from './util'
 
 export default {
   name: SDKKey + '-skeleton-button',
-  components: {},
   inject: {
     skeletonSubOptions: {
       default: null
@@ -37,7 +36,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  watch: {},
   computed: {
     shapeClassName() {
       let shape
@@ -61,11 +59,7 @@ export default {
       }
       return this.animated
     }
-  },
-  created() {},
-  mounted() {},
-  beforeDestroy() {},
-  methods: {}
+  }
 }
 </script>
 

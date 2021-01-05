@@ -189,7 +189,7 @@ xiyiji/guntong
 
 ## Picker 选择器
 
-- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项)  使用。
+- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项) 使用。
 
 ## Picker Props
 

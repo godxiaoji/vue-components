@@ -79,13 +79,6 @@ export default {
       return arr
     }
   },
-  watch: {},
-  created() {},
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
-  beforeDestroy() {},
   methods: {
     onClick(e) {
       this.$emit(e.type, e)

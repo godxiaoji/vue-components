@@ -5,7 +5,6 @@ export default {
       default: false
     }
   },
-  computed: {},
   data() {
     return {
       visible2: false

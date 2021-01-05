@@ -221,6 +221,7 @@ export default {
       this.$showPopover({
         selector,
         content: '这是气泡内容',
+        placement: 'top',
         success: res => {
           console.log('success', res)
         }

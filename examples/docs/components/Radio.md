@@ -2,11 +2,11 @@
 
 ## Radio Props
 
-| 属性              | 类型                           | 默认值 | 必填 | 说明                                                                                   |
-| ----------------- | ------------------------------ | ------ | ---- | -------------------------------------------------------------------------------------- |
-| value             | string / number / 可序列化对象 | ''     | 否   | 标识，[radio-group](./RadioGroup.md) 的 change 事件会携带 [radio](./Radio.md) 的 value |
-| disabled          | boolean                        | false  | 否   | 是否禁用                                                                               |
-| checked / v-model | boolean                        | false  | 否   | 当前是否选中，可用来设置默认选中                                                       |
+| 属性     | 类型          | 默认值 | 必填 | 说明                                                                         |
+| -------- | ------------- | ------ | ---- | ---------------------------------------------------------------------------- |
+| value    | string/number | ''     | 否   | 该项值，[radio-group](./RadioGroup.md) 的 change 事件会携带 `radio` 的 value |
+| disabled | boolean       | false  | 否   | 是否禁用                                                                     |
+| v-model  | boolean       | false  | 否   | 当前是否选中，可用来设置默认选中                                             |
 
 ## Radio CSS
 
@@ -27,14 +27,15 @@
 
 - 内部由多个 [Radio](./Radio.md#Radio-单选项) 组成。
 
-- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项)  使用。
+- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项) 使用。
 
 ## RadioGroup Props
 
-| 属性   | 类型    | 默认值 | 必填 | 说明                           |
-| ------ | ------- | ------ | ---- | ------------------------------ |
-| name   | string  |        | 否   | [Form](./Form.md) 的标识       |
-| inline | boolean | false  | 否   | 是否使用内联布局，默认纵向布局 |
+| 属性    | 类型          | 默认值 | 必填 | 说明                           |
+| ------- | ------------- | ------ | ---- | ------------------------------ |
+| name    | string        |        | 否   | [Form](./Form.md) 的标识       |
+| inline  | boolean       | false  | 否   | 是否使用内联布局，默认纵向布局 |
+| v-model | string/number | ''     | 否   | 当前选择子项的 value 值        |
 
 ## RadioGroup Events
 

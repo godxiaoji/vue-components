@@ -1,7 +1,6 @@
 import { inArray } from '../../helpers/util'
 
 export default {
-  props: {},
   data() {
     return {
       appChildren: []

@@ -2,10 +2,7 @@
   <div :class="[prefix + '-slider', { disabled }]">
     <div :class="[prefix + '-slider_inner']">
       <div :class="[prefix + '-slider_box']">
-        <div
-          :class="[prefix + '-slider_track']"
-          :style="[{ width: progress }]"
-        ></div>
+        <div :class="[prefix + '-slider_track']" :style="[{ width: progress }]"></div>
         <div :class="[prefix + '-slider_thumb']" :style="[{ left: progress }]">
           {{ showValue ? formValue : '' }}
         </div>
@@ -35,28 +32,20 @@ export default {
   name: SDKKey + '-slider',
   mixins: [formMixin],
   props: {
-    value: {
-      validator(val) {
-        return isNumeric(val)
-      },
+    modelValue: {
+      validator: isNumeric,
       default: null
     },
     min: {
-      validator(val) {
-        return isNumeric(val)
-      },
+      validator: isNumeric,
       default: 0
     },
     max: {
-      validator(val) {
-        return isNumeric(val)
-      },
+      validator: isNumeric,
       default: 100
     },
     step: {
-      validator(val) {
-        return isNumeric(val)
-      },
+      validator: isNumeric,
       default: 1
     },
     name: {
@@ -73,7 +62,7 @@ export default {
     }
   },
   model: {
-    prop: 'value',
+    prop: 'modelValue',
     event: '_input'
   },
   data() {
@@ -89,7 +78,7 @@ export default {
     }
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.formValue = val
 
       this.$nextTick(() => {
@@ -109,8 +98,6 @@ export default {
       })
     }
   },
-  created() {},
-  ready() {},
   mounted() {
     const $input = this.getInputEl()
 
@@ -120,14 +107,12 @@ export default {
     this.formValue = $input.value
     this.inputModel()
   },
-  updated() {},
-  attached() {},
   methods: {
     updateValue() {
       this.formValue = this.getInputEl().value
     },
     inputModel() {
-      if (this.value == null || this.formValue !== this.value.toString()) {
+      if (this.modelValue == null || this.formValue !== this.modelValue.toString()) {
         this.$emit('_input', this.hookFormValue())
       }
     },

@@ -18,7 +18,7 @@
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
-        v-model="activeIndex"
+        :activeIndex.sync="activeIndex"
         @reset-items="onResetItems"
         @change="onChange"
       >
@@ -58,15 +58,9 @@ export default {
       tabList: []
     }
   },
-  computed: {},
-  watch: {},
-  created() {},
-  ready() {},
   mounted() {
     this.resetContainer(document)
   },
-  updated() {},
-  attached() {},
   destroyed() {},
   methods: {
     resetContainer(containSelector) {

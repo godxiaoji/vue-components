@@ -23,7 +23,7 @@
 
 <script>
 import Cell from '../Cell'
-import Icon from '../Icon/Icon.vue'
+import Icon from '../Icon'
 import Schema from 'async-validator'
 import { SDKKey } from '../../config'
 import {
@@ -107,10 +107,6 @@ export default {
       this.appForm.formList.push(this)
     }
   },
-  ready() {},
-  mounted() {},
-  updated() {},
-  attached() {},
   beforeDestroy() {
     if (this.appForm) {
       const formList = this.appForm.formList

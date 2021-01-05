@@ -6,8 +6,9 @@ import {
   getType,
   elementValidator,
   calendarValueValidator,
-  getPropValidation,
-  arrayValueValidator
+  createEnumsValidator,
+  arrayValueValidator,
+  selectorValidator
 } from '../helpers/validator'
 
 import { MODE_NAMES as SELECT_MODE_NAMES } from '../components/util/mulit-selector'
@@ -319,21 +320,31 @@ export const apiRules = {
     }
   },
   showPopover: {
-    selector: getPropValidation('selector'),
+    selector: {
+      validator: selectorValidator,
+      requird: true
+    },
     content: {
       type: String,
       default: ''
     },
-    placement: getPropValidation('placement')
+    placement: {
+      validator: createEnumsValidator('placement')
+    }
   },
   showPopDialog: {
-    selector: getPropValidation('selector'),
+    selector: {
+      validator: selectorValidator,
+      requird: true
+    },
     content: {
       type: String,
       default: '',
       required: true
     },
-    placement: getPropValidation('placement'),
+    placement: {
+      validator: createEnumsValidator('placement')
+    },
     showCancel: {
       type: Boolean,
       default: true
@@ -348,8 +359,13 @@ export const apiRules = {
     }
   },
   showPopMenu: {
-    selector: getPropValidation('selector'),
-    placement: getPropValidation('placement'),
+    selector: {
+      validator: selectorValidator,
+      requird: true
+    },
+    placement: {
+      validator: createEnumsValidator('placement')
+    },
     options: {
       type: Array,
       default() {
@@ -374,20 +390,14 @@ export const parseParamsByRules = function(options, apiName) {
 
     if (rule.required && !notNullValidator(option)) {
       throw new Exception(
-        `param0.${k} should be ${getType(
-          rule.validator || rule.type()
-        )} instead of ${getType(option)}`,
+        `param0.${k} should be ${getType(rule.validator || rule.type())} instead of ${getType(option)}`,
         PARAM_ERROR,
         apiName
       )
     } else if (option != null) {
       if (rule.validator) {
         if (!rule.validator(option)) {
-          throw new Exception(
-            `param0.${k} should be ${getType(rule.validator)}`,
-            PARAM_ERROR,
-            apiName
-          )
+          throw new Exception(`param0.${k} should be ${getType(rule.validator)}`, PARAM_ERROR, apiName)
         } else {
           ret[k] = option
         }
@@ -411,18 +421,14 @@ export const parseParamsByRules = function(options, apiName) {
           ret[k] = option
         } else {
           throw new Exception(
-            `param0.${k} should be ${getType(rule.type())} instead of ${getType(
-              option
-            )}`,
+            `param0.${k} should be ${getType(rule.type())} instead of ${getType(option)}`,
             PARAM_ERROR,
             apiName
           )
         }
       } else if (rule.type(option) !== option) {
         throw new Exception(
-          `param0.${k} should be ${getType(rule.type())} instead of ${getType(
-            option
-          )}`,
+          `param0.${k} should be ${getType(rule.type())} instead of ${getType(option)}`,
           PARAM_ERROR,
           apiName
         )

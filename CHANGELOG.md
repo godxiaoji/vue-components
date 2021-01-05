@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/godxiaoji/vfox/compare/v1.6.5...v1.6.6) (2021-01-05)
+
+
+### Bug Fixes
+
+* 表单和导航bug修复 ([dc07744](https://github.com/godxiaoji/vfox/commit/dc077449be3d0387ff26d1a46a90c696dd03a868))
+
 ## [1.6.5](https://github.com/godxiaoji/vfox/compare/v1.6.4...v1.6.5) (2021-01-04)
 
 

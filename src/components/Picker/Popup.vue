@@ -115,13 +115,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-picker-popup {
-  .#{$prefix}-nav-bar {
-    --nav-bar-height: 48px;
-  }
-}
-</style>

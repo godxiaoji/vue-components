@@ -10,11 +10,7 @@
 import { SDKKey } from '../../config'
 import { addScrollEvent, removeScrollEvent } from '../../helpers/events'
 import { eventSelectorValidator, sizeValidator } from '../../helpers/validator'
-import {
-  getRelativeOffset,
-  getSizeValue,
-  querySelector
-} from '../../helpers/dom'
+import { getRelativeOffset, getSizeValue, querySelector } from '../../helpers/dom'
 
 export default {
   name: SDKKey + '-sticky',
@@ -123,23 +119,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-sticky {
-  --sticky-background-color: transparent;
-  background-color: var(--sticky-background-color);
-
-  &_content {
-    background-color: var(--sticky-background-color);
-
-    &.fixed {
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 1000;
-    }
-  }
-}
-</style>

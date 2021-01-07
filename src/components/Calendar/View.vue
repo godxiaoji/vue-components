@@ -3,10 +3,7 @@
     <div :class="[prefix + '-calendar-view_header']">
       <div :class="[prefix + '-calendar-view_weekdays']">
         <span
-          :class="[
-            prefix + '-calendar-view_weekday',
-            { highlight: weekDay.value === 0 || weekDay.value === 6 }
-          ]"
+          :class="[prefix + '-calendar-view_weekday', { highlight: weekDay.value === 0 || weekDay.value === 6 }]"
           v-for="weekDay in weekDays"
           :key="weekDay.value"
           >{{ weekDay.label }}</span
@@ -14,14 +11,8 @@
       </div>
     </div>
     <div :class="[prefix + '-calendar-view_body']">
-      <template
-        :class="[prefix + '-calendar-view_month']"
-        v-for="(month, monthIndex) in months"
-      >
-        <div
-          :class="[prefix + '-calendar-view_month-caption']"
-          :key="month.caption"
-        >
+      <template :class="[prefix + '-calendar-view_month']" v-for="(month, monthIndex) in months">
+        <div :class="[prefix + '-calendar-view_month-caption']" :key="month.caption">
           {{ month.caption }}
         </div>
         <div
@@ -35,10 +26,7 @@
               prefix + '-calendar-view_day',
               {
                 disabled: day.state === 'disabled',
-                selected:
-                  day.state === 'selected' ||
-                  day.state === 'startSelected' ||
-                  day.state === 'endSelected',
+                selected: day.state === 'selected' || day.state === 'startSelected' || day.state === 'endSelected',
                 'in-range': type === 'range' && day.state === 'selected'
               }
             ]"
@@ -48,19 +36,13 @@
           >
             <span
               v-if="day.topText"
-              :class="[
-                prefix + '-calendar-view_day-top-text',
-                { highlight: day.topHighlight }
-              ]"
+              :class="[prefix + '-calendar-view_day-top-text', { highlight: day.topHighlight }]"
               >{{ day.topText }}</span
             >
             {{ day.text }}
             <span
               v-if="day.bottomText"
-              :class="[
-                prefix + '-calendar-view_day-bottom-text',
-                { highlight: day.bottomHighlight }
-              ]"
+              :class="[prefix + '-calendar-view_day-bottom-text', { highlight: day.bottomHighlight }]"
               >{{ day.bottomText }}</span
             >
           </div>
@@ -149,16 +131,12 @@ export default {
     }
   },
   created() {
-    this.type = inArray(this.initialType, TYPE_NAMES)
-      ? this.initialType
-      : TYPE_NAMES[0]
+    this.type = inArray(this.initialType, TYPE_NAMES) ? this.initialType : TYPE_NAMES[0]
 
     const popup = this.appCalendarPopup
 
     this.updateOptions()
-    this.updateValue(
-      this.parseValues(popup && popup.modelValue != null ? popup.modelValue : this.modelValue)
-    )
+    this.updateValue(this.parseValues(popup && popup.modelValue != null ? popup.modelValue : this.modelValue))
 
     if (popup) {
       popup.detail = this.getDetail()
@@ -201,9 +179,7 @@ export default {
             if (hasDisabled) {
               printError('"modelValue"值的范围包含有禁用的天数.')
             } else if (rangeCount > this.maxRange) {
-              printError(
-                `"modelValue"值得范围有${rangeCount}天，不能超过${this.maxRange}天.`
-              )
+              printError(`"modelValue"值得范围有${rangeCount}天，不能超过${this.maxRange}天.`)
             } else {
               this.start = start
               this.end = end
@@ -253,9 +229,7 @@ export default {
       let state = ''
 
       if (
-        (this.type === 'range' &&
-          timestamp >= this.start.timestamp &&
-          timestamp <= this.end.timestamp) ||
+        (this.type === 'range' && timestamp >= this.start.timestamp && timestamp <= this.end.timestamp) ||
         timestamp === this.start.timestamp
       ) {
         state = 'selected'
@@ -276,12 +250,7 @@ export default {
 
       let dayInfo = {
         topHighlight: false,
-        topText:
-          state === 'startSelected'
-            ? '开始'
-            : state === 'endSelected'
-            ? '结束'
-            : '',
+        topText: state === 'startSelected' ? '开始' : state === 'endSelected' ? '结束' : '',
         state,
         bottomHighlight: false,
         bottomText: '',
@@ -305,9 +274,7 @@ export default {
       })
     },
     getFirstDayOfWeek() {
-      return this.firstDayOfWeek >= 0 && this.firstDayOfWeek <= 6
-        ? parseInt(this.firstDayOfWeek)
-        : 0
+      return this.firstDayOfWeek >= 0 && this.firstDayOfWeek <= 6 ? parseInt(this.firstDayOfWeek) : 0
     },
     getStartMonth(day) {
       const month = {
@@ -320,11 +287,7 @@ export default {
       let day2 = day.startOf('month')
 
       // 头部周偏移占位
-      for (
-        let i = 0, len = day2.day() - this.getFirstDayOfWeek();
-        i < len;
-        i++
-      ) {
+      for (let i = 0, len = day2.day() - this.getFirstDayOfWeek(); i < len; i++) {
         month.days.push({
           cover: true,
           text: '',
@@ -475,16 +438,10 @@ export default {
 
       if (this.type === 'range') {
         // 范围
-        if (
-          (this.start.dateString && this.end.dateString) ||
-          !this.start.dateString
-        ) {
+        if ((this.start.dateString && this.end.dateString) || !this.start.dateString) {
           this.setSelected('end', null, monthIndex, dayIndex)
         } else {
-          if (
-            day.timestamp > this.start.timestamp ||
-            (this.allowSameDay && day.timestamp === this.start.timestamp)
-          ) {
+          if (day.timestamp > this.start.timestamp || (this.allowSameDay && day.timestamp === this.start.timestamp)) {
             // 范围
             const { rangeCount, hasDisabled } = this.getRangeInfo(this.start, {
               monthIndex,
@@ -527,11 +484,7 @@ export default {
             const newState = this.getState(day.timestamp)
 
             if (newState !== day.state) {
-              this.$set(
-                this.months[i].days,
-                j,
-                this.getDayInfo(dayjs(day.timestamp), { state: newState })
-              )
+              this.$set(this.months[i].days, j, this.getDayInfo(dayjs(day.timestamp), { state: newState }))
             }
           }
         }
@@ -542,10 +495,7 @@ export default {
       let value
 
       if (this.type === 'range') {
-        value = [
-          dayjs(this.start.timestamp).toDate(),
-          dayjs(this.end.timestamp).toDate()
-        ]
+        value = [dayjs(this.start.timestamp).toDate(), dayjs(this.end.timestamp).toDate()]
       } else {
         value = dayjs(this.start.timestamp).toDate()
       }
@@ -563,16 +513,12 @@ export default {
      */
     getRangeInfo(start, end) {
       let hasDisabled = false
-      let rangeCount =
-        start.monthIndex === end.monthIndex && start.dayIndex === end.dayIndex
-          ? 1
-          : 2
+      let rangeCount = start.monthIndex === end.monthIndex && start.dayIndex === end.dayIndex ? 1 : 2
 
       for (let i = start.monthIndex; i <= end.monthIndex; i++) {
         for (
           let j = i === start.monthIndex ? start.dayIndex + 1 : 0,
-            len =
-              i === end.monthIndex ? end.dayIndex : this.months[i].days.length;
+            len = i === end.monthIndex ? end.dayIndex : this.months[i].days.length;
           j < len;
           j++
         ) {
@@ -596,139 +542,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-calendar-view {
-  --calendar-view-color: #{$font-color};
-  --calendar-view-highlight-color: #{$primary-color};
-  --calendar-view-highlight2-color: #{$danger-color};
-
-  height: 520px;
-  background: #fff;
-  overflow: hidden;
-  color: var(--calendar-view-color);
-
-  &_header {
-    height: 28px;
-    border-bottom: 1px solid $divider-color;
-  }
-
-  &_weekdays {
-    display: flex;
-    height: 100%;
-    align-items: center;
-  }
-
-  &_weekday {
-    width: 14.285%;
-    text-align: center;
-    font-size: 14px;
-
-    &.highlight {
-      color: var(--calendar-view-highlight2-color);
-    }
-  }
-
-  &_body {
-    position: relative;
-    height: calc(100% - 32px);
-    overflow-y: auto;
-  }
-
-  &_month-caption {
-    position: sticky;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    font-size: 14px;
-    text-align: center;
-    background-color: $background2-color;
-    z-index: 1;
-  }
-
-  &_days {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    z-index: 0;
-  }
-
-  &_day {
-    width: 14.285%;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    font-size: 17px;
-
-    span {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      font-size: 11px;
-      display: block;
-      width: 100%;
-      text-align: center;
-      height: 15px;
-      line-height: 15px;
-      margin-top: -24px;
-
-      &.highlight {
-        color: var(--calendar-view-highlight-color);
-      }
-
-      &.#{$prefix}-calendar-view_day-bottom.text {
-        margin: 9px 0 0 0;
-
-        &.highlight {
-          color: var(--calendar-view-highlight2-color);
-        }
-      }
-    }
-
-    &.disabled {
-      opacity: 0.2;
-    }
-
-    &.selected,
-    &.in-range {
-      color: #fff;
-
-      span.highlight {
-        color: #fff;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        width: 100%;
-        height: 60px;
-        background-color: var(--calendar-view-highlight-color);
-        z-index: -1;
-        margin-top: -30px;
-        border-radius: 4px;
-      }
-    }
-
-    &.in-range {
-      color: var(--calendar-view-highlight-color);
-
-      span.highlight {
-        color: var(--calendar-view-highlight-color);
-      }
-
-      &::before {
-        border-radius: 0;
-        opacity: 0.2;
-      }
-    }
-  }
-}
-</style>

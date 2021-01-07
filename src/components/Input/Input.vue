@@ -3,15 +3,15 @@
     :class="[
       prefix + '-input',
       {
-        'has--prepend': hasPrepend,
-        'has--append': hasAppend,
+        'has--prepend': $slots.prepend,
+        'has--append': $slots.append,
         [prefix + '-textarea']: type === 'textarea',
         focus: focus2
       }
     ]"
     :disabled="disabled"
   >
-    <div :class="[prefix + '-input_prepend']" v-if="hasPrepend">
+    <div :class="[prefix + '-input_prepend']" v-if="$slots.prepend">
       <slot name="prepend"></slot>
     </div>
     <textarea
@@ -51,7 +51,7 @@
       class-name="CloseCircleFilled"
       @click.native.prevent="onClear"
     />
-    <div :class="[prefix + '-input_append']" v-if="hasAppend">
+    <div :class="[prefix + '-input_append']" v-if="$slots.append">
       <slot name="append"></slot>
     </div>
   </label>
@@ -111,9 +111,6 @@ export default {
   data() {
     return {
       prefix: SDKKey,
-
-      hasPrepend: false,
-      hasAppend: false,
 
       formValue: '',
 
@@ -185,13 +182,6 @@ export default {
     }
   },
   mounted() {
-    if (this.$scopedSlots.prepend) {
-      this.hasPrepend = true
-    }
-    if (this.$scopedSlots.append) {
-      this.hasAppend = true
-    }
-
     this.updateValue(this.modelValue == null ? '' : this.modelValue)
 
     const $input = this.getInputEl()
@@ -294,124 +284,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-input {
-  --input-height: 48px;
-  --input-font-size: 17px;
-  --input-icon-size: 18px;
-  --input-color: #{$title-color};
-  --input-secondary-color: #{$font3-color};
-
-  height: var(--input-height);
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  border: 1px solid $border-color;
-  box-sizing: border-box;
-  padding: 0 16px;
-  font-size: var(--input-font-size);
-  background-color: #fff;
-  color: var(--input-color);
-
-  .#{$prefix}-icon {
-    --size: var(--input-icon-size);
-    --color: var(--input-secondary-color);
-  }
-
-  &[disabled] {
-    background-color: $background2-color;
-    --input-color: #{$font3-color};
-    -webkit-text-fill-color: $font3-color;
-    opacity: 1;
-  }
-
-  &_prepend,
-  &_append {
-    display: flex;
-    align-items: center;
-    padding: 0 8px 0 0;
-    color: var(--input-secondary-color);
-  }
-
-  &_append,
-  &_clear,
-  &_arrow {
-    padding: 0 0 0 8px;
-  }
-
-  &.has--value {
-    .#{$prefix}-input {
-      &_arrow {
-        --color: var(--input-color);
-      }
-    }
-  }
-
-  &_input {
-    flex: 1;
-    display: block;
-    overflow: hidden;
-    margin: 0;
-    outline: none;
-    border: none;
-    width: 100%;
-    height: 100%;
-    line-height: calc(var(--input-height) - 2px);
-    width: 100%;
-    padding: 0;
-    font-size: var(--input-font-size);
-    cursor: pointer;
-    color: $title-color;
-    background: none;
-    box-sizing: border-box;
-    box-shadow: none;
-    resize: none;
-
-    &:read-only {
-      cursor: auto;
-    }
-
-    &[type='search']::-webkit-search-cancel-button {
-      display: none;
-    }
-
-    &.placeholder,
-    &::-webkit-input-placeholder {
-      color: $font3-color;
-    }
-
-    &:disabled {
-      color: $font3-color;
-      -webkit-text-fill-color: $font3-color;
-      opacity: 1;
-      cursor: not-allowed;
-      user-select: none;
-    }
-  }
-
-  &.focus {
-    border-color: $primary-color;
-  }
-
-  &_cover {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    margin: 0;
-    padding: 0;
-    border: none;
-
-    &:disabled {
-      cursor: not-allowed;
-    }
-  }
-}
-</style>

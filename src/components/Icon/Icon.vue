@@ -68,23 +68,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-icon {
-  --size: 24px;
-  --color: #{$title-color};
-
-  display: inline-block;
-  width: var(--size);
-  height: var(--size);
-  overflow: hidden;
-  line-height: 0;
-  fill: var(--color);
-
-  &.spin {
-    @include rotate-360-animation(800ms);
-  }
-}
-</style>

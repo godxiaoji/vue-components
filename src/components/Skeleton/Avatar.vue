@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      prefix + '-skeleton-avatar',
-      shapeClassName,
-      { animated: useAnimation }
-    ]"
-  ></div>
+  <div :class="[prefix + '-skeleton-avatar', shapeClassName, { animated: useAnimation }]"></div>
 </template>
 
 <script>
@@ -49,10 +43,7 @@ export default {
         shape = this.shape
       }
 
-      return (
-        'shape--' +
-        (inArray(shape, AVATAR_SHAPE_NAMES) ? shape : AVATAR_SHAPE_NAMES[0])
-      )
+      return 'shape--' + (inArray(shape, AVATAR_SHAPE_NAMES) ? shape : AVATAR_SHAPE_NAMES[0])
     },
     useAnimation() {
       if (this.skeletonSubOptions) {
@@ -63,28 +54,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-@import './index.module.scss';
-
-.#{$prefix}-skeleton-avatar {
-  display: block;
-  width: 32px;
-  height: 32px;
-  border-radius: 2px;
-  @include skeleton-background;
-
-  &.shape--circle {
-    border-radius: 50%;
-  }
-
-  &.shape--square {
-    border-radius: 0;
-  }
-
-  &.animated {
-    @include skeleton-animation;
-  }
-}
-</style>

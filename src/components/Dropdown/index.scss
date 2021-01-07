@@ -1,0 +1,31 @@
+@import '../style/var.scss';
+
+.#{$prefix}-dropdown {
+  &.#{$prefix}-popup {
+    height: auto;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  &_inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-height: 50px;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.2s;
+    background-color: #fff;
+  }
+
+  &.visible {
+    .#{$prefix}-dropdown {
+      &_inner {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+}

@@ -2,22 +2,14 @@
 import SkeletonLayout from './Layout.vue'
 import { SDKKey } from '../../config'
 import { inArray } from '../../helpers/util'
-import {
-  paragraphDefaultRow,
-  AVATAR_SHAPE_NAMES,
-  BUTTON_SHAPE_NAMES
-} from './util'
+import { paragraphDefaultRow, AVATAR_SHAPE_NAMES, BUTTON_SHAPE_NAMES } from './util'
 
 export default {
   render(createElement) {
     if (!this.loading) {
       if (this.$slots.default) {
         if (this.$slots.default.length > 1) {
-          return createElement(
-            'div',
-            { class: [SDKKey + '-skeleton_loaded'] },
-            this.$slots.default
-          )
+          return createElement('div', { class: [SDKKey + '-skeleton_loaded'] }, this.$slots.default)
         }
         return this.$slots.default
       }
@@ -120,38 +112,6 @@ export default {
   },
   created() {
     this._app_skeleton = true
-  },
-  mounted() {
-    if (this.$scopedSlots.default) {
-      this.hasSlot = true
-    }
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-@import './index.module.scss';
-
-.#{$prefix}-skeleton {
-  &_layout {
-    display: flex;
-    width: 100%;
-
-    &-left {
-      + .#{$prefix}-skeleton_layout-right {
-        padding: 8px 0 0 0;
-        margin-left: 12px;
-      }
-    }
-
-    &-right {
-      flex: 1;
-
-      .#{$prefix}-skeleton-title {
-        margin-bottom: 20px;
-      }
-    }
-  }
-}
-</style>

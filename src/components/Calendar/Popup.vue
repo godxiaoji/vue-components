@@ -122,16 +122,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-calendar-popup {
-  &_confirm {
-    padding: 12px 16px;
-    background-color: #fff;
-    display: flex;
-    border-top: 1px solid $divider-color;
-  }
-}
-</style>

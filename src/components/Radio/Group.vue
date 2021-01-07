@@ -113,35 +113,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-radio-group {
-  display: flex;
-  height: 32px;
-  align-items: center;
-  color: $title-color;
-  box-sizing: border-box;
-  flex: 1;
-
-  &.vertical {
-    flex-direction: column;
-    height: auto;
-    min-height: 32px;
-
-    .#{$prefix}-radio {
-      display: flex;
-      width: 100%;
-
-      + .#{$prefix}-radio {
-        margin-left: 0;
-
-        &::before {
-          content: '';
-        }
-      }
-    }
-  }
-}
-</style>

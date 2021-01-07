@@ -40,7 +40,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import '../../../../src/components/component.module.scss';
+@import '../../../../src/components/style/var.scss';
 
 .empty-custom-image {
   width: 320px;

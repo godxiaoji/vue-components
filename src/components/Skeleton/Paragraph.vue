@@ -42,10 +42,7 @@ export default {
       let row
 
       if (this.row == null) {
-        if (
-          this.skeletonSubOptions &&
-          this.skeletonSubOptions.paragraphRow != null
-        ) {
+        if (this.skeletonSubOptions && this.skeletonSubOptions.paragraphRow != null) {
           row = this.skeletonSubOptions.paragraphRow
         }
       } else {
@@ -57,34 +54,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-@import './index.module.scss';
-
-.#{$prefix}-skeleton-paragraph {
-  overflow: hidden;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  & li {
-    width: 100%;
-    margin: 0 0 12px 0;
-    height: 16px;
-    @include skeleton-background;
-    border-radius: 2px;
-
-    &:last-child {
-      width: 60%;
-      margin-bottom: 0;
-    }
-  }
-
-  &.animated {
-    & li {
-      @include skeleton-animation;
-    }
-  }
-}
-</style>

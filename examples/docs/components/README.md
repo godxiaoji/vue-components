@@ -9,4 +9,4 @@
 如果需要修改组件前缀，需要同时修改以下两个文件的值：
 
 - `src/config.js` 的 `SDKKey`
-- `src/components/component.module.sass` 的 `$prefix`
+- `src/components/style/var.sass` 的 `$prefix`

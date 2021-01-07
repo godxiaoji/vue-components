@@ -10,30 +10,25 @@
     @scroll-to-lower="onScrollToLower"
     @refreshing="onRefreshing"
   >
-    <div :class="[prefix + '-flat-list_header']" v-show="hasHeader">
+    <div :class="[prefix + '-flat-list_header']" v-show="$slots.header">
       <slot name="header"></slot>
     </div>
     <div
       :class="[prefix + '-flat-list_item']"
       v-for="(item, index) in list"
-      :key="
-        dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index
-      "
+      :key="dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index"
     >
       <div :class="[prefix + '-flat-list_item-inner']" v-show="!item.recycled">
         <slot name="item" :item="item.data" :index="index"> </slot>
       </div>
-      <div
-        :class="[prefix + '-flat-list_separator']"
-        v-if="hasSeparator && index < list.length - 1"
-      >
+      <div :class="[prefix + '-flat-list_separator']" v-if="$slots.separator && index < list.length - 1">
         <slot name="separator"></slot>
       </div>
     </div>
     <div :class="[prefix + '-flat-list_empty']" v-show="list.length === 0">
       <slot name="empty"></slot>
     </div>
-    <div :class="[prefix + '-flat-list_footer']" v-show="hasFooter">
+    <div :class="[prefix + '-flat-list_footer']" v-show="$slots.footer">
       <slot name="footer"></slot>
     </div>
   </scroll-view>
@@ -105,10 +100,6 @@ export default {
       scrollX: false,
       scrollY: true,
 
-      hasSeparator: false,
-      hasHeader: false,
-      hasFooter: false,
-
       list: []
     }
   },
@@ -153,12 +144,6 @@ export default {
     this.wrapperSize = this.getElSize(this.$el)
     this.$el.addEventListener('resize', this.onResize, false)
 
-    const { separator, header, footer } = this.$scopedSlots
-
-    if (separator) this.hasSeparator = true
-    if (header) this.hasHeader = true
-    if (footer) this.hasFooter = true
-
     let scrolled = false
 
     if (this.initialScrollIndex >= 0) {
@@ -200,10 +185,7 @@ export default {
         if (oldItem) {
           if (this.dataKey === '*this' && v === oldItem.data) {
             newItem.recycled = oldItem.recycled
-          } else if (
-            this.dataKey &&
-            v[this.dataKey] === oldItem.data[this.dataKey]
-          ) {
+          } else if (this.dataKey && v[this.dataKey] === oldItem.data[this.dataKey]) {
             newItem.recycled = oldItem.recycled
           } else if (!this.dataKey) {
             newItem.recycled = oldItem.recycled
@@ -366,8 +348,7 @@ export default {
      */
     getItemEls() {
       const $els = []
-      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`)
-        .children
+      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`).children
 
       for (let i = 0, len = $children.length; i < len; i++) {
         const $el = $children[i]
@@ -396,10 +377,7 @@ export default {
 
         if (options.viewPosition === 0.5 || options.viewPosition === 'center') {
           block = 'center'
-        } else if (
-          options.viewPosition === 1 ||
-          options.viewPosition === 'end'
-        ) {
+        } else if (options.viewPosition === 1 || options.viewPosition === 'end') {
           block = 'end'
         }
       }
@@ -469,44 +447,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-flat-list {
-  position: relative;
-  display: block;
-  width: 100%;
-
-  &_item {
-    display: flex;
-    flex-direction: column;
-
-    &-inner {
-      height: 100%;
-      flex-grow: 1;
-    }
-  }
-
-  &_header,
-  &_footer {
-    .#{$prefix}-flat-list.horizontal & {
-      display: inline-block;
-      vertical-align: top;
-    }
-  }
-
-  &.horizontal {
-    white-space: nowrap;
-
-    .#{$prefix}-flat-list {
-      &_item {
-        display: inline-flex;
-        flex-direction: row;
-        height: 100%;
-        vertical-align: top;
-      }
-    }
-  }
-}
-</style>

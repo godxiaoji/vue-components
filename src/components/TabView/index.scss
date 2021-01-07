@@ -1,0 +1,55 @@
+@import '../style/var.scss';
+
+.#{$prefix}-tab-view {
+  background-color: #fff;
+
+  &_header {
+    position: relative;
+    height: 37px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &::after {
+      content: '';
+    }
+  }
+
+  &_body {
+    height: calc(100% - 37px);
+
+    .#{$prefix}-swiper {
+      height: 100%;
+    }
+  }
+
+  &.vertical {
+    display: flex;
+
+    .#{$prefix}-tab-view {
+      &_header {
+        width: 80px;
+        height: 100%;
+        background-color: $background-color;
+
+        &::after {
+          content: none;
+        }
+      }
+
+      &_body {
+        flex: 1;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.#{$prefix}-tab-view-item {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}

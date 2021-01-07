@@ -3,16 +3,11 @@
     <cell :label="label" :description="errMsg" :required="required">
       <slot>
         <div :class="[prefix + '-input']">
-          <div
-            :class="[prefix + '-input_input', { placeholder: !valueString2 }]"
-          >
+          <div :class="[prefix + '-input_input', { placeholder: !valueString2 }]">
             {{ valueString2 || placeholder }}
           </div>
           <div :class="[prefix + '-input_append']">
-            <icon
-              class-name="RightOutlined"
-              :class="[prefix + '-form-item_icon']"
-            />
+            <icon class-name="RightOutlined" :class="[prefix + '-form-item_icon']" />
           </div>
           <input type="hidden" ref="input" :name="name" :value="valueString2" />
         </div>
@@ -26,13 +21,7 @@ import Cell from '../Cell'
 import Icon from '../Icon'
 import Schema from 'async-validator'
 import { SDKKey } from '../../config'
-import {
-  isArray,
-  isBoolean,
-  isNumber,
-  isFunction,
-  isString
-} from '../../helpers/util'
+import { isArray, isBoolean, isNumber, isFunction, isString } from '../../helpers/util'
 
 export default {
   name: SDKKey + '-form-item',
@@ -123,11 +112,7 @@ export default {
 
       if (this.rules && this.rules[0]) {
         rules = this.rules
-      } else if (
-        this.appForm &&
-        this.appForm.rules &&
-        isArray(this.appForm.rules[name])
-      ) {
+      } else if (this.appForm && this.appForm.rules && isArray(this.appForm.rules[name])) {
         rules = this.appForm.rules[name]
       }
 
@@ -223,24 +208,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-form-item {
-  display: block;
-
-  > .#{$prefix}-cell {
-    .#{$prefix}-cell {
-      &_description {
-        color: $danger-color;
-      }
-    }
-  }
-
-  + .#{$prefix}-form-item .#{$prefix}-cell::before {
-    content: '';
-    margin-left: 16px;
-  }
-}
-</style>

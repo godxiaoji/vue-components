@@ -71,29 +71,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-pop-dialog {
-  &_footer {
-    display: flex;
-    flex-direction: column;
-
-    &::before {
-      content: '';
-    }
-
-    &-inner {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-
-      > .#{$prefix}-button + .#{$prefix}-button::before {
-        height: 100%;
-        background-color: $border-color;
-      }
-    }
-  }
-}
-</style>

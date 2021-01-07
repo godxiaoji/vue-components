@@ -6,16 +6,12 @@
       :style="{ 'padding-top': aspectRatio * 100 + '%' }"
     ></span>
     <i :class="[prefix + '-image_loading']" v-if="loading">
-      <icon class-name="ImageOutlined"/>
+      <icon class-name="ImageOutlined" />
     </i>
     <i :class="[prefix + '-image_error']" v-if="error">
-      <icon class-name="ImageBreakOutlined"/>
+      <icon class-name="ImageBreakOutlined" />
     </i>
-    <img
-      v-if="imgSrc"
-      :class="[prefix + '-image_img', modeClassName]"
-      :src="imgSrc"
-    />
+    <img v-if="imgSrc" :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
   </div>
 </template>
 
@@ -134,14 +130,11 @@ export default {
 
       const type = 'load'
 
-      this.$emit(
-        type,
-        {
-          width: res.naturalWidth,
-          height: res.naturalHeight,
-          src: this.imgSrc
-        }
-      )
+      this.$emit(type, {
+        width: res.naturalWidth,
+        height: res.naturalHeight,
+        src: this.imgSrc
+      })
     },
     onError(e) {
       this.loading = false
@@ -155,127 +148,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-image {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-
-  &_loading,
-  &_error {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .#{$prefix}-icon {
-      --color: #{$border-color};
-      --size: 32px;
-    }
-  }
-
-  &_ratio {
-    padding-top: 100%;
-    float: left;
-  }
-
-  &_img {
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: none;
-
-    &.mode--scaleToFill {
-      object-fit: fill;
-    }
-
-    &.mode--aspectFit {
-      object-fit: contain;
-    }
-
-    &.mode--aspectFill {
-      object-fit: cover;
-    }
-
-    &.mode--widthFix {
-      height: auto;
-    }
-
-    &.mode--top,
-    &.mode--bottom {
-      left: 50%;
-      width: auto;
-      height: auto;
-      transform: translateX(-50%);
-    }
-
-    &.mode--top {
-      top: 0;
-    }
-
-    &.mode--bottom {
-      bottom: 0;
-    }
-
-    &.mode--center {
-      top: 50%;
-      left: 50%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
-    }
-
-    &.mode--left,
-    &.mode--right {
-      top: 50%;
-      width: auto;
-      height: auto;
-      transform: translateY(-50%);
-    }
-
-    &.mode--left {
-      left: 0;
-    }
-
-    &.mode--right {
-      right: 0;
-    }
-
-    &.mode--top-left {
-      top: 0;
-      left: 0;
-      width: auto;
-      height: auto;
-    }
-
-    &.mode--top-right {
-      top: 0;
-      right: 0;
-      width: auto;
-      height: auto;
-    }
-
-    &.mode--bottom-left {
-      bottom: 0;
-      left: 0;
-      width: auto;
-      height: auto;
-    }
-
-    &.mode--bottom-right {
-      right: 0;
-      bottom: 0;
-      width: auto;
-      height: auto;
-    }
-  }
-}
-</style>

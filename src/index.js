@@ -4,6 +4,7 @@ import * as Apis from './apis'
 import { addData as _addRegionData } from './components/util/mulit-selector/region'
 import { SDKKey } from './config'
 import { init as initEvent } from './helpers/events'
+import './components/style'
 
 const Vfox = {
   install(Vue) {

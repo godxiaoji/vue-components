@@ -1,19 +1,11 @@
 <template>
   <div
-    :class="[
-      prefix + '-preview-image',
-      prefix + '-popup',
-      { visible: visible2 }
-    ]"
+    :class="[prefix + '-preview-image', prefix + '-popup', { visible: visible2 }]"
     :style="{ zIndex }"
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']"></div>
-    <swiper
-      :activeIndex.sync="activeIndex"
-      @click="onPreviewClick"
-      @change="onSwiperChange"
-    >
+    <swiper :activeIndex.sync="activeIndex" @click="onPreviewClick" @change="onSwiperChange">
       <swiper-item v-for="(item, index) in images" :key="index">
         <div :class="[prefix + '-preview-image_image']">
           <fx-image
@@ -25,9 +17,7 @@
         </div>
       </swiper-item>
     </swiper>
-    <div :class="[prefix + '-preview-image_pagination']">
-      {{ activeIndex + 1 }} / {{ urls.length }}
-    </div>
+    <div :class="[prefix + '-preview-image_pagination']">{{ activeIndex + 1 }} / {{ urls.length }}</div>
     <fx-button
       v-if="showClose"
       :class="[prefix + '-preview-image_close']"
@@ -161,58 +151,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-preview-image {
-  .#{$prefix}-mask {
-    background-color: rgba($color: $black-color, $alpha: 0.9);
-  }
-
-  .#{$prefix}-swiper {
-    display: block;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.2s;
-    opacity: 0;
-  }
-
-  &.visible {
-    .#{$prefix}-swiper {
-      opacity: 1;
-    }
-  }
-
-  &_image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    .#{$prefix}-image {
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
-
-  &_pagination {
-    position: absolute;
-    top: 0;
-    left: 0;
-    line-height: 48px;
-    width: 100%;
-    font-size: 17px;
-    color: #fff;
-    text-align: center;
-  }
-
-  &_close {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 0;
-  }
-}
-</style>

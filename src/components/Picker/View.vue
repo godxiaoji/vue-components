@@ -1,21 +1,10 @@
 <template>
   <div :class="[prefix + '-picker-view']" ref="picker">
     <div :class="[prefix + '-picker-view_cols']">
-      <div
-        :class="[prefix + '-picker-view_col']"
-        v-for="(list, listIndex) in cols"
-        :key="listIndex"
-      >
-        <ul
-          :class="[prefix + '-picker-view_list']"
-          :data-index="listIndex"
-          @scroll.stop="onListScroll"
-        >
+      <div :class="[prefix + '-picker-view_col']" v-for="(list, listIndex) in cols" :key="listIndex">
+        <ul :class="[prefix + '-picker-view_list']" :data-index="listIndex" @scroll.stop="onListScroll">
           <li
-            :class="[
-              prefix + '-picker-view_item',
-              { selected: item.selected, disabled: item.disabled }
-            ]"
+            :class="[prefix + '-picker-view_item', { selected: item.selected, disabled: item.disabled }]"
             v-for="(item, index) in list"
             :key="item.value"
             :selected="item.selected"
@@ -81,8 +70,7 @@ export default {
           const $firstList = $lists[0]
 
           if ($firstList && $firstList.firstElementChild) {
-            const itemHeight =
-              $firstList.firstElementChild.clientHeight || this.itemHeight
+            const itemHeight = $firstList.firstElementChild.clientHeight || this.itemHeight
             const $selecteds = $picker.querySelectorAll('[selected]')
             $selecteds.forEach(($selected, index) => {
               const itemIndex = parseInt($selected.dataset.index)
@@ -118,10 +106,7 @@ export default {
       let isChange = current !== oldSelectIndex
 
       if (isChange) {
-        while (
-          $items[current].getAttribute('disabled') === 'disabled' &&
-          current !== oldSelectIndex
-        ) {
+        while ($items[current].getAttribute('disabled') === 'disabled' && current !== oldSelectIndex) {
           // 处理disabled 不能选的问题
           if (current > oldSelectIndex) {
             current--
@@ -169,95 +154,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-picker-view {
-  flex-grow: 1;
-  position: relative;
-  background: #fff;
-  color: $title-color;
-  --pick-view-item-height: 48px;
-
-  &_cols {
-    width: 100%;
-    height: calc(var(--pick-view-item-height) * 5);
-    display: flex;
-    flex-wrap: nowrap;
-  }
-
-  &_col {
-    position: relative;
-    height: 100%;
-    flex: 1;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: calc(var(--pick-view-item-height) * 2);
-      left: 0;
-      height: 0;
-      width: 100%;
-      box-sizing: border-box;
-      border-bottom: 1px solid $border-color;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: calc(var(--pick-view-item-height) * 2);
-      left: 0;
-      height: 0;
-      width: 100%;
-      box-sizing: border-box;
-      border-top: 1px solid $border-color;
-    }
-  }
-
-  &_list {
-    width: 100%;
-    max-height: 100%;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    user-select: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-  }
-
-  &_item {
-    padding: 0 12px;
-    cursor: pointer;
-    user-select: none;
-    box-sizing: border-box;
-    height: var(--pick-view-item-height);
-    line-height: var(--pick-view-item-height);
-    font-size: 17px;
-    color: $font3-color;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: center;
-
-    &:first-child {
-      margin-top: calc(var(--pick-view-item-height) * 2);
-    }
-
-    &:last-child {
-      margin-bottom: calc(var(--pick-view-item-height) * 2);
-    }
-
-    &.selected {
-      color: $title-color;
-    }
-
-    &.disabled {
-      color: $divider-color;
-    }
-  }
-}
-</style>

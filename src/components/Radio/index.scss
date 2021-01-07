@@ -1,0 +1,63 @@
+@import '../style/var.scss';
+
+.#{$prefix}-radio {
+  --radio-color: #{$border-color};
+  --radio-active-color: #{$primary-color};
+  --radio-font-color: #{$title-color};
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 17px;
+  color: var(--radio-font-color);
+  text-align: left;
+  position: relative;
+
+  + .#{$prefix}-radio {
+    margin-left: 16px;
+  }
+
+  &_box {
+    display: flex;
+    width: 100%;
+    height: 32px;
+    box-sizing: border-box;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  &_icon,
+  &_checked-icon {
+    --size: 24px;
+    --color: var(--radio-color);
+  }
+
+  &_checked-icon {
+    display: none;
+    --color: var(--radio-active-color);
+  }
+
+  &_input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+
+    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
+      display: none;
+    }
+    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_checked-icon {
+      display: block;
+    }
+  }
+
+  &_text {
+    display: block;
+    line-height: 1;
+    margin-left: 12px;
+  }
+
+  &[disabled] {
+    opacity: 0.3;
+  }
+}

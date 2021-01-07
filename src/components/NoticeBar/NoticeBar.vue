@@ -1,28 +1,15 @@
 <template>
-  <div
-    :class="[prefix + '-notice-bar', typeClassName]"
-    :style="styles"
-    v-show="visible2"
-    @click="onClick"
-  >
+  <div :class="[prefix + '-notice-bar', typeClassName]" :style="styles" v-show="visible2" @click="onClick">
     <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
-      <icon :class-name="leftIcon" :style="iconStyle"/>
+      <icon :class-name="leftIcon" :style="iconStyle" />
     </div>
     <div :class="[prefix + '-notice-bar_content']">
-      <div
-        ref="content"
-        :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]"
-        :style="contentStyles"
-      >
+      <div ref="content" :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]" :style="contentStyles">
         {{ title }}
       </div>
     </div>
-    <div
-      v-if="rightIcon2"
-      :class="[prefix + '-notice-bar_right-icon']"
-      @click="onRightIconClick"
-    >
-      <icon :class-name="rightIcon2" :style="iconStyle"/>
+    <div v-if="rightIcon2" :class="[prefix + '-notice-bar_right-icon']" @click="onRightIconClick">
+      <icon :class-name="rightIcon2" :style="iconStyle" />
     </div>
   </div>
 </template>
@@ -146,16 +133,13 @@ export default {
       const obj = {}
 
       if (this.marqueeX !== 0) obj.transform = `translateX(${this.marqueeX}px)`
-      if (this.marqueeDuration > 0)
-        obj.transitionDuration = `${this.marqueeDuration}s`
+      if (this.marqueeDuration > 0) obj.transitionDuration = `${this.marqueeDuration}s`
 
       return obj
     },
     // 计算属性的 getter
     typeClassName() {
-      return (
-        'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
-      )
+      return 'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
     }
   },
   mounted() {
@@ -237,79 +221,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-notice-bar {
-  // --notice-bar-color: #{$warning-color};
-  --notice-bar-color: #db8f02;
-  --notice-bar-background-color: #{$warning-background-color};
-
-  position: relative;
-  display: flex;
-  padding: 10px 0 10px 16px;
-  min-height: 40px;
-  align-items: center;
-  background-color: var(--notice-bar-background-color);
-  color: var(--notice-bar-color);
-  line-height: 20px;
-  font-size: 14px;
-  box-sizing: border-box;
-  flex-grow: 1;
-
-  &.type--success {
-    --notice-bar-color: #{$success-color};
-    --notice-bar-background-color: #{$success-background-color};
-  }
-
-  &.type--primary {
-    --notice-bar-color: #{$primary-color};
-    --notice-bar-background-color: #{$primary-background-color};
-  }
-
-  &.type--danger {
-    --notice-bar-color: #{$danger-color};
-    --notice-bar-background-color: #{$danger-background-color};
-  }
-
-  &_left-icon,
-  &_right-icon {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-right: 8px;
-    flex-shrink: 0;
-
-    .#{$prefix}-icon {
-      --size: 14px;
-      --color: var(--notice-bar-color);
-    }
-  }
-
-  &_right-icon {
-    padding: 0 16px 0 8px;
-    margin: -10px 0;
-  }
-
-  &_content {
-    flex-grow: 1;
-    overflow: hidden;
-    margin-right: 16px;
-    position: relative;
-    min-height: 20px;
-
-    + .#{$prefix}-notice-bar_right-icon {
-      margin-left: -16px;
-    }
-  }
-
-  &_content-inner {
-    &.marquee {
-      position: absolute;
-      white-space: nowrap;
-      transition-timing-function: linear;
-    }
-  }
-}
-</style>

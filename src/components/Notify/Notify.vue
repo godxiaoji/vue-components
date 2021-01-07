@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
-    :style="{ zIndex }"
-    v-show="isShow"
-  >
+  <div :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]" :style="{ zIndex }" v-show="isShow">
     <notice-bar
       :class="[prefix + '-notify_inner']"
       :type="type"
@@ -98,31 +94,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-popup.#{$prefix}-notify {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: auto;
-}
-
-.#{$prefix}-notify {
-  &_inner {
-    width: 100%;
-    transform: translate3d(0, calc(-100%), 0);
-    transition: all 0.2s;
-    opacity: 0;
-  }
-
-  &.visible {
-    .#{$prefix}-notify_inner {
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-    }
-  }
-}
-</style>

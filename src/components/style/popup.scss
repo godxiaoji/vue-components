@@ -1,0 +1,51 @@
+@import './var.scss';
+
+.#{$prefix}-overflow-hidden {
+  overflow: hidden !important;
+}
+
+.#{$prefix}-mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: $black-color, $alpha: 0.45);
+}
+
+.#{$prefix}-popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: $default-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > .#{$prefix}-mask {
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+  }
+
+  &.visible {
+    > .#{$prefix}-mask {
+      opacity: 1;
+    }
+  }
+
+  &.no--mask {
+    &.visible {
+      height: 0;
+    }
+
+    > .#{$prefix}-mask {
+      display: none;
+    }
+  }
+}

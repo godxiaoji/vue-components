@@ -209,13 +209,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-calendar {
-  display: flex;
-  width: 100%;
-  position: relative;
-}
-</style>

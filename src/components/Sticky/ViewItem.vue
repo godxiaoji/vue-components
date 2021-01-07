@@ -43,25 +43,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-sticky-view-item {
-  &_header {
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    height: var(--sticky-view-fixed-height);
-    line-height: var(--sticky-view-fixed-height);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    padding: 0 16px;
-    background-color: #fff;
-    color: $font-color;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-}
-</style>

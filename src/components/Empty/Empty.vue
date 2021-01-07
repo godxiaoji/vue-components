@@ -38,44 +38,8 @@ export default {
   },
   computed: {
     imageUrl() {
-      return `https://cdn.fox2.cn/vfox/empty/${
-        inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
-      }@2x.png`
+      return `https://cdn.fox2.cn/vfox/empty/${inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]}@2x.png`
     }
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-empty {
-  --empty-font-color: #{$font2-color};
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 24px 0;
-  box-sizing: border-box;
-
-  &_image {
-    width: 160px;
-    height: 160px;
-  }
-
-  &_description {
-    color: var(--empty-font-color);
-    text-align: center;
-    word-break: break-all;
-    word-wrap: break-word;
-    margin: 16px 0 0 0;
-    font-size: 14px;
-    line-height: 19.6px;
-
-    + * {
-      margin-top: 16px;
-    }
-  }
-}
-</style>

@@ -1,17 +1,8 @@
 <template>
   <div :class="[prefix + '-scroll-tab']">
     <div :class="[prefix + '-scroll-tab_sidebar']">
-      <sticky
-        ref="sidebar"
-        :offset-top="stickyOffsetTop"
-        :offset-bottom="stickyOffsetBottom"
-      >
-        <tab
-          :options="tabList"
-          v-model="activeIndex"
-          :vertical="true"
-          :scroll-threshold="1"
-        />
+      <sticky ref="sidebar" :offset-top="stickyOffsetTop" :offset-bottom="stickyOffsetBottom">
+        <tab :options="tabList" v-model="activeIndex" :vertical="true" :scroll-threshold="1" />
       </sticky>
     </div>
     <div :class="[prefix + '-scroll-tab_body']">
@@ -105,25 +96,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-scroll-tab {
-  display: flex;
-  overflow-y: auto;
-  position: relative;
-  background-color: $background-color;
-
-  &_sidebar {
-    width: 80px;
-    height: 100%;
-    flex-grow: 0;
-    background-color: $background-color;
-  }
-
-  &_body {
-    flex: 1;
-  }
-}
-</style>

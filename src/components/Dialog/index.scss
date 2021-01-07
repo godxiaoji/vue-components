@@ -1,0 +1,63 @@
+@import '../style/var.scss';
+
+.#{$prefix}-dialog {
+  &_header {
+    flex: 1;
+    font-size: 17px;
+    line-height: 24px;
+    height: 24px;
+    font-weight: 500;
+    color: $title-color;
+    margin: 32px 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: center;
+    white-space: pre-line;
+
+    + .#{$prefix}-dialog_content {
+      margin-top: 0;
+    }
+  }
+
+  &_content {
+    margin-top: 16px;
+    padding: 16px 24px;
+    font-size: 17px;
+    line-height: 24px;
+    color: $font-color;
+
+    &-text {
+      min-height: 24px;
+      max-height: 300px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      word-break: break-all;
+      word-wrap: break-word;
+      text-align: center;
+      white-space: pre-line;
+    }
+  }
+
+  &_footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+
+    &::before {
+      content: '';
+    }
+
+    &-inner {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      > .#{$prefix}-button + .#{$prefix}-button::before {
+        height: 100%;
+        background-color: $border-color;
+      }
+    }
+  }
+}

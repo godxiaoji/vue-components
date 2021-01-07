@@ -32,20 +32,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-@import './index.module.scss';
-
-.#{$prefix}-skeleton-image {
-  display: block;
-  width: 100px;
-  height: 100px;
-  border-radius: 2px;
-  @include skeleton-background;
-
-  &.animated {
-    @include skeleton-animation;
-  }
-}
-</style>

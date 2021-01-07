@@ -32,11 +32,7 @@ export default {
     // 水平排列方式
     justify: {
       validator(value) {
-        return (
-          ['start', 'end', 'center', 'space-around', 'space-between'].indexOf(
-            value
-          ) !== -1
-        )
+        return ['start', 'end', 'center', 'space-around', 'space-between'].indexOf(value) !== -1
       },
       default: 'start'
     },
@@ -110,52 +106,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  &.justify {
-    &--start {
-      justify-content: flex-start;
-    }
-
-    &--end {
-      justify-content: flex-end;
-    }
-
-    &--center {
-      justify-content: center;
-    }
-
-    &--space-around {
-      justify-content: space-around;
-    }
-
-    &--space-between {
-      justify-content: space-between;
-    }
-  }
-
-  &.align {
-    &--top {
-      align-items: flex-start;
-    }
-
-    &--middle {
-      align-items: center;
-    }
-
-    &--bottom {
-      align-items: flex-end;
-    }
-  }
-}
-</style>

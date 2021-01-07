@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      prefix + '-skeleton-button',
-      shapeClassName,
-      { animated: useAnimation }
-    ]"
-  ></div>
+  <div :class="[prefix + '-skeleton-button', shapeClassName, { animated: useAnimation }]"></div>
 </template>
 
 <script>
@@ -48,10 +42,7 @@ export default {
         shape = this.shape
       }
 
-      return (
-        'shape--' +
-        (inArray(shape, BUTTON_SHAPE_NAMES) ? shape : BUTTON_SHAPE_NAMES[0])
-      )
+      return 'shape--' + (inArray(shape, BUTTON_SHAPE_NAMES) ? shape : BUTTON_SHAPE_NAMES[0])
     },
     useAnimation() {
       if (this.skeletonSubOptions) {
@@ -62,29 +53,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-@import './index.module.scss';
-
-.#{$prefix}-skeleton-button {
-  display: block;
-  width: 56px;
-  height: 28px;
-  border-radius: 2px;
-  @include skeleton-background;
-
-  &.shape--circle {
-    border-radius: 50%;
-    width: 44px;
-  }
-
-  &.shape--round {
-    border-radius: 22px;
-  }
-
-  &.animated {
-    @include skeleton-animation;
-  }
-}
-</style>

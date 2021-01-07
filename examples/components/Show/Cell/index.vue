@@ -40,7 +40,7 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="Slot default">
-      <fx-cell label="右侧图标">
+      <fx-cell label="右侧图标" content="内容">
         <fx-icon class-name="CloseOutlined"></fx-icon>
       </fx-cell>
     </fx-group>

@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      prefix + '-collapse-item',
-      prefix + '-horizontal-hairline',
-      { active }
-    ]"
-  >
+  <div :class="[prefix + '-collapse-item', prefix + '-horizontal-hairline', { active }]">
     <cell
       :class="[prefix + '-collapse-item_header']"
       :label="title"
@@ -135,41 +129,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-collapse-item {
-  &_body {
-    overflow: hidden;
-    transition: height 0.2s;
-    will-change: height;
-
-    &::before {
-      content: '';
-    }
-  }
-
-  &_content {
-    font-size: 14px;
-    color: $font-color;
-    line-height: 20px;
-  }
-
-  + .#{$prefix}-collapse-item::before {
-    content: '';
-  }
-
-  &_header {
-    .#{$prefix}-cell_link-icon {
-      transition: transform 0.2s;
-    }
-  }
-
-  &.active {
-    .#{$prefix}-collapse-item_header .#{$prefix}-cell_link-icon {
-      transform: rotate(180deg);
-    }
-  }
-}
-</style>

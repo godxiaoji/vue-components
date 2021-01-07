@@ -50,8 +50,7 @@ export default {
     styles() {
       const arr = []
 
-      const [gH, gV] = (this.appRowSubOptions &&
-        this.appRowSubOptions.gutter) || [0, 0]
+      const [gH, gV] = (this.appRowSubOptions && this.appRowSubOptions.gutter) || [0, 0]
 
       if (gH > 0 || gV > 0) {
         arr.push({
@@ -86,40 +85,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-col {
-  position: relative;
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  max-width: 100%;
-  min-height: 1px;
-  box-sizing: border-box;
-
-  &-0 {
-    display: none;
-  }
-
-  @for $i from 1 through 24 {
-    &-#{$i} {
-      flex-basis: percentage($i / 24);
-      max-width: percentage($i / 24);
-    }
-
-    &-offset-#{$i} {
-      margin-left: percentage($i / 24);
-    }
-
-    &-push-#{$i} {
-      left: percentage($i / 24);
-    }
-
-    &-pull-#{$i} {
-      right: percentage($i / 24);
-    }
-  }
-}
-</style>

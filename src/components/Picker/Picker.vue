@@ -7,20 +7,11 @@
       }
     ]"
   >
-    <div
-      :class="[prefix + '-input', { 'has--value': formLabelString }]"
-      :disabled="disabled"
-      @click="onFieldClick"
-    >
-      <div
-        :class="[prefix + '-input_input', { placeholder: !formLabelString }]"
-      >
+    <div :class="[prefix + '-input', { 'has--value': formLabelString }]" :disabled="disabled" @click="onFieldClick">
+      <div :class="[prefix + '-input_input', { placeholder: !formLabelString }]">
         {{ formLabelString || placeholder }}
       </div>
-      <icon
-        :class="[prefix + '-input_arrow']"
-        class-name="RightOutlined"
-      />
+      <icon :class="[prefix + '-input_arrow']" class-name="RightOutlined" />
       <input
         :class="[prefix + '-input_cover']"
         type="text"
@@ -52,13 +43,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-picker {
-  display: flex;
-  width: 100%;
-  position: relative;
-}
-</style>

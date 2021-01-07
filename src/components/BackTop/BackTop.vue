@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-show="scrollTop >= visibleHeight"
-    :class="[prefix + '-back-top']"
-    :style="styles"
-    @click="onClick"
-  >
+  <div v-show="scrollTop >= visibleHeight" :class="[prefix + '-back-top']" :style="styles" @click="onClick">
     <slot>
       <icon class-name="UpCircleOutlined" />
     </slot>
@@ -81,29 +76,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-back-top {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1000;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  min-height: 40px;
-  font-size: 17px;
-  --back-top-color: #{$title-color};
-  color: var(--back-top-color);
-
-  .#{$prefix}-icon {
-    --size: 40px;
-    --color: var(--back-top-color);
-    display: block;
-  }
-}
-</style>

@@ -1,0 +1,7 @@
+@import '../style/var.scss';
+
+.#{$prefix}-calendar {
+  display: flex;
+  width: 100%;
+  position: relative;
+}

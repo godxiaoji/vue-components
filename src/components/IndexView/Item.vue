@@ -1,8 +1,5 @@
 <template>
-  <group
-    :class="[prefix + '-sticky-view-item', prefix + '-index-view-item']"
-    :title="name"
-  >
+  <group :class="[prefix + '-sticky-view-item', prefix + '-index-view-item']" :title="name">
     <slot></slot>
   </group>
 </template>
@@ -18,16 +15,3 @@ export default {
   extends: StickyViewItem
 }
 </script>
-
-<style lang="scss">
-@import '../component.module.scss';
-
-.#{$prefix}-index-view-item {
-  margin-bottom: 0;
-
-  .#{$prefix}-group_header {
-    height: 28px;
-    background-color: $background-color;
-  }
-}
-</style>

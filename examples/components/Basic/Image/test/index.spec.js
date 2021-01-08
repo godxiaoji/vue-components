@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Image from '@/components/Image'
+import Image from '@/Image'
 
 const imageUrl = 'https://cdn.fox2.cn/vfox/swiper/center-2.jpg'
 

@@ -2,7 +2,7 @@
 
 import { mount } from '@vue/test-utils'
 
-import ActionSheet from '@/components/ActionSheet'
+import ActionSheet from '@/ActionSheet'
 
 const options = [
   {

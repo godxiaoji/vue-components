@@ -25,7 +25,7 @@ exports[`IndexView IndexViewItem should render default correctly 1`] = `
   <div class="fx-group_header">
     <div class="fx-group_title">item-1</div>
   </div>
-  <div class="fx-group_body fx-horizontal-hairline">
+  <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
     <div class="fx-group_body-inner">content</div>
   </div>
 </div>

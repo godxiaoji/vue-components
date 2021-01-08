@@ -4,8 +4,8 @@ const autoprefixer = require('gulp-autoprefixer')
 
 gulp.task('build', function() {
   return gulp
-    .src('src/components/**/*.scss')
-    .pipe(sass())
+    .src('src/**/*.scss')
+    .pipe(sass({outputStyle: 'expanded'}))
     .pipe(autoprefixer({ cascade: false }))
-    .pipe(gulp.dest('lib'))
+    .pipe(gulp.dest('src'))
 })

@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Toast from '@/components/Toast'
+import Toast from '@/Toast'
 
 describe('Toast', () => {
   test('should render default correctly', () => {

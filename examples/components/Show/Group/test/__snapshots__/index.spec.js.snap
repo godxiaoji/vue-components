@@ -5,7 +5,7 @@ exports[`Group should render default slot correctly 1`] = `
   <div class="fx-group_header">
     <div class="fx-group_title">title</div>
   </div>
-  <div class="fx-group_body fx-horizontal-hairline">
+  <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
     <div class="fx-group_body-inner">
       <div class="fx-cell fx-horizontal-hairline">
         <div class="fx-cell_cover"></div>
@@ -26,7 +26,7 @@ exports[`Group should render prop set title correctly 1`] = `
   <div class="fx-group_header">
     <div class="fx-group_title">title</div>
   </div>
-  <div class="fx-group_body fx-horizontal-hairline">
+  <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
     <div class="fx-group_body-inner"></div>
   </div>
 </div>

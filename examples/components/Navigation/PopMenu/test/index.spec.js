@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import PopMenu from '@/components/PopMenu'
+import PopMenu from '@/PopMenu'
 
 const options = [
   {

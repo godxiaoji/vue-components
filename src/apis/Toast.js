@@ -1,4 +1,4 @@
-import Toast from '../components/Toast'
+import Toast from '../Toast'
 import { isObject, isString } from '../helpers/util'
 import { baseShow, baseHide } from './Notify'
 

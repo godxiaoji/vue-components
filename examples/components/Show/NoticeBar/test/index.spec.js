@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import NoticeBar from '@/components/NoticeBar'
+import NoticeBar from '@/NoticeBar'
 
 describe('NoticeBar', () => {
   test('should render default correctly', () => {

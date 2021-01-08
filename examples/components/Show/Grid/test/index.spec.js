@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Row from '@/components/Row'
-import Col from '@/components/Col'
+import Row from '@/Row'
+import Col from '@/Col'
 
 describe('Grid', () => {
   test('Row should render default correctly', () => {

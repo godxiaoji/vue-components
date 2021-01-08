@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Icon from '@/components/Icon'
+import Icon from '@/Icon'
 
 describe('Icon', () => {
   test('should render prop className="UpOutlined" correctly', () => {

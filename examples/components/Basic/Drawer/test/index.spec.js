@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Drawer from '@/components/Drawer'
+import Drawer from '@/Drawer'
 
 describe('Drawer', () => {
   test('should render prop title="Drawer" correctly', () => {

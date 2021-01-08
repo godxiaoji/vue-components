@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import ScrollTab from '@/components/ScrollTab'
-import ScrollTabItem from '@/components/ScrollTabItem'
+import ScrollTab from '@/ScrollTab'
+import ScrollTabItem from '@/ScrollTabItem'
 
 describe('ScrollTab', () => {
   test('ScrollTab should render default correctly', () => {

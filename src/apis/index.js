@@ -11,7 +11,7 @@ import {
   clearStorage
 } from './LocalStorage'
 import { pageScrollTo, elementScrollTo } from './Scroll'
-import { queryString } from './URL'
+// import { queryString } from './URL'
 import {
   showPicker,
   showCascader,
@@ -41,7 +41,7 @@ export {
   pageScrollTo,
   elementScrollTo,
   previewImage,
-  queryString,
+  // queryString,
   showPicker,
   showCascader,
   showCalendar,

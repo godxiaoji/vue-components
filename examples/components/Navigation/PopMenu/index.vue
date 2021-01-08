@@ -226,6 +226,7 @@ export default {
         placement: 'top',
         success: res => {
           console.log('select', res)
+          this.$showToast(`选择了 ${res.detail.item.name}`)
         }
       })
     }

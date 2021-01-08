@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Swiper from '@/components/Swiper'
-import SwiperItem from '@/components/SwiperItem'
+import Swiper from '@/Swiper'
+import SwiperItem from '@/SwiperItem'
 
 describe('Swiper', () => {
   test('Swiper should render default correctly', () => {

@@ -11,8 +11,8 @@ import {
   selectorValidator
 } from '../helpers/validator'
 
-import { MODE_NAMES as SELECT_MODE_NAMES } from '../components/util/mulit-selector'
-import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '../components/Calendar/util'
+import { MODE_NAMES as SELECT_MODE_NAMES } from '../util/mulit-selector'
+import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '../Calendar/util'
 
 export const apiRules = {
   /**

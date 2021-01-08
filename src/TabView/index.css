@@ -1,0 +1,50 @@
+.fx-tab-view {
+  background-color: #fff;
+}
+
+.fx-tab-view_header {
+  position: relative;
+  height: 37px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fx-tab-view_header::after {
+  content: '';
+}
+
+.fx-tab-view_body {
+  height: calc(100% - 37px);
+}
+
+.fx-tab-view_body .fx-swiper {
+  height: 100%;
+}
+
+.fx-tab-view.vertical {
+  display: flex;
+}
+
+.fx-tab-view.vertical .fx-tab-view_header {
+  width: 80px;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.fx-tab-view.vertical .fx-tab-view_header::after {
+  content: none;
+}
+
+.fx-tab-view.vertical .fx-tab-view_body {
+  flex: 1;
+  height: 100%;
+}
+
+.fx-tab-view-item {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}

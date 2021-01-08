@@ -13,6 +13,7 @@ exports[`Form FormItem should render default correctly 1`] = `
         <!---->
       </div>
       <div class="fx-cell_content">
+        <!---->
         <div class="fx-input">
           <div class="fx-input_input placeholder">
 

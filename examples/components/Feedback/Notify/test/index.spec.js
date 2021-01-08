@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Notify from '@/components/Notify'
+import Notify from '@/Notify'
 
 describe('Notify', () => {
   test('should render default correctly', () => {

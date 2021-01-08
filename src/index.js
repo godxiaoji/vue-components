@@ -1,19 +1,15 @@
-import { isUndefined, objectForEach } from './helpers/util'
-import * as Components from './components'
+import { isUndefined } from './helpers/util'
+import * as Components from './component'
 import * as Apis from './apis'
-import { addData as _addRegionData } from './components/util/mulit-selector/region'
+import { addData as _addRegionData } from './util/mulit-selector/region'
 import { SDKKey } from './config'
 import { init as initEvent } from './helpers/events'
-import './components/style'
+import './style'
 
 const Vfox = {
   install(Vue) {
     Object.values(Components).forEach(component => {
-      Vue.component(component.name, component)
-    })
-
-    objectForEach(Apis, function(api, apiName) {
-      Vue.prototype[`$${apiName}`] = api
+      Vue.use(component)
     })
 
     // Vue.prototype.$createIntersectionObserver = function createIntersectionObserver(
@@ -36,7 +32,7 @@ const Vfox = {
   }
 }
 
-export * from './components'
+export * from './component'
 export * from './apis'
 
 export default Vfox

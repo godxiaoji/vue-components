@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Skeleton from '@/components/Skeleton'
+import Skeleton from '@/Skeleton'
 
 describe('Skeleton', () => {
   test('should render default correctly', () => {

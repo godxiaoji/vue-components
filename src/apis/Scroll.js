@@ -12,11 +12,7 @@ export function pageScrollTo(object) {
   try {
     const options = parseParamsByRules(object, 'pageScrollTo')
 
-    _elementScrollTo(
-      document.documentElement,
-      options.scrollTop,
-      options.duration
-    )
+    _elementScrollTo(document, options.scrollTop, options.duration)
 
     success({})
   } catch (e) {
@@ -48,6 +44,14 @@ export function elementScrollTo(object) {
 
 function _elementScrollTo(element, scrollTop, duration) {
   const from = element.scrollTop
+
+  if (element === document) {
+    if (typeof document.compatMode !== 'undefined' && document.compatMode !== 'BackCompat') {
+      element = document.documentElement
+    } else {
+      element = document.body
+    }
+  }
 
   if (from === scrollTop) {
     // 不需要跳转

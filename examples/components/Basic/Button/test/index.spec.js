@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Button from '@/components/Button'
+import Button from '@/Button'
 
 describe('Button', () => {
   test('should render default slot correctly', () => {

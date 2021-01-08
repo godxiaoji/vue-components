@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Cascader from '@/components/Cascader'
+import Cascader from '@/Cascader'
 import { cascadeOptions } from '../../Picker/picker-util'
 
 describe('Cascader', () => {

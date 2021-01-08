@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Radio from '@/components/Radio'
+import Radio from '@/Radio'
 
 describe('Radio', () => {
   test('should render default correctly', () => {

@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Form from '@/components/Form'
-import FormItem from '@/components/FormItem'
+import Form from '@/Form'
+import FormItem from '@/FormItem'
 
 describe('Form', () => {
   test('Form should render default correctly', () => {

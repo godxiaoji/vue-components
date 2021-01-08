@@ -34,7 +34,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import '../../../../src/components/style/var.scss';
+@import '../../../../src/style/var.scss';
 
 .switch {
   &-custom-color {

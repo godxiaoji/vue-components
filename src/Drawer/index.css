@@ -1,0 +1,93 @@
+.fx-drawer_inner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  transform: translate3d(0, 100%, 0);
+  transition: transform 0.2s;
+  background-color: #fff;
+  min-height: 100px;
+}
+
+.fx-drawer_inner.placement--left, .fx-drawer_inner.placement--right {
+  min-width: 100px;
+  max-width: 90%;
+  min-height: auto;
+  width: auto;
+  height: 100%;
+  top: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.fx-drawer_inner.placement--right {
+  left: auto;
+  right: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.fx-drawer_inner.placement--top {
+  top: 0;
+  bottom: auto;
+  transform: translate3d(0, -100%, 0);
+}
+
+.fx-drawer_header {
+  flex-shrink: 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.fx-drawer_header::after {
+  content: '';
+}
+
+.fx-drawer_header-inner {
+  height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+}
+
+.fx-drawer_title {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 48px;
+  height: 48px;
+  color: #262626;
+  padding: 0 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.fx-drawer_inner.placement--top .fx-drawer_title,
+.fx-drawer_inner.placement--bottom .fx-drawer_title {
+  text-align: center;
+}
+
+.fx-drawer_close.type--default {
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex-shrink: 0;
+  border-radius: 0;
+  --button-font-color: #bfbfbf;
+}
+
+.fx-drawer_body {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.fx-drawer_inner.has--header .fx-drawer_body {
+  height: calc(100% - 48px);
+}
+
+.fx-drawer.visible .fx-drawer_inner {
+  transform: translate3d(0, 0, 0);
+}

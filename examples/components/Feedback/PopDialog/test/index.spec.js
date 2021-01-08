@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import PopDialog from '@/components/PopDialog'
+import PopDialog from '@/PopDialog'
 
 describe('PopDialog', () => {
   test('should render default correctly', () => {

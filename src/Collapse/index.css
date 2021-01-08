@@ -1,0 +1,27 @@
+.fx-collapse-item_body {
+  overflow: hidden;
+  transition: height 0.2s;
+  will-change: height;
+}
+
+.fx-collapse-item_body::before {
+  content: '';
+}
+
+.fx-collapse-item_content {
+  font-size: 14px;
+  color: #595959;
+  line-height: 20px;
+}
+
+.fx-collapse-item + .fx-collapse-item::before {
+  content: '';
+}
+
+.fx-collapse-item_header .fx-cell_link-icon {
+  transition: transform 0.2s;
+}
+
+.fx-collapse-item.active .fx-collapse-item_header .fx-cell_link-icon {
+  transform: rotate(180deg);
+}

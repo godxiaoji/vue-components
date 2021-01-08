@@ -1,0 +1,28 @@
+.fx-empty {
+  --empty-font-color: #8c8c8c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+  box-sizing: border-box;
+}
+
+.fx-empty_image {
+  width: 160px;
+  height: 160px;
+}
+
+.fx-empty_description {
+  color: var(--empty-font-color);
+  text-align: center;
+  word-break: break-all;
+  word-wrap: break-word;
+  margin: 16px 0 0 0;
+  font-size: 14px;
+  line-height: 19.6px;
+}
+
+.fx-empty_description + * {
+  margin-top: 16px;
+}

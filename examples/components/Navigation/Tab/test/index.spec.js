@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Tab from '@/components/Tab'
+import Tab from '@/Tab'
 
 const shortTabList = [
   {

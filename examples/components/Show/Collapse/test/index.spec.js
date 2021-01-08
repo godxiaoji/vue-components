@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Collapse from '@/components/Collapse'
-import CollapseItem from '@/components/CollapseItem'
+import Collapse from '@/Collapse'
+import CollapseItem from '@/CollapseItem'
 
 describe('Collapse', () => {
   test('Collapse should render default correctly', () => {

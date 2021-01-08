@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Group from '@/components/Group'
-import Cell from '@/components/Cell'
+import Group from '@/Group'
+import Cell from '@/Cell'
 
 describe('Group', () => {
   test('should render prop set title correctly', () => {

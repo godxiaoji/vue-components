@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import ScrollView from '@/components/ScrollView'
+import ScrollView from '@/ScrollView'
 
 describe('ScrollView', () => {
   test('should render prop scrollY=true correctly', () => {

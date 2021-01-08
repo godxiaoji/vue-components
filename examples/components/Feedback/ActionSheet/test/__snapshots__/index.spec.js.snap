@@ -13,19 +13,19 @@ exports[`ActionSheet should render props set options correctly 1`] = `
     <div class="fx-drawer_body">
       <!---->
       <div class="fx-action-sheet_body">
-        <ul class="fx-select_list">
-          <li class="fx-select_item fx-horizontal-hairline">
-            <div class="fx-select_item-inner"><span>选项1</span>
+        <ul class="fx-action-sheet_list">
+          <li class="fx-action-sheet_item fx-horizontal-hairline">
+            <div class="fx-action-sheet_item-inner"><span>选项1</span>
               <!---->
             </div>
           </li>
-          <li class="fx-select_item fx-horizontal-hairline">
-            <div class="fx-select_item-inner"><span>选项2</span>
+          <li class="fx-action-sheet_item fx-horizontal-hairline">
+            <div class="fx-action-sheet_item-inner"><span>选项2</span>
               <!---->
             </div>
           </li>
-          <li class="fx-select_item fx-horizontal-hairline">
-            <div class="fx-select_item-inner"><span>选项3</span>
+          <li class="fx-action-sheet_item fx-horizontal-hairline">
+            <div class="fx-action-sheet_item-inner"><span>选项3</span>
               <!---->
             </div>
           </li>

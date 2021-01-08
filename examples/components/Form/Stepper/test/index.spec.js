@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Stepper from '@/components/Stepper'
+import Stepper from '@/Stepper'
 
 describe('Stepper', () => {
   test('should render default correctly', () => {

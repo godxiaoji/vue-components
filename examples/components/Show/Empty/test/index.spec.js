@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Empty from '@/components/Empty'
-import Image from '@/components/Image'
+import Empty from '@/Empty'
+import Image from '@/Image'
 
 describe('Empty', () => {
   test('should render prop set description correctly', () => {

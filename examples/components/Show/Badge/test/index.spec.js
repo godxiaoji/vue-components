@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Badge from '@/components/Badge'
+import Badge from '@/Badge'
 
 describe('Badge', () => {
   test('should render prop content=1 correctly', () => {

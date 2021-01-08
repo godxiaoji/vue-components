@@ -1,0 +1,1 @@
+import '../../Skeleton/index.css'

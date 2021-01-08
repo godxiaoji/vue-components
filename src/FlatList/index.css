@@ -1,0 +1,31 @@
+.fx-flat-list {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.fx-flat-list_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.fx-flat-list_item-inner {
+  height: 100%;
+  flex-grow: 1;
+}
+
+.fx-flat-list.horizontal .fx-flat-list_header, .fx-flat-list.horizontal .fx-flat-list_footer {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.fx-flat-list.horizontal {
+  white-space: nowrap;
+}
+
+.fx-flat-list.horizontal .fx-flat-list_item {
+  display: inline-flex;
+  flex-direction: row;
+  height: 100%;
+  vertical-align: top;
+}

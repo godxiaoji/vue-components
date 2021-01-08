@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import ImagePreview from '../components/ImagePreview'
+import ImagePreview from '../ImagePreview'
 import { createPopup } from '../helpers/popup'
 import { isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'

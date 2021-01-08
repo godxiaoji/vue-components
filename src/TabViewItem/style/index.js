@@ -1,0 +1,1 @@
+import '../../TabView/index.css'

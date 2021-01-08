@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Cell from '@/components/Cell'
+import Cell from '@/Cell'
 
 describe('Cell', () => {
   test('should render default correctly', () => {

@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Dropdown from '@/components/Dropdown'
+import Dropdown from '@/Dropdown'
 
 describe('Dropdown', () => {
   test('should render default correctly', () => {

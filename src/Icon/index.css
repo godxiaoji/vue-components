@@ -1,0 +1,23 @@
+@keyframes fx-rotate-360 {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fx-icon {
+  --size: 24px;
+  --color: #262626;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  overflow: hidden;
+  line-height: 0;
+  fill: var(--color);
+}
+
+.fx-icon.spin {
+  animation: fx-rotate-360 800ms infinite linear both;
+}

@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import StickyView from '@/components/StickyView'
-import StickyViewItem from '@/components/StickyViewItem'
+import StickyView from '@/StickyView'
+import StickyViewItem from '@/StickyViewItem'
 
 describe('StickyView', () => {
   test('StickyView should render default correctly', () => {

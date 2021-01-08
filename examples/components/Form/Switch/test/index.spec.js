@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Switch from '@/components/Switch'
+import Switch from '@/Switch'
 
 describe('Switch', () => {
   test('should render default correctly', () => {

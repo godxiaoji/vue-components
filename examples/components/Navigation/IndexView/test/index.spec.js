@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import IndexView from '@/components/IndexView'
-import IndexViewItem from '@/components/IndexViewItem'
+import IndexView from '@/IndexView'
+import IndexViewItem from '@/IndexViewItem'
 
 describe('IndexView', () => {
   test('IndexView should render default correctly', () => {

@@ -1,8 +1,8 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import TabView from '@/components/TabView'
-import TabViewItem from '@/components/TabViewItem'
+import TabView from '@/TabView'
+import TabViewItem from '@/TabViewItem'
 
 describe('TabView', () => {
   test('TabView should render default correctly', () => {

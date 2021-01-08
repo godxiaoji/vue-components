@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Copy from '@/components/Copy'
+import Copy from '@/Copy'
 
 describe('Copy', () => {
   test('should render prop text="content" correctly', () => {

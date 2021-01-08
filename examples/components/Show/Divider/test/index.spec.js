@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Divider from '@/components/Divider'
+import Divider from '@/Divider'
 
 describe('Divider', () => {
   test('should render default correctly', () => {

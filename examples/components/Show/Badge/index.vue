@@ -1,5 +1,5 @@
 <template>
-  <div class="badge ">
+  <div>
     <fx-group title="基础用法">
       <div class="badge-grid">
         <fx-row :gutter="[16, 16]">
@@ -130,7 +130,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import '../../../../src/components/style/var.scss';
+@import '../../../../src/style/var.scss';
 
 .badge {
   &-grid {

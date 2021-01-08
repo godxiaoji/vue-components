@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Popover from '@/components/Popover'
+import Popover from '@/Popover'
 
 describe('Popover', () => {
   test('should render prop set content correctly', () => {

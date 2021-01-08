@@ -44,13 +44,7 @@
         </fx-button>
       </fx-cell>
       <fx-cell label="不展示蒙层">
-        <fx-button
-          size="small"
-          id="popDialogNoMask"
-          shape="circle"
-          icon="DeleteOutlined"
-          @click="visible3 = true"
-        >
+        <fx-button size="small" id="popDialogNoMask" shape="circle" icon="DeleteOutlined" @click="visible3 = true">
         </fx-button>
       </fx-cell>
     </fx-group>
@@ -242,9 +236,11 @@ export default {
     onCallApi(selector) {
       this.$showPopDialog({
         selector,
+        placement: 'top',
         content: this.content,
-        success: (res) => {
+        success: res => {
           console.log('success', res)
+          this.$showToast(res.confirm ? `点击了确定` : `点击了取消`)
         }
       })
     }

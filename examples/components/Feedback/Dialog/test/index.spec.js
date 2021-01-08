@@ -1,7 +1,7 @@
 /* global describe,test,expect */
 
 import { mount } from '@vue/test-utils'
-import Dialog from '@/components/Dialog'
+import Dialog from '@/Dialog'
 
 describe('Dialog', () => {
   test('should render default correctly', () => {

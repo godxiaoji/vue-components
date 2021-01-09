@@ -5,14 +5,14 @@
   "main": "./dist/index.js",
   "module": "./src/index.js",
   "directories": {
-    "doc": "doc"
+    "doc": "./examples/docs"
   },
   "scripts": {
     "test:unit": "jest --detectOpenHandles",
     "build": "webpack --config=./build/webpack.config.js",
     "build:svg": "webpack --config=./build/webpack.svg.config.js",
     "lint": "eslint --fix ./src/**/*.js",
-    "gulp": "gulp build",
+    "build:css": "gulp build",
     "semantic-release": "semantic-release"
   },
   "repository": {
@@ -37,10 +37,8 @@
   ],
   "homepage": "https://github.com/godxiaoji/vfox#readme",
   "dependencies": {
-    "@godxiaoji/url-handler": "^1.0.3",
     "async-validator": "^3.4.0",
-    "dayjs": "^1.9.7",
-    "mslide": "^1.2.1"
+    "dayjs": "^1.9.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

@@ -25,14 +25,15 @@ npm i vfox -S
 
 ## 引入
 
-### 全局注册
+### 全组件引入
 
 ```
 import Vue from 'vue'
-import Vfox from 'vfox'
 
-// require styles
+import Vfox from 'vfox'
 import 'vfox/dist/index.css'
+
+Vue.use(Vfox)
 
 ```
 
@@ -44,26 +45,63 @@ import regionData from 'vfox/data/region'
 Vfox.addRegionData(regionData)
 ```
 
-### 局部注册
+### 自动按需引入组件
+
+使用 antV 团队提供的 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) babel 插件，它会在编译过程中将 import 的写法自动转换为按需引入的方式。
 
 ```
-import 'vfox/dist/index.css'
-import { Toast } from 'vfox'
+npm i babel-plugin-import -D
+```
 
-export default {
-  components: {
-    Toast
-  }
+在 `babel.config.js` 中配置：
+
+```
+module.exports = {
+  ...
+  plugins: [
+    [
+      "import",
+      {
+        libraryName: "vfox",
+        libraryDirectory: "src",
+        style: true,
+        camel2DashComponentName: false
+      },
+      "vfox"
+    ]
+  ]
 }
+```
+
+在业务代码中引入 `Vfox` 组件：
+
+```
+import Vue from 'vue'
+import { Button } from 'vfox'
+
+Vue.use(Button)
+```
+
+### 手动按需引入组件
+
+在不使用插件的情况下，可以手动引入需要的组件。
+
+```
+import Vue from 'vue'
+import { Button } from 'vfox/src/Button'
+import 'vfox/src/Button/style'
+
+Vue.use(Button)
 ```
 
 ### 函数调用
 
 ```
-import 'vfox/dist/index.css'
-import { showToast } from 'vfox'
+import Vue from 'vue';
+import { Toast } from 'vfox';
 
-showToast({
+...
+this.$showToast({
   title: '成功',
   type: 'success',
   duration: 2000

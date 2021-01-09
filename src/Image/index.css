@@ -34,14 +34,17 @@
 }
 
 .fx-image_img.mode--scaleToFill {
+  -o-object-fit: fill;
   object-fit: fill;
 }
 
 .fx-image_img.mode--aspectFit {
+  -o-object-fit: contain;
   object-fit: contain;
 }
 
 .fx-image_img.mode--aspectFill {
+  -o-object-fit: cover;
   object-fit: cover;
 }
 

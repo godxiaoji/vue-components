@@ -11,4 +11,9 @@ Toast.install = function(Vue) {
   Vue.prototype.$hideLoading = hideLoading
 }
 
+Toast.showToast = showToast
+Toast.hideToast = hideToast
+Toast.showLoading = showLoading
+Toast.hideLoading = hideLoading
+
 export default Toast

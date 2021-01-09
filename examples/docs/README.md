@@ -29,7 +29,6 @@ npm i vfox -S
 
 ```
 import Vue from 'vue'
-
 import Vfox from 'vfox'
 import 'vfox/dist/index.css'
 

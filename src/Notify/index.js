@@ -9,4 +9,7 @@ Notify.install = function(Vue) {
   Vue.prototype.$hideNotify = hideNotify
 }
 
+Notify.showNotify = showNotify
+Notify.hideNotify = hideNotify
+
 export default Notify

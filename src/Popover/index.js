@@ -8,4 +8,6 @@ Popover.install = function(Vue) {
   Vue.prototype.$showPopover = showPopover
 }
 
+Popover.showPopover = showPopover
+
 export default Popover

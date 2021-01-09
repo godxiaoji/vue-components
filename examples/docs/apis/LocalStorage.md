@@ -4,7 +4,7 @@
 
 - 封装的接口支持序列化数据，序列化和反序列化操作由接口内部实现。
 
-## getStorageSync(key)
+## getStorage(key)
 
 ### Params
 
@@ -31,37 +31,7 @@ try {
 }
 ```
 
-## getStorage(object)
-
-### Params
-
-Object object
-
-| 属性     | 类型     | 默认值 | 必填 | 说明                                             |
-| -------- | -------- | ------ | ---- | ------------------------------------------------ |
-| key      | string   |        | 是   | 本地缓存中指定的 key                             |
-| success  | function |        | 否   | 接口调用成功的回调函数                           |
-| fail     | function |        | 否   | 接口调用失败的回调函数                           |
-| complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
-
-#### object.success 回调参数
-
-| 属性 | 类型 | 说明           |
-| ---- | ---- | -------------- |
-| data | any  | key 对应的内容 |
-
-### Usage
-
-```
-this.$getStorage({
-  key: 'key',
-  success (res) {
-    console.log(res.data)
-  }
-})
-```
-
-## setStorageSync(key, value)
+## setStorage(key, value)
 
 ### Params
 
@@ -78,30 +48,7 @@ try {
 } catch (e) { }
 ```
 
-## setStorage(object)
-
-### Params
-
-Object object
-
-| 参数     | 类型     | 默认值 | 必填 | 说明                                                                         |
-| -------- | -------- | ------ | ---- | ---------------------------------------------------------------------------- |
-| key      | string   |        | 是   | 本地缓存中指定的 key                                                         |
-| data     | any      |        | 是   | 需要存储的内容。只支持原生类型、Date、及能够通过 JSON.stringify 序列化的对象 |
-| success  | function |        | 否   | 接口调用成功的回调函数                                                       |
-| fail     | function |        | 否   | 接口调用失败的回调函数                                                       |
-| complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行）                             |
-
-### Usage
-
-```
-this.$setStorage({
-  key: 'key',
-  data: 'value'
-})
-```
-
-## removeStorageSync(key)
+## removeStorage(key)
 
 ### Params
 
@@ -119,31 +66,7 @@ try {
 }
 ```
 
-## removeStorage(object)
-
-### Params
-
-Object object
-
-| 参数     | 类型     | 默认值 | 必填 | 说明                                             |
-| -------- | -------- | ------ | ---- | ------------------------------------------------ |
-| key      | string   |        | 是   | 本地缓存中指定的 key                             |
-| success  | function |        | 否   | 接口调用成功的回调函数                           |
-| fail     | function |        | 否   | 接口调用失败的回调函数                           |
-| complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
-
-### Usage
-
-```
-this.$removeStorage({
-  key: 'key',
-  success (res) {
-    console.log(res)
-  }
-})
-```
-
-## clearStorageSync()
+## clearStorage()
 
 ### Usage
 
@@ -155,25 +78,7 @@ try {
 }
 ```
 
-## clearStorage([object])
-
-### Params
-
-Object object
-
-| 参数     | 类型     | 默认值 | 必填 | 说明                                             |
-| -------- | -------- | ------ | ---- | ------------------------------------------------ |
-| success  | function |        | 否   | 接口调用成功的回调函数                           |
-| fail     | function |        | 否   | 接口调用失败的回调函数                           |
-| complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
-
-### Usage
-
-```
-wx.clearStorage()
-```
-
-## getStorageInfoSync()
+## getStorageInfo()
 
 ### Return
 
@@ -198,36 +103,31 @@ try {
 }
 ```
 
-## getStorageInfo([object])
+## createStorage(areaName[, options])
+
+创建指定分区的实例，来维护自身缓存，避免缓存污染全局。
 
 ### Params
 
-Object object
+| 参数    | 类型   | 默认值 | 必填 | 说明                |
+| ------- | ------ | ------ | ---- | ------------------- |
+| key     | string |        | 是   | 分区名，如 `myArea` |
+| options | object |        | 否   | 配置项              |
 
-| 参数     | 类型     | 默认值 | 必填 | 说明                                             |
-| -------- | -------- | ------ | ---- | ------------------------------------------------ |
-| success  | function |        | 否   | 接口调用成功的回调函数                           |
-| fail     | function |        | 否   | 接口调用失败的回调函数                           |
-| complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
+#### options 的 Params
 
-#### object.success 回调参数
+| 参数         | 类型   | 默认值 | 必填 | 说明            |
+| ------------ | ------ | ------ | ---- | --------------- |
+| perLimitSize | number | 1024   | 否   | 单次缓存最大 kb |
+| limitSize    | number | 2560   | 否   | 分区缓存最大 kb |
 
-Object object
+### Return
 
-| 参数        | 类型   | 说明                        |
-| ----------- | ------ | --------------------------- |
-| keys        | string | 当前 storage 中所有的 key   |
-| currentSize | number | 当前占用的空间大小, 单位 KB |
-| limitSize   | number | 限制的空间大小，单位 KB     |
+`StorageArea` 实例，可以操作指定分区的本地缓存。
 
 ### Usage
 
 ```
-this.$getStorageInfo({
-  success (res) {
-    console.log(res.keys)
-    console.log(res.currentSize)
-    console.log(res.limitSize)
-  }
-})
+const myArea = this.$createStorage('myArea', { limitSize: 1000 })
+myArea.setStorage('a', 1)
 ```

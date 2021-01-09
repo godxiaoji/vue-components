@@ -8,4 +8,6 @@ CalendarPopup.install = function(Vue) {
   Vue.prototype.$showCalendar = showCalendar
 }
 
+CalendarPopup.showCalendar = showCalendar
+
 export default CalendarPopup

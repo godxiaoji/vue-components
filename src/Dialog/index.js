@@ -8,4 +8,6 @@ Dialog.install = function(Vue) {
   Vue.prototype.$showDialog = showDialog
 }
 
+Dialog.showDialog = showDialog
+
 export default Dialog

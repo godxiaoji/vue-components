@@ -8,4 +8,7 @@ const Scroll = {
   }
 }
 
+Scroll.pageScrollTo = pageScrollTo
+Scroll.elementScrollTo = elementScrollTo
+
 export default Scroll

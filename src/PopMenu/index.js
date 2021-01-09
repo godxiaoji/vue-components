@@ -8,4 +8,6 @@ PopMenu.install = function(Vue) {
   Vue.prototype.$showPopMenu = showPopMenu
 }
 
+PopMenu.showPopMenu = showPopMenu
+
 export default PopMenu

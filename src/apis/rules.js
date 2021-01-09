@@ -18,6 +18,20 @@ export const apiRules = {
   /**
    * 数据存储
    */
+  createStorage: {
+    areaName: {
+      type: String,
+      required: true
+    },
+    perLimitSize: {
+      type: Number,
+      default: 1024
+    },
+    limitSize: {
+      type: Number,
+      default: 2560
+    }
+  },
   getStorage: {
     key: {
       type: String,

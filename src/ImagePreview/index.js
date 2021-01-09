@@ -7,4 +7,6 @@ ImagePreview.install = function(Vue) {
   Vue.prototype.$previewImage = previewImage
 }
 
+ImagePreview.previewImage = previewImage
+
 export default ImagePreview

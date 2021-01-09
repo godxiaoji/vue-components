@@ -8,4 +8,6 @@ PopDialog.install = function(Vue) {
   Vue.prototype.$showPopDialog = showPopDialog
 }
 
+PopDialog.showPopDialog = showPopDialog
+
 export default PopDialog

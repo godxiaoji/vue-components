@@ -131,7 +131,7 @@ export default {
         clearTimeout(this.changeTimer)
         this.coords.isChange = true
 
-        this.changeTimer = this.changeTimer = setTimeout(() => {
+        this.changeTimer = setTimeout(() => {
           this.activeIndex = rangeInteger(current + offsetCount, 0, this.indexList.length - 1)
         }, 100)
       }
@@ -142,6 +142,7 @@ export default {
     onTouchEnd(e) {
       if (this.coords) {
         if (!this.coords.isChange) {
+          clearTimeout(this.changeTimer)
           this.activeIndex = this.coords.current
         }
 

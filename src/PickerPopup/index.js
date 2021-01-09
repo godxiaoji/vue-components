@@ -8,4 +8,6 @@ PickerPopup.install = function(Vue) {
   Vue.prototype.$showPicker = showPicker
 }
 
+PickerPopup.showPicker = showPicker
+
 export default PickerPopup

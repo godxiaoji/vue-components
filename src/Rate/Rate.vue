@@ -5,15 +5,14 @@
       :class="[prefix + '-rate_item', { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }]"
       v-for="num in max"
       :key="num"
-      @click="onItemClick(num)"
+      :data-value="num"
     >
-      <div :class="[prefix + '-rate_icon']">
+      <i :class="[prefix + '-rate_icon']">
         <icon :class-name="defaultIcon" />
-      </div>
-      <div :class="[prefix + '-rate_active-icon']">
+      </i>
+      <i :class="[prefix + '-rate_active-icon']">
         <icon :class-name="activeIcon" :style="iconStyles" />
-      </div>
-      <i :class="[prefix + '-rate_half']" @click.stop="onHalfClick(num)"></i>
+      </i>
     </div>
   </div>
 </template>
@@ -23,6 +22,10 @@ import Icon from '../Icon'
 import { inArray, capitalize, isInteger, isNumeric } from '../helpers/util'
 import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
+import { touchEvent } from '../helpers/events'
+import { rangeInteger } from '../helpers/util'
+
+const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
 
 const ALLOW_ICONS = ['star', 'heart']
 
@@ -132,8 +135,95 @@ export default {
 
     inputEl._app_component = this
     inputEl._app_type = 'rate'
+
+    addListeners(this.$el, this)
+  },
+  beforeDestroy() {
+    removeListeners(this.$el, this)
   },
   methods: {
+    /**
+     * 事件
+     * @param {Event} e
+     */
+    handleEvent(e) {
+      switch (e.type) {
+        case touchstart:
+          this.onTouchStart(e)
+          break
+        case touchmove:
+          this.onTouchMove(e)
+          break
+        case touchend:
+          this.onTouchEnd(e)
+          break
+        case 'mouseleave':
+          this.onTouchEnd(e)
+          break
+        default:
+          break
+      }
+    },
+
+    onTouchStart(e) {
+      const { clientX } = getTouch(e)
+
+      let $target = e.target
+      while ($target.tagName !== 'DIV') {
+        $target = $target.parentNode
+      }
+      const value = parseInt($target.dataset.value)
+      const rects = $target.getClientRects()[0]
+
+      this.coords = {
+        size: rects.height,
+        offsetX: clientX - rects.left,
+        startX: clientX,
+        current: value
+      }
+      this.coords.isHalf = this.coords.offsetX < this.coords.size / 2
+
+      clearTimeout(this.changeTimer)
+      this._change(value, this.coords.isHalf)
+
+      e.preventDefault()
+    },
+
+    onTouchMove(e) {
+      if (!this.coords) {
+        return
+      }
+
+      const { clientX } = getTouch(e)
+      const { startX, size, offsetX, current } = this.coords
+
+      const x = clientX - startX
+
+      let offsetCount = 0
+
+      if (x > 0) {
+        offsetCount = Math.floor(x / size) + (x % size > size - offsetX ? 1 : 0)
+      } else if (x < 0) {
+        offsetCount = -Math.floor(-x / size) + (-x % size > offsetX ? -1 : 0)
+      }
+
+      const isHalf = (offsetX + x) % size < size / 2
+
+      clearTimeout(this.changeTimer)
+      this.coords.isChange = true
+
+      this._change(rangeInteger(current + offsetCount, 1, this.max), isHalf)
+
+      e.stopPropagation()
+    },
+
+    onTouchEnd(e) {
+      if (this.coords) {
+        delete this.coords
+        e.stopPropagation()
+      }
+    },
+
     onHalfClick(num) {
       if (this.readonly || this.disabled) {
         return
@@ -158,7 +248,11 @@ export default {
       return this.$el.firstElementChild
     },
 
-    _change(value) {
+    _change(value, isHalf = false) {
+      if (this.allowHalf && isHalf) {
+        value -= 0.5
+      }
+
       if (value !== this.formValue) {
         this.formValue = value
 

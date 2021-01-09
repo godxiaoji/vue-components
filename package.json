@@ -85,6 +85,13 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "sideEffects": [
+    "src/**/style/*",
+    "src/**/lib/*",
+    "*.css",
+    "*.scss",
+    "*.vue"
+  ],
   "browserslist": [
     "> 1%",
     "not ie <= 11",

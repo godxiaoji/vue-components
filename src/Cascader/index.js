@@ -8,4 +8,6 @@ Cascader.install = function(Vue) {
   Vue.prototype.$showCascader = showCascader
 }
 
+Cascader.showCascader = showCascader
+
 export default Cascader

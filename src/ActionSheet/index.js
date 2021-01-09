@@ -8,4 +8,6 @@ ActionSheet.install = function(Vue) {
   Vue.prototype.$showActionSheet = showActionSheet
 }
 
+ActionSheet.showActionSheet = showActionSheet
+
 export default ActionSheet

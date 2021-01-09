@@ -1,8 +1,6 @@
 import { isUndefined } from './helpers/util'
 import * as Components from './component'
-import * as Apis from './apis'
 import { addData as _addRegionData } from './util/mulit-selector/region'
-import { SDKKey } from './config'
 import { init as initEvent } from './helpers/events'
 import './style'
 
@@ -33,11 +31,9 @@ const Vfox = {
 }
 
 export * from './component'
-export * from './apis'
 
 export default Vfox
 
 if (!isUndefined(window) && window.Vue) {
   window.Vue.use(Vfox)
-  window[SDKKey] = Apis
 }

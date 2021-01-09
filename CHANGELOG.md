@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/godxiaoji/vfox/compare/v1.6.6...v1.7.0) (2021-01-09)
+
+
+### Bug Fixes
+
+* 修复bug ([1d8b8f3](https://github.com/godxiaoji/vfox/commit/1d8b8f33b0e83beea122a8948878c82f1f326225))
+* 修复引用不全bug ([8ca1839](https://github.com/godxiaoji/vfox/commit/8ca1839bda821276751fa5b6c305d3a0ec2b888f))
+
+
+### Features
+
+* **css:** 抽离css ([655c6f0](https://github.com/godxiaoji/vfox/commit/655c6f09cc9ffd4d153c1306453a4af9aead3997))
+
 ## [1.6.6](https://github.com/godxiaoji/vfox/compare/v1.6.5...v1.6.6) (2021-01-05)
 
 

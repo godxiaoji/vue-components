@@ -3,6 +3,7 @@
   "version": "1.6.5",
   "description": "Vue components include form, toast, modal, etc.",
   "main": "./dist/index.js",
+  "module": "./src/index.js",
   "directories": {
     "doc": "doc"
   },

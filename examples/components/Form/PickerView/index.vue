@@ -4,27 +4,13 @@
       <fx-picker-view :options="options" @change="onChange" v-model="viewValue"></fx-picker-view>
     </fx-group>
     <fx-group title="多列">
-      <fx-picker-view
-        :options="multiOptions"
-        @change="onChange"
-        v-model="multiViewValue"
-      ></fx-picker-view>
+      <fx-picker-view :options="multiOptions" @change="onChange" v-model="multiViewValue"></fx-picker-view>
     </fx-group>
     <fx-group title="级联">
-      <fx-picker-view
-        :options="cascadeOptions"
-        @change="onChange"
-      ></fx-picker-view>
+      <fx-picker-view :options="cascadeOptions" @change="onChange"></fx-picker-view>
     </fx-group>
     <fx-group title="日期选择器">
       <fx-picker-view initial-mode="date" @change="onChange"></fx-picker-view>
-    </fx-group>
-    <fx-group title="禁用">
-      <fx-picker-view
-        :options="options"
-        @change="onChange"
-        disabled
-      ></fx-picker-view>
     </fx-group>
   </div>
 </template>
@@ -61,5 +47,3 @@ export default {
   }
 }
 </script>
-
-

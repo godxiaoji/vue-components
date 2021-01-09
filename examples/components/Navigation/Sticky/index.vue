@@ -1,23 +1,13 @@
 <template>
   <div>
     <fx-group title="Sticky View">
-      <fx-sticky-view
-        class="sticky-box"
-        :activeIndex.sync="activeIndex"
-        @change="onChange"
-      >
+      <fx-sticky-view class="sticky-box" :activeIndex.sync="activeIndex" @change="onChange">
         <fx-sticky-view-item name="Sticky 1">
           <div class="sticky-box-1"></div>
         </fx-sticky-view-item>
-        <fx-sticky-view-item name="Sticky 2">
-          <div class="sticky-box-2"></div
-        ></fx-sticky-view-item>
-        <fx-sticky-view-item name="Sticky 3">
-          <div class="sticky-box-3"></div
-        ></fx-sticky-view-item>
-        <fx-sticky-view-item name="Sticky 4">
-          <div class="sticky-box-4"></div
-        ></fx-sticky-view-item>
+        <fx-sticky-view-item name="Sticky 2"> <div class="sticky-box-2"></div></fx-sticky-view-item>
+        <fx-sticky-view-item name="Sticky 3"> <div class="sticky-box-3"></div></fx-sticky-view-item>
+        <fx-sticky-view-item name="Sticky 4"> <div class="sticky-box-4"></div></fx-sticky-view-item>
       </fx-sticky-view>
       <!-- <div class="sticky-box" id="stickyContainer">
       <div class="sticky-header">
@@ -66,41 +56,25 @@ export default {
   &-box-1 {
     height: 1000px;
     background: $primary-color;
-    background-image: linear-gradient(
-      0,
-      $primary-background-color 0%,
-      $primary-color 100%
-    );
+    background-image: linear-gradient(0, $primary-background-color 0%, $primary-color 100%);
   }
 
   &-box-2 {
     height: 1000px;
     background: $success-color;
-    background-image: linear-gradient(
-      0,
-      $success-background-color 0%,
-      $success-color 100%
-    );
+    background-image: linear-gradient(0, $success-background-color 0%, $success-color 100%);
   }
 
   &-box-3 {
     height: 1000px;
     background: $warning-color;
-    background-image: linear-gradient(
-      0,
-      $warning-background-color 0%,
-      $warning-color 100%
-    );
+    background-image: linear-gradient(0, $warning-background-color 0%, $warning-color 100%);
   }
 
   &-box-4 {
     height: 1000px;
     background: $danger-color;
-    background-image: linear-gradient(
-      0,
-      $danger-background-color 0%,
-      $danger-color 100%
-    );
+    background-image: linear-gradient(0, $danger-background-color 0%, $danger-color 100%);
   }
 }
 </style>

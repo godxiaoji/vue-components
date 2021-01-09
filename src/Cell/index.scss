@@ -127,6 +127,10 @@
       border-bottom-color: transparent;
       padding: 0;
 
+      &.focus {
+        border-color: transparent;
+      }
+
       &_input {
         text-align: right;
       }

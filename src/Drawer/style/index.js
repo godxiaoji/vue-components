@@ -1,3 +1,5 @@
 import '../../style/popup.css'
 import '../../style/hairline.css'
+import '../../Icon/index.css'
+import '../../Button/index.css'
 import '../index.css'

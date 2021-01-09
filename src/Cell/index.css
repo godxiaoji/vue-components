@@ -125,6 +125,10 @@
   padding: 0;
 }
 
+.fx-cell .fx-input.focus {
+  border-color: transparent;
+}
+
 .fx-cell .fx-input_input {
   text-align: right;
 }

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import FxButton from '../Button'
 import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
@@ -30,6 +31,7 @@ import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 export default {
   name: SDKKey + '-drawer',
   mixins: [popupMixin],
+  components: { FxButton },
   props: {
     title: {
       type: String,

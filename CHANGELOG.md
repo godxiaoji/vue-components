@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/godxiaoji/vfox/compare/v1.7.0...v1.7.1) (2021-01-09)
+
+
+### Bug Fixes
+
+* 优化localStorage和Rate组件 ([8376f6a](https://github.com/godxiaoji/vfox/commit/8376f6a5a16a3dcccc807c543198d3472c193072))
+
 # [1.7.0](https://github.com/godxiaoji/vfox/compare/v1.6.6...v1.7.0) (2021-01-09)
 
 

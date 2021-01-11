@@ -11,7 +11,7 @@
       <div :class="[prefix + '-input_input', { placeholder: !formLabelString }]">
         {{ formLabelString || placeholder }}
       </div>
-      <icon :class="[prefix + '-input_arrow']" class-name="RightOutlined" />
+      <icon :class="[prefix + '-input_arrow']" icon="RightOutlined" />
       <input
         :class="[prefix + '-input_cover']"
         type="text"

@@ -2,29 +2,29 @@
 
 exports[`Rate should render default correctly 1`] = `
 <div class="fx-rate"><input name="" type="hidden" value="0">
-  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarFilled"></use>
       </svg></i></div>
-  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarFilled"></use>
       </svg></i></div>
-  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarFilled"></use>
       </svg></i></div>
-  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarFilled"></use>
       </svg></i></div>
-  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon"><svg aria-hidden="true" class="fx-icon">
+  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg aria-hidden="true" class="fx-icon">
+      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
         <use xlink:href="#icon-StarFilled"></use>
       </svg></i></div>
 </div>

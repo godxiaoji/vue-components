@@ -12,8 +12,8 @@
     :type="realFormType"
     @click="onClick"
   >
-    <icon v-if="loading" class-name="LoadingOutlined" :spin="true" />
-    <icon v-else-if="icon" :class-name="icon" />
+    <icon v-if="loading" icon="LoadingOutlined" :spin="true" />
+    <icon v-else-if="icon" :icon="icon" />
     <span><slot>按钮</slot></span>
   </button>
 </template>

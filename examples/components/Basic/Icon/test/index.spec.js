@@ -4,10 +4,10 @@ import { mount } from '@vue/test-utils'
 import Icon from '@/Icon'
 
 describe('Icon', () => {
-  test('should render prop className="UpOutlined" correctly', () => {
+  test('should render prop icon="UpOutlined" correctly', () => {
     const wrapper = mount(Icon, {
       propsData: {
-        className: 'UpOutlined'
+        icon: 'UpOutlined'
       }
     })
 

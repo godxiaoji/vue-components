@@ -26,7 +26,7 @@
           >
             <div :class="[prefix + '-scroll-view_pull-refresh-indicator']" :style="indicatorStyles">
               <icon
-                :class-name="pullRefreshState === PULL_REFRESH_STATE_REFRESHING ? 'LoadingOutlined' : 'CircleOutlined'"
+                :icon="pullRefreshState === PULL_REFRESH_STATE_REFRESHING ? 'LoadingOutlined' : 'CircleOutlined'"
                 :spin="pullRefreshState === PULL_REFRESH_STATE_REFRESHING"
               />
               <span>{{
@@ -45,7 +45,7 @@
           v-show="lowerLoading"
         >
           <div :class="[prefix + '-scroll-view_lower-loading-indicator']" :style="indicatorStyles">
-            <icon :class-name="'LoadingOutlined'" :spin="true" /><span>正在加载</span>
+            <icon :icon="'LoadingOutlined'" :spin="true" /><span>正在加载</span>
           </div>
         </div>
       </div>

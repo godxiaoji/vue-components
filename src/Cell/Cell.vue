@@ -10,7 +10,7 @@
     <div :class="[prefix + '-cell_cover']"></div>
     <div :class="[prefix + '-cell_inner']">
       <i :class="[prefix + '-cell_icon']" v-if="icon">
-        <icon :class-name="icon" />
+        <icon :icon="icon" />
       </i>
       <div :class="[prefix + '-cell_label']">
         {{ label }}
@@ -21,7 +21,7 @@
         <slot></slot>
       </div>
       <i :class="[prefix + '-cell_link-icon']" v-if="clickable">
-        <icon :class-name="linkIconName" />
+        <icon :icon="linkIconName" />
       </i>
       <div :class="[prefix + '-cell_description']" v-if="description">
         {{ description }}

@@ -7,7 +7,7 @@
             {{ valueString2 || placeholder }}
           </div>
           <div :class="[prefix + '-input_append']">
-            <icon class-name="RightOutlined" :class="[prefix + '-form-item_icon']" />
+            <icon icon="RightOutlined" :class="[prefix + '-form-item_icon']" />
           </div>
           <input type="hidden" ref="input" :name="name" :value="valueString2" />
         </div>

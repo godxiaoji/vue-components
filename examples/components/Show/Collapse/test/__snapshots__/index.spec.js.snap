@@ -12,7 +12,7 @@ exports[`Collapse CollapseItem should render default correctly 1`] = `
         title-1
         <!---->
       </div>
-      <div class="fx-cell_content"> </div> <i class="fx-cell_link-icon"><svg aria-hidden="true" class="fx-icon">
+      <div class="fx-cell_content"> </div> <i class="fx-cell_link-icon"><svg class="fx-icon">
           <use xlink:href="#icon-DownOutlined"></use>
         </svg></i>
       <!---->

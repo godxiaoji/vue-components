@@ -1,7 +1,7 @@
 <template>
   <div :class="[prefix + '-notice-bar', typeClassName]" :style="styles" v-show="visible2" @click="onClick">
     <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
-      <icon :class-name="leftIcon" :style="iconStyle" />
+      <icon :icon="leftIcon" :style="iconStyle" />
     </div>
     <div :class="[prefix + '-notice-bar_content']">
       <div ref="content" :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]" :style="contentStyles">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div v-if="rightIcon2" :class="[prefix + '-notice-bar_right-icon']" @click="onRightIconClick">
-      <icon :class-name="rightIcon2" :style="iconStyle" />
+      <icon :icon="rightIcon2" :style="iconStyle" />
     </div>
   </div>
 </template>

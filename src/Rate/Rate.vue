@@ -8,10 +8,10 @@
       :data-value="num"
     >
       <i :class="[prefix + '-rate_icon']">
-        <icon :class-name="defaultIcon" />
+        <icon :icon="defaultIcon" />
       </i>
       <i :class="[prefix + '-rate_active-icon']">
-        <icon :class-name="activeIcon" :style="iconStyles" />
+        <icon :icon="activeIcon" :style="iconStyles" />
       </i>
     </div>
   </div>

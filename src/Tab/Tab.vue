@@ -15,7 +15,7 @@
         @click="onChange(item.value)"
       >
         <badge :class="[prefix + '-tab_item-inner']" :content="item.badge != null ? item.badge : 0">
-          <icon v-if="item.icon" :class-name="item.icon" />
+          <icon v-if="item.icon" :icon="item.icon" />
           <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
         </badge>
       </li>

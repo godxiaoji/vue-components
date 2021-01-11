@@ -5,7 +5,7 @@
     v-show="isShow"
   >
     <div :class="[prefix + '-toast_box', { 'has--icon': !!iconName }]">
-      <icon v-if="iconName" :class="[prefix + '-toast_icon']" :class-name="iconName" :spin="type === 'loading'" />
+      <icon v-if="iconName" :class="[prefix + '-toast_icon']" :icon="iconName" :spin="type === 'loading'" />
       <div :class="[prefix + '-toast_text']">
         {{ title }}
       </div>

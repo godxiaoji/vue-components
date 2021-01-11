@@ -6,10 +6,10 @@
       :style="{ 'padding-top': aspectRatio * 100 + '%' }"
     ></span>
     <i :class="[prefix + '-image_loading']" v-if="loading">
-      <icon class-name="ImageOutlined" />
+      <icon icon="ImageOutlined" />
     </i>
     <i :class="[prefix + '-image_error']" v-if="error">
-      <icon class-name="ImageBreakOutlined" />
+      <icon icon="ImageBreakOutlined" />
     </i>
     <img v-if="imgSrc" :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
   </div>

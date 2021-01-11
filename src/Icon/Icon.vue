@@ -1,18 +1,29 @@
 <template>
-  <svg :class="[prefix + '-icon', moreClassName]" :style="[iconColor, iconSize]" aria-hidden="true">
-    <use :xlink:href="iconName"></use>
-  </svg>
+  <component
+    :is="component"
+    :class="[prefix + '-icon', moreClassName]"
+    :style="[iconColor, iconSize]"
+    :icon-name="iconName"
+  >
+  </component>
 </template>
 
 <script>
 import { SDKKey } from '../config'
-import './lib/load-svg'
+import { isObject, isString } from '../helpers/util'
+import SvgIcon from './SvgIcon'
+
+function isComponent(value) {
+  return isObject(value) && value.functional
+}
 
 export default {
   name: SDKKey + '-icon',
   props: {
-    className: {
-      type: String,
+    icon: {
+      validator(value) {
+        return isString(value) || isComponent(value)
+      },
       required: true
     },
     spin: {
@@ -22,19 +33,34 @@ export default {
     size: {
       type: Number,
       default: 0
+    },
+    width: {
+      type: Number,
+      default: 0
+    },
+    height: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return { prefix: SDKKey }
   },
   computed: {
+    component() {
+      if (isComponent(this.icon)) {
+        return this.icon
+      }
+
+      return SvgIcon
+    },
     moreClassName() {
       return {
         spin: this.spin
       }
     },
     iconName() {
-      return `#icon-${this.className}`
+      return `#icon-${isComponent(this.icon) ? 'component' : this.icon}`
     },
     iconColor() {
       if (this.color) {
@@ -45,6 +71,12 @@ export default {
       return null
     },
     iconSize() {
+      if (this.width > 0 && this.height > 0) {
+        return {
+          width: this.width + 'px',
+          height: this.height + 'px'
+        }
+      }
       if (this.size > 0) {
         return {
           width: this.size + 'px',

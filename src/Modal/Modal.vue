@@ -6,7 +6,7 @@
         <slot></slot>
       </div>
       <i v-if="showClose" :class="[prefix + '-modal_close']" @click="onCloseClick"
-        ><icon class-name="CloseCircleFilled"></icon
+        ><icon icon="CloseCircleFilled"></icon
       ></i>
     </div>
   </div>

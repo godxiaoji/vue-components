@@ -18,7 +18,7 @@ exports[`Form FormItem should render default correctly 1`] = `
           <div class="fx-input_input placeholder">
 
           </div>
-          <div class="fx-input_append"><svg aria-hidden="true" class="fx-icon fx-form-item_icon">
+          <div class="fx-input_append"><svg class="fx-icon fx-form-item_icon">
               <use xlink:href="#icon-RightOutlined"></use>
             </svg></div> <input type="hidden" name="test">
         </div>

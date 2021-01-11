@@ -9,8 +9,8 @@
       @change="onChange"
     />
     <div :class="[prefix + '-radio_box']">
-      <icon :class="[prefix + '-radio_icon']" class-name="CircleOutlined" />
-      <icon :class="[prefix + '-radio_checked-icon']" class-name="CheckCircleFilled" />
+      <icon :class="[prefix + '-radio_icon']" icon="CircleOutlined" />
+      <icon :class="[prefix + '-radio_checked-icon']" icon="CheckCircleFilled" />
       <span :class="[prefix + '-radio_text']" v-if="$slots.default">
         <slot></slot>
       </span>

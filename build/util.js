@@ -7,8 +7,19 @@ function kebabCase2Pascalcase(name) {
   return name.substr(0, 1).toUpperCase() + name.substr(1)
 }
 
+function getSymbolId(filePath, iconsPath) {
+  const paths = relative(iconsPath, filePath)
+    .replace(/\\/g, '/')
+    .split('/')
+
+  const fileName = paths.pop().replace('.svg', '')
+
+  return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+}
+
 module.exports = {
   kebabCase2Pascalcase,
+  getSymbolId,
   svgLoader(config, iconsPath) {
     config.module
       .rule('svg')
@@ -24,13 +35,7 @@ module.exports = {
       .loader('svg-sprite-loader')
       .options({
         symbolId(filePath) {
-          let paths = relative(iconsPath, filePath)
-            .replace(/\\/g, '/')
-            .split('/')
-
-          const fileName = paths.pop().replace('.svg', '')
-
-          return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+          return getSymbolId(filePath, iconsPath)
         }
       })
   }

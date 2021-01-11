@@ -2,9 +2,9 @@
 
 exports[`Checkbox should render default correctly 1`] = `
 <label class="fx-checkbox fx-horizontal-hairline"><input type="checkbox" name="" class="fx-checkbox_input" value="">
-  <div class="fx-checkbox_box"><svg aria-hidden="true" class="fx-icon fx-checkbox_icon">
+  <div class="fx-checkbox_box"><svg class="fx-icon fx-checkbox_icon">
       <use xlink:href="#icon-BorderOutlined"></use>
-    </svg> <svg aria-hidden="true" class="fx-icon fx-checkbox_checked-icon">
+    </svg> <svg class="fx-icon fx-checkbox_checked-icon">
       <use xlink:href="#icon-CheckSquareFilled"></use>
     </svg>
     <!---->

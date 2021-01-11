@@ -1,7 +1,7 @@
 <template>
   <div v-show="scrollTop >= visibleHeight" :class="[prefix + '-back-top']" :style="styles" @click="onClick">
     <slot>
-      <icon class-name="UpCircleOutlined" />
+      <icon icon="UpCircleOutlined" />
     </slot>
   </div>
 </template>

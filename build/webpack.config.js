@@ -1,8 +1,8 @@
-const { resolve, relative } = require('path')
+const { resolve } = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const { kebabCase2Pascalcase } = require('./util')
+const { getSymbolId } = require('./util')
 
 module.exports = {
   devtool: 'source-map',
@@ -56,13 +56,7 @@ module.exports = {
         include: [resolve('assets/icons')],
         options: {
           symbolId(filePath) {
-            let paths = relative('assets/icons', filePath)
-              .replace(/\\/g, '/')
-              .split('/')
-
-            const fileName = paths.pop().replace('.svg', '')
-
-            return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+            return getSymbolId(filePath, 'assets/icons')
           }
         }
       },

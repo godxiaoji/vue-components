@@ -6,7 +6,7 @@
 | --------------- | ------- | --------- | ---- | ------------------------------------------------------------------------------ |
 | visible.sync    | boolean | false     | 是   | 是否显示                                                                       |
 | closable        | boolean | false     | 是   | 是否显示关闭按钮                                                               |
-| icon            | string  |           | 否   | 设置 [Icon](./Icon.md) 图标                                                    |
+| icon            | string  |           | 否   | 图标，使用 [Icon](./Icon.md) 组件                                              |
 | type            | string  | 'default' | 否   | 提示类型，可选值：'primary', 'success', 'warning', 'danger'                    |
 | duration        | number  | 0         | 否   | visible=true 展示后，duration 毫秒后消失，0 为不消失，在 `visible.sync` 下生效 |
 | backgroundColor | string  |           | 否   | 指定背景颜色，会覆盖 type 的颜色                                               |

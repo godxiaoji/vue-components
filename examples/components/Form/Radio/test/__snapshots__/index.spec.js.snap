@@ -2,9 +2,9 @@
 
 exports[`Radio should render default correctly 1`] = `
 <label class="fx-radio fx-horizontal-hairline"><input type="radio" name="" class="fx-radio_input" value="">
-  <div class="fx-radio_box"><svg aria-hidden="true" class="fx-icon fx-radio_icon">
+  <div class="fx-radio_box"><svg class="fx-icon fx-radio_icon">
       <use xlink:href="#icon-CircleOutlined"></use>
-    </svg> <svg aria-hidden="true" class="fx-icon fx-radio_checked-icon">
+    </svg> <svg class="fx-icon fx-radio_checked-icon">
       <use xlink:href="#icon-CheckCircleFilled"></use>
     </svg>
     <!---->

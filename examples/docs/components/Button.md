@@ -10,7 +10,7 @@
 | shape     | string  | 'default' | 否   | 按钮形状                                                 |
 | ghost     | boolean | false     | 否   | 是否使用幽灵按钮，幽灵按钮将按钮的内容反色，背景变为透明 |
 | disabled  | boolean | false     | 否   | 是否禁用                                                 |
-| icon      | string  |           | 否   | 设置 [Icon](./Icon.md) 图标                       |
+| icon      | string  |           | 否   | 图标，使用 [Icon](./Icon.md) 组件                        |
 | loading   | boolean | false     | 否   | 名称前是否带 loading 图标，优先级大于 icon               |
 | form-type | string  |           | 否   | 'submit' / 'reset'                                       |
 

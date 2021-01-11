@@ -48,7 +48,7 @@
       v-if="showClear"
       v-show="formValue"
       :class="[prefix + '-input_clear']"
-      class-name="CloseCircleFilled"
+      icon="CloseCircleFilled"
       @click.native.prevent="onClear"
     />
     <div :class="[prefix + '-input_append']" v-if="$slots.append">

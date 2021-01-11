@@ -1,6 +1,6 @@
 const webpack = require('webpack')
-const { resolve, relative } = require('path')
-const { kebabCase2Pascalcase } = require('./util')
+const { resolve } = require('path')
+const { getSymbolId } = require('./util')
 
 module.exports = {
   devtool: false,
@@ -31,13 +31,7 @@ module.exports = {
         include: [resolve('assets/icons')],
         options: {
           symbolId(filePath) {
-            let paths = relative('assets/icons', filePath)
-              .replace(/\\/g, '/')
-              .split('/')
-
-            const fileName = paths.pop().replace('.svg', '')
-
-            return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+            return getSymbolId(filePath, 'assets/icons')
           }
         }
       }

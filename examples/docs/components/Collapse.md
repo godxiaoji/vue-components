@@ -43,12 +43,12 @@
 
 ## CollapseItem Props
 
-| 属性     | 类型    | 默认值 | 必填 | 说明                                    |
-| -------- | ------- | ------ | ---- | --------------------------------------- |
-| title    | string  | ''     | 否   | 面板子项标题                            |
-| icon     | string  |        | 否   | 面板子项标题前图标                      |
-| name     | string  |        | 否   | 唯一标识，设置后可以配合 `v-model` 使用 |
-| disabled | boolean | false  | 否   | 是否禁用                                |
+| 属性     | 类型    | 默认值 | 必填 | 说明                                            |
+| -------- | ------- | ------ | ---- | ----------------------------------------------- |
+| title    | string  | ''     | 否   | 面板子项标题                                    |
+| icon     | string  |        | 否   | 面板子项标题前图标，使用 [Icon](./Icon.md) 组件 |
+| name     | string  |        | 否   | 唯一标识，设置后可以配合 `v-model` 使用         |
+| disabled | boolean | false  | 否   | 是否禁用                                        |
 
 ## CollapseItem Events
 

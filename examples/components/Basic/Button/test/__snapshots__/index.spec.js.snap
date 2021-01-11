@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button should render add icon correctly 1`] = `
-<button type="button" class="fx-button type--default size--large pattern--default shape--rectangle has--icon"><svg aria-hidden="true" class="fx-icon">
+<button type="button" class="fx-button type--default size--large pattern--default shape--rectangle has--icon"><svg class="fx-icon">
     <use xlink:href="#icon-EditOutlined"></use>
   </svg> <span>content</span></button>
 `;

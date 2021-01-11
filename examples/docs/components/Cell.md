@@ -19,7 +19,7 @@
 
 ```
 <fx-cell label="右侧图标">
-  <fx-icon class-name="CloseOutlined"></fx-icon>
+  <fx-icon icon="CloseOutlined"></fx-icon>
 </fx-cell>
 ```
 

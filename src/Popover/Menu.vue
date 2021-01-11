@@ -21,7 +21,7 @@
             @click="onItemClick(index)"
           >
             <div :class="[prefix + '-pop-menu_item-inner', { 'has--icon': item.icon }]">
-              <icon v-if="item.icon" :class-name="item.icon" />
+              <icon v-if="item.icon" :icon="item.icon" />
               <span>{{ item.name }}</span>
             </div>
           </li>

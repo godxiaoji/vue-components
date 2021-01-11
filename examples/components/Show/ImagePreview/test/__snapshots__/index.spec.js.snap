@@ -8,7 +8,7 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
       <div class="fx-swiper-item" data-index="0" style="width: 0px; float: left;">
         <div class="fx-preview-image_image">
           <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg aria-hidden="true" class="fx-icon">
+            <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>
             <!---->
@@ -19,7 +19,7 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
       <div class="fx-swiper-item" data-index="1" style="width: 0px; float: left;">
         <div class="fx-preview-image_image">
           <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg aria-hidden="true" class="fx-icon">
+            <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>
             <!---->
@@ -30,7 +30,7 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
       <div class="fx-swiper-item" data-index="2" style="width: 0px; float: left;">
         <div class="fx-preview-image_image">
           <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg aria-hidden="true" class="fx-icon">
+            <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>
             <!---->

@@ -92,7 +92,7 @@ Object object
 | ----------------- | ------ | ------ | ---- | -------- |
 | name              | string |        | 是   | 选项名   |
 | disabled          | string | false  | 否   | 是否禁用 |
-| icon              | string |        | 否   | 图标     |
+| icon              | string |        | 否   | 图标，使用 [Icon](./Icon.md) 组件     |
 
 ```
 [

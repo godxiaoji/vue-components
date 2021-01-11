@@ -9,8 +9,8 @@
       @change="onChange"
     />
     <div :class="[prefix + '-checkbox_box']">
-      <icon :class="[prefix + '-checkbox_icon']" class-name="BorderOutlined" />
-      <icon :class="[prefix + '-checkbox_checked-icon']" class-name="CheckSquareFilled" />
+      <icon :class="[prefix + '-checkbox_icon']" icon="BorderOutlined" />
+      <icon :class="[prefix + '-checkbox_checked-icon']" icon="CheckSquareFilled" />
       <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
         <slot></slot>
       </span>

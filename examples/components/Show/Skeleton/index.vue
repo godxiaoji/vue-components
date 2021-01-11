@@ -23,7 +23,7 @@
         </div>
         <fx-skeleton :avatar="true" :loading="!loadingSwitch">
           <div class="skeleton-sub-component">
-            <fx-icon class-name="HeartFilled"></fx-icon>
+            <fx-icon icon="HeartFilled"></fx-icon>
             <h4 class="title">hello World</h4>
             <p class="paragraph">
               简单不先于复杂，而是在复杂之后。

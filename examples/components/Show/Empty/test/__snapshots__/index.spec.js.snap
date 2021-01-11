@@ -10,7 +10,7 @@ exports[`Empty should render prop set description correctly 1`] = `
 
 exports[`Empty should render set image slot correctly 1`] = `
 <div class="fx-empty">
-  <div class="fx-image"><i class="fx-image_loading"><svg aria-hidden="true" class="fx-icon">
+  <div class="fx-image"><i class="fx-image_loading"><svg class="fx-icon">
         <use xlink:href="#icon-ImageOutlined"></use>
       </svg></i></div>
   <p class="fx-empty_description">

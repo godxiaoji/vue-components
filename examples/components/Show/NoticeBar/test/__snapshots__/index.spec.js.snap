@@ -14,7 +14,7 @@ exports[`NoticeBar should render default correctly 1`] = `
 
 exports[`NoticeBar should render prop leftIcon="SoundOutlined" correctly 1`] = `
 <div class="fx-notice-bar type--warning">
-  <div class="fx-notice-bar_left-icon"><svg aria-hidden="true" class="fx-icon">
+  <div class="fx-notice-bar_left-icon"><svg class="fx-icon">
       <use xlink:href="#icon-SoundOutlined"></use>
     </svg></div>
   <div class="fx-notice-bar_content">
@@ -34,7 +34,7 @@ exports[`NoticeBar should render prop mode="clickable" correctly 1`] = `
       title
     </div>
   </div>
-  <div class="fx-notice-bar_right-icon"><svg aria-hidden="true" class="fx-icon">
+  <div class="fx-notice-bar_right-icon"><svg class="fx-icon">
       <use xlink:href="#icon-RightOutlined"></use>
     </svg></div>
 </div>
@@ -48,7 +48,7 @@ exports[`NoticeBar should render prop mode="closable" correctly 1`] = `
       title
     </div>
   </div>
-  <div class="fx-notice-bar_right-icon"><svg aria-hidden="true" class="fx-icon">
+  <div class="fx-notice-bar_right-icon"><svg class="fx-icon">
       <use xlink:href="#icon-CloseOutlined"></use>
     </svg></div>
 </div>

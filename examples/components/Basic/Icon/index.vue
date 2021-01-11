@@ -4,19 +4,19 @@
       <div class="icon-grid">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="6">
-            <fx-icon class="icon-icon" class-name="UpOutlined"></fx-icon>
+            <fx-icon class="icon-icon" icon="UpOutlined"></fx-icon>
             <span class="icon-text">UpOutlined</span>
           </fx-col>
           <fx-col :span="6">
-            <fx-icon class="icon-icon" class-name="DownOutlined"></fx-icon>
+            <fx-icon class="icon-icon" icon="DownOutlined"></fx-icon>
             <span class="icon-text">DownOutlined</span>
           </fx-col>
           <fx-col :span="6">
-            <fx-icon class="icon-icon" class-name="LeftOutlined"></fx-icon>
+            <fx-icon class="icon-icon" icon="LeftOutlined"></fx-icon>
             <span class="icon-text">LeftOutlined</span>
           </fx-col>
           <fx-col :span="6">
-            <fx-icon class="icon-icon" class-name="RightOutlined"></fx-icon>
+            <fx-icon class="icon-icon" icon="RightOutlined"></fx-icon>
             <span class="icon-text">RightOutlined</span>
           </fx-col>
         </fx-row>
@@ -28,28 +28,28 @@
           <fx-col :span="6">
             <fx-icon
               class="icon-icon size-16"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">16px</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon size-24"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">24px</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon size-32"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">32px</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon size-40"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">40px</span>
           </fx-col>
@@ -62,28 +62,28 @@
           <fx-col :span="6">
             <fx-icon
               class="icon-icon color-primary"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">蓝色</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon color-success"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">绿色</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon color-warning"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">橙色</span>
           </fx-col>
           <fx-col :span="6">
             <fx-icon
               class="icon-icon color-danger"
-              class-name="CheckCircleOutlined"
+              icon="CheckCircleOutlined"
             ></fx-icon>
             <span class="icon-text">红色</span>
           </fx-col>

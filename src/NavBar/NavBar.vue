@@ -75,6 +75,7 @@ import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
 import { SDKKey } from '../config'
 import { isArray, isString } from '../helpers/util'
+import { iconValidator } from '../helpers/validator'
 
 function validateButtons(val) {
   if (isArray(val)) {
@@ -83,7 +84,7 @@ function validateButtons(val) {
     }
 
     for (let i = 0; i < val.length; i++) {
-      if (!(isString(val[i].text) && isString(val[i].icon))) {
+      if (!(isString(val[i].text) && iconValidator(val[i].icon))) {
         return false
       }
     }

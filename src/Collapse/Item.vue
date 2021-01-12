@@ -25,6 +25,7 @@
 <script>
 import Cell from '../Cell'
 import { SDKKey } from '../config'
+import { iconValidator } from '../helpers/validator'
 
 export default {
   name: SDKKey + '-collapse-item',
@@ -36,7 +37,7 @@ export default {
   },
   props: {
     icon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     title: {

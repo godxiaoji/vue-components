@@ -1,4 +1,4 @@
-import { cloneData } from '../../../../src/helpers/util'
+import { cloneData } from '@/helpers/util'
 
 const options = []
 for (let i = 2000; i <= 2020; i++) {

@@ -45,7 +45,7 @@
           v-show="lowerLoading"
         >
           <div :class="[prefix + '-scroll-view_lower-loading-indicator']" :style="indicatorStyles">
-            <icon :icon="'LoadingOutlined'" :spin="true" /><span>正在加载</span>
+            <icon icon="LoadingOutlined" spin /><span>正在加载</span>
           </div>
         </div>
       </div>

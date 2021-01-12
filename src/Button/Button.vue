@@ -21,7 +21,7 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../config'
-import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
+import { createEnumsValidator, getEnumsValue, iconValidator } from '../helpers/validator'
 
 export default {
   name: SDKKey + '-button',
@@ -64,8 +64,8 @@ export default {
       default: false
     },
     icon: {
-      type: String,
-      default: ''
+      validator: iconValidator,
+      default: null
     },
     ghost: {
       type: Boolean,

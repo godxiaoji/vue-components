@@ -10,12 +10,12 @@
   align-items: center;
 }
 
-.fx-group_body {
-  background-color: #fff;
-}
-
 .fx-group_body::before, .fx-group_body::after {
   content: '';
+}
+
+.fx-group_body-inner {
+  background-color: #fff;
 }
 
 .fx-group_title {

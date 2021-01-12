@@ -7,11 +7,7 @@
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
-        <fx-tab
-          :options="shortTabList"
-          v-model="shortActiveName"
-          :vertical="true"
-        ></fx-tab>
+        <fx-tab :options="shortTabList" v-model="shortActiveName" :vertical="true"></fx-tab>
       </div>
     </fx-group>
     <fx-group title="滚动（阈值 scrollThreshold = 4）">
@@ -21,17 +17,15 @@
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
-        <fx-tab
-          :options="tabList"
-          v-model="activeName"
-          :vertical="true"
-        ></fx-tab>
+        <fx-tab :options="tabList" v-model="activeName" :vertical="true"></fx-tab>
       </div>
     </fx-group>
   </div>
 </template>
 
 <script>
+import { shortTabList, tabList } from './data'
+
 export default {
   name: 'Tab',
   props: {},
@@ -39,94 +33,8 @@ export default {
     return {
       shortActiveName: 1,
       activeName: 1,
-      shortTabList: [
-        {
-          value: 1,
-          label: '空调'
-        },
-        {
-          value: 2,
-          label: '冰箱'
-        },
-        {
-          value: 3,
-          label: '洗衣机'
-        },
-        {
-          value: 4,
-          label: '热水器'
-        }
-      ],
-      tabList: [
-        {
-          value: 1,
-          label: '空调'
-        },
-        {
-          value: 2,
-          label: '冰箱'
-        },
-        {
-          value: 3,
-          label: '洗衣机'
-        },
-        {
-          value: 4,
-          label: '热水器'
-        },
-        {
-          value: 5,
-          label: '洗碗机'
-        },
-        {
-          value: 6,
-          label: '油烟机'
-        },
-        {
-          value: 7,
-          label: '煤气灶'
-        },
-        {
-          value: 8,
-          label: '蒸烤机'
-        },
-        {
-          value: 9,
-          label: '电饭锅'
-        },
-        {
-          value: 10,
-          label: '电磁炉'
-        },
-        {
-          value: 11,
-          label: '净水器'
-        },
-        {
-          value: 12,
-          label: '净化器'
-        },
-        {
-          value: 13,
-          label: '电风扇'
-        },
-        {
-          value: 14,
-          label: '干衣机'
-        },
-        {
-          value: 15,
-          label: '电暖气'
-        },
-        {
-          value: 16,
-          label: '加湿器'
-        },
-        {
-          value: 17,
-          label: '吸尘器'
-        }
-      ]
+      shortTabList,
+      tabList
     }
   }
 }
@@ -134,7 +42,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import '../../../../src/style/var.scss';
+@import '@/style/var.scss';
 
 .tab-box {
   background-color: $background-color;

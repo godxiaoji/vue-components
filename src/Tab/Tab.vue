@@ -14,8 +14,8 @@
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <badge :class="[prefix + '-tab_item-inner']" :content="item.badge != null ? item.badge : 0">
-          <icon v-if="item.icon" :icon="item.icon" />
+        <badge :class="[prefix + '-tab_item-inner']" v-bind="item.badge">
+          <icon v-if="item.icon" :icon="index === activeIndex ? item.activeIcon : item.icon" />
           <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
         </badge>
       </li>
@@ -24,48 +24,14 @@
 </template>
 
 <script>
-import Icon from '../Icon'
-import Badge from '../Badge'
-import { isNumber, isString, isArray, isObject, isStringNumberMix } from '../helpers/util'
+import tabMixin from './tab-mixin'
 import { SDKKey } from '../config'
 import { frameTo } from '../helpers/animation'
-import Exception from '../helpers/exception'
 
 export default {
   name: SDKKey + '-tab',
-  components: { Icon, Badge },
+  mixins: [tabMixin],
   props: {
-    options: {
-      validator(value) {
-        if (isArray(value)) {
-          for (let i = 0; i < value.length; i++) {
-            const option = value[i]
-
-            if (!(isNumber(option) || isString(option) || isObject(option))) {
-              return false
-            }
-          }
-        } else {
-          return false
-        }
-
-        return true
-      },
-      required: true,
-      default() {
-        return []
-      }
-    },
-    value: {
-      validator: isStringNumberMix,
-      default: ''
-    },
-    fieldNames: {
-      type: Object,
-      default() {
-        return { label: 'label', value: 'value' }
-      }
-    },
     // 纵向
     vertical: {
       type: Boolean,
@@ -78,124 +44,16 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
-      value2: null,
-      label2: '',
-      activeIndex: -1,
-
-      fieldNames2: { label: 'label', value: 'value' },
-      options2: []
+      prefix: SDKKey
     }
-  },
-  model: {
-    prop: 'value',
-    event: '_change'
-  },
-  watch: {
-    value() {
-      this.updateValue()
-    },
-    options() {
-      this.updateOptions()
-    },
-    fieldNames() {
-      this.updateOptions()
-    }
-  },
-  created() {
-    this.updateOptions()
   },
   mounted() {
     this.isMounted = true
     this.updatePos()
   },
-  destroyed() {},
   methods: {
-    updateValue() {
-      if (!this.updateActive(this.value)) {
-        this.$emit('_change', this.value2)
-        console.error(new Exception('"value" is not in "options".', Exception.TYPE.PROP_ERROR, 'Tab'))
-      }
-    },
-
-    updateOptions() {
-      if (isObject(this.fieldNames)) {
-        if (isString(this.fieldNames.label)) {
-          this.fieldNames2.label = this.fieldNames.label
-        }
-        if (isString(this.fieldNames.value)) {
-          this.fieldNames2.value = this.fieldNames.value
-        }
-      }
-
-      const options = []
-      const { label: labelName, value: valueName } = this.fieldNames2
-      let hasActive = false
-
-      if (isArray(this.options)) {
-        this.options.forEach((item, index) => {
-          let option
-
-          if (isNumber(item)) {
-            option = {
-              label: item.toString(),
-              value: item
-            }
-          } else if (isString(item)) {
-            option = {
-              label: item,
-              value: item
-            }
-          } else if (isObject(item) && (isString(item[valueName]) || isNumber(item[valueName]))) {
-            option = {
-              label: item[labelName] == null ? item[valueName] : item[labelName],
-              value: item[valueName],
-              icon: isString(item.icon) && item.icon ? item.icon : null
-            }
-          }
-
-          if (option) {
-            if (option.value === this.value2) {
-              this.activeIndex = index
-              hasActive = true
-            }
-
-            options.push(option)
-          }
-        })
-      }
-
-      this.options2 = options
-
-      if (!hasActive && options[0]) {
-        this.onChange(options[0].value)
-      }
-    },
-
-    updateActive(value) {
-      if (value === this.value2) {
-        return true
-      }
-
-      let hasValue = false
-
-      this.options2.forEach((option, index) => {
-        if (option.value === value) {
-          this.label2 = option.label
-          this.value2 = option.value
-          this.activeIndex = index
-          hasValue = true
-        }
-      })
-
-      if (hasValue) {
-        this.isMounted && this.updatePos()
-      } else {
-        this.activeIndex = -1
-      }
-
-      return hasValue
+    afterUpdate({ hasValue }) {
+      hasValue && this.isMounted && this.updatePos()
     },
 
     updatePos() {
@@ -226,22 +84,6 @@ export default {
         progress(res) {
           $list['scroll' + directionKey] = res.current
         }
-      })
-    },
-
-    onChange(value) {
-      if (value === this.value2) {
-        return
-      }
-
-      this.updateActive(value)
-
-      this.$emit('_change', value)
-
-      const type = 'change'
-      this.$emit(type, {
-        value,
-        index: this.activeIndex
       })
     }
   }

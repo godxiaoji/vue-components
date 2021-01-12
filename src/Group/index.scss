@@ -12,11 +12,13 @@
   }
 
   &_body {
-    background-color: #fff;
-
     &::before,
     &::after {
       content: '';
+    }
+
+    &-inner {
+      background-color: #fff;
     }
   }
 

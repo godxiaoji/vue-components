@@ -10,8 +10,9 @@
 
 <script>
 import { SDKKey } from '../config'
-import { isObject, isString } from '../helpers/util'
+import { isObject } from '../helpers/util'
 import SvgIcon from './SvgIcon'
+import { iconValidator } from '../helpers/validator'
 
 function isComponent(value) {
   return isObject(value) && value.functional
@@ -21,9 +22,7 @@ export default {
   name: SDKKey + '-icon',
   props: {
     icon: {
-      validator(value) {
-        return isString(value) || isComponent(value)
-      },
+      validator: iconValidator,
       required: true
     },
     spin: {

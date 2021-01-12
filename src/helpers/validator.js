@@ -10,7 +10,8 @@ import {
   isDate,
   isDateArray,
   isNumberArray,
-  isStringNumberMixArray
+  isStringNumberMixArray,
+  isObject
 } from './util'
 import dayjs from 'dayjs'
 import { getSizeValue } from './dom'
@@ -185,3 +186,8 @@ export function getEnumsValue(propName, value) {
   }
   return rule[0]
 }
+
+export function iconValidator(value) {
+  return isString(value) || (isObject(value) && value.functional)
+}
+iconValidator._type = 'string Or SVG Component'

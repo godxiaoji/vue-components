@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { cloneData } from '../../../../src/helpers/util'
+import { cloneData } from '@/helpers/util'
 import { cascadeOptions, multiOptions, options } from '../Picker/picker-util'
 
 export default {

@@ -18,6 +18,7 @@
 import Icon from '../Icon'
 import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
+import { iconValidator } from '../helpers/validator'
 
 const TYPE_NAMES = ['primary', 'success', 'warning', 'danger']
 
@@ -55,12 +56,12 @@ export default {
     },
     // 左侧图标名称
     leftIcon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     // 右边侧图标名称
     rightIcon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     // 背景颜色

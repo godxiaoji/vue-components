@@ -34,6 +34,7 @@
 import Icon from '../Icon'
 import { SDKKey } from '../config'
 import { inArray, capitalize } from '../helpers/util'
+import { iconValidator } from '../helpers/validator'
 
 const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 
@@ -42,7 +43,7 @@ export default {
   components: { Icon },
   props: {
     icon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     label: {

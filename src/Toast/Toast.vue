@@ -18,6 +18,7 @@ import Icon from '../Icon'
 import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { isUndefined } from '../helpers/util'
+import { iconValidator } from '../helpers/validator'
 
 const TYPE_MAP = {
   default: null,
@@ -42,7 +43,7 @@ export default {
       default: 'default'
     },
     icon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     mask: {

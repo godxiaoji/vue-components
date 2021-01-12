@@ -1,0 +1,75 @@
+.fx-tab-bar {
+  --tab-bar-color: #595959;
+  --tab-bar-active-color: #1890ff;
+  --tab-bar-background-color: #fff;
+  height: 52px;
+}
+
+.fx-tab-bar_inner {
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: var(--tab-bar-background-color);
+}
+
+.fx-tab-bar_inner::before, .fx-tab-bar_inner::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  content: '';
+}
+
+.fx-tab-bar_inner::after {
+  top: auto;
+  bottom: 0;
+}
+
+.fx-tab-bar_inner.fixed {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.fx-tab-bar_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100%;
+}
+
+.fx-tab-bar_item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--tab-bar-color);
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.fx-tab-bar_item-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+}
+
+.fx-tab-bar_item .fx-icon {
+  --size: 24px;
+  --color: var(--tab-bar-color);
+}
+
+.fx-tab-bar_item.active {
+  color: var(--tab-bar-active-color);
+}
+
+.fx-tab-bar_item.active .fx-icon {
+  --color: var(--tab-bar-active-color);
+}

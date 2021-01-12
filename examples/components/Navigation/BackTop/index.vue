@@ -32,7 +32,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import '../../../../src/style/var.scss';
+@import '@/style/var.scss';
 
 .backTop-box {
   list-style: none;

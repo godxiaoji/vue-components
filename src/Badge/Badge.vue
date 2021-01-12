@@ -1,8 +1,8 @@
 <template>
   <div :class="[prefix + '-badge', { animated: !!animated }]">
     <slot></slot>
-    <i v-if="dot" :class="[prefix + '-badge_dot']" :style="styles"></i>
-    <span v-else :class="[prefix + '-badge_num']" :style="styles">{{ showCount }}</span>
+    <i v-if="dot && content != null" :class="[prefix + '-badge_dot']" :style="styles"></i>
+    <span v-else-if="content != null" :class="[prefix + '-badge_num']" :style="styles">{{ showCount }}</span>
   </div>
 </template>
 

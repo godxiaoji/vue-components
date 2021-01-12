@@ -37,6 +37,7 @@ import PopDialog from './PopDialog'
 
 /* Navigation */
 import Tab from './Tab'
+import TabBar from './TabBar'
 import BackTop from './BackTop'
 import NavBar from './NavBar'
 import PopMenu from './PopMenu'
@@ -145,6 +146,7 @@ export {
   ScrollTabItem,
   IndexView,
   IndexViewItem,
+  TabBar,
   Scroll,
   LocalStorage
 }

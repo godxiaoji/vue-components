@@ -16,6 +16,13 @@
         </fx-swiper-item>
       </fx-swiper>
     </fx-group>
+    <fx-group title="显示切换按钮 navigation-buttons=true">
+      <fx-swiper class="swiper-box" navigation-buttons>
+        <fx-swiper-item v-for="url in imageUrls" :key="url">
+          <fx-image class="swiper-image" :src="url"></fx-image>
+        </fx-swiper-item>
+      </fx-swiper>
+    </fx-group>
     <fx-group title="循环展示 initial-circular=true">
       <fx-swiper class="swiper-box" indicator-dots initial-circular>
         <fx-swiper-item v-for="(item, index) in swiperList" :key="item">

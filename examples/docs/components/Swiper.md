@@ -13,6 +13,7 @@
 | duration               | number  |                            | 否   | 滑动动画时长，没有设置时使用内置调优时长 |
 | initial-circular       | boolean | false                      | 否   | 初始设置是否循环切换                     |
 | initial-vertical       | boolean | false                      | 否   | 初始设置是否为纵向滑动                   |
+| navigation-buttons     | boolean | false                      | 否   | 是否展示上一页/下一页按钮                |
 
 ## Swiper Events
 

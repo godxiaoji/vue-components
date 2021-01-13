@@ -201,6 +201,10 @@ export const apiRules = {
     showClose: {
       type: Boolean,
       default: false
+    },
+    navigationButtons: {
+      type: Boolean,
+      default: false
     }
   },
   showToast: {

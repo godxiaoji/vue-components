@@ -13,10 +13,33 @@
         }"
       ></span>
     </div>
+    <fx-button
+      v-if="navigationButtons"
+      v-show="this.pagination.length > 1"
+      :class="[prefix + '-swiper_prev']"
+      @click.stop="prev(true)"
+      icon="LeftOutlined"
+      size="large"
+      pattern="borderless"
+      shape="circle"
+      :ghost="true"
+    ></fx-button>
+    <fx-button
+      v-if="navigationButtons"
+      v-show="this.pagination.length > 1"
+      :class="[prefix + '-swiper_next']"
+      @click.stop="next(true)"
+      icon="RightOutlined"
+      size="large"
+      pattern="borderless"
+      shape="circle"
+      :ghost="true"
+    ></fx-button>
   </div>
 </template>
 
 <script>
+import FxButton from '../Button'
 import { SDKKey } from '../config'
 import { resizeDetector } from '../helpers/dom'
 import Exception from '../helpers/exception'
@@ -29,6 +52,7 @@ const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch
 // export
 export default {
   name: SDKKey + '-swiper',
+  components: { FxButton },
   provide() {
     return {
       appSwiper: this
@@ -49,6 +73,11 @@ export default {
     indicatorActiveColor: {
       type: String,
       default: null
+    },
+
+    navigationButtons: {
+      type: Boolean,
+      default: false
     },
 
     autoplay: {
@@ -157,14 +186,14 @@ export default {
     /**
      * 跳转到上一项
      */
-    prev() {
-      this.to(this.circular ? this.getCircleIndex(-1) : this.index - 1)
+    prev(circular = false) {
+      this.to(circular ? this.getCircleIndex(-1) : this.index - 1)
     },
     /**
      * 跳转到下一项
      */
-    next() {
-      this.to(this.circular ? this.getCircleIndex(1) : this.index + 1)
+    next(circular = false) {
+      this.to(circular ? this.getCircleIndex(1) : this.index + 1)
     },
 
     /**

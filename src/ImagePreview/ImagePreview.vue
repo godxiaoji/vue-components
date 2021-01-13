@@ -5,7 +5,12 @@
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']"></div>
-    <swiper :activeIndex.sync="activeIndex" @click="onPreviewClick" @change="onSwiperChange">
+    <swiper
+      :activeIndex.sync="activeIndex"
+      :navigation-buttons="navigationButtons"
+      @click="onPreviewClick"
+      @change="onSwiperChange"
+    >
       <swiper-item v-for="(item, index) in images" :key="index">
         <div :class="[prefix + '-preview-image_image']">
           <fx-image
@@ -56,6 +61,10 @@ export default {
       default: ''
     },
     showClose: {
+      type: Boolean,
+      default: false
+    },
+    navigationButtons: {
       type: Boolean,
       default: false
     }

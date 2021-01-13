@@ -34,6 +34,19 @@
   background-color: #fff;
 }
 
+.fx-swiper_prev.type--default.ghost, .fx-swiper_next.type--default.ghost {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.fx-swiper_next.type--default.ghost {
+  left: auto;
+  right: 12px;
+}
+
 .fx-swiper_list {
   height: 100%;
 }

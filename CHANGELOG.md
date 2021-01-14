@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/godxiaoji/vfox/compare/v1.7.2...v1.7.3) (2021-01-14)
+
+
+### Bug Fixes
+
+* **imagepreview:** 关闭按钮调整到右上角 ([7cee88f](https://github.com/godxiaoji/vfox/commit/7cee88f9d7635d8837593364697d672d0c29e823))
+
 ## [1.7.2](https://github.com/godxiaoji/vfox/compare/v1.7.1...v1.7.2) (2021-01-13)
 
 

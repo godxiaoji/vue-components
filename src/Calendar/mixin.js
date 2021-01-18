@@ -14,18 +14,13 @@ export default {
     minDate: {
       type: Date,
       default() {
-        return dayjs()
-          .startOf('day')
-          .toDate()
+        return dayjs().startOf('day').toDate()
       }
     },
     maxDate: {
       type: Date,
       default() {
-        return dayjs()
-          .startOf('day')
-          .add(DEFAULT_MONTH_RANGE, 'month')
-          .toDate()
+        return dayjs().startOf('day').add(DEFAULT_MONTH_RANGE, 'month').toDate()
       }
     },
     initialType: {

@@ -32,7 +32,11 @@ export default {
     // 水平排列方式
     justify: {
       validator(value) {
-        return ['start', 'end', 'center', 'space-around', 'space-between'].indexOf(value) !== -1
+        return (
+          ['start', 'end', 'center', 'space-around', 'space-between'].indexOf(
+            value
+          ) !== -1
+        )
       },
       default: 'start'
     },

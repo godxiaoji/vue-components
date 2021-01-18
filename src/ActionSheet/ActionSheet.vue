@@ -1,16 +1,23 @@
 <template>
   <drawer
     :class="[prefix + '-action-sheet']"
-    ref="popup"
     placement="bottom"
-    :visible.sync="visible2"
+    :visible="visible"
     @show="onShow"
     @shown="onShown"
     @hide="onHide"
     @hidden="onHidden"
     @cancel="onCancel"
+    @update:visible="onUpdateVisible"
+    ref="popup"
   >
-    <div :class="[prefix + '-action-sheet_header', prefix + '-horizontal-hairline']" v-if="title">
+    <div
+      :class="[
+        prefix + '-action-sheet_header',
+        prefix + '-horizontal-hairline'
+      ]"
+      v-if="title"
+    >
       <div :class="[prefix + '-action-sheet_title']" v-if="title">
         {{ title }}
       </div>
@@ -18,12 +25,21 @@
     <div :class="[prefix + '-action-sheet_body']">
       <ul :class="[prefix + '-action-sheet_list']">
         <li
-          :class="[prefix + '-action-sheet_item', prefix + '-horizontal-hairline', { disabled: !!item.disabled }]"
+          :class="[
+            prefix + '-action-sheet_item',
+            prefix + '-horizontal-hairline',
+            { disabled: !!item.disabled }
+          ]"
           v-for="(item, index) in options2"
           :key="index"
           @click="onItemClick(index)"
         >
-          <div :class="[prefix + '-action-sheet_item-inner', { highlight: item.highlight }]">
+          <div
+            :class="[
+              prefix + '-action-sheet_item-inner',
+              { highlight: item.highlight }
+            ]"
+          >
             <span>{{ item.name }}</span>
             <small v-if="item.description">{{ item.description }}</small>
           </div>
@@ -32,8 +48,17 @@
     </div>
     <div :class="[prefix + '-action-sheet_footer']" v-if="showCancel">
       <ul :class="[prefix + '-action-sheet_list']">
-        <li :class="[prefix + '-action-sheet_item', prefix + '-horizontal-hairline']" @click="onCancelClick">
-          <div class="align--center" :class="[prefix + '-action-sheet_item-inner']">
+        <li
+          :class="[
+            prefix + '-action-sheet_item',
+            prefix + '-horizontal-hairline'
+          ]"
+          @click="onCancelClick"
+        >
+          <div
+            class="align--center"
+            :class="[prefix + '-action-sheet_item-inner']"
+          >
             <span>{{ cancelText }}</span>
           </div>
         </li>
@@ -102,7 +127,7 @@ export default {
       this.$emit('select', detail)
       this.afterSelect(detail)
 
-      this.visible2 = false
+      this.onUpdateVisible(false)
     },
 
     afterSelect() {}

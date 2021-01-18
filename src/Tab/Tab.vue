@@ -1,5 +1,10 @@
 <template>
-  <div :class="[prefix + '-tab', { vertical, 'no--scroll': options2.length <= scrollThreshold }]">
+  <div
+    :class="[
+      prefix + '-tab',
+      { vertical, 'no--scroll': options2.length <= scrollThreshold }
+    ]"
+  >
     <ul :class="[prefix + '-tab_list']" ref="list">
       <li
         :class="[
@@ -15,7 +20,10 @@
         @click="onChange(item.value)"
       >
         <badge :class="[prefix + '-tab_item-inner']" v-bind="item.badge">
-          <icon v-if="item.icon" :icon="index === activeIndex ? item.activeIcon : item.icon" />
+          <icon
+            v-if="item.icon"
+            :icon="index === activeIndex ? item.activeIcon : item.icon"
+          />
           <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
         </badge>
       </li>
@@ -72,7 +80,8 @@ export default {
         scrollOffset = $activeItem['offset' + directionKey]
       } else {
         scrollOffset = Math.min(
-          $activeItem['offset' + directionKey] - ($list['offset' + sizeKey] - $activeItem['offset' + sizeKey]) / 2,
+          $activeItem['offset' + directionKey] -
+            ($list['offset' + sizeKey] - $activeItem['offset' + sizeKey]) / 2,
           $list['scroll' + sizeKey] - $list['offset' + sizeKey]
         )
       }

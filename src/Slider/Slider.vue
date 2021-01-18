@@ -2,7 +2,10 @@
   <div :class="[prefix + '-slider', { disabled }]">
     <div :class="[prefix + '-slider_inner']">
       <div :class="[prefix + '-slider_box']">
-        <div :class="[prefix + '-slider_track']" :style="[{ width: progress }]"></div>
+        <div
+          :class="[prefix + '-slider_track']"
+          :style="[{ width: progress }]"
+        ></div>
         <div :class="[prefix + '-slider_thumb']" :style="[{ left: progress }]">
           {{ showValue ? formValue : '' }}
         </div>
@@ -48,10 +51,6 @@ export default {
       validator: isNumeric,
       default: 1
     },
-    name: {
-      type: String,
-      default: ''
-    },
     disabled: {
       type: Boolean,
       default: false
@@ -63,7 +62,7 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_input'
+    event: 'update:modelValue'
   },
   data() {
     return {
@@ -112,8 +111,11 @@ export default {
       this.formValue = this.getInputEl().value
     },
     inputModel() {
-      if (this.modelValue == null || this.formValue !== this.modelValue.toString()) {
-        this.$emit('_input', this.hookFormValue())
+      if (
+        this.modelValue == null ||
+        this.formValue !== this.modelValue.toString()
+      ) {
+        this.$emit('update:modelValue', this.hookFormValue())
       }
     },
     onInput(e) {
@@ -132,9 +134,6 @@ export default {
         value
       })
       this.validateAfterEventTrigger(type, value)
-    },
-    getInputEl() {
-      return this.$el && this.$el.querySelector('input')
     },
     hookFormValue() {
       return parseFloat(this.formValue)

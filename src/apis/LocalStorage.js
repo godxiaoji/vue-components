@@ -66,12 +66,16 @@ export function createStorage(areaName, options) {
       const valueSize = value.length / 1024
 
       if (valueSize > perLimitSize) {
-        throw new Error(`Storage error: per storage limit size exceeded ${perLimitSize}KB.`)
+        throw new Error(
+          `Storage error: per storage limit size exceeded ${perLimitSize}KB.`
+        )
       }
 
       if (storageInfo.currentSize + valueSize > storageInfo.limitSize) {
         // 超过限制大小
-        throw new Error(`Storage error: total storage limit size exceeded ${limitSize}KB.`)
+        throw new Error(
+          `Storage error: total storage limit size exceeded ${limitSize}KB.`
+        )
       }
 
       localStorage.setItem(prefix + key, value)

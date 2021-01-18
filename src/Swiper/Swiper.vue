@@ -1,15 +1,25 @@
 <template>
-  <div :class="[prefix + '-swiper', { vertical: direction === 'y' }]" @click="onClick">
+  <div
+    :class="[prefix + '-swiper', { vertical: direction === 'y' }]"
+    @click="onClick"
+  >
     <div :class="[prefix + '-swiper_list']" ref="list">
       <slot></slot>
     </div>
-    <div :class="[prefix + '-swiper_indicators', { vertical: direction === 'y' }]" v-show="indicatorDots">
+    <div
+      :class="[prefix + '-swiper_indicators', { vertical: direction === 'y' }]"
+      v-show="indicatorDots"
+    >
       <span
         v-for="item in pagination"
         :key="item.index"
-        :class="[prefix + '-swiper_indicator', { active: item.index === index }]"
+        :class="[
+          prefix + '-swiper_indicator',
+          { active: item.index === index }
+        ]"
         :style="{
-          background: item.index === index ? indicatorActiveColor : indicatorColor
+          background:
+            item.index === index ? indicatorActiveColor : indicatorColor
         }"
       ></span>
     </div>
@@ -43,16 +53,30 @@ import FxButton from '../Button'
 import { SDKKey } from '../config'
 import { resizeDetector } from '../helpers/dom'
 import Exception from '../helpers/exception'
-import { camelCase2KebabCase, isNumber, isUndefined, objectForEach } from '../helpers/util'
+import {
+  camelCase2KebabCase,
+  isNumber,
+  isUndefined,
+  objectForEach
+} from '../helpers/util'
+import listMixin from '../util/list-mixin'
 
 import { touchEvent } from '../helpers/events'
 
-const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 // export
 export default {
   name: SDKKey + '-swiper',
   components: { FxButton },
+  mixins: [listMixin],
   provide() {
     return {
       appSwiper: this
@@ -175,12 +199,22 @@ export default {
      * @param {Number} activeIndex 索引
      */
     swipeTo(activeIndex) {
-      if (isNumber(activeIndex) && activeIndex >= 0 && activeIndex < this.$items.length) {
+      if (
+        isNumber(activeIndex) &&
+        activeIndex >= 0 &&
+        activeIndex < this.$items.length
+      ) {
         if (activeIndex !== this.index) {
           this.to(activeIndex)
         }
       } else {
-        console.error(new Exception('"activeIndex"不在范围内', Exception.TYPE.PROP_ERROR, 'Swiper'))
+        console.error(
+          new Exception(
+            '"activeIndex"不在范围内',
+            Exception.TYPE.PROP_ERROR,
+            'Swiper'
+          )
+        )
       }
     },
     /**
@@ -216,18 +250,7 @@ export default {
       }
     },
 
-    update(lazy = 17) {
-      if (!this.isInit) {
-        return
-      }
-
-      clearTimeout(this.updateTimer)
-      this.updateTimer = setTimeout(() => {
-        this.refresh()
-      }, lazy)
-    },
     updateSlide() {
-      this.isInit = true
       // 设置方向
       if (this.initialVertical) {
         this.direction = 'y'
@@ -344,7 +367,11 @@ export default {
       const active = this.index
       let transSize = active * itemSize
 
-      if (!this.circular && ((active === 0 && offsetX < 0) || (active === this.getLastIndex() && offsetX > 0))) {
+      if (
+        !this.circular &&
+        ((active === 0 && offsetX < 0) ||
+          (active === this.getLastIndex() && offsetX > 0))
+      ) {
         transSize += Math.ceil(offsetX / Math.log(Math.abs(offsetX)))
       } else {
         transSize += offsetX
@@ -373,7 +400,10 @@ export default {
         const coords = this.touchCoords
 
         const itemSize = this.itemSize
-        const offsetX = this.direction === 'x' ? coords.startX - coords.stopX : coords.startY - coords.stopY
+        const offsetX =
+          this.direction === 'x'
+            ? coords.startX - coords.stopX
+            : coords.startY - coords.stopY
         let absX = Math.abs(offsetX)
         const active = this.index
 
@@ -401,7 +431,13 @@ export default {
     },
     // 获取滑动距离值
     getTransVal(size) {
-      return 'translate3d(' + (this.direction === 'x' ? size + 'px, 0px, 0px' : '0px, ' + size + 'px, 0px') + ')'
+      return (
+        'translate3d(' +
+        (this.direction === 'x'
+          ? size + 'px, 0px, 0px'
+          : '0px, ' + size + 'px, 0px') +
+        ')'
+      )
     },
     getLastIndex() {
       return this.$items.length - 1
@@ -536,7 +572,7 @@ export default {
       }
     },
     // 刷新
-    refresh() {
+    resetItems() {
       if (this._isDestroyed) {
         return
       }
@@ -547,14 +583,13 @@ export default {
         this.to(last)
       }
     },
-    resetItems() {
-      return (this.$items = [].slice.call(this.$refs.list.querySelectorAll(`.${SDKKey}-swiper-item`), 0))
-    },
     // 设置列表项
     setItems() {
-      this.resetItems()
+      if (this.$refs.list) {
+        this.$items = this.getItems('swiper')
 
-      this.setSlideStyle()
+        this.setSlideStyle()
+      }
     },
     // 设置滑动属性
     setSlideStyle() {

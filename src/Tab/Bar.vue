@@ -1,6 +1,13 @@
 <template>
   <div :class="[prefix + '-tab-bar']">
-    <div :class="[prefix + '-tab-bar_inner', prefix + '-horizontal-hairline', { fixed }]" :style="innerStyles">
+    <div
+      :class="[
+        prefix + '-tab-bar_inner',
+        prefix + '-horizontal-hairline',
+        { fixed }
+      ]"
+      :style="innerStyles"
+    >
       <ul :class="[prefix + '-tab-bar_list']" ref="list">
         <li
           :class="[
@@ -14,7 +21,10 @@
           @click="onChange(item.value)"
         >
           <badge :class="[prefix + '-tab-bar_item-icon']" v-bind="item.badge">
-            <icon v-if="item.icon" :icon="index === activeIndex ? item.activeIcon : item.icon" />
+            <icon
+              v-if="item.icon"
+              :icon="index === activeIndex ? item.activeIcon : item.icon"
+            />
           </badge>
           <span :class="[prefix + '-tab-bar_item-text']">{{ item.label }}</span>
         </li>

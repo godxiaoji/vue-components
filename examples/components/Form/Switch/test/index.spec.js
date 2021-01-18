@@ -30,7 +30,7 @@ describe('Switch', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  test('should formValue=true with input trigger change correctly', async() => {
+  test('should formValue=true with input trigger change correctly', async () => {
     const wrapper = mount(Switch, {})
     const input = wrapper.find('input[type="checkbox"]')
 

@@ -49,10 +49,6 @@ export default {
       type: String,
       default: ''
     },
-    name: {
-      type: String,
-      default: ''
-    },
     // 是否禁用步进器
     disabled: {
       type: Boolean,
@@ -163,7 +159,7 @@ export default {
       if (value !== this.formValue) {
         this.formValue = value
         if (eventChange) {
-          this._change(value)
+          this.afterChange(value)
         }
       }
 
@@ -173,13 +169,10 @@ export default {
       }
 
       if (value !== this.modelValue) {
-        this.$emit('_change', value)
+        this.$emit('update:modelValue', value)
       }
 
       return value
-    },
-    getInputEl() {
-      return this.$el && this.$el.querySelector('input')
     },
     onFocus(e) {
       this.$emit(e.type, e)
@@ -191,7 +184,10 @@ export default {
       this.updateValue(e.target.value)
     },
     formateNumber(value) {
-      return formatInputNumber(value, !this.allowDecimal ? 0 : this.decimalLength)
+      return formatInputNumber(
+        value,
+        !this.allowDecimal ? 0 : this.decimalLength
+      )
     },
     onInput(e) {
       const value = this.formateNumber(e.target.value)
@@ -205,7 +201,7 @@ export default {
     reset() {
       return this._reset(this.getInputEl().value)
     },
-    _change(value) {
+    afterChange(value) {
       const type = 'change'
 
       this.$emit(type, {

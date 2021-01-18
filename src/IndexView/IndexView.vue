@@ -34,7 +34,14 @@ import { sizeValidator } from '../helpers/validator'
 import { touchEvent } from '../helpers/events'
 import { rangeInteger } from '../helpers/util'
 
-const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 export default {
   name: SDKKey + '-index-view',
@@ -59,7 +66,6 @@ export default {
 
     addListeners(this.$refs.list, this)
   },
-  destroyed() {},
   beforeDestroy() {
     removeListeners(this.$refs.list, this)
   },
@@ -132,7 +138,11 @@ export default {
         this.coords.isChange = true
 
         this.changeTimer = setTimeout(() => {
-          this.activeIndex = rangeInteger(current + offsetCount, 0, this.indexList.length - 1)
+          this.activeIndex = rangeInteger(
+            current + offsetCount,
+            0,
+            this.indexList.length - 1
+          )
         }, 100)
       }
 
@@ -158,10 +168,6 @@ export default {
     },
 
     onResetItems(list) {
-      if (this._isDestroyed) {
-        return
-      }
-
       this.indexList = list.map(({ name, index }) => {
         return {
           label: name.substr(0, 1),

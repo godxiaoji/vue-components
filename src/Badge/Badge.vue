@@ -1,13 +1,27 @@
 <template>
   <div :class="[prefix + '-badge', { animated: !!animated }]">
     <slot></slot>
-    <i v-if="dot && content != null" :class="[prefix + '-badge_dot']" :style="styles"></i>
-    <span v-else-if="content != null" :class="[prefix + '-badge_num']" :style="styles">{{ showCount }}</span>
+    <i
+      v-if="dot && content != null"
+      :class="[prefix + '-badge_dot']"
+      :style="styles"
+    ></i>
+    <span
+      v-else-if="content != null"
+      :class="[prefix + '-badge_num']"
+      :style="styles"
+      >{{ showCount }}</span
+    >
   </div>
 </template>
 
 <script>
-import { isNumber, isString, isStringNumberMix, rangeInteger } from '../helpers/util'
+import {
+  isNumber,
+  isString,
+  isStringNumberMix,
+  rangeInteger
+} from '../helpers/util'
 import { SDKKey } from '../config'
 import { frameTo } from '../helpers/animation'
 
@@ -102,7 +116,11 @@ export default {
     styles() {
       return {
         transform: `translate3d(50%, -50%, 0px) scale(${
-          (isString(this.content) && this.content) || this.showZero || this.content > 0 ? 1 : 0
+          (isString(this.content) && this.content) ||
+          this.showZero ||
+          this.content > 0
+            ? 1
+            : 0
         })`,
         right: `${-this.offset[0]}px`,
         top: `${this.offset[1]}px`

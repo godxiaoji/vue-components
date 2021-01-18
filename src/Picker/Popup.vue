@@ -1,14 +1,15 @@
 <template>
   <drawer
     :class="[prefix + '-picker-popup']"
-    ref="popup"
     placement="bottom"
-    :visible.sync="visible2"
+    :visible="visible"
     @show="onShow"
     @shown="onShown"
     @hide="onHide"
     @hidden="onHidden"
     @cancel="onCancel"
+    @update:visible="onUpdateVisible"
+    ref="popup"
   >
     <nav-bar
       :title="title"
@@ -63,7 +64,7 @@ export default {
         this.updateValue(val)
       }
     },
-    visible2: {
+    visible: {
       handler(val) {
         if (val) {
           this.$refs.view.updatePos()
@@ -73,7 +74,7 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_change'
+    event: 'update:modelValue'
   },
   methods: {
     updateValue(val) {
@@ -93,12 +94,12 @@ export default {
 
       if (!isSameArray(oldDetail.value, detail.value)) {
         // 跟picker-view不一样，改变数值时机是确定按钮
-        this.$emit('_change', this.hookFormValue())
+        this.$emit('update:modelValue', this.hookFormValue())
         this.$emit('change', cloneData(detail))
         this.afterChange(cloneData(detail))
       }
 
-      this.visible2 = false
+      this.onUpdateVisible(false)
     },
 
     afterChange() {},

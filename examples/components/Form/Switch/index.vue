@@ -12,7 +12,9 @@
       <fx-cell label="开"><fx-switch disabled :modelValue="true"/></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="change"><fx-switch v-model="value" @change="onChange"/></fx-cell>
+      <fx-cell label="change"
+        ><fx-switch v-model="value" @change="onChange"
+      /></fx-cell>
     </fx-group>
   </div>
 </template>

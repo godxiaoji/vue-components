@@ -110,7 +110,9 @@ export default {
   },
   methods: {
     onChange({ activeNames }) {
-      this.$showToast(activeNames.length > 0 ? activeNames.join('，') : '没有项' + '展开')
+      this.$showToast(
+        activeNames.length > 0 ? activeNames.join('，') : '没有项' + '展开'
+      )
     },
     onToggle({ spread }) {
       this.$showToast(spread ? '展开' : '收起')

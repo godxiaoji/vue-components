@@ -42,7 +42,10 @@ export default {
       let row
 
       if (this.row == null) {
-        if (this.skeletonSubOptions && this.skeletonSubOptions.paragraphRow != null) {
+        if (
+          this.skeletonSubOptions &&
+          this.skeletonSubOptions.paragraphRow != null
+        ) {
           row = this.skeletonSubOptions.paragraphRow
         }
       } else {

@@ -1,8 +1,21 @@
 <template>
-  <div :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]" :style="{ zIndex }" v-show="isShow">
+  <div
+    :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
+    :style="popupStyles"
+    v-show="isShow"
+  >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-drawer_inner', alignClassName, { 'has--header': hasHeader }]">
-      <div v-show="hasHeader" :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']">
+    <div
+      :class="[
+        prefix + '-drawer_inner',
+        alignClassName,
+        { 'has--header': hasHeader }
+      ]"
+    >
+      <div
+        v-show="hasHeader"
+        :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
+      >
         <div :class="[prefix + '-drawer_header-inner']">
           <div :class="[prefix + '-drawer_title']">{{ title }}</div>
           <fx-button

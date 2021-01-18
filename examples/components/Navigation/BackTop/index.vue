@@ -15,7 +15,7 @@
         <li>Scroll to bottom 往下滑</li>
       </ul>
     </fx-group>
-    <fx-back-top ></fx-back-top>
+    <fx-back-top></fx-back-top>
     <fx-back-top :offset="[0, -50]">UP</fx-back-top>
   </div>
 </template>

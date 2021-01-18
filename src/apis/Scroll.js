@@ -1,4 +1,5 @@
 import { frameTo } from '../helpers/animation'
+import { getScrollDom } from '../helpers/dom'
 import { getCallbackFns } from './callback'
 import { parseParamsByRules } from './rules'
 
@@ -46,11 +47,7 @@ function _elementScrollTo(element, scrollTop, duration) {
   const from = element.scrollTop
 
   if (element === document) {
-    if (typeof document.compatMode !== 'undefined' && document.compatMode !== 'BackCompat') {
-      element = document.documentElement
-    } else {
-      element = document.body
-    }
+    element = getScrollDom()
   }
 
   if (from === scrollTop) {

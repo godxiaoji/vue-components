@@ -7,10 +7,7 @@
           id="popMenu"
           shape="circle"
           icon="MenuOutlined"
-          @click="
-            selector = '#popMenu'
-            visible = true
-          "
+          @click=";(selector = '#popMenu'), (visible = true)"
         >
         </fx-button>
       </fx-cell>
@@ -34,9 +31,9 @@
             shape="circle"
             icon="UpOutlined"
             @click="
-              placement2 = 'top'
-              selector2 = '#popMenuTop2'
-              visible2 = true
+              ;(placement2 = 'top'),
+                (selector2 = '#popMenuTop2'),
+                (visible2 = true)
             "
           >
             上
@@ -49,9 +46,9 @@
             shape="circle"
             icon="LeftOutlined"
             @click="
-              placement2 = 'left'
-              selector2 = '#popMenuLeft2'
-              visible2 = true
+              ;(placement2 = 'left'),
+                (selector2 = '#popMenuLeft2'),
+                (visible2 = true)
             "
           >
             左
@@ -62,9 +59,9 @@
             shape="circle"
             icon="RightOutlined"
             @click="
-              placement2 = 'right'
-              selector2 = '#popMenuRight2'
-              visible2 = true
+              ;(placement2 = 'right'),
+                (selector2 = '#popMenuRight2'),
+                (visible2 = true)
             "
           >
             右
@@ -77,9 +74,9 @@
             shape="circle"
             icon="DownOutlined"
             @click="
-              placement2 = 'bottom'
-              selector2 = '#popMenuBottom2'
-              visible2 = true
+              ;(placement2 = 'bottom'),
+                (selector2 = '#popMenuBottom2'),
+                (visible2 = true)
             "
           >
             下
@@ -95,9 +92,7 @@
           shape="circle"
           icon="MenuOutlined"
           @click="
-            selector = '#popMenuEvent'
-            showEvent = true
-            visible = true
+            ;(selector = '#popMenuEvent'), (showEvent = true), (visible = true)
           "
         >
         </fx-button>
@@ -109,9 +104,9 @@
           shape="circle"
           icon="MenuOutlined"
           @click="
-            selector = '#popMenuPopupEvent'
-            showPopupEvent = true
-            visible = true
+            ;(selector = '#popMenuPopupEvent'),
+              (showPopupEvent = true),
+              (visible = true)
           "
         >
         </fx-button>
@@ -226,7 +221,11 @@ export default {
         placement: 'top',
         success: res => {
           console.log('select', res)
-          this.$showToast(`选择了 ${res.detail.item.name}`)
+          if (res.selected) {
+            this.$showToast(`选择了 ${res.detail.item.name}`)
+          } else {
+            this.$showToast('取消了')
+          }
         }
       })
     }

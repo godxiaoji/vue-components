@@ -1,14 +1,23 @@
 <template>
   <div :class="[prefix + '-picker-view']" ref="picker">
     <div :class="[prefix + '-picker-view_cols']">
-      <div :class="[prefix + '-picker-view_col']" v-for="(list, listIndex) in cols" :key="listIndex">
-        <ul :class="[prefix + '-picker-view_list']" :data-index="listIndex" @scroll.stop="onListScroll">
+      <div
+        :class="[prefix + '-picker-view_col']"
+        v-for="(list, listIndex) in cols"
+        :key="listIndex"
+      >
+        <ul
+          :class="[prefix + '-picker-view_list']"
+          :data-index="listIndex"
+          @scroll.stop="onListScroll"
+        >
           <li
-            :class="[prefix + '-picker-view_item', { selected: item.selected, disabled: item.disabled }]"
+            :class="[
+              prefix + '-picker-view_item',
+              { selected: item.selected, disabled: item.disabled }
+            ]"
             v-for="(item, index) in list"
             :key="item.value"
-            :selected="item.selected"
-            :disabled="item.disabled"
             :data-index="index"
           >
             {{ item.label }}
@@ -23,6 +32,7 @@
 import { frameTo } from '../helpers/animation'
 import { SDKKey } from '../config'
 import mulitSelectorMixin from '../util/mulit-selector/mixin'
+import { hasClassName } from '../helpers/dom'
 
 export default {
   name: SDKKey + '-picker-view',
@@ -39,11 +49,11 @@ export default {
     this.formValue = this.cacheValue
 
     // 需要立即同步好数据
-    this.$emit('_change', this.hookFormValue())
+    this.$emit('update:modelValue', this.hookFormValue())
   },
   methods: {
     onChange() {
-      this.$emit('_change', this.hookFormValue())
+      this.$emit('update:modelValue', this.hookFormValue())
       this.$emit('change', this.getDetail())
     },
 
@@ -70,8 +80,9 @@ export default {
           const $firstList = $lists[0]
 
           if ($firstList && $firstList.firstElementChild) {
-            const itemHeight = $firstList.firstElementChild.clientHeight || this.itemHeight
-            const $selecteds = $picker.querySelectorAll('[selected]')
+            const itemHeight =
+              $firstList.firstElementChild.clientHeight || this.itemHeight
+            const $selecteds = $picker.querySelectorAll('.selected')
             $selecteds.forEach(($selected, index) => {
               const itemIndex = parseInt($selected.dataset.index)
               $lists[index].scrollTop = itemHeight * itemIndex
@@ -97,7 +108,7 @@ export default {
       let oldSelectIndex = 0
 
       for (let i = 0; i < $items.length; i++) {
-        if ($items[i].getAttribute('selected') === 'selected') {
+        if (hasClassName($items[i], 'selected')) {
           oldSelectIndex = i
           break
         }
@@ -106,7 +117,10 @@ export default {
       let isChange = current !== oldSelectIndex
 
       if (isChange) {
-        while ($items[current].getAttribute('disabled') === 'disabled' && current !== oldSelectIndex) {
+        while (
+          hasClassName($items[current], 'disabled') &&
+          current !== oldSelectIndex
+        ) {
           // 处理disabled 不能选的问题
           if (current > oldSelectIndex) {
             current--

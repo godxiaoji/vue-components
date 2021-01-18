@@ -8,7 +8,14 @@
 import { SDKKey } from '../config'
 import { touchEvent } from '../helpers/events'
 
-const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 export default {
   name: SDKKey + '-tab-view-item',
@@ -76,19 +83,31 @@ export default {
       }
     },
     onTouchStart(e) {
-      const { scrollHeight, scrollTop, clientHeight, scrollLeft, scrollWidth, clientWidth } = e.currentTarget
+      const {
+        scrollHeight,
+        scrollTop,
+        clientHeight,
+        scrollLeft,
+        scrollWidth,
+        clientWidth
+      } = e.currentTarget
       const vertical = this.appTabView.vertical
 
       const touch = getTouch(e)
 
       if (
-        (vertical && (scrollHeight === scrollTop + clientHeight || scrollTop === 0)) ||
-        (!vertical && (scrollWidth === scrollLeft + clientWidth || scrollLeft === 0))
+        (vertical &&
+          (scrollHeight === scrollTop + clientHeight || scrollTop === 0)) ||
+        (!vertical &&
+          (scrollWidth === scrollLeft + clientWidth || scrollLeft === 0))
       ) {
         if (scrollHeight !== clientHeight || scrollWidth !== clientWidth) {
           this.touchCoords = {
             vertical,
-            position: (vertical && scrollTop === 0) || (!vertical && scrollLeft === 0) ? 1 : 2,
+            position:
+              (vertical && scrollTop === 0) || (!vertical && scrollLeft === 0)
+                ? 1
+                : 2,
             startX: touch.pageX,
             startY: touch.pageY,
             timeStamp: e.timeStamp
@@ -115,9 +134,14 @@ export default {
       const { pageX, pageY } = getTouch(e)
       const coords = this.touchCoords
 
-      const offset = coords.vertical ? coords.startY - pageY : coords.startX - pageX
+      const offset = coords.vertical
+        ? coords.startY - pageY
+        : coords.startX - pageX
 
-      if ((coords.position === 1 && offset > 0) || (coords.position === 2 && offset < 0)) {
+      if (
+        (coords.position === 1 && offset > 0) ||
+        (coords.position === 2 && offset < 0)
+      ) {
         coords.stop = true
         e.stopPropagation()
       }

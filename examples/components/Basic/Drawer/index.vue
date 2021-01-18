@@ -83,7 +83,12 @@ export default {
   name: 'Drawer',
   props: {},
   data() {
-    return { drawerVisible: false, title: '', placement: 'top', showClose: false }
+    return {
+      drawerVisible: false,
+      title: '',
+      placement: 'top',
+      showClose: false
+    }
   },
   methods: {
     onShow({ title, placement, showClose, showEventCallback }) {
@@ -102,5 +107,3 @@ export default {
   }
 }
 </script>
-
-

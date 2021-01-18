@@ -50,6 +50,7 @@
     "@semantic-release/github": "^7.1.1",
     "@semantic-release/npm": "^7.0.6",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.1.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -59,6 +60,7 @@
     "css-loader": "^3.4.2",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "file-loader": "^6.2.0",
     "gulp": "^4.0.2",
@@ -69,6 +71,7 @@
     "jest-transform-stub": "^2.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prettier": "^2.2.1",
     "sass": "^1.27.1",
     "sass-loader": "^10.0.4",
     "semantic-release": "^17.3.0",
@@ -91,11 +94,5 @@
     "*.css",
     "*.scss",
     "*.vue"
-  ],
-  "browserslist": [
-    "> 1%",
-    "not ie <= 11",
-    "Android >= 5.0",
-    "iOS >= 10"
   ]
 }

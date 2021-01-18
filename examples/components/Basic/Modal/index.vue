@@ -64,13 +64,13 @@
       @hidden="onOtherEvent('hidden')"
     >
     </fx-modal>
-    <fx-modal :visible.sync="visible2"
-      ><fx-image
+    <fx-modal :visible.sync="visible2">
+      <fx-image
         class="image-image"
         :src="imageUrl"
         :aspect-ratio="1"
-      ></fx-image
-    ></fx-modal>
+      ></fx-image>
+    </fx-modal>
   </div>
 </template>
 
@@ -129,5 +129,3 @@ export default {
   }
 }
 </script>
-
-

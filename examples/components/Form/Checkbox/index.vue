@@ -8,8 +8,11 @@
       <fx-cell label="带文案">
         <fx-checkbox v-model="checked">勾选</fx-checkbox>
       </fx-cell>
-      <fx-cell label="激活">
+      <fx-cell label="默认激活">
         <fx-checkbox checked>勾选</fx-checkbox>
+      </fx-cell>
+      <fx-cell label="禁用">
+        <fx-checkbox disabled>勾选</fx-checkbox>
       </fx-cell>
     </fx-group>
     <fx-group title="CheckboxGroup">
@@ -54,5 +57,3 @@ export default {
   }
 }
 </script>
-
-

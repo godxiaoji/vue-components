@@ -25,7 +25,7 @@
     --color: var(--input-secondary-color);
   }
 
-  &[disabled] {
+  &.disabled {
     background-color: $background2-color;
     --input-color: #{$font3-color};
     -webkit-text-fill-color: $font3-color;

@@ -1,5 +1,9 @@
 <template>
-  <div :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]" :style="{ zIndex }" v-show="isShow">
+  <div
+    :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
+    :style="popupStyles"
+    v-show="isShow"
+  >
     <notice-bar
       :class="[prefix + '-notify_inner']"
       :type="type"

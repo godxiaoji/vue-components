@@ -7,6 +7,7 @@ import Popover from './Popover'
 import Drawer from './Drawer'
 import Modal from './Modal'
 import Dropdown from './Dropdown'
+import ScrollView from './ScrollView'
 
 /* Form  */
 import Switch from './Switch'
@@ -52,7 +53,6 @@ import IndexView from './IndexView'
 import IndexViewItem from './IndexViewItem'
 
 /* Show */
-import ScrollView from './ScrollView'
 import Swiper from './Swiper'
 import SwiperItem from './SwiperItem'
 import FlatList from './FlatList'

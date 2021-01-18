@@ -2,22 +2,30 @@
   <div>
     <fx-group title="基础用法">
       <div class="tab-box">
-        <fx-tab :options="shortTabList" v-model="shortActiveName"></fx-tab>
+        <fx-tab :options="shortTabList" v-model="shortActiveValue"></fx-tab>
       </div>
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
-        <fx-tab :options="shortTabList" v-model="shortActiveName" :vertical="true"></fx-tab>
+        <fx-tab
+          :options="shortTabList"
+          v-model="shortActiveValue"
+          :vertical="true"
+        ></fx-tab>
       </div>
     </fx-group>
     <fx-group title="滚动（阈值 scrollThreshold = 4）">
       <div class="tab-box">
-        <fx-tab :options="tabList" v-model="activeName"></fx-tab>
+        <fx-tab :options="tabList" v-model="activeValue"></fx-tab>
       </div>
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
-        <fx-tab :options="tabList" v-model="activeName" :vertical="true"></fx-tab>
+        <fx-tab
+          :options="tabList"
+          v-model="activeValue"
+          :vertical="true"
+        ></fx-tab>
       </div>
     </fx-group>
   </div>
@@ -31,8 +39,8 @@ export default {
   props: {},
   data() {
     return {
-      shortActiveName: 1,
-      activeName: 1,
+      shortActiveValue: 1,
+      activeValue: 1,
       shortTabList,
       tabList
     }

@@ -1,7 +1,17 @@
 <template>
   <label :class="[prefix + '-switch']">
-    <input :class="[prefix + '-switch_checkbox']" type="checkbox" :disabled="disabled" @change="onChange" />
-    <input type="hidden" :disabled="disabled" :name="formName" :value="formValue" />
+    <input
+      :class="[prefix + '-switch_checkbox']"
+      type="checkbox"
+      :disabled="disabled"
+      @change="onChange"
+    />
+    <input
+      type="hidden"
+      :disabled="disabled"
+      :name="formName"
+      :value="formValue"
+    />
   </label>
 </template>
 
@@ -16,10 +26,6 @@ export default {
     modelValue: {
       type: Boolean,
       default: false
-    },
-    name: {
-      type: String,
-      default: ''
     },
     disabled: {
       type: Boolean,
@@ -60,7 +66,7 @@ export default {
       this.formValue = value
 
       if (this.modelValue !== value) {
-        this.$emit('_change', value)
+        this.$emit('update:modelValue', value)
       }
 
       this.eventEmit('change', value)

@@ -236,7 +236,7 @@
             <fx-button type="primary" icon="LeftOutlined"></fx-button>
             <fx-button type="primary" icon="HomeOutlined"></fx-button>
           </fx-button-group>
-          <fx-button-group shape="round"  pattern="gradient">
+          <fx-button-group shape="round" pattern="gradient">
             <fx-button type="warning">加购物车</fx-button>
             <fx-button type="danger">立即购买</fx-button>
           </fx-button-group>

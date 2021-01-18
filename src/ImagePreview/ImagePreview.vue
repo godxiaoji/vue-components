@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="[prefix + '-preview-image', prefix + '-popup', { visible: visible2 }]"
+    :class="[
+      prefix + '-preview-image',
+      prefix + '-popup',
+      { visible: visible2 }
+    ]"
     :style="{ zIndex }"
     v-show="isShow"
   >
@@ -22,7 +26,9 @@
         </div>
       </swiper-item>
     </swiper>
-    <div :class="[prefix + '-preview-image_pagination']">{{ activeIndex + 1 }} / {{ urls.length }}</div>
+    <div :class="[prefix + '-preview-image_pagination']">
+      {{ activeIndex + 1 }} / {{ urls.length }}
+    </div>
     <fx-button
       v-if="showClose"
       :class="[prefix + '-preview-image_close']"
@@ -128,7 +134,7 @@ export default {
       }
 
       if (!hasUrl && this.images[0]) {
-        this.$emit('update:activeIndex', this.images[0].src)
+        this.$emit('update:current', this.images[0].src)
       }
     },
     onImageLoad({ width, height, src }) {

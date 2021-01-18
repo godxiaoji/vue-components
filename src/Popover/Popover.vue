@@ -1,7 +1,11 @@
 <template>
   <div
-    :class="[prefix + '-popover', prefix + '-popup', { visible: visible2, 'no--mask': !showMask }]"
-    :style="{ zIndex }"
+    :class="[
+      prefix + '-popover',
+      prefix + '-popup',
+      { visible: visible2, 'no--mask': !showMask }
+    ]"
+    :style="popupStyles"
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
@@ -17,10 +21,15 @@
 </template>
 
 <script>
-import { cloneData, isElement } from '../helpers/util'
+import { cloneData } from '../helpers/util'
 import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
-import { selectorValidator, createEnumsValidator, getEnumsValue } from '../helpers/validator'
+import {
+  selectorValidator,
+  createEnumsValidator,
+  getEnumsValue
+} from '../helpers/validator'
+import { getElement } from '../helpers/dom'
 
 const DEFAULT_POS = { t: null, l: null, at: null, al: null, show: false }
 
@@ -113,7 +122,7 @@ export default {
       })
     },
     updatePos() {
-      const $target = isElement(this.selector) ? this.selector : document.querySelector(this.selector)
+      const $target = getElement(this.selector)
 
       if (!$target) {
         return

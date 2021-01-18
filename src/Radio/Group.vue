@@ -19,10 +19,6 @@ export default {
     }
   },
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     modelValue: {
       validator: isStringNumberMix,
       default: null
@@ -63,6 +59,16 @@ export default {
       }
     }
   },
+  mounted() {
+    for (let i = 0; i < this.appChildren.length; i++) {
+      const child = this.appChildren[i]
+
+      if (child.getInputChecked()) {
+        this.formValue = child.value
+        break
+      }
+    }
+  },
   methods: {
     updateValue(vm) {
       let value = ''
@@ -80,7 +86,7 @@ export default {
       this.formValue = value
 
       if (value !== this.modelValue) {
-        this.$emit('_change', value)
+        this.$emit('update:modelValue', value)
       }
     },
 

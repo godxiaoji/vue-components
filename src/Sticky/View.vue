@@ -9,7 +9,11 @@
       :class="[prefix + '-sticky-view_top']"
       ref="sticky"
     >
-      <div ref="fixed" :class="[prefix + '-sticky-view_fixed']" :style="fixedStyles">
+      <div
+        ref="fixed"
+        :class="[prefix + '-sticky-view_fixed']"
+        :style="fixedStyles"
+      >
         {{ title }}
       </div>
     </sticky>
@@ -22,10 +26,12 @@ import { SDKKey } from '../config'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getRelativeOffset, getSizeValue, querySelector } from '../helpers/dom'
 import { eventSelectorValidator, sizeValidator } from '../helpers/validator'
+import listMixin from '../util/list-mixin'
 
 export default {
   name: SDKKey + '-sticky-view',
   components: { Sticky },
+  mixins: [listMixin],
   provide() {
     return {
       appSticky: this
@@ -64,7 +70,9 @@ export default {
   computed: {
     fixedStyles() {
       return {
-        transform: `translate3d(0px, ${this.titleY === null ? '-100%' : this.titleY + 'px'}, 0px)`
+        transform: `translate3d(0px, ${
+          this.titleY === null ? '-100%' : this.titleY + 'px'
+        }, 0px)`
       }
     }
   },
@@ -74,8 +82,6 @@ export default {
     }
   },
   mounted() {
-    this.isInit = true
-
     this.resetItems()
 
     this.resetContainer(this.containSelector)
@@ -104,31 +110,18 @@ export default {
       this.updateFixed($container.scrollTop)
     },
 
-    update() {
-      if (!this.isInit) {
-        return
-      }
-
-      clearTimeout(this.updateTimer)
-      this.updateTimer = setTimeout(() => {
-        this.resetItems()
-      }, 17)
-    },
-
     resetItems() {
       if (this._isDestroyed) {
         return
       }
 
-      const $list = this.$refs.list
-
-      const $items = [].slice.call($list.querySelectorAll(`.${SDKKey}-sticky-view-item`), 0).map(v => {
+      const $items = this.getItems('sticky-view').map(v => {
         return v._app_component
       })
 
       this.$items = $items
 
-      this.updateFixed($list.scrollTop)
+      this.updateFixed(this.$refs.list.scrollTop)
 
       this.$emit(
         'reset-items',
@@ -159,7 +152,8 @@ export default {
       const offsetTops = this.getOffsetTops()
       //   console.log(offsetTops, scrollTop)
       const current = offsetTops[activeIndex]
-      const next = offsetTops[nextIndex] != null ? offsetTops[nextIndex] : Infinity
+      const next =
+        offsetTops[nextIndex] != null ? offsetTops[nextIndex] : Infinity
       const first = offsetTops[0]
 
       if (scrollTop < first) {
@@ -171,7 +165,10 @@ export default {
           this.title = this.$items[nextIndex].name
           this.titleY = 0
 
-          if (offsetTops[nextIndex + 1] && scrollTop >= offsetTops[nextIndex + 1]) {
+          if (
+            offsetTops[nextIndex + 1] &&
+            scrollTop >= offsetTops[nextIndex + 1]
+          ) {
             // 超过了
             this.updateFixed(scrollTop)
           } else {
@@ -197,7 +194,10 @@ export default {
           this.title = this.$items[this.index].name
           this.titleY = 0
 
-          if (offsetTops[activeIndex - 1] && offsetTops[activeIndex - 1] > scrollTop) {
+          if (
+            offsetTops[activeIndex - 1] &&
+            offsetTops[activeIndex - 1] > scrollTop
+          ) {
             this.updateFixed(scrollTop)
           } else {
             if (!this.isScrollTo) {
@@ -220,7 +220,10 @@ export default {
      */
     scrollToIndex({ index }) {
       if (this.$items[index] && index != this.index) {
-        this.scrollToOffset({ offset: getRelativeOffset(this.$items[index].$el, this.$container).offsetTop })
+        this.scrollToOffset({
+          offset: getRelativeOffset(this.$items[index].$el, this.$container)
+            .offsetTop
+        })
       }
     },
 
@@ -234,7 +237,9 @@ export default {
     },
 
     getOffsetTops() {
-      const offset = getRelativeOffset(this.$refs.list, this.$container).offsetTop - getSizeValue(this.offsetTop)
+      const offset =
+        getRelativeOffset(this.$refs.list, this.$container).offsetTop -
+        getSizeValue(this.offsetTop)
 
       return this.$items.map(v => {
         return v.$el.offsetTop + offset

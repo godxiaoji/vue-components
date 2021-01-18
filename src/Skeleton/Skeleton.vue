@@ -2,14 +2,22 @@
 import SkeletonLayout from './Layout.vue'
 import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
-import { paragraphDefaultRow, AVATAR_SHAPE_NAMES, BUTTON_SHAPE_NAMES } from './util'
+import {
+  paragraphDefaultRow,
+  AVATAR_SHAPE_NAMES,
+  BUTTON_SHAPE_NAMES
+} from './util'
 
 export default {
   render(createElement) {
     if (!this.loading) {
       if (this.$slots.default) {
         if (this.$slots.default.length > 1) {
-          return createElement('div', { class: [SDKKey + '-skeleton_loaded'] }, this.$slots.default)
+          return createElement(
+            'div',
+            { class: [SDKKey + '-skeleton_loaded'] },
+            this.$slots.default
+          )
         }
         return this.$slots.default
       }

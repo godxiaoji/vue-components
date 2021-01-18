@@ -1,5 +1,11 @@
 <template>
-  <div :class="[prefix + '-collapse-item', prefix + '-horizontal-hairline', { active }]">
+  <div
+    :class="[
+      prefix + '-collapse-item',
+      prefix + '-horizontal-hairline',
+      { active }
+    ]"
+  >
     <cell
       :class="[prefix + '-collapse-item_header']"
       :label="title"
@@ -12,7 +18,6 @@
     <div
       :class="[prefix + '-collapse-item_body', prefix + '-horizontal-hairline']"
       style="display: none"
-      :style="{ height: contentHeight }"
       ref="body"
     >
       <div :class="[prefix + '-collapse-item_content']">
@@ -56,8 +61,7 @@ export default {
   data() {
     return {
       prefix: SDKKey,
-      active: false,
-      contentHeight: 0
+      active: false
     }
   },
   created() {
@@ -86,13 +90,13 @@ export default {
 
       $body.style.cssText = 'position: absolute; opacity: 0;'
       const contentHeight = $body.getBoundingClientRect().height
-      $body.style.cssText = 'height: 0px'
+      $body.style.cssText = 'height: 0px;'
 
       this.visibleTimer = setTimeout(() => {
-        this.contentHeight = contentHeight + 'px'
+        $body.style.cssText = `height: ${contentHeight}px;`
 
         this.visibleTimer = setTimeout(() => {
-          this.contentHeight = null
+          $body.style.cssText = null
         }, 210)
       }, 17)
 
@@ -111,13 +115,13 @@ export default {
       clearTimeout(this.visibleTimer)
 
       const $body = this.$refs.body
-      this.contentHeight = $body.getBoundingClientRect().height + 'px'
+      $body.style.cssText = `height: ${$body.getBoundingClientRect().height}px;`
 
       this.visibleTimer = setTimeout(() => {
-        this.contentHeight = 0
+        $body.style.cssText = 'height: 0px;'
 
         this.visibleTimer = setTimeout(() => {
-          $body.style.display = 'none'
+          $body.style.cssText = 'display: none;'
         }, 210)
       }, 17)
 

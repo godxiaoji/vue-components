@@ -40,26 +40,17 @@
       <fx-cell
         label="Event:change"
         clickable
-        @click="
-          changeEvent = true
-          visible = true
-        "
+        @click=";(changeEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="Event:confirm/cancel"
         clickable
-        @click="
-          clickEvent = true
-          visible = true
-        "
+        @click=";(clickEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="Event:show/shown/hide/hidden"
         clickable
-        @click="
-          otherEvent = true
-          visible = true
-        "
+        @click=";(otherEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
@@ -152,5 +143,3 @@ export default {
   }
 }
 </script>
-
-

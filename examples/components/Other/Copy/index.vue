@@ -1,14 +1,14 @@
 <template>
   <div>
     <fx-group title="基本用法">
-      <div class="pad">
+      <div class="copy-pad">
         <fx-copy class="copy-box" text="复制的文本"
           ><fx-button type="primary">点击复制</fx-button></fx-copy
         >
       </div>
     </fx-group>
     <fx-group title="事件监听">
-      <div class="pad">
+      <div class="copy-pad">
         <fx-copy
           class="copy-box"
           text="复制的文本2"
@@ -48,6 +48,10 @@ export default {
   &-box {
     display: flex !important;
     flex: 1;
+  }
+
+  &-pad {
+    padding: 12px 16px;
   }
 }
 </style>

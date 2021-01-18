@@ -6,21 +6,33 @@
       prefix + '-popup',
       { visible: visible2, 'no--mask': !showMask }
     ]"
-    :style="{ zIndex }"
+    :style="popupStyles"
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
       <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
       <div :class="[prefix + '-popover_content']">
-        <ul :class="[prefix + '-pop-menu_list', prefix + '-pop-menu_list']" v-if="options2 && options2.length > 0">
+        <ul
+          :class="[prefix + '-pop-menu_list', prefix + '-pop-menu_list']"
+          v-if="options2 && options2.length > 0"
+        >
           <li
-            :class="[prefix + '-pop-menu_item', prefix + '-horizontal-hairline', { disabled: !!item.disabled }]"
+            :class="[
+              prefix + '-pop-menu_item',
+              prefix + '-horizontal-hairline',
+              { disabled: !!item.disabled }
+            ]"
             v-for="(item, index) in options2"
             :key="index"
             @click="onItemClick(index)"
           >
-            <div :class="[prefix + '-pop-menu_item-inner', { 'has--icon': item.icon }]">
+            <div
+              :class="[
+                prefix + '-pop-menu_item-inner',
+                { 'has--icon': item.icon }
+              ]"
+            >
               <icon v-if="item.icon" :icon="item.icon" />
               <span>{{ item.name }}</span>
             </div>

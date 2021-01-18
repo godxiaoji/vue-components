@@ -3,7 +3,7 @@
 import { mount } from '@vue/test-utils'
 import ImagePreview from '@/ImagePreview'
 
-const imageUrls= [
+const imageUrls = [
   'https://cdn.fox2.cn/vfox/swiper/different-1.jpg',
   'https://cdn.fox2.cn/vfox/swiper/different-2.jpg',
   'https://cdn.fox2.cn/vfox/swiper/different-3.jpg'

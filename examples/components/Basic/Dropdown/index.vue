@@ -5,10 +5,7 @@
         label="基础"
         clickable
         id="dropdownCell"
-        @click="
-          selector = '#dropdownCell'
-          visible = true
-        "
+        @click=";(selector = '#dropdownCell'), (visible = true)"
       />
     </fx-group>
     <fx-group title="事件监听">
@@ -16,9 +13,9 @@
         label="show/shown/hide/hidden"
         id="dropdownCellEvent"
         @click="
-          selector = '#dropdownCellEvent'
-          showEventCallback = true
-          visible = true
+          ;(selector = '#dropdownCellEvent'),
+            (showEventCallback = true),
+            (visible = true)
         "
       />
     </fx-group>

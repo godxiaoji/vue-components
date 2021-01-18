@@ -18,7 +18,7 @@ exports[`Collapse CollapseItem should render default correctly 1`] = `
       <!---->
     </div>
   </div>
-  <div class="fx-collapse-item_body fx-horizontal-hairline" style="display: none; height: 0px;">
+  <div class="fx-collapse-item_body fx-horizontal-hairline" style="display: none;">
     <div class="fx-collapse-item_content">content</div>
   </div>
 </div>

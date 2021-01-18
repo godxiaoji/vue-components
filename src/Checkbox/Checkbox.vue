@@ -1,5 +1,11 @@
 <template>
-  <label :class="[prefix + '-checkbox', prefix + '-horizontal-hairline']" :disabled="disabled">
+  <label
+    :class="[
+      prefix + '-checkbox',
+      prefix + '-horizontal-hairline',
+      { disabled }
+    ]"
+  >
     <input
       :class="[prefix + '-checkbox_input']"
       type="checkbox"
@@ -10,7 +16,10 @@
     />
     <div :class="[prefix + '-checkbox_box']">
       <icon :class="[prefix + '-checkbox_icon']" icon="BorderOutlined" />
-      <icon :class="[prefix + '-checkbox_checked-icon']" icon="CheckSquareFilled" />
+      <icon
+        :class="[prefix + '-checkbox_checked-icon']"
+        icon="CheckSquareFilled"
+      />
       <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -68,7 +77,7 @@ export default {
   },
   model: {
     prop: 'checked',
-    event: '_change'
+    event: 'update:checked'
   },
   watch: {
     checked() {
@@ -113,7 +122,7 @@ export default {
       if (this.appCheckboxGroup) {
         this.appCheckboxGroup.onChange(this)
       } else {
-        this.$emit('_change', e.target.checked)
+        this.$emit('update:checked', e.target.checked)
       }
     },
     getInputEl() {

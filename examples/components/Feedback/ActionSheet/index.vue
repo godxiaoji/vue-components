@@ -5,26 +5,20 @@
       <fx-cell
         label="展示标题"
         clickable
-        @click="
-          title = '标题'
-          visible = true
-        "
+        @click=";(title = '标题'), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="展示取消按钮"
         clickable
-        @click="
-          showCancel = true
-          visible = true
-        "
+        @click=";(showCancel = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="设置取消按钮文案"
         clickable
         @click="
-          showCancel = true
-          cancelText = '自定义取消按钮文案'
-          visible = true
+          ;(showCancel = true),
+            (cancelText = '自定义取消按钮文案'),
+            (visible = true)
         "
       ></fx-cell>
     </fx-group>
@@ -33,7 +27,7 @@
         label="选项描述"
         clickable
         @click="
-          options = [
+          ;(options = [
             {
               name: '选项1',
               description: '选项1的描述文案'
@@ -44,15 +38,15 @@
             {
               name: '选项3'
             }
-          ]
-          visible = true
+          ]),
+            (visible = true)
         "
       ></fx-cell>
       <fx-cell
         label="选项高亮"
         clickable
         @click="
-          options = [
+          ;(options = [
             {
               name: '选项1',
               highlight: true
@@ -63,8 +57,8 @@
             {
               name: '选项3'
             }
-          ]
-          visible = true
+          ]),
+            (visible = true)
         "
       ></fx-cell>
     </fx-group>
@@ -73,18 +67,13 @@
         label="select/cancel"
         clickable
         @click="
-          showCancel = true
-          showSelectEvent = true
-          visible = true
+          ;(showCancel = true), (showSelectEvent = true), (visible = true)
         "
       ></fx-cell>
       <fx-cell
         label="show/shown/hide/hidden"
         clickable
-        @click="
-          showOtherEvent = true
-          visible = true
-        "
+        @click=";(showOtherEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">

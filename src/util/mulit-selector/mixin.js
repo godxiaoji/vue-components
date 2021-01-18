@@ -48,7 +48,7 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_change'
+    event: 'update:modelValue'
   },
   created() {
     // 优先确定模式

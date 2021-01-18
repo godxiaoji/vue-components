@@ -6,6 +6,12 @@ export default {
       default: null
     }
   },
+  props: {
+    name: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
     formName() {
       if (this.appFormItem) {
@@ -16,11 +22,15 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_change'
+    event: 'update:modelValue'
   },
   methods: {
+    getInputEl() {
+      return this.$el && this.$el.querySelector('input')
+    },
     validateAfterEventTrigger(type, value) {
-      this.appFormItem && this.appFormItem.validateAfterEventTrigger(type, value)
+      this.appFormItem &&
+        this.appFormItem.validateAfterEventTrigger(type, value)
     },
     hookFormValue() {
       return cloneData(this.formValue)
@@ -29,7 +39,7 @@ export default {
       this.formValue = value
 
       if (value != this.value) {
-        this.$emit(this.inputField ? '_input' : '_change', this.hookFormValue())
+        this.$emit('update:modelValue', this.hookFormValue())
       }
 
       this.$emit('reset', { name: this.formName, value: this.hookFormValue() })

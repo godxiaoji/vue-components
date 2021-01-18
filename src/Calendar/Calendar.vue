@@ -8,17 +8,13 @@
     ]"
   >
     <div
-      :class="[prefix + '-input', { 'has--value': formLabel }]"
-      :disabled="disabled"
+      :class="[prefix + '-input', { 'has--value': formLabel, disabled }]"
       @click="onFieldClick"
     >
       <div :class="[prefix + '-input_input', { placeholder: !formLabel }]">
         {{ formLabel || placeholder }}
       </div>
-      <icon
-        :class="[prefix + '-input_arrow']"
-        icon="RightOutlined"
-      />
+      <icon :class="[prefix + '-input_arrow']" icon="RightOutlined" />
       <input
         :class="[prefix + '-input_cover']"
         type="text"
@@ -28,6 +24,14 @@
         :value="formLabel"
       />
     </div>
+    <calendar-popup
+      v-bind="$props"
+      :title="placeholder"
+      :visible.sync="popupVisible"
+      v-if="isInitPopup"
+      @confirm="onConfirm"
+      ref="popup"
+    />
   </div>
 </template>
 
@@ -35,7 +39,6 @@
 import Icon from '../Icon'
 import CalendarPopup from './Popup.vue'
 import { SDKKey } from '../config'
-import { initPickerPopup } from '../helpers/popup'
 import formMixin from '../util/form-mixin'
 import mixin from './mixin'
 import {
@@ -50,7 +53,7 @@ import dayjs from 'dayjs'
 
 export default {
   name: SDKKey + '-calendar',
-  components: { Icon },
+  components: { Icon, CalendarPopup },
   mixins: [mixin, formMixin],
   props: {
     disabled: {
@@ -65,11 +68,11 @@ export default {
       type: Function,
       default: null
     },
-    popupShowConfirm: {
+    showConfirm: {
       type: Boolean,
       default: false
     },
-    popupShowClose: {
+    showClose: {
       type: Boolean,
       default: false
     }
@@ -81,7 +84,10 @@ export default {
       formValue: [],
       formLabel: '',
       detail: getDefaultDetail(),
-      defaultDetail: getDefaultDetail()
+      defaultDetail: getDefaultDetail(),
+
+      isInitPopup: false,
+      popupVisible: true
     }
   },
   watch: {
@@ -109,50 +115,14 @@ export default {
     $input.defaultValue = $input.value
   },
   methods: {
-    initPopup() {
-      const parent = this
-
-      this.popup = initPickerPopup(
-        parent,
-        {
-          methods: {
-            afterConfirm(detail) {
-              parent.onConfirm(detail)
-            }
-          }
-        },
-        [
-          { propName: 'initialType', parentName: 'initialType', watch: false },
-          { propName: 'modelValue', parentName: 'modelValue', watch: false },
-          { propName: 'minDate', parentName: 'minDate', watch: true },
-          { propName: 'maxDate', parentName: 'maxDate', watch: true },
-          { propName: 'allowSameDay', parentName: 'allowSameDay', watch: true },
-          { propName: 'maxRange', parentName: 'maxRange', watch: true },
-          {
-            propName: 'showConfirm',
-            parentName: 'popupShowConfirm',
-            watch: true
-          },
-          { propName: 'showClose', parentName: 'popupShowClose', watch: true },
-          { propName: 'title', parentName: 'placeholder', watch: true },
-          { propName: 'dayHandler', parentName: 'dayHandler', watch: true }
-        ],
-        CalendarPopup
-      )
-    },
-
     onFieldClick() {
       if (!this.disabled) {
-        if (!this.popup) {
-          this.initPopup()
+        if (!this.isInitPopup) {
+          this.isInitPopup = true
         } else {
-          this.popup.show()
+          this.popupVisible = true
         }
       }
-    },
-
-    getInputEl() {
-      return this.$el && this.$el.querySelector('input')
     },
 
     onConfirm(detail) {
@@ -163,15 +133,15 @@ export default {
       this.updateDetail(detail)
       const formatValue = this.hookFormValue()
       this._changeValue = formatValue
-      this.$emit('_change', formatValue)
+      this.$emit('update:modelValue', formatValue)
       this.$emit('change', cloneDetail(detail))
 
       this.validateAfterEventTrigger('change', this.formValue)
     },
 
     updateValue(val) {
-      if (this.popup) {
-        this.updateDetail(this.popup.updateValue(val))
+      if (this.$refs.popup) {
+        this.updateDetail(this.$refs.popup.updateValue(val))
       } else {
         this.updateDetail(
           getDetail(parseValues(val, this.initialType), this.initialType)
@@ -200,7 +170,7 @@ export default {
     reset() {
       this.updateValue(this.defaultDetail.value)
 
-      this.$emit('_change', this.hookFormValue())
+      this.$emit('update:modelValue', this.hookFormValue())
 
       this.$emit('reset', { name: this.formName, value: this.hookFormValue() })
 

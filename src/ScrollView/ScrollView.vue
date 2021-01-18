@@ -16,7 +16,10 @@
         <div
           v-show="!lowerLoading"
           v-if="enablePullDirections.length > 0"
-          :class="[prefix + '-scroll-view_pull-refresh', 'direction--' + (pullDirection || 'unknown')]"
+          :class="[
+            prefix + '-scroll-view_pull-refresh',
+            'direction--' + (pullDirection || 'unknown')
+          ]"
         >
           <slot
             v-bind:pullDirection="pullDirection"
@@ -24,9 +27,16 @@
             v-bind:pullIndicatorSafeArea="pullIndicatorSafeArea"
             name="indicator"
           >
-            <div :class="[prefix + '-scroll-view_pull-refresh-indicator']" :style="indicatorStyles">
+            <div
+              :class="[prefix + '-scroll-view_pull-refresh-indicator']"
+              :style="indicatorStyles"
+            >
               <icon
-                :icon="pullRefreshState === PULL_REFRESH_STATE_REFRESHING ? 'LoadingOutlined' : 'CircleOutlined'"
+                :icon="
+                  pullRefreshState === PULL_REFRESH_STATE_REFRESHING
+                    ? 'LoadingOutlined'
+                    : 'CircleOutlined'
+                "
                 :spin="pullRefreshState === PULL_REFRESH_STATE_REFRESHING"
               />
               <span>{{
@@ -41,10 +51,16 @@
         </div>
         <slot></slot>
         <div
-          :class="[prefix + '-scroll-view_lower-loading', 'direction--' + (pullDirection || 'unknown')]"
+          :class="[
+            prefix + '-scroll-view_lower-loading',
+            'direction--' + (pullDirection || 'unknown')
+          ]"
           v-show="lowerLoading"
         >
-          <div :class="[prefix + '-scroll-view_lower-loading-indicator']" :style="indicatorStyles">
+          <div
+            :class="[prefix + '-scroll-view_lower-loading-indicator']"
+            :style="indicatorStyles"
+          >
             <icon icon="LoadingOutlined" spin /><span>正在加载</span>
           </div>
         </div>
@@ -59,7 +75,14 @@ import { SDKKey } from '../config'
 import { inArray, isArray, isString, isStringArray } from '../helpers/util'
 import { touchEvent } from '../helpers/events'
 
-const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 const SCROLL_STATE_CENTER = 0
 const SCROLL_STATE_UPPER = 1
@@ -248,7 +271,14 @@ export default {
     onTouchStart(e) {
       const { pageX, pageY } = getTouch(e)
       const $scroll = this.$refs.scroll
-      const { scrollHeight, scrollTop, clientHeight, scrollLeft, scrollWidth, clientWidth } = $scroll
+      const {
+        scrollHeight,
+        scrollTop,
+        clientHeight,
+        scrollLeft,
+        scrollWidth,
+        clientWidth
+      } = $scroll
 
       this.touchCoords = {
         pageX,
@@ -283,13 +313,19 @@ export default {
       if (scrollTop === 0 && inArray('down', allowPullDirections)) {
         directions.push('down')
       }
-      if (scrollTop + clientHeight >= scrollHeight && inArray('up', allowPullDirections)) {
+      if (
+        scrollTop + clientHeight >= scrollHeight &&
+        inArray('up', allowPullDirections)
+      ) {
         directions.push('up')
       }
       if (scrollLeft === 0 && inArray('right', allowPullDirections)) {
         directions.push('right')
       }
-      if (scrollLeft + clientWidth >= scrollWidth && inArray('left', allowPullDirections)) {
+      if (
+        scrollLeft + clientWidth >= scrollWidth &&
+        inArray('left', allowPullDirections)
+      ) {
         directions.push('left')
       }
 
@@ -338,11 +374,17 @@ export default {
         // 如果可能存在两个方向，继续验证会走的方向
         if (Math.abs(offsetY) >= Math.abs(offsetX)) {
           coords.directions = coords.directions.filter(v => {
-            return inArray(v, ['up', 'down']) && ((v === 'down' && offsetY > 0) || (v === 'up' && offsetY < 0))
+            return (
+              inArray(v, ['up', 'down']) &&
+              ((v === 'down' && offsetY > 0) || (v === 'up' && offsetY < 0))
+            )
           })
         } else {
           coords.directions = coords.directions.filter(v => {
-            return inArray(v, ['left', 'right']) && ((v === 'right' && offsetX > 0) || (v === 'left' && offsetX < 0))
+            return (
+              inArray(v, ['left', 'right']) &&
+              ((v === 'right' && offsetX > 0) || (v === 'left' && offsetX < 0))
+            )
           })
         }
 
@@ -367,10 +409,12 @@ export default {
 
         if (inArray(pullDirection, ['up', 'down'])) {
           safeArea.left = $scroll.scrollLeft
-          safeArea.right = $scroll.scrollWidth - $scroll.scrollLeft - $scroll.clientWidth
+          safeArea.right =
+            $scroll.scrollWidth - $scroll.scrollLeft - $scroll.clientWidth
         } else {
           safeArea.top = $scroll.scrollTop
-          safeArea.bottom = $scroll.scrollHeight - $scroll.scrollTop - $scroll.clientHeight
+          safeArea.bottom =
+            $scroll.scrollHeight - $scroll.scrollTop - $scroll.clientHeight
         }
 
         this.pullIndicatorSafeArea = safeArea
@@ -395,11 +439,14 @@ export default {
         distance =
           this.pullRefreshThreshold +
           Math.ceil(
-            (distance - this.pullRefreshThreshold) / Math.log(Math.abs(distance - this.pullRefreshThreshold) / 2)
+            (distance - this.pullRefreshThreshold) /
+              Math.log(Math.abs(distance - this.pullRefreshThreshold) / 2)
           ) // 除于2比不除更好拉一点
       }
 
-      this.pullDistance = inArray(this.pullDirection, ['down', 'right']) ? distance : -distance
+      this.pullDistance = inArray(this.pullDirection, ['down', 'right'])
+        ? distance
+        : -distance
     },
 
     onTouchEnd() {
@@ -469,7 +516,14 @@ export default {
      */
     onScroll(e) {
       const { upperThreshold, lowerThreshold, scrollX, scrollY, $el } = this
-      const { scrollTop, scrollLeft, scrollWidth, scrollHeight, clientHeight, clientWidth } = $el
+      const {
+        scrollTop,
+        scrollLeft,
+        scrollWidth,
+        scrollHeight,
+        clientHeight,
+        clientWidth
+      } = $el
 
       let isToLowerY = false
       let isToUpperY = false
@@ -491,7 +545,10 @@ export default {
 
       // 上下滚动
       if (scrollY) {
-        if (scrollTop + clientHeight + lowerThreshold >= scrollHeight && scrollTop > this._prevY) {
+        if (
+          scrollTop + clientHeight + lowerThreshold >= scrollHeight &&
+          scrollTop > this._prevY
+        ) {
           isToLowerY = true
         } else if (scrollTop <= upperThreshold && scrollTop < this._prevY) {
           isToUpperY = true

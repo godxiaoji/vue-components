@@ -2,47 +2,47 @@
   <div>
     <fx-group title="基础用法">
       <div class="skeleton-panel">
-        <fx-skeleton></fx-skeleton></div
-    ></fx-group>
+        <fx-skeleton />
+      </div>
+    </fx-group>
     <fx-group title="显示头像">
       <div class="skeleton-panel">
-        <fx-skeleton :avatar="true"></fx-skeleton></div
-    ></fx-group>
+        <fx-skeleton avatar />
+      </div>
+    </fx-group>
     <fx-group title="带动画">
       <div class="skeleton-panel">
-        <fx-skeleton
-          :avatar="true"
-          :animated="true"
-          :avatar-shape="'circle'"
-        ></fx-skeleton></div
-    ></fx-group>
+        <fx-skeleton avatar animated :avatar-shape="'circle'" />
+      </div>
+    </fx-group>
     <fx-group title="显示子组件">
       <div class="skeleton-panel">
         <div class="skeleton-switch">
-          <fx-switch v-model="loadingSwitch"></fx-switch>
+          <fx-switch v-model="loadingSwitch" />
         </div>
-        <fx-skeleton :avatar="true" :loading="!loadingSwitch">
+        <fx-skeleton avatar :loading="!loadingSwitch">
           <div class="skeleton-sub-component">
-            <fx-icon icon="HeartFilled"></fx-icon>
+            <fx-icon icon="HeartFilled" />
             <h4 class="title">hello World</h4>
             <p class="paragraph">
               简单不先于复杂，而是在复杂之后。
             </p>
           </div>
         </fx-skeleton>
-      </div></fx-group
-    >
+      </div>
+    </fx-group>
     <fx-group title="自由组合">
       <div class="skeleton-panel">
         <fx-skeleton class="skeleton-custom">
           <template #layout>
-            <fx-skeleton-image></fx-skeleton-image>
-            <fx-skeleton-title></fx-skeleton-title>
-            <fx-skeleton-paragraph :row="2"></fx-skeleton-paragraph>
-            <fx-skeleton-button></fx-skeleton-button>
+            <fx-skeleton-image />
+            <fx-skeleton-title />
+            <fx-skeleton-paragraph :row="2" />
+            <fx-skeleton-button />
           </template>
-        </fx-skeleton></div
-    ></fx-group>
+        </fx-skeleton>
+      </div>
+    </fx-group>
   </div>
 </template>
 

@@ -43,10 +43,10 @@
     top: 0;
     opacity: 0;
 
-    &:not([disabled]):checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_icon {
+    &:checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_icon {
       display: none;
     }
-    &:not([disabled]):checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_checked-icon {
+    &:checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_checked-icon {
       display: block;
     }
   }
@@ -57,7 +57,7 @@
     margin-left: 12px;
   }
 
-  &[disabled] {
+  &.disabled {
     opacity: 0.3;
   }
 }

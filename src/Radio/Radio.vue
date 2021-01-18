@@ -1,5 +1,7 @@
 <template>
-  <label :class="[prefix + '-radio', prefix + '-horizontal-hairline']" :disabled="disabled">
+  <label
+    :class="[prefix + '-radio', prefix + '-horizontal-hairline', { disabled }]"
+  >
     <input
       :class="[prefix + '-radio_input']"
       type="radio"
@@ -10,7 +12,10 @@
     />
     <div :class="[prefix + '-radio_box']">
       <icon :class="[prefix + '-radio_icon']" icon="CircleOutlined" />
-      <icon :class="[prefix + '-radio_checked-icon']" icon="CheckCircleFilled" />
+      <icon
+        :class="[prefix + '-radio_checked-icon']"
+        icon="CheckCircleFilled"
+      />
       <span :class="[prefix + '-radio_text']" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -68,7 +73,7 @@ export default {
   },
   model: {
     prop: 'checked',
-    event: '_change'
+    event: 'update:checked'
   },
   watch: {
     checked() {
@@ -113,7 +118,7 @@ export default {
       if (this.appRadioGroup) {
         this.appRadioGroup.onChange(this)
       } else {
-        this.$emit('_change', e.target.checked)
+        this.$emit('update:checked', e.target.checked)
       }
     },
     getInputEl() {

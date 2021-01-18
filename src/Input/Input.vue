@@ -6,10 +6,10 @@
         'has--prepend': $slots.prepend,
         'has--append': $slots.append,
         [prefix + '-textarea']: type === 'textarea',
-        focus: focus2
+        focus: focus2,
+        disabled
       }
     ]"
-    :disabled="disabled"
   >
     <div :class="[prefix + '-input_prepend']" v-if="$slots.prepend">
       <slot name="prepend"></slot>
@@ -26,6 +26,7 @@
       @change="onChange"
       @focus="onFocus"
       @blur="onBlur"
+      ref="input"
     ></textarea>
     <input
       v-else
@@ -43,6 +44,7 @@
       @blur="onBlur"
       @compositionstart="onCompositionStart"
       @compositionend="onCompositionEnd"
+      ref="input"
     />
     <icon
       v-if="showClear"
@@ -64,17 +66,21 @@ import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import { formatInputDigit, formatInputNumber } from '../helpers/input'
 
-const TYPE_NAMES = ['text', 'number', 'digit', 'tel', 'password', 'search', 'textarea']
+const TYPE_NAMES = [
+  'text',
+  'number',
+  'digit',
+  'tel',
+  'password',
+  'search',
+  'textarea'
+]
 
 export default {
   name: SDKKey + '-input',
   components: { Icon },
   mixins: [formMixin],
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     maxlength: {
       type: Number,
       default: 140
@@ -114,8 +120,7 @@ export default {
 
       formValue: '',
 
-      focus2: false,
-      inputField: true
+      focus2: false
     }
   },
   computed: {
@@ -161,10 +166,6 @@ export default {
       return mode
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: '_input'
-  },
   watch: {
     modelValue(val) {
       if (val != this.formValue) {
@@ -200,7 +201,7 @@ export default {
     },
     onCompositionEnd(e) {
       this.isComposition = false
-      this._input(e.target.value)
+      this.updateInput(e.target.value)
     },
     updateValue(value) {
       switch (this.type) {
@@ -231,7 +232,7 @@ export default {
       }
 
       if (value != this.modelValue) {
-        this.$emit('_input', this.formValue)
+        this.$emit('update:modelValue', this.formValue)
       }
 
       return { value, isChange }
@@ -241,10 +242,10 @@ export default {
      */
     onInput(e) {
       if (!this.isComposition) {
-        this._input(e.target.value)
+        this.updateInput(e.target.value)
       }
     },
-    _input(newVal) {
+    updateInput(newVal) {
       const { value, isChange } = this.updateValue(newVal)
 
       if (isChange) {
@@ -273,13 +274,13 @@ export default {
       this.validateAfterEventTrigger(e.type, this.formValue)
     },
     getInputEl() {
-      return (this.$el && this.$el.querySelector('input')) || this.$el.querySelector('textarea')
+      return this.$refs.input
     },
     reset() {
       return this._reset(this.getInputEl().value)
     },
     onClear() {
-      this._input('')
+      this.updateInput('')
     }
   }
 }

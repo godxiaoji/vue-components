@@ -1,15 +1,16 @@
 <template>
   <drawer
     :class="[prefix + '-cascader-popup']"
-    ref="popup"
     :title="title2"
     placement="right"
-    :visible.sync="visible2"
+    :visible="visible"
     @show="onShow"
     @shown="onShown"
     @hide="onHide"
     @hidden="onHidden"
     @cancel="onCancel"
+    @update:visible="onUpdateVisible"
+    ref="popup"
   >
     <div ref="dropdown" :class="[prefix + '-cascader_groups']">
       <div
@@ -80,7 +81,7 @@ export default {
     }
   },
   watch: {
-    visible2: {
+    visible: {
       handler(val) {
         if (val) {
           this.update(this.formValue)
@@ -173,14 +174,14 @@ export default {
 
           this.select()
 
-          this.$emit('_change', this.hookFormValue())
+          this.$emit('update:modelValue', this.hookFormValue())
           this.$emit('change', this.getDetail())
           this.afterChange(this.getDetail())
         } else {
           this.select()
         }
 
-        this.visible2 = false
+        this.onUpdateVisible(false)
       }
     },
 

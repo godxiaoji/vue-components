@@ -68,18 +68,20 @@
         label="Event:confirm"
         clickable
         @click="
-          confirmEvent = true
-          popupShowConfirm = false
-          popupVisible = true
+          ;(confirmEvent = true),
+            (popupShowConfirm = false),
+            (popupShowClose = false),
+            (popupVisible = true)
         "
       ></fx-cell>
       <fx-cell
         label="showConfirm=true"
         clickable
         @click="
-          confirmEvent = true
-          popupShowConfirm = true
-          popupVisible = true
+          ;(confirmEvent = true),
+            (popupShowConfirm = true),
+            (popupShowClose = false),
+            (popupVisible = true)
         "
       ></fx-cell>
       <fx-cell
@@ -91,9 +93,10 @@
         label="Event:show/shown/hide/hidden"
         clickable
         @click="
-          otherEvent = true
-          popupShowConfirm = true
-          popupVisible = true
+          ;(otherEvent = true),
+            (popupShowConfirm = true),
+            (popupShowClose = true),
+            (popupVisible = true)
         "
       ></fx-cell>
     </fx-group>
@@ -104,6 +107,7 @@
       :visible.sync="popupVisible"
       :title="title"
       :show-confirm="popupShowConfirm"
+      :show-close="popupShowClose"
       v-model="popupValue"
       @confirm="onConfirm"
       @show="onOtherEvent('show')"
@@ -140,6 +144,7 @@ export default {
       popupVisible: false,
       popupRangeVisible: false,
       popupShowConfirm: false,
+      popupShowClose: false,
 
       title: '日期选择',
 

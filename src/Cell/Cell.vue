@@ -83,7 +83,9 @@ export default {
   computed: {
     linkIconName() {
       return `${capitalize(
-        inArray(this.arrowDirection, LINK_ICON_NAMES) ? this.arrowDirection : LINK_ICON_NAMES[0]
+        inArray(this.arrowDirection, LINK_ICON_NAMES)
+          ? this.arrowDirection
+          : LINK_ICON_NAMES[0]
       )}Outlined`
     }
   },

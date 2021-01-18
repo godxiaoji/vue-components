@@ -1,6 +1,11 @@
 import { defaultZIndex, getNewZIndex } from '../helpers/popup'
 import { cloneData, isFunction } from '../helpers/util'
-import { addClassName, removeClassName, removeEl } from '../helpers/dom'
+import {
+  addClassName,
+  getScrollDom,
+  removeClassName,
+  removeEl
+} from '../helpers/dom'
 import { SDKKey } from '../config'
 
 export default {
@@ -22,9 +27,11 @@ export default {
     return {
       isShow: false,
       visible2: false,
-      zIndex: defaultZIndex,
       forbidScroll: true,
-      top: 0
+
+      zIndex: defaultZIndex,
+      top: null,
+      position: null
     }
   },
   watch: {
@@ -34,6 +41,17 @@ export default {
       } else {
         this.hide()
       }
+    }
+  },
+  computed: {
+    popupStyles() {
+      const styles = {
+        zIndex: this.zIndex,
+        top: this.top,
+        position: this.position
+      }
+
+      return styles
     }
   },
   mounted() {
@@ -89,8 +107,8 @@ export default {
         addClassName(document.body, SDKKey + '-overflow-hidden')
 
       if (!this.showMask) {
-        this.$el.style.position = 'absolute'
-        this.$el.style.top = document.documentElement.scrollTop + 'px'
+        this.position = 'absolute'
+        this.top = getScrollDom().scrollTop + 'px'
       }
 
       this.zIndex = getNewZIndex()
@@ -130,7 +148,6 @@ export default {
       }
       this.isHiding = true
       this.isShowing = false
-
       removeClassName(document.body, SDKKey + '-overflow-hidden')
       this.visible2 = false
 
@@ -138,8 +155,9 @@ export default {
       this.visibleTimer = setTimeout(() => {
         this.isShow = false
         this.isHiding = false
-        this.$el.style.position = ''
-        this.$el.style.top = ''
+
+        this.position = null
+        this.top = null
 
         if (isFunction(callback)) {
           callback()

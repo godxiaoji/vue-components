@@ -5,7 +5,7 @@
       'size--' + subOptions.size,
       'pattern--' + subOptions.pattern,
       'shape--' + subOptions.shape,
-      'count--' + (buttonIds.length || 1)
+      'count--' + (appChildren.length || 1)
     ]"
   >
     <slot></slot>
@@ -14,7 +14,7 @@
 
 <script>
 import { SDKKey } from '../config'
-import { inArray } from '../helpers/util'
+import groupMixin from '../util/group-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 
 export default {
@@ -25,6 +25,7 @@ export default {
       appButtonGroup: this
     }
   },
+  mixins: [groupMixin],
   props: {
     size: {
       validator: createEnumsValidator('buttonSize'),
@@ -42,8 +43,6 @@ export default {
   data() {
     return {
       prefix: SDKKey,
-
-      buttonIds: [],
 
       subOptions: {
         pattern: '',
@@ -69,20 +68,6 @@ export default {
       immediate: true,
       handler(newVal) {
         this.subOptions.shape = getEnumsValue('buttonShape', newVal)
-      }
-    }
-  },
-  methods: {
-    addButton(uid) {
-      if (!inArray(uid, this.buttonIds)) {
-        this.buttonIds.push(uid)
-      }
-    },
-    removeButton(uid) {
-      const index = this.buttonIds.indexOf(uid)
-
-      if (index !== -1) {
-        this.buttonIds.splice(index, 1)
       }
     }
   }

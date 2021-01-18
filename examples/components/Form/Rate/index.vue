@@ -2,7 +2,7 @@
   <div>
     <fx-group title="基础用法">
       <fx-cell label="默认"><fx-rate /></fx-cell>
-      <fx-cell label="modelValue=3"><fx-rate modelValue="3" /></fx-cell>
+      <fx-cell label="modelValue=3"><fx-rate modelValue="3"/></fx-cell>
     </fx-group>
     <fx-group title="风格">
       <fx-cell label="爱心（pattern=heart）"
@@ -19,7 +19,9 @@
       <fx-cell label="count=8"><fx-rate count="8"/></fx-cell>
     </fx-group>
     <fx-group title="半星">
-      <fx-cell label="modelValue=2.5"><fx-rate allow-half v-model="value" :count="count"/></fx-cell>
+      <fx-cell label="modelValue=2.5"
+        ><fx-rate allow-half v-model="value" :count="count"
+      /></fx-cell>
     </fx-group>
     <fx-group title="状态">
       <fx-cell label="只读"><fx-rate readonly :modelValue="3"/></fx-cell>

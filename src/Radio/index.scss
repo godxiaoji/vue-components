@@ -43,10 +43,10 @@
     top: 0;
     opacity: 0;
 
-    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
+    &:checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
       display: none;
     }
-    &:not([disabled]):checked + .#{$prefix}-radio_box .#{$prefix}-radio_checked-icon {
+    &:checked + .#{$prefix}-radio_box .#{$prefix}-radio_checked-icon {
       display: block;
     }
   }
@@ -57,7 +57,7 @@
     margin-left: 12px;
   }
 
-  &[disabled] {
+  &.disabled {
     opacity: 0.3;
   }
 }

@@ -5,7 +5,13 @@
 </template>
 
 <script>
-import { isStringNumberMixArray, cloneData, isSameArray, isArray, inArray } from '../helpers/util'
+import {
+  isStringNumberMixArray,
+  cloneData,
+  isSameArray,
+  isArray,
+  inArray
+} from '../helpers/util'
 import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import groupMixin from '../util/group-mixin'
@@ -19,10 +25,6 @@ export default {
     }
   },
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     modelValue: {
       validator(val) {
         return isStringNumberMixArray(val)
@@ -61,8 +63,11 @@ export default {
       }
     }
   },
+  mounted() {
+    this.updateValue(false)
+  },
   methods: {
-    updateValue() {
+    updateValue(isChange = true) {
       const value = this.formValue.slice(0, 0)
 
       this.childrenForEach(child => {
@@ -73,8 +78,8 @@ export default {
 
       this.formValue = value
 
-      if (!isSameArray(value, this.modelValue)) {
-        this.$emit('_change', this.hookFormValue())
+      if (isChange && !isSameArray(value, this.modelValue)) {
+        this.$emit('update:modelValue', this.hookFormValue())
       }
     },
 

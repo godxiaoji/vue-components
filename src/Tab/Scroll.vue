@@ -1,8 +1,17 @@
 <template>
   <div :class="[prefix + '-scroll-tab']">
     <div :class="[prefix + '-scroll-tab_sidebar']">
-      <sticky ref="sidebar" :offset-top="stickyOffsetTop" :offset-bottom="stickyOffsetBottom">
-        <tab :options="tabList" v-model="activeIndex" :vertical="true" :scroll-threshold="1" />
+      <sticky
+        ref="sidebar"
+        :offset-top="stickyOffsetTop"
+        :offset-bottom="stickyOffsetBottom"
+      >
+        <tab
+          :options="tabList"
+          v-model="activeIndex"
+          :vertical="true"
+          :scroll-threshold="1"
+        />
       </sticky>
     </div>
     <div :class="[prefix + '-scroll-tab_body']">
@@ -52,7 +61,6 @@ export default {
   mounted() {
     this.resetContainer(document)
   },
-  destroyed() {},
   methods: {
     resetContainer(containSelector) {
       const $container = querySelector(containSelector)
@@ -62,10 +70,6 @@ export default {
     },
 
     onResetItems(list) {
-      if (this._isDestroyed) {
-        return
-      }
-
       this.tabList = list.map(({ name, index }) => {
         return {
           label: name,

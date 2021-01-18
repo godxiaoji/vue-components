@@ -6,7 +6,7 @@
       prefix + '-popup',
       { visible: visible2, 'no--mask': !showMask }
     ]"
-    :style="{ zIndex }"
+    :style="popupStyles"
     v-show="isShow"
   >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
@@ -16,8 +16,17 @@
         <div :class="[prefix + '-pop-dialog_body']">
           <div :class="[prefix + '-popover_text']">{{ content }}</div>
         </div>
-        <div :class="[prefix + '-pop-dialog_footer', prefix + '-horizontal-hairline']">
-          <fx-button-group :class="[prefix + '-pop-dialog_footer-inner']" pattern="borderless" size="middle">
+        <div
+          :class="[
+            prefix + '-pop-dialog_footer',
+            prefix + '-horizontal-hairline'
+          ]"
+        >
+          <fx-button-group
+            :class="[prefix + '-pop-dialog_footer-inner']"
+            pattern="borderless"
+            size="middle"
+          >
             <fx-button v-if="showCancel" type="default" @click="onCancelClick">
               {{ cancelText }}
             </fx-button>

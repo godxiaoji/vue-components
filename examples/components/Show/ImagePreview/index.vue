@@ -5,9 +5,15 @@
       <fx-cell
         label="指定初始图片"
         clickable
-        @click="onShow({ current: 'https://cdn.fox2.cn/vfox/swiper/different-2.jpg' })"
+        @click="
+          onShow({ current: 'https://cdn.fox2.cn/vfox/swiper/different-2.jpg' })
+        "
       ></fx-cell>
-      <fx-cell label="展示关闭按钮" clickable @click="onShow({ showClose: true })"></fx-cell>
+      <fx-cell
+        label="展示关闭按钮"
+        clickable
+        @click="onShow({ showClose: true })"
+      ></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell

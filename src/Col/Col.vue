@@ -50,7 +50,8 @@ export default {
     styles() {
       const arr = []
 
-      const [gH, gV] = (this.appRowSubOptions && this.appRowSubOptions.gutter) || [0, 0]
+      const [gH, gV] = (this.appRowSubOptions &&
+        this.appRowSubOptions.gutter) || [0, 0]
 
       if (gH > 0 || gV > 0) {
         arr.push({

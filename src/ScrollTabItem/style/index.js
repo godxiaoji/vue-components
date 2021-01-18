@@ -1,2 +1,1 @@
 import '../../StickyView/index.css'
-

@@ -1,7 +1,7 @@
 <template>
   <modal
     :class="[prefix + '-dialog']"
-    :visible.sync="visible2"
+    :visible="visible"
     :show-close="false"
     :mask-closable="maskClosable"
     @show="onShow"
@@ -9,6 +9,7 @@
     @hide="onHide"
     @hidden="onHidden"
     @cancel="onCancel"
+    @update:visible="onUpdateVisible"
     ref="popup"
   >
     <div :class="[prefix + '-dialog_header']" v-if="title != null">
@@ -21,11 +22,23 @@
       <slot v-else></slot>
     </div>
     <div :class="[prefix + '-dialog_footer', prefix + '-horizontal-hairline']">
-      <fx-button-group :class="[prefix + '-dialog_footer-inner']" pattern="borderless">
-        <fx-button v-if="showCancel" :class="[prefix + '-dialog_button']" type="default" @click="onCancelClick">
+      <fx-button-group
+        :class="[prefix + '-dialog_footer-inner']"
+        pattern="borderless"
+      >
+        <fx-button
+          v-if="showCancel"
+          :class="[prefix + '-dialog_button']"
+          type="default"
+          @click="onCancelClick"
+        >
           {{ cancelText }}
         </fx-button>
-        <fx-button :class="[prefix + '-dialog_button']" type="primary" @click="onConfirmClick">
+        <fx-button
+          :class="[prefix + '-dialog_button']"
+          type="primary"
+          @click="onConfirmClick"
+        >
           {{ confirmText }}
         </fx-button>
       </fx-button-group>
@@ -78,7 +91,7 @@ export default {
       this.$emit('confirm', {})
       this.afterConfirm({})
 
-      this.visible2 = false
+      this.onUpdateVisible(false)
     }
   }
 }

@@ -1,10 +1,22 @@
 <template>
   <div :class="[prefix + '-tab-view', { vertical: initialVertical }]">
-    <div :class="[prefix + '-tab-view_header', prefix + '-horizontal-hairline']">
-      <tab :options="tabList" v-model="activeIndex" :vertical="vertical" :scroll-threshold="scrollThreshold" />
+    <div
+      :class="[prefix + '-tab-view_header', prefix + '-horizontal-hairline']"
+    >
+      <tab
+        :options="tabList"
+        v-model="activeIndex"
+        :vertical="vertical"
+        :scroll-threshold="scrollThreshold"
+      />
     </div>
     <div :class="[prefix + '-tab-view_body']" ref="list">
-      <swiper :activeIndex.sync="activeIndex" @change="onChange" ref="swiper" :initial-vertical="vertical">
+      <swiper
+        :activeIndex.sync="activeIndex"
+        @change="onChange"
+        ref="swiper"
+        :initial-vertical="vertical"
+      >
         <slot></slot>
       </swiper>
     </div>
@@ -15,10 +27,12 @@
 import Tab from '../Tab'
 import Swiper from '../Swiper/Swiper.vue'
 import { SDKKey } from '../config'
+import listMixin from '../util/list-mixin'
 
 export default {
   name: SDKKey + '-tab-view',
   components: { Tab, Swiper },
+  mixins: [listMixin],
   provide() {
     return {
       appTabView: this
@@ -54,21 +68,9 @@ export default {
     this.vertical = !!this.initialVertical
   },
   mounted() {
-    this.isInit = true
     this.update()
   },
-  destroyed() {},
   methods: {
-    update() {
-      if (!this.isInit) {
-        return
-      }
-
-      clearTimeout(this.updateTimer)
-      this.updateTimer = setTimeout(() => {
-        this.resetItems()
-      }, 17)
-    },
     resetItems() {
       if (this._isDestroyed) {
         return
@@ -76,7 +78,7 @@ export default {
 
       const $newItems = []
 
-      const $items = [].slice.call(this.$refs.list.querySelectorAll(`.${SDKKey}-tab-view-item`), 0)
+      const $items = this.getItems('tab-view')
 
       $items.forEach($item => {
         if ($item._app_name === 'tab-view-item') {
@@ -104,7 +106,10 @@ export default {
 
           const $firstChild = $viewItem.firstElementChild
 
-          if ($firstChild && $firstChild.className.indexOf(`${SDKKey}-scroll-view`) !== -1) {
+          if (
+            $firstChild &&
+            $firstChild.className.indexOf(`${SDKKey}-scroll-view`) !== -1
+          ) {
             // ScrollView
             $firstChild.scrollTo({
               top: 0,

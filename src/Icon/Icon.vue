@@ -4,6 +4,7 @@
     :class="[prefix + '-icon', moreClassName]"
     :style="[iconColor, iconSize]"
     :icon-name="iconName"
+    @click="onClick"
   >
   </component>
 </template>
@@ -40,6 +41,10 @@ export default {
     height: {
       type: Number,
       default: 0
+    },
+    color: {
+      type: String,
+      default: null
     }
   },
   data() {

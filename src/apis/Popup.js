@@ -7,6 +7,7 @@ import Popover from '../Popover'
 import PopMenu from '../Popover/Menu.vue'
 import PopDialog from '../Popover/Dialog.vue'
 import Dialog from '../Dialog'
+import ImagePreview from '../ImagePreview'
 import { createPopup } from '../helpers/popup'
 import { isObject } from '../helpers/util'
 import { getCallbackFns } from './callback'
@@ -24,13 +25,13 @@ function show(object, apiName, getComp) {
   const { success, fail, complete } = getCallbackFns(object)
 
   return new Promise(function(resolve, reject) {
-    function done(res) {
-      success(res)
-      complete()
-      resolve(res)
-    }
-
     try {
+      const done = function(res) {
+        success(res)
+        complete()
+        resolve(res)
+      }
+
       const propsData = parseParamsByRules(object, apiName)
 
       if (propsData.mode) {
@@ -42,9 +43,19 @@ function show(object, apiName, getComp) {
         delete propsData.value
       }
 
-      const Comp = Vue.extend(getComp(done))
-
       const { $wrapper } = createPopup()
+
+      const compOptions = getComp(done)
+      if (!isObject(compOptions.methods)) {
+        compOptions.methods = {}
+      }
+      compOptions.methods.onUpdateVisible = function(value) {
+        this.visible = !!value
+      }
+      compOptions.methods.destroy = function() {
+        this.$destroy()
+      }
+      const Comp = Vue.extend(compOptions)
 
       const app = new Comp({
         propsData: Object.assign(propsData, {
@@ -82,7 +93,7 @@ export function showPicker(object) {
           done(res)
         },
         onHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -110,7 +121,7 @@ export function showCascader(object) {
           done(res)
         },
         onHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -138,7 +149,7 @@ export function showCalendar(object) {
           done(res)
         },
         onHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -162,11 +173,11 @@ export function showActionSheet(object) {
           })
         },
         afterCancel(res) {
-          res.selected = true
+          res.selected = false
           done(res)
         },
         onHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -186,7 +197,7 @@ export function showPopover(object) {
       },
       methods: {
         afterHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -213,7 +224,7 @@ export function showPopDialog(object) {
           done(res)
         },
         afterHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -241,7 +252,7 @@ export function showPopMenu(object) {
           done(res)
         },
         afterHidden() {
-          this.$destroy()
+          this.destroy()
         }
       }
     }
@@ -264,7 +275,27 @@ export function showDialog(object) {
           done(res)
         },
         onHidden() {
-          this.$destroy()
+          this.destroy()
+        }
+      }
+    }
+  })
+}
+
+/**
+ * 展示图片预览
+ * @param {Object} object 参数
+ */
+export function previewImage(object) {
+  return show(object, 'previewImage', function(done) {
+    return {
+      extends: ImagePreview,
+      methods: {
+        afterCancel(res) {
+          done(res)
+        },
+        afterHidden() {
+          this.destroy()
         }
       }
     }

@@ -1,5 +1,10 @@
 <template>
-  <div v-show="scrollTop >= visibleHeight" :class="[prefix + '-back-top']" :style="styles" @click="onClick">
+  <div
+    v-show="scrollTop >= visibleHeight"
+    :class="[prefix + '-back-top']"
+    :style="styles"
+    @click="onClick"
+  >
     <slot>
       <icon icon="UpCircleOutlined" />
     </slot>
@@ -11,6 +16,7 @@ import Icon from '../Icon'
 import { SDKKey } from '../config'
 import { pageScrollTo } from '../apis/Scroll'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
+import { getScrollDom } from '../helpers/dom'
 
 export default {
   name: SDKKey + '-back-top',
@@ -49,7 +55,7 @@ export default {
     }
   },
   created() {
-    this.scrollTop = document.documentElement.scrollTop
+    this.scrollTop = getScrollDom().scrollTop
 
     addScrollEvent(this.onScroll)
   },

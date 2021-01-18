@@ -37,10 +37,6 @@ export default {
       activeNames2: []
     }
   },
-  model: {
-    prop: 'activeNames',
-    event: '_change'
-  },
   watch: {
     activeNames(val) {
       this.updateValue(val)
@@ -48,6 +44,10 @@ export default {
   },
   mounted() {
     this.updateValue(this.activeNames)
+  },
+  model: {
+    prop: 'activeNames',
+    event: 'update:activeNames'
   },
   methods: {
     updateValue(val) {
@@ -99,7 +99,7 @@ export default {
       }
 
       this.activeNames2 = activeNames
-      this.$emit('_change', cloneData(activeNames))
+      this.$emit('update:activeNames', cloneData(activeNames))
       this.$emit('change', {
         activeNames: cloneData(activeNames)
       })

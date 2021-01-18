@@ -1,11 +1,20 @@
 <template>
   <div
-    :class="[prefix + '-toast', prefix + '-popup', { visible: visible2, 'forbid-click': mask }]"
-    :style="{ zIndex }"
+    :class="[
+      prefix + '-toast',
+      prefix + '-popup',
+      { visible: visible2, 'forbid-click': mask }
+    ]"
+    :style="popupStyles"
     v-show="isShow"
   >
     <div :class="[prefix + '-toast_box', { 'has--icon': !!iconName }]">
-      <icon v-if="iconName" :class="[prefix + '-toast_icon']" :icon="iconName" :spin="type === 'loading'" />
+      <icon
+        v-if="iconName"
+        :class="[prefix + '-toast_icon']"
+        :icon="iconName"
+        :spin="type === 'loading'"
+      />
       <div :class="[prefix + '-toast_text']">
         {{ title }}
       </div>

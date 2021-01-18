@@ -38,7 +38,9 @@ export default {
   },
   computed: {
     imageUrl() {
-      return `https://cdn.fox2.cn/vfox/empty/${inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]}@2x.png`
+      return `https://cdn.fox2.cn/vfox/empty/${
+        inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
+      }@2x.png`
     }
   }
 }

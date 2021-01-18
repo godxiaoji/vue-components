@@ -7,8 +7,13 @@
       }
     ]"
   >
-    <div :class="[prefix + '-input', { 'has--value': formLabelString }]" :disabled="disabled" @click="onFieldClick">
-      <div :class="[prefix + '-input_input', { placeholder: !formLabelString }]">
+    <div
+      :class="[prefix + '-input', { 'has--value': formLabelString, disabled }]"
+      @click="onFieldClick"
+    >
+      <div
+        :class="[prefix + '-input_input', { placeholder: !formLabelString }]"
+      >
         {{ formLabelString || placeholder }}
       </div>
       <icon :class="[prefix + '-input_arrow']" icon="RightOutlined" />
@@ -21,6 +26,14 @@
         :value="formValueString"
       />
     </div>
+    <picker-popup
+      v-bind="$props"
+      :title="placeholder"
+      :visible.sync="popupVisible"
+      v-if="isInitPopup"
+      @change="onChange"
+      ref="popup"
+    />
   </div>
 </template>
 
@@ -32,14 +45,12 @@ import pickerMixin from '../util/mulit-selector/picker-mixin'
 export default {
   name: SDKKey + '-picker',
   mixins: [pickerMixin],
+  components: { PickerPopup },
   data() {
     return {
       prefix: SDKKey,
       compName: 'picker'
     }
-  },
-  created() {
-    this.Popup = PickerPopup
   }
 }
 </script>

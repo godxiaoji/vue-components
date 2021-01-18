@@ -1,11 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-form
-        @validate-submit="onSubmit"
-        @reset="onReset"
-        :rules="rules"
-      >
+      <fx-form @validate-submit="onSubmit" @reset="onReset" :rules="rules">
         <fx-form-item name="nickname" :label="'昵称'" required>
           <fx-input
             v-model="form.nickname"
@@ -107,7 +103,7 @@ export default {
         gender: [{ required: true, message: '请选择性别' }],
         age: [{ required: true, message: '请选择年龄' }],
         region: [{ required: true, message: '请选择地区' }],
-        character: [{ required: true, message: '请选择性格' }],
+        character: [{ required: true, type: 'array', message: '请选择性格' }],
         season: [{ required: true, message: '请选择季节' }],
         birthday: [{ required: true, message: '请选择生日' }],
         weight: [

@@ -1,14 +1,27 @@
 <template>
-  <div :class="[prefix + '-notice-bar', typeClassName]" :style="styles" v-show="visible2" @click="onClick">
+  <div
+    :class="[prefix + '-notice-bar', typeClassName]"
+    :style="styles"
+    v-show="visible2"
+    @click="onClick"
+  >
     <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
       <icon :icon="leftIcon" :style="iconStyle" />
     </div>
     <div :class="[prefix + '-notice-bar_content']">
-      <div ref="content" :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]" :style="contentStyles">
+      <div
+        ref="content"
+        :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]"
+        :style="contentStyles"
+      >
         {{ title }}
       </div>
     </div>
-    <div v-if="rightIcon2" :class="[prefix + '-notice-bar_right-icon']" @click="onRightIconClick">
+    <div
+      v-if="rightIcon2"
+      :class="[prefix + '-notice-bar_right-icon']"
+      @click="onRightIconClick"
+    >
       <icon :icon="rightIcon2" :style="iconStyle" />
     </div>
   </div>
@@ -134,13 +147,16 @@ export default {
       const obj = {}
 
       if (this.marqueeX !== 0) obj.transform = `translateX(${this.marqueeX}px)`
-      if (this.marqueeDuration > 0) obj.transitionDuration = `${this.marqueeDuration}s`
+      if (this.marqueeDuration > 0)
+        obj.transitionDuration = `${this.marqueeDuration}s`
 
       return obj
     },
     // 计算属性的 getter
     typeClassName() {
-      return 'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
+      return (
+        'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
+      )
     }
   },
   mounted() {

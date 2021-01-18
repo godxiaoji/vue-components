@@ -5,29 +5,6 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      visible2: false
-    }
-  },
-  watch: {
-    visible: {
-      immediate: true,
-      handler(val) {
-        val = !!val
-        if (this.visible2 !== val) {
-          this.visible2 = val
-        }
-      }
-    },
-    visible2: {
-      handler(val) {
-        if (this.visible != val) {
-          this.$emit('update:visible', val)
-        }
-      }
-    }
-  },
   methods: {
     onShow(res) {
       this.$emit('show', res)
@@ -48,6 +25,9 @@ export default {
       this.$emit('cancel', res)
 
       this.afterCancel(Object.assign({ cancel: true }, res))
+    },
+    onUpdateVisible(value) {
+      this.$emit('update:visible', value)
     },
     afterConfirm() {},
     afterCancel() {}

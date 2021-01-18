@@ -40,12 +40,23 @@
         <fx-input type="text" modelValue="只读文本" :disabled="true" />
       </fx-cell>
       <fx-cell label="可清除">
-        <fx-input type="text" placeholder="请输入文本" modelValue="文本内容" :show-clear="true" />
+        <fx-input
+          type="text"
+          placeholder="请输入文本"
+          modelValue="文本内容"
+          :show-clear="true"
+        />
       </fx-cell>
     </fx-group>
     <fx-group title="input 事件监听">
       <fx-cell label="文本">
-        <fx-input type="text" placeholder="请输入文本" :show-clear="true" v-model="value" @input="onInput" />
+        <fx-input
+          type="text"
+          placeholder="请输入文本"
+          :show-clear="true"
+          v-model="value"
+          @input="onInput"
+        />
       </fx-cell>
     </fx-group>
   </div>

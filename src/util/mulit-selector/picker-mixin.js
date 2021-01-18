@@ -1,5 +1,4 @@
 import Icon from '../../Icon/Icon.vue'
-import { initPickerPopup } from '../../helpers/popup'
 import formMixin from '../form-mixin'
 import mulitSelectorPropsMixin from './props-mixin'
 import { cloneData, isSameArray, inArray } from '../../helpers/util'
@@ -35,7 +34,10 @@ export default {
       defaultDetail: getDefaultDetail(),
 
       mode: MODE_NAMES[0],
-      separator: '/'
+      separator: '/',
+
+      isInitPopup: false,
+      popupVisible: true
     }
   },
   watch: {
@@ -47,7 +49,7 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_change'
+    event: 'update:modelValue'
   },
   created() {
     // 优先确定模式
@@ -68,38 +70,9 @@ export default {
     $input.defaultValue = $input.value
   },
   methods: {
-    initPopup(Popup) {
-      const parent = this
-
-      this.popup = initPickerPopup(
-        parent,
-        {
-          methods: {
-            afterChange(detail) {
-              parent.onChange(detail)
-            }
-          }
-        },
-        [
-          { propName: 'initialMode', parentName: 'initialMode', watch: false },
-          {
-            propName: 'initialSeparator',
-            parentName: 'initialSeparator',
-            watch: false
-          },
-          { propName: 'formatString', parentName: 'formatString', watch: true },
-          { propName: 'modelValue', parentName: 'formValue', watch: false },
-          { propName: 'title', parentName: 'placeholder', watch: true },
-          { propName: 'options', parentName: 'options', watch: true },
-          { propName: 'fieldNames', parentName: 'fieldNames', watch: true }
-        ],
-        Popup
-      )
-    },
-
     updateValue(val) {
-      if (this.popup) {
-        const popupDetail = this.popup.updateValue(val)
+      if (this.$refs.popup) {
+        const popupDetail = this.$refs.popup.updateValue(val)
         this.updateDetail(isEmpty(val) ? getDefaultDetail() : popupDetail)
         return
       }
@@ -130,23 +103,18 @@ export default {
 
     onFieldClick() {
       if (!this.disabled) {
-        if (!this.popup) {
-          this.initPopup(this.Popup)
-          delete this.Popup
+        if (!this.isInitPopup) {
+          this.isInitPopup = true
         } else {
-          this.popup.show()
+          this.popupVisible = true
         }
       }
-    },
-
-    getInputEl() {
-      return this.$el && this.$el.querySelector('input')
     },
 
     onChange(detail) {
       this.updateDetail(detail)
 
-      this.$emit('_change', this.hookFormValue())
+      this.$emit('update:modelValue', this.hookFormValue())
       this.$emit('change', cloneData(detail))
 
       this.validateAfterEventTrigger('change', this.formValue)
@@ -169,7 +137,7 @@ export default {
     reset() {
       this.updateValue(this.getInputEl().value)
 
-      this.$emit('_change', this.hookFormValue())
+      this.$emit('update:modelValue', this.hookFormValue())
 
       this.$emit('reset', { name: this.formName, value: this.hookFormValue() })
 

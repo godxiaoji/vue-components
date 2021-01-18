@@ -1,8 +1,16 @@
 <template>
   <div :class="[prefix + '-rate', { disabled, readonly }]">
-    <input :name="formName" type="hidden" :value="formValue" :disabled="disabled" />
+    <input
+      :name="formName"
+      type="hidden"
+      :value="formValue"
+      :disabled="disabled"
+    />
     <div
-      :class="[prefix + '-rate_item', { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }]"
+      :class="[
+        prefix + '-rate_item',
+        { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }
+      ]"
       v-for="num in max"
       :key="num"
       :data-value="num"
@@ -25,7 +33,14 @@ import formMixin from '../util/form-mixin'
 import { touchEvent } from '../helpers/events'
 import { rangeInteger } from '../helpers/util'
 
-const { touchstart, touchmove, touchend, addListeners, removeListeners, getTouch } = touchEvent
+const {
+  touchstart,
+  touchmove,
+  touchend,
+  addListeners,
+  removeListeners,
+  getTouch
+} = touchEvent
 
 const ALLOW_ICONS = ['star', 'heart']
 
@@ -43,10 +58,6 @@ export default {
   mixins: [formMixin],
   components: { Icon },
   props: {
-    name: {
-      type: String,
-      default: ''
-    },
     pattern: {
       validator(val) {
         return inArray(val, ALLOW_ICONS)
@@ -92,12 +103,16 @@ export default {
   },
   computed: {
     defaultIcon() {
-      const icon = inArray(this.pattern, ALLOW_ICONS) ? this.pattern : ALLOW_ICONS[0]
+      const icon = inArray(this.pattern, ALLOW_ICONS)
+        ? this.pattern
+        : ALLOW_ICONS[0]
 
       return capitalize(icon) + 'Outlined'
     },
     activeIcon() {
-      const icon = inArray(this.pattern, ALLOW_ICONS) ? this.pattern : ALLOW_ICONS[0]
+      const icon = inArray(this.pattern, ALLOW_ICONS)
+        ? this.pattern
+        : ALLOW_ICONS[0]
 
       return capitalize(icon) + 'Filled'
     },
@@ -244,10 +259,6 @@ export default {
       this._change(num)
     },
 
-    getInputEl() {
-      return this.$el.firstElementChild
-    },
-
     _change(value, isHalf = false) {
       if (this.allowHalf && isHalf) {
         value -= 0.5
@@ -256,7 +267,7 @@ export default {
       if (value !== this.formValue) {
         this.formValue = value
 
-        this.$emit('_change', value)
+        this.$emit('update:modelValue', value)
 
         this.eventEmit('change')
       }

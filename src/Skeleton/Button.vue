@@ -1,5 +1,11 @@
 <template>
-  <div :class="[prefix + '-skeleton-button', shapeClassName, { animated: useAnimation }]"></div>
+  <div
+    :class="[
+      prefix + '-skeleton-button',
+      shapeClassName,
+      { animated: useAnimation }
+    ]"
+  ></div>
 </template>
 
 <script>
@@ -42,7 +48,10 @@ export default {
         shape = this.shape
       }
 
-      return 'shape--' + (inArray(shape, BUTTON_SHAPE_NAMES) ? shape : BUTTON_SHAPE_NAMES[0])
+      return (
+        'shape--' +
+        (inArray(shape, BUTTON_SHAPE_NAMES) ? shape : BUTTON_SHAPE_NAMES[0])
+      )
     },
     useAnimation() {
       if (this.skeletonSubOptions) {

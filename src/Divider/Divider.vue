@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="[prefix + '-divider', prefix + '-horizontal-hairline', { 'has--title': !!title, 'border--dashed': dashed }]"
+    :class="[
+      prefix + '-divider',
+      prefix + '-horizontal-hairline',
+      { 'has--title': !!title, 'border--dashed': dashed }
+    ]"
   >
     <span v-if="title">{{ title }}</span>
   </div>

@@ -135,7 +135,7 @@
         text-align: right;
       }
 
-      &[disabled] {
+      &.disabled {
         background-color: transparent;
       }
     }

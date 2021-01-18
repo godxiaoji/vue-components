@@ -1,5 +1,8 @@
 <template>
-  <group :class="[prefix + '-sticky-view-item', prefix + '-index-view-item']" :title="name">
+  <group
+    :class="[prefix + '-sticky-view-item', prefix + '-index-view-item']"
+    :title="name"
+  >
     <slot></slot>
   </group>
 </template>

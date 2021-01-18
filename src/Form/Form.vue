@@ -7,9 +7,11 @@
 <script>
 import { inArray, isUndefined } from '../helpers/util'
 import { SDKKey } from '../config'
+import groupMixin from '../util/group-mixin'
 
 export default {
   name: SDKKey + '-form',
+  mixins: [groupMixin],
   provide() {
     return {
       appForm: this
@@ -21,11 +23,6 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  created() {
-    this._app_form = true
-
-    this.formList = []
-  },
   methods: {
     onSubmit(e) {
       const inputEls = e.target.elements
@@ -34,7 +31,7 @@ export default {
 
       inputEls.forEach(el => {
         const _ac = el._app_component
-        if (_ac && _ac._uid) {
+        if (_ac) {
           // 主要用于排重checbox等多选的情况
           if (!inArray(_ac._uid, uids)) {
             // 获取配套表单组件
@@ -117,7 +114,7 @@ export default {
     validate(value) {
       const retList = []
 
-      this.formList.forEach($child => {
+      this.childrenForEach($child => {
         if ($child.name && !isUndefined(value[$child.name])) {
           retList.push($child.validate(value[$child.name]))
         }
@@ -138,7 +135,6 @@ export default {
 
           if (
             _ac &&
-            _ac._uid &&
             !inArray(_ac._uid, uids) // 主要用于排重checbox等多选的情况
           ) {
             // 获取配套表单组件

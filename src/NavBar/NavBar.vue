@@ -1,6 +1,12 @@
 <template>
   <div :class="[prefix + '-nav-bar']">
-    <div :class="[prefix + '-nav-bar_inner', prefix + '-horizontal-hairline', { fixed: fixedTop }]">
+    <div
+      :class="[
+        prefix + '-nav-bar_inner',
+        prefix + '-horizontal-hairline',
+        { fixed: fixedTop }
+      ]"
+    >
       <div :class="[prefix + '-nav-bar_layout']">
         <div :class="[prefix + '-nav-bar_left']">
           <slot name="left" v-if="$slots.left"></slot>
@@ -41,7 +47,11 @@
             </template>
           </fx-button-group>
         </div>
-        <div :class="[prefix + '-nav-bar_title']" @mousedown="onTitleStart" @touchstart="onTitleStart">
+        <div
+          :class="[prefix + '-nav-bar_title']"
+          @mousedown="onTitleStart"
+          @touchstart="onTitleStart"
+        >
           {{ title }}
         </div>
         <div :class="[prefix + '-nav-bar_right']">

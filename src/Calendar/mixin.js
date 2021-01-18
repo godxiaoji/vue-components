@@ -55,6 +55,6 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    event: '_change'
+    event: 'update:modelValue'
   }
 }

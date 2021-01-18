@@ -408,14 +408,20 @@ export const parseParamsByRules = function(options, apiName) {
 
     if (rule.required && !notNullValidator(option)) {
       throw new Exception(
-        `param0.${k} should be ${getType(rule.validator || rule.type())} instead of ${getType(option)}`,
+        `param0.${k} should be ${getType(
+          rule.validator || rule.type()
+        )} instead of ${getType(option)}`,
         PARAM_ERROR,
         apiName
       )
     } else if (option != null) {
       if (rule.validator) {
         if (!rule.validator(option)) {
-          throw new Exception(`param0.${k} should be ${getType(rule.validator)}`, PARAM_ERROR, apiName)
+          throw new Exception(
+            `param0.${k} should be ${getType(rule.validator)}`,
+            PARAM_ERROR,
+            apiName
+          )
         } else {
           ret[k] = option
         }
@@ -439,14 +445,18 @@ export const parseParamsByRules = function(options, apiName) {
           ret[k] = option
         } else {
           throw new Exception(
-            `param0.${k} should be ${getType(rule.type())} instead of ${getType(option)}`,
+            `param0.${k} should be ${getType(rule.type())} instead of ${getType(
+              option
+            )}`,
             PARAM_ERROR,
             apiName
           )
         }
       } else if (rule.type(option) !== option) {
         throw new Exception(
-          `param0.${k} should be ${getType(rule.type())} instead of ${getType(option)}`,
+          `param0.${k} should be ${getType(rule.type())} instead of ${getType(
+            option
+          )}`,
           PARAM_ERROR,
           apiName
         )

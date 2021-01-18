@@ -11,7 +11,11 @@
     <i :class="[prefix + '-image_error']" v-if="error">
       <icon icon="ImageBreakOutlined" />
     </i>
-    <img v-if="imgSrc" :class="[prefix + '-image_img', modeClassName]" :src="imgSrc" />
+    <img
+      v-if="imgSrc"
+      :class="[prefix + '-image_img', modeClassName]"
+      :src="imgSrc"
+    />
   </div>
 </template>
 

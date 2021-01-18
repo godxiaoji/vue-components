@@ -7,10 +7,7 @@
           id="popDialog"
           shape="circle"
           icon="DeleteOutlined"
-          @click="
-            selector = '#popDialog'
-            visible = true
-          "
+          @click=";(selector = '#popDialog'), (visible = true)"
         >
         </fx-button>
       </fx-cell>
@@ -21,9 +18,9 @@
           shape="circle"
           icon="DeleteOutlined"
           @click="
-            selector = '#popDialogNoCancel'
-            showCancel = false
-            visible = true
+            ;(selector = '#popDialogNoCancel'),
+              (showCancel = false),
+              (visible = true)
           "
         >
         </fx-button>
@@ -35,16 +32,22 @@
           shape="circle"
           icon="DeleteOutlined"
           @click="
-            selector = '#popDialogButtonText'
-            confirmText = '接受'
-            cancelText = '拒绝'
-            visible = true
+            ;(selector = '#popDialogButtonText'),
+              (confirmText = '接受'),
+              (cancelText = '拒绝'),
+              (visible = true)
           "
         >
         </fx-button>
       </fx-cell>
       <fx-cell label="不展示蒙层">
-        <fx-button size="small" id="popDialogNoMask" shape="circle" icon="DeleteOutlined" @click="visible3 = true">
+        <fx-button
+          size="small"
+          id="popDialogNoMask"
+          shape="circle"
+          icon="DeleteOutlined"
+          @click="visible3 = true"
+        >
         </fx-button>
       </fx-cell>
     </fx-group>
@@ -57,9 +60,9 @@
             shape="circle"
             icon="UpOutlined"
             @click="
-              placement2 = 'top'
-              selector2 = '#popDialogTop2'
-              visible2 = true
+              ;(placement2 = 'top'),
+                (selector2 = '#popDialogTop2'),
+                (visible2 = true)
             "
           >
             上
@@ -72,9 +75,9 @@
             shape="circle"
             icon="LeftOutlined"
             @click="
-              placement2 = 'left'
-              selector2 = '#popDialogLeft2'
-              visible2 = true
+              ;(placement2 = 'left'),
+                (selector2 = '#popDialogLeft2'),
+                (visible2 = true)
             "
           >
             左
@@ -85,9 +88,9 @@
             shape="circle"
             icon="RightOutlined"
             @click="
-              placement2 = 'right'
-              selector2 = '#popDialogRight2'
-              visible2 = true
+              ;(placement2 = 'right'),
+                (selector2 = '#popDialogRight2'),
+                (visible2 = true)
             "
           >
             右
@@ -100,9 +103,9 @@
             shape="circle"
             icon="DownOutlined"
             @click="
-              placement2 = 'bottom'
-              selector2 = '#popDialogBottom2'
-              visible2 = true
+              ;(placement2 = 'bottom'),
+                (selector2 = '#popDialogBottom2'),
+                (visible2 = true)
             "
           >
             下
@@ -118,9 +121,9 @@
           shape="circle"
           icon="DeleteOutlined"
           @click="
-            selector = '#popDialogEvent'
-            showEvent = true
-            visible = true
+            ;(selector = '#popDialogEvent'),
+              (showEvent = true),
+              (visible = true)
           "
         >
         </fx-button>
@@ -132,9 +135,9 @@
           shape="circle"
           icon="DeleteOutlined"
           @click="
-            selector = '#popDialogPopupEvent'
-            showPopupEvent = true
-            visible = true
+            ;(selector = '#popDialogPopupEvent'),
+              (showPopupEvent = true),
+              (visible = true)
           "
         >
         </fx-button>

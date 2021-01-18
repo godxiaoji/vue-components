@@ -1,7 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-tab-bar :options="baseList" :fixed="false" v-model="activeName" />
+      <fx-tab-bar :options="baseList" :fixed="false" v-model="activeValue" />
     </fx-group>
     <fx-group title="徽标">
       <fx-tab-bar :options="badgeList" :fixed="false" />
@@ -10,7 +10,11 @@
       <fx-tab-bar :options="customIconList" :fixed="false" />
     </fx-group>
     <fx-group title="自定义颜色">
-      <fx-tab-bar class="tab-bar-custom-color" :options="baseList" :fixed="false" />
+      <fx-tab-bar
+        class="tab-bar-custom-color"
+        :options="baseList"
+        :fixed="false"
+      />
     </fx-group>
   </div>
 </template>
@@ -23,7 +27,7 @@ export default {
   props: {},
   data() {
     return {
-      activeName: 1,
+      activeValue: 1,
       customIconList,
       baseList,
       badgeList

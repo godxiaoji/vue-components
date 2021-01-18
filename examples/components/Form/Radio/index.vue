@@ -8,8 +8,11 @@
       <fx-cell label="带文案">
         <fx-radio v-model="value">勾选</fx-radio>
       </fx-cell>
-      <fx-cell label="激活">
+      <fx-cell label="默认激活">
         <fx-radio checked>勾选</fx-radio>
+      </fx-cell>
+      <fx-cell label="禁用">
+        <fx-radio disabled>勾选</fx-radio>
       </fx-cell>
     </fx-group>
     <fx-group title="RadioGroup">
@@ -42,7 +45,7 @@ export default {
   name: 'Radio',
   props: {},
   data() {
-    return { value: null, groupValue: null }
+    return { value: null, groupValue: 'man' }
   },
   methods: {
     onChange({ value }) {
@@ -51,5 +54,3 @@ export default {
   }
 }
 </script>
-
-

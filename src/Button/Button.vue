@@ -21,7 +21,11 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../config'
-import { createEnumsValidator, getEnumsValue, iconValidator } from '../helpers/validator'
+import {
+  createEnumsValidator,
+  getEnumsValue,
+  iconValidator
+} from '../helpers/validator'
 
 export default {
   name: SDKKey + '-button',
@@ -86,20 +90,32 @@ export default {
         'pattern--' +
         getEnumsValue(
           'buttonPattern',
-          this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.pattern : this.pattern
+          this.appButtonGroupSubOptions
+            ? this.appButtonGroupSubOptions.pattern
+            : this.pattern
         )
       )
     },
     sizeClassName() {
       return (
         'size--' +
-        getEnumsValue('buttonSize', this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.size : this.size)
+        getEnumsValue(
+          'buttonSize',
+          this.appButtonGroupSubOptions
+            ? this.appButtonGroupSubOptions.size
+            : this.size
+        )
       )
     },
     shapeClassName() {
       return (
         'shape--' +
-        getEnumsValue('buttonShape', this.appButtonGroupSubOptions ? this.appButtonGroupSubOptions.shape : this.shape)
+        getEnumsValue(
+          'buttonShape',
+          this.appButtonGroupSubOptions
+            ? this.appButtonGroupSubOptions.shape
+            : this.shape
+        )
       )
     },
     realFormType() {
@@ -107,13 +123,13 @@ export default {
     }
   },
   created() {
-    this.appButtonGroup && this.appButtonGroup.addButton(this._uid)
+    this.appButtonGroup && this.appButtonGroup.addChild(this)
   },
   mounted() {
     this.$el._app_type = 'button'
   },
   destroyed() {
-    this.appButtonGroup && this.appButtonGroup.removeButton(this._uid)
+    this.appButtonGroup && this.appButtonGroup.removeChild(this)
   },
   methods: {
     onClick(e) {

@@ -1,5 +1,9 @@
 <template>
-  <div :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]" :style="popupStyles" v-show="isShow">
+  <div
+    :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]"
+    :style="popupStyles"
+    v-show="isShow"
+  >
     <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
     <div :class="[prefix + '-dropdown_inner']">
       <slot></slot>
@@ -9,10 +13,10 @@
 
 <script>
 import { SDKKey } from '../config'
-import { isElement } from '../helpers/util'
 import popupMixin from '../util/popup-mixin'
 import { selectorValidator } from '../helpers/validator'
 import Exception from '../helpers/exception'
+import { getElement } from '../helpers/dom'
 
 export default {
   name: SDKKey + '-dropdown',
@@ -45,10 +49,16 @@ export default {
       this.updatePos()
     },
     updatePos() {
-      const $target = isElement(this.selector) ? this.selector : document.querySelector(this.selector)
+      const $target = getElement(this.selector)
 
       if (!$target) {
-        console.error(new Exception('通过"selector"找不到对应Element.', Exception.TYPE.PROP_ERROR, 'Dropdown'))
+        console.error(
+          new Exception(
+            '通过"selector"找不到对应Element.',
+            Exception.TYPE.PROP_ERROR,
+            'Dropdown'
+          )
+        )
 
         return
       }

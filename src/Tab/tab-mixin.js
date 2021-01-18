@@ -1,6 +1,12 @@
 import Icon from '../Icon'
 import Badge from '../Badge'
-import { isNumber, isString, isArray, isObject, isStringNumberMix } from '../helpers/util'
+import {
+  isNumber,
+  isString,
+  isArray,
+  isObject,
+  isStringNumberMix
+} from '../helpers/util'
 import Exception from '../helpers/exception'
 import { iconValidator } from '../helpers/validator'
 
@@ -28,7 +34,7 @@ export default {
         return []
       }
     },
-    value: {
+    activeValue: {
       validator: isStringNumberMix,
       default: ''
     },
@@ -56,11 +62,11 @@ export default {
     }
   },
   model: {
-    prop: 'value',
-    event: '_change'
+    prop: 'activeValue',
+    event: 'update:activeValue'
   },
   watch: {
-    value(value) {
+    activeValue(value) {
       this.switchTo(value, true)
     },
     options() {
@@ -76,7 +82,7 @@ export default {
   methods: {
     switchTo(value, isProp = false) {
       if (!this.updateActive(value)) {
-        // this.$emit('_change', this.value2)
+        // this.$emit('update:activeValue', this.value2)
         console.error(
           new Exception(
             '"value" is not in "options".',
@@ -91,7 +97,13 @@ export default {
       if (this.options2[index]) {
         this.updateActive(this.options2[index].value)
       } else {
-        console.error(new Exception('"options[index]" not found.', Exception.TYPE.PARAM_ERROR, this.tabName))
+        console.error(
+          new Exception(
+            '"options[index]" not found.',
+            Exception.TYPE.PARAM_ERROR,
+            this.tabName
+          )
+        )
       }
     },
 
@@ -123,14 +135,20 @@ export default {
               label: item,
               value: item
             }
-          } else if (isObject(item) && (isString(item[valueName]) || isNumber(item[valueName]))) {
+          } else if (
+            isObject(item) &&
+            (isString(item[valueName]) || isNumber(item[valueName]))
+          ) {
             option = {
-              label: item[labelName] == null ? item[valueName] : item[labelName],
+              label:
+                item[labelName] == null ? item[valueName] : item[labelName],
               value: item[valueName],
               icon: iconValidator(item.icon) ? item.icon : null,
               badge: item.badge
             }
-            option.activeIcon = iconValidator(item.activeIcon) ? item.activeIcon : option.icon
+            option.activeIcon = iconValidator(item.activeIcon)
+              ? item.activeIcon
+              : option.icon
             if (isStringNumberMix(item.badge)) {
               option.badge = {
                 content: item.badge
@@ -198,8 +216,7 @@ export default {
       }
 
       this.updateActive(value)
-
-      this.$emit('_change', value)
+      this.$emit('update:activeValue', value)
 
       const type = 'change'
       this.$emit(type, {

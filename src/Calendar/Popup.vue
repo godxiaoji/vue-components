@@ -1,9 +1,8 @@
 <template>
   <drawer
     :class="[prefix + '-calendar-popup']"
-    ref="popup"
     placement="bottom"
-    :visible.sync="visible2"
+    :visible="visible"
     :title="title || null"
     :show-close="showClose"
     @show="onShow"
@@ -11,6 +10,8 @@
     @hide="onHide"
     @hidden="onHidden"
     @cancel="onCancel"
+    @update:visible="onUpdateVisible"
+    ref="popup"
   >
     <calendar-view
       ref="view"
@@ -99,13 +100,13 @@ export default {
     confirm() {
       this.detail = this.$refs.view.getDetail()
 
-      this.$emit('_change', this.getDetail().value)
+      this.$emit('update:modelValue', this.getDetail().value)
 
       const confirmDetail = this.getDetail()
       this.$emit('confirm', confirmDetail)
       this.afterConfirm(confirmDetail)
 
-      this.visible2 = false
+      this.onUpdateVisible(false)
     },
 
     afterConfirm() {},

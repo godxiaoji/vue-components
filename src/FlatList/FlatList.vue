@@ -16,12 +16,17 @@
     <div
       :class="[prefix + '-flat-list_item']"
       v-for="(item, index) in list"
-      :key="dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index"
+      :key="
+        dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index
+      "
     >
       <div :class="[prefix + '-flat-list_item-inner']" v-show="!item.recycled">
         <slot name="item" :item="item.data" :index="index"> </slot>
       </div>
-      <div :class="[prefix + '-flat-list_separator']" v-if="$slots.separator && index < list.length - 1">
+      <div
+        :class="[prefix + '-flat-list_separator']"
+        v-if="$slots.separator && index < list.length - 1"
+      >
         <slot name="separator"></slot>
       </div>
     </div>
@@ -185,7 +190,10 @@ export default {
         if (oldItem) {
           if (this.dataKey === '*this' && v === oldItem.data) {
             newItem.recycled = oldItem.recycled
-          } else if (this.dataKey && v[this.dataKey] === oldItem.data[this.dataKey]) {
+          } else if (
+            this.dataKey &&
+            v[this.dataKey] === oldItem.data[this.dataKey]
+          ) {
             newItem.recycled = oldItem.recycled
           } else if (!this.dataKey) {
             newItem.recycled = oldItem.recycled
@@ -348,7 +356,8 @@ export default {
      */
     getItemEls() {
       const $els = []
-      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`).children
+      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`)
+        .children
 
       for (let i = 0, len = $children.length; i < len; i++) {
         const $el = $children[i]
@@ -377,7 +386,10 @@ export default {
 
         if (options.viewPosition === 0.5 || options.viewPosition === 'center') {
           block = 'center'
-        } else if (options.viewPosition === 1 || options.viewPosition === 'end') {
+        } else if (
+          options.viewPosition === 1 ||
+          options.viewPosition === 'end'
+        ) {
           block = 'end'
         }
       }

@@ -1,4 +1,4 @@
-import { isElement, isNumber, isString } from './util'
+import { inArray, isElement, isNumber, isString } from './util'
 
 const docEl = document.documentElement
 
@@ -16,6 +16,10 @@ export function addClassName($el, className) {
 
 export function removeClassName($el, className) {
   $el.classList.remove(className)
+}
+
+export function hasClassName($el, className) {
+  return inArray(className, [].slice.call($el.classList, 0))
 }
 
 /**
@@ -108,4 +112,23 @@ export function querySelector(selector) {
   }
 
   return null
+}
+
+export function getScrollDom() {
+  if (
+    typeof document.compatMode !== 'undefined' &&
+    document.compatMode !== 'BackCompat'
+  ) {
+    return docEl
+  } else {
+    return document.body
+  }
+}
+
+/**
+ * 获取元素
+ * @param {Element|String} selector
+ */
+export function getElement(selector) {
+  return isElement(selector) ? selector : document.querySelector(selector)
 }

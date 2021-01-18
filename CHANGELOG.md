@@ -1,3 +1,19 @@
+## [1.7.3](https://github.com/godxiaoji/vfox/compare/v1.7.2...v1.7.3) (2021-01-14)
+
+
+### Bug Fixes
+
+* **imagepreview:** 关闭按钮调整到右上角 ([7cee88f](https://github.com/godxiaoji/vfox/commit/7cee88f9d7635d8837593364697d672d0c29e823))
+
+## [1.7.2](https://github.com/godxiaoji/vfox/compare/v1.7.1...v1.7.2) (2021-01-13)
+
+
+### Bug Fixes
+
+* **swiper:** swiper组件增加导航按钮 ([e2c6c7a](https://github.com/godxiaoji/vfox/commit/e2c6c7a0d360a9fd6be9c458530f589303fb95e7))
+* add TabBar Component ([1f3eb07](https://github.com/godxiaoji/vfox/commit/1f3eb0741fb0828d4d71add9433c8bdd0a70985d))
+* **icon:** 图标支持传入svg组件 ([dc54cd8](https://github.com/godxiaoji/vfox/commit/dc54cd85ab072f277e2e0430f8541e176335f614))
+
 ## [1.7.1](https://github.com/godxiaoji/vfox/compare/v1.7.0...v1.7.1) (2021-01-09)
 
 

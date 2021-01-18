@@ -2206,7 +2206,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var req = __webpack_require__(86);
 
-var requireAll = function requireAll(requireContext) {
+var requireAll = requireContext => {
   var _context;
 
   return _babel_runtime_corejs3_core_js_stable_instance_map__WEBPACK_IMPORTED_MODULE_1___default()(_context = _babel_runtime_corejs3_core_js_stable_instance_keys__WEBPACK_IMPORTED_MODULE_0___default()(requireContext).call(requireContext)).call(_context, requireContext);

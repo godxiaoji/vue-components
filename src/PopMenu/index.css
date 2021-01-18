@@ -9,6 +9,10 @@
   background-color: #fff;
 }
 
+.fx-pop-menu_item {
+  cursor: pointer;
+}
+
 .fx-pop-menu_item:not(.disabled):active {
   background-color: rgba(0, 0, 0, 0.16);
 }

@@ -133,7 +133,7 @@
   text-align: right;
 }
 
-.fx-cell .fx-input[disabled] {
+.fx-cell .fx-input.disabled {
   background-color: transparent;
 }
 

@@ -41,11 +41,11 @@
   opacity: 0;
 }
 
-.fx-checkbox_input:not([disabled]):checked + .fx-checkbox_box .fx-checkbox_icon {
+.fx-checkbox_input:checked + .fx-checkbox_box .fx-checkbox_icon {
   display: none;
 }
 
-.fx-checkbox_input:not([disabled]):checked + .fx-checkbox_box .fx-checkbox_checked-icon {
+.fx-checkbox_input:checked + .fx-checkbox_box .fx-checkbox_checked-icon {
   display: block;
 }
 
@@ -55,6 +55,6 @@
   margin-left: 12px;
 }
 
-.fx-checkbox[disabled] {
+.fx-checkbox.disabled {
   opacity: 0.3;
 }

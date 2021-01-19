@@ -46,10 +46,6 @@ export default {
       this.updateOptions(this.formValue)
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
   created() {
     // 优先确定模式
     if (inArray(this.initialMode, MODE_NAMES)) {
@@ -60,6 +56,7 @@ export default {
     // 初始化value
     this.updateOptions(this.modelValue)
   },
+  emits: ['change', 'update:modelValue'],
   methods: {
     updateValue(val, forceUpdate = false) {
       const { vaild, value } = this.validateValues(val)
@@ -86,9 +83,9 @@ export default {
         if (index === current) {
           this.formValue[colIndex] = item.value
           this.formLabel[colIndex] = item.label
-          this.$set(this.cols[colIndex][index], 'selected', true)
+          this.cols[colIndex][index].selected = true
         } else {
-          this.$set(this.cols[colIndex][index], 'selected', false)
+          this.cols[colIndex][index].selected = false
         }
       })
     },

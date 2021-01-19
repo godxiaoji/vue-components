@@ -13,7 +13,7 @@ describe('Collapse', () => {
 
   test('CollapseItem should render default correctly', () => {
     const wrapper = mount(CollapseItem, {
-      propsData: { name: 'item-1', title: 'title-1' },
+      props: { name: 'item-1', title: 'title-1' },
       slots: {
         default: 'content'
       }

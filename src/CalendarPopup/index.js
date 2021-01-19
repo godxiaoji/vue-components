@@ -1,11 +1,11 @@
 import CalendarPopup from '../Calendar/Popup.vue'
 import { showCalendar } from '../apis/Popup'
 
-CalendarPopup.install = function(Vue) {
-  Vue.component(CalendarPopup.name, CalendarPopup)
+CalendarPopup.install = function(app) {
+  app.component(CalendarPopup.name, CalendarPopup)
 
   // 添加api
-  Vue.prototype.$showCalendar = showCalendar
+  app.config.globalProperties.$showCalendar = showCalendar
 }
 
 CalendarPopup.showCalendar = showCalendar

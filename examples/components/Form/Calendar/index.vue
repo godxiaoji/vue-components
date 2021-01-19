@@ -104,7 +104,7 @@
       <fx-cell label="showCalendar" clickable @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-calendar-popup
-      :visible.sync="popupVisible"
+      v-model:visible="popupVisible"
       :title="title"
       :show-confirm="popupShowConfirm"
       :show-close="popupShowClose"
@@ -116,7 +116,7 @@
       @hidden="onOtherEvent('hidden')"
     />
     <fx-calendar-popup
-      :visible.sync="popupRangeVisible"
+      v-model:visible="popupRangeVisible"
       :title="title"
       initial-type="range"
       :max-range="5"

@@ -72,10 +72,7 @@ export default {
       }
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
+  emits: ['confirm', 'update:modelValue', 'change'],
   methods: {
     updateValue(val) {
       this.detail = this.$refs.view.updateValue(val)

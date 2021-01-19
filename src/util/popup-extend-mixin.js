@@ -5,6 +5,7 @@ export default {
       default: false
     }
   },
+  emits: ['cancel', 'show', 'shown', 'hide', 'hidden', 'update:visible'],
   methods: {
     onShow(res) {
       this.$emit('show', res)

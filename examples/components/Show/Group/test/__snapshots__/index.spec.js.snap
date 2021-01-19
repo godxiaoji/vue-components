@@ -7,13 +7,16 @@ exports[`Group should render default slot correctly 1`] = `
   </div>
   <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
     <div class="fx-group_body-inner">
-      <div class="fx-cell fx-horizontal-hairline">
+      <div class="fx-cell  fx-horizontal-hairline">
         <div class="fx-cell_cover"></div>
         <div class="fx-cell_inner">
-          <div class="fx-cell_label">
-            label
+          <!--v-if-->
+          <div class="fx-cell_label">label
+            <!--v-if-->
           </div>
-          <div class="fx-cell_content">content </div>
+          <div class="fx-cell_content">content</div>
+          <!--v-if-->
+          <!--v-if-->
         </div>
       </div>
     </div>

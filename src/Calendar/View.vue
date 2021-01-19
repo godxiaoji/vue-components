@@ -17,16 +17,13 @@
       <template
         :class="[prefix + '-calendar-view_month']"
         v-for="(month, monthIndex) in months"
+        :key="month.caption"
       >
-        <div
-          :class="[prefix + '-calendar-view_month-caption']"
-          :key="month.caption"
-        >
+        <div :class="[prefix + '-calendar-view_month-caption']">
           {{ month.caption }}
         </div>
         <div
           :class="[prefix + '-calendar-view_days']"
-          :key="month.monthString"
           :data-index="monthIndex"
           @click="onDaysClick"
         >
@@ -170,6 +167,7 @@ export default {
       popup.initialized()
     }
   },
+  emits: ['select', 'update:modelValue'],
   methods: {
     reset() {
       clearTimeout(this.updateOptionsTimer)
@@ -528,11 +526,9 @@ export default {
             const newState = this.getState(day.timestamp)
 
             if (newState !== day.state) {
-              this.$set(
-                this.months[i].days,
-                j,
-                this.getDayInfo(dayjs(day.timestamp), { state: newState })
-              )
+              this.months[i].days[j] = this.getDayInfo(dayjs(day.timestamp), {
+                state: newState
+              })
             }
           }
         }

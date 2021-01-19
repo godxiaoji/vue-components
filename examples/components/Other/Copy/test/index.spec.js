@@ -6,7 +6,7 @@ import Copy from '@/Copy'
 describe('Copy', () => {
   test('should render prop text="content" correctly', () => {
     const wrapper = mount(Copy, {
-      propsData: {
+      props: {
         text: 'content'
       },
       slots: {

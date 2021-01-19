@@ -4,17 +4,18 @@ exports[`Form Form should render default correctly 1`] = `<form class="fx-form">
 
 exports[`Form FormItem should render default correctly 1`] = `
 <div class="fx-form-item">
-  <div class="fx-cell fx-horizontal-hairline">
+  <div class="fx-cell  fx-horizontal-hairline">
     <div class="fx-cell_cover"></div>
     <div class="fx-cell_inner">
-      <!---->
+      <!--v-if-->
       <div class="fx-cell_label">
-
-        <!---->
+        <!--v-if-->
       </div>
-      <div class="fx-cell_content"> </div>
-      <!---->
-      <!---->
+      <div class="fx-cell_content">
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+      <!--v-if-->
     </div>
   </div>
 </div>

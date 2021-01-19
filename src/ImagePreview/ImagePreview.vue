@@ -1,45 +1,47 @@
 <template>
-  <div
-    :class="[
-      prefix + '-preview-image',
-      prefix + '-popup',
-      { visible: visible2 }
-    ]"
-    :style="{ zIndex }"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']"></div>
-    <swiper
-      :activeIndex.sync="activeIndex"
-      :navigation-buttons="navigationButtons"
-      @click="onPreviewClick"
-      @change="onSwiperChange"
+  <teleport to="body">
+    <div
+      :class="[
+        prefix + '-preview-image',
+        prefix + '-popup',
+        { visible: visible2 }
+      ]"
+      :style="{ zIndex }"
+      v-show="isShow"
     >
-      <swiper-item v-for="(item, index) in images" :key="index">
-        <div :class="[prefix + '-preview-image_image']">
-          <fx-image
-            :src="item.src"
-            :mode="'aspectFit'"
-            @load="onImageLoad"
-            :style="{ width: item.width + 'px', height: item.height + 'px' }"
-          />
-        </div>
-      </swiper-item>
-    </swiper>
-    <div :class="[prefix + '-preview-image_pagination']">
-      {{ activeIndex + 1 }} / {{ urls.length }}
+      <div :class="[prefix + '-mask']"></div>
+      <swiper
+        v-model:activeIndex="activeIndex"
+        :navigation-buttons="navigationButtons"
+        @click="onPreviewClick"
+        @change="onSwiperChange"
+      >
+        <swiper-item v-for="(item, index) in images" :key="index">
+          <div :class="[prefix + '-preview-image_image']">
+            <fx-image
+              :src="item.src"
+              :mode="'aspectFit'"
+              @load="onImageLoad"
+              :style="{ width: item.width + 'px', height: item.height + 'px' }"
+            />
+          </div>
+        </swiper-item>
+      </swiper>
+      <div :class="[prefix + '-preview-image_pagination']">
+        {{ activeIndex + 1 }} / {{ urls.length }}
+      </div>
+      <fx-button
+        v-if="showClose"
+        :class="[prefix + '-preview-image_close']"
+        @click.stop="onCloseClick"
+        icon="CloseOutlined"
+        size="large"
+        pattern="borderless"
+        shape="square"
+        :ghost="true"
+      ></fx-button>
     </div>
-    <fx-button
-      v-if="showClose"
-      :class="[prefix + '-preview-image_close']"
-      @click.stop="onCloseClick"
-      icon="CloseOutlined"
-      size="large"
-      pattern="borderless"
-      shape="square"
-      :ghost="true"
-    ></fx-button>
-  </div>
+  </teleport>
 </template>
 
 <script>
@@ -119,6 +121,7 @@ export default {
   created() {
     this.updateCurrent(this.current)
   },
+  emits: ['update:current', 'change'],
   methods: {
     updateCurrent(val) {
       let hasUrl = false

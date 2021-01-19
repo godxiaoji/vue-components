@@ -75,10 +75,7 @@ export default {
       return this.name || ''
     }
   },
-  model: {
-    prop: 'checked',
-    event: 'update:checked'
-  },
+  emits: ['update:checked'],
   watch: {
     checked() {
       if (this.appCheckboxGroup) {
@@ -114,7 +111,7 @@ export default {
     $input._app_component = this.appCheckboxGroup || this
     $input._app_type = 'checkbox'
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.appCheckboxGroup && this.appCheckboxGroup.removeChild(this)
   },
   methods: {

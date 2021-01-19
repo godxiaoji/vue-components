@@ -8,7 +8,7 @@ const imageUrl = 'https://cdn.fox2.cn/vfox/swiper/center-2.jpg'
 describe('Image', () => {
   test('should render prop set imageUrl correctly', () => {
     const wrapper = mount(Image, {
-      propsData: {
+      props: {
         src: imageUrl
       }
     })

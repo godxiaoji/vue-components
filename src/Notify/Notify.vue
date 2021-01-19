@@ -1,20 +1,23 @@
 <template>
-  <div
-    :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <notice-bar
-      :class="[prefix + '-notify_inner']"
-      :type="type"
-      :left-icon="icon"
-      :title="title"
-      :color="color"
-      :background-color="backgroundColor"
-      :mode="closable ? 'closable' : 'default'"
-      @close-click="onClose"
-    />
-  </div>
+  <teleport to="body">
+    <div
+      :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <notice-bar
+        :class="[prefix + '-notify_inner']"
+        :type="type"
+        :left-icon="icon"
+        :title="title"
+        :color="color"
+        :background-color="backgroundColor"
+        :mode="closable ? 'closable' : 'default'"
+        @close-click="onClose"
+      />
+    </div>
+  </teleport>
 </template>
 
 <script>
@@ -68,7 +71,7 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.removeAutoClose()
   },
   methods: {

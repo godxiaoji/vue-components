@@ -7,7 +7,7 @@ import Image from '@/Image'
 describe('Empty', () => {
   test('should render prop set description correctly', () => {
     const wrapper = mount(Empty, {
-      propsData: {
+      props: {
         description: 'description'
       }
     })
@@ -17,12 +17,12 @@ describe('Empty', () => {
 
   test('should render set image slot correctly', () => {
     const wrapper = mount(Empty, {
-      propsData: {
+      props: {
         description: 'description'
       },
       slots: {
         image: mount(Image, {
-          propsData: {
+          props: {
             src: 'https://cdn.fox2.cn/vfox/swiper/different-1.jpg'
           }
         }).html()

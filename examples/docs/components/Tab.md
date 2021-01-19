@@ -2,13 +2,13 @@
 
 ## Props
 
-| 属性             | 类型                       | 默认值                             | 必填 | 说明                                       |
-| ---------------- | -------------------------- | ---------------------------------- | ---- | ------------------------------------------ |
-| options          | object[]/string[]/number[] | []                                 | 是   | tab 数据集                                 |
-| v-model          | string, number             |                                    | 否   | 当前激活项的 value 值                      |
-| scroll-threshold | number                     | 4                                  | 否   | 超过 `scrollThreshold` 个 Tab 使用滚动形式 |
-| vertical         | boolean                    | false                              | 否   | 纵向展示                                   |
-| field-names      | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key   |
+| 属性                 | 类型                       | 默认值                             | 必填 | 说明                                       |
+| -------------------- | -------------------------- | ---------------------------------- | ---- | ------------------------------------------ |
+| options              | object[]/string[]/number[] | []                                 | 是   | tab 数据集                                 |
+| v-model:active-value | string, number             |                                    | 否   | 当前激活项的 value 值                      |
+| scroll-threshold     | number                     | 4                                  | 否   | 超过 `scrollThreshold` 个 Tab 使用滚动形式 |
+| vertical             | boolean                    | false                              | 否   | 纵向展示                                   |
+| field-names          | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key   |
 
 ### options 的结构
 

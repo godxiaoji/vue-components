@@ -23,6 +23,7 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
+  emits: ['validate-submit', 'submit', 'reset'],
   methods: {
     onSubmit(e) {
       const inputEls = e.target.elements
@@ -33,9 +34,9 @@ export default {
         const _ac = el._app_component
         if (_ac) {
           // 主要用于排重checbox等多选的情况
-          if (!inArray(_ac._uid, uids)) {
+          if (!inArray(_ac.$.uid, uids)) {
             // 获取配套表单组件
-            uids.push(_ac._uid)
+            uids.push(_ac.$.uid)
             if (_ac.formName || _ac.name) {
               value[_ac.formName || _ac.name] = _ac.hookFormValue
                 ? _ac.hookFormValue()
@@ -135,10 +136,10 @@ export default {
 
           if (
             _ac &&
-            !inArray(_ac._uid, uids) // 主要用于排重checbox等多选的情况
+            !inArray(_ac.$.uid, uids) // 主要用于排重checbox等多选的情况
           ) {
             // 获取配套表单组件
-            uids.push(_ac._uid)
+            uids.push(_ac.$.uid)
 
             if (_ac.reset) {
               _ac.reset()

@@ -6,7 +6,7 @@ import Notify from '@/Notify'
 describe('Notify', () => {
   test('should render default correctly', () => {
     const wrapper = mount(Notify, {
-      propsData: {
+      props: {
         title: '通知文本'
       }
     })
@@ -16,7 +16,7 @@ describe('Notify', () => {
 
   test('should render prop type="success" correctly', () => {
     const wrapper = mount(Notify, {
-      propsData: { title: '成功文本', type: 'success' }
+      props: { title: '成功文本', type: 'success' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -24,7 +24,7 @@ describe('Notify', () => {
 
   test('should render prop type="warning" correctly', () => {
     const wrapper = mount(Notify, {
-      propsData: { title: '警告文本', type: 'warning' }
+      props: { title: '警告文本', type: 'warning' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -32,7 +32,7 @@ describe('Notify', () => {
 
   test('should render prop type="danger" correctly', () => {
     const wrapper = mount(Notify, {
-      propsData: { title: '危险文本', type: 'danger' }
+      props: { title: '危险文本', type: 'danger' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()

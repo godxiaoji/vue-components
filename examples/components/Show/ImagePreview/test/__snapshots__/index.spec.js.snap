@@ -1,51 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ImagePreview should render props set urls correctly 1`] = `
-<div class="fx-preview-image fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-mask"></div>
-  <div class="fx-swiper" style="overflow-x: hidden;">
-    <div class="fx-swiper_list" style="--webkit-backface-visibility: hidden; --webkit-perspective: 1000; width: 0px; transition: transform 0ms ease-out; transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
-      <div class="fx-swiper-item" data-index="0" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg class="fx-icon">
-                <use xlink:href="#icon-ImageOutlined"></use>
-              </svg></i>
-            <!---->
-            <!---->
-          </div>
-        </div>
-      </div>
-      <div class="fx-swiper-item" data-index="1" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg class="fx-icon">
-                <use xlink:href="#icon-ImageOutlined"></use>
-              </svg></i>
-            <!---->
-            <!---->
-          </div>
-        </div>
-      </div>
-      <div class="fx-swiper-item" data-index="2" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
-            <!----> <i class="fx-image_loading"><svg class="fx-icon">
-                <use xlink:href="#icon-ImageOutlined"></use>
-              </svg></i>
-            <!---->
-            <!---->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="fx-swiper_indicators" style="display: none;"></div>
-    <!---->
-    <!----><object style="display: block; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; padding: 0px; margin: 0px; opacity: 0; z-index: -1000; pointer-events: none;" tabindex="-1" type="text/html" aria-hidden="true" data="about:blank"></object>
-  </div>
-  <div class="fx-preview-image_pagination">
-    1 / 3
-  </div>
-  <!---->
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;

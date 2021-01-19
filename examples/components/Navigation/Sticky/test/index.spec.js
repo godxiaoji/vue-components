@@ -13,7 +13,7 @@ describe('StickyView', () => {
 
   test('StickyViewItem should render default correctly', () => {
     const wrapper = mount(StickyViewItem, {
-      propsData: { name: 'item-1' },
+      props: { name: 'item-1' },
       slots: {
         default: 'content'
       }

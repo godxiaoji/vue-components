@@ -2,13 +2,11 @@
 
 exports[`NoticeBar should render default correctly 1`] = `
 <div class="fx-notice-bar type--warning">
-  <!---->
+  <!--v-if-->
   <div class="fx-notice-bar_content">
-    <div class="fx-notice-bar_content-inner">
-      title
-    </div>
+    <div class="fx-notice-bar_content-inner">title</div>
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -18,21 +16,17 @@ exports[`NoticeBar should render prop leftIcon="SoundOutlined" correctly 1`] = `
       <use xlink:href="#icon-SoundOutlined"></use>
     </svg></div>
   <div class="fx-notice-bar_content">
-    <div class="fx-notice-bar_content-inner">
-      title
-    </div>
+    <div class="fx-notice-bar_content-inner">title</div>
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
 exports[`NoticeBar should render prop mode="clickable" correctly 1`] = `
 <div class="fx-notice-bar type--warning">
-  <!---->
+  <!--v-if-->
   <div class="fx-notice-bar_content">
-    <div class="fx-notice-bar_content-inner">
-      title
-    </div>
+    <div class="fx-notice-bar_content-inner">title</div>
   </div>
   <div class="fx-notice-bar_right-icon"><svg class="fx-icon">
       <use xlink:href="#icon-RightOutlined"></use>
@@ -42,11 +36,9 @@ exports[`NoticeBar should render prop mode="clickable" correctly 1`] = `
 
 exports[`NoticeBar should render prop mode="closable" correctly 1`] = `
 <div class="fx-notice-bar type--warning">
-  <!---->
+  <!--v-if-->
   <div class="fx-notice-bar_content">
-    <div class="fx-notice-bar_content-inner">
-      title
-    </div>
+    <div class="fx-notice-bar_content-inner">title</div>
   </div>
   <div class="fx-notice-bar_right-icon"><svg class="fx-icon">
       <use xlink:href="#icon-CloseOutlined"></use>

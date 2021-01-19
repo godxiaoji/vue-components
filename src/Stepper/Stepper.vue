@@ -119,6 +119,7 @@ export default {
     $input.value = this.formValue
     $input.defaultValue = this.formValue
   },
+  emits: ['plus-click', 'minus-click', 'input', 'focus', 'blur'],
   methods: {
     doStep(e, isPlus = true) {
       const step = parseFloat(this.step)

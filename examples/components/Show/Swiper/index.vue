@@ -1,7 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-swiper class="swiper-box" :activeIndex.sync="activeIndex">
+      <fx-swiper class="swiper-box" v-model:activeIndex="activeIndex">
         <fx-swiper-item v-for="(item, index) in swiperList" :key="item">
           <div class="swiper-box-item" :class="{ even: index % 2 == 1 }">
             {{ item }}

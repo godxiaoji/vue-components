@@ -1,28 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PopMenu should render prop set options correctly 1`] = `
-<div class="fx-popover fx-pop-menu fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-mask"></div>
-  <div class="fx-popover_inner" style="left: 0px; top: 0px; max-width: -16px; max-height: -16px;"><i class="fx-popover_arrow" style="left: 200vw; top: 200vh;"></i>
-    <div class="fx-popover_content">
-      <ul class="fx-pop-menu_list fx-pop-menu_list">
-        <li class="fx-pop-menu_item fx-horizontal-hairline">
-          <div class="fx-pop-menu_item-inner has--icon"><svg class="fx-icon">
-              <use xlink:href="#icon-HeartOutlined"></use>
-            </svg> <span>爱心</span></div>
-        </li>
-        <li class="fx-pop-menu_item fx-horizontal-hairline">
-          <div class="fx-pop-menu_item-inner has--icon"><svg class="fx-icon">
-              <use xlink:href="#icon-StarOutlined"></use>
-            </svg> <span>星星</span></div>
-        </li>
-        <li class="fx-pop-menu_item fx-horizontal-hairline disabled">
-          <div class="fx-pop-menu_item-inner has--icon"><svg class="fx-icon">
-              <use xlink:href="#icon-CircleOutlined"></use>
-            </svg> <span>圈圈</span></div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;

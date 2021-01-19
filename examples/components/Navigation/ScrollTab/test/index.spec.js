@@ -13,7 +13,7 @@ describe('ScrollTab', () => {
 
   test('ScrollTabItem should render default correctly', () => {
     const wrapper = mount(ScrollTabItem, {
-      propsData: { name: 'item-1' },
+      props: { name: 'item-1' },
       slots: {
         default: 'content'
       }

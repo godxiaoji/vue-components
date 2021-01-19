@@ -57,7 +57,7 @@
       <fx-cell label="showPicker" clickable @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-picker-popup
-      :visible.sync="visible"
+      v-model:visible="visible"
       :title="title"
       :options="multiOptions"
       :format-string="true"

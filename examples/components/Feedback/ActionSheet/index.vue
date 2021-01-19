@@ -80,7 +80,7 @@
       <fx-cell label="showActionSheet" clickable @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-action-sheet
-      :visible.sync="visible"
+      v-model:visible="visible"
       :title="title"
       :options="options"
       :show-cancel="showCancel"

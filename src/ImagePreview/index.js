@@ -1,10 +1,10 @@
 import ImagePreview from './ImagePreview.vue'
 import { previewImage } from '../apis/Popup'
 
-ImagePreview.install = function(Vue) {
-  Vue.component(ImagePreview.name, ImagePreview)
+ImagePreview.install = function(app) {
+  app.component(ImagePreview.name, ImagePreview)
 
-  Vue.prototype.$previewImage = previewImage
+  app.config.globalProperties.$previewImage = previewImage
 }
 
 ImagePreview.previewImage = previewImage

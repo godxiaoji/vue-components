@@ -51,7 +51,7 @@
       v-show="formValue"
       :class="[prefix + '-input_clear']"
       icon="CloseCircleFilled"
-      @click.native.prevent="onClear"
+      @click.prevent="onClear"
     />
     <div :class="[prefix + '-input_append']" v-if="$slots.append">
       <slot name="append"></slot>
@@ -195,6 +195,7 @@ export default {
 
     $input._app_component = this
   },
+  emits: ['input', 'focus', 'blur'],
   methods: {
     onCompositionStart() {
       this.isComposition = true

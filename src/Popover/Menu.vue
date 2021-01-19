@@ -1,46 +1,53 @@
 <template>
-  <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-pop-menu',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
-        <ul
-          :class="[prefix + '-pop-menu_list', prefix + '-pop-menu_list']"
-          v-if="options2 && options2.length > 0"
-        >
-          <li
-            :class="[
-              prefix + '-pop-menu_item',
-              prefix + '-horizontal-hairline',
-              { disabled: !!item.disabled }
-            ]"
-            v-for="(item, index) in options2"
-            :key="index"
-            @click="onItemClick(index)"
+  <teleport to="body">
+    <div
+      :class="[
+        prefix + '-popover',
+        prefix + '-pop-menu',
+        prefix + '-popup',
+        { visible: visible2, 'no--mask': !showMask }
+      ]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div
+        :class="[prefix + '-popover_inner']"
+        ref="inner"
+        :style="innerStyles"
+      >
+        <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
+        <div :class="[prefix + '-popover_content']">
+          <ul
+            :class="[prefix + '-pop-menu_list', prefix + '-pop-menu_list']"
+            v-if="options2 && options2.length > 0"
           >
-            <div
+            <li
               :class="[
-                prefix + '-pop-menu_item-inner',
-                { 'has--icon': item.icon }
+                prefix + '-pop-menu_item',
+                prefix + '-horizontal-hairline',
+                { disabled: !!item.disabled }
               ]"
+              v-for="(item, index) in options2"
+              :key="index"
+              @click="onItemClick(index)"
             >
-              <icon v-if="item.icon" :icon="item.icon" />
-              <span>{{ item.name }}</span>
-            </div>
-          </li>
-        </ul>
+              <div
+                :class="[
+                  prefix + '-pop-menu_item-inner',
+                  { 'has--icon': item.icon }
+                ]"
+              >
+                <icon v-if="item.icon" :icon="item.icon" />
+                <span>{{ item.name }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>
@@ -81,6 +88,7 @@ export default {
       return []
     }
   },
+  emits: ['select'],
   methods: {
     onItemClick(index) {
       const item = this.options[index]

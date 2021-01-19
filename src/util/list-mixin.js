@@ -3,7 +3,7 @@ import { SDKKey } from '../config'
 export default {
   methods: {
     update(lazy = 17) {
-      if (!this._isMounted) {
+      if (!this.$.isMounted) {
         return
       }
 

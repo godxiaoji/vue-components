@@ -77,7 +77,7 @@
       <fx-cell label="showDialog" clickable @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-dialog
-      :visible.sync="visible"
+      v-model:visible="visible"
       :title="title"
       :content="content"
       :show-cancel="showCancel"

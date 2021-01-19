@@ -5,10 +5,8 @@ exports[`Slider should render default correctly 1`] = `
   <div class="fx-slider_inner">
     <div class="fx-slider_box">
       <div class="fx-slider_track" style="width: 0%;"></div>
-      <div class="fx-slider_thumb" style="left: 0%;">
-
-      </div>
-    </div> <input type="range" min="0" max="100" step="1" name="" class="fx-slider_range">
+      <div class="fx-slider_thumb" style="left: 0%;"></div>
+    </div><input class="fx-slider_range" type="range" min="0" max="100" step="1" name="">
   </div>
 </div>
 `;

@@ -10,9 +10,9 @@ export default {
     addChild(vm) {
       if (
         !inArray(
-          vm._uid,
-          this.appChildren.map(({ _uid }) => {
-            return _uid
+          vm.$.uid,
+          this.appChildren.map(cvm => {
+            return cvm.$.uid
           })
         )
       ) {
@@ -26,10 +26,10 @@ export default {
 
     removeChild(vm) {
       const index = this.appChildren
-        .map(({ _uid }) => {
-          return _uid
+        .map(cvm => {
+          return cvm.$.uid
         })
-        .indexOf(vm._uid)
+        .indexOf(vm.$.uid)
 
       if (index !== -1) {
         this.appChildren.splice(index, 1)

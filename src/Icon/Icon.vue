@@ -4,7 +4,6 @@
     :class="[prefix + '-icon', moreClassName]"
     :style="[iconColor, iconSize]"
     :icon-name="iconName"
-    @click="onClick"
   >
   </component>
 </template>
@@ -88,11 +87,6 @@ export default {
         }
       }
       return null
-    }
-  },
-  methods: {
-    onClick(e) {
-      this.$emit(e.type, e)
     }
   }
 }

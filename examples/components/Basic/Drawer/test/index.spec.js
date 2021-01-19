@@ -6,7 +6,7 @@ import Drawer from '@/Drawer'
 describe('Drawer', () => {
   test('should render prop title="Drawer" correctly', () => {
     const wrapper = mount(Drawer, {
-      propsData: {
+      props: {
         title: 'Drawer'
       }
     })

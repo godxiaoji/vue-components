@@ -59,7 +59,7 @@ export default {
 
     addScrollEvent(this.onScroll)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeScrollEvent(this.onScroll)
   },
   methods: {

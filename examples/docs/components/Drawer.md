@@ -4,12 +4,12 @@
 
 ## Props
 
-| 属性         | 类型    | 默认值   | 必填 | 说明                                               |
-| ------------ | ------- | -------- | ---- | -------------------------------------------------- |
-| visible.sync | boolean | false    | 否   | 是否显示                                           |
-| title        | string  |          | 否   | 标题，设置标题后展示头部栏                         |
-| placement    | string  | 'bottom' | 否   | 从哪展开，可选值：'bottom', 'top', 'left', 'right' |
-| show-close   | boolean | false    | 否   | 是否显示关闭按钮，显示按钮后展示头部栏             |
+| 属性            | 类型    | 默认值   | 必填 | 说明                                               |
+| --------------- | ------- | -------- | ---- | -------------------------------------------------- |
+| v-model:visible | boolean | false    | 否   | 是否显示                                           |
+| title           | string  |          | 否   | 标题，设置标题后展示头部栏                         |
+| placement       | string  | 'bottom' | 否   | 从哪展开，可选值：'bottom', 'top', 'left', 'right' |
+| show-close      | boolean | false    | 否   | 是否显示关闭按钮，显示按钮后展示头部栏             |
 
 ## Events
 

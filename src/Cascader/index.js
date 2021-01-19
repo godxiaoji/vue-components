@@ -1,11 +1,11 @@
 import Cascader from './Cascader.vue'
 import { showCascader } from '../apis/Popup'
 
-Cascader.install = function(Vue) {
-  Vue.component(Cascader.name, Cascader)
+Cascader.install = function(app) {
+  app.component(Cascader.name, Cascader)
 
   // 添加api
-  Vue.prototype.$showCascader = showCascader
+  app.config.globalProperties.$showCascader = showCascader
 }
 
 Cascader.showCascader = showCascader

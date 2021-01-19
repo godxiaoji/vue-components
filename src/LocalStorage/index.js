@@ -4,11 +4,11 @@ import { SDKKey } from '../config'
 
 const LocalStorage = createStorage(SDKKey)
 
-LocalStorage.install = function(Vue) {
+LocalStorage.install = function(app) {
   // 添加api
   objectForEach(this, function(v, k) {
     if (k !== 'install') {
-      Vue.prototype[`$${k}`] = v
+      app.config.globalProperties[`$${k}`] = v
     }
   })
 }

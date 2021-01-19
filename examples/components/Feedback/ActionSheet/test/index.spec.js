@@ -19,7 +19,7 @@ const options = [
 describe('ActionSheet', () => {
   test('should render props set options correctly', () => {
     const wrapper = mount(ActionSheet, {
-      propsData: {
+      props: {
         options
       }
     })

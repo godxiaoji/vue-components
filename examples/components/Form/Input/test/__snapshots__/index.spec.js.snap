@@ -2,8 +2,8 @@
 
 exports[`Input should render default correctly 1`] = `
 <label class="fx-input">
-  <!----> <input name="" type="text" inputmode="text" placeholder="" maxlength="140" class="fx-input_input" value="">
-  <!---->
-  <!---->
+  <!--v-if--><input class="fx-input_input" name="" type="text" inputmode="text" placeholder="" maxlength="140" value="">
+  <!--v-if-->
+  <!--v-if-->
 </label>
 `;

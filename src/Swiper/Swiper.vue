@@ -167,7 +167,7 @@ export default {
       this.update(50)
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearTimeout(this.updateTimer)
     clearTimeout(this.durationTimer)
     this.stop()
@@ -193,6 +193,7 @@ export default {
       this.start()
     }
   },
+  emits: ['update:activeIndex', 'change', 'animated', 'click'],
   methods: {
     /**
      * 切换到
@@ -573,7 +574,7 @@ export default {
     },
     // 刷新
     resetItems() {
-      if (this._isDestroyed) {
+      if (this.$.isUnmounted) {
         return
       }
 

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Notify from '../Notify'
 import { isObject, isString } from '../helpers/util'
 import { parseParamsByRules } from './rules'
@@ -25,25 +25,29 @@ export function baseShow(object, apiName, componentOptions) {
 
     clear(key)
 
-    const Comp = Vue.extend({
+    const Comp = {
+      name: key,
       extends: componentOptions,
       methods: {
         afterHidden() {
-          this.$destroy()
+          app.unmount($wrapper)
         }
       },
-      destroyed() {
+      unmounted() {
         remove(key, this)
       }
-    })
+    }
 
     const { $wrapper } = createPopup()
 
-    $refs[key] = new Comp({
-      propsData: Object.assign(propsData, {
+    const app = createApp(
+      Comp,
+      Object.assign(propsData, {
         visible: true
       })
-    }).$mount($wrapper)
+    )
+
+    $refs[key] = app.mount($wrapper)
 
     success({})
   } catch (e) {
@@ -59,7 +63,7 @@ function clear(key) {
 }
 
 function remove(key, $ref) {
-  if ($refs[key] && $refs[key]._uid === $ref._uid) {
+  if ($refs[key] && $refs[key].$.uid === $ref.$.uid) {
     $refs[key] = null
   }
 }

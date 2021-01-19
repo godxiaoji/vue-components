@@ -86,9 +86,10 @@ export default {
 
     this.resetContainer(this.containSelector)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeScrollEvent(this.onScroll, this.$container)
   },
+  emits: ['reset-items', 'update:activeIndex', 'change'],
   methods: {
     resetContainer(containSelector) {
       if (this.$container) {
@@ -111,7 +112,7 @@ export default {
     },
 
     resetItems() {
-      if (this._isDestroyed) {
+      if (this.$.isUnmounted) {
         return
       }
 

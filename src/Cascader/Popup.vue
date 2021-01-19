@@ -89,6 +89,7 @@ export default {
       }
     }
   },
+  emits: ['select'],
   methods: {
     afterUpdate() {
       this.$nextTick(() => {

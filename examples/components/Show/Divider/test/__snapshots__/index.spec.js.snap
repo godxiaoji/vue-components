@@ -2,7 +2,7 @@
 
 exports[`Divider should render default correctly 1`] = `
 <div class="fx-divider fx-horizontal-hairline">
-  <!---->
+  <!--v-if-->
 </div>
 `;
 

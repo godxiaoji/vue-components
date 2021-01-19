@@ -1,4 +1,5 @@
 <script>
+import { h } from 'vue'
 import SkeletonLayout from './Layout.vue'
 import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
@@ -9,37 +10,21 @@ import {
 } from './util'
 
 export default {
-  render(createElement) {
+  render() {
     if (!this.loading) {
-      if (this.$slots.default) {
-        if (this.$slots.default.length > 1) {
-          return createElement(
-            'div',
-            { class: [SDKKey + '-skeleton_loaded'] },
-            this.$slots.default
-          )
-        }
-        return this.$slots.default
-      }
-
-      return createElement('div', { class: [SDKKey + '-skeleton_loaded'] })
+      return this.$slots.default ? this.$slots.default() : null
     }
 
-    return createElement(
-      'SkeletonLayout',
+    return h(
+      SkeletonLayout,
       {
-        props: {
-          animated: this.animated,
-          avatar: this.avatar
-        }
+        animated: this.animated,
+        avatar: this.avatar
       },
       this.$slots.layout
     )
   },
   name: SDKKey + '-skeleton',
-  components: {
-    SkeletonLayout
-  },
   provide() {
     return {
       skeletonSubOptions: this.subOptions

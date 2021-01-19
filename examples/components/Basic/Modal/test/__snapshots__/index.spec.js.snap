@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Modal should render default correctly 1`] = `
-<div class="fx-modal fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-mask"></div>
-  <div class="fx-modal_box">
-    <div class="fx-modal_box-inner"></div> <i class="fx-modal_close"><svg class="fx-icon">
-        <use xlink:href="#icon-CloseCircleFilled"></use>
-      </svg></i>
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;

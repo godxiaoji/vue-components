@@ -13,7 +13,7 @@ describe('IndexView', () => {
 
   test('IndexViewItem should render default correctly', () => {
     const wrapper = mount(IndexViewItem, {
-      propsData: { name: 'item-1' },
+      props: { name: 'item-1' },
       slots: {
         default: 'content'
       }

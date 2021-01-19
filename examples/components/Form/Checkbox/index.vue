@@ -6,7 +6,7 @@
         <fx-checkbox />
       </fx-cell>
       <fx-cell label="带文案">
-        <fx-checkbox v-model="checked">勾选</fx-checkbox>
+        <fx-checkbox v-model:checked="checked">勾选</fx-checkbox>
       </fx-cell>
       <fx-cell label="默认激活">
         <fx-checkbox checked>勾选</fx-checkbox>

@@ -6,7 +6,7 @@ import Cell from '@/Cell'
 describe('Cell', () => {
   test('should render default correctly', () => {
     const wrapper = mount(Cell, {
-      propsData: {
+      props: {
         label: 'label',
         content: 'content'
       }

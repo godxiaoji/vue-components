@@ -70,7 +70,7 @@
       <fx-cell label="hideLoading" clickable @click="$hideLoading()"></fx-cell>
     </fx-group>
     <fx-toast
-      :visible.sync="visible"
+      v-model:visible="visible"
       :title="title"
       :type="type"
       :mask="mask"

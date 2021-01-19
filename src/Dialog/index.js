@@ -1,11 +1,11 @@
 import Dialog from './Dialog.vue'
 import { showDialog } from '../apis/Popup'
 
-Dialog.install = function(Vue) {
-  Vue.component(Dialog.name, Dialog)
+Dialog.install = function(app) {
+  app.component(Dialog.name, Dialog)
 
   // 添加api
-  Vue.prototype.$showDialog = showDialog
+  app.config.globalProperties.$showDialog = showDialog
 }
 
 Dialog.showDialog = showDialog

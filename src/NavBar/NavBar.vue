@@ -158,6 +158,13 @@ export default {
       return this.iconOnly ? 'square' : 'rectangle'
     }
   },
+  emits: [
+    'back-click',
+    'home-click',
+    'left-button-click',
+    'right-button-click',
+    'title-dbclick'
+  ],
   methods: {
     onBack() {
       this.$emit('back-click', {})

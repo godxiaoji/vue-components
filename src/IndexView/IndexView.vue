@@ -16,7 +16,7 @@
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
-        :activeIndex.sync="activeIndex"
+        v-model:activeIndex="activeIndex"
         @reset-items="onResetItems"
         @change="onChange"
       >
@@ -66,9 +66,10 @@ export default {
 
     addListeners(this.$refs.list, this)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeListeners(this.$refs.list, this)
   },
+  emits: ['change'],
   methods: {
     /**
      * 事件

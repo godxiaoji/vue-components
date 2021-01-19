@@ -86,6 +86,7 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
+  emits: ['confirm'],
   methods: {
     onConfirmClick() {
       this.$emit('confirm', {})

@@ -67,7 +67,7 @@ export default {
   created() {
     this.appCollapse && this.appCollapse.addChild(this)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.appCollapse && this.appCollapse.removeChild(this)
   },
   methods: {

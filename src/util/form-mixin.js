@@ -20,10 +20,7 @@ export default {
       return this.name || ''
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
+  emits: ['update:modelValue', 'change', 'reset'],
   methods: {
     getInputEl() {
       return this.$el && this.$el.querySelector('input')

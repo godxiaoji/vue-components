@@ -30,9 +30,9 @@
       <fx-cell label="previewImage" clickable @click="onCallApi"></fx-cell>
     </fx-group>
     <fx-image-preview
-      :visible.sync="visible"
+      v-model:visible="visible"
       :urls="imageUrls"
-      :current.sync="current"
+      v-model:current="current"
       :show-close="showClose"
       @show="onEvent('show')"
       @shown="onEvent('shown')"

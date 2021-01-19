@@ -13,7 +13,7 @@ describe('Swiper', () => {
 
   test('SwiperItem should render default correctly', () => {
     const wrapper = mount(SwiperItem, {
-      propsData: {},
+      props: {},
       slots: {
         default: 'content'
       }

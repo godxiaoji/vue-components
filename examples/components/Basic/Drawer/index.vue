@@ -66,7 +66,7 @@
       ></fx-cell>
     </fx-group>
     <fx-drawer
-      :visible.sync="drawerVisible"
+      v-model:visible="drawerVisible"
       :title="title"
       :placement="placement"
       :show-close="showClose"

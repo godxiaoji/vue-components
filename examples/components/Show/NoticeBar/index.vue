@@ -21,7 +21,7 @@
       <fx-notice-bar
         class="notice-bar-item"
         mode="closable"
-        :visible.sync="visible"
+        v-model:visible="visible"
         :title="text1"
         @close-click="onClose"
       >

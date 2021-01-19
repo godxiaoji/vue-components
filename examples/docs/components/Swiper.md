@@ -8,7 +8,7 @@
 | indicator-color        | color   | 'rgba(255, 255, 255, 0.4)' | 否   | 指示点颜色                               |
 | indicator-active-color | color   | '#ffffff'                  | 否   | 当前选中的指示点颜色                     |
 | autoplay               | boolean | false                      | 否   | 是否自动切换                             |
-| active-index.sync      | number  | 0                          | 否   | 当前所在滑块的 index                     |
+| v-model:active-index   | number  | 0                          | 否   | 当前所在滑块的 index                     |
 | interval               | number  | 5000                       | 否   | 自动切换时间间隔                         |
 | duration               | number  |                            | 否   | 滑动动画时长，没有设置时使用内置调优时长 |
 | initial-circular       | boolean | false                      | 否   | 初始设置是否循环切换                     |

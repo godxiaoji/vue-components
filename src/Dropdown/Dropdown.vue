@@ -1,14 +1,17 @@
 <template>
-  <div
-    :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-dropdown_inner']">
-      <slot></slot>
+  <teleport to="body">
+    <div
+      :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div :class="[prefix + '-dropdown_inner']">
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

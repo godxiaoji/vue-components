@@ -117,6 +117,7 @@ export default {
       return []
     }
   },
+  emits: ['select'],
   methods: {
     onItemClick(index) {
       const detail = {

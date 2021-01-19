@@ -4,14 +4,14 @@
 
 ## Props
 
-| 属性          | 类型    | 默认值 | 必填 | 说明                       |
-| ------------- | ------- | ------ | ---- | -------------------------- |
-| visible.sync  | boolean | false  | 否   | 是否显示                   |
-| title         | string  |        | 否   | 标题，不设置则不展示标题栏 |
-| options       | array   |        | 否   | 选项列表                   |
-| mask-closable | boolean | true   | 否   | 点击蒙层是否触发关闭操作   |
-| show-cancel   | boolean | true   | 否   | 是否显示取消按钮           |
-| cancel-text   | string  | '取消' | 否   | 取消按钮的文本             |
+| 属性            | 类型    | 默认值 | 必填 | 说明                       |
+| --------------- | ------- | ------ | ---- | -------------------------- |
+| v-model:visible | boolean | false  | 否   | 是否显示                   |
+| title           | string  |        | 否   | 标题，不设置则不展示标题栏 |
+| options         | array   |        | 否   | 选项列表                   |
+| mask-closable   | boolean | true   | 否   | 点击蒙层是否触发关闭操作   |
+| show-cancel     | boolean | true   | 否   | 是否显示取消按钮           |
+| cancel-text     | string  | '取消' | 否   | 取消按钮的文本             |
 
 ### options 的结构
 

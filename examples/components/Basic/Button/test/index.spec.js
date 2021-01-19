@@ -16,7 +16,7 @@ describe('Button', () => {
 
   test('should render add icon correctly', () => {
     const wrapper = mount(Button, {
-      propsData: {
+      props: {
         icon: 'EditOutlined'
       },
       slots: {

@@ -76,7 +76,7 @@ export default {
       for (let i = 0; i < this.appChildren.length; i++) {
         const child = this.appChildren[i]
 
-        if (child._uid === vm._uid) {
+        if (child.$.uid === vm.$.uid) {
           value = cloneData(vm.value)
         } else if (child.getInputChecked()) {
           child.setChecked(false)

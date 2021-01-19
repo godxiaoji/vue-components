@@ -213,7 +213,7 @@ export default {
     this.updateScroll()
     this.scrollIntoIdView(this.scrollIntoView)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeListeners(this.$el, this)
   },
   watch: {
@@ -242,6 +242,7 @@ export default {
       }
     }
   },
+  emits: ['scroll-to-upper', 'scroll-to-lower', 'scroll', 'refreshing'],
   methods: {
     loadComplete() {
       this.pullRefreshState = PULL_REFRESH_STATE_PULLING

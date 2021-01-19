@@ -6,7 +6,7 @@ import NoticeBar from '@/NoticeBar'
 describe('NoticeBar', () => {
   test('should render default correctly', () => {
     const wrapper = mount(NoticeBar, {
-      propsData: {
+      props: {
         title: 'title'
       }
     })
@@ -16,7 +16,7 @@ describe('NoticeBar', () => {
 
   test('should render prop leftIcon="SoundOutlined" correctly', () => {
     const wrapper = mount(NoticeBar, {
-      propsData: {
+      props: {
         title: 'title',
         leftIcon: 'SoundOutlined'
       }
@@ -27,7 +27,7 @@ describe('NoticeBar', () => {
 
   test('should render prop mode="closable" correctly', () => {
     const wrapper = mount(NoticeBar, {
-      propsData: {
+      props: {
         title: 'title',
         mode: 'closable'
       }
@@ -38,7 +38,7 @@ describe('NoticeBar', () => {
 
   test('should render prop mode="clickable" correctly', () => {
     const wrapper = mount(NoticeBar, {
-      propsData: {
+      props: {
         title: 'title',
         mode: 'clickable'
       }

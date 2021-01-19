@@ -3,7 +3,6 @@
     :class="[prefix + '-notice-bar', typeClassName]"
     :style="styles"
     v-show="visible2"
-    @click="onClick"
   >
     <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
       <icon :icon="leftIcon" :style="iconStyle" />
@@ -116,6 +115,7 @@ export default {
       }
     }
   },
+  emits: ['update:visible', 'show', 'hide', 'close-click'],
   computed: {
     rightIcon2() {
       if (this.rightIcon) {
@@ -164,7 +164,7 @@ export default {
       this.startMarquee()
     }
   },
-  destroyed() {
+  unmounted() {
     this.stopMarquee()
   },
   methods: {
@@ -231,9 +231,6 @@ export default {
 
         this.$emit('close-click', {})
       }
-    },
-    onClick(e) {
-      this.$emit(e.type, e)
     }
   }
 }

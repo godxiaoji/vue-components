@@ -1,5 +1,5 @@
 <template>
-  <div :class="classNames" :style="styles" @click="onClick">
+  <div :class="classNames" :style="styles">
     <slot></slot>
   </div>
 </template>
@@ -77,11 +77,6 @@ export default {
       }
 
       return arr
-    }
-  },
-  methods: {
-    onClick(e) {
-      this.$emit(e.type, e)
     }
   }
 }

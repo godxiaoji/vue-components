@@ -6,7 +6,7 @@
         <fx-radio />
       </fx-cell>
       <fx-cell label="带文案">
-        <fx-radio v-model="value">勾选</fx-radio>
+        <fx-radio v-model:checked="value">勾选</fx-radio>
       </fx-cell>
       <fx-cell label="默认激活">
         <fx-radio checked>勾选</fx-radio>

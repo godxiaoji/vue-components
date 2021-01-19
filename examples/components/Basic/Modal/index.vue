@@ -54,7 +54,7 @@
       ></fx-cell>
     </fx-group>
     <fx-modal
-      :visible.sync="visible"
+      v-model:visible="visible"
       :mask-closable="maskClosable"
       :show-close="showClose"
       @cancel="onClose"
@@ -64,7 +64,7 @@
       @hidden="onOtherEvent('hidden')"
     >
     </fx-modal>
-    <fx-modal :visible.sync="visible2">
+    <fx-modal v-model:visible="visible2">
       <fx-image
         class="image-image"
         :src="imageUrl"

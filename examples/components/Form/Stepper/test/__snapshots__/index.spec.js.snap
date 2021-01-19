@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stepper should render default correctly 1`] = `
-<div class="fx-stepper"><button disabled="disabled" type="button" class="fx-button type--default size--small pattern--default shape--square has--icon"><svg class="fx-icon">
+<div class="fx-stepper"><button class="fx-button type--default size--small pattern--default shape--square has--icon" disabled="" type="button"><svg class="fx-icon">
       <use xlink:href="#icon-MinusOutlined"></use>
-    </svg> <span>按钮</span></button> <input type="text" inputmode="decimal" name="" class="fx-stepper_input" value="1"> <button type="button" class="fx-button type--default size--small pattern--default shape--square has--icon"><svg class="fx-icon">
+    </svg><span>按钮</span></button><input class="fx-stepper_input" type="text" inputmode="decimal" name="" value="1"><button class="fx-button type--default size--small pattern--default shape--square has--icon" type="button"><svg class="fx-icon">
       <use xlink:href="#icon-PlusOutlined"></use>
-    </svg> <span>按钮</span></button></div>
+    </svg><span>按钮</span></button></div>
 `;

@@ -1,11 +1,11 @@
 import Picker from './Picker.vue'
 import { showPicker } from '../apis/Popup'
 
-Picker.install = function(Vue) {
-  Vue.component(Picker.name, Picker)
+Picker.install = function(app) {
+  app.component(Picker.name, Picker)
 
   // 添加api
-  Vue.prototype.$showPicker = showPicker
+  app.config.globalProperties.$showPicker = showPicker
 }
 
 Picker.showPicker = showPicker

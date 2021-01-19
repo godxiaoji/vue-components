@@ -47,10 +47,6 @@ export default {
       }
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
   created() {
     // 优先确定模式
     if (inArray(this.initialMode, MODE_NAMES)) {
@@ -69,6 +65,7 @@ export default {
     $input._app_type = this.compName
     $input.defaultValue = $input.value
   },
+  // emits: ['update:modelValue', 'change'],
   methods: {
     updateValue(val) {
       if (this.$refs.popup) {

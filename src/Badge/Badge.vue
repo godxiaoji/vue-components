@@ -134,7 +134,7 @@ export default {
       this.content2 = rangeInteger(this.content, 0, this.maxCount)
     }
   },
-  destroyed() {
+  unmounted() {
     this.frameTask && this.frameTask.stop()
   }
 }

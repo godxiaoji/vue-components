@@ -2,10 +2,10 @@
 
 exports[`Image should render prop set imageUrl correctly 1`] = `
 <div class="fx-image">
-  <!----> <i class="fx-image_loading"><svg class="fx-icon">
+  <!--v-if--><i class="fx-image_loading"><svg class="fx-icon">
       <use xlink:href="#icon-ImageOutlined"></use>
     </svg></i>
-  <!---->
-  <!---->
+  <!--v-if-->
+  <!--v-if-->
 </div>
 `;

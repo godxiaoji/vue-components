@@ -2,14 +2,14 @@
 
 ## Props
 
-| 属性         | 类型    | 默认值    | 必填 | 说明                                                                           |
-| ------------ | ------- | --------- | ---- | ------------------------------------------------------------------------------ |
-| visible.sync | boolean | false     | 否   | 是否显示                                                                       |
-| title        | string  |           | 是   | 提示的内容                                                                     |
-| type         | string  | 'default' | 否   | 类型，'default'无图标, 可选 'success', 'loading', 'fail'                       |
-| image        | string  |           | 否   | 图标，优先级高于 type 自带的图标                                               |
-| mask         | boolean | false     | 否   | 是否显示透明蒙层，防止触摸穿透                                                 |
-| duration     | number  | 0         | 否   | visible=true 展示后，duration 毫秒后消失，0 为不消失，在 `visible.sync` 下生效 |
+| 属性            | 类型    | 默认值    | 必填 | 说明                                                                              |
+| --------------- | ------- | --------- | ---- | --------------------------------------------------------------------------------- |
+| v-model:visible | boolean | false     | 否   | 是否显示                                                                          |
+| title           | string  |           | 是   | 提示的内容                                                                        |
+| type            | string  | 'default' | 否   | 类型，'default'无图标, 可选 'success', 'loading', 'fail'                          |
+| image           | string  |           | 否   | 图标，优先级高于 type 自带的图标                                                  |
+| mask            | boolean | false     | 否   | 是否显示透明蒙层，防止触摸穿透                                                    |
+| duration        | number  | 0         | 否   | visible=true 展示后，duration 毫秒后消失，0 为不消失，在 `v-model:visible` 下生效 |
 
 ### type 的合法值
 

@@ -108,7 +108,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeComponentFromLazy(this)
   },
   methods: {

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Picker from '../Picker/Popup.vue'
 import Cascader from '../Cascader/Popup.vue'
 import Calendar from '../Calendar/Popup.vue'
@@ -46,24 +46,25 @@ function show(object, apiName, getComp) {
       const { $wrapper } = createPopup()
 
       const compOptions = getComp(done)
+      compOptions.name = apiName.replace('show', '')
       if (!isObject(compOptions.methods)) {
         compOptions.methods = {}
       }
       compOptions.methods.onUpdateVisible = function(value) {
-        this.visible = !!value
+        this.$refs.popup[value ? 'show' : 'hide']()
       }
       compOptions.methods.destroy = function() {
-        this.$destroy()
+        app.unmount($wrapper)
       }
-      const Comp = Vue.extend(compOptions)
 
-      const app = new Comp({
-        propsData: Object.assign(propsData, {
+      const app = createApp(
+        compOptions,
+        Object.assign(propsData, {
           visible: true
         })
-      }).$mount($wrapper)
+      )
 
-      return app
+      return app.mount($wrapper)
     } catch (e) {
       fail(e)
       complete()

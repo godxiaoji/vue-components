@@ -6,7 +6,7 @@ import PopDialog from '@/PopDialog'
 describe('PopDialog', () => {
   test('should render default correctly', () => {
     const wrapper = mount(PopDialog, {
-      propsData: {
+      props: {
         selector: '#test',
         title: 'title',
         content: 'content'
@@ -18,7 +18,7 @@ describe('PopDialog', () => {
 
   test('should render prop showCancel=false correctly', () => {
     const wrapper = mount(PopDialog, {
-      propsData: {
+      props: {
         selector: '#test',
         title: 'title',
         content: 'content',

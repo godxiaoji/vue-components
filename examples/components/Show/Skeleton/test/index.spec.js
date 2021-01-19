@@ -12,7 +12,7 @@ describe('Skeleton', () => {
 
   test('should render prop avatar=true correctly', () => {
     const wrapper = mount(Skeleton, {
-      propsData: {
+      props: {
         avatar: true
       }
     })

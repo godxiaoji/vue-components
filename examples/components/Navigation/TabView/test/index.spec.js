@@ -13,7 +13,7 @@ describe('TabView', () => {
 
   test('TabViewItem should render default correctly', () => {
     const wrapper = mount(TabViewItem, {
-      propsData: { name: 'item-1' },
+      props: { name: 'item-1' },
       slots: {
         default: 'content'
       }

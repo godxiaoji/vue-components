@@ -2,11 +2,11 @@
 
 ## Radio Props
 
-| 属性     | 类型          | 默认值 | 必填 | 说明                                                                         |
-| -------- | ------------- | ------ | ---- | ---------------------------------------------------------------------------- |
-| value    | string/number | ''     | 否   | 该项值，[radio-group](./RadioGroup.md) 的 change 事件会携带 `radio` 的 value |
-| disabled | boolean       | false  | 否   | 是否禁用                                                                     |
-| v-model  | boolean       | false  | 否   | 当前是否选中，可用来设置默认选中                                             |
+| 属性            | 类型          | 默认值 | 必填 | 说明                                                                         |
+| --------------- | ------------- | ------ | ---- | ---------------------------------------------------------------------------- |
+| value           | string/number | ''     | 否   | 该项值，[radio-group](./RadioGroup.md) 的 change 事件会携带 `radio` 的 value |
+| disabled        | boolean       | false  | 否   | 是否禁用                                                                     |
+| v-model:checked | boolean       | false  | 否   | 当前是否选中，可用来设置默认选中                                             |
 
 ## Radio CSS
 

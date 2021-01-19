@@ -1,11 +1,11 @@
 import ActionSheet from './ActionSheet.vue'
 import { showActionSheet } from '../apis/Popup'
 
-ActionSheet.install = function(Vue) {
-  Vue.component(ActionSheet.name, ActionSheet)
+ActionSheet.install = function(app) {
+  app.component(ActionSheet.name, ActionSheet)
 
   // 添加api
-  Vue.prototype.$showActionSheet = showActionSheet
+  app.config.globalProperties.$showActionSheet = showActionSheet
 }
 
 ActionSheet.showActionSheet = showActionSheet

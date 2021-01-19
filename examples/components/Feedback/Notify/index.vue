@@ -88,7 +88,7 @@
       <fx-cell label="hideNotify" clickable @click="$hideNotify()"></fx-cell>
     </fx-group>
     <fx-notify
-      :visible.sync="visible"
+      v-model:visible="visible"
       :title="title"
       :type="type"
       :backgroundColor="backgroundColor"

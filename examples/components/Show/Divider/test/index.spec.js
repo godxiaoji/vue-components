@@ -12,7 +12,7 @@ describe('Divider', () => {
 
   test('should render prop title="title" correctly', () => {
     const wrapper = mount(Divider, {
-      propsData: {
+      props: {
         title: 'title'
       }
     })
@@ -22,7 +22,7 @@ describe('Divider', () => {
 
   test('should render prop dashed=true correctly', () => {
     const wrapper = mount(Divider, {
-      propsData: {
+      props: {
         title: 'title',
         dashed: true
       }

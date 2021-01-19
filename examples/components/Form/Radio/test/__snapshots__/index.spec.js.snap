@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Radio should render default correctly 1`] = `
-<label class="fx-radio fx-horizontal-hairline"><input type="radio" name="" class="fx-radio_input" value="">
+<label class="fx-radio fx-horizontal-hairline"><input class="fx-radio_input" type="radio" name="" value="">
   <div class="fx-radio_box"><svg class="fx-icon fx-radio_icon">
       <use xlink:href="#icon-CircleOutlined"></use>
-    </svg> <svg class="fx-icon fx-radio_checked-icon">
+    </svg><svg class="fx-icon fx-radio_checked-icon">
       <use xlink:href="#icon-CheckCircleFilled"></use>
     </svg>
-    <!---->
+    <!--v-if-->
   </div>
 </label>
 `;

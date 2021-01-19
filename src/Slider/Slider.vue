@@ -60,10 +60,6 @@ export default {
       default: false
     }
   },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
-  },
   data() {
     return {
       prefix: SDKKey,
@@ -97,6 +93,7 @@ export default {
       })
     }
   },
+  emits: ['input'],
   mounted() {
     const $input = this.getInputEl()
 

@@ -6,7 +6,7 @@ import Badge from '@/Badge'
 describe('Badge', () => {
   test('should render prop content=1 correctly', () => {
     const wrapper = mount(Badge, {
-      propsData: {
+      props: {
         content: 1
       },
       slots: {

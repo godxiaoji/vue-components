@@ -52,9 +52,5 @@ export default {
       },
       default: 0
     }
-  },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
   }
 }

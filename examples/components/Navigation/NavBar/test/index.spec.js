@@ -6,7 +6,7 @@ import NavBar from '@/NavBar'
 describe('NavBar', () => {
   test('should render prop title="NavBar" correctly', () => {
     const wrapper = mount(NavBar, {
-      propsData: {
+      props: {
         title: 'NavBar'
       }
     })

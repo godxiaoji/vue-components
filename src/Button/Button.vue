@@ -10,7 +10,6 @@
     ]"
     :disabled="disabled"
     :type="realFormType"
-    @click="onClick"
   >
     <icon v-if="loading" icon="LoadingOutlined" :spin="true" />
     <icon v-else-if="icon" :icon="icon" />
@@ -128,13 +127,8 @@ export default {
   mounted() {
     this.$el._app_type = 'button'
   },
-  destroyed() {
+  unmounted() {
     this.appButtonGroup && this.appButtonGroup.removeChild(this)
-  },
-  methods: {
-    onClick(e) {
-      this.$emit(e.type, e)
-    }
   }
 }
 </script>

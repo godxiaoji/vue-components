@@ -80,6 +80,7 @@ export default {
       }
     }
   },
+  emits: ['confirm', 'update:modelValue'],
   methods: {
     // updateValue(val) {
     //   this.detail = this.$refs.view.updateValue(

@@ -80,6 +80,7 @@ export default {
   data() {
     return { prefix: SDKKey }
   },
+  emits: ['click'],
   computed: {
     linkIconName() {
       return `${capitalize(

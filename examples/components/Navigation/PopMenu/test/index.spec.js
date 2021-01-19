@@ -22,7 +22,7 @@ const options = [
 describe('PopMenu', () => {
   test('should render prop set options correctly', () => {
     const wrapper = mount(PopMenu, {
-      propsData: {
+      props: {
         options
       }
     })

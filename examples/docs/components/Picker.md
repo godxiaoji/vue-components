@@ -218,10 +218,10 @@ xiyiji/guntong
 
 ## PickerPopup Props
 
-| 属性         | 类型    | 默认值 | 必填 | 说明         |
-| ------------ | ------- | ------ | ---- | ------------ |
-| visible.sync | boolean | false  | 否   | 是否显示弹窗 |
-| title        | string  |        | 否   | 弹窗标题     |
+| 属性            | 类型    | 默认值 | 必填 | 说明         |
+| --------------- | ------- | ------ | ---- | ------------ |
+| v-model:visible | boolean | false  | 否   | 是否显示弹窗 |
+| title           | string  |        | 否   | 弹窗标题     |
 
 ## PickerPopup Events
 

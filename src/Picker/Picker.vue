@@ -29,7 +29,7 @@
     <picker-popup
       v-bind="$props"
       :title="placeholder"
-      :visible.sync="popupVisible"
+      v-model:visible="popupVisible"
       v-if="isInitPopup"
       @change="onChange"
       ref="popup"

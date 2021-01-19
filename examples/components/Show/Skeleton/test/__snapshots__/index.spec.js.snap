@@ -3,7 +3,7 @@
 exports[`Skeleton should render default correctly 1`] = `
 <div class="fx-skeleton">
   <div class="fx-skeleton_layout">
-    <!---->
+    <!--v-if-->
     <div class="fx-skeleton_layout-right">
       <div class="fx-skeleton-title"></div>
       <ul class="fx-skeleton-paragraph">

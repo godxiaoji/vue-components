@@ -7,7 +7,7 @@ import { cascadeOptions } from '../../Picker/picker-util'
 describe('Picker', () => {
   test('should render prop set options correctly', () => {
     const wrapper = mount(Picker, {
-      propsData: {
+      props: {
         options: cascadeOptions
       }
     })

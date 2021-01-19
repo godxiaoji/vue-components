@@ -1,23 +1,30 @@
 <template>
-  <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
-        <slot>
-          <div :class="[prefix + '-popover_text']">{{ content }}</div>
-        </slot>
+  <teleport to="body">
+    <div
+      :class="[
+        prefix + '-popover',
+        prefix + '-popup',
+        { visible: visible2, 'no--mask': !showMask }
+      ]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div
+        :class="[prefix + '-popover_inner']"
+        ref="inner"
+        :style="innerStyles"
+      >
+        <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
+        <div :class="[prefix + '-popover_content']">
+          <slot>
+            <div :class="[prefix + '-popover_text']">{{ content }}</div>
+          </slot>
+        </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

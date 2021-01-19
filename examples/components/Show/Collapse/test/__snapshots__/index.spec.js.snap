@@ -7,15 +7,14 @@ exports[`Collapse CollapseItem should render default correctly 1`] = `
   <div class="fx-cell clickable fx-horizontal-hairline fx-collapse-item_header">
     <div class="fx-cell_cover"></div>
     <div class="fx-cell_inner">
-      <!---->
-      <div class="fx-cell_label">
-        title-1
-        <!---->
+      <!--v-if-->
+      <div class="fx-cell_label">title-1
+        <!--v-if-->
       </div>
-      <div class="fx-cell_content"> </div> <i class="fx-cell_link-icon"><svg class="fx-icon">
+      <div class="fx-cell_content"></div><i class="fx-cell_link-icon"><svg class="fx-icon">
           <use xlink:href="#icon-DownOutlined"></use>
         </svg></i>
-      <!---->
+      <!--v-if-->
     </div>
   </div>
   <div class="fx-collapse-item_body fx-horizontal-hairline" style="display: none;">

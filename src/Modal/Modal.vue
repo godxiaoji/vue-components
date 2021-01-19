@@ -1,22 +1,25 @@
 <template>
-  <div
-    :class="[prefix + '-modal', prefix + '-popup', { visible: visible2 }]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-modal_box']" :style="boxStyles">
-      <div :class="[prefix + '-modal_box-inner']">
-        <slot></slot>
+  <teleport to="body">
+    <div
+      :class="[prefix + '-modal', prefix + '-popup', { visible: visible2 }]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div :class="[prefix + '-modal_box']" :style="boxStyles">
+        <div :class="[prefix + '-modal_box-inner']">
+          <slot></slot>
+        </div>
+        <i
+          v-if="showClose"
+          :class="[prefix + '-modal_close']"
+          @click="onCloseClick"
+          ><icon icon="CloseCircleFilled"></icon
+        ></i>
       </div>
-      <i
-        v-if="showClose"
-        :class="[prefix + '-modal_close']"
-        @click="onCloseClick"
-        ><icon icon="CloseCircleFilled"></icon
-      ></i>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

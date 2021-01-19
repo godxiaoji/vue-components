@@ -1,5 +1,3 @@
-import { appendToBody } from './dom'
-
 export const defaultZIndex = 2000
 
 let puid = 1
@@ -10,10 +8,8 @@ export function getNewZIndex() {
 }
 
 export function createPopup() {
-  const $wrapper = document.createElement('div')
+  const $wrapper = document.createDocumentFragment()
   const id = puid++
-
-  appendToBody($wrapper)
 
   return {
     id,

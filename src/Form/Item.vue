@@ -43,7 +43,7 @@ export default {
   created() {
     this.appForm && this.appForm.addChild(this)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.appForm && this.appForm.removeChild(this)
   },
   methods: {

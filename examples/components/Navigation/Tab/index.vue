@@ -2,28 +2,31 @@
   <div>
     <fx-group title="基础用法">
       <div class="tab-box">
-        <fx-tab :options="shortTabList" v-model="shortActiveValue"></fx-tab>
+        <fx-tab
+          :options="shortTabList"
+          v-model:activeValue="shortActiveValue"
+        ></fx-tab>
       </div>
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
         <fx-tab
           :options="shortTabList"
-          v-model="shortActiveValue"
+          v-model:activeValue="shortActiveValue"
           :vertical="true"
         ></fx-tab>
       </div>
     </fx-group>
     <fx-group title="滚动（阈值 scrollThreshold = 4）">
       <div class="tab-box">
-        <fx-tab :options="tabList" v-model="activeValue"></fx-tab>
+        <fx-tab :options="tabList" v-model:activeValue="activeValue"></fx-tab>
       </div>
     </fx-group>
     <fx-group title="竖向">
       <div class="tab-box" style="height: 220px;">
         <fx-tab
           :options="tabList"
-          v-model="activeValue"
+          v-model:activeValue="activeValue"
           :vertical="true"
         ></fx-tab>
       </div>

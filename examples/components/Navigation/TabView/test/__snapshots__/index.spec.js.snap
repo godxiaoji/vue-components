@@ -11,8 +11,8 @@ exports[`TabView TabView should render default correctly 1`] = `
     <div class="fx-swiper" style="overflow-x: hidden;">
       <div class="fx-swiper_list" style="--webkit-backface-visibility: hidden; --webkit-perspective: 1000; width: 0px; transition: transform 0ms ease-out; transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></div>
       <div class="fx-swiper_indicators" style="display: none;"></div>
-      <!---->
-      <!----><object style="display: block; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; padding: 0px; margin: 0px; opacity: 0; z-index: -1000; pointer-events: none;" tabindex="-1" type="text/html" aria-hidden="true" data="about:blank"></object>
+      <!--v-if-->
+      <!--v-if--><object style="display: block; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; padding: 0px; margin: 0px; opacity: 0; z-index: -1000; pointer-events: none;" tabindex="-1" type="text/html" aria-hidden="true" data="about:blank"></object>
     </div>
   </div>
 </div>

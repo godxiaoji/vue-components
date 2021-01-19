@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty should render prop set description correctly 1`] = `
-<div class="fx-empty"><img src="https://cdn.fox2.cn/vfox/empty/default@2x.png" class="fx-empty_image">
-  <p class="fx-empty_description">
-    description
-  </p>
+<div class="fx-empty"><img class="fx-empty_image" src="https://cdn.fox2.cn/vfox/empty/default@2x.png">
+  <p class="fx-empty_description">description</p>
 </div>
 `;
 
 exports[`Empty should render set image slot correctly 1`] = `
 <div class="fx-empty">
-  <div class="fx-image"><i class="fx-image_loading"><svg class="fx-icon">
+  <div class="fx-image">
+    <!--v-if--><i class="fx-image_loading"><svg class="fx-icon">
         <use xlink:href="#icon-ImageOutlined"></use>
-      </svg></i></div>
-  <p class="fx-empty_description">
-    description
-  </p>
+      </svg></i>
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+  <p class="fx-empty_description">description</p>
 </div>
 `;

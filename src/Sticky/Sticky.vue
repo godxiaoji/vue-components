@@ -70,7 +70,7 @@ export default {
   mounted() {
     this.resetContainer(this.containSelector)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeScrollEvent(this.onScroll, this.$container)
   },
   methods: {

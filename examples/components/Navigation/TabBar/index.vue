@@ -1,14 +1,18 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-tab-bar :options="baseList" :fixed="false" v-model="activeValue" />
+      <fx-tab-bar
+        :options="baseList"
+        :fixed="false"
+        v-model:activeValue="activeValue"
+      />
     </fx-group>
     <fx-group title="徽标">
       <fx-tab-bar :options="badgeList" :fixed="false" />
     </fx-group>
-    <fx-group title="自定义图标">
+    <!-- <fx-group title="自定义图标">
       <fx-tab-bar :options="customIconList" :fixed="false" />
-    </fx-group>
+    </fx-group> -->
     <fx-group title="自定义颜色">
       <fx-tab-bar
         class="tab-bar-custom-color"
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-import { customIconList, baseList, badgeList } from './data'
+import { baseList, badgeList } from './data'
 
 export default {
   name: 'TabBar',
@@ -28,7 +32,6 @@ export default {
   data() {
     return {
       activeValue: 1,
-      customIconList,
       baseList,
       badgeList
     }

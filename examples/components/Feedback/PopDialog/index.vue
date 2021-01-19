@@ -156,7 +156,7 @@
       </fx-cell>
     </fx-group>
     <fx-pop-dialog
-      :visible.sync="visible"
+      v-model:visible="visible"
       :selector="selector"
       :content="content"
       :show-cancel="showCancel"
@@ -171,7 +171,7 @@
     >
     </fx-pop-dialog>
     <fx-pop-dialog
-      :visible.sync="visible2"
+      v-model:visible="visible2"
       :selector="selector2"
       :placement="placement2"
       content="这是气泡内容"
@@ -179,7 +179,7 @@
     >
     </fx-pop-dialog>
     <fx-pop-dialog
-      :visible.sync="visible3"
+      v-model:visible="visible3"
       selector="#popDialogNoMask"
       content="这是气泡内容"
       :show-cancel="false"

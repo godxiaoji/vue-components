@@ -168,9 +168,10 @@ export default {
       this.updateItems(null, 'init')
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$el.removeEventListener('resize', this.onResize, false)
   },
+  emits: ['recycle-change', 'end-reached', 'scroll', 'refreshing'],
   methods: {
     onRefreshing(res, done) {
       this.$emit('refreshing', res, done)

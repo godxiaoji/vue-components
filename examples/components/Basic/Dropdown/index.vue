@@ -20,7 +20,7 @@
       />
     </fx-group>
     <fx-dropdown
-      :visible.sync="visible"
+      v-model:visible="visible"
       :selector="selector"
       @show="onEvent('show')"
       @shown="onEvent('shown')"

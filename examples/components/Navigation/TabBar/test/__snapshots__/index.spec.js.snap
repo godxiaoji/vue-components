@@ -7,22 +7,22 @@ exports[`Tab should render set badge correctly 1`] = `
       <li class="fx-tab-bar_item active">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-HomeOutlined"></use>
-          </svg> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">热</span></div> <span class="fx-tab-bar_item-text">首页</span>
+          </svg><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">热</span></div><span class="fx-tab-bar_item-text">首页</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-SearchOutlined"></use>
-          </svg> <i class="fx-badge_dot" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;"></i></div> <span class="fx-tab-bar_item-text">搜索</span>
+          </svg><i class="fx-badge_dot" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;"></i></div><span class="fx-tab-bar_item-text">搜索</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-UserOutlined"></use>
-          </svg> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</span></div> <span class="fx-tab-bar_item-text">我的</span>
+          </svg><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</span></div><span class="fx-tab-bar_item-text">我的</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-SettingOutlined"></use>
-          </svg> <span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">99+</span></div> <span class="fx-tab-bar_item-text">设置</span>
+          </svg><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">99+</span></div><span class="fx-tab-bar_item-text">设置</span>
       </li>
     </ul>
   </div>
@@ -37,29 +37,29 @@ exports[`Tab should render set options correctly 1`] = `
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-HomeOutlined"></use>
           </svg>
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">首页</span>
+          <!--v-if-->
+        </div><span class="fx-tab-bar_item-text">首页</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-SearchOutlined"></use>
           </svg>
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">搜索</span>
+          <!--v-if-->
+        </div><span class="fx-tab-bar_item-text">搜索</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-UserOutlined"></use>
           </svg>
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">我的</span>
+          <!--v-if-->
+        </div><span class="fx-tab-bar_item-text">我的</span>
       </li>
       <li class="fx-tab-bar_item">
         <div class="fx-badge fx-tab-bar_item-icon"><svg class="fx-icon">
             <use xlink:href="#icon-SettingOutlined"></use>
           </svg>
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">设置</span>
+          <!--v-if-->
+        </div><span class="fx-tab-bar_item-text">设置</span>
       </li>
     </ul>
   </div>
@@ -69,28 +69,7 @@ exports[`Tab should render set options correctly 1`] = `
 exports[`Tab should render use custom icons correctly 1`] = `
 <div class="fx-tab-bar">
   <div class="fx-tab-bar_inner fx-horizontal-hairline fixed" style="z-index: 1;">
-    <ul class="fx-tab-bar_list">
-      <li class="fx-tab-bar_item active">
-        <div class="fx-badge fx-tab-bar_item-icon">
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">微信</span>
-      </li>
-      <li class="fx-tab-bar_item">
-        <div class="fx-badge fx-tab-bar_item-icon">
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">QQ</span>
-      </li>
-      <li class="fx-tab-bar_item">
-        <div class="fx-badge fx-tab-bar_item-icon">
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">微博</span>
-      </li>
-      <li class="fx-tab-bar_item">
-        <div class="fx-badge fx-tab-bar_item-icon">
-          <!---->
-        </div> <span class="fx-tab-bar_item-text">淘宝</span>
-      </li>
-    </ul>
+    <ul class="fx-tab-bar_list"></ul>
   </div>
 </div>
 `;

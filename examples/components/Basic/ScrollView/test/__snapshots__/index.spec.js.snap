@@ -4,7 +4,7 @@ exports[`ScrollView should render prop scrollY=true correctly 1`] = `
 <div class="fx-scroll-view scroll-y">
   <div class="fx-scroll-view_inner">
     <div class="fx-scroll-view_content" style="transition: transform 200ms; transform: translate3d(0px, 0, 0);">
-      <!---->
+      <!--v-if-->
       <div class="fx-scroll-view_lower-loading direction--unknown" style="display: none;">
         <div class="fx-scroll-view_lower-loading-indicator" style="padding: 0px 0px 0px 0px;"><svg class="fx-icon spin">
             <use xlink:href="#icon-LoadingOutlined"></use>

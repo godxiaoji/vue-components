@@ -1,7 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-collapse v-model="activeNames">
+      <fx-collapse v-model:activeNames="activeNames">
         <fx-collapse-item title="标题1" name="row1">
           <div class="collapse-pad">
             代码是写出来给人看的，附带能在机器上运行
@@ -20,7 +20,7 @@
       </fx-collapse>
     </fx-group>
     <fx-group title="手风琴">
-      <fx-collapse v-model="activeNames2" accordion>
+      <fx-collapse v-model:activeNames="activeNames2" accordion>
         <fx-collapse-item title="标题1" name="row1">
           <div class="collapse-pad">
             代码是写出来给人看的，附带能在机器上运行
@@ -39,7 +39,7 @@
       </fx-collapse>
     </fx-group>
     <fx-group title="其他">
-      <fx-collapse v-model="activeNames3">
+      <fx-collapse v-model:activeNames="activeNames3">
         <fx-collapse-item title="默认展开" name="row1">
           <div class="collapse-pad">
             代码是写出来给人看的，附带能在机器上运行
@@ -66,7 +66,7 @@
       </fx-collapse>
     </fx-group>
     <fx-group title="Collapse 的事件 change">
-      <fx-collapse v-model="activeNames4" @change="onChange">
+      <fx-collapse v-model:activeNames="activeNames4" @change="onChange">
         <fx-collapse-item title="标题1" name="第1项">
           <div class="collapse-pad">
             代码是写出来给人看的，附带能在机器上运行

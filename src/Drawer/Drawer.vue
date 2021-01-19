@@ -1,38 +1,41 @@
 <template>
-  <div
-    :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+  <teleport to="body">
     <div
-      :class="[
-        prefix + '-drawer_inner',
-        alignClassName,
-        { 'has--header': hasHeader }
-      ]"
+      :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
     >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
       <div
-        v-show="hasHeader"
-        :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
+        :class="[
+          prefix + '-drawer_inner',
+          alignClassName,
+          { 'has--header': hasHeader }
+        ]"
       >
-        <div :class="[prefix + '-drawer_header-inner']">
-          <div :class="[prefix + '-drawer_title']">{{ title }}</div>
-          <fx-button
-            v-if="showClose"
-            :class="[prefix + '-drawer_close']"
-            shape="square"
-            icon="CloseOutlined"
-            pattern="borderless"
-            @click="onCloseClick"
-          ></fx-button>
+        <div
+          v-show="hasHeader"
+          :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
+        >
+          <div :class="[prefix + '-drawer_header-inner']">
+            <div :class="[prefix + '-drawer_title']">{{ title }}</div>
+            <fx-button
+              v-if="showClose"
+              :class="[prefix + '-drawer_close']"
+              shape="square"
+              icon="CloseOutlined"
+              pattern="borderless"
+              @click="onCloseClick"
+            ></fx-button>
+          </div>
+        </div>
+        <div :class="[prefix + '-drawer_body']">
+          <slot></slot>
         </div>
       </div>
-      <div :class="[prefix + '-drawer_body']">
-        <slot></slot>
-      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

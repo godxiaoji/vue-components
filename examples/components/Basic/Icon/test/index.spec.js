@@ -6,7 +6,7 @@ import Icon from '@/Icon'
 describe('Icon', () => {
   test('should render prop icon="UpOutlined" correctly', () => {
     const wrapper = mount(Icon, {
-      propsData: {
+      props: {
         icon: 'UpOutlined'
       }
     })

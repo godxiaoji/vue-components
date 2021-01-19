@@ -5,14 +5,14 @@
     >
       <tab
         :options="tabList"
-        v-model="activeIndex"
+        v-model:activeValue="activeIndex"
         :vertical="vertical"
         :scroll-threshold="scrollThreshold"
       />
     </div>
     <div :class="[prefix + '-tab-view_body']" ref="list">
       <swiper
-        :activeIndex.sync="activeIndex"
+        v-model:activeIndex="activeIndex"
         @change="onChange"
         ref="swiper"
         :initial-vertical="vertical"
@@ -70,9 +70,10 @@ export default {
   mounted() {
     this.update()
   },
+  emits: ['change'],
   methods: {
     resetItems() {
-      if (this._isDestroyed) {
+      if (this.$.isUnmounted) {
         return
       }
 

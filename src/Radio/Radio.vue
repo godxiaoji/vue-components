@@ -71,10 +71,6 @@ export default {
       return this.name || ''
     }
   },
-  model: {
-    prop: 'checked',
-    event: 'update:checked'
-  },
   watch: {
     checked() {
       if (this.appRadioGroup) {
@@ -110,7 +106,7 @@ export default {
     $input._app_component = this.appRadioGroup || this
     $input._app_type = 'radio'
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.appRadioGroup && this.appRadioGroup.removeChild(this)
   },
   methods: {

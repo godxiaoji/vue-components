@@ -27,7 +27,7 @@
     <calendar-popup
       v-bind="$props"
       :title="placeholder"
-      :visible.sync="popupVisible"
+      v-model:visible="popupVisible"
       v-if="isInitPopup"
       @confirm="onConfirm"
       ref="popup"

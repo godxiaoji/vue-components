@@ -13,7 +13,7 @@ describe('Form', () => {
 
   test('FormItem should render default correctly', () => {
     const wrapper = mount(FormItem, {
-      propsData: {
+      props: {
         name: 'test'
       }
     })

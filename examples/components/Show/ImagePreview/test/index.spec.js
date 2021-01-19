@@ -12,7 +12,7 @@ const imageUrls = [
 describe('ImagePreview', () => {
   test('should render props set urls correctly', () => {
     const wrapper = mount(ImagePreview, {
-      propsData: {
+      props: {
         urls: imageUrls
       }
     })

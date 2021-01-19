@@ -6,7 +6,7 @@ import ScrollView from '@/ScrollView'
 describe('ScrollView', () => {
   test('should render prop scrollY=true correctly', () => {
     const wrapper = mount(ScrollView, {
-      propsData: {
+      props: {
         scrollY: true
       }
     })

@@ -1,43 +1,54 @@
 <template>
-  <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-pop-dialog',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
-    :style="popupStyles"
-    v-show="isShow"
-  >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
-        <div :class="[prefix + '-pop-dialog_body']">
-          <div :class="[prefix + '-popover_text']">{{ content }}</div>
-        </div>
-        <div
-          :class="[
-            prefix + '-pop-dialog_footer',
-            prefix + '-horizontal-hairline'
-          ]"
-        >
-          <fx-button-group
-            :class="[prefix + '-pop-dialog_footer-inner']"
-            pattern="borderless"
-            size="middle"
+  <teleport to="body">
+    <div
+      :class="[
+        prefix + '-popover',
+        prefix + '-pop-dialog',
+        prefix + '-popup',
+        { visible: visible2, 'no--mask': !showMask }
+      ]"
+      :style="popupStyles"
+      v-bind="$attrs"
+      v-show="isShow"
+    >
+      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div
+        :class="[prefix + '-popover_inner']"
+        ref="inner"
+        :style="innerStyles"
+      >
+        <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
+        <div :class="[prefix + '-popover_content']">
+          <div :class="[prefix + '-pop-dialog_body']">
+            <div :class="[prefix + '-popover_text']">{{ content }}</div>
+          </div>
+          <div
+            :class="[
+              prefix + '-pop-dialog_footer',
+              prefix + '-horizontal-hairline'
+            ]"
           >
-            <fx-button v-if="showCancel" type="default" @click="onCancelClick">
-              {{ cancelText }}
-            </fx-button>
-            <fx-button type="primary" @click="onConfirmClick">
-              {{ confirmText }}
-            </fx-button>
-          </fx-button-group>
+            <fx-button-group
+              :class="[prefix + '-pop-dialog_footer-inner']"
+              pattern="borderless"
+              size="middle"
+            >
+              <fx-button
+                v-if="showCancel"
+                type="default"
+                @click="onCancelClick"
+              >
+                {{ cancelText }}
+              </fx-button>
+              <fx-button type="primary" @click="onConfirmClick">
+                {{ confirmText }}
+              </fx-button>
+            </fx-button-group>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>
@@ -69,6 +80,7 @@ export default {
       default: '确定'
     }
   },
+  emits: ['confirm'],
   methods: {
     onConfirmClick() {
       this.$emit('confirm', {})

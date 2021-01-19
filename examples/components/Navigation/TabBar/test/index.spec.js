@@ -8,7 +8,7 @@ import { customIconList, baseList, badgeList } from '../data'
 describe('Tab', () => {
   test('should render set options correctly', () => {
     const wrapper = mount(TabBar, {
-      propsData: {
+      props: {
         options: baseList
       }
     })
@@ -18,7 +18,7 @@ describe('Tab', () => {
 
   test('should render set badge correctly', () => {
     const wrapper = mount(TabBar, {
-      propsData: {
+      props: {
         options: badgeList
       }
     })
@@ -28,7 +28,7 @@ describe('Tab', () => {
 
   test('should render use custom icons correctly', () => {
     const wrapper = mount(TabBar, {
-      propsData: {
+      props: {
         options: customIconList
       }
     })

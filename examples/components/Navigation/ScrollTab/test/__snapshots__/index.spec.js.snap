@@ -16,9 +16,7 @@ exports[`ScrollTab ScrollTab should render default correctly 1`] = `
       <div class="fx-sticky-view_list"></div>
       <div class="fx-sticky fx-sticky-view_top">
         <div class="fx-sticky_content">
-          <div class="fx-sticky-view_fixed" style="transform: translate3d(0px, 0px, 0px);">
-
-          </div>
+          <div class="fx-sticky-view_fixed" style="transform: translate3d(0px, 0px, 0px);"></div>
         </div>
       </div>
     </div>

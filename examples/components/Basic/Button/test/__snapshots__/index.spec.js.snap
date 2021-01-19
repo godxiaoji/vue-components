@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button should render add icon correctly 1`] = `
-<button type="button" class="fx-button type--default size--large pattern--default shape--rectangle has--icon"><svg class="fx-icon">
+<button class="fx-button type--default size--large pattern--default shape--rectangle has--icon" type="button"><svg class="fx-icon">
     <use xlink:href="#icon-EditOutlined"></use>
-  </svg> <span>content</span></button>
+  </svg><span>content</span></button>
 `;
 
 exports[`Button should render default slot correctly 1`] = `
-<button type="button" class="fx-button type--default size--large pattern--default shape--rectangle">
-  <!----> <span>content</span>
+<button class="fx-button type--default size--large pattern--default shape--rectangle" type="button">
+  <!--v-if--><span>content</span>
 </button>
 `;

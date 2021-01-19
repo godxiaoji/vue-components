@@ -45,10 +45,7 @@ export default {
   mounted() {
     this.updateValue(this.activeNames)
   },
-  model: {
-    prop: 'activeNames',
-    event: 'update:activeNames'
-  },
+  emits: ['update:activeNames', 'change'],
   methods: {
     updateValue(val) {
       if (isArray(val) && isSameArray(val, this.activeNames2)) {
@@ -77,7 +74,7 @@ export default {
       this.activeNames2 = activeNames
     },
 
-    onChange({ _uid, name, active }) {
+    onChange({ name, active, $: { uid } }) {
       let activeNames = []
 
       if (this.accordion) {
@@ -85,7 +82,7 @@ export default {
 
         if (active) {
           this.childrenForEach(child => {
-            if (child._uid !== _uid) {
+            if (child.$.uid !== uid) {
               child.hide()
             }
           })

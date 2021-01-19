@@ -7,7 +7,7 @@ import Cell from '@/Cell'
 describe('Group', () => {
   test('should render prop set title correctly', () => {
     const wrapper = mount(Group, {
-      propsData: {
+      props: {
         title: 'title'
       }
     })
@@ -17,12 +17,12 @@ describe('Group', () => {
 
   test('should render default slot correctly', () => {
     const wrapper = mount(Group, {
-      propsData: {
+      props: {
         title: 'title'
       },
       slots: {
         default: mount(Cell, {
-          propsData: {
+          props: {
             label: 'label',
             content: 'content'
           }

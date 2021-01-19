@@ -20,7 +20,7 @@ export default {
   mounted() {
     this.update()
   },
-  destroyed() {
+  unmounted() {
     this.update()
   },
   updated() {

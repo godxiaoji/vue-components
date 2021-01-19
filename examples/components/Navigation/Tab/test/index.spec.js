@@ -8,7 +8,7 @@ import { shortTabList, tabList } from '../data'
 describe('Tab', () => {
   test('should render set options correctly', () => {
     const wrapper = mount(Tab, {
-      propsData: {
+      props: {
         options: shortTabList
       }
     })
@@ -18,7 +18,7 @@ describe('Tab', () => {
 
   test('should render set mix options correctly', () => {
     const wrapper = mount(Tab, {
-      propsData: {
+      props: {
         options: tabList
       }
     })

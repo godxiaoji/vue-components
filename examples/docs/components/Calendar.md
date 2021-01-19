@@ -33,18 +33,18 @@
 
 ## Calendar 日历选择器
 
-- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项)  使用。
+- 可以配合 [Form](./Form.md) 和 [FormItem](./Form.md#formitem-表单项) 使用。
 
 ## Calendar Props
 
-| 属性               | 类型     | 默认值 | 必填 | 说明                                   |
-| ------------------ | -------- | ------ | ---- | -------------------------------------- |
-| name               | string   |        | 否   | [Form](./Form.md) 的标识        |
-| placeholder        | string   |        | 否   | 没有选中值的提示，也会用在弹窗标题上 |
-| disabled           | boolean  | false  | 否   | 是否禁用                               |
-| formatter          | Function |        | 否   | 选中项格式化函数                       |
-| popup-show-confirm | boolean  | false  | 否   | 弹窗是否展示确定按钮               |
-| popup-show-close   | boolean  | false  | 否   | 弹窗是否展示关闭按钮                 |
+| 属性         | 类型     | 默认值 | 必填 | 说明                                 |
+| ------------ | -------- | ------ | ---- | ------------------------------------ |
+| name         | string   |        | 否   | [Form](./Form.md) 的标识             |
+| placeholder  | string   |        | 否   | 没有选中值的提示，也会用在弹窗标题上 |
+| disabled     | boolean  | false  | 否   | 是否禁用                             |
+| formatter    | Function |        | 否   | 选中项格式化函数                     |
+| show-confirm | boolean  | false  | 否   | 弹窗是否展示确定按钮                 |
+| show-close   | boolean  | false  | 否   | 弹窗是否展示关闭按钮                 |
 
 ### formatter 函数
 
@@ -70,12 +70,12 @@ formatter(value: Date[]) => any
 
 ## CalendarPopup Props
 
-| 属性         | 类型    | 默认值 | 必填 | 说明                   |
-| ------------ | ------- | ------ | ---- | ---------------------- |
-| visible.sync | boolean | false  | 否   | 是否显示               |
-| title        | string  |        | 否   | 弹窗标题               |
-| show-confirm | boolean | false  | 否   | 选择时是否展示确定按钮 |
-| show-close   | boolean | false  | 否   | 是否展示关闭按钮       |
+| 属性            | 类型    | 默认值 | 必填 | 说明                   |
+| --------------- | ------- | ------ | ---- | ---------------------- |
+| v-model:visible | boolean | false  | 否   | 是否显示               |
+| title           | string  |        | 否   | 弹窗标题               |
+| show-confirm    | boolean | false  | 否   | 选择时是否展示确定按钮 |
+| show-close      | boolean | false  | 否   | 是否展示关闭按钮       |
 
 ## CalendarPopup Events
 

@@ -46,10 +46,10 @@ export default {
 
     this.update()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeListeners(this.$el, this)
   },
-  destroyed() {
+  unmounted() {
     this.update()
   },
   updated() {

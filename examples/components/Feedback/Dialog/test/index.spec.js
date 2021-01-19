@@ -6,7 +6,7 @@ import Dialog from '@/Dialog'
 describe('Dialog', () => {
   test('should render default correctly', () => {
     const wrapper = mount(Dialog, {
-      propsData: {
+      props: {
         title: 'title',
         content: 'content'
       }
@@ -17,7 +17,7 @@ describe('Dialog', () => {
 
   test('should render prop showCancel=false correctly', () => {
     const wrapper = mount(Dialog, {
-      propsData: {
+      props: {
         title: 'title',
         content: 'content',
         showCancel: false

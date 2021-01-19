@@ -1,11 +1,6 @@
 import { defaultZIndex, getNewZIndex } from '../helpers/popup'
 import { cloneData, isFunction } from '../helpers/util'
-import {
-  addClassName,
-  getScrollDom,
-  removeClassName,
-  removeEl
-} from '../helpers/dom'
+import { addClassName, getScrollDom, removeClassName } from '../helpers/dom'
 import { SDKKey } from '../config'
 
 export default {
@@ -54,15 +49,11 @@ export default {
       return styles
     }
   },
+  emits: ['cancel', 'show', 'shown', 'hide', 'hidden', 'update:visible'],
   mounted() {
-    document.body.append(this.$el)
-
     if (this.visible) {
       this.show()
     }
-  },
-  destroyed() {
-    removeEl(this.$el)
   },
   methods: {
     onMaskClick() {

@@ -125,7 +125,7 @@
       </fx-cell>
     </fx-group>
     <fx-pop-menu
-      :visible.sync="visible"
+      v-model:visible="visible"
       :selector="selector"
       :options="options"
       @select="onSelect"
@@ -137,7 +137,7 @@
     >
     </fx-pop-menu>
     <fx-pop-menu
-      :visible.sync="visible2"
+      v-model:visible="visible2"
       :selector="selector2"
       :placement="placement2"
       :options="options"
@@ -146,7 +146,7 @@
     >
     </fx-pop-menu>
     <fx-pop-menu
-      :visible.sync="visible3"
+      v-model:visible="visible3"
       selector="#popMenuNoMask"
       :options="options"
       :show-mask="false"

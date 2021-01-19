@@ -9,6 +9,6 @@ deploy:
   provider: script
   skip_cleanup: true
   on:
-    branch: master
+    branch: beta
   script:
     - npm run semantic-release

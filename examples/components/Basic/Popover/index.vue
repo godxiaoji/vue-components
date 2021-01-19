@@ -7,10 +7,7 @@
           id="popoverLeft"
           shape="circle"
           icon="PlusOutlined"
-          @click="
-            selector = '#popoverLeft'
-            visible = true
-          "
+          @click=";(selector = '#popoverLeft'), (visible = true)"
         >
           左
         </fx-button>
@@ -19,10 +16,7 @@
           id="popoverCenter"
           shape="circle"
           icon="PlusOutlined"
-          @click="
-            selector = '#popoverCenter'
-            visible = true
-          "
+          @click=";(selector = '#popoverCenter'), (visible = true)"
         >
           中
         </fx-button>
@@ -31,10 +25,7 @@
           id="popoverRight"
           shape="circle"
           icon="PlusOutlined"
-          @click="
-            selector = '#popoverRight'
-            visible = true
-          "
+          @click=";(selector = '#popoverRight'), (visible = true)"
         >
           右
         </fx-button>
@@ -49,9 +40,9 @@
             shape="circle"
             icon="UpOutlined"
             @click="
-              placement = 'top'
-              selector = '#popoverTop2'
-              visible = true
+              ;(placement = 'top'),
+                (selector = '#popoverTop2'),
+                (visible = true)
             "
           >
             上
@@ -64,9 +55,9 @@
             shape="circle"
             icon="LeftOutlined"
             @click="
-              placement = 'left'
-              selector = '#popoverLeft2'
-              visible = true
+              ;(placement = 'left'),
+                (selector = '#popoverLeft2'),
+                (visible = true)
             "
           >
             左
@@ -77,9 +68,9 @@
             shape="circle"
             icon="RightOutlined"
             @click="
-              placement = 'right'
-              selector = '#popoverRight2'
-              visible = true
+              ;(placement = 'right'),
+                (selector = '#popoverRight2'),
+                (visible = true)
             "
           >
             右
@@ -92,9 +83,9 @@
             shape="circle"
             icon="DownOutlined"
             @click="
-              placement = 'bottom'
-              selector = '#popoverBottom2'
-              visible = true
+              ;(placement = 'bottom'),
+                (selector = '#popoverBottom2'),
+                (visible = true)
             "
           >
             下
@@ -110,10 +101,10 @@
           shape="circle"
           icon="PlusOutlined"
           @click="
-            selector = '#popoverLongContent'
-            content =
-              '这是气泡内容这是气泡内容这是气泡内容这是气泡内容这是气泡内容这是气泡内容'
-            visible = true
+            ;(selector = '#popoverLongContent'),
+              (content =
+                '这是气泡内容这是气泡内容这是气泡内容这是气泡内容这是气泡内容这是气泡内容'),
+              (visible = true)
           "
         >
         </fx-button>
@@ -137,9 +128,9 @@
           shape="circle"
           icon="PlusOutlined"
           @click="
-            selector = '#popoverEvent'
-            showEventCallback = true
-            visible = true
+            ;(selector = '#popoverEvent'),
+              (showEventCallback = true),
+              (visible = true)
           "
         >
         </fx-button>
@@ -158,7 +149,7 @@
       </fx-cell>
     </fx-group>
     <fx-popover
-      :visible.sync="visible"
+      v-model:visible="visible"
       :selector="selector"
       :placement="placement"
       :content="content"
@@ -169,7 +160,7 @@
     >
     </fx-popover>
     <fx-popover
-      :visible.sync="noMaskVisible"
+      v-model:visible="noMaskVisible"
       selector="#popoverNoMask"
       :show-mask="false"
       content="无蒙层气泡内容"

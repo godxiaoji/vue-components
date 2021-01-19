@@ -6,7 +6,7 @@ import Dropdown from '@/Dropdown'
 describe('Dropdown', () => {
   test('should render default correctly', () => {
     const wrapper = mount(Dropdown, {
-      propsData: {
+      props: {
         selector: '#test'
       }
     })

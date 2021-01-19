@@ -6,7 +6,7 @@ import Toast from '@/Toast'
 describe('Toast', () => {
   test('should render default correctly', () => {
     const wrapper = mount(Toast, {
-      propsData: {
+      props: {
         title: '提示文本'
       }
     })
@@ -16,7 +16,7 @@ describe('Toast', () => {
 
   test('should render prop type="success" correctly', () => {
     const wrapper = mount(Toast, {
-      propsData: { title: '成功文本', type: 'success' }
+      props: { title: '成功文本', type: 'success' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -24,7 +24,7 @@ describe('Toast', () => {
 
   test('should render prop type="fail" correctly', () => {
     const wrapper = mount(Toast, {
-      propsData: { title: '失败文本', type: 'fail' }
+      props: { title: '失败文本', type: 'fail' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -32,7 +32,7 @@ describe('Toast', () => {
 
   test('should render prop type="loading" correctly', () => {
     const wrapper = mount(Toast, {
-      propsData: { title: '加载文本', type: 'loading' }
+      props: { title: '加载文本', type: 'loading' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()

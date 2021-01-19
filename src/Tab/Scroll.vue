@@ -8,7 +8,7 @@
       >
         <tab
           :options="tabList"
-          v-model="activeIndex"
+          v-model:activeValue="activeIndex"
           :vertical="true"
           :scroll-threshold="1"
         />
@@ -18,7 +18,7 @@
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
-        :activeIndex.sync="activeIndex"
+        v-model:activeIndex="activeIndex"
         @reset-items="onResetItems"
         @change="onChange"
       >
@@ -61,6 +61,7 @@ export default {
   mounted() {
     this.resetContainer(document)
   },
+  emits: ['change'],
   methods: {
     resetContainer(containSelector) {
       const $container = querySelector(containSelector)

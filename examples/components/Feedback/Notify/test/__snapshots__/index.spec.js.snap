@@ -1,57 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Notify should render default correctly 1`] = `
-<div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--primary fx-notify_inner">
-    <!---->
-    <div class="fx-notice-bar_content">
-      <div class="fx-notice-bar_content-inner">
-        通知文本
-      </div>
-    </div>
-    <!---->
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;
 
 exports[`Notify should render prop type="danger" correctly 1`] = `
-<div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--danger fx-notify_inner">
-    <!---->
-    <div class="fx-notice-bar_content">
-      <div class="fx-notice-bar_content-inner">
-        危险文本
-      </div>
-    </div>
-    <!---->
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;
 
 exports[`Notify should render prop type="success" correctly 1`] = `
-<div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--success fx-notify_inner">
-    <!---->
-    <div class="fx-notice-bar_content">
-      <div class="fx-notice-bar_content-inner">
-        成功文本
-      </div>
-    </div>
-    <!---->
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;
 
 exports[`Notify should render prop type="warning" correctly 1`] = `
-<div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--warning fx-notify_inner">
-    <!---->
-    <div class="fx-notice-bar_content">
-      <div class="fx-notice-bar_content-inner">
-        警告文本
-      </div>
-    </div>
-    <!---->
-  </div>
-</div>
+<!--teleport start-->
+<!--teleport end-->
 `;

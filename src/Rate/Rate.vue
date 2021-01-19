@@ -153,7 +153,7 @@ export default {
 
     addListeners(this.$el, this)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeListeners(this.$el, this)
   },
   methods: {

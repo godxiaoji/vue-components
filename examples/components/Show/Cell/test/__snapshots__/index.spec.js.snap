@@ -1,17 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cell should render default correctly 1`] = `
-<div class="fx-cell fx-horizontal-hairline">
+<div class="fx-cell  fx-horizontal-hairline">
   <div class="fx-cell_cover"></div>
   <div class="fx-cell_inner">
-    <!---->
-    <div class="fx-cell_label">
-      label
-      <!---->
+    <!--v-if-->
+    <div class="fx-cell_label">label
+      <!--v-if-->
     </div>
-    <div class="fx-cell_content">content </div>
-    <!---->
-    <!---->
+    <div class="fx-cell_content">content</div>
+    <!--v-if-->
+    <!--v-if-->
   </div>
 </div>
 `;

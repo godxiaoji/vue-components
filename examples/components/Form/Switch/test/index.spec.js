@@ -12,7 +12,7 @@ describe('Switch', () => {
 
   test('should render prop disabled=true correctly', () => {
     const wrapper = mount(Switch, {
-      propsData: {
+      props: {
         disabled: true
       }
     })
@@ -22,7 +22,7 @@ describe('Switch', () => {
 
   test('should render prop value=true correctly', () => {
     const wrapper = mount(Switch, {
-      propsData: {
+      props: {
         modelValue: true
       }
     })

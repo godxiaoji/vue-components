@@ -51,10 +51,6 @@ export default {
       validator: isNumeric,
       default: 1
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     showValue: {
       type: Boolean,
       default: false

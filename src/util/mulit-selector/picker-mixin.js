@@ -15,10 +15,6 @@ export default {
   components: { Icon },
   mixins: [mulitSelectorPropsMixin, formMixin],
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     placeholder: {
       type: String,
       default: ''

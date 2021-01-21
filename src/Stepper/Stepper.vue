@@ -49,11 +49,6 @@ export default {
       type: String,
       default: ''
     },
-    // 是否禁用步进器
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     // 是否禁用减少按钮
     disabledMinus: {
       type: Boolean,

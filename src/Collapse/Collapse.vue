@@ -45,10 +45,6 @@ export default {
   mounted() {
     this.updateValue(this.activeNames)
   },
-  model: {
-    prop: 'activeNames',
-    event: 'update:activeNames'
-  },
   methods: {
     updateValue(val) {
       if (isArray(val) && isSameArray(val, this.activeNames2)) {

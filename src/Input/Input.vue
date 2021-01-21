@@ -97,10 +97,6 @@ export default {
       validator: isStringNumberMix,
       default: null
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     focus: {
       type: Boolean,
       default: false

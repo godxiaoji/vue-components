@@ -61,10 +61,6 @@ export default {
       tabName: 'Tab'
     }
   },
-  model: {
-    prop: 'activeValue',
-    event: 'update:activeValue'
-  },
   watch: {
     activeValue(value) {
       this.switchTo(value, true)

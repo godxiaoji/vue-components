@@ -2,19 +2,19 @@
 
 ## Props
 
-| 属性        | 类型                       | 默认值                             | 必填 | 说明                                     |
-| ----------- | -------------------------- | ---------------------------------- | ---- | ---------------------------------------- |
-| options     | object[]/string[]/number[] | []                                 | 是   | tab 数据集                               |
-| v-model     | string, number             |                                    | 否   | 当前激活项的 value 值                    |
-| fixed       | boolean                    | true                               | 否   | 设置固定底部展示                         |
-| z-index     | number                     | 4                                  | 否   | 设定固定底部的 zIndex，fixed=true 时生效 |
-| field-names | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key |
+| 属性              | 类型                       | 默认值                             | 必填 | 说明                                     |
+| ----------------- | -------------------------- | ---------------------------------- | ---- | ---------------------------------------- |
+| options           | object[]/string[]/number[] | []                                 | 是   | tab 数据集                               |
+| active-value.sync | string, number             |                                    | 否   | 当前激活项的 value 值                    |
+| fixed             | boolean                    | true                               | 否   | 设置固定底部展示                         |
+| z-index           | number                     | 4                                  | 否   | 设定固定底部的 zIndex，fixed=true 时生效 |
+| field-names       | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key |
 
 ### options 的结构
 
 | key         | 类型                 | 默认值 | 必填 | 说明                                                                    |
 | ----------- | -------------------- | ------ | ---- | ----------------------------------------------------------------------- |
-| value       | string/number        |        | 是   | 唯一值（v-model 使用）                                                  |
+| value       | string/number        |        | 是   | 唯一值（active-value 使用）                                             |
 | label       | string               |        | 是   | 标签名                                                                  |
 | icon        | string/Component     |        | 否   | 设置图标，使用 [Icon](./Icon.md) 组件                                   |
 | active-icon | string/Component     |        | 否   | 设置激活态图标，没有设置则沿用 `icon` 属性，使用 [Icon](./Icon.md) 组件 |

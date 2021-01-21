@@ -1,13 +1,17 @@
 <template>
   <label
-    :class="[prefix + '-radio', prefix + '-horizontal-hairline', { disabled }]"
+    :class="[
+      prefix + '-radio',
+      prefix + '-horizontal-hairline',
+      { disabled: disabled2 }
+    ]"
   >
     <input
       :class="[prefix + '-radio_input']"
       type="radio"
       :name="formName"
       :value="value"
-      :disabled="disabled"
+      :disabled="disabled2"
       @change="onChange"
     />
     <div :class="[prefix + '-radio_box']">
@@ -69,6 +73,13 @@ export default {
       }
 
       return this.name || ''
+    },
+    disabled2() {
+      if (this.appRadioGroup) {
+        return this.appRadioGroup.disabled
+      }
+
+      return this.disabled
     }
   },
   model: {

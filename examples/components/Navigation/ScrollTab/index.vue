@@ -4,7 +4,6 @@
       <!-- <div class="scroll-tab-header">占位头部</div> -->
       <fx-scroll-tab
         class="scroll-tab-boxs"
-        v-model="activeIndex"
         :stickyOffsetTop="offsetTop"
         :stickyOffsetBottom="offsetBottom"
         @change="onChange"
@@ -56,7 +55,6 @@ export default {
   props: {},
   data() {
     return {
-      activeIndex: 0,
       offsetTop: 52,
       offsetBottom: 12
     }

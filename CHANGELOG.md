@@ -1,3 +1,10 @@
+## [1.7.6](https://github.com/godxiaoji/vfox/compare/v1.7.5...v1.7.6) (2021-01-21)
+
+
+### Bug Fixes
+
+* **form:** 表单优化 ([2196e6b](https://github.com/godxiaoji/vfox/commit/2196e6b857a096ba904b5f0959d79999b07ea380))
+
 ## [1.7.5](https://github.com/godxiaoji/vfox/compare/v1.7.4...v1.7.5) (2021-01-21)
 
 

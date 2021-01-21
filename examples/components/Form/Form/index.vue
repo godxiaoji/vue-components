@@ -33,7 +33,8 @@
         </fx-form-item>
         <fx-form-item name="region" :label="'地区'" required>
           <fx-cascader
-            initial-mode="region"
+            :options="regionOptions"
+            :field-names="{ value: 'label' }"
             v-model="form.region"
             :placeholder="'选择地区'"
             :format-string="formatString"
@@ -87,7 +88,7 @@
 </template>
 
 <script>
-import { multiOptions } from '../Picker/picker-util'
+import { multiOptions, regionOptions } from '../Picker/data'
 
 export default {
   name: 'Form',
@@ -95,6 +96,7 @@ export default {
   data() {
     return {
       ageVisible: false,
+      regionOptions,
       rules: {
         nickname: [
           { required: true, message: '请输入昵称', trigger: 'blur' },

@@ -9,7 +9,6 @@ import {
   timeString2Array,
   datetimeString2Array
 } from './date'
-import { parseRegionList } from './region'
 import {
   cloneData,
   isArray,
@@ -49,8 +48,6 @@ export function parseDropdownList(mode, index, parent) {
     return parseTimeList(index, parent)
   } else if (mode === 'datetime') {
     return parseDatetimeList(index, parent)
-  } else if (mode === 'region') {
-    return parseRegionList(index, parent)
   }
 
   // 多项选择
@@ -169,7 +166,7 @@ export function getDefaultDetail() {
 
 export const DATE_MODE_NAMES = ['date', 'time', 'datetime']
 
-export const MODE_NAMES = ['multiSelector', 'region'].concat(DATE_MODE_NAMES)
+export const MODE_NAMES = ['multiSelector'].concat(DATE_MODE_NAMES)
 
 /**
  * 非级联检查

@@ -2,7 +2,7 @@
 
 import { mount } from '@vue/test-utils'
 import Cascader from '@/Cascader'
-import { cascadeOptions } from '../../Picker/picker-util'
+import { cascadeOptions } from '../../Picker/data'
 
 describe('Cascader', () => {
   test('should render prop set options correctly', () => {

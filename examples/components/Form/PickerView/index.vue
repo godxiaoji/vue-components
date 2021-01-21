@@ -28,7 +28,7 @@
 
 <script>
 import { cloneData } from '@/helpers/util'
-import { cascadeOptions, multiOptions, options } from '../Picker/picker-util'
+import { cascadeOptions, multiOptions, options } from '../Picker/data'
 
 export default {
   name: 'PickerView',

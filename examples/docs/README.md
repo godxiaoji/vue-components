@@ -4,7 +4,16 @@ sidebarDepth: 2
 
 # 指南
 
-移动端 Vue 组件库。
+## 介紹
+
+移动端 Vue 2.x 组件库。
+
+### 特性
+
+- 提供 60+ 组件，覆盖移动端各类场景
+- 单元测试覆盖
+- 支持 Vue 2 和 Vue 3
+- 支持按需引入
 
 ## 安装
 
@@ -28,25 +37,15 @@ npm i vfox -S
 ### 全组件引入
 
 ```
-import Vue from 'vue'
 import Vfox from 'vfox'
 import 'vfox/dist/index.css'
 
 Vue.use(Vfox)
-
-```
-
-注：由于地区涉及的数据较大，使用 `Cascader` 、 `PickerView` 和 `Picker` 组件的地区选择器时，需要额外引入地区数据。
-
-```
-import regionData from 'vfox/data/region'
-
-Vfox.addRegionData(regionData)
 ```
 
 ### 自动按需引入组件
 
-使用 antV 团队提供的 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) babel 插件，它会在编译过程中将 import 的写法自动转换为按需引入的方式。
+使用 ant 团队提供的 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) babel 插件，它会在编译过程中将 import 的写法自动转换为按需引入的方式。
 
 ```
 npm i babel-plugin-import -D
@@ -75,7 +74,6 @@ module.exports = {
 在业务代码中引入 `Vfox` 组件：
 
 ```
-import Vue from 'vue'
 import { Button } from 'vfox'
 
 Vue.use(Button)
@@ -86,7 +84,6 @@ Vue.use(Button)
 在不使用插件的情况下，可以手动引入需要的组件。
 
 ```
-import Vue from 'vue'
 import { Button } from 'vfox/src/Button'
 import 'vfox/src/Button/style'
 
@@ -96,8 +93,9 @@ Vue.use(Button)
 ### 函数调用
 
 ```
-import Vue from 'vue';
 import { Toast } from 'vfox';
+
+Vue.use(Toast)
 
 ...
 this.$showToast({

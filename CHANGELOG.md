@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/godxiaoji/vfox/compare/v1.7.4...v1.7.5) (2021-01-21)
+
+
+### Bug Fixes
+
+* **region:** 剥离region内置选择器 ([99f4e47](https://github.com/godxiaoji/vfox/commit/99f4e47a92db0fdbfd6f67d486aa92bd9d6c2643))
+
 ## [1.7.4](https://github.com/godxiaoji/vfox/compare/v1.7.3...v1.7.4) (2021-01-18)
 
 

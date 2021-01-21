@@ -8,7 +8,7 @@
       >
         <tab
           :options="tabList"
-          v-model="activeIndex"
+          :activeValue.sync="activeIndex"
           :vertical="true"
           :scroll-threshold="1"
         />

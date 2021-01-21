@@ -93,14 +93,17 @@ Vue.use(Button)
 ### 函数调用
 
 ```
-import { Toast } from 'vfox';
+import { Toast } from 'vfox'
 
 Vue.use(Toast)
 
-...
-this.$showToast({
-  title: '成功',
-  type: 'success',
-  duration: 2000
-})
+export default {
+  mounted() {
+    this.$showToast({
+      title: '成功',
+      type: 'success',
+      duration: 2000
+    })
+  }
+}
 ```

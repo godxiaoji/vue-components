@@ -1,7 +1,11 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-tab-bar :options="baseList" :fixed="false" v-model="activeValue" />
+      <fx-tab-bar
+        :options="baseList"
+        :fixed="false"
+        :activeValue.sync="activeValue"
+      />
     </fx-group>
     <fx-group title="徽标">
       <fx-tab-bar :options="badgeList" :fixed="false" />

@@ -56,10 +56,6 @@ export default {
   components: { Icon, CalendarPopup },
   mixins: [mixin, formMixin],
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     placeholder: {
       type: String,
       default: ''

@@ -3,7 +3,7 @@
     :class="[
       prefix + '-checkbox',
       prefix + '-horizontal-hairline',
-      { disabled }
+      { disabled: disabled2 }
     ]"
   >
     <input
@@ -11,7 +11,7 @@
       type="checkbox"
       :name="formName"
       :value="value"
-      :disabled="disabled"
+      :disabled="disabled2"
       @change="onChange"
     />
     <div :class="[prefix + '-checkbox_box']">
@@ -73,6 +73,13 @@ export default {
       }
 
       return this.name || ''
+    },
+    disabled2() {
+      if (this.appCheckboxGroup) {
+        return this.appCheckboxGroup.disabled
+      }
+
+      return this.disabled
     }
   },
   model: {

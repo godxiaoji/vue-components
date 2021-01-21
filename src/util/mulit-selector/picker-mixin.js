@@ -15,10 +15,6 @@ export default {
   components: { Icon },
   mixins: [mulitSelectorPropsMixin, formMixin],
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     placeholder: {
       type: String,
       default: ''
@@ -46,10 +42,6 @@ export default {
         this.updateValue(val)
       }
     }
-  },
-  model: {
-    prop: 'modelValue',
-    event: 'update:modelValue'
   },
   created() {
     // 优先确定模式

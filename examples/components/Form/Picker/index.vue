@@ -76,12 +76,7 @@
 </template>
 
 <script>
-import {
-  cascadeOptions,
-  multiOptions,
-  options,
-  regionOptions
-} from './data'
+import { cascadeOptions, multiOptions, options, regionOptions } from './data'
 
 export default {
   components: {},

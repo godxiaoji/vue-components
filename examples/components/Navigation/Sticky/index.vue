@@ -10,14 +10,14 @@
           <div class="sticky-box-1"></div>
         </fx-sticky-view-item>
         <fx-sticky-view-item name="Sticky 2">
-          <div class="sticky-box-2"></div
-        ></fx-sticky-view-item>
+          <div class="sticky-box-2"></div>
+        </fx-sticky-view-item>
         <fx-sticky-view-item name="Sticky 3">
-          <div class="sticky-box-3"></div
-        ></fx-sticky-view-item>
+          <div class="sticky-box-3"></div>
+        </fx-sticky-view-item>
         <fx-sticky-view-item name="Sticky 4">
-          <div class="sticky-box-4"></div
-        ></fx-sticky-view-item>
+          <div class="sticky-box-4"></div>
+        </fx-sticky-view-item>
       </fx-sticky-view>
       <!-- <div class="sticky-box" id="stickyContainer">
       <div class="sticky-header">

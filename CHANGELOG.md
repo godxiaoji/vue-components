@@ -1,3 +1,10 @@
+# [2.0.0-beta.2](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-01-21)
+
+
+### Bug Fixes
+
+* 剥离地区选择器 ([ce67dca](https://github.com/godxiaoji/vfox/commit/ce67dca5a6470b95e568310e244610d5e075bf88))
+
 # [2.0.0-beta.1](https://github.com/godxiaoji/vfox/compare/v1.7.3...v2.0.0-beta.1) (2021-01-19)
 
 

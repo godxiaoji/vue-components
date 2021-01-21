@@ -5,7 +5,7 @@
 | 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                                                                    |
 | ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------- |
 | v-modal           | string/number/string[]/number[] | []                                                       | 否   | 选中值                                                                                  |
-| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，可选值： 'date', 'time', ' datetime, 'region'，设置后会采用内置 options |
+| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，设置后忽略 `options`属性  |
 | options           | array                           | []                                                       | 否   | 数据集                                                                                  |
 | format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                                                              |
 | initial-separator | string                          | '/'                                                      | 否   | 分隔符                                                                                  |
@@ -18,9 +18,6 @@
 | time     | 时间选择器     |
 | date     | 日期选择器     |
 | datetime | 日期时间选择器 |
-| region   | 省市区选择器   |
-
-注：由于地区涉及的数据较大，当 `mode='region'` 时，需要额外引入地区数据。
 
 ```
 import Vfox from 'vfox'

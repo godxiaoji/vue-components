@@ -1,4 +1,5 @@
 import { cloneData } from '@/helpers/util'
+import regionOptions from './region'
 
 const options = []
 for (let i = 2000; i <= 2020; i++) {
@@ -172,4 +173,4 @@ const cascadeOptions = [
   }
 ]
 
-export { options, multiOptions, cascadeOptions }
+export { options, multiOptions, cascadeOptions, regionOptions }

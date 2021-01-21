@@ -32,8 +32,7 @@
   },
   "files": [
     "dist/",
-    "src/",
-    "data/"
+    "src/"
   ],
   "homepage": "https://github.com/godxiaoji/vfox#readme",
   "dependencies": {

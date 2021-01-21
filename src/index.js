@@ -1,6 +1,5 @@
 import { isUndefined } from './helpers/util'
 import * as Components from './component'
-import { addData as _addRegionData } from './util/mulit-selector/region'
 import { init as initEvent } from './helpers/events'
 import './style'
 
@@ -20,13 +19,6 @@ const Vfox = {
     // }
 
     initEvent()
-  },
-  /**
-   * 地区数据
-   * @param {Array} regionData
-   */
-  addRegionData(regionData) {
-    return _addRegionData(regionData)
   }
 }
 

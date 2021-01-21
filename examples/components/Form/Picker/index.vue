@@ -15,19 +15,20 @@
       <fx-cell label="级联">
         <fx-picker :options="cascadeOptions" @change="onChange"></fx-picker>
       </fx-cell>
-      <fx-cell label="时间">
+      <fx-cell label="时间（initial-mode=datetime）">
         <fx-picker initial-mode="datetime" @change="onChange" />
       </fx-cell>
       <fx-cell label="地区">
         <fx-picker
-          initial-mode="region"
+          :options="regionOptions"
+          :field-names="{ value: 'label' }"
           :format-string="true"
           v-model="pickerValue"
           @change="onChange"
         />
       </fx-cell>
       <fx-cell label="禁用">
-        <fx-picker :placeholder="regionTitle" initial-mode="region" disabled />
+        <fx-picker initial-mode="datetime" disabled />
       </fx-cell>
     </fx-group>
     <fx-group title="PickerPopup">
@@ -75,7 +76,7 @@
 </template>
 
 <script>
-import { cascadeOptions, multiOptions, options } from './picker-util.js'
+import { cascadeOptions, multiOptions, options, regionOptions } from './data'
 
 export default {
   components: {},
@@ -90,7 +91,8 @@ export default {
       regionTitle: '选择地区',
       multiOptions,
       options,
-      cascadeOptions
+      cascadeOptions,
+      regionOptions
     }
   },
   created() {},

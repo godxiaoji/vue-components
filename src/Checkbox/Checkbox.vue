@@ -82,7 +82,6 @@ export default {
       return this.disabled
     }
   },
-  emits: ['update:checked'],
   watch: {
     checked() {
       if (this.appCheckboxGroup) {
@@ -121,6 +120,7 @@ export default {
   beforeUnmount() {
     this.appCheckboxGroup && this.appCheckboxGroup.removeChild(this)
   },
+  emits: ['update:checked'],
   methods: {
     onChange(e) {
       if (this.appCheckboxGroup) {

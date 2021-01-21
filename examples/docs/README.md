@@ -2,15 +2,15 @@
 sidebarDepth: 2
 ---
 
-# Vfox
+# 指南
 
 ## 介紹
 
-移动端 Vue 组件库。
+移动端 Vue 3.x 组件库。
 
 ### 特性
 
-- 提供60+组件，覆盖移动端各类场景
+- 提供 60+ 组件，覆盖移动端各类场景
 - 单元测试覆盖
 - 支持 Vue 2 和 Vue 3
 - 支持按需引入
@@ -24,7 +24,7 @@ sidebarDepth: 2
 ### NPM
 
 ```
-npm i -S vfox@2.0.0-beta.1
+npm i -S vfox@beta
 ```
 
 ## 引入
@@ -36,14 +36,6 @@ import Vfox from 'vfox'
 import 'vfox/dist/index.css'
 
 app.use(Vfox)
-```
-
-注：由于地区涉及的数据较大，使用 `Cascader` 、 `PickerView` 和 `Picker` 组件的地区选择器时，需要额外引入地区数据。
-
-```
-import regionData from 'vfox/data/region'
-
-Vfox.addRegionData(regionData)
 ```
 
 ### 自动按需引入组件
@@ -113,7 +105,7 @@ export default {
 }
 ```
 
-## 从 v1（基于Vue2）版本升级
+## 从 v1（基于 Vue2）版本升级
 
 ### 升级 Vue 3
 
@@ -143,8 +135,7 @@ export default {
 #### 其他涉及 .sync、v-model 字段的变更
 
 - Tab/TabBar 组件 `active-value.sync` -> `v-model:active-value`
-- Swiper 组件 `active-index.sync` -> `v-model:active-index`
+- Swiper/Sticky 组件 `active-index.sync` -> `v-model:active-index`
 - Radio/Checkbox 组件 `v-model` -> `v-model:checked`
 - ImagePreview 组件 `current.sync` -> `v-model:current`
-- Collapse 组件 `v-model` -> `v-model:activeNames`
-
+- Collapse 组件 `active-names.syc` -> `v-model:active-names`

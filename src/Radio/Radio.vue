@@ -120,6 +120,7 @@ export default {
   beforeUnmount() {
     this.appRadioGroup && this.appRadioGroup.removeChild(this)
   },
+  emits: ['update:checked'],
   methods: {
     onChange(e) {
       if (this.appRadioGroup) {

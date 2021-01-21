@@ -61,7 +61,6 @@ export default {
     $input._app_type = this.compName
     $input.defaultValue = $input.value
   },
-  // emits: ['update:modelValue', 'change'],
   methods: {
     updateValue(val) {
       if (this.$refs.popup) {

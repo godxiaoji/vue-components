@@ -36,10 +36,14 @@
     <div :class="[prefix + '-flat-list_footer']" v-show="$slots.footer">
       <slot name="footer"></slot>
     </div>
+    <div :class="[prefix + '-flat-list_indicator']" v-show="lowerLoading">
+      <icon icon="LoadingOutlined" spin /><span>正在加载</span>
+    </div>
   </scroll-view>
 </template>
 
 <script>
+import Icon from '../Icon'
 import { cloneData, isFunction, isNumber, isObject } from '../helpers/util'
 import { SDKKey } from '../config'
 import ScrollView from '../ScrollView/ScrollView.vue'
@@ -47,7 +51,7 @@ import Exception from '../helpers/exception'
 
 export default {
   name: SDKKey + '-flat-list',
-  components: { ScrollView },
+  components: { ScrollView, Icon },
   props: {
     dataKey: {
       type: String,

@@ -50,20 +50,6 @@
           >
         </div>
         <slot></slot>
-        <div
-          :class="[
-            prefix + '-scroll-view_lower-loading',
-            'direction--' + (pullDirection || 'unknown')
-          ]"
-          v-show="lowerLoading"
-        >
-          <div
-            :class="[prefix + '-scroll-view_lower-loading-indicator']"
-            :style="indicatorStyles"
-          >
-            <icon icon="LoadingOutlined" spin /><span>正在加载</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -225,21 +211,6 @@ export default {
     },
     scrollIntoView(val) {
       this.scrollIntoIdView(val)
-    },
-    lowerLoading(val) {
-      if (val) {
-        if (this._isToLowerOrUpperY === SCROLL_STATE_LOWER) {
-          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
-          this.pullDirection = 'up'
-          this.pullDistance = -this.pullRefreshThreshold
-        } else if (this._isToLowerOrUpperX === SCROLL_STATE_LOWER) {
-          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
-          this.pullDirection = 'left'
-          this.pullDistance = -this.pullRefreshThreshold
-        }
-      } else {
-        this.loadComplete()
-      }
     }
   },
   methods: {

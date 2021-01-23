@@ -44,11 +44,11 @@ export function elementScrollTo(object) {
 }
 
 function _elementScrollTo(element, scrollTop, duration) {
-  const from = element.scrollTop
-
   if (element === document) {
     element = getScrollDom()
   }
+
+  const from = element.scrollTop
 
   if (from === scrollTop) {
     // 不需要跳转

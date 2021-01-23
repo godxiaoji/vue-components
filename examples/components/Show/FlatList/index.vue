@@ -32,7 +32,7 @@
     <fx-group title="展示底部加载更多提示">
       <fx-flat-list
         class="flat-list-box"
-        :data="list"
+        :data="loadList"
         :item-size="50"
         data-key="id"
         :lower-loading="lowerLoading"
@@ -99,7 +99,8 @@ export default {
   data() {
     return {
       list: [],
-      lowerLoading: false
+      lowerLoading: false,
+      loadList: []
     }
   },
   created() {
@@ -113,6 +114,8 @@ export default {
     }
 
     this.list = list
+
+    this.getLoadList()
   },
   methods: {
     onRefreshing(res, done) {
@@ -128,9 +131,14 @@ export default {
       this.$showToast(`到底了`)
     },
     onLoadMore() {
+      if (this.loadList.length >= 100) {
+        return
+      }
+
       this.lowerLoading = true
 
       setTimeout(() => {
+        this.getLoadList()
         this.$showToast({
           title: `加载成功`,
           type: 'success'
@@ -141,6 +149,18 @@ export default {
     onRecycleChange({ item, index, recycled }) {
       index === 49 &&
         this.$showToast(`${item.text} ${recycled ? '回收了' : '加入了'}`)
+    },
+    getLoadList() {
+      for (
+        let i = this.loadList.length, len = this.loadList.length + 10;
+        i < len;
+        i++
+      ) {
+        this.loadList.push({
+          id: i + 1,
+          text: `第 ${i + 1} 个列表`
+        })
+      }
     }
   }
 }

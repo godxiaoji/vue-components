@@ -1,3 +1,10 @@
+## [1.7.7](https://github.com/godxiaoji/vfox/compare/v1.7.6...v1.7.7) (2021-01-23)
+
+
+### Bug Fixes
+
+* imagePreview支持缩放 ([631f3fe](https://github.com/godxiaoji/vfox/commit/631f3fe6baf26fce6dd18aafbc3e6a7a5a0760fe))
+
 ## [1.7.6](https://github.com/godxiaoji/vfox/compare/v1.7.5...v1.7.6) (2021-01-21)
 
 

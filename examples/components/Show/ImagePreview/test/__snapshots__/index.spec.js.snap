@@ -6,8 +6,8 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
   <div class="fx-swiper" style="overflow-x: hidden;">
     <div class="fx-swiper_list" style="--webkit-backface-visibility: hidden; --webkit-perspective: 1000; width: 0px; transition: transform 0ms ease-out; transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
       <div class="fx-swiper-item" data-index="0" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
+        <div class="fx-preview-image_image-container">
+          <div class="fx-image" style="width: 0px; height: 0px; margin-left: 0px; margin-top: 0px;">
             <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>
@@ -17,8 +17,8 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
         </div>
       </div>
       <div class="fx-swiper-item" data-index="1" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
+        <div class="fx-preview-image_image-container">
+          <div class="fx-image" style="width: 0px; height: 0px; margin-left: 0px; margin-top: 0px;">
             <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>
@@ -28,8 +28,8 @@ exports[`ImagePreview should render props set urls correctly 1`] = `
         </div>
       </div>
       <div class="fx-swiper-item" data-index="2" style="width: 0px; float: left;">
-        <div class="fx-preview-image_image">
-          <div class="fx-image" style="width: 0px; height: 0px;">
+        <div class="fx-preview-image_image-container">
+          <div class="fx-image" style="width: 0px; height: 0px; margin-left: 0px; margin-top: 0px;">
             <!----> <i class="fx-image_loading"><svg class="fx-icon">
                 <use xlink:href="#icon-ImageOutlined"></use>
               </svg></i>

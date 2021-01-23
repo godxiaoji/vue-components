@@ -35,4 +35,27 @@
       }
     }
   }
+
+  &_indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    color: $font-color;
+    box-sizing: border-box;
+    height: 48px;
+
+    .#{$prefix}-icon {
+      --size: 18px;
+      --color: #{$font-color};
+      margin-right: 8px;
+    }
+
+    span {
+      line-height: 16px;
+      text-align: center;
+      white-space: normal;
+    }
+  }
 }

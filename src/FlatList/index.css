@@ -29,3 +29,26 @@
   height: 100%;
   vertical-align: top;
 }
+
+.fx-flat-list_indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 14px;
+  color: #595959;
+  box-sizing: border-box;
+  height: 48px;
+}
+
+.fx-flat-list_indicator .fx-icon {
+  --size: 18px;
+  --color: #595959;
+  margin-right: 8px;
+}
+
+.fx-flat-list_indicator span {
+  line-height: 16px;
+  text-align: center;
+  white-space: normal;
+}

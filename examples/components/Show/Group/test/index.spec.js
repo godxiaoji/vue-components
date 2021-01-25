@@ -1,14 +1,16 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Group from '@/Group'
 import Cell from '@/Cell'
 
+const title = 'title'
+
 describe('Group', () => {
   test('should render prop set title correctly', () => {
-    const wrapper = mount(Group, {
+    const wrapper = shallowMount(Group, {
       propsData: {
-        title: 'title'
+        title
       }
     })
 
@@ -16,17 +18,12 @@ describe('Group', () => {
   })
 
   test('should render default slot correctly', () => {
-    const wrapper = mount(Group, {
+    const wrapper = shallowMount(Group, {
       propsData: {
-        title: 'title'
+        title
       },
       slots: {
-        default: mount(Cell, {
-          propsData: {
-            label: 'label',
-            content: 'content'
-          }
-        }).html()
+        default: [Cell]
       }
     })
 

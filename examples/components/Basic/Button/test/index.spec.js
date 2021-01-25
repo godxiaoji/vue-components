@@ -1,11 +1,12 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Button from '@/Button'
+import ButtonGroup from '@/ButtonGroup'
 
 describe('Button', () => {
   test('should render default slot correctly', () => {
-    const wrapper = mount(Button, {
+    const wrapper = shallowMount(Button, {
       slots: {
         default: 'content'
       }
@@ -15,12 +16,24 @@ describe('Button', () => {
   })
 
   test('should render add icon correctly', () => {
-    const wrapper = mount(Button, {
+    const wrapper = shallowMount(Button, {
       propsData: {
         icon: 'EditOutlined'
       },
       slots: {
         default: 'content'
+      }
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+})
+
+describe('ButtonGroup', () => {
+  test('should render 2 buttons slot correctly', () => {
+    const wrapper = shallowMount(ButtonGroup, {
+      slots: {
+        default: [Button, Button]
       }
     })
 

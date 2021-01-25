@@ -172,7 +172,7 @@ export default {
 
 .flat-list {
   &-box {
-    height: 240px;
+    height: 275px;
   }
 
   &-item {

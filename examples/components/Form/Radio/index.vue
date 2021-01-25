@@ -28,6 +28,12 @@
           <fx-radio value="woman">女</fx-radio>
         </fx-radio-group>
       </fx-cell>
+      <fx-cell label="禁用">
+        <fx-radio-group modelValue="man" disabled>
+          <fx-radio value="man">男</fx-radio>
+          <fx-radio value="woman">女</fx-radio>
+        </fx-radio-group>
+      </fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell label="change">

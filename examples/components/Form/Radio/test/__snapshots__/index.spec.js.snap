@@ -2,12 +2,38 @@
 
 exports[`Radio should render default correctly 1`] = `
 <label class="fx-radio fx-horizontal-hairline"><input type="radio" name="" class="fx-radio_input" value="">
-  <div class="fx-radio_box"><svg class="fx-icon fx-radio_icon">
-      <use xlink:href="#icon-CircleOutlined"></use>
-    </svg> <svg class="fx-icon fx-radio_checked-icon">
-      <use xlink:href="#icon-CheckCircleFilled"></use>
-    </svg>
+  <div class="fx-radio_box">
+    <icon-stub icon="CircleOutlined" size="0" width="0" height="0" class="fx-radio_icon"></icon-stub>
+    <icon-stub icon="CheckCircleFilled" size="0" width="0" height="0" class="fx-radio_checked-icon"></icon-stub>
     <!---->
   </div>
 </label>
 `;
+
+exports[`Radio should render prop disabled=true correctly 1`] = `
+<label class="fx-radio fx-horizontal-hairline disabled"><input type="radio" name="" disabled="disabled" class="fx-radio_input" value="">
+  <div class="fx-radio_box">
+    <icon-stub icon="CircleOutlined" size="0" width="0" height="0" class="fx-radio_icon"></icon-stub>
+    <icon-stub icon="CheckCircleFilled" size="0" width="0" height="0" class="fx-radio_checked-icon"></icon-stub>
+    <!---->
+  </div>
+</label>
+`;
+
+exports[`RadioGroup should render 2 Radio slot correctly 1`] = `
+<div class="fx-radio-group vertical"><label class="fx-radio fx-horizontal-hairline"><input type="radio" name="" class="fx-radio_input" value="">
+    <div class="fx-radio_box">
+      <icon-stub icon="CircleOutlined" size="0" width="0" height="0" class="fx-radio_icon"></icon-stub>
+      <icon-stub icon="CheckCircleFilled" size="0" width="0" height="0" class="fx-radio_checked-icon"></icon-stub>
+      <!---->
+    </div>
+  </label><label class="fx-radio fx-horizontal-hairline"><input type="radio" name="" class="fx-radio_input" value="">
+    <div class="fx-radio_box">
+      <icon-stub icon="CircleOutlined" size="0" width="0" height="0" class="fx-radio_icon"></icon-stub>
+      <icon-stub icon="CheckCircleFilled" size="0" width="0" height="0" class="fx-radio_checked-icon"></icon-stub>
+      <!---->
+    </div>
+  </label></div>
+`;
+
+exports[`RadioGroup should render prop disabled=true correctly 1`] = `<div class="fx-radio-group vertical disabled"></div>`;

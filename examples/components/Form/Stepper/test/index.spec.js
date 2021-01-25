@@ -1,11 +1,21 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Stepper from '@/Stepper'
 
 describe('Stepper', () => {
   test('should render default correctly', () => {
-    const wrapper = mount(Stepper, {})
+    const wrapper = shallowMount(Stepper, {})
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  test('should render prop disabled=true correctly', () => {
+    const wrapper = shallowMount(Stepper, {
+      propsData: {
+        disabled: true
+      }
+    })
 
     expect(wrapper.html()).toMatchSnapshot()
   })

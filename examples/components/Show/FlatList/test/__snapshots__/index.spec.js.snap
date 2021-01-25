@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlatList should render default slot correctly 1`] = `
+<scroll-view-stub scrolly="true" upperthreshold="50" lowerthreshold="0" scrolltop="0" scrollleft="0" scrollintoview="" enablepulldirections="" pullrefreshthreshold="48" class="fx-flat-list">
+  <!---->
+  <ul class="fx-flat-list_list">
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 1.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 2.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 3.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 4.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 5.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 6.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 7.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 8.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 9.</div>
+      </div>
+      <!---->
+    </li>
+    <li class="fx-flat-list_item">
+      <div class="fx-flat-list_item-inner">
+        <div>Item 10.</div>
+      </div>
+      <!---->
+    </li>
+  </ul>
+  <div class="fx-flat-list_empty" style="display: none;"></div>
+  <!---->
+  <div class="fx-flat-list_indicator" style="display: none;">
+    <icon-stub icon="LoadingOutlined" spin="true" size="0" width="0" height="0"></icon-stub><span>正在加载</span>
+  </div>
+</scroll-view-stub>
+`;

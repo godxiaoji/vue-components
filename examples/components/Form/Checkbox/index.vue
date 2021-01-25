@@ -30,6 +30,13 @@
           <fx-checkbox value="C">C</fx-checkbox>
         </fx-checkbox-group>
       </fx-cell>
+      <fx-cell label="禁用">
+        <fx-checkbox-group modelValue="A" disabled>
+          <fx-checkbox value="A">A</fx-checkbox>
+          <fx-checkbox value="B">B</fx-checkbox>
+          <fx-checkbox value="C">C</fx-checkbox>
+        </fx-checkbox-group>
+      </fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell label="change">

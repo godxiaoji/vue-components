@@ -1,13 +1,13 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import TabBar from '@/TabBar'
 
 import { customIconList, baseList, badgeList } from '../data'
 
 describe('Tab', () => {
   test('should render set options correctly', () => {
-    const wrapper = mount(TabBar, {
+    const wrapper = shallowMount(TabBar, {
       propsData: {
         options: baseList
       }
@@ -17,7 +17,7 @@ describe('Tab', () => {
   })
 
   test('should render set badge correctly', () => {
-    const wrapper = mount(TabBar, {
+    const wrapper = shallowMount(TabBar, {
       propsData: {
         options: badgeList
       }
@@ -27,7 +27,7 @@ describe('Tab', () => {
   })
 
   test('should render use custom icons correctly', () => {
-    const wrapper = mount(TabBar, {
+    const wrapper = shallowMount(TabBar, {
       propsData: {
         options: customIconList
       }

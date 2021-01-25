@@ -2,30 +2,135 @@
 
 exports[`Rate should render default correctly 1`] = `
 <div class="fx-rate"><input name="" type="hidden" value="0">
-  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarFilled"></use>
-      </svg></i></div>
-  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarFilled"></use>
-      </svg></i></div>
-  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarFilled"></use>
-      </svg></i></div>
-  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarFilled"></use>
-      </svg></i></div>
-  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarOutlined"></use>
-      </svg></i> <i class="fx-rate_active-icon"><svg class="fx-icon">
-        <use xlink:href="#icon-StarFilled"></use>
-      </svg></i></div>
+  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+</div>
+`;
+
+exports[`Rate should render prop count=8 correctly 1`] = `
+<div class="fx-rate"><input name="" type="hidden" value="0">
+  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="6" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="7" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="8" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+</div>
+`;
+
+exports[`Rate should render prop disabled=true correctly 1`] = `
+<div class="fx-rate disabled"><input name="" type="hidden" disabled="disabled" value="0">
+  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="StarOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="StarFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+</div>
+`;
+
+exports[`Rate should render prop pattern="heart" correctly 1`] = `
+<div class="fx-rate"><input name="" type="hidden" value="0">
+  <div data-value="1" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="HeartOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="HeartFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="2" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="HeartOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="HeartFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="3" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="HeartOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="HeartFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="4" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="HeartOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="HeartFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
+  <div data-value="5" class="fx-rate_item"><i class="fx-rate_icon">
+      <icon-stub icon="HeartOutlined" size="0" width="0" height="0"></icon-stub>
+    </i> <i class="fx-rate_active-icon">
+      <icon-stub icon="HeartFilled" size="0" width="0" height="0"></icon-stub>
+    </i></div>
 </div>
 `;

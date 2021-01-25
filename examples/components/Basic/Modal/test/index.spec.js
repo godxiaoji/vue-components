@@ -9,4 +9,14 @@ describe('Modal', () => {
 
     expect(wrapper.html()).toMatchSnapshot()
   })
+
+  test('should render prop showClose=true correctly', () => {
+    const wrapper = mount(Modal, {
+      propsData: {
+        showClose: true
+      }
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })

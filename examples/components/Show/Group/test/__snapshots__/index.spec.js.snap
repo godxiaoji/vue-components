@@ -10,10 +10,14 @@ exports[`Group should render default slot correctly 1`] = `
       <div class="fx-cell fx-horizontal-hairline">
         <div class="fx-cell_cover"></div>
         <div class="fx-cell_inner">
+          <!---->
           <div class="fx-cell_label">
-            label
+
+            <!---->
           </div>
-          <div class="fx-cell_content">content </div>
+          <div class="fx-cell_content"> </div>
+          <!---->
+          <!---->
         </div>
       </div>
     </div>

@@ -1,9 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stepper should render default correctly 1`] = `
-<div class="fx-stepper"><button disabled="disabled" type="button" class="fx-button type--default size--small pattern--default shape--square has--icon"><svg class="fx-icon">
-      <use xlink:href="#icon-MinusOutlined"></use>
-    </svg> <span>按钮</span></button> <input type="text" inputmode="decimal" name="" class="fx-stepper_input" value="1"> <button type="button" class="fx-button type--default size--small pattern--default shape--square has--icon"><svg class="fx-icon">
-      <use xlink:href="#icon-PlusOutlined"></use>
-    </svg> <span>按钮</span></button></div>
+<div class="fx-stepper">
+  <fx-button-stub size="small" shape="square" disabled="true" icon="MinusOutlined"></fx-button-stub> <input type="text" inputmode="decimal" name="" class="fx-stepper_input" value="1">
+  <fx-button-stub size="small" shape="square" icon="PlusOutlined"></fx-button-stub>
+</div>
+`;
+
+exports[`Stepper should render prop disabled=true correctly 1`] = `
+<div class="fx-stepper disabled">
+  <fx-button-stub size="small" shape="square" disabled="true" icon="MinusOutlined"></fx-button-stub> <input type="text" inputmode="decimal" name="" disabled="disabled" class="fx-stepper_input" value="1">
+  <fx-button-stub size="small" shape="square" disabled="true" icon="PlusOutlined"></fx-button-stub>
+</div>
 `;

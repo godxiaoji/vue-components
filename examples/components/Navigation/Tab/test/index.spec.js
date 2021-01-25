@@ -1,13 +1,13 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Tab from '@/Tab'
 
 import { shortTabList, tabList } from '../data'
 
 describe('Tab', () => {
   test('should render set options correctly', () => {
-    const wrapper = mount(Tab, {
+    const wrapper = shallowMount(Tab, {
       propsData: {
         options: shortTabList
       }
@@ -17,7 +17,7 @@ describe('Tab', () => {
   })
 
   test('should render set mix options correctly', () => {
-    const wrapper = mount(Tab, {
+    const wrapper = shallowMount(Tab, {
       propsData: {
         options: tabList
       }

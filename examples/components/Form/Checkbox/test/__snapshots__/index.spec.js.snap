@@ -2,12 +2,38 @@
 
 exports[`Checkbox should render default correctly 1`] = `
 <label class="fx-checkbox fx-horizontal-hairline"><input type="checkbox" name="" class="fx-checkbox_input" value="">
-  <div class="fx-checkbox_box"><svg class="fx-icon fx-checkbox_icon">
-      <use xlink:href="#icon-BorderOutlined"></use>
-    </svg> <svg class="fx-icon fx-checkbox_checked-icon">
-      <use xlink:href="#icon-CheckSquareFilled"></use>
-    </svg>
+  <div class="fx-checkbox_box">
+    <icon-stub icon="BorderOutlined" size="0" width="0" height="0" class="fx-checkbox_icon"></icon-stub>
+    <icon-stub icon="CheckSquareFilled" size="0" width="0" height="0" class="fx-checkbox_checked-icon"></icon-stub>
     <!---->
   </div>
 </label>
 `;
+
+exports[`Checkbox should render prop disabled=true correctly 1`] = `
+<label class="fx-checkbox fx-horizontal-hairline disabled"><input type="checkbox" name="" disabled="disabled" class="fx-checkbox_input" value="">
+  <div class="fx-checkbox_box">
+    <icon-stub icon="BorderOutlined" size="0" width="0" height="0" class="fx-checkbox_icon"></icon-stub>
+    <icon-stub icon="CheckSquareFilled" size="0" width="0" height="0" class="fx-checkbox_checked-icon"></icon-stub>
+    <!---->
+  </div>
+</label>
+`;
+
+exports[`CheckboxGroup should render 2 Checkbox slot correctly 1`] = `
+<div class="fx-checkbox-group vertical"><label class="fx-checkbox fx-horizontal-hairline"><input type="checkbox" name="" class="fx-checkbox_input" value="">
+    <div class="fx-checkbox_box">
+      <icon-stub icon="BorderOutlined" size="0" width="0" height="0" class="fx-checkbox_icon"></icon-stub>
+      <icon-stub icon="CheckSquareFilled" size="0" width="0" height="0" class="fx-checkbox_checked-icon"></icon-stub>
+      <!---->
+    </div>
+  </label><label class="fx-checkbox fx-horizontal-hairline"><input type="checkbox" name="" class="fx-checkbox_input" value="">
+    <div class="fx-checkbox_box">
+      <icon-stub icon="BorderOutlined" size="0" width="0" height="0" class="fx-checkbox_icon"></icon-stub>
+      <icon-stub icon="CheckSquareFilled" size="0" width="0" height="0" class="fx-checkbox_checked-icon"></icon-stub>
+      <!---->
+    </div>
+  </label></div>
+`;
+
+exports[`CheckboxGroup should render prop disabled=true correctly 1`] = `<div class="fx-checkbox-group vertical disabled"></div>`;

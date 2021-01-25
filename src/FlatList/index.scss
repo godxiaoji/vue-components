@@ -9,11 +9,15 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    position: relative;
+    transform: translateZ(0);
   }
 
   &_item {
     display: flex;
     flex-direction: column;
+    left: 0;
+    top: 0;
 
     &-inner {
       height: 100%;

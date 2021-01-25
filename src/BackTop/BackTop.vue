@@ -14,7 +14,6 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../config'
-import { pageScrollTo } from '../apis/Scroll'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getScrollDom } from '../helpers/dom'
 
@@ -74,9 +73,9 @@ export default {
     },
 
     toTop() {
-      pageScrollTo({
-        scrollTop: 0,
-        duration: this.duration
+      getScrollDom().scrollTo({
+        top: 0,
+        behavior: this.animated ? 'smooth' : 'instant'
       })
     }
   }

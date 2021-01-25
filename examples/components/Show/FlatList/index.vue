@@ -1,13 +1,8 @@
 <template>
   <div class="flat-list">
     <fx-group title="基础用法">
-      <fx-flat-list
-        class="flat-list-box"
-        :data="list"
-        :item-size="50"
-        data-key="id"
-      >
-        <template #item="{ item }">
+      <fx-flat-list class="flat-list-box" :data="list" data-key="id">
+        <template #default="{ item }">
           <div class="flat-list-item">
             {{ item.text }}
           </div>
@@ -20,9 +15,9 @@
         :data="list"
         :item-size="130"
         data-key="id"
-        horizontal
+        initialHorizontal
       >
-        <template #item="{ item }">
+        <template #default="{ item }">
           <div class="flat-list-item">
             {{ item.text }}
           </div>
@@ -38,8 +33,39 @@
         :lower-loading="lowerLoading"
         @end-reached="onLoadMore"
       >
-        <template #item="{ item }">
+        <template #default="{ item }">
           <div class="flat-list-item">
+            {{ item.text }}
+          </div>
+        </template>
+      </fx-flat-list>
+    </fx-group>
+    <fx-group title="设置间隔（itemGutter=[16, 6]）">
+      <fx-flat-list
+        class="flat-list-box"
+        :data="list"
+        data-key="id"
+        :itemGutter="[16, 6]"
+      >
+        <template #default="{ item, index }">
+          <div class="flat-list-item" :class="['color-' + (index % 10)]">
+            {{ item.text }}
+          </div>
+        </template>
+      </fx-flat-list>
+    </fx-group>
+    <fx-group title="瀑布流">
+      <fx-flat-list
+        class="flat-list-box"
+        :data="list"
+        :getItemSize="getItemSize"
+        data-key="id"
+        initialWaterfall
+        :waterfallColCount="3"
+        ref="demo"
+      >
+        <template #default="{ item, index }">
+          <div class="flat-list-item" :class="['color-' + (index % 10)]">
             {{ item.text }}
           </div>
         </template>
@@ -54,7 +80,7 @@
         @end-reached="onEndReached"
         @recycle-change="onRecycleChange"
       >
-        <template #item="{ item }">
+        <template #default="{ item }">
           <div class="flat-list-item">
             {{ item.text }}
           </div>
@@ -70,7 +96,7 @@
         :enable-pull-refresh="true"
         @refreshing="onRefreshing"
       >
-        <template #item="{ item }">
+        <template #default="{ item }">
           <div class="flat-list-item">
             {{ item.text }}
           </div>
@@ -89,6 +115,40 @@
         </template>
       </fx-flat-list>
     </fx-group>
+    <fx-group title="Method">
+      <fx-flat-list
+        class="flat-list-box"
+        :data="list"
+        data-key="id"
+        ref="flatList"
+      >
+        <template #default="{ item, index }">
+          <div class="flat-list-item" :class="['color-' + (index % 10)]">
+            {{ item.text }}
+          </div>
+        </template>
+      </fx-flat-list>
+      <fx-cell
+        label="scrollToIndex({ index: 49 })"
+        clickable
+        @click="$refs.flatList.scrollToIndex({ index: 49 })"
+      ></fx-cell>
+      <fx-cell
+        label="同上加 viewPosition=0.5"
+        clickable
+        @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 0.5 })"
+      ></fx-cell>
+      <fx-cell
+        label="同上加 viewPosition=1"
+        clickable
+        @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 1 })"
+      ></fx-cell>
+      <fx-cell
+        label="scrollToOffset({ offset: 200 })"
+        clickable
+        @click="$refs.flatList.scrollToOffset({ offset: 200 })"
+      ></fx-cell>
+    </fx-group>
   </div>
 </template>
 
@@ -100,7 +160,10 @@ export default {
     return {
       list: [],
       lowerLoading: false,
-      loadList: []
+      loadList: [],
+      getItemSize(item, index) {
+        return 50 + (index % 10) * 2
+      }
     }
   },
   created() {
@@ -144,7 +207,7 @@ export default {
           type: 'success'
         })
         this.lowerLoading = false
-      }, 2000)
+      }, 500)
     },
     onRecycleChange({ item, index, recycled }) {
       index === 49 &&
@@ -176,12 +239,19 @@ export default {
   }
 
   &-item {
+    min-height: 50px;
     height: 100%;
     padding: 0 16px;
     font-size: 17px;
     color: $title-color;
     display: flex;
     align-items: center;
+
+    @for $i from 0 through 9 {
+      &.color-#{$i} {
+        background-color: rgb($i * 25, $i * 25, $i * 25);
+      }
+    }
   }
 }
 </style>

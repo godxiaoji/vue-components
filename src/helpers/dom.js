@@ -57,7 +57,11 @@ export function resizeDetector($el, callback) {
   }
 }
 
-export function getRelativeOffset($el, $relativeEl = document) {
+export function getRelativeOffset(
+  $el,
+  $relativeEl = document,
+  viewPosition = 0
+) {
   if ($el === document) {
     return { offsetTop: 0, offsetLeft: 0 }
   }
@@ -70,6 +74,25 @@ export function getRelativeOffset($el, $relativeEl = document) {
 
     offsetTop += parent.offsetTop
     offsetLeft += parent.offsetLeft
+  }
+
+  const viewPositionMap = {
+    start: 0,
+    center: 0.5,
+    end: 1,
+    '0': 0,
+    '0.5': 0.5,
+    '1': 1
+  }
+
+  if (viewPositionMap[viewPosition]) {
+    if (viewPositionMap[viewPosition] === 1) {
+      offsetTop -= $relativeEl.clientHeight - $el.clientHeight
+      offsetLeft -= $relativeEl.clientWidth - $el.clientWidth
+    } else {
+      offsetTop -= $relativeEl.clientHeight / 2 - $el.clientHeight / 2
+      offsetLeft -= $relativeEl.clientWidth / 2 - $el.clientWidth / 2
+    }
   }
 
   return { offsetTop, offsetLeft }

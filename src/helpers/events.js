@@ -158,6 +158,68 @@ export function removeScrollEvent(callback, target = document) {
   }
 }
 
+// const resizeCallbacks = {}
+
+// function onResize(e) {
+//   const target = e.target
+
+//   if (target._euid && resizeCallbacks[target._euid]) {
+//     const callbacks = resizeCallbacks[target._euid]
+
+//     callbacks.forEach(callback => {
+//       callback.call(callback, e, target)
+//     })
+//   }
+// }
+
+// export function addResizeEvent(callback, target = document) {
+//   if (!isFunction(callback)) {
+//     return
+//   }
+
+//   if (!target._euid) {
+//     target._euid = ++euid
+//   }
+//   const id = target._euid
+
+//   if (!resizeCallbacks[id]) {
+//     resizeCallbacks[id] = []
+//     target.addEventListener('resize', onResize, false)
+//   }
+
+//   resizeCallbacks[id].push(callback)
+// }
+
+// export function removeResizeEvent(callback, target = document) {
+//   if (target === document.documentElement) {
+//     target = document
+//   }
+
+//   if (!isArray(resizeCallbacks[target._euid])) {
+//     return
+//   }
+
+//   const id = target._euid
+//   const callbacks = resizeCallbacks[id]
+//   let index = -1
+
+//   for (let i = 0; i < callbacks.length; i++) {
+//     if (callbacks[i] == callback) {
+//       index = i
+//       break
+//     }
+//   }
+
+//   if (index >= 0) {
+//     callbacks.splice(index, 1)
+
+//     if (callbacks.length === 0) {
+//       target.removeEventListener('resize', onResize, false)
+//       delete resizeCallbacks[id]
+//     }
+//   }
+// }
+
 export function init() {
   if (isMobile) {
     if (isIOS) {

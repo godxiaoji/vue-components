@@ -9,6 +9,7 @@
     @scroll="onScroll"
     @scroll-to-lower="onScrollToLower"
     @refreshing="onRefreshing"
+    ref="scrollView"
   >
     <div :class="[prefix + '-flat-list_header']" v-if="$slots.header">
       <slot name="header"></slot>
@@ -28,35 +29,46 @@
         <div
           :class="[prefix + '-flat-list_item-inner']"
           v-show="!item.recycled"
+          :style="itemStyles"
         >
-          <slot name="item" :item="item.data" :index="index"> </slot>
+          <slot :item="item.data" :index="index"> </slot>
         </div>
         <div
           :class="[prefix + '-flat-list_separator']"
-          v-if="$slots.separator && index < list.length - 1"
+          v-if="cols.length <= 1 && $slots.separator && index < list.length - 1"
         >
           <slot name="separator"></slot>
         </div>
       </li>
     </ul>
+    <div :class="[prefix + '-flat-list_indicator']" v-show="lowerLoading">
+      <icon icon="LoadingOutlined" spin /><span>正在加载</span>
+    </div>
     <div :class="[prefix + '-flat-list_empty']" v-show="list.length === 0">
       <slot name="empty"></slot>
     </div>
     <div :class="[prefix + '-flat-list_footer']" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
-    <div :class="[prefix + '-flat-list_indicator']" v-show="lowerLoading">
-      <icon icon="LoadingOutlined" spin /><span>正在加载</span>
-    </div>
   </scroll-view>
 </template>
 
 <script>
 import Icon from '../Icon'
-import { cloneData, isFunction, isNumber, isObject } from '../helpers/util'
+import {
+  capitalize,
+  cloneData,
+  isFunction,
+  isInteger,
+  isNumber,
+  isNumberArray,
+  isObject,
+  rangeInteger
+} from '../helpers/util'
 import { SDKKey } from '../config'
 import ScrollView from '../ScrollView/ScrollView.vue'
 import Exception from '../helpers/exception'
+import { getRelativeOffset, resizeDetector } from '../helpers/dom'
 
 export default {
   name: SDKKey + '-flat-list',
@@ -82,14 +94,9 @@ export default {
       default: null
     },
     // 横向
-    horizontal: {
+    initialHorizontal: {
       type: Boolean,
       default: false
-    },
-    // 开始时屏幕顶端的元素是列表中的第 initialScrollIndex个元素, 而不是第一个元素
-    initialScrollIndex: {
-      type: Number,
-      default: 0
     },
     // 预加载多少屏
     preLoad: {
@@ -109,6 +116,22 @@ export default {
     lowerLoading: {
       type: Boolean,
       default: false
+    },
+    initialWaterfall: {
+      type: Boolean,
+      default: false
+    },
+    waterfallColCount: {
+      validator(value) {
+        return isInteger(value) && value >= 2 && value <= 5
+      },
+      default: 2
+    },
+    itemGutter: {
+      validator(value) {
+        return isNumber(value) || (isNumberArray(value) && value.length === 2)
+      },
+      default: 0
     }
   },
   data() {
@@ -117,6 +140,10 @@ export default {
       wrapperSize: 0,
       scrollX: false,
       scrollY: true,
+      horizontal: false,
+
+      colSize: 0,
+      cols: [],
 
       list: []
     }
@@ -127,6 +154,18 @@ export default {
     },
     lowerThreshold() {
       return this.wrapperSize * this.endReachedThreshold
+    },
+    itemStyles() {
+      const styles = {}
+      const gutter = this.itemGutter
+
+      if (isNumberArray(gutter) && gutter.length === 2) {
+        styles.padding = `${gutter[1]}px ${gutter[0]}px`
+      } else if (isNumber(gutter) && gutter > 0) {
+        styles.padding = gutter + 'px'
+      }
+
+      return styles
     },
     enablePullDirections() {
       if (this.enablePullRefresh) {
@@ -146,11 +185,24 @@ export default {
       }
     },
     itemSize() {
-      this.setItemsSize()
+      this.updateItems()
     }
   },
   created() {
     this.scrollCount = 0
+
+    if (this.initialWaterfall) {
+      for (
+        let i = 0, len = rangeInteger(this.waterfallColCount, 2, 5);
+        i < len;
+        i++
+      ) {
+        this.cols.push(0)
+      }
+    } else if (this.initialHorizontal) {
+      this.horizontal = true
+    }
+
     if (this.horizontal) {
       this.scrollX = true
       this.scrollY = false
@@ -159,34 +211,22 @@ export default {
     this.dataToList(this.data)
   },
   mounted() {
-    this.wrapperSize = this.getElSize(this.$el)
-    this.$el.addEventListener('resize', this.onResize, false)
+    this.updateSize()
+    this.updateItems(null, 'init')
 
-    let scrolled = false
-
-    if (this.initialScrollIndex >= 0) {
-      if (this.sizeFixed) {
-        this.setItemsSize()
-      }
-
-      const oldScrollSize = this.getScrollSize()
-      if (this.initialScrollIndex > 0) {
-        this.scrollToIndex(this.initialScrollIndex)
-      }
-      const newScrollSize = this.getScrollSize()
-      if (newScrollSize !== oldScrollSize) {
-        scrolled = true
-      }
-    }
-
-    if (!scrolled) {
-      this.updateItems(null, 'init')
-    }
+    this.offResizeDetector = resizeDetector(this.$el, () => {
+      this.onResize()
+    })
   },
   beforeDestroy() {
-    this.$el.removeEventListener('resize', this.onResize, false)
+    this.offResizeDetector()
   },
   methods: {
+    updateSize() {
+      this.wrapperSize = this.getElSize(this.$el)
+      this.colSize = this.$el.offsetWidth / this.cols.length
+    },
+
     onRefreshing(res, done) {
       this.$emit('refreshing', res, done)
     },
@@ -252,11 +292,8 @@ export default {
       }
     },
     onResize() {
-      clearTimeout(this.resizeTimer)
-      this.resizeTimer = setTimeout(() => {
-        this.wrapperSize = this.getElSize(this.$el)
-        this.updateItems(null, 'resize')
-      }, 17)
+      this.updateSize()
+      this.updateItems(null, 'resize')
     },
     getElSize($el) {
       return $el[this.scrollX ? 'offsetWidth' : 'offsetHeight']
@@ -313,15 +350,41 @@ export default {
      */
     updateItems(scrollSize) {
       const wrapperSize = this.wrapperSize
+      const $list = this.$refs.list
+      const cols = this.cols.map(() => {
+        return 0
+      })
 
       if (scrollSize == null) {
         scrollSize = this.getScrollSize()
       }
 
       this.getItemEls().forEach(($item, index) => {
-        const offset = $item[this.scrollX ? 'offsetLeft' : 'offsetTop']
+        let offset = $list.offsetTop
         const sizeKey = this.scrollX ? 'width' : 'height'
         const itemLayout = this.getItemLayout($item, index)
+
+        if (itemLayout.fixed) {
+          $item.style[sizeKey] = itemLayout.size + 'px'
+        } else {
+          $item.style[sizeKey] = $item[`offset${capitalize(sizeKey)}`] + 'px'
+        }
+
+        if (cols.length > 1) {
+          const colMin = Math.min.apply(null, cols)
+          const colMinIndex = cols.indexOf(colMin)
+
+          $item.style.width = this.colSize + 'px'
+          $item.style.position = 'absolute'
+          $item.style.transform = `translate3d(${colMinIndex *
+            this.colSize}px, ${colMin}px, 0)`
+
+          cols[colMinIndex] = colMin + $item.offsetHeight
+          $item._translateOffset = offset = colMin
+        } else {
+          offset = $item[this.scrollX ? 'offsetLeft' : 'offsetTop']
+        }
+
         const item = this.list[index]
 
         const change = recycled => {
@@ -334,18 +397,14 @@ export default {
           })
         }
 
-        if (itemLayout.fixed) {
-          $item.style[sizeKey] = itemLayout.size + 'px'
-        }
-
         if (
           offset >= scrollSize - wrapperSize * this.preLoad &&
           offset <= scrollSize + wrapperSize * (this.preLoad + 1)
         ) {
           // 展示
-          if (!itemLayout.fixed) {
-            $item.style[sizeKey] = ''
-          }
+          // if (!itemLayout.fixed) {
+          //   $item.style[sizeKey] = ''
+          // }
           item.recycled = false
 
           if ($item._recycled == null || $item._recycled === true) {
@@ -354,9 +413,9 @@ export default {
           }
         } else {
           // 被回收
-          if (!itemLayout.fixed) {
-            $item.style[sizeKey] = itemLayout.size + 'px'
-          }
+          // if (!itemLayout.fixed) {
+          //   $item.style[sizeKey] = itemLayout.size + 'px'
+          // }
           item.recycled = true
 
           if ($item._recycled == null || $item._recycled === false) {
@@ -365,6 +424,11 @@ export default {
           }
         }
       })
+
+      if (cols.length > 1) {
+        $list.style.height = Math.max.apply(null, cols) + 'px'
+        this.cols = cols
+      }
     },
     /**
      * 获取列表元素
@@ -387,39 +451,30 @@ export default {
      */
     scrollToIndex(options) {
       let index
-      let behavior = 'smooth'
-      let block = 'start'
-      let inline = 'nearest'
 
       if (isNumber(options)) {
         index = options
-        behavior = 'auto'
+        options = {}
       } else {
         index = options.index
-        if (options.animated === false) behavior = 'auto'
-
-        if (options.viewPosition === 0.5 || options.viewPosition === 'center') {
-          block = 'center'
-        } else if (
-          options.viewPosition === 1 ||
-          options.viewPosition === 'end'
-        ) {
-          block = 'end'
-        }
-      }
-
-      if (this.scrollX) {
-        // 如果是水平的，数值换一下
-        block = [inline, (inline = block)][0]
       }
 
       const $view = this.getItemEls()[index]
 
       if ($view) {
-        $view.scrollIntoView({
-          behavior,
-          block,
-          inline
+        const parentOffset = getRelativeOffset(
+          $view,
+          this.$el,
+          options.viewPosition
+        )
+
+        let offset =
+          parentOffset[this.scrollX ? 'offsetLeft' : 'offsetTop'] +
+          ($view._translateOffset || 0)
+
+        this.scrollToOffset({
+          offset,
+          animated: options.animated
         })
       }
     },
@@ -427,28 +482,7 @@ export default {
      * 滚动列表到指定的偏移（以像素为单位）
      */
     scrollToOffset(options) {
-      let behavior = 'smooth'
-      let top = 0
-      let left = 0
-
-      if (isNumber(options)) {
-        top = options
-        behavior = 'auto'
-      } else {
-        top = options.offset
-        if (options.animated === false) behavior = 'auto'
-      }
-
-      if (this.scrollX) {
-        // 如果是水平的，数值换一下
-        top = [left, (left = top)][0]
-      }
-
-      this.$el.scrollTo({
-        top,
-        left,
-        behavior
-      })
+      this.$refs.scrollView.scrollToOffset(options)
     },
     /**
      * 滚动到底部

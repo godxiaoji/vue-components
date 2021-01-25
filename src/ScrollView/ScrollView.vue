@@ -58,7 +58,13 @@
 <script>
 import Icon from '../Icon'
 import { SDKKey } from '../config'
-import { inArray, isArray, isString, isStringArray } from '../helpers/util'
+import {
+  inArray,
+  isArray,
+  isNumber,
+  isString,
+  isStringArray
+} from '../helpers/util'
 import { touchEvent } from '../helpers/events'
 
 const {
@@ -116,11 +122,6 @@ export default {
     scrollLeft: {
       type: Number,
       default: 0
-    },
-    // 值应为某子元素id（id不能以数字开头）。设置哪个方向可滚动，则在哪个方向滚动到该元素
-    scrollIntoView: {
-      type: String,
-      default: ''
     },
     // 下拉刷新方向
     enablePullDirections: {
@@ -197,7 +198,6 @@ export default {
 
     // 处理初始化设置的滚动位置
     this.updateScroll()
-    this.scrollIntoIdView(this.scrollIntoView)
   },
   beforeDestroy() {
     removeListeners(this.$el, this)
@@ -208,9 +208,6 @@ export default {
     },
     scrollTop() {
       this.updateScroll()
-    },
-    scrollIntoView(val) {
-      this.scrollIntoIdView(val)
     }
   },
   methods: {
@@ -459,6 +456,34 @@ export default {
           })
         }
       }
+    },
+
+    /**
+     * 滚动列表到指定的偏移（以像素为单位）
+     */
+    scrollToOffset(options) {
+      let behavior = 'smooth'
+      let top = 0
+      let left = 0
+
+      if (isNumber(options)) {
+        top = options
+        behavior = 'instant'
+      } else {
+        top = options.offset
+        if (options.animated === false) behavior = 'instant'
+      }
+
+      if (this.scrollX) {
+        // 如果是水平的，数值换一下
+        top = [left, (left = top)][0]
+      }
+
+      this.$el.scrollTo({
+        top,
+        left,
+        behavior
+      })
     },
 
     /**

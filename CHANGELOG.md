@@ -1,3 +1,10 @@
+## [1.7.9](https://github.com/godxiaoji/vfox/compare/v1.7.8...v1.7.9) (2021-01-25)
+
+
+### Bug Fixes
+
+* **flat-list:** flatList支持瀑布流 ([0d467df](https://github.com/godxiaoji/vfox/commit/0d467dfd17121ff15b19475a3129e1fb51d4f7cf))
+
 ## [1.7.8](https://github.com/godxiaoji/vfox/compare/v1.7.7...v1.7.8) (2021-01-25)
 
 

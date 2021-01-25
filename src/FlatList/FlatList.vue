@@ -10,30 +10,39 @@
     @scroll-to-lower="onScrollToLower"
     @refreshing="onRefreshing"
   >
-    <div :class="[prefix + '-flat-list_header']" v-show="$slots.header">
+    <div :class="[prefix + '-flat-list_header']" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
-    <div
-      :class="[prefix + '-flat-list_item']"
-      v-for="(item, index) in list"
-      :key="
-        dataKey ? (dataKey === '*this' ? item.data : item.data[dataKey]) : index
-      "
-    >
-      <div :class="[prefix + '-flat-list_item-inner']" v-show="!item.recycled">
-        <slot name="item" :item="item.data" :index="index"> </slot>
-      </div>
-      <div
-        :class="[prefix + '-flat-list_separator']"
-        v-if="$slots.separator && index < list.length - 1"
+    <ul :class="[prefix + '-flat-list_list']" ref="list">
+      <li
+        :class="[prefix + '-flat-list_item']"
+        v-for="(item, index) in list"
+        :key="
+          dataKey
+            ? dataKey === '*this'
+              ? item.data
+              : item.data[dataKey]
+            : index
+        "
       >
-        <slot name="separator"></slot>
-      </div>
-    </div>
+        <div
+          :class="[prefix + '-flat-list_item-inner']"
+          v-show="!item.recycled"
+        >
+          <slot name="item" :item="item.data" :index="index"> </slot>
+        </div>
+        <div
+          :class="[prefix + '-flat-list_separator']"
+          v-if="$slots.separator && index < list.length - 1"
+        >
+          <slot name="separator"></slot>
+        </div>
+      </li>
+    </ul>
     <div :class="[prefix + '-flat-list_empty']" v-show="list.length === 0">
       <slot name="empty"></slot>
     </div>
-    <div :class="[prefix + '-flat-list_footer']" v-show="$slots.footer">
+    <div :class="[prefix + '-flat-list_footer']" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
     <div :class="[prefix + '-flat-list_indicator']" v-show="lowerLoading">
@@ -161,7 +170,9 @@ export default {
       }
 
       const oldScrollSize = this.getScrollSize()
-      this.scrollToIndex(this.initialScrollIndex)
+      if (this.initialScrollIndex > 0) {
+        this.scrollToIndex(this.initialScrollIndex)
+      }
       const newScrollSize = this.getScrollSize()
       if (newScrollSize !== oldScrollSize) {
         scrolled = true
@@ -360,8 +371,7 @@ export default {
      */
     getItemEls() {
       const $els = []
-      const $children = this.$el.querySelector(`.${SDKKey}-scroll-view_content`)
-        .children
+      const $children = this.$refs.list.children
 
       for (let i = 0, len = $children.length; i < len; i++) {
         const $el = $children[i]

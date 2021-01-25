@@ -4,6 +4,12 @@
   width: 100%;
 }
 
+.fx-flat-list_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .fx-flat-list_item {
   display: flex;
   flex-direction: column;
@@ -21,6 +27,11 @@
 
 .fx-flat-list.horizontal {
   white-space: nowrap;
+}
+
+.fx-flat-list.horizontal .fx-flat-list_list {
+  display: inline-flex;
+  height: 100%;
 }
 
 .fx-flat-list.horizontal .fx-flat-list_item {

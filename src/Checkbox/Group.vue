@@ -1,5 +1,10 @@
 <template>
-  <div :class="[prefix + '-checkbox-group', { vertical: !inline }]">
+  <div
+    :class="[
+      prefix + '-checkbox-group',
+      { vertical: !inline, disabled: !!disabled }
+    ]"
+  >
     <slot></slot>
   </div>
 </template>

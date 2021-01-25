@@ -1,5 +1,10 @@
 <template>
-  <div :class="[prefix + '-radio-group', { vertical: !inline }]">
+  <div
+    :class="[
+      prefix + '-radio-group',
+      { vertical: !inline, disabled: !!disabled }
+    ]"
+  >
     <slot></slot>
   </div>
 </template>

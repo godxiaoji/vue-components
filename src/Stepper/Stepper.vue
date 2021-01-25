@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-stepper']">
+  <div :class="[prefix + '-stepper', { disabled: !!disabled }]">
     <fx-button
       icon="MinusOutlined"
       shape="square"

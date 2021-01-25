@@ -1,3 +1,11 @@
+## [1.7.8](https://github.com/godxiaoji/vfox/compare/v1.7.7...v1.7.8) (2021-01-25)
+
+
+### Bug Fixes
+
+* **flatlist:** 优化FlatList组件 ([7668da5](https://github.com/godxiaoji/vfox/commit/7668da5c53c08c69088470dd2c719b5c9119a9a6))
+* **form:** 表单组件补上根disabled样式 ([9130779](https://github.com/godxiaoji/vfox/commit/91307791ab4116ba3400d6f1614782482a06af40))
+
 ## [1.7.7](https://github.com/godxiaoji/vfox/compare/v1.7.6...v1.7.7) (2021-01-23)
 
 

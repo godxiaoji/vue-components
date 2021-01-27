@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-tab-bar {
+.fx-tab-bar {
   --tab-bar-color: #{$font-color};
   --tab-bar-active-color: #{$primary-color};
   --tab-bar-background-color: #fff;
@@ -63,7 +63,7 @@
       margin-top: 1px;
     }
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 24px;
       --color: var(--tab-bar-color);
     }
@@ -71,7 +71,7 @@
     &.active {
       color: var(--tab-bar-active-color);
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --color: var(--tab-bar-active-color);
       }
     }

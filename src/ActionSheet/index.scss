@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-action-sheet {
+.fx-action-sheet {
   --action-sheet-highlight-color: #{$danger-color};
 
   &_list {
@@ -34,7 +34,7 @@
       font-size: 17px;
       line-height: 24px;
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --size: 18px;
         --color: #{$title-color};
         vertical-align: middle;

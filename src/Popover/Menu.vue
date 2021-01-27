@@ -1,37 +1,28 @@
 <template>
   <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-pop-menu',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
+    class="fx-popover fx-popup fx-pop-menu"
+    :class="{ visible: visible2, 'no--mask': !showMask }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
+    <div class="fx-mask" @click="onMaskClick"></div>
+    <div class="fx-popover_inner" ref="inner" :style="innerStyles">
+      <i class="fx-popover_arrow" :style="arrowStyles"></i>
+      <div class="fx-popover_content">
         <ul
-          :class="[prefix + '-pop-menu_list', prefix + '-pop-menu_list']"
+          class="fx-pop-menu_list fx-pop-menu_list"
           v-if="options2 && options2.length > 0"
         >
           <li
-            :class="[
-              prefix + '-pop-menu_item',
-              prefix + '-horizontal-hairline',
-              { disabled: !!item.disabled }
-            ]"
+            class="fx-pop-menu_item fx-horizontal-hairline"
+            :class="{ disabled: !!item.disabled }"
             v-for="(item, index) in options2"
             :key="index"
             @click="onItemClick(index)"
           >
             <div
-              :class="[
-                prefix + '-pop-menu_item-inner',
-                { 'has--icon': item.icon }
-              ]"
+              class="fx-pop-menu_item-inner"
+              :class="{ 'has--icon': item.icon }"
             >
               <icon v-if="item.icon" :icon="item.icon" />
               <span>{{ item.name }}</span>
@@ -47,10 +38,9 @@
 import Popover from './Popover.vue'
 import Icon from '../Icon'
 import { cloneData, isArray, isObject } from '../helpers/util'
-import { SDKKey } from '../config'
 
 export default {
-  name: SDKKey + '-pop-menu',
+  name: 'fx-pop-menu',
   extends: Popover,
   components: { Icon },
   props: {
@@ -59,11 +49,6 @@ export default {
       default() {
         return []
       }
-    }
-  },
-  data() {
-    return {
-      prefix: SDKKey
     }
   },
   computed: {

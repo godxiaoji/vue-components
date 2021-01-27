@@ -1,9 +1,8 @@
 import { appendToBody } from './dom'
-
-export const defaultZIndex = 2000
+import { popupZIndex } from './layer'
 
 let puid = 1
-let zIndex = defaultZIndex
+let zIndex = popupZIndex
 
 export function getNewZIndex() {
   return zIndex++

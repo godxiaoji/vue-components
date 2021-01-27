@@ -1,29 +1,29 @@
 <template>
   <div
-    :class="[
-      prefix + '-cell',
-      { clickable, 'has--icon': !!icon, disabled: !!disabled },
-      prefix + '-horizontal-hairline'
-    ]"
+    class="fx-cell fx-horizontal-hairline"
+    :class="{ clickable, 'has--icon': !!icon, disabled: !!disabled }"
     @click="onClick"
   >
-    <div :class="[prefix + '-cell_cover']"></div>
-    <div :class="[prefix + '-cell_inner']">
-      <i :class="[prefix + '-cell_icon']" v-if="icon">
+    <div class="fx-cell_cover"></div>
+    <div class="fx-cell_inner">
+      <i class="fx-cell_icon" v-if="icon">
         <icon :icon="icon" />
       </i>
-      <div :class="[prefix + '-cell_label']">
+      <div class="fx-cell_label">
         {{ label }}
-        <span :class="[prefix + '-cell_required']" v-if="required">*</span>
+        <span class="fx-cell_required" v-if="required">*</span>
       </div>
-      <div :class="[prefix + '-cell_content']">
+      <div class="fx-cell_content">
         <template v-if="!$slots.default">{{ content }}</template>
         <slot></slot>
       </div>
-      <i :class="[prefix + '-cell_link-icon']" v-if="clickable">
+      <i
+        class="fx-cell_link-icon"
+        v-if="clickable && arrowDirection !== 'none'"
+      >
         <icon :icon="linkIconName" />
       </i>
-      <div :class="[prefix + '-cell_description']" v-if="description">
+      <div class="fx-cell_description" v-if="description">
         {{ description }}
       </div>
     </div>
@@ -32,14 +32,13 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { inArray, capitalize } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
-const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
+const LINK_ICON_NAMES = ['right', 'up', 'down', 'left', 'none']
 
 export default {
-  name: SDKKey + '-cell',
+  name: 'fx-cell',
   components: { Icon },
   props: {
     icon: {
@@ -76,9 +75,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     linkIconName() {

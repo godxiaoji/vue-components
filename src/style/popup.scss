@@ -1,17 +1,17 @@
 @import './var.scss';
 
-.#{$prefix}-overflow-hidden {
+.fx-overflow-hidden {
   overflow: hidden !important;
 }
 
-.#{$prefix}-mask {
+.fx-mask {
   display: block;
   width: 100%;
   height: 100%;
   background-color: rgba($color: $black-color, $alpha: 0.45);
 }
 
-.#{$prefix}-popup {
+.fx-popup {
   position: fixed;
   left: 0;
   top: 0;
@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
 
-  > .#{$prefix}-mask {
+  > .fx-mask {
     opacity: 0;
     transition: opacity 0.2s;
     position: absolute;
@@ -34,7 +34,7 @@
   }
 
   &.visible {
-    > .#{$prefix}-mask {
+    > .fx-mask {
       opacity: 1;
     }
   }
@@ -44,7 +44,7 @@
       height: 0;
     }
 
-    > .#{$prefix}-mask {
+    > .fx-mask {
       display: none;
     }
   }

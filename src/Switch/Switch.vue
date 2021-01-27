@@ -1,7 +1,7 @@
 <template>
-  <label :class="[prefix + '-switch']">
+  <label class="fx-switch" :class="{ disabled: !!disabled }">
     <input
-      :class="[prefix + '-switch_checkbox']"
+      class="fx-switch_checkbox"
       type="checkbox"
       :disabled="disabled"
       @change="onChange"
@@ -16,11 +16,10 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 
 export default {
-  name: SDKKey + '-switch',
+  name: 'fx-switch',
   mixins: [formMixin],
   props: {
     modelValue: {
@@ -30,8 +29,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: false
     }
   },

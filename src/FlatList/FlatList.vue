@@ -1,6 +1,7 @@
 <template>
   <scroll-view
-    :class="[prefix + '-flat-list', scrollX ? 'horizontal' : null]"
+    class="fx-flat-list"
+    :class="{ horizontal }"
     :scroll-x="scrollX"
     :scroll-y="scrollY"
     :lower-threshold="lowerThreshold"
@@ -11,12 +12,12 @@
     @refreshing="onRefreshing"
     ref="scrollView"
   >
-    <div :class="[prefix + '-flat-list_header']" v-if="$slots.header">
+    <div class="fx-flat-list_header" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
-    <ul :class="[prefix + '-flat-list_list']" ref="list">
+    <ul class="fx-flat-list_list" ref="list">
       <li
-        :class="[prefix + '-flat-list_item']"
+        class="fx-flat-list_item"
         v-for="(item, index) in list"
         :key="
           dataKey
@@ -27,27 +28,27 @@
         "
       >
         <div
-          :class="[prefix + '-flat-list_item-inner']"
+          class="fx-flat-list_item-inner"
           v-show="!item.recycled"
           :style="itemStyles"
         >
           <slot :item="item.data" :index="index"> </slot>
         </div>
         <div
-          :class="[prefix + '-flat-list_separator']"
+          class="fx-flat-list_separator"
           v-if="cols.length <= 1 && $slots.separator && index < list.length - 1"
         >
           <slot name="separator"></slot>
         </div>
       </li>
     </ul>
-    <div :class="[prefix + '-flat-list_indicator']" v-show="lowerLoading">
+    <div class="fx-flat-list_indicator" v-show="lowerLoading">
       <icon icon="LoadingOutlined" spin /><span>正在加载</span>
     </div>
-    <div :class="[prefix + '-flat-list_empty']" v-show="list.length === 0">
+    <div class="fx-flat-list_empty" v-show="list.length === 0">
       <slot name="empty"></slot>
     </div>
-    <div :class="[prefix + '-flat-list_footer']" v-if="$slots.footer">
+    <div class="fx-flat-list_footer" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
   </scroll-view>
@@ -65,13 +66,12 @@ import {
   isObject,
   rangeInteger
 } from '../helpers/util'
-import { SDKKey } from '../config'
 import ScrollView from '../ScrollView/ScrollView.vue'
 import Exception from '../helpers/exception'
 import { getRelativeOffset, resizeDetector } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-flat-list',
+  name: 'fx-flat-list',
   components: { ScrollView, Icon },
   props: {
     dataKey: {
@@ -136,7 +136,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       wrapperSize: 0,
       scrollX: false,
       scrollY: true,

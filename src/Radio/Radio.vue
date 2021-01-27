@@ -1,26 +1,20 @@
 <template>
   <label
-    :class="[
-      prefix + '-radio',
-      prefix + '-horizontal-hairline',
-      { disabled: disabled2 }
-    ]"
+    class="fx-radio fx-horizontal-hairline"
+    :class="{ disabled: disabled2 }"
   >
     <input
-      :class="[prefix + '-radio_input']"
+      class="fx-radio_input"
       type="radio"
       :name="formName"
       :value="value"
       :disabled="disabled2"
       @change="onChange"
     />
-    <div :class="[prefix + '-radio_box']">
-      <icon :class="[prefix + '-radio_icon']" icon="CircleOutlined" />
-      <icon
-        :class="[prefix + '-radio_checked-icon']"
-        icon="CheckCircleFilled"
-      />
-      <span :class="[prefix + '-radio_text']" v-if="$slots.default">
+    <div class="fx-radio_box">
+      <icon class="fx-radio_icon" icon="CircleOutlined" />
+      <icon class="fx-radio_checked-icon" icon="CheckCircleFilled" />
+      <span class="fx-radio_text" v-if="$slots.default">
         <slot></slot>
       </span>
     </div>
@@ -29,11 +23,10 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { isStringNumberMix } from '../helpers/util'
 
 export default {
-  name: SDKKey + '-radio',
+  name: 'fx-radio',
   components: { Icon },
   inject: {
     appRadioGroup: {
@@ -61,9 +54,6 @@ export default {
       type: String,
       default: ''
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     /* 优先接受来自分组的name */

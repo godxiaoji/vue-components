@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-button-group {
+.fx-button-group {
   display: inline-flex;
   flex: 1;
 
@@ -9,12 +9,12 @@
     flex: 0;
   }
 
-  + .#{$prefix}-button-group {
+  + .fx-button-group {
     margin-left: 16px;
   }
 
   &:not(.count--1) {
-    > .#{$prefix}-button {
+    > .fx-button {
       &:first-child {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -31,7 +31,7 @@
         }
       }
 
-      + .#{$prefix}-button {
+      + .fx-button {
         position: relative;
         margin-left: 0;
         border-left-width: 0;

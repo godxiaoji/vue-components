@@ -1,16 +1,15 @@
 <template>
-  <ul :class="[prefix + '-skeleton-paragraph', { animated: useAnimation }]">
+  <ul class="fx-skeleton-paragraph" :class="{ animated: useAnimation }">
     <li v-for="num in size" :key="num"></li>
   </ul>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { isNumber } from '../helpers/util'
 import { paragraphDefaultRow } from './util'
 
 export default {
-  name: SDKKey + '-skeleton-paragraph',
+  name: 'fx-skeleton-paragraph',
   inject: {
     skeletonSubOptions: {
       default: null
@@ -27,9 +26,6 @@ export default {
       type: Number,
       default: null
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     useAnimation() {

@@ -1,22 +1,20 @@
 <template>
   <label
-    :class="[
-      prefix + '-input',
-      {
-        'has--prepend': $slots.prepend,
-        'has--append': $slots.append,
-        [prefix + '-textarea']: type === 'textarea',
-        focus: focus2,
-        disabled
-      }
-    ]"
+    class="fx-input"
+    :class="{
+      'has--prepend': $slots.prepend,
+      'has--append': $slots.append,
+      'fx-textarea': type === 'textarea',
+      focus: focus2,
+      disabled
+    }"
   >
-    <div :class="[prefix + '-input_prepend']" v-if="$slots.prepend">
+    <div class="fx-input_prepend" v-if="$slots.prepend">
       <slot name="prepend"></slot>
     </div>
     <textarea
       v-if="type === 'textarea'"
-      :class="[prefix + '-input_input']"
+      class="fx-input_input"
       :name="formName"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -30,7 +28,7 @@
     ></textarea>
     <input
       v-else
-      :class="[prefix + '-input_input']"
+      class="fx-input_input"
       :name="formName"
       :type="inputType"
       :inputmode="inputMode"
@@ -48,12 +46,12 @@
     />
     <icon
       v-if="showClear"
-      v-show="formValue"
-      :class="[prefix + '-input_clear']"
+      v-show="formValue && focus2"
+      class="fx-input_clear"
       icon="CloseCircleFilled"
-      @click.native.prevent="onClear"
+      @mousedown.native.prevent="onClear"
     />
-    <div :class="[prefix + '-input_append']" v-if="$slots.append">
+    <div class="fx-input_append" v-if="$slots.append">
       <slot name="append"></slot>
     </div>
   </label>
@@ -62,7 +60,6 @@
 <script>
 import Icon from '../Icon'
 import { inArray, isStringNumberMix } from '../helpers/util'
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import { formatInputDigit, formatInputNumber } from '../helpers/input'
 
@@ -77,7 +74,7 @@ const TYPE_NAMES = [
 ]
 
 export default {
-  name: SDKKey + '-input',
+  name: 'fx-input',
   components: { Icon },
   mixins: [formMixin],
   props: {
@@ -112,8 +109,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: '',
 
       focus2: false

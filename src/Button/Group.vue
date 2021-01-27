@@ -1,7 +1,7 @@
 <template>
   <div
+    class="fx-button-group"
     :class="[
-      prefix + '-button-group',
       'size--' + subOptions.size,
       'pattern--' + subOptions.pattern,
       'shape--' + subOptions.shape,
@@ -13,12 +13,11 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import groupMixin from '../util/group-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-button-group',
+  name: 'fx-button-group',
   provide() {
     return {
       appButtonGroupSubOptions: this.subOptions,
@@ -42,8 +41,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       subOptions: {
         pattern: '',
         size: '',

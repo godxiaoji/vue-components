@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-notice-bar {
+.fx-notice-bar {
   // --notice-bar-color: #{$warning-color};
   --notice-bar-color: #db8f02;
   --notice-bar-background-color: #{$warning-background-color};
@@ -40,7 +40,7 @@
     margin-right: 8px;
     flex-shrink: 0;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 14px;
       --color: var(--notice-bar-color);
     }
@@ -59,7 +59,7 @@
     min-height: 20px;
     text-align: left;
 
-    + .#{$prefix}-notice-bar_right-icon {
+    + .fx-notice-bar_right-icon {
       margin-left: -16px;
     }
   }

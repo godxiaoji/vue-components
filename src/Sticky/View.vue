@@ -1,19 +1,15 @@
 <template>
-  <div :class="[prefix + '-sticky-view', { 'is-container': '' }]">
-    <div :class="[prefix + '-sticky-view_list']" ref="list">
+  <div class="fx-sticky-view">
+    <div class="fx-sticky-view_list" ref="list">
       <slot></slot>
     </div>
     <sticky
       :offset-top="offsetTop"
       :contain-selector="containSelector"
-      :class="[prefix + '-sticky-view_top']"
+      class="fx-sticky-view_top"
       ref="sticky"
     >
-      <div
-        ref="fixed"
-        :class="[prefix + '-sticky-view_fixed']"
-        :style="fixedStyles"
-      >
+      <div ref="fixed" class="fx-sticky-view_fixed" :style="fixedStyles">
         {{ title }}
       </div>
     </sticky>
@@ -22,14 +18,13 @@
 
 <script>
 import Sticky from '../Sticky'
-import { SDKKey } from '../config'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getRelativeOffset, getSizeValue, querySelector } from '../helpers/dom'
 import { eventSelectorValidator, sizeValidator } from '../helpers/validator'
 import listMixin from '../util/list-mixin'
 
 export default {
-  name: SDKKey + '-sticky-view',
+  name: 'fx-sticky-view',
   components: { Sticky },
   mixins: [listMixin],
   provide() {
@@ -54,8 +49,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       $items: [],
 
       index: 0,

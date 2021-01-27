@@ -4,12 +4,14 @@
   --input-icon-size: 18px;
   --input-color: #262626;
   --input-secondary-color: #bfbfbf;
+  --input-border-color: #d9d9d9;
+  --input-focus-border-color: #1890ff;
   height: var(--input-height);
   width: 100%;
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--input-border-color);
   box-sizing: border-box;
   padding: 0 16px;
   font-size: var(--input-font-size);
@@ -87,7 +89,7 @@
 }
 
 .fx-input.focus {
-  border-color: #1890ff;
+  border-color: var(--input-focus-border-color);
 }
 
 .fx-input_cover {

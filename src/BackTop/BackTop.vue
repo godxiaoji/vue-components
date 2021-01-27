@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="scrollTop >= visibleHeight"
-    :class="[prefix + '-back-top']"
+    class="fx-back-top"
     :style="styles"
     @click="onClick"
   >
@@ -13,12 +13,11 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getScrollDom } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-back-top',
+  name: 'fx-back-top',
   components: { Icon },
   props: {
     visibleHeight: {
@@ -40,8 +39,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       scrollTop: 0,
       duration: 200
     }

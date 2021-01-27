@@ -1,7 +1,7 @@
 @import './var.scss';
 
-.#{$prefix}-horizontal-hairline,
-.#{$prefix}-vertical-hairline {
+.fx-horizontal-hairline,
+.fx-vertical-hairline {
   &::before,
   &::after {
     display: block;
@@ -15,7 +15,7 @@
   }
 }
 
-.#{$prefix}-horizontal-hairline {
+.fx-horizontal-hairline {
   &::after {
     transform-origin: 0 100%;
   }
@@ -31,7 +31,7 @@
   }
 }
 
-.#{$prefix}-vertical-hairline {
+.fx-vertical-hairline {
   &::before,
   &::after {
     height: 100%;
@@ -55,14 +55,14 @@
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
-  .#{$prefix}-horizontal-hairline {
+  .fx-horizontal-hairline {
     &::before,
     &::after {
       transform: scaleY(0.5);
     }
   }
 
-  .#{$prefix}-vertical-hairline {
+  .fx-vertical-hairline {
     &::before,
     &::after {
       transform: scaleX(0.5);
@@ -73,14 +73,14 @@
 $one-third: 1 / 3;
 
 @media screen and (-webkit-min-device-pixel-ratio: 3) {
-  .#{$prefix}-horizontal-hairline {
+  .fx-horizontal-hairline {
     &::before,
     &::after {
       transform: scaleY($one-third);
     }
   }
 
-  .#{$prefix}-vertical-hairline {
+  .fx-vertical-hairline {
     &::before,
     &::after {
       transform: scaleX($one-third);

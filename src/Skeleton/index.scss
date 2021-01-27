@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-@keyframes #{$prefix}-skeleton-loading {
+@keyframes fx-skeleton-loading {
   0% {
     background-position: 100% 50%;
   }
@@ -16,16 +16,16 @@
 }
 
 @mixin skeleton-animation {
-  animation: #{$prefix}-skeleton-loading 1.4s ease infinite;
+  animation: fx-skeleton-loading 1.4s ease infinite;
 }
 
-.#{$prefix}-skeleton {
+.fx-skeleton {
   &_layout {
     display: flex;
     width: 100%;
 
     &-left {
-      + .#{$prefix}-skeleton_layout-right {
+      + .fx-skeleton_layout-right {
         padding: 8px 0 0 0;
         margin-left: 12px;
       }
@@ -34,14 +34,14 @@
     &-right {
       flex: 1;
 
-      .#{$prefix}-skeleton-title {
+      .fx-skeleton-title {
         margin-bottom: 20px;
       }
     }
   }
 }
 
-.#{$prefix}-skeleton-title {
+.fx-skeleton-title {
   display: block;
   width: 50%;
   height: 16px;
@@ -53,7 +53,7 @@
   }
 }
 
-.#{$prefix}-skeleton-avatar {
+.fx-skeleton-avatar {
   display: block;
   width: 32px;
   height: 32px;
@@ -73,7 +73,7 @@
   }
 }
 
-.#{$prefix}-skeleton-button {
+.fx-skeleton-button {
   display: block;
   width: 56px;
   height: 28px;
@@ -94,7 +94,7 @@
   }
 }
 
-.#{$prefix}-skeleton-image {
+.fx-skeleton-image {
   display: block;
   width: 100px;
   height: 100px;
@@ -106,7 +106,7 @@
   }
 }
 
-.#{$prefix}-skeleton-paragraph {
+.fx-skeleton-paragraph {
   overflow: hidden;
   list-style: none;
   padding: 0;

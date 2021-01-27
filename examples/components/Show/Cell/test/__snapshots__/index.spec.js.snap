@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cell should render prop clickable=true correctly 1`] = `
-<div class="fx-cell clickable fx-horizontal-hairline">
+<div class="fx-cell fx-horizontal-hairline clickable">
   <div class="fx-cell_cover"></div>
   <div class="fx-cell_inner">
     <!---->
@@ -18,7 +18,7 @@ exports[`Cell should render prop clickable=true correctly 1`] = `
 `;
 
 exports[`Cell should render prop icon="EditOutlined" correctly 1`] = `
-<div class="fx-cell has--icon fx-horizontal-hairline">
+<div class="fx-cell fx-horizontal-hairline has--icon">
   <div class="fx-cell_cover"></div>
   <div class="fx-cell_inner"><i class="fx-cell_icon">
       <icon-stub icon="EditOutlined" size="0" width="0" height="0"></icon-stub>

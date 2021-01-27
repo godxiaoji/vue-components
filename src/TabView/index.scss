@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-tab-view {
+.fx-tab-view {
   background-color: #fff;
 
   &_header {
@@ -19,7 +19,7 @@
   &_body {
     height: calc(100% - 37px);
 
-    .#{$prefix}-swiper {
+    .fx-swiper {
       height: 100%;
     }
   }
@@ -27,7 +27,7 @@
   &.vertical {
     display: flex;
 
-    .#{$prefix}-tab-view {
+    .fx-tab-view {
       &_header {
         width: 80px;
         height: 100%;
@@ -46,7 +46,7 @@
   }
 }
 
-.#{$prefix}-tab-view-item {
+.fx-tab-view-item {
   height: 100%;
   width: 100%;
   max-width: 100%;

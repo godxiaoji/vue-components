@@ -1,13 +1,7 @@
 <template>
-  <div
-    :class="[
-      prefix + '-collapse-item',
-      prefix + '-horizontal-hairline',
-      { active }
-    ]"
-  >
+  <div class="fx-collapse-item fx-horizontal-hairline" :class="{ active }">
     <cell
-      :class="[prefix + '-collapse-item_header']"
+      class="fx-collapse-item_header"
       :label="title"
       :icon="icon"
       :disabled="disabled"
@@ -16,11 +10,11 @@
       @click="onClick"
     />
     <div
-      :class="[prefix + '-collapse-item_body', prefix + '-horizontal-hairline']"
+      class="fx-collapse-item_body fx-horizontal-hairline"
       style="display: none"
       ref="body"
     >
-      <div :class="[prefix + '-collapse-item_content']">
+      <div class="fx-collapse-item_content">
         <slot></slot>
       </div>
     </div>
@@ -29,11 +23,10 @@
 
 <script>
 import Cell from '../Cell'
-import { SDKKey } from '../config'
 import { iconValidator } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-collapse-item',
+  name: 'fx-collapse-item',
   components: { Cell },
   inject: {
     appCollapse: {
@@ -60,7 +53,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       active: false
     }
   },

@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-cell {
+.fx-cell {
   --cell-label-color: #{$title-color};
   --cell-content-color: #{$font-color};
   --cell-description-color: #{$font2-color};
@@ -8,7 +8,7 @@
   background-color: #fff;
   position: relative;
 
-  + .#{$prefix}-cell::before {
+  + .fx-cell::before {
     content: '';
     margin-left: 16px;
   }
@@ -61,7 +61,7 @@
     overflow: hidden;
     text-align: left;
 
-    .#{$prefix}-cell.has--icon & {
+    .fx-cell.has--icon & {
       margin-left: 23px;
     }
   }
@@ -84,7 +84,7 @@
     height: 32px;
     margin-right: 5px;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 18px;
       --color: var(--cell-label-color);
     }
@@ -96,7 +96,7 @@
     height: 32px;
     margin-left: 5px;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 18px;
       --color: var(--cell-content-color);
     }
@@ -105,7 +105,7 @@
   &:not(.disabled).clickable {
     cursor: pointer;
     &:active {
-      .#{$prefix}-cell_cover {
+      .fx-cell_cover {
         display: block;
       }
     }
@@ -118,7 +118,7 @@
     cursor: not-allowed;
   }
 
-  .#{$prefix} {
+  .fx {
     &-input {
       --input-height: 32px;
       border-left-width: 0;
@@ -143,7 +143,7 @@
     &-radio-group {
       justify-content: flex-end;
 
-      &.vertical .#{$prefix}-radio_box {
+      &.vertical .fx-radio_box {
         justify-content: flex-end;
       }
     }
@@ -151,7 +151,7 @@
     &-checkbox-group {
       justify-content: flex-end;
 
-      &.vertical .#{$prefix}-checkbox_box {
+      &.vertical .fx-checkbox_box {
         justify-content: flex-end;
       }
     }

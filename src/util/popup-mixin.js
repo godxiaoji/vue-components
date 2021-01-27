@@ -1,4 +1,5 @@
-import { defaultZIndex, getNewZIndex } from '../helpers/popup'
+import { getNewZIndex } from '../helpers/popup'
+import { popupZIndex } from '../helpers/layer'
 import { cloneData, isFunction } from '../helpers/util'
 import {
   addClassName,
@@ -6,7 +7,6 @@ import {
   removeClassName,
   removeEl
 } from '../helpers/dom'
-import { SDKKey } from '../config'
 
 export default {
   props: {
@@ -29,7 +29,7 @@ export default {
       visible2: false,
       forbidScroll: true,
 
-      zIndex: defaultZIndex,
+      zIndex: popupZIndex,
       top: null,
       position: null
     }
@@ -104,7 +104,7 @@ export default {
 
       this.forbidScroll &&
         this.showMask &&
-        addClassName(document.body, SDKKey + '-overflow-hidden')
+        addClassName(document.body, 'fx-overflow-hidden')
 
       if (!this.showMask) {
         this.position = 'absolute'
@@ -148,7 +148,7 @@ export default {
       }
       this.isHiding = true
       this.isShowing = false
-      removeClassName(document.body, SDKKey + '-overflow-hidden')
+      removeClassName(document.body, 'fx-overflow-hidden')
       this.visible2 = false
 
       clearTimeout(this.visibleTimer)

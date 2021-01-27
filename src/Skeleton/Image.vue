@@ -1,12 +1,10 @@
 <template>
-  <div :class="[prefix + '-skeleton-image', { animated: useAnimation }]"></div>
+  <div class="fx-skeleton-image" :class="{ animated: useAnimation }"></div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-skeleton-image',
+  name: 'fx-skeleton-image',
   inject: {
     skeletonSubOptions: {
       default: null
@@ -18,9 +16,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     useAnimation() {

@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-button {
+.fx-button {
   --button-font-color: #fff;
   --button-border-color: transparent;
   --button-icon-size: 20px;
@@ -60,11 +60,11 @@
     background-color: rgba($color: $black-color, $alpha: 0.16);
   }
 
-  + .#{$prefix}-button {
+  + .fx-button {
     margin-left: 16px;
   }
 
-  .#{$prefix}-icon {
+  .fx-icon {
     flex-shrink: 0;
     --color: var(--button-font-color);
     --size: var(--button-icon-size);
@@ -76,7 +76,7 @@
 
   &.shape--round,
   &.shape--rectangle {
-    .#{$prefix}-icon {
+    .fx-icon {
       margin: 0 8px 0 -2px;
     }
   }
@@ -127,7 +127,7 @@
 
     &.shape--round,
     &.shape--rectangle {
-      .#{$prefix}-icon {
+      .fx-icon {
         margin: 0 4px 0 -2px;
       }
     }
@@ -156,7 +156,7 @@
 
     &.shape--round,
     &.shape--rectangle {
-      .#{$prefix}-icon {
+      .fx-icon {
         margin: 0 2px 0 -2px;
       }
     }
@@ -279,7 +279,7 @@
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
-  .#{$prefix}-button {
+  .fx-button {
     &::before {
       transform: translate3d(0, -50%, 0) scaleX(0.5);
     }
@@ -295,7 +295,7 @@
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 3) {
-  .#{$prefix}-button {
+  .fx-button {
     &::before {
       transform: translate3d(0, -50%, 0) scaleX($one-third);
     }

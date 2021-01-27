@@ -1,10 +1,10 @@
 @import './var.scss';
 
 @mixin rotate-360-animation($duration: 800ms) {
-  animation: #{$prefix}-rotate-360 $duration infinite linear both;
+  animation: fx-rotate-360 $duration infinite linear both;
 }
 
-@keyframes #{$prefix}-rotate-360 {
+@keyframes fx-rotate-360 {
   0% {
     transform: rotate(0);
   }

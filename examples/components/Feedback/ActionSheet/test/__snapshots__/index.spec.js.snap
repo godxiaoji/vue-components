@@ -35,7 +35,7 @@ exports[`ActionSheet should render props showCancel=true & cancelText="Custom Ca
   <div class="fx-action-sheet_footer">
     <ul class="fx-action-sheet_list">
       <li class="fx-action-sheet_item fx-horizontal-hairline">
-        <div class="align--center fx-action-sheet_item-inner"><span>Custom Cancel</span></div>
+        <div class="fx-action-sheet_item-inner align--center"><span>Custom Cancel</span></div>
       </li>
     </ul>
   </div>

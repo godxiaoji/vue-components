@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-checkbox {
+.fx-checkbox {
   --checkbox-color: #{$border-color};
   --checkbox-active-color: #{$primary-color};
   --checkbox-font-color: #{$title-color};
@@ -13,7 +13,7 @@
   text-align: left;
   position: relative;
 
-  + .#{$prefix}-checkbox {
+  + .fx-checkbox {
     margin-left: 16px;
   }
 
@@ -43,10 +43,10 @@
     top: 0;
     opacity: 0;
 
-    &:checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_icon {
+    &:checked + .fx-checkbox_box .fx-checkbox_icon {
       display: none;
     }
-    &:checked + .#{$prefix}-checkbox_box .#{$prefix}-checkbox_checked-icon {
+    &:checked + .fx-checkbox_box .fx-checkbox_checked-icon {
       display: block;
     }
   }

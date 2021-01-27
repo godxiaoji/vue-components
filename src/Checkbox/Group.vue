@@ -1,9 +1,7 @@
 <template>
   <div
-    :class="[
-      prefix + '-checkbox-group',
-      { vertical: !inline, disabled: !!disabled }
-    ]"
+    class="fx-checkbox-group"
+    :class="{ vertical: !inline, disabled: !!disabled }"
   >
     <slot></slot>
   </div>
@@ -15,14 +13,14 @@ import {
   cloneData,
   isSameArray,
   isArray,
-  inArray
+  inArray,
+  isStringNumberMix
 } from '../helpers/util'
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import groupMixin from '../util/group-mixin'
 
 export default {
-  name: SDKKey + '-checkbox-group',
+  name: 'fx-checkbox-group',
   mixins: [formMixin, groupMixin],
   provide() {
     return {
@@ -32,7 +30,7 @@ export default {
   props: {
     modelValue: {
       validator(val) {
-        return isStringNumberMixArray(val)
+        return isStringNumberMix(val) || isStringNumberMixArray(val)
       },
       default() {
         return []
@@ -45,14 +43,16 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: []
     }
   },
   watch: {
     modelValue: {
       handler(val) {
+        if (isStringNumberMix(val)) {
+          val = [val]
+        }
+
         if (isArray(val) && !isSameArray(val, this.formValue)) {
           let formValue = []
 

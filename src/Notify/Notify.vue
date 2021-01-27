@@ -1,11 +1,12 @@
 <template>
   <div
-    :class="[prefix + '-notify', prefix + '-popup', { visible: visible2 }]"
+    class="fx-notify fx-popup"
+    :class="{ visible: visible2 }"
     :style="popupStyles"
     v-show="isShow"
   >
     <notice-bar
-      :class="[prefix + '-notify_inner']"
+      class="fx-notify_inner"
       :type="type"
       :left-icon="icon"
       :title="title"
@@ -19,11 +20,10 @@
 
 <script>
 import NoticeBar from '../NoticeBar'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 
 export default {
-  name: SDKKey + '-notify',
+  name: 'fx-notify',
   components: { NoticeBar },
   mixins: [popupMixin],
   provide() {
@@ -64,9 +64,6 @@ export default {
       type: String,
       default: 'primary'
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   beforeDestroy() {
     this.removeAutoClose()

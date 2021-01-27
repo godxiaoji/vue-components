@@ -1,6 +1,6 @@
 <template>
   <drawer
-    :class="[prefix + '-cascader-popup']"
+    class="fx-cascader-popup"
     :title="title2"
     placement="right"
     :visible="visible"
@@ -12,28 +12,25 @@
     @update:visible="onUpdateVisible"
     ref="popup"
   >
-    <div ref="dropdown" :class="[prefix + '-cascader_groups']">
+    <div ref="dropdown" class="fx-cascader_groups">
       <div
-        :class="[prefix + '-cascader_group', prefix + '-vertical-hairline']"
+        class="fx-cascader_group fx-vertical-hairline"
         v-for="(list, listIndex) in cols"
         :key="listIndex"
       >
-        <ul :class="[prefix + '-cascader_list']" :data-index="listIndex">
+        <ul class="fx-cascader_list" :data-index="listIndex">
           <li
-            :class="[
-              prefix + '-cascader_item',
-              prefix + '-horizontal-hairline',
-              {
-                selected: item.selected,
-                disabled: item.disabled
-              }
-            ]"
+            class="fx-cascader_item fx-horizontal-hairline"
+            :class="{
+              selected: item.selected,
+              disabled: item.disabled
+            }"
             v-for="(item, index) in list"
             :key="item.value"
             :data-index="index"
             @click="onItemClick($event, item)"
           >
-            <span :class="[prefix + '-cascader_item-text']">
+            <span class="fx-cascader_item-text">
               {{ item.label }}
             </span>
           </li>
@@ -45,7 +42,6 @@
 
 <script>
 import Drawer from '../Drawer'
-import { SDKKey } from '../config'
 import { array2String, getDefaultDetail } from '../util/mulit-selector'
 import { frameTo } from '../helpers/animation'
 import mulitSelectorMixin from '../util/mulit-selector/mixin'
@@ -53,7 +49,7 @@ import popupExtendMixin from '../util/popup-extend-mixin'
 import { isSameArray } from '../helpers/util'
 
 export default {
-  name: SDKKey + '-cascader-popup',
+  name: 'fx-cascader-popup',
   mixins: [popupExtendMixin, mulitSelectorMixin],
   components: { Drawer },
   props: {
@@ -64,8 +60,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       detail: getDefaultDetail(),
 
       cascader: true
@@ -98,7 +92,7 @@ export default {
           return
         }
 
-        const $lists = $dropdown.querySelectorAll(`.${SDKKey}-cascader_list`)
+        const $lists = $dropdown.querySelectorAll(`.fx-cascader_list`)
         const $selecteds = $dropdown.querySelectorAll('.selected')
 
         if ($lists[1]) {

@@ -1,6 +1,6 @@
 <template>
   <modal
-    :class="[prefix + '-dialog']"
+    class="fx-dialog"
     :visible="visible"
     :show-close="false"
     :mask-closable="maskClosable"
@@ -12,30 +12,27 @@
     @update:visible="onUpdateVisible"
     ref="popup"
   >
-    <div :class="[prefix + '-dialog_header']" v-if="title != null">
+    <div class="fx-dialog_header" v-if="title != null">
       {{ title }}
     </div>
-    <div :class="[prefix + '-dialog_content']">
-      <div :class="[prefix + '-dialog_content-text']" v-if="content != null">
+    <div class="fx-dialog_content">
+      <div class="fx-dialog_content-text" v-if="content != null">
         {{ content }}
       </div>
       <slot v-else></slot>
     </div>
-    <div :class="[prefix + '-dialog_footer', prefix + '-horizontal-hairline']">
-      <fx-button-group
-        :class="[prefix + '-dialog_footer-inner']"
-        pattern="borderless"
-      >
+    <div class="fx-dialog_footer fx-horizontal-hairline">
+      <fx-button-group class="fx-dialog_footer-inner" pattern="borderless">
         <fx-button
           v-if="showCancel"
-          :class="[prefix + '-dialog_button']"
+          class="fx-dialog_button"
           type="default"
           @click="onCancelClick"
         >
           {{ cancelText }}
         </fx-button>
         <fx-button
-          :class="[prefix + '-dialog_button']"
+          class="fx-dialog_button"
           type="primary"
           @click="onConfirmClick"
         >
@@ -50,11 +47,10 @@
 import FxButton from '../Button/Button.vue'
 import FxButtonGroup from '../Button/Group.vue'
 import Modal from '../Modal/Modal.vue'
-import { SDKKey } from '../config'
 import popupExtendMixin from '../util/popup-extend-mixin'
 
 export default {
-  name: SDKKey + '-dialog',
+  name: 'fx-dialog',
   components: { FxButton, FxButtonGroup, Modal },
   mixins: [popupExtendMixin],
   props: {
@@ -82,9 +78,6 @@ export default {
       type: String,
       default: null
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   methods: {
     onConfirmClick() {

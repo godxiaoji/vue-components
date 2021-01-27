@@ -1,8 +1,6 @@
 <template>
-  <div :class="[prefix + '-tab-view', { vertical: initialVertical }]">
-    <div
-      :class="[prefix + '-tab-view_header', prefix + '-horizontal-hairline']"
-    >
+  <div class="fx-tab-view" :class="{ vertical: initialVertical }">
+    <div class="fx-tab-view_header fx-horizontal-hairline">
       <tab
         :options="tabList"
         :activeValue.sync="activeIndex"
@@ -10,7 +8,7 @@
         :scroll-threshold="scrollThreshold"
       />
     </div>
-    <div :class="[prefix + '-tab-view_body']" ref="list">
+    <div class="fx-tab-view_body" ref="list">
       <swiper
         :activeIndex.sync="activeIndex"
         @change="onChange"
@@ -26,11 +24,10 @@
 <script>
 import Tab from '../Tab'
 import Swiper from '../Swiper/Swiper.vue'
-import { SDKKey } from '../config'
 import listMixin from '../util/list-mixin'
 
 export default {
-  name: SDKKey + '-tab-view',
+  name: 'fx-tab-view',
   components: { Tab, Swiper },
   mixins: [listMixin],
   provide() {
@@ -55,8 +52,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       activeIndex: 0,
 
       tabList: [],
@@ -108,7 +103,7 @@ export default {
 
           if (
             $firstChild &&
-            $firstChild.className.indexOf(`${SDKKey}-scroll-view`) !== -1
+            $firstChild.className.indexOf(`fx-scroll-view`) !== -1
           ) {
             // ScrollView
             $firstChild.scrollTo({

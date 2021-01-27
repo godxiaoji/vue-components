@@ -6,10 +6,9 @@
 
 <script>
 import { isNumber, isArray } from '../helpers/util'
-import { SDKKey } from '../config'
 
 export default {
-  name: SDKKey + '-row',
+  name: 'fx-row',
   provide() {
     return {
       appRowSubOptions: this.subOptions
@@ -50,7 +49,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       subOptions: {
         gutter: [0, 0]
       }
@@ -69,7 +67,7 @@ export default {
       return {}
     },
     classNames() {
-      const arr = [`${SDKKey}-row`]
+      const arr = [`fx-row`]
 
       if (this.justify !== 'start') {
         arr.push(`justify--${this.justify}`)

@@ -206,6 +206,7 @@ export default {
 
 .image {
   &-grid {
+    overflow: hidden;
     margin-bottom: -16px;
   }
 

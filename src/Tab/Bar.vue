@@ -1,32 +1,27 @@
 <template>
-  <div :class="[prefix + '-tab-bar']">
+  <div class="fx-tab-bar">
     <div
-      :class="[
-        prefix + '-tab-bar_inner',
-        prefix + '-horizontal-hairline',
-        { fixed }
-      ]"
+      class="fx-tab-bar_inner fx-horizontal-hairline"
+      :class="{ fixed }"
       :style="innerStyles"
     >
-      <ul :class="[prefix + '-tab-bar_list']" ref="list">
+      <ul class="fx-tab-bar_list" ref="list">
         <li
-          :class="[
-            prefix + '-tab-bar_item',
-            {
-              active: index === activeIndex
-            }
-          ]"
+          class="fx-tab-bar_item"
+          :class="{
+            active: index === activeIndex
+          }"
           v-for="(item, index) in options2"
           :key="item.value"
           @click="onChange(item.value)"
         >
-          <badge :class="[prefix + '-tab-bar_item-icon']" v-bind="item.badge">
+          <badge class="fx-tab-bar_item-icon" v-bind="item.badge">
             <icon
               v-if="item.icon"
               :icon="index === activeIndex ? item.activeIcon : item.icon"
             />
           </badge>
-          <span :class="[prefix + '-tab-bar_item-text']">{{ item.label }}</span>
+          <span class="fx-tab-bar_item-text">{{ item.label }}</span>
         </li>
       </ul>
     </div>
@@ -35,10 +30,9 @@
 
 <script>
 import tabMixin from './tab-mixin'
-import { SDKKey } from '../config'
 
 export default {
-  name: SDKKey + '-tab-bar',
+  name: 'fx-tab-bar',
   mixins: [tabMixin],
   props: {
     fixed: {
@@ -52,8 +46,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       tabName: 'TabBar'
     }
   },

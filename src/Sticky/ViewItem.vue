@@ -1,15 +1,13 @@
 <template>
-  <div :class="[prefix + '-sticky-view-item']">
-    <div :class="[prefix + '-sticky-view-item_header']">{{ name }}</div>
-    <div :class="[prefix + '-sticky-view-item_body']"><slot></slot></div>
+  <div class="fx-sticky-view-item">
+    <div class="fx-sticky-view-item_header">{{ name }}</div>
+    <div class="fx-sticky-view-item_body"><slot></slot></div>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-sticky-view-item',
+  name: 'fx-sticky-view-item',
   inject: {
     appSticky: {
       default: null
@@ -20,9 +18,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   mounted() {
     const $el = this.$el

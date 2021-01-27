@@ -1,6 +1,6 @@
 <template>
   <drawer
-    :class="[prefix + '-picker-popup']"
+    class="fx-picker-popup"
     placement="bottom"
     :visible="visible"
     @show="onShow"
@@ -36,14 +36,13 @@
 import PickerView from './View.vue'
 import NavBar from '../NavBar'
 import Drawer from '../Drawer'
-import { SDKKey } from '../config'
 import { cloneData, isSameArray } from '../helpers/util'
 import popupExtendMixin from '../util/popup-extend-mixin'
 import mulitSelectorPropsMixin from '../util/mulit-selector/props-mixin'
 import { getDefaultDetail } from '../util/mulit-selector'
 
 export default {
-  name: SDKKey + '-picker-popup',
+  name: 'fx-picker-popup',
   components: { PickerView, NavBar, Drawer },
   mixins: [popupExtendMixin, mulitSelectorPropsMixin],
   props: {
@@ -54,7 +53,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       detail: getDefaultDetail()
     }
   },

@@ -1,24 +1,21 @@
 <template>
-  <div :class="[prefix + '-nav-bar']">
+  <div class="fx-nav-bar">
     <div
-      :class="[
-        prefix + '-nav-bar_inner',
-        prefix + '-horizontal-hairline',
-        { fixed: fixedTop }
-      ]"
+      class="fx-nav-bar_inner fx-horizontal-hairline"
+      :class="{ fixed: fixedTop }"
     >
-      <div :class="[prefix + '-nav-bar_layout']">
-        <div :class="[prefix + '-nav-bar_left']">
+      <div class="fx-nav-bar_layout">
+        <div class="fx-nav-bar_left">
           <slot name="left" v-if="$slots.left"></slot>
           <fx-button-group
             v-else-if="leftButtons.length > 0 || showBack || showHome"
-            :class="[prefix + '-nav-bar_button-group']"
+            class="fx-nav-bar_button-group"
             :shape="buttonShape"
             pattern="borderless"
           >
             <template v-if="leftButtons.length > 0">
               <fx-button
-                :class="[prefix + '-nav-bar_button']"
+                class="fx-nav-bar_button"
                 :type="item.type || 'default'"
                 :icon="item.icon"
                 v-for="(item, index) in leftButtons"
@@ -29,7 +26,7 @@
             </template>
             <template v-else>
               <fx-button
-                :class="[prefix + '-nav-bar_button']"
+                class="fx-nav-bar_button"
                 type="default"
                 icon="LeftOutlined"
                 v-if="showBack"
@@ -37,7 +34,7 @@
                 >返回</fx-button
               >
               <fx-button
-                :class="[prefix + '-nav-bar_button']"
+                class="fx-nav-bar_button"
                 type="default"
                 icon="HomeOutlined"
                 v-if="showHome"
@@ -48,23 +45,23 @@
           </fx-button-group>
         </div>
         <div
-          :class="[prefix + '-nav-bar_title']"
+          class="fx-nav-bar_title"
           @mousedown="onTitleStart"
           @touchstart="onTitleStart"
         >
           {{ title }}
         </div>
-        <div :class="[prefix + '-nav-bar_right']">
+        <div class="fx-nav-bar_right">
           <slot name="right" v-if="$slots.right"></slot>
           <template v-else>
             <fx-button-group
-              :class="[prefix + '-nav-bar_button-group']"
+              class="fx-nav-bar_button-group"
               :shape="buttonShape"
               pattern="borderless"
               v-if="rightButtons.length > 0"
             >
               <fx-button
-                :class="[prefix + '-nav-bar_button']"
+                class="fx-nav-bar_button"
                 :type="item.type || 'default'"
                 :icon="item.icon"
                 v-for="(item, index) in rightButtons"
@@ -83,7 +80,6 @@
 <script>
 import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
-import { SDKKey } from '../config'
 import { isArray, isString } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
@@ -106,7 +102,7 @@ function validateButtons(val) {
 }
 
 export default {
-  name: SDKKey + '-nav-bar',
+  name: 'fx-nav-bar',
   components: { FxButton, FxButtonGroup },
   props: {
     // 标题
@@ -149,9 +145,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     buttonShape() {

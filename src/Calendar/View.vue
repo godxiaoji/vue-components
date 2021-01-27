@@ -1,66 +1,55 @@
 <template>
-  <div :class="[prefix + '-calendar-view']">
-    <div :class="[prefix + '-calendar-view_header']">
-      <div :class="[prefix + '-calendar-view_weekdays']">
+  <div class="fx-calendar-view">
+    <div class="fx-calendar-view_header">
+      <div class="fx-calendar-view_weekdays">
         <span
-          :class="[
-            prefix + '-calendar-view_weekday',
-            { highlight: weekDay.value === 0 || weekDay.value === 6 }
-          ]"
+          class="fx-calendar-view_weekday"
+          :class="{ highlight: weekDay.value === 0 || weekDay.value === 6 }"
           v-for="weekDay in weekDays"
           :key="weekDay.value"
           >{{ weekDay.label }}</span
         >
       </div>
     </div>
-    <div :class="[prefix + '-calendar-view_body']">
+    <div class="fx-calendar-view_body">
       <template
-        :class="[prefix + '-calendar-view_month']"
+        class="fx-calendar-view_month"
         v-for="(month, monthIndex) in months"
       >
-        <div
-          :class="[prefix + '-calendar-view_month-caption']"
-          :key="month.caption"
-        >
+        <div class="fx-calendar-view_month-caption" :key="month.caption">
           {{ month.caption }}
         </div>
         <div
-          :class="[prefix + '-calendar-view_days']"
+          class="fx-calendar-view_days"
           :key="month.monthString"
           :data-index="monthIndex"
           @click="onDaysClick"
         >
           <div
-            :class="[
-              prefix + '-calendar-view_day',
-              {
-                disabled: day.state === 'disabled',
-                selected:
-                  day.state === 'selected' ||
-                  day.state === 'startSelected' ||
-                  day.state === 'endSelected',
-                'in-range': type === 'range' && day.state === 'selected'
-              }
-            ]"
+            class="fx-calendar-view_day"
+            :class="{
+              disabled: day.state === 'disabled',
+              selected:
+                day.state === 'selected' ||
+                day.state === 'startSelected' ||
+                day.state === 'endSelected',
+              'in-range': type === 'range' && day.state === 'selected'
+            }"
             v-for="(day, dayIndex) in month.days"
             :key="dayIndex"
             :data-index="dayIndex"
           >
             <span
               v-if="day.topText"
-              :class="[
-                prefix + '-calendar-view_day-top-text',
-                { highlight: day.topHighlight }
-              ]"
+              class="fx-calendar-view_day-top-text"
+              :class="{ highlight: day.topHighlight }"
               >{{ day.topText }}</span
             >
             {{ day.text }}
             <span
               v-if="day.bottomText"
-              :class="[
-                prefix + '-calendar-view_day-bottom-text',
-                { highlight: day.bottomHighlight }
-              ]"
+              class="fx-calendar-view_day-bottom-text"
+              :class="{ highlight: day.bottomHighlight }"
               >{{ day.bottomText }}</span
             >
           </div>
@@ -71,7 +60,6 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import dayjs from 'dayjs'
 import { isDate } from '../helpers/util'
 import { showToast } from '../apis/Toast'
@@ -95,7 +83,7 @@ function printError(message) {
 }
 
 export default {
-  name: SDKKey + '-calendar-view',
+  name: 'fx-calendar-view',
   inject: {
     appCalendarPopup: {
       default: null
@@ -104,8 +92,6 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      prefix: SDKKey,
-
       type: TYPE_NAMES[0],
 
       weekDays: [],

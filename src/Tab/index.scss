@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-tab {
+.fx-tab {
   --tab-active-color: #{$title-color};
   --tab-color: #{$font-color};
   background-color: #fff;
@@ -64,14 +64,14 @@
       color: var(--tab-active-color);
       font-weight: 700;
 
-      .#{$prefix}-tab_item-inner::before {
+      .fx-tab_item-inner::before {
         content: '';
       }
     }
   }
 
   &.no--scroll:not(.vertical) {
-    .#{$prefix}-tab {
+    .fx-tab {
       &_list {
         display: flex;
         padding: 0;
@@ -96,7 +96,7 @@
     height: 100%;
     background-color: $background-color;
 
-    .#{$prefix}-tab {
+    .fx-tab {
       &_list {
         overflow-x: hidden;
         overflow-y: auto;
@@ -135,7 +135,7 @@
     }
 
     &.no--scroll {
-      .#{$prefix}-tab {
+      .fx-tab {
         &_list {
           display: flex;
           flex-direction: column;

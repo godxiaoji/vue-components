@@ -1,9 +1,7 @@
 <template>
   <div
-    :class="[
-      prefix + '-radio-group',
-      { vertical: !inline, disabled: !!disabled }
-    ]"
+    class="fx-radio-group"
+    :class="{ vertical: !inline, disabled: !!disabled }"
   >
     <slot></slot>
   </div>
@@ -11,12 +9,11 @@
 
 <script>
 import { cloneData, isStringNumberMix } from '../helpers/util'
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import groupMixin from '../util/group-mixin'
 
 export default {
-  name: SDKKey + '-radio-group',
+  name: 'fx-radio-group',
   mixins: [formMixin, groupMixin],
   provide() {
     return {
@@ -35,8 +32,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: ''
     }
   },

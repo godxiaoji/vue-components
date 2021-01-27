@@ -73,6 +73,7 @@ import Divider from './Divider'
 import Collapse from './Collapse'
 import CollapseItem from './CollapseItem'
 import Badge from './Badge'
+import SearchBar from './SearchBar'
 
 /* Other */
 import Copy from './Copy'
@@ -148,5 +149,6 @@ export {
   IndexViewItem,
   TabBar,
   Scroll,
-  LocalStorage
+  LocalStorage,
+  SearchBar
 }

@@ -1,20 +1,16 @@
 <template>
   <div
-    :class="[
-      prefix + '-skeleton-avatar',
-      shapeClassName,
-      { animated: useAnimation }
-    ]"
+    class="fx-skeleton-avatar"
+    :class="[shapeClassName, { animated: useAnimation }]"
   ></div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
 import { AVATAR_SHAPE_NAMES } from './util'
 
 export default {
-  name: SDKKey + '-skeleton-avatar',
+  name: 'fx-skeleton-avatar',
   inject: {
     skeletonSubOptions: {
       default: null
@@ -33,9 +29,6 @@ export default {
       },
       default: null
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     shapeClassName() {

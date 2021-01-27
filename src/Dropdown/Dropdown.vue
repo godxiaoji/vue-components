@@ -1,25 +1,25 @@
 <template>
   <div
-    :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]"
+    class="fx-dropdown fx-popup"
+    :class="{ visible: visible2 }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-dropdown_inner']">
+    <div class="fx-mask" @click="onMaskClick"></div>
+    <div class="fx-dropdown_inner">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { selectorValidator } from '../helpers/validator'
 import Exception from '../helpers/exception'
 import { getElement } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-dropdown',
+  name: 'fx-dropdown',
   mixins: [popupMixin],
   props: {
     selector: {
@@ -29,8 +29,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       top: -1
     }
   },

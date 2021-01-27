@@ -1,24 +1,19 @@
 <template>
-  <div :class="[prefix + '-copy']" @click="onCopy">
-    <input type="text" :value="text" :class="[prefix + '-copy_input']" />
-    <div :class="[prefix + '-copy_box']"><slot>复制</slot></div>
+  <div class="fx-copy" @click="onCopy">
+    <input type="text" :value="text" class="fx-copy_input" />
+    <div class="fx-copy_box"><slot>复制</slot></div>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-copy',
+  name: 'fx-copy',
   props: {
     // 需要复制的文本
     text: {
       type: String,
       required: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   methods: {
     /**

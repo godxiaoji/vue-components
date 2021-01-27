@@ -1,6 +1,6 @@
 <template>
   <drawer
-    :class="[prefix + '-calendar-popup']"
+    class="fx-calendar-popup"
     placement="bottom"
     :visible="visible"
     :title="title || null"
@@ -23,7 +23,7 @@
       :max-range="maxRange"
       :day-handler="dayHandler"
     />
-    <div :class="[prefix + '-calendar-popup_confirm']" v-if="showConfirm">
+    <div class="fx-calendar-popup_confirm" v-if="showConfirm">
       <fx-button
         type="primary"
         @click="onConfirmClick"
@@ -38,13 +38,12 @@
 import CalendarView from './View.vue'
 import Drawer from '../Drawer'
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import popupExtendMixin from '../util/popup-extend-mixin'
 import mixin from './mixin'
 import { getDefaultDetail, cloneDetail } from './util'
 
 export default {
-  name: SDKKey + '-calendar-popup',
+  name: 'fx-calendar-popup',
   components: { CalendarView, Drawer, FxButton },
   mixins: [popupExtendMixin, mixin],
   provide() {
@@ -68,8 +67,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       detail: getDefaultDetail()
     }
   },

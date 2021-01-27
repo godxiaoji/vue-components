@@ -1,11 +1,10 @@
 <template>
-  <div :class="[prefix + '-swiper-item', prefix + '-tab-view-item']">
+  <div class="fx-swiper-item fx-tab-view-item">
     <slot></slot>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { touchEvent } from '../helpers/events'
 
 const {
@@ -18,7 +17,7 @@ const {
 } = touchEvent
 
 export default {
-  name: SDKKey + '-tab-view-item',
+  name: 'fx-tab-view-item',
   inject: {
     appSwiper: {
       default: null
@@ -32,9 +31,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   mounted() {
     const $el = this.$el

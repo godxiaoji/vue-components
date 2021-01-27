@@ -19,7 +19,7 @@ describe('FlatList', () => {
         data
       },
       scopedSlots: {
-        item: `<div>{{ props.item.text }}</div>`
+        default: `<div>{{ props.item.text }}</div>`
       }
     })
 

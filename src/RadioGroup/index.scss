@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-radio-group {
+.fx-radio-group {
   display: flex;
   height: 32px;
   align-items: center;
@@ -13,11 +13,11 @@
     height: auto;
     min-height: 32px;
 
-    .#{$prefix}-radio {
+    .fx-radio {
       display: flex;
       width: 100%;
 
-      + .#{$prefix}-radio {
+      + .fx-radio {
         margin-left: 0;
 
         &::before {

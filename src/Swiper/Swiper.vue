@@ -1,22 +1,22 @@
 <template>
   <div
-    :class="[prefix + '-swiper', { vertical: direction === 'y' }]"
+    class="fx-swiper"
+    :class="{ vertical: direction === 'y' }"
     @click="onClick"
   >
-    <div :class="[prefix + '-swiper_list']" ref="list">
+    <div class="fx-swiper_list" ref="list">
       <slot></slot>
     </div>
     <div
-      :class="[prefix + '-swiper_indicators', { vertical: direction === 'y' }]"
+      class="fx-swiper_indicators"
+      :class="{ vertical: direction === 'y' }"
       v-show="indicatorDots"
     >
       <span
         v-for="item in pagination"
         :key="item.index"
-        :class="[
-          prefix + '-swiper_indicator',
-          { active: item.index === index }
-        ]"
+        class="fx-swiper_indicator"
+        :class="{ active: item.index === index }"
         :style="{
           background:
             item.index === index ? indicatorActiveColor : indicatorColor
@@ -25,8 +25,8 @@
     </div>
     <fx-button
       v-if="navigationButtons"
-      v-show="this.pagination.length > 1"
-      :class="[prefix + '-swiper_prev']"
+      v-show="pagination.length > 1"
+      class="fx-swiper_prev"
       @click.stop="prev(true)"
       icon="LeftOutlined"
       size="large"
@@ -36,8 +36,8 @@
     ></fx-button>
     <fx-button
       v-if="navigationButtons"
-      v-show="this.pagination.length > 1"
-      :class="[prefix + '-swiper_next']"
+      v-show="pagination.length > 1"
+      class="fx-swiper_next"
       @click.stop="next(true)"
       icon="RightOutlined"
       size="large"
@@ -50,7 +50,6 @@
 
 <script>
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import { resizeDetector } from '../helpers/dom'
 import Exception from '../helpers/exception'
 import {
@@ -74,7 +73,7 @@ const {
 
 // export
 export default {
-  name: SDKKey + '-swiper',
+  name: 'fx-swiper',
   components: { FxButton },
   mixins: [listMixin],
   provide() {
@@ -136,8 +135,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       index: 0,
       pagination: [],
       $items: [],

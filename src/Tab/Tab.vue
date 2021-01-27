@@ -1,30 +1,26 @@
 <template>
   <div
-    :class="[
-      prefix + '-tab',
-      { vertical, 'no--scroll': options2.length <= scrollThreshold }
-    ]"
+    class="fx-tab"
+    :class="{ vertical, 'no--scroll': options2.length <= scrollThreshold }"
   >
-    <ul :class="[prefix + '-tab_list']" ref="list">
+    <ul class="fx-tab_list" ref="list">
       <li
-        :class="[
-          prefix + '-tab_item',
-          {
-            active: index === activeIndex,
-            'active-prev': index === activeIndex - 1,
-            'active-next': index === activeIndex + 1
-          }
-        ]"
+        class="fx-tab_item"
+        :class="{
+          active: index === activeIndex,
+          'active-prev': index === activeIndex - 1,
+          'active-next': index === activeIndex + 1
+        }"
         v-for="(item, index) in options2"
         :key="item.value"
         @click="onChange(item.value)"
       >
-        <badge :class="[prefix + '-tab_item-inner']" v-bind="item.badge">
+        <badge class="fx-tab_item-inner" v-bind="item.badge">
           <icon
             v-if="item.icon"
             :icon="index === activeIndex ? item.activeIcon : item.icon"
           />
-          <span :class="[prefix + '-tab_item-text']">{{ item.label }}</span>
+          <span class="fx-tab_item-text">{{ item.label }}</span>
         </badge>
       </li>
     </ul>
@@ -33,11 +29,10 @@
 
 <script>
 import tabMixin from './tab-mixin'
-import { SDKKey } from '../config'
 import { frameTo } from '../helpers/animation'
 
 export default {
-  name: SDKKey + '-tab',
+  name: 'fx-tab',
   mixins: [tabMixin],
   props: {
     // 纵向
@@ -48,11 +43,6 @@ export default {
     scrollThreshold: {
       type: Number,
       default: 4
-    }
-  },
-  data() {
-    return {
-      prefix: SDKKey
     }
   },
   mounted() {

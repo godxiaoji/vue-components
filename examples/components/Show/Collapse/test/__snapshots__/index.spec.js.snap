@@ -4,7 +4,7 @@ exports[`Collapse Collapse should render default correctly 1`] = `<div class="fx
 
 exports[`Collapse CollapseItem should render default correctly 1`] = `
 <div class="fx-collapse-item fx-horizontal-hairline">
-  <div class="fx-cell clickable fx-horizontal-hairline fx-collapse-item_header">
+  <div class="fx-cell fx-horizontal-hairline fx-collapse-item_header clickable">
     <div class="fx-cell_cover"></div>
     <div class="fx-cell_inner">
       <!---->

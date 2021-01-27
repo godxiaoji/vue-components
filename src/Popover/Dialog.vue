@@ -1,29 +1,20 @@
 <template>
   <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-pop-dialog',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
+    class="fx-popover fx-popup fx-pop-dialog"
+    :class="{ visible: visible2, 'no--mask': !showMask }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
-        <div :class="[prefix + '-pop-dialog_body']">
-          <div :class="[prefix + '-popover_text']">{{ content }}</div>
+    <div class="fx-mask" @click="onMaskClick"></div>
+    <div class="fx-popover_inner" ref="inner" :style="innerStyles">
+      <i class="fx-popover_arrow" :style="arrowStyles"></i>
+      <div class="fx-popover_content">
+        <div class="fx-pop-dialog_body">
+          <div class="fx-popover_text">{{ content }}</div>
         </div>
-        <div
-          :class="[
-            prefix + '-pop-dialog_footer',
-            prefix + '-horizontal-hairline'
-          ]"
-        >
+        <div class="fx-pop-dialog_footer fx-horizontal-hairline">
           <fx-button-group
-            :class="[prefix + '-pop-dialog_footer-inner']"
+            class="fx-pop-dialog_footer-inner"
             pattern="borderless"
             size="middle"
           >
@@ -44,10 +35,9 @@
 import Popover from './Popover.vue'
 import FxButton from '../Button/Button.vue'
 import FxButtonGroup from '../Button/Group.vue'
-import { SDKKey } from '../config'
 
 export default {
-  name: SDKKey + '-pop-dialog',
+  name: 'fx-pop-dialog',
   extends: Popover,
   components: { FxButton, FxButtonGroup },
   props: {

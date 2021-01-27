@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-form-item']" @click="onClick">
+  <div class="fx-form-item" @click="onClick">
     <cell :label="label" :description="errMsg" :required="required">
       <slot></slot>
     </cell>
@@ -9,11 +9,10 @@
 <script>
 import Cell from '../Cell'
 import Schema from 'async-validator'
-import { SDKKey } from '../config'
 import { isArray, isBoolean, isNumber } from '../helpers/util'
 
 export default {
-  name: SDKKey + '-form-item',
+  name: 'fx-form-item',
   components: { Cell },
   provide() {
     return {
@@ -38,7 +37,7 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, errMsg: '' }
+    return { errMsg: '' }
   },
   created() {
     this.appForm && this.appForm.addChild(this)

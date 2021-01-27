@@ -1,26 +1,21 @@
 <template>
   <div
-    :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
+    class="fx-drawer fx-popup"
+    :class="{ visible: visible2 }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+    <div class="fx-mask" @click="onMaskClick"></div>
     <div
-      :class="[
-        prefix + '-drawer_inner',
-        alignClassName,
-        { 'has--header': hasHeader }
-      ]"
+      class="fx-drawer_inner"
+      :class="[alignClassName, { 'has--header': hasHeader }]"
     >
-      <div
-        v-show="hasHeader"
-        :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
-      >
-        <div :class="[prefix + '-drawer_header-inner']">
-          <div :class="[prefix + '-drawer_title']">{{ title }}</div>
+      <div v-show="hasHeader" class="fx-drawer_header fx-horizontal-hairline">
+        <div class="fx-drawer_header-inner">
+          <div class="fx-drawer_title">{{ title }}</div>
           <fx-button
             v-if="showClose"
-            :class="[prefix + '-drawer_close']"
+            class="fx-drawer_close"
             shape="square"
             icon="CloseOutlined"
             pattern="borderless"
@@ -28,7 +23,7 @@
           ></fx-button>
         </div>
       </div>
-      <div :class="[prefix + '-drawer_body']">
+      <div class="fx-drawer_body">
         <slot></slot>
       </div>
     </div>
@@ -37,12 +32,11 @@
 
 <script>
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-drawer',
+  name: 'fx-drawer',
   mixins: [popupMixin],
   components: { FxButton },
   props: {
@@ -56,11 +50,6 @@ export default {
     showClose: {
       type: Boolean,
       default: false
-    }
-  },
-  data() {
-    return {
-      prefix: SDKKey
     }
   },
   computed: {

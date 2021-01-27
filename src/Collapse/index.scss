@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-collapse-item {
+.fx-collapse-item {
   &_body {
     overflow: hidden;
     transition: height 0.2s;
@@ -17,18 +17,18 @@
     line-height: 20px;
   }
 
-  + .#{$prefix}-collapse-item::before {
+  + .fx-collapse-item::before {
     content: '';
   }
 
   &_header {
-    .#{$prefix}-cell_link-icon {
+    .fx-cell_link-icon {
       transition: transform 0.2s;
     }
   }
 
   &.active {
-    .#{$prefix}-collapse-item_header .#{$prefix}-cell_link-icon {
+    .fx-collapse-item_header .fx-cell_link-icon {
       transform: rotate(180deg);
     }
   }

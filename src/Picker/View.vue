@@ -1,21 +1,19 @@
 <template>
-  <div :class="[prefix + '-picker-view']" ref="picker">
-    <div :class="[prefix + '-picker-view_cols']">
+  <div class="fx-picker-view" ref="picker">
+    <div class="fx-picker-view_cols">
       <div
-        :class="[prefix + '-picker-view_col']"
+        class="fx-picker-view_col"
         v-for="(list, listIndex) in cols"
         :key="listIndex"
       >
         <ul
-          :class="[prefix + '-picker-view_list']"
+          class="fx-picker-view_list"
           :data-index="listIndex"
           @scroll.stop="onListScroll"
         >
           <li
-            :class="[
-              prefix + '-picker-view_item',
-              { selected: item.selected, disabled: item.disabled }
-            ]"
+            class="fx-picker-view_item"
+            :class="{ selected: item.selected, disabled: item.disabled }"
             v-for="(item, index) in list"
             :key="item.value"
             :data-index="index"
@@ -30,16 +28,14 @@
 
 <script>
 import { frameTo } from '../helpers/animation'
-import { SDKKey } from '../config'
 import mulitSelectorMixin from '../util/mulit-selector/mixin'
 import { hasClassName } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-picker-view',
+  name: 'fx-picker-view',
   mixins: [mulitSelectorMixin],
   data() {
     return {
-      prefix: SDKKey,
       itemHeight: 48,
       picker: true
     }
@@ -76,7 +72,7 @@ export default {
         const $picker = this.$refs.picker
 
         if ($picker) {
-          const $lists = $picker.querySelectorAll(`.${SDKKey}-picker-view_list`)
+          const $lists = $picker.querySelectorAll(`.fx-picker-view_list`)
           const $firstList = $lists[0]
 
           if ($firstList && $firstList.firstElementChild) {

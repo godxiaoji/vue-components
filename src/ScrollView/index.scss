@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-scroll-view {
+.fx-scroll-view {
   display: block;
   width: 100%;
   overflow: hidden;
@@ -24,12 +24,12 @@
     overflow: hidden;
     transform: translateZ(0);
 
-    .#{$prefix}-scroll-view.scroll-x & {
+    .fx-scroll-view.scroll-x & {
       display: inline-block;
       vertical-align: top;
     }
 
-    .#{$prefix}-scroll-view.scroll-x:not(.scroll-y) & {
+    .fx-scroll-view.scroll-x:not(.scroll-y) & {
       height: 100%;
     }
   }
@@ -39,7 +39,7 @@
     min-height: 100%;
     min-width: 100%;
 
-    .#{$prefix}-scroll-view.scroll-x:not(.scroll-y) & {
+    .fx-scroll-view.scroll-x:not(.scroll-y) & {
       height: 100%;
     }
   }
@@ -65,7 +65,7 @@
       box-sizing: border-box;
       height: 48px;
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --size: 18px;
         --color: #{$font-color};
         margin-right: 8px;
@@ -99,12 +99,12 @@
       align-items: center;
       transform: translate3d(-100%, 0, 0);
 
-      .#{$prefix}-scroll-view_pull-refresh-indicator {
+      .fx-scroll-view_pull-refresh-indicator {
         width: 48px;
         height: 100%;
         flex-direction: column;
 
-        .#{$prefix}-icon {
+        .fx-icon {
           margin: 0 0 8px 0;
         }
 

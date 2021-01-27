@@ -1,21 +1,18 @@
 <template>
   <div
-    :class="[
-      prefix + '-toast',
-      prefix + '-popup',
-      { visible: visible2, 'forbid-click': mask }
-    ]"
+    class="fx-toast fx-popup"
+    :class="{ visible: visible2, 'forbid-click': mask }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-toast_box', { 'has--icon': !!iconName }]">
+    <div class="fx-toast_box" :class="{ 'has--icon': !!iconName }">
       <icon
         v-if="iconName"
-        :class="[prefix + '-toast_icon']"
+        class="fx-toast_icon"
         :icon="iconName"
         :spin="type === 'loading'"
       />
-      <div :class="[prefix + '-toast_text']">
+      <div class="fx-toast_text">
         {{ title }}
       </div>
     </div>
@@ -24,7 +21,6 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { isUndefined } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
@@ -37,7 +33,7 @@ const TYPE_MAP = {
 }
 
 export default {
-  name: SDKKey + '-toast',
+  name: 'fx-toast',
   components: { Icon },
   mixins: [popupMixin],
   props: {
@@ -66,7 +62,7 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, forbidScroll: false }
+    return { forbidScroll: false }
   },
   computed: {
     iconName() {

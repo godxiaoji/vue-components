@@ -1,11 +1,11 @@
 <template>
-  <div :class="[prefix + '-skeleton', { animated }]">
+  <div class="fx-skeleton" :class="{ animated }">
     <slot>
-      <div :class="[prefix + '-skeleton_layout']">
-        <div :class="[prefix + '-skeleton_layout-left']" v-if="avatar">
+      <div class="fx-skeleton_layout">
+        <div class="fx-skeleton_layout-left" v-if="avatar">
           <skeleton-avatar />
         </div>
-        <div :class="[prefix + '-skeleton_layout-right']">
+        <div class="fx-skeleton_layout-right">
           <skeleton-title />
           <skeleton-paragraph />
         </div>
@@ -15,21 +15,17 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import SkeletonAvatar from './Avatar.vue'
 import SkeletonTitle from './Title.vue'
 import SkeletonParagraph from './Paragraph.vue'
 
 export default {
-  name: SDKKey + '-skeleton-layout',
+  name: 'fx-skeleton-layout',
   props: { animated: Boolean, avatar: Boolean },
   components: {
     SkeletonAvatar,
     SkeletonTitle,
     SkeletonParagraph
-  },
-  data() {
-    return { prefix: SDKKey }
   }
 }
 </script>

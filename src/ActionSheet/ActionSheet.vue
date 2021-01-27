@@ -1,6 +1,6 @@
 <template>
   <drawer
-    :class="[prefix + '-action-sheet']"
+    class="fx-action-sheet"
     placement="bottom"
     :visible="visible"
     @show="onShow"
@@ -11,34 +11,23 @@
     @update:visible="onUpdateVisible"
     ref="popup"
   >
-    <div
-      :class="[
-        prefix + '-action-sheet_header',
-        prefix + '-horizontal-hairline'
-      ]"
-      v-if="title"
-    >
-      <div :class="[prefix + '-action-sheet_title']" v-if="title">
+    <div class="fx-action-sheet_header fx-horizontal-hairline" v-if="title">
+      <div class="fx-action-sheet_title" v-if="title">
         {{ title }}
       </div>
     </div>
-    <div :class="[prefix + '-action-sheet_body']">
-      <ul :class="[prefix + '-action-sheet_list']">
+    <div class="fx-action-sheet_body">
+      <ul class="fx-action-sheet_list">
         <li
-          :class="[
-            prefix + '-action-sheet_item',
-            prefix + '-horizontal-hairline',
-            { disabled: !!item.disabled }
-          ]"
+          class="fx-action-sheet_item fx-horizontal-hairline"
+          :class="{ disabled: !!item.disabled }"
           v-for="(item, index) in options2"
           :key="index"
           @click="onItemClick(index)"
         >
           <div
-            :class="[
-              prefix + '-action-sheet_item-inner',
-              { highlight: item.highlight }
-            ]"
+            class="fx-action-sheet_item-inner"
+            :class="{ highlight: item.highlight }"
           >
             <span>{{ item.name }}</span>
             <small v-if="item.description">{{ item.description }}</small>
@@ -46,19 +35,13 @@
         </li>
       </ul>
     </div>
-    <div :class="[prefix + '-action-sheet_footer']" v-if="showCancel">
-      <ul :class="[prefix + '-action-sheet_list']">
+    <div class="fx-action-sheet_footer" v-if="showCancel">
+      <ul class="fx-action-sheet_list">
         <li
-          :class="[
-            prefix + '-action-sheet_item',
-            prefix + '-horizontal-hairline'
-          ]"
+          class="fx-action-sheet_item fx-horizontal-hairline"
           @click="onCancelClick"
         >
-          <div
-            class="align--center"
-            :class="[prefix + '-action-sheet_item-inner']"
-          >
+          <div class="fx-action-sheet_item-inner align--center">
             <span>{{ cancelText }}</span>
           </div>
         </li>
@@ -69,12 +52,11 @@
 
 <script>
 import Drawer from '../Drawer'
-import { SDKKey } from '../config'
 import { isArray, isObject, cloneData } from '../helpers/util'
 import popupExtendMixin from '../util/popup-extend-mixin'
 
 export default {
-  name: SDKKey + '-action-sheet',
+  name: 'fx-action-sheet',
   components: { Drawer },
   mixins: [popupExtendMixin],
   props: {
@@ -95,11 +77,6 @@ export default {
       default() {
         return []
       }
-    }
-  },
-  data() {
-    return {
-      prefix: SDKKey
     }
   },
   computed: {

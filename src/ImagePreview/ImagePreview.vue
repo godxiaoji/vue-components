@@ -1,14 +1,11 @@
 <template>
   <div
-    :class="[
-      prefix + '-preview-image',
-      prefix + '-popup',
-      { visible: visible2 }
-    ]"
+    class="fx-preview-image fx-popup"
+    :class="{ visible: visible2 }"
     :style="{ zIndex }"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']"></div>
+    <div class="fx-mask"></div>
     <swiper
       :activeIndex.sync="activeIndex"
       :navigation-buttons="navigationButtons"
@@ -17,7 +14,7 @@
       @animated="onSwiperAnimated"
     >
       <swiper-item v-for="(item, index) in images" :key="index">
-        <div :class="[prefix + '-preview-image_image-container']">
+        <div class="fx-preview-image_image-container">
           <fx-image
             :src="item.src"
             :mode="'aspectFit'"
@@ -36,12 +33,12 @@
         </div>
       </swiper-item>
     </swiper>
-    <div :class="[prefix + '-preview-image_pagination']">
+    <div class="fx-preview-image_pagination">
       {{ activeIndex + 1 }} / {{ urls.length }}
     </div>
     <fx-button
       v-if="showClose"
-      :class="[prefix + '-preview-image_close']"
+      class="fx-preview-image_close"
       @click.stop="onCloseClick"
       icon="CloseOutlined"
       size="large"
@@ -57,12 +54,11 @@ import FxButton from '../Button'
 import FxImage from '../Image'
 import Swiper from '../Swiper'
 import SwiperItem from '../SwiperItem'
-import { SDKKey } from '../config'
 import { isStringArray, rangeNumber } from '../helpers/util'
 import popupMixin from '../util/popup-mixin'
 
 export default {
-  name: SDKKey + '-image-preview',
+  name: 'fx-image-preview',
   components: { FxButton, Swiper, SwiperItem, FxImage },
   mixins: [popupMixin],
   props: {
@@ -91,7 +87,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       activeIndex: 0,
       images: [],
       visible2: false,

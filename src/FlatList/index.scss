@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-flat-list {
+.fx-flat-list {
   position: relative;
   display: block;
   width: 100%;
@@ -27,7 +27,7 @@
 
   &_header,
   &_footer {
-    .#{$prefix}-flat-list.horizontal & {
+    .fx-flat-list.horizontal & {
       display: inline-block;
       vertical-align: top;
     }
@@ -36,7 +36,7 @@
   &.horizontal {
     white-space: nowrap;
 
-    .#{$prefix}-flat-list {
+    .fx-flat-list {
       &_list {
         display: inline-flex;
         height: 100%;
@@ -61,7 +61,7 @@
     box-sizing: border-box;
     height: 48px;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 18px;
       --color: #{$font-color};
       margin-right: 8px;

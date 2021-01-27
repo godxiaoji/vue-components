@@ -1,6 +1,5 @@
 <script>
 import SkeletonLayout from './Layout.vue'
-import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
 import {
   paragraphDefaultRow,
@@ -15,14 +14,14 @@ export default {
         if (this.$slots.default.length > 1) {
           return createElement(
             'div',
-            { class: [SDKKey + '-skeleton_loaded'] },
+            { class: ['fx-skeleton_loaded'] },
             this.$slots.default
           )
         }
         return this.$slots.default
       }
 
-      return createElement('div', { class: [SDKKey + '-skeleton_loaded'] })
+      return createElement('div', { class: ['fx-skeleton_loaded'] })
     }
 
     return createElement(
@@ -36,7 +35,7 @@ export default {
       this.$slots.layout
     )
   },
-  name: SDKKey + '-skeleton',
+  name: 'fx-skeleton',
   components: {
     SkeletonLayout
   },
@@ -83,7 +82,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       subOptions: {
         avatarShape: AVATAR_SHAPE_NAMES[0],
         buttonShape: BUTTON_SHAPE_NAMES[0],

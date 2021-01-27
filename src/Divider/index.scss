@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-divider {
+.fx-divider {
   --divider-font-color: #{$font3-color};
   --divider-border-color: #{$divider-color};
 
@@ -10,7 +10,7 @@
   border: 0 solid var(--divider-border-color);
   color: var(--divider-font-color);
 
-  &.#{$prefix}-horizontal-hairline {
+  &.fx-horizontal-hairline {
     &::before,
     &::after {
       flex: 1;

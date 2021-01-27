@@ -1,11 +1,11 @@
 @import '../style/var.scss';
 
-.#{$prefix}-preview-image {
-  .#{$prefix}-mask {
+.fx-preview-image {
+  .fx-mask {
     background-color: rgba($color: $black-color, $alpha: 0.9);
   }
 
-  .#{$prefix}-swiper {
+  .fx-swiper {
     display: block;
     width: 100%;
     height: 100%;
@@ -14,7 +14,7 @@
   }
 
   &.visible {
-    .#{$prefix}-swiper {
+    .fx-swiper {
       opacity: 1;
     }
   }
@@ -28,7 +28,7 @@
     transform: translateZ();
     overflow: hidden;
 
-    .#{$prefix}-image {
+    .fx-image {
       position: absolute;
       left: 50%;
       top: 50%;

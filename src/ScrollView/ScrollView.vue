@@ -1,7 +1,7 @@
 <template>
   <div
+    class="fx-scroll-view"
     :class="[
-      prefix + '-scroll-view',
       {
         'scroll-x': scrollX,
         'scroll-y': scrollY,
@@ -11,15 +11,13 @@
     ref="scroll"
     @scroll="onScroll"
   >
-    <div :class="[prefix + '-scroll-view_inner']">
-      <div :class="[prefix + '-scroll-view_content']" :style="contentStyles">
+    <div class="fx-scroll-view_inner">
+      <div class="fx-scroll-view_content" :style="contentStyles">
         <div
           v-show="!lowerLoading"
           v-if="enablePullDirections.length > 0"
-          :class="[
-            prefix + '-scroll-view_pull-refresh',
-            'direction--' + (pullDirection || 'unknown')
-          ]"
+          class="fx-scroll-view_pull-refresh"
+          :class="['direction--' + (pullDirection || 'unknown')]"
         >
           <slot
             v-bind:pullDirection="pullDirection"
@@ -28,7 +26,7 @@
             name="indicator"
           >
             <div
-              :class="[prefix + '-scroll-view_pull-refresh-indicator']"
+              class="fx-scroll-view_pull-refresh-indicator"
               :style="indicatorStyles"
             >
               <icon
@@ -57,7 +55,6 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import {
   inArray,
   isArray,
@@ -85,8 +82,13 @@ const PULL_REFRESH_STATE_HOLDING = 'holding'
 const PULL_REFRESH_STATE_REFRESHING = 'refreshing'
 
 export default {
-  name: SDKKey + '-scroll-view',
+  name: 'fx-scroll-view',
   components: { Icon },
+  provide() {
+    return {
+      disableFixed: true
+    }
+  },
   props: {
     // 允许横向滚动
     scrollX: {
@@ -144,8 +146,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       pullRefreshState: PULL_REFRESH_STATE_PULLING,
       pullDistance: 0,
       translateDuration: 200,

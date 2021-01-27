@@ -1,16 +1,15 @@
 <template>
-  <form :class="[prefix + '-form']" @submit.prevent="onSubmit" @reset="onReset">
+  <form class="fx-form" @submit.prevent="onSubmit" @reset="onReset">
     <slot></slot>
   </form>
 </template>
 
 <script>
 import { inArray, isUndefined } from '../helpers/util'
-import { SDKKey } from '../config'
 import groupMixin from '../util/group-mixin'
 
 export default {
-  name: SDKKey + '-form',
+  name: 'fx-form',
   mixins: [groupMixin],
   provide() {
     return {
@@ -19,9 +18,6 @@ export default {
   },
   props: {
     rules: Object
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   methods: {
     onSubmit(e) {

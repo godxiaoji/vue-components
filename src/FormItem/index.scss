@@ -1,17 +1,17 @@
 @import '../style/var.scss';
 
-.#{$prefix}-form-item {
+.fx-form-item {
   display: block;
 
-  > .#{$prefix}-cell {
-    .#{$prefix}-cell {
+  > .fx-cell {
+    .fx-cell {
       &_description {
         color: $danger-color;
       }
     }
   }
 
-  + .#{$prefix}-form-item .#{$prefix}-cell::before {
+  + .fx-form-item .fx-cell::before {
     content: '';
     margin-left: 16px;
   }

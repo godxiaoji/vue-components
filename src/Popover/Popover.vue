@@ -1,19 +1,16 @@
 <template>
   <div
-    :class="[
-      prefix + '-popover',
-      prefix + '-popup',
-      { visible: visible2, 'no--mask': !showMask }
-    ]"
+    class="fx-popover fx-popup"
+    :class="{ visible: visible2, 'no--mask': !showMask }"
     :style="popupStyles"
     v-show="isShow"
   >
-    <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-    <div :class="[prefix + '-popover_inner']" ref="inner" :style="innerStyles">
-      <i :class="[prefix + '-popover_arrow']" :style="arrowStyles"></i>
-      <div :class="[prefix + '-popover_content']">
+    <div class="fx-mask" @click="onMaskClick"></div>
+    <div class="fx-popover_inner" ref="inner" :style="innerStyles">
+      <i class="fx-popover_arrow" :style="arrowStyles"></i>
+      <div class="fx-popover_content">
         <slot>
-          <div :class="[prefix + '-popover_text']">{{ content }}</div>
+          <div class="fx-popover_text">{{ content }}</div>
         </slot>
       </div>
     </div>
@@ -22,7 +19,6 @@
 
 <script>
 import { cloneData } from '../helpers/util'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import {
   selectorValidator,
@@ -34,7 +30,7 @@ import { getElement } from '../helpers/dom'
 const DEFAULT_POS = { t: null, l: null, at: null, al: null, show: false }
 
 export default {
-  name: SDKKey + '-popover',
+  name: 'fx-popover',
   mixins: [popupMixin],
   props: {
     selector: {
@@ -51,8 +47,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       pos: cloneData(DEFAULT_POS),
 
       padding: 8

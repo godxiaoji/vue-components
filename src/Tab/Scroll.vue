@@ -1,6 +1,6 @@
 <template>
-  <div :class="[prefix + '-scroll-tab']">
-    <div :class="[prefix + '-scroll-tab_sidebar']">
+  <div class="fx-scroll-tab">
+    <div class="fx-scroll-tab_sidebar">
       <sticky
         ref="sidebar"
         :offset-top="stickyOffsetTop"
@@ -14,7 +14,7 @@
         />
       </sticky>
     </div>
-    <div :class="[prefix + '-scroll-tab_body']">
+    <div class="fx-scroll-tab_body">
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
@@ -32,12 +32,11 @@
 import Tab from '../Tab'
 import Sticky from '../Sticky'
 import StickyView from '../Sticky/View.vue'
-import { SDKKey } from '../config'
 import { querySelector } from '../helpers/dom'
 import { sizeValidator } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-scroll-tab',
+  name: 'fx-scroll-tab',
   components: { Tab, Sticky, StickyView },
   props: {
     stickyOffsetTop: {
@@ -51,8 +50,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       activeIndex: 0,
 
       tabList: []

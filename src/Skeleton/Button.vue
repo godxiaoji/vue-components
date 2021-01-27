@@ -1,20 +1,16 @@
 <template>
   <div
-    :class="[
-      prefix + '-skeleton-button',
-      shapeClassName,
-      { animated: useAnimation }
-    ]"
+    class="fx-skeleton-button"
+    :class="[shapeClassName, { animated: useAnimation }]"
   ></div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
 import { BUTTON_SHAPE_NAMES } from './util'
 
 export default {
-  name: SDKKey + '-skeleton-button',
+  name: 'fx-skeleton-button',
   inject: {
     skeletonSubOptions: {
       default: null
@@ -32,9 +28,6 @@ export default {
         return inArray(val, BUTTON_SHAPE_NAMES)
       }
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     shapeClassName() {

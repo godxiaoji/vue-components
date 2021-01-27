@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PopMenu should render prop set options correctly 1`] = `
-<div class="fx-popover fx-pop-menu fx-popup" style="z-index: 2000; display: none;">
+<div class="fx-popover fx-popup fx-pop-menu" style="z-index: 2000; display: none;">
   <div class="fx-mask"></div>
   <div class="fx-popover_inner" style="left: 0px; top: 0px; max-width: -16px; max-height: -16px;"><i class="fx-popover_arrow" style="left: 200vw; top: 200vh;"></i>
     <div class="fx-popover_content">

@@ -1,7 +1,8 @@
 <template>
   <component
     :is="component"
-    :class="[prefix + '-icon', moreClassName]"
+    class="fx-icon"
+    :class="[moreClassName]"
     :style="[iconColor, iconSize]"
     :icon-name="iconName"
     @click="onClick"
@@ -10,7 +11,6 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { isObject } from '../helpers/util'
 import SvgIcon from './SvgIcon'
 import { iconValidator } from '../helpers/validator'
@@ -20,7 +20,7 @@ function isComponent(value) {
 }
 
 export default {
-  name: SDKKey + '-icon',
+  name: 'fx-icon',
   props: {
     icon: {
       validator: iconValidator,
@@ -46,9 +46,6 @@ export default {
       type: String,
       default: null
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     component() {

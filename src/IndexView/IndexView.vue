@@ -1,7 +1,7 @@
 <template>
-  <div :class="[prefix + '-index-view']">
-    <div :class="[prefix + '-index-view_sidebar']">
-      <ul :class="[prefix + '-index-view_list']" ref="list">
+  <div class="fx-index-view">
+    <div class="fx-index-view_sidebar">
+      <ul class="fx-index-view_list" ref="list">
         <li
           :class="{ active: item.value === activeIndex }"
           v-for="item in indexList"
@@ -12,7 +12,7 @@
         </li>
       </ul>
     </div>
-    <div :class="[prefix + '-index-view_body']">
+    <div class="fx-index-view_body">
       <sticky-view
         :offset-top="stickyOffsetTop"
         ref="body"
@@ -28,7 +28,6 @@
 
 <script>
 import StickyView from '../Sticky/View.vue'
-import { SDKKey } from '../config'
 import { querySelector } from '../helpers/dom'
 import { sizeValidator } from '../helpers/validator'
 import { touchEvent } from '../helpers/events'
@@ -44,7 +43,7 @@ const {
 } = touchEvent
 
 export default {
-  name: SDKKey + '-index-view',
+  name: 'fx-index-view',
   components: { StickyView },
   props: {
     stickyOffsetTop: {
@@ -54,8 +53,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       activeIndex: 0,
 
       indexList: []

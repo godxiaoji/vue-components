@@ -2,7 +2,7 @@
 
 exports[`Notify should render default correctly 1`] = `
 <div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--primary fx-notify_inner">
+  <div class="fx-notice-bar fx-notify_inner type--primary">
     <!---->
     <div class="fx-notice-bar_content">
       <div class="fx-notice-bar_content-inner">
@@ -16,7 +16,7 @@ exports[`Notify should render default correctly 1`] = `
 
 exports[`Notify should render prop type="danger" correctly 1`] = `
 <div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--danger fx-notify_inner">
+  <div class="fx-notice-bar fx-notify_inner type--danger">
     <!---->
     <div class="fx-notice-bar_content">
       <div class="fx-notice-bar_content-inner">
@@ -30,7 +30,7 @@ exports[`Notify should render prop type="danger" correctly 1`] = `
 
 exports[`Notify should render prop type="success" correctly 1`] = `
 <div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--success fx-notify_inner">
+  <div class="fx-notice-bar fx-notify_inner type--success">
     <!---->
     <div class="fx-notice-bar_content">
       <div class="fx-notice-bar_content-inner">
@@ -44,7 +44,7 @@ exports[`Notify should render prop type="success" correctly 1`] = `
 
 exports[`Notify should render prop type="warning" correctly 1`] = `
 <div class="fx-notify fx-popup" style="z-index: 2000; display: none;">
-  <div class="fx-notice-bar type--warning fx-notify_inner">
+  <div class="fx-notice-bar fx-notify_inner type--warning">
     <!---->
     <div class="fx-notice-bar_content">
       <div class="fx-notice-bar_content-inner">

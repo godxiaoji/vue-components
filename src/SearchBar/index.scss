@@ -1,0 +1,96 @@
+@import '../style/var.scss';
+
+.fx-search {
+  --search-height: 52px;
+  --search-background-color: transparent;
+  --search-input-border-color: #{$border-color};
+  --search-input-focus-border-color: #{$primary-color};
+
+  flex: 1;
+  height: var(--search-height);
+
+  &_inner {
+    display: flex;
+    align-items: center;
+    height: var(--search-height);
+    background-color: var(--search-background-color);
+  }
+
+  &_field {
+    flex: 1;
+    border-radius: 14px;
+    background-color: $background-color;
+    padding: 0 8px;
+    --input-height: 28px;
+    --input-font-size: 12px;
+    --input-icon-size: 16px;
+    --input-border-color: var(--search-input-border-color);
+    --input-focus-border-color: var(--search-input-focus-border-color);
+
+    &.ghost {
+      background-color: #fff;
+      --input-border-color: transparent;
+      --input-focus-border-color: transparent;
+    }
+  }
+
+  &_back-button {
+    height: 100%;
+    border-radius: 0;
+
+    &.type--default {
+      background-color: transparent;
+    }
+  }
+
+  &_button {
+    display: block;
+    width: 0;
+    height: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+  }
+
+  &_cancel-button {
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    &.type--default {
+      background-color: transparent;
+    }
+  }
+
+  &_suggest {
+    &-item {
+      min-height: 40px;
+
+      .fx-cell {
+        &_inner {
+          padding: 4px 16px 4px 0;
+        }
+
+        &_label {
+          font-size: 12px;
+        }
+      }
+    }
+
+    &-tag {
+      font-size: 10px;
+      padding: 0 4px;
+      height: 20px;
+      box-sizing: border-box;
+      background-color: $background-color;
+      border: 1px solid $border-color;
+      display: flex;
+      align-items: center;
+      margin-left: 8px;
+      border-radius: 2px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

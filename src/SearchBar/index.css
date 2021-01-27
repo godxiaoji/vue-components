@@ -1,0 +1,89 @@
+.fx-search {
+  --search-height: 52px;
+  --search-background-color: transparent;
+  --search-input-border-color: #d9d9d9;
+  --search-input-focus-border-color: #1890ff;
+  flex: 1;
+  height: var(--search-height);
+}
+
+.fx-search_inner {
+  display: flex;
+  align-items: center;
+  height: var(--search-height);
+  background-color: var(--search-background-color);
+}
+
+.fx-search_field {
+  flex: 1;
+  border-radius: 14px;
+  background-color: #f5f5f5;
+  padding: 0 8px;
+  --input-height: 28px;
+  --input-font-size: 12px;
+  --input-icon-size: 16px;
+  --input-border-color: var(--search-input-border-color);
+  --input-focus-border-color: var(--search-input-focus-border-color);
+}
+
+.fx-search_field.ghost {
+  background-color: #fff;
+  --input-border-color: transparent;
+  --input-focus-border-color: transparent;
+}
+
+.fx-search_back-button {
+  height: 100%;
+  border-radius: 0;
+}
+
+.fx-search_back-button.type--default {
+  background-color: transparent;
+}
+
+.fx-search_button {
+  display: block;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.fx-search_cancel-button {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.fx-search_cancel-button.type--default {
+  background-color: transparent;
+}
+
+.fx-search_suggest-item {
+  min-height: 40px;
+}
+
+.fx-search_suggest-item .fx-cell_inner {
+  padding: 4px 16px 4px 0;
+}
+
+.fx-search_suggest-item .fx-cell_label {
+  font-size: 12px;
+}
+
+.fx-search_suggest-tag {
+  font-size: 10px;
+  padding: 0 4px;
+  height: 20px;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  border-radius: 2px;
+}
+
+.fx-search_suggest-tag:first-child {
+  margin-left: 0;
+}

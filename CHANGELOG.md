@@ -1,3 +1,12 @@
+# [1.8.0](https://github.com/godxiaoji/vfox/compare/v1.7.9...v1.8.0) (2021-02-02)
+
+
+### Features
+
+* 新增 SwipeCell SearchBar Progress 组件 ([208efff](https://github.com/godxiaoji/vfox/commit/208efffeb0d57fe2ec87dfa8d1d2e60bf967b264))
+* **prefix:** 取消自定义前缀 ([5d28f77](https://github.com/godxiaoji/vfox/commit/5d28f774940652592d0e226e940e21699693bfac))
+* **search-bar:** add SearchBar ([5a2e098](https://github.com/godxiaoji/vfox/commit/5a2e0985f86e7be8e10a4ec1701aef9635b1b7ed))
+
 ## [1.7.9](https://github.com/godxiaoji/vfox/compare/v1.7.8...v1.7.9) (2021-01-25)
 
 

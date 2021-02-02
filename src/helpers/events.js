@@ -1,5 +1,5 @@
 import { isIOS, isMobile } from './device'
-import { objectForEach, isFunction, isArray } from './util'
+import { objectForEach, isFunction } from './util'
 // import Exception from './exception'
 
 // export function getAppTarget(el) {
@@ -89,25 +89,29 @@ export function getDataset(object) {
 
 let euid = 0
 
-const scrollCallbacks = {}
+const callbacks = {}
 
-function onScroll(e) {
-  let target = e.target
+window.callbacks = callbacks
 
-  if (target._euid && scrollCallbacks[target._euid]) {
-    const callbacks = scrollCallbacks[target._euid]
-    if (target === document) {
-      target = document.documentElement
+function onEvent(e) {
+  let { currentTarget, type } = e
+  const uid = currentTarget._euid
+
+  if (uid && callbacks[type] && callbacks[type][uid]) {
+    const currentCallbacks = callbacks[type][uid]
+
+    if (currentTarget === document) {
+      currentTarget = document.documentElement
     }
 
-    callbacks.forEach(callback => {
-      callback.call(callback, e, target)
+    currentCallbacks.forEach(callback => {
+      callback.call(callback, e, currentTarget)
     })
   }
 }
 
-export function addScrollEvent(callback, target = document) {
-  if (!isFunction(callback)) {
+export function addEvent(type, callback, target = document) {
+  if (!isFunction(callback) || !type) {
     return
   }
 
@@ -118,44 +122,54 @@ export function addScrollEvent(callback, target = document) {
   if (!target._euid) {
     target._euid = ++euid
   }
-  const id = target._euid
+  const uid = target._euid
 
-  if (!scrollCallbacks[id]) {
-    scrollCallbacks[id] = []
-    target.addEventListener('scroll', onScroll, false)
+  if (!callbacks[type]) {
+    callbacks[type] = {}
+  }
+  if (!callbacks[type][uid]) {
+    callbacks[type][uid] = []
+    target.addEventListener(type, onEvent, false)
   }
 
-  scrollCallbacks[id].push(callback)
+  callbacks[type][uid].push(callback)
 }
 
-export function removeScrollEvent(callback, target = document) {
+export function addScrollEvent(callback, target) {
+  addEvent('scroll', callback, target)
+}
+
+export function removeEvent(type, callback, target = document) {
   if (target === document.documentElement) {
     target = document
   }
 
-  if (!isArray(scrollCallbacks[target._euid])) {
-    return
-  }
+  const uid = target._euid
 
-  const id = target._euid
-  const callbacks = scrollCallbacks[id]
-  let index = -1
+  if (callbacks[type] && callbacks[type][uid]) {
+    const currentCallbacks = callbacks[type][uid]
+    let index = -1
 
-  for (let i = 0; i < callbacks.length; i++) {
-    if (callbacks[i] == callback) {
-      index = i
-      break
+    for (let i = 0; i < currentCallbacks.length; i++) {
+      if (currentCallbacks[i] == callback) {
+        index = i
+        break
+      }
+    }
+
+    if (index > -1) {
+      currentCallbacks.splice(index, 1)
+
+      if (currentCallbacks.length === 0) {
+        target.removeEventListener(type, onEvent, false)
+        delete callbacks[type][uid]
+      }
     }
   }
+}
 
-  if (index >= 0) {
-    callbacks.splice(index, 1)
-
-    if (callbacks.length === 0) {
-      target.removeEventListener('scroll', onScroll, false)
-      delete scrollCallbacks[id]
-    }
-  }
+export function removeScrollEvent(callback, target) {
+  removeEvent('scroll', callback, target)
 }
 
 // const resizeCallbacks = {}
@@ -248,10 +262,15 @@ const touchOptions = {
   options: passiveSupported ? { passive: false } : false
 }
 
+function getStretchOffset(offset) {
+  return Math.ceil(offset / Math.log(Math.abs(offset)))
+}
+
 export const touchEvent = {
   touchstart: touchOptions.touchstart,
   touchmove: touchOptions.touchmove,
   touchend: touchOptions.touchend,
+  getStretchOffset,
   addListeners($el, ref) {
     $el.addEventListener(touchOptions.touchstart, ref, touchOptions.options)
     $el.addEventListener(touchOptions.touchmove, ref, touchOptions.options)

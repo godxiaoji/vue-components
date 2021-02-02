@@ -16,7 +16,9 @@
         :class="{ marquee: !!marquee }"
         :style="contentStyles"
       >
-        {{ title }}
+        <slot>
+          {{ title }}
+        </slot>
       </div>
     </div>
     <div
@@ -58,7 +60,6 @@ export default {
     },
     title: {
       type: String,
-      required: true,
       default: ''
     },
     // 通知栏模式

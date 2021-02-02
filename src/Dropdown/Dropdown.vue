@@ -7,7 +7,7 @@
   >
     <div class="fx-mask" @click="onMaskClick"></div>
     <div class="fx-dropdown_inner">
-      <slot></slot>
+      <slot :height="height"></slot>
     </div>
   </div>
 </template>
@@ -29,7 +29,8 @@ export default {
   },
   data() {
     return {
-      top: -1
+      top: -1,
+      height: 0
     }
   },
   computed: {
@@ -64,6 +65,10 @@ export default {
       const rect = $target.getBoundingClientRect()
 
       this.top = rect.bottom
+
+      this.$nextTick(() => {
+        this.height = this.$el.offsetHeight
+      })
     },
     afterHidden() {
       this.top = -1

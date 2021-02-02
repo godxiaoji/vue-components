@@ -1,7 +1,7 @@
 .fx-input {
   --input-height: 48px;
   --input-font-size: 17px;
-  --input-icon-size: 18px;
+  --input-icon-size: 20px;
   --input-color: #262626;
   --input-secondary-color: #bfbfbf;
   --input-border-color: #d9d9d9;
@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   border: 1px solid var(--input-border-color);
+  border-radius: 4px;
   box-sizing: border-box;
   padding: 0 16px;
   font-size: var(--input-font-size);

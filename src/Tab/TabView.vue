@@ -1,10 +1,15 @@
 <template>
   <div class="fx-tab-view" :class="{ vertical: initialVertical }">
     <div class="fx-tab-view_header fx-horizontal-hairline">
-      <tab
+      <side-tab
+        v-if="vertical"
         :options="tabList"
         :activeValue.sync="activeIndex"
-        :vertical="vertical"
+      ></side-tab>
+      <tab
+        v-else
+        :options="tabList"
+        :activeValue.sync="activeIndex"
         :scroll-threshold="scrollThreshold"
       />
     </div>
@@ -12,6 +17,7 @@
       <swiper
         :activeIndex.sync="activeIndex"
         @change="onChange"
+        @animated="onAnimated"
         ref="swiper"
         :initial-vertical="vertical"
       >
@@ -23,12 +29,13 @@
 
 <script>
 import Tab from '../Tab'
+import SideTab from '../SideTab'
 import Swiper from '../Swiper/Swiper.vue'
 import listMixin from '../util/list-mixin'
 
 export default {
   name: 'fx-tab-view',
-  components: { Tab, Swiper },
+  components: { Tab, SideTab, Swiper },
   mixins: [listMixin],
   provide() {
     return {
@@ -83,6 +90,7 @@ export default {
 
       this.tabList = $newItems.map(($item, index) => {
         return {
+          subLabel: $item.subName,
           label: $item.name,
           value: index
         }
@@ -114,6 +122,9 @@ export default {
           }
         }
       }
+    },
+    onAnimated(res) {
+      this.$emit('animated', res)
     },
     swipeTo(activeIndex) {
       this.$refs.swiper.swipeTo(activeIndex)

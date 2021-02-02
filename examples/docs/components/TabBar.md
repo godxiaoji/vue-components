@@ -12,13 +12,13 @@
 
 ### options 的结构
 
-| key         | 类型                 | 默认值 | 必填 | 说明                                                                    |
-| ----------- | -------------------- | ------ | ---- | ----------------------------------------------------------------------- |
-| value       | string/number        |        | 是   | 唯一值（active-value 使用）                                             |
-| label       | string               |        | 是   | 标签名                                                                  |
-| icon        | string/Component     |        | 否   | 设置图标，使用 [Icon](./Icon.md) 组件                                   |
-| active-icon | string/Component     |        | 否   | 设置激活态图标，没有设置则沿用 `icon` 属性，使用 [Icon](./Icon.md) 组件 |
-| badge       | string/number/object |        | 否   | 徽标，使用 [Badge](./Badge.md) 组件，可传入一个基于 Badge props 的对象  |
+| key        | 类型                 | 默认值 | 必填 | 说明                                                                    |
+| ---------- | -------------------- | ------ | ---- | ----------------------------------------------------------------------- |
+| value      | string/number        |        | 是   | 唯一值（active-value 使用）                                             |
+| label      | string               |        | 是   | 标签名                                                                  |
+| icon       | string/Component     |        | 否   | 设置图标，使用 [Icon](./Icon.md) 组件                                   |
+| activeIcon | string/Component     |        | 否   | 设置激活态图标，没有设置则沿用 `icon` 属性，使用 [Icon](./Icon.md) 组件 |
+| badge      | string/number/object |        | 否   | 徽标，使用 [Badge](./Badge.md) 组件，可传入一个基于 Badge props 的对象  |
 
 ```
 [

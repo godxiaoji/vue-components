@@ -69,6 +69,13 @@ export function getRelativeOffset(
   let offsetTop = $el.offsetTop
   let offsetLeft = $el.offsetLeft
 
+  const transform = window.getComputedStyle($el).transform
+  if (transform && transform !== 'none') {
+    const transformMatrix = transform.slice(7, transform.length - 1).split(', ')
+    offsetLeft += parseFloat(transformMatrix[4])
+    offsetTop += parseFloat(transformMatrix[5])
+  }
+
   if ($el.offsetParent && $el.offsetParent !== $relativeEl) {
     const parent = getRelativeOffset($el.offsetParent, $relativeEl)
 

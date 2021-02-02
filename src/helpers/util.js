@@ -393,5 +393,13 @@ export function rangeNumber(number, min, max) {
  * @param {Number} max
  */
 export function rangeInteger(number, min, max) {
+  if (isString(number)) {
+    if (isNumeric(number)) {
+      number = parseFloat(number)
+    } else {
+      number = min
+    }
+  }
+
   return rangeNumber(Math.round(number), Math.ceil(min), Math.floor(max))
 }

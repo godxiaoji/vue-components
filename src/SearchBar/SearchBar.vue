@@ -2,26 +2,17 @@
   <div class="fx-search">
     <form
       class="fx-search_inner"
+      :class="{ 'has--cancel': showCancel }"
       @submit.prevent="onSearch(searchText)"
       ref="inner"
       :style="{ background }"
     >
-      <fx-button
-        class="fx-search_back-button"
-        type="default"
-        icon="LeftOutlined"
-        pattern="borderless"
-        shape="square"
-        :ghost="ghost"
-        v-if="showBack"
-        @click="onBack"
-        >Back</fx-button
-      >
       <fx-input
         class="fx-search_field"
-        :ckass="{ ghost: !!ghost }"
+        :class="{ ghost: !!ghost }"
         :placeholder="placeholder"
         type="search"
+        :disabled="readonly"
         v-model="searchText"
         :focus="focus"
         :maxlength="maxlength"
@@ -29,6 +20,7 @@
         @input="onInput"
         @focus="proxyEvent"
         @blur="proxyEvent"
+        @click.native="onClick"
       >
         <template #prepend>
           <icon icon="SearchOutlined"></icon>
@@ -37,9 +29,9 @@
       <button class="fx-search_button">Search</button>
       <fx-button
         class="fx-search_cancel-button"
-        size="small"
+        size="large"
+        type="default"
         pattern="borderless"
-        shape="round"
         :ghost="ghost"
         v-if="showCancel"
         @click="onCancel"
@@ -52,22 +44,28 @@
       v-if="enableDropdown"
       :visible.sync="suggestVisible"
     >
-      <cell
-        v-for="item in suggestList"
-        :key="item.text"
-        :label="item.text"
-        class="fx-search_suggest-item"
-        arrowDirection="none"
-        clickable
-        @click="onSuggestItemClick(item.text)"
-      >
-        <span
-          class="fx-search_suggest-tag"
-          v-for="tag in item.tags"
-          :key="tag"
-          >{{ tag }}</span
-        >
-      </cell>
+      <template #default="{ height }">
+        <div class="fx-search_suggest" :style="{ height: height + 'px' }">
+          <div class="fx-search_suggest-list">
+            <cell
+              v-for="item in suggestList"
+              :key="item.text"
+              :label="item.text"
+              class="fx-search_suggest-item"
+              arrowDirection="none"
+              clickable
+              @click="onSuggestItemClick(item.text)"
+            >
+              <span
+                class="fx-search_suggest-tag"
+                v-for="tag in item.tags"
+                :key="tag"
+                >{{ tag }}</span
+              >
+            </cell>
+          </div>
+        </div>
+      </template>
     </dropdown>
   </div>
 </template>
@@ -94,11 +92,11 @@ export default {
       type: Boolean,
       default: false
     },
-    showCancel: {
+    readonly: {
       type: Boolean,
       default: false
     },
-    showBack: {
+    showCancel: {
       type: Boolean,
       default: false
     },
@@ -170,6 +168,7 @@ export default {
       this.$emit(
         e.type,
         {
+          type: e.type,
           text: searchText
         },
         res => {
@@ -183,6 +182,7 @@ export default {
       this.$emit(
         'input',
         {
+          type: e.type,
           text: searchText
         },
         res => {
@@ -215,6 +215,8 @@ export default {
       if (suggestList.length > 0) {
         this.enableDropdown = true
         this.suggestVisible = true
+      } else {
+        this.suggestVisible = false
       }
 
       this.suggestList = suggestList
@@ -237,10 +239,13 @@ export default {
       this.onSearch(text, 'suggest')
     },
     onCancel() {
-      this.$emit('cancel', {})
+      this.$emit('cancel', { type: 'cancel' })
     },
-    onBack() {
-      this.$emit('back', {})
+    onClick(e) {
+      this.$emit(e.type, {
+        type: e.type,
+        searchText: this.searchText || this.placeholder
+      })
     }
   }
 }

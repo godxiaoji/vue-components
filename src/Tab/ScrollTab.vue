@@ -6,12 +6,7 @@
         :offset-top="stickyOffsetTop"
         :offset-bottom="stickyOffsetBottom"
       >
-        <tab
-          :options="tabList"
-          :activeValue.sync="activeIndex"
-          :vertical="true"
-          :scroll-threshold="1"
-        />
+        <side-tab :options="tabList" :activeValue.sync="activeIndex" />
       </sticky>
     </div>
     <div class="fx-scroll-tab_body">
@@ -29,15 +24,15 @@
 </template>
 
 <script>
-import Tab from '../Tab'
+import SideTab from '../SideTab'
 import Sticky from '../Sticky'
-import StickyView from '../Sticky/View.vue'
+import StickyView from '../StickyView'
 import { querySelector } from '../helpers/dom'
 import { sizeValidator } from '../helpers/validator'
 
 export default {
   name: 'fx-scroll-tab',
-  components: { Tab, Sticky, StickyView },
+  components: { SideTab, Sticky, StickyView },
   props: {
     stickyOffsetTop: {
       validator: sizeValidator,

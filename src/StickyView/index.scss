@@ -1,8 +1,6 @@
 @import '../style/var.scss';
 
 .fx-sticky-view {
-  --sticky-view-fixed-height: 28px;
-
   position: relative;
 
   &_top {
@@ -18,8 +16,8 @@
 
   &_fixed {
     width: 100%;
-    height: var(--sticky-view-fixed-height);
-    line-height: var(--sticky-view-fixed-height);
+    height: 28px;
+    line-height: 28px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -36,8 +34,8 @@
     width: 100%;
     height: 28px;
     line-height: 28px;
-    height: var(--sticky-view-fixed-height);
-    line-height: var(--sticky-view-fixed-height);
+    height: 28px;
+    line-height: 28px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

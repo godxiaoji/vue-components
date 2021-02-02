@@ -3,13 +3,13 @@
 import { shallowMount } from '@vue/test-utils'
 import Tab from '@/Tab'
 
-import { shortTabList, tabList } from '../data'
+import { mixTabList, tabList } from '../data'
 
 describe('Tab', () => {
   test('should render set options correctly', () => {
     const wrapper = shallowMount(Tab, {
       propsData: {
-        options: shortTabList
+        options: tabList
       }
     })
 
@@ -19,7 +19,7 @@ describe('Tab', () => {
   test('should render set mix options correctly', () => {
     const wrapper = shallowMount(Tab, {
       propsData: {
-        options: tabList
+        options: mixTabList
       }
     })
 

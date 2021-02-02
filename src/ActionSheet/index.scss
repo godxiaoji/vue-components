@@ -12,7 +12,7 @@
 
   &_item {
     &:not(.disabled):active {
-      background-color: rgba($color: $black-color, $alpha: 0.16);
+      @include background-active;
     }
 
     &:not(:last-child)::after {

@@ -38,7 +38,7 @@
 }
 
 .fx-notice-bar_left-icon .fx-icon, .fx-notice-bar_right-icon .fx-icon {
-  --size: 14px;
+  --size: 17px;
   --color: var(--notice-bar-color);
 }
 

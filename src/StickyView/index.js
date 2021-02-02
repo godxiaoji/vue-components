@@ -1,4 +1,4 @@
-import StickyView from '../Sticky/View.vue'
+import StickyView from '../Sticky/StickyView.vue'
 
 StickyView.install = function(Vue) {
   Vue.component(StickyView.name, StickyView)

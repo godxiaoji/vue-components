@@ -1,119 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tab should render set mix options correctly 1`] = `
-<div class="fx-tab">
+<div class="fx-tab no--scroll">
   <ul class="fx-tab_list">
-    <li class="fx-tab_item active">
+    <li class="fx-tab_item fx-vertical-hairline active">
       <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">空调</span>
+        <icon-stub icon="CheckSquareFilled" size="0" width="0" height="0"></icon-stub> <span class="fx-tab_item-text">买过</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item active-next">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">冰箱</span>
+    <li class="fx-tab_item fx-vertical-hairline active-next">
+      <badge-stub content="惠" maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">秒杀</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item">
+    <li class="fx-tab_item fx-vertical-hairline">
       <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">洗衣机</span>
+        <!----> <span class="fx-tab_item-text">天天半价工作餐</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">热水器</span>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub content="1" maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">套餐</span>
       </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">洗碗机</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">油烟机</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">煤气灶</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">蒸烤机</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">电饭锅</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">电磁炉</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">净水器</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">净化器</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">电风扇</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">干衣机</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">电暖气</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">加湿器</span>
-      </badge-stub>
-    </li>
-    <li class="fx-tab_item">
-      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
-        <!----> <span class="fx-tab_item-text">吸尘器</span>
-      </badge-stub>
+      <!---->
     </li>
   </ul>
 </div>
 `;
 
 exports[`Tab should render set options correctly 1`] = `
-<div class="fx-tab no--scroll">
+<div class="fx-tab">
   <ul class="fx-tab_list">
-    <li class="fx-tab_item active">
-      <badge-stub content="热" maxcount="99" offset="0,0" class="fx-tab_item-inner">
+    <li class="fx-tab_item fx-vertical-hairline active">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
         <!----> <span class="fx-tab_item-text">空调</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item active-next">
+    <li class="fx-tab_item fx-vertical-hairline active-next">
       <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
         <!----> <span class="fx-tab_item-text">冰箱</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item">
+    <li class="fx-tab_item fx-vertical-hairline">
       <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
         <!----> <span class="fx-tab_item-text">洗衣机</span>
       </badge-stub>
+      <!---->
     </li>
-    <li class="fx-tab_item">
+    <li class="fx-tab_item fx-vertical-hairline">
       <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
         <!----> <span class="fx-tab_item-text">热水器</span>
       </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">洗碗机</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">油烟机</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">煤气灶</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">蒸烤机</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">电饭锅</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">电磁炉</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">净水器</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">净化器</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">电风扇</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">干衣机</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">电暖气</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">加湿器</span>
+      </badge-stub>
+      <!---->
+    </li>
+    <li class="fx-tab_item fx-vertical-hairline">
+      <badge-stub maxcount="99" offset="0,0" class="fx-tab_item-inner">
+        <!----> <span class="fx-tab_item-text">吸尘器</span>
+      </badge-stub>
+      <!---->
     </li>
   </ul>
 </div>

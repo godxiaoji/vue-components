@@ -30,6 +30,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    subName: {
+      type: String,
+      default: null
     }
   },
   mounted() {

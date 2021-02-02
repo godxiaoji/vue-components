@@ -1,0 +1,45 @@
+@import '../style/var.scss';
+
+.fx-progress {
+  --progress-color: #{$primary-color};
+  --progress-background-color: #ffffff;
+  --progress-text-color: #{$font2-color};
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-height: 13px;
+
+  &_bar {
+    flex-grow: 1;
+    height: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--progress-color);
+    background-color: var(--progress-background-color);
+    border-radius: 2px;
+  }
+
+  &_track {
+    height: 100%;
+    background-color: var(--progress-color);
+
+    &.animated {
+      transition: width 0.2s ease;
+    }
+  }
+
+  &_text {
+    font-size: 9px;
+    line-height: 13px;
+    margin-left: 5px;
+    color: var(--progress-text-color);
+  }
+
+  &.fixed-bar {
+    .fx-progress_text {
+      position: absolute;
+      right: -5px;
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+}

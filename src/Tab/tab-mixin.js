@@ -9,6 +9,7 @@ import {
 } from '../helpers/util'
 import Exception from '../helpers/exception'
 import { iconValidator } from '../helpers/validator'
+import { frameTo } from '../helpers/animation'
 
 export default {
   components: { Icon, Badge },
@@ -36,7 +37,7 @@ export default {
     },
     activeValue: {
       validator: isStringNumberMix,
-      default: ''
+      default: null
     },
     fieldNames: {
       type: Object,
@@ -58,7 +59,8 @@ export default {
       fieldNames2: { label: 'label', value: 'value' },
       options2: [],
 
-      tabName: 'Tab'
+      tabName: 'Tab',
+      hasSub: false
     }
   },
   watch: {
@@ -73,7 +75,11 @@ export default {
     }
   },
   created() {
+    this.value2 = this.activeValue
     this.updateOptions()
+  },
+  mounted() {
+    this.updatePos()
   },
   methods: {
     switchTo(value, isProp = false) {
@@ -116,6 +122,7 @@ export default {
       const options = []
       const { label: labelName, value: valueName } = this.fieldNames2
       let hasActive = false
+      let hasSub = false
 
       if (isArray(this.options)) {
         this.options.forEach((item, index) => {
@@ -138,9 +145,13 @@ export default {
             option = {
               label:
                 item[labelName] == null ? item[valueName] : item[labelName],
+              subLabel: item.subLabel ? item.subLabel.toString() : '',
               value: item[valueName],
               icon: iconValidator(item.icon) ? item.icon : null,
               badge: item.badge
+            }
+            if (item.subLabel) {
+              hasSub = true
             }
             option.activeIcon = iconValidator(item.activeIcon)
               ? item.activeIcon
@@ -169,10 +180,12 @@ export default {
         })
       }
 
+      this.hasSub = hasSub
       this.options2 = options
 
       if (!hasActive && options[0]) {
-        this.onChange(options[0].value)
+        // this.onChange(options[0].value)
+        this.updateActive(options[0].value)
       }
     },
 
@@ -204,7 +217,45 @@ export default {
       return hasValue
     },
 
-    afterUpdate() {},
+    afterUpdate({ hasValue }) {
+      hasValue && this._isMounted && this.updatePos()
+    },
+
+    updatePos() {
+      if (this.tabName === 'TabBar') {
+        return
+      }
+
+      const $list = this.$refs.list
+      const $activeItem = $list.children[this.activeIndex]
+
+      if (!$activeItem) {
+        return
+      }
+
+      let scrollOffset = 0
+      const sizeKey = !this.vertical ? 'Width' : 'Height'
+      const directionKey = !this.vertical ? 'Left' : 'Top'
+
+      if ($activeItem['offset' + sizeKey] > $list['offset' + sizeKey]) {
+        scrollOffset = $activeItem['offset' + directionKey]
+      } else {
+        scrollOffset = Math.min(
+          $activeItem['offset' + directionKey] -
+            ($list['offset' + sizeKey] - $activeItem['offset' + sizeKey]) / 2,
+          $list['scroll' + sizeKey] - $list['offset' + sizeKey]
+        )
+      }
+
+      frameTo({
+        from: $list['scroll' + directionKey],
+        to: scrollOffset,
+        duration: 200,
+        progress(res) {
+          $list['scroll' + directionKey] = res.current
+        }
+      })
+    },
 
     onChange(value) {
       if (value === this.value2) {

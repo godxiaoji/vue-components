@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { rangeInteger } from '../helpers/util'
+import { isNumeric, rangeInteger } from '../helpers/util'
 
 function rangeCol(number) {
   return rangeInteger(number, 0, 24)
@@ -21,7 +21,7 @@ export default {
   props: {
     // 栅格占据的列数
     span: {
-      type: Number,
+      validator: isNumeric,
       default: 24
     },
     // 栅格左侧的间隔格数

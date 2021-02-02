@@ -28,6 +28,7 @@ import PickerPopup from './PickerPopup'
 import CalendarView from './CalendarView'
 import CalendarPopup from './CalendarPopup'
 import Calendar from './Calendar'
+import SearchBar from './SearchBar'
 
 /* Feedback */
 import Toast from './Toast'
@@ -35,9 +36,11 @@ import Notify from './Notify'
 import Dialog from './Dialog'
 import ActionSheet from './ActionSheet'
 import PopDialog from './PopDialog'
+import SwipeCell from './SwipeCell'
 
 /* Navigation */
 import Tab from './Tab'
+import SideTab from './SideTab'
 import TabBar from './TabBar'
 import BackTop from './BackTop'
 import NavBar from './NavBar'
@@ -73,7 +76,7 @@ import Divider from './Divider'
 import Collapse from './Collapse'
 import CollapseItem from './CollapseItem'
 import Badge from './Badge'
-import SearchBar from './SearchBar'
+import Progress from './Progress'
 
 /* Other */
 import Copy from './Copy'
@@ -150,5 +153,8 @@ export {
   TabBar,
   Scroll,
   LocalStorage,
-  SearchBar
+  SearchBar,
+  SwipeCell,
+  SideTab,
+  Progress
 }

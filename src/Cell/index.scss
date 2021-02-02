@@ -19,9 +19,9 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba($color: $black-color, $alpha: 0.16);
     z-index: 0;
     display: none;
+    @include background-active;
   }
 
   &_inner {
@@ -126,6 +126,7 @@
       border-top-color: transparent;
       border-bottom-color: transparent;
       padding: 0;
+      border-radius: 0;
 
       &.focus {
         border-color: transparent;

@@ -31,6 +31,10 @@ export default {
     offsetBottom: {
       validator: sizeValidator,
       default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -48,6 +52,13 @@ export default {
       }
 
       return styles
+    }
+  },
+  watch: {
+    disabled: {
+      handler() {
+        this.updateFixed(this.$container.scrollTop)
+      }
     }
   },
   mounted() {
@@ -77,6 +88,11 @@ export default {
 
     updateFixed(scrollTop) {
       if (!this.$el) {
+        return
+      }
+
+      if (this.disabled) {
+        this.updateStyles(false)
         return
       }
 

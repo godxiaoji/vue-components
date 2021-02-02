@@ -23,4 +23,4 @@
 </fx-cell>
 ```
 
-注：添加slot 后 `content` props属性失效。
+注：添加 slot 后 `content` prop 属性失效。

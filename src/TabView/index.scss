@@ -5,15 +5,13 @@
 
   &_header {
     position: relative;
-    height: 37px;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    &::after {
-      content: '';
-    }
+    // &::after {
+    //   content: '';
+    // }
   }
 
   &_body {

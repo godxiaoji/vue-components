@@ -316,18 +316,26 @@ export default {
       const y = this._isToLowerOrUpperY
       const x = this._isToLowerOrUpperX
 
-      if (
-        coords.stop ||
-        (coords.scrollY &&
-          (y === SCROLL_STATE_CENTER ||
-            (y === SCROLL_STATE_UPPER && offsetY < 0) ||
-            (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
-        (coords.scrollX &&
-          (x === SCROLL_STATE_CENTER ||
-            (x === SCROLL_STATE_UPPER && offsetX < 0) ||
-            (x === SCROLL_STATE_LOWER && offsetX > 0)))
-      ) {
-        coords.stop = true
+      if (coords.stop == null) {
+        if (
+          (coords.scrollY &&
+            Math.abs(offsetY) >= Math.abs(offsetX) &&
+            (y === SCROLL_STATE_CENTER ||
+              (y === SCROLL_STATE_UPPER && offsetY < 0) ||
+              (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
+          (coords.scrollX &&
+            Math.abs(offsetX) >= Math.abs(offsetY) &&
+            (x === SCROLL_STATE_CENTER ||
+              (x === SCROLL_STATE_UPPER && offsetX < 0) ||
+              (x === SCROLL_STATE_LOWER && offsetX > 0)))
+        ) {
+          coords.stop = true
+        } else {
+          coords.stop = false
+        }
+      }
+
+      if (coords.stop) {
         e.stopPropagation()
       }
 

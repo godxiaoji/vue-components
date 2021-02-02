@@ -3,7 +3,7 @@
 .fx-input {
   --input-height: 48px;
   --input-font-size: 17px;
-  --input-icon-size: 18px;
+  --input-icon-size: 20px;
   --input-color: #{$title-color};
   --input-secondary-color: #{$font3-color};
   --input-border-color: #{$border-color};
@@ -16,6 +16,7 @@
   align-items: center;
 
   border: 1px solid var(--input-border-color);
+  border-radius: 4px;
   box-sizing: border-box;
   padding: 0 16px;
   font-size: var(--input-font-size);

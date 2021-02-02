@@ -1,8 +1,7 @@
 export const shortTabList = [
   {
     value: 1,
-    label: '空调',
-    badge: '热'
+    label: '空调'
   },
   {
     value: 2,
@@ -86,5 +85,51 @@ export const tabList = [
   {
     value: 17,
     label: '吸尘器'
+  }
+]
+
+export const mixTabList = [
+  {
+    value: 1,
+    label: '买过',
+    icon: 'BorderOutlined',
+    activeIcon: 'CheckSquareFilled'
+  },
+  {
+    value: 2,
+    label: '秒杀',
+    badge: '惠'
+  },
+  {
+    value: 3,
+    label: '天天半价工作餐'
+  },
+  {
+    value: 4,
+    label: '套餐',
+    badge: 1
+  }
+]
+
+export const subTabList = [
+  {
+    value: 1,
+    label: '精选',
+    subLabel: '为你推荐'
+  },
+  {
+    value: 2,
+    label: '折扣',
+    subLabel: '今日折扣'
+  },
+  {
+    value: 3,
+    label: '好物',
+    subLabel: '好物必备'
+  },
+  {
+    value: 4,
+    label: '新品',
+    subLabel: '新品速递'
   }
 ]

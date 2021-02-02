@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import StickyView from '../Sticky/View.vue'
+import StickyView from '../StickyView'
 import { querySelector } from '../helpers/dom'
 import { sizeValidator } from '../helpers/validator'
 import { touchEvent } from '../helpers/events'

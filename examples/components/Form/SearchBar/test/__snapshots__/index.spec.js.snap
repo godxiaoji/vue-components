@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar should render default correctly 1`] = `
+<div class="fx-search">
+  <form class="fx-search_inner">
+    <fx-input-stub name="" maxlength="100" placeholder="" type="search" modelvalue="" showclear="true" class="fx-search_field"></fx-input-stub> <button class="fx-search_button">Search</button>
+    <!---->
+  </form>
+  <!---->
+</div>
+`;
+
+exports[`SearchBar should render prop ghost=true slots correctly 1`] = `
+<div class="fx-search">
+  <form class="fx-search_inner has--cancel">
+    <fx-input-stub name="" maxlength="100" placeholder="" type="search" modelvalue="" showclear="true" class="fx-search_field ghost"></fx-input-stub> <button class="fx-search_button">Search</button>
+    <fx-button-stub size="large" type="default" pattern="borderless" ghost="true" class="fx-search_cancel-button">
+      取消
+    </fx-button-stub>
+  </form>
+  <!---->
+</div>
+`;
+
+exports[`SearchBar should render prop set placeholders correctly 1`] = `
+<div class="fx-search">
+  <form class="fx-search_inner">
+    <fx-input-stub name="" maxlength="100" placeholder="冰箱" type="search" modelvalue="" showclear="true" class="fx-search_field"></fx-input-stub> <button class="fx-search_button">Search</button>
+    <!---->
+  </form>
+  <!---->
+</div>
+`;
+
+exports[`SearchBar should render prop showCancel=true correctly 1`] = `
+<div class="fx-search">
+  <form class="fx-search_inner has--cancel">
+    <fx-input-stub name="" maxlength="100" placeholder="" type="search" modelvalue="" showclear="true" class="fx-search_field"></fx-input-stub> <button class="fx-search_button">Search</button>
+    <fx-button-stub size="large" type="default" pattern="borderless" class="fx-search_cancel-button">
+      取消
+    </fx-button-stub>
+  </form>
+  <!---->
+</div>
+`;

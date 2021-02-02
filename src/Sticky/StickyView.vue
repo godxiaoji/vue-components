@@ -6,6 +6,7 @@
     <sticky
       :offset-top="offsetTop"
       :contain-selector="containSelector"
+      :disabled="disabled"
       class="fx-sticky-view_top"
       ref="sticky"
     >
@@ -45,6 +46,10 @@ export default {
     offsetTop: {
       validator: sizeValidator,
       default: 0
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

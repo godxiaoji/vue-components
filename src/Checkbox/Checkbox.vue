@@ -12,8 +12,14 @@
       @change="onChange"
     />
     <div class="fx-checkbox_box">
-      <icon class="fx-checkbox_icon" icon="BorderOutlined" />
-      <icon class="fx-checkbox_checked-icon" icon="CheckSquareFilled" />
+      <icon
+        class="fx-checkbox_icon"
+        :icon="circle ? 'CircleOutlined' : 'BorderOutlined'"
+      />
+      <icon
+        class="fx-checkbox_checked-icon"
+        :icon="circle ? 'CheckCircleFilled' : 'CheckSquareFilled'"
+      />
       <span class="fx-checkbox_text" v-if="$slots.default">
         <slot></slot>
       </span>
@@ -43,6 +49,10 @@ export default {
       default: false
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    circle: {
       type: Boolean,
       default: false
     },

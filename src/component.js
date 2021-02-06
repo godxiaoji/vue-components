@@ -54,6 +54,7 @@ import ScrollTab from './ScrollTab'
 import ScrollTabItem from './ScrollTabItem'
 import IndexView from './IndexView'
 import IndexViewItem from './IndexViewItem'
+import Fixed from './Fixed'
 
 /* Show */
 import Swiper from './Swiper'
@@ -77,6 +78,7 @@ import Collapse from './Collapse'
 import CollapseItem from './CollapseItem'
 import Badge from './Badge'
 import Progress from './Progress'
+import Tag from './Tag'
 
 /* Other */
 import Copy from './Copy'
@@ -156,5 +158,7 @@ export {
   SearchBar,
   SwipeCell,
   SideTab,
-  Progress
+  Progress,
+  Tag,
+  Fixed
 }

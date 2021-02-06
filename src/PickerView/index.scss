@@ -12,6 +12,10 @@
     height: calc(var(--pick-view-item-height) * 5);
     display: flex;
     flex-wrap: nowrap;
+
+    .fx-empty {
+      width: 100%;
+    }
   }
 
   &_col {

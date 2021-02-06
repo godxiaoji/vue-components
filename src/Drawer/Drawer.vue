@@ -9,6 +9,7 @@
     <div
       class="fx-drawer_inner"
       :class="[alignClassName, { 'has--header': hasHeader }]"
+      :style="innerStyles"
     >
       <div v-show="hasHeader" class="fx-drawer_header fx-horizontal-hairline">
         <div class="fx-drawer_header-inner">
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+import safeAreaInsets from 'safe-area-insets'
 import FxButton from '../Button'
 import popupMixin from '../util/popup-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
@@ -50,6 +52,21 @@ export default {
     showClose: {
       type: Boolean,
       default: false
+    },
+    // 是否开启安全区
+    enableSafeAreaInsets: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {
+      safeAreaInsets: {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }
     }
   },
   computed: {
@@ -58,6 +75,50 @@ export default {
     },
     hasHeader() {
       return this.title != null || this.showClose
+    },
+    innerStyles() {
+      const placement = getEnumsValue('placement', this.placement)
+
+      let { left, top, right, bottom } = this.safeAreaInsets
+
+      if (placement === 'top') {
+        bottom = 0
+      } else if (placement === 'bottom') {
+        top = 0
+      } else if (placement === 'left') {
+        right = 0
+      } else if (placement === 'right') {
+        left = 0
+      }
+
+      return {
+        padding: top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px'
+      }
+    }
+  },
+  mounted() {
+    safeAreaInsets.onChange(this.updateSafeAreaInsets)
+  },
+  beforeDestroy() {
+    safeAreaInsets.offChange(this.updateSafeAreaInsets)
+  },
+  methods: {
+    updateSafeAreaInsets() {
+      if (this.enableSafeAreaInsets) {
+        this.safeAreaInsets = {
+          top: safeAreaInsets.top,
+          left: safeAreaInsets.left,
+          right: safeAreaInsets.right,
+          bottom: safeAreaInsets.bottom
+        }
+      } else {
+        this.safeAreaInsets = {
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        }
+      }
     }
   }
 }

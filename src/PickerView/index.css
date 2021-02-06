@@ -13,6 +13,10 @@
   flex-wrap: nowrap;
 }
 
+.fx-picker-view_cols .fx-empty {
+  width: 100%;
+}
+
 .fx-picker-view_col {
   position: relative;
   height: 100%;

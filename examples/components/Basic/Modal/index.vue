@@ -1,10 +1,10 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="默认" clickable @click="onShowModal({})"></fx-cell>
+      <fx-cell label="默认" isLink @click="onShowModal({})"></fx-cell>
       <fx-cell
         label="蒙层可点击"
-        clickable
+        isLink
         @click="
           onShowModal({
             maskClosable: true
@@ -13,7 +13,7 @@
       ></fx-cell>
       <fx-cell
         label="隐藏关闭按钮"
-        clickable
+        isLink
         @click="
           onShowModal({
             maskClosable: true,
@@ -23,12 +23,12 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="Slot default">
-      <fx-cell label="图片" clickable @click="visible2 = true"></fx-cell>
+      <fx-cell label="图片" isLink @click="visible2 = true"></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
         label="close"
-        clickable
+        isLink
         @click="
           onShowModal(
             {
@@ -40,7 +40,7 @@
       ></fx-cell>
       <fx-cell
         label="show/shown/hide/hidden"
-        clickable
+        isLink
         @click="
           onShowModal(
             {

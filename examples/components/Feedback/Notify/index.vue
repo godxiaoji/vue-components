@@ -3,29 +3,29 @@
     <fx-group title="基础用法">
       <fx-cell
         label="主要"
-        clickable
+        isLink
         @click="onShowNotify({ title: '通知文本' })"
       ></fx-cell>
       <fx-cell
         label="成功"
-        clickable
+        isLink
         @click="onShowNotify({ title: '成功文本', type: 'success' })"
       ></fx-cell>
       <fx-cell
         label="警告"
-        clickable
+        isLink
         @click="onShowNotify({ title: '警告文本', type: 'warning' })"
       ></fx-cell>
       <fx-cell
         label="危险"
-        clickable
+        isLink
         @click="onShowNotify({ title: '危险文本', type: 'danger' })"
       ></fx-cell>
     </fx-group>
     <fx-group title="自定义图标">
       <fx-cell
         label="成功"
-        clickable
+        isLink
         @click="
           onShowNotify({
             title: '成功文本',
@@ -36,7 +36,7 @@
       ></fx-cell>
       <fx-cell
         label="警告"
-        clickable
+        isLink
         @click="
           onShowNotify({
             title: '警告文本',
@@ -47,7 +47,7 @@
       ></fx-cell>
       <fx-cell
         label="危险"
-        clickable
+        isLink
         @click="
           onShowNotify({
             title: '危险文本',
@@ -60,12 +60,12 @@
     <fx-group title="其他">
       <fx-cell
         label="自定义时长"
-        clickable
+        isLink
         @click="onShowNotify({ title: '5秒后消失', duration: 5000 })"
       ></fx-cell>
       <fx-cell
         label="自定义颜色"
-        clickable
+        isLink
         @click="
           onShowNotify({
             title: '深色调',
@@ -77,15 +77,15 @@
       ></fx-cell>
       <fx-cell
         label="手动关闭"
-        clickable
+        isLink
         @click="
           onShowNotify({ title: '常驻可手动关闭', duration: 0, closable: true })
         "
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showNotify" clickable @click="onCallApi"></fx-cell>
-      <fx-cell label="hideNotify" clickable @click="$hideNotify()"></fx-cell>
+      <fx-cell label="showNotify" isLink @click="onCallApi"></fx-cell>
+      <fx-cell label="hideNotify" isLink @click="$hideNotify()"></fx-cell>
     </fx-group>
     <fx-notify
       :visible.sync="visible"

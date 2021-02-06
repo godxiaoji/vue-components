@@ -4,6 +4,7 @@
   --checkbox-color: #{$border-color};
   --checkbox-active-color: #{$primary-color};
   --checkbox-font-color: #{$title-color};
+  --checkbox-icon-size: 24px;
 
   display: inline-flex;
   flex-direction: column;
@@ -28,7 +29,7 @@
 
   &_icon,
   &_checked-icon {
-    --size: 24px;
+    --size: var(--checkbox-icon-size);
     --color: var(--checkbox-color);
   }
 

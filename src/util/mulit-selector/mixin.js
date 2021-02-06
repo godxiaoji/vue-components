@@ -24,7 +24,8 @@ export default {
       fieldNames2: getDefaultFieldNames(),
       separator: '',
       options2: [],
-      isCascade: true
+      isCascade: true,
+      extactData: []
     }
   },
   computed: {
@@ -93,23 +94,28 @@ export default {
       })
     },
 
+    addCache(item) {
+      this.cacheValue.push(item.value)
+      this.cacheLabel.push(item.label)
+      this.extactData.push(cloneData(item.extactData))
+    },
+
     /**
      * 更新多列展示效果
      */
     updateCols(selecteds) {
+      this.cacheValue = []
+      this.cacheLabel = []
+      this.extactData = []
+
       if (this.options2.length === 0) {
         this.cols = []
-        this.cacheValue = []
-        this.cacheLabel = []
         return []
       }
 
       const cols = cloneData(
         isArray(this.options2[0]) ? this.options2 : [this.options2]
       )
-
-      const values = []
-      const labels = []
 
       cols.forEach((list, listIndex) => {
         let hasSelected = false
@@ -119,8 +125,7 @@ export default {
           if (item.value == selecteds[listIndex]) {
             hasSelected = true
             item.selected = true
-            values.push(item.value)
-            labels.push(item.label)
+            this.addCache(item)
             break
           }
         }
@@ -129,16 +134,12 @@ export default {
           if (list[0]) {
             const firstItem = list[0]
             firstItem.selected = true
-            values.push(firstItem.value)
-            labels.push(firstItem.label)
+            this.addCache(firstItem)
           }
         }
       })
 
       this.cols = cols
-
-      this.cacheValue = values
-      this.cacheLabel = labels
 
       return cols
     },
@@ -148,7 +149,10 @@ export default {
      * @param {Array} selecteds
      */
     updateCascadeCols(selecteds) {
-      //
+      this.cacheValue = []
+      this.cacheLabel = []
+      this.extactData = []
+
       let optionList = this.parseColList(0)
 
       if (selecteds.length === 0) {
@@ -156,16 +160,14 @@ export default {
         selecteds = this.getDefaultSelecteds()
       }
 
-      const menuGroup = []
+      const cols = []
       const menuLabels = []
       const menuValues = []
-      const labels = []
-      const values = []
       let lastGroupSelected = false
 
       for (let i = 0; i <= selecteds.length; i++) {
         let selected = selecteds[i]
-        const menuList = []
+        const colList = []
         let nextParent = null
         lastGroupSelected = false
 
@@ -173,7 +175,7 @@ export default {
           for (let j = 0; j < optionList.length; j++) {
             let optionItem = optionList[j]
 
-            let menuItem = {
+            const colItem = {
               label: optionItem.label,
               value: optionItem.value,
               selected: false,
@@ -181,25 +183,24 @@ export default {
               hasChildren: optionItem.hasChildren
             }
 
-            menuItem.values = menuValues.concat(menuItem.value)
-            menuItem.labels = menuLabels.concat(menuItem.label)
+            colItem.values = menuValues.concat(colItem.value)
+            colItem.labels = menuLabels.concat(colItem.label)
 
-            if (selected != null && menuItem.value === selected) {
+            if (selected != null && colItem.value === selected) {
               // 找到
-              menuItem.selected = true
+              colItem.selected = true
               lastGroupSelected = true
 
-              if (menuItem.hasChildren) {
+              if (colItem.hasChildren) {
                 nextParent = optionItem
               }
 
-              labels.push(menuItem.label)
-              values.push(menuItem.value)
+              this.addCache(optionItem)
             }
 
-            menuList.push(menuItem)
+            colList.push(colItem)
           }
-          menuGroup.push(menuList)
+          cols.push(colList)
         }
 
         if (!nextParent) {
@@ -217,10 +218,8 @@ export default {
         let lastGroupFirstItem = optionList[0]
 
         if (lastGroupFirstItem) {
-          const menuItem = menuGroup[menuGroup.length - 1][0]
-          menuItem.selected = true
-          labels.push(menuItem.label)
-          values.push(menuItem.value)
+          cols[cols.length - 1][0].selected = true
+          this.addCache(lastGroupFirstItem)
         }
 
         while (lastGroupFirstItem) {
@@ -230,12 +229,12 @@ export default {
 
             optionList = this.parseColList(i++, lastGroupFirstItem)
 
-            const menuList = []
+            const colList = []
 
             if (optionList) {
               for (let j = 0; j < optionList.length; j++) {
                 const optionItem = optionList[j]
-                const menuItem = {
+                const colItem = {
                   label: optionItem.label,
                   value: optionItem.value,
                   selected: j === 0,
@@ -243,17 +242,16 @@ export default {
                   hasChildren: optionItem.hasChildren
                 }
 
-                menuItem.values = menuValues.concat(menuItem.value)
-                menuItem.labels = menuLabels.concat(menuItem.label)
+                colItem.values = menuValues.concat(colItem.value)
+                colItem.labels = menuLabels.concat(colItem.label)
 
-                if (menuItem.selected) {
-                  labels.push(menuItem.label)
-                  values.push(menuItem.value)
+                if (colItem.selected) {
+                  this.addCache(optionItem)
                 }
 
-                menuList.push(menuItem)
+                colList.push(colItem)
               }
-              menuGroup.push(menuList)
+              cols.push(colList)
             }
 
             lastGroupFirstItem = optionList[0]
@@ -263,20 +261,17 @@ export default {
         }
       }
 
-      this.cacheValue = values
-      this.cacheLabel = labels
+      this.cols = cols
 
-      this.cols = menuGroup
-
-      return menuGroup
+      return cols
     },
 
     update(selecteds) {
-      const menuGroup = !this.isCascade
+      const cols = !this.isCascade
         ? this.updateCols(selecteds)
         : this.updateCascadeCols(selecteds)
 
-      this.afterUpdate(menuGroup)
+      this.afterUpdate(cols)
     },
 
     updateOptions(val) {
@@ -339,7 +334,8 @@ export default {
         valueString: array2String(this.formValue, this.mode, this.separator),
         labelString: array2String(this.formLabel, this.mode, this.separator),
         value: cloneData(this.formValue),
-        label: cloneData(this.formLabel)
+        label: cloneData(this.formLabel),
+        extactData: cloneData(this.extactData)
       }
 
       return detail

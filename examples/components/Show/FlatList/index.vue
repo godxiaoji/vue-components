@@ -130,22 +130,22 @@
       </fx-flat-list>
       <fx-cell
         label="scrollToIndex({ index: 49 })"
-        clickable
+        isLink
         @click="$refs.flatList.scrollToIndex({ index: 49 })"
       ></fx-cell>
       <fx-cell
         label="同上加 viewPosition=0.5"
-        clickable
+        isLink
         @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 0.5 })"
       ></fx-cell>
       <fx-cell
         label="同上加 viewPosition=1"
-        clickable
+        isLink
         @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 1 })"
       ></fx-cell>
       <fx-cell
         label="scrollToOffset({ offset: 200 })"
-        clickable
+        isLink
         @click="$refs.flatList.scrollToOffset({ offset: 200 })"
       ></fx-cell>
     </fx-group>

@@ -1,11 +1,10 @@
 import Icon from '../../Icon/Icon.vue'
 import formMixin from '../form-mixin'
 import mulitSelectorPropsMixin from './props-mixin'
-import { cloneData, isSameArray, inArray } from '../../helpers/util'
+import { cloneData, isSameArray, inArray, isEmpty } from '../../helpers/util'
 import {
   getDefaultDetail,
   getFormatOptions,
-  isEmpty,
   MODE_NAMES,
   string2Array,
   validateValues
@@ -41,6 +40,13 @@ export default {
       handler(val) {
         this.updateValue(val)
       }
+    },
+    options: {
+      handler() {
+        if (!this.$refs.popup) {
+          this.updateValue(this.modelValue)
+        }
+      }
     }
   },
   created() {
@@ -65,7 +71,9 @@ export default {
     updateValue(val) {
       if (this.$refs.popup) {
         const popupDetail = this.$refs.popup.updateValue(val)
-        this.updateDetail(isEmpty(val) ? getDefaultDetail() : popupDetail)
+        this.updateDetail(
+          isEmpty(val) && val !== 0 ? getDefaultDetail() : popupDetail
+        )
         return
       }
 
@@ -113,6 +121,10 @@ export default {
     },
 
     updateDetail(detail) {
+      if (!isSameArray(detail.value, this.formValue)) {
+        this.$emit('value-change', cloneData(detail))
+      }
+
       this.detail = detail
       this.formValue = detail.value
       this.formLabel = detail.label

@@ -4,6 +4,7 @@
   --radio-color: #{$border-color};
   --radio-active-color: #{$primary-color};
   --radio-font-color: #{$title-color};
+  --radio-icon-size: 24px;
 
   display: inline-flex;
   flex-direction: column;
@@ -28,7 +29,7 @@
 
   &_icon,
   &_checked-icon {
-    --size: 24px;
+    --size: var(--radio-icon-size);
     --color: var(--radio-color);
   }
 

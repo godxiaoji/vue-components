@@ -61,12 +61,12 @@
       </div>
     </fx-group>
     <fx-group title="CalendarPopup">
-      <fx-cell label="v-modal +1day" clickable @click="addOneDay">{{
+      <fx-cell label="v-modal +1day" isLink @click="addOneDay">{{
         popupValueString
       }}</fx-cell>
       <fx-cell
         label="Event:confirm"
-        clickable
+        isLink
         @click="
           ;(confirmEvent = true),
             (popupShowConfirm = false),
@@ -76,7 +76,7 @@
       ></fx-cell>
       <fx-cell
         label="showConfirm=true"
-        clickable
+        isLink
         @click="
           ;(confirmEvent = true),
             (popupShowConfirm = true),
@@ -86,12 +86,12 @@
       ></fx-cell>
       <fx-cell
         label="initial-type=range && max-range=5"
-        clickable
+        isLink
         @click="popupRangeVisible = true"
       ></fx-cell>
       <fx-cell
         label="Event:show/shown/hide/hidden"
-        clickable
+        isLink
         @click="
           ;(otherEvent = true),
             (popupShowConfirm = true),
@@ -101,7 +101,7 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showCalendar" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showCalendar" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-calendar-popup
       :visible.sync="popupVisible"

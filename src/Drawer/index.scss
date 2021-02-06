@@ -12,6 +12,7 @@
     transition: transform 0.2s;
     background-color: #fff;
     min-height: 100px;
+    box-sizing: border-box;
 
     &.placement--left,
     &.placement--right {
@@ -86,6 +87,7 @@
   &_body {
     flex-shrink: 1;
     flex-grow: 1;
+    height: 100%;
 
     .fx-drawer_inner.has--header & {
       height: calc(100% - 48px);

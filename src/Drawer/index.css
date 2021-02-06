@@ -9,6 +9,7 @@
   transition: transform 0.2s;
   background-color: #fff;
   min-height: 100px;
+  box-sizing: border-box;
 }
 
 .fx-drawer_inner.placement--left, .fx-drawer_inner.placement--right {
@@ -82,6 +83,7 @@
 .fx-drawer_body {
   flex-shrink: 1;
   flex-grow: 1;
+  height: 100%;
 }
 
 .fx-drawer_inner.has--header .fx-drawer_body {

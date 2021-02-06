@@ -1,31 +1,30 @@
 <template>
   <div
     class="fx-cell fx-horizontal-hairline"
-    :class="{ clickable, 'has--icon': !!icon, disabled: !!disabled }"
+    :class="{
+      clickable: clickable || isLink,
+      'has--icon': $slots.icon || icon,
+      disabled: !!disabled
+    }"
     @click="onClick"
   >
     <div class="fx-cell_cover"></div>
-    <div class="fx-cell_inner">
-      <i class="fx-cell_icon" v-if="icon">
-        <icon :icon="icon" />
-      </i>
-      <div class="fx-cell_label">
+    <div class="fx-cell_header">
+      <div class="fx-cell_icon" v-if="$slots.icon">
+        <slot name="icon"></slot>
+      </div>
+      <div class="fx-cell_icon" v-else-if="icon"><icon :icon="icon" /></div>
+      <div class="fx-cell_label" v-if="label">
         {{ label }}
         <span class="fx-cell_required" v-if="required">*</span>
       </div>
       <div class="fx-cell_content">
-        <template v-if="!$slots.default">{{ content }}</template>
-        <slot></slot>
+        <slot>{{ content }}</slot>
       </div>
-      <i
-        class="fx-cell_link-icon"
-        v-if="clickable && arrowDirection !== 'none'"
-      >
-        <icon :icon="linkIconName" />
-      </i>
-      <div class="fx-cell_description" v-if="description">
-        {{ description }}
-      </div>
+      <icon class="fx-cell_link-icon" v-if="isLink" :icon="linkIconName" />
+    </div>
+    <div class="fx-cell_body" v-if="description">
+      {{ description }}
     </div>
   </div>
 </template>
@@ -35,7 +34,7 @@ import Icon from '../Icon'
 import { inArray, capitalize } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
-const LINK_ICON_NAMES = ['right', 'up', 'down', 'left', 'none']
+const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 
 export default {
   name: 'fx-cell',
@@ -65,6 +64,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isLink: {
+      type: Boolean,
+      default: false
+    },
     arrowDirection: {
       validator(val) {
         return inArray(val, LINK_ICON_NAMES)
@@ -86,6 +89,7 @@ export default {
     }
   },
   methods: {
+    noop() {},
     onClick(e) {
       if (!this.disabled) {
         this.$emit(e.type, e)

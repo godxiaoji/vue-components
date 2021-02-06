@@ -2,6 +2,7 @@
   --checkbox-color: #d9d9d9;
   --checkbox-active-color: #1890ff;
   --checkbox-font-color: #262626;
+  --checkbox-icon-size: 24px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +26,7 @@
 }
 
 .fx-checkbox_icon, .fx-checkbox_checked-icon {
-  --size: 24px;
+  --size: var(--checkbox-icon-size);
   --color: var(--checkbox-color);
 }
 

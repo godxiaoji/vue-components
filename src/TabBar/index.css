@@ -3,10 +3,6 @@
   --tab-bar-active-color: #1890ff;
   --tab-bar-background-color: #fff;
   height: 52px;
-}
-
-.fx-tab-bar_inner {
-  height: 52px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +10,7 @@
   background-color: var(--tab-bar-background-color);
 }
 
-.fx-tab-bar_inner::before, .fx-tab-bar_inner::after {
+.fx-tab-bar::before, .fx-tab-bar::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -22,17 +18,9 @@
   content: '';
 }
 
-.fx-tab-bar_inner::after {
+.fx-tab-bar::after {
   top: auto;
   bottom: 0;
-}
-
-.fx-tab-bar_inner.fixed {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 1;
-  width: 100%;
 }
 
 .fx-tab-bar_list {

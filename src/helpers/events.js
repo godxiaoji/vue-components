@@ -255,38 +255,36 @@ try {
   // 此处不需要任何操作
 }
 
-const touchOptions = {
-  touchstart: isMobile ? 'touchstart' : 'mousedown',
-  touchmove: isMobile ? 'touchmove' : 'mousemove',
-  touchend: isMobile ? 'touchend' : 'mouseup',
-  options: passiveSupported ? { passive: false } : false
-}
+const touchstart = isMobile ? 'touchstart' : 'mousedown'
+const touchmove = isMobile ? 'touchmove' : 'mousemove'
+const touchend = isMobile ? 'touchend' : 'mouseup'
+const touchOptions = passiveSupported ? { passive: false } : false
 
 function getStretchOffset(offset) {
   return Math.ceil(offset / Math.log(Math.abs(offset)))
 }
 
 export const touchEvent = {
-  touchstart: touchOptions.touchstart,
-  touchmove: touchOptions.touchmove,
-  touchend: touchOptions.touchend,
+  touchstart,
+  touchmove,
+  touchend,
   getStretchOffset,
   addListeners($el, ref) {
-    $el.addEventListener(touchOptions.touchstart, ref, touchOptions.options)
-    $el.addEventListener(touchOptions.touchmove, ref, touchOptions.options)
-    $el.addEventListener(touchOptions.touchend, ref, touchOptions.options)
+    $el.addEventListener(touchstart, ref, touchOptions)
+    $el.addEventListener(touchmove, ref, touchOptions)
+    $el.addEventListener(touchend, ref, touchOptions)
 
-    if (touchOptions.touchend === 'mouseup') {
-      $el.addEventListener('mouseleave', ref, touchOptions.options)
+    if (touchend === 'mouseup') {
+      $el.addEventListener('mouseleave', ref, touchOptions)
     }
   },
   removeListeners($el, ref) {
-    $el.removeEventListener(touchOptions.touchstart, ref, touchOptions.options)
-    $el.removeEventListener(touchOptions.touchmove, ref, touchOptions.options)
-    $el.removeEventListener(touchOptions.touchend, ref, touchOptions.options)
+    $el.removeEventListener(touchstart, ref, touchOptions)
+    $el.removeEventListener(touchmove, ref, touchOptions)
+    $el.removeEventListener(touchend, ref, touchOptions)
 
-    if (touchOptions.touchend === 'mouseup') {
-      $el.removeEventListener('mouseleave', ref, touchOptions.options)
+    if (touchend === 'mouseup') {
+      $el.removeEventListener('mouseleave', ref, touchOptions)
     }
   },
   getTouch(e) {
@@ -303,5 +301,78 @@ export const touchEvent = {
     }
 
     return touch
+  }
+}
+
+/**
+ * 绑定长按事件
+ * @param {Element} $el 绑定的元素
+ * @param {Function} callback 回调函数
+ */
+export function addLongPressEvent($el, callback) {
+  let coords = null
+
+  const ref = {
+    /**
+     * 事件
+     * @param {Event} e
+     */
+    handleEvent(e) {
+      switch (e.type) {
+        case touchstart:
+          this.onStart(e)
+          break
+        case touchmove:
+          this.onMove(e)
+          break
+        case touchend:
+          this.onEnd(e)
+          break
+        case 'mouseleave':
+          this.onEnd(e)
+          break
+        default:
+          break
+      }
+    },
+    onStart(e) {
+      const { pageX, pageY } = touchEvent.getTouch(e)
+
+      coords = {
+        startX: pageX,
+        startY: pageY,
+        timeStamp: e.timeStamp
+      }
+    },
+    onMove(e) {
+      if (!coords) {
+        return
+      }
+
+      const { pageX, pageY } = touchEvent.getTouch(e)
+
+      if (
+        Math.abs(pageX - coords.startX) >= 10 ||
+        Math.abs(pageY - coords.startY) >= 10
+      ) {
+        coords = null
+      }
+    },
+    onEnd(e) {
+      if (coords) {
+        isFunction(callback) &&
+          callback({
+            type: e.timeStamp - coords.timeStamp >= 800 ? 'long-press' : 'click'
+          })
+      }
+
+      coords = null
+    }
+  }
+
+  touchEvent.addListeners($el, ref)
+
+  return function removeLongPressEvent() {
+    touchEvent.removeListeners($el, ref)
   }
 }

@@ -1,9 +1,12 @@
 <template>
-  <div class="fx-form-item" @click="onClick">
-    <cell :label="label" :description="errMsg" :required="required">
-      <slot></slot>
-    </cell>
-  </div>
+  <cell
+    class="fx-form-item"
+    :label="label"
+    :description="errMsg"
+    :required="required"
+  >
+    <slot></slot>
+  </cell>
 </template>
 
 <script>

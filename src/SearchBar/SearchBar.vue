@@ -52,16 +52,10 @@
               :key="item.text"
               :label="item.text"
               class="fx-search_suggest-item"
-              arrowDirection="none"
               clickable
               @click="onSuggestItemClick(item.text)"
             >
-              <span
-                class="fx-search_suggest-tag"
-                v-for="tag in item.tags"
-                :key="tag"
-                >{{ tag }}</span
-              >
+              <tag v-for="tag in item.tags" :key="tag">{{ tag }}</tag>
             </cell>
           </div>
         </div>
@@ -76,6 +70,7 @@ import FxInput from '../Input'
 import FxButton from '../Button'
 import Dropdown from '../Dropdown'
 import Cell from '../Cell'
+import Tag from '../Tag'
 import {
   isArray,
   isObject,
@@ -86,7 +81,7 @@ import {
 
 export default {
   name: 'fx-search-bar',
-  components: { Icon, FxInput, FxButton, Dropdown, Cell },
+  components: { Icon, FxInput, FxButton, Dropdown, Cell, Tag },
   props: {
     ghost: {
       type: Boolean,

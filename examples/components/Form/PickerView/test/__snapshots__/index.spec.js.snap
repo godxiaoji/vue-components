@@ -45,6 +45,7 @@ exports[`PickerView should render prop set options correctly 1`] = `
         </li>
       </ul>
     </div>
+    <!---->
   </div>
 </div>
 `;

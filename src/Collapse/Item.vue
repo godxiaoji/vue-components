@@ -5,7 +5,7 @@
       :label="title"
       :icon="icon"
       :disabled="disabled"
-      clickable
+      isLink
       arrow-direction="down"
       @click="onClick"
     />

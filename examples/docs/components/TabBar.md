@@ -6,8 +6,6 @@
 | ----------------- | -------------------------- | ---------------------------------- | ---- | ---------------------------------------- |
 | options           | object[]/string[]/number[] | []                                 | 是   | tab 数据集                               |
 | active-value.sync | string, number             |                                    | 否   | 当前激活项的 value 值                    |
-| fixed             | boolean                    | true                               | 否   | 设置固定底部展示                         |
-| z-index           | number                     | 4                                  | 否   | 设定固定底部的 zIndex，fixed=true 时生效 |
 | field-names       | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key |
 
 ### options 的结构

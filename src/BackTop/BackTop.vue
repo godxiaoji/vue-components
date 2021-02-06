@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import safeAreaInsets from 'safe-area-insets'
 import Icon from '../Icon'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getScrollDom } from '../helpers/dom'
@@ -35,18 +36,25 @@ export default {
       default() {
         return [0, 0]
       }
+    },
+    // 是否开启安全区
+    enableSafeAreaInsets: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
       scrollTop: 0,
-      duration: 200
+      duration: 200,
+      safeAreaInsetBottom: 0
     }
   },
   computed: {
     styles() {
       return {
-        transform: `translate3d(${this.offset[0]}px, ${this.offset[1]}px, 0px)`
+        transform: `translate3d(${this.offset[0]}px, ${this.offset[1] -
+          this.safeAreaInsetBottom}px, 0px)`
       }
     }
   },
@@ -55,10 +63,21 @@ export default {
 
     addScrollEvent(this.onScroll)
   },
+  mounted() {
+    safeAreaInsets.onChange(this.updateSafeAreaInsets)
+    this.updateSafeAreaInsets()
+  },
   beforeDestroy() {
+    safeAreaInsets.offChange(this.updateSafeAreaInsets)
     removeScrollEvent(this.onScroll)
   },
   methods: {
+    updateSafeAreaInsets() {
+      this.safeAreaInsetBottom = this.enableSafeAreaInsets
+        ? safeAreaInsets.bottom
+        : 0
+    },
+
     onScroll(e) {
       this.scrollTop = e.target.documentElement.scrollTop
     },

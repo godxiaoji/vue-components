@@ -7,10 +7,15 @@
   min-height: 48px;
   background-color: #fff;
   position: relative;
+  width: 100%;
 
-  + .fx-cell::before {
+  &:not(:last-child)::after {
     content: '';
     margin-left: 16px;
+  }
+
+  &.has--icon::after {
+    margin-left: 48px;
   }
 
   &_cover {
@@ -24,16 +29,17 @@
     @include background-active;
   }
 
-  &_inner {
-    padding: 8px 16px 8px 0;
-    margin-left: 16px;
+  &_header {
+    padding: 8px 16px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
   }
 
   &_label {
+    flex-shrink: 0;
     height: 32px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -43,27 +49,14 @@
     color: var(--cell-label-color);
     font-size: 17px;
     padding-right: 12px;
+
+    + .fx-cell_content {
+      justify-content: flex-end;
+    }
   }
 
   &_required {
     color: $danger-color;
-  }
-
-  &_description {
-    width: 100%;
-    line-height: 20px;
-    font-size: 14px;
-    color: var(--cell-description-color);
-    margin: 0 0 4px 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: left;
-
-    .fx-cell.has--icon & {
-      margin-left: 23px;
-    }
   }
 
   &_content {
@@ -74,31 +67,43 @@
     min-height: 32px;
     line-height: 32px;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    max-width: 100%;
   }
 
   &_icon {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    margin-right: 5px;
+    margin: 0 12px 0 0;
 
-    .fx-icon {
-      --size: 18px;
+    > .fx-icon {
+      --size: 20px;
       --color: var(--cell-label-color);
+    }
+
+    .fx-checkbox {
+      --checkbox-icon-size: 20px;
     }
   }
 
   &_link-icon {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    margin-left: 5px;
+    margin-left: 4px;
+    --size: 20px;
+    --color: var(--cell-content-color);
+  }
 
-    .fx-icon {
-      --size: 18px;
-      --color: var(--cell-content-color);
+  &_body {
+    width: 100%;
+    line-height: 20px;
+    font-size: 14px;
+    color: var(--cell-description-color);
+    margin: -8px 0 0 16px;
+    padding-bottom: 12px;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-align: left;
+
+    .fx-cell.has--icon & {
+      margin-left: 48px;
     }
   }
 

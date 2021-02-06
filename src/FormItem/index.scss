@@ -1,18 +1,7 @@
 @import '../style/var.scss';
 
-.fx-form-item {
-  display: block;
-
-  > .fx-cell {
-    .fx-cell {
-      &_description {
-        color: $danger-color;
-      }
-    }
-  }
-
-  + .fx-form-item .fx-cell::before {
-    content: '';
-    margin-left: 16px;
+.fx-form-item.fx-cell {
+  .fx-cell_body {
+    color: $danger-color;
   }
 }

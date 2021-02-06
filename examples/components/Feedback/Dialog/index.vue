@@ -3,7 +3,7 @@
     <fx-group title="基础用法">
       <fx-cell
         label="默认"
-        clickable
+        isLink
         @click="
           onShowDialog({
             title: '标题',
@@ -13,7 +13,7 @@
       ></fx-cell>
       <fx-cell
         label="不带标题"
-        clickable
+        isLink
         @click="
           onShowDialog({
             content: '提示内容提示内容提示内容提示内容提示内容提示内容'
@@ -22,7 +22,7 @@
       ></fx-cell>
       <fx-cell
         label="不显示取消按钮"
-        clickable
+        isLink
         @click="
           onShowDialog({
             title: '标题',
@@ -33,7 +33,7 @@
       ></fx-cell>
       <fx-cell
         label="自定义按钮文案"
-        clickable
+        isLink
         @click="
           onShowDialog({
             title: '惊喜',
@@ -47,7 +47,7 @@
     <fx-group title="事件监听">
       <fx-cell
         label="confirm/cancel"
-        clickable
+        isLink
         @click="
           onShowDialog(
             {
@@ -60,7 +60,7 @@
       ></fx-cell>
       <fx-cell
         label="show/shown/hide/hidden"
-        clickable
+        isLink
         @click="
           onShowDialog(
             {
@@ -74,7 +74,7 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showDialog" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showDialog" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-dialog
       :visible.sync="visible"

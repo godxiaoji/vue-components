@@ -133,13 +133,19 @@ export function parseOptions(options, fieldNames) {
         newOptions.push({
           label: option.toString(),
           value: option,
-          disabled: false
+          disabled: false,
+          extactData: {}
         })
       } else if (
         isObject(option) &&
         (isNumber(option[fieldNames.value]) ||
           isString(option[fieldNames.value]))
       ) {
+        const extactData = cloneData(option)
+        delete extactData[fieldNames.label]
+        delete extactData[fieldNames.value]
+        delete extactData[fieldNames.children]
+
         newOptions.push({
           label:
             option[fieldNames.label] == null
@@ -147,7 +153,8 @@ export function parseOptions(options, fieldNames) {
               : option[fieldNames.label],
           value: option[fieldNames.value],
           disabled: option.disabled ? true : false,
-          children: parseOptions(option[fieldNames.children], fieldNames)
+          children: parseOptions(option[fieldNames.children], fieldNames),
+          extactData
         })
       }
     })
@@ -157,11 +164,17 @@ export function parseOptions(options, fieldNames) {
 }
 
 export function getDefaultFieldNames() {
-  return cloneData({ label: 'label', value: 'value', children: 'children' })
+  return { label: 'label', value: 'value', children: 'children' }
 }
 
 export function getDefaultDetail() {
-  return cloneData({ valueString: '', value: [], labelString: '', label: [] })
+  return {
+    valueString: '',
+    value: [],
+    labelString: '',
+    label: [],
+    extactData: []
+  }
 }
 
 export const DATE_MODE_NAMES = ['date', 'time', 'datetime']
@@ -178,6 +191,7 @@ function validateCols(values, options) {
   let selectCount = 0
   const value = []
   const label = []
+  const extactData = []
 
   cols.forEach((list, colIndex) => {
     for (let i = 0; i < list.length; i++) {
@@ -186,6 +200,7 @@ function validateCols(values, options) {
         selectCount++
         value.push(item.value)
         label.push(item.label)
+        extactData.push(cloneData(item.extactData))
         break
       }
     }
@@ -195,12 +210,14 @@ function validateCols(values, options) {
     ? {
         vaild: true,
         value,
-        label
+        label,
+        extactData
       }
     : {
         vaild: false,
         value: [],
-        label: []
+        label: [],
+        extactData: []
       }
 }
 
@@ -212,6 +229,13 @@ function validateCols(values, options) {
 function validateCascadeCols(values, options, mode) {
   const value = []
   const label = []
+  const extactData = []
+
+  function addData(optionItem) {
+    value.push(optionItem.value)
+    label.push(optionItem.label)
+    extactData.push(cloneData(optionItem.extactData))
+  }
 
   const deep = (index, parent) => {
     const optionList = parseDropdownList(mode, index, parent)
@@ -222,13 +246,11 @@ function validateCascadeCols(values, options, mode) {
       if (optionItem.value === values[index]) {
         if (optionItem.hasChildren && values[index + 1]) {
           // 都有下一项
-          value.push(optionItem.value)
-          label.push(optionItem.label)
+          addData(optionItem)
           return deep(index + 1, optionItem)
         } else if (!optionItem.hasChildren && index + 1 >= values.length) {
           // 都没有下一项，匹配正确
-          value.push(optionItem.value)
-          label.push(optionItem.label)
+          addData(optionItem)
           return true
         } else {
           return false
@@ -243,12 +265,14 @@ function validateCascadeCols(values, options, mode) {
     ? {
         vaild: true,
         value,
-        label
+        label,
+        extactData
       }
     : {
         vaild: false,
         value: [],
-        label: []
+        label: [],
+        extactData: []
       }
 }
 
@@ -346,10 +370,4 @@ export function getFormatOptions(options, fieldNames, mode, cascader = false) {
     isCascade,
     fieldNames: newFieldNames
   }
-}
-
-export function isEmpty(object) {
-  return (
-    object == null || object === '' || (isArray(object) && object.length === 0)
-  )
 }

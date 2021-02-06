@@ -65,6 +65,9 @@ export default {
     this.resetContainer(this.containSelector)
   },
   beforeDestroy() {
+    if (this.disableFixed) {
+      this.$el.append(this.$refs.content)
+    }
     removeScrollEvent(this.onScroll, this.$container)
   },
   methods: {

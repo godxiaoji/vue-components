@@ -4,20 +4,7 @@ exports[`Collapse Collapse should render default correctly 1`] = `<div class="fx
 
 exports[`Collapse CollapseItem should render default correctly 1`] = `
 <div class="fx-collapse-item fx-horizontal-hairline">
-  <div class="fx-cell fx-horizontal-hairline fx-collapse-item_header clickable">
-    <div class="fx-cell_cover"></div>
-    <div class="fx-cell_inner">
-      <!---->
-      <div class="fx-cell_label">
-        title-1
-        <!---->
-      </div>
-      <div class="fx-cell_content"> </div> <i class="fx-cell_link-icon"><svg class="fx-icon">
-          <use xlink:href="#icon-DownOutlined"></use>
-        </svg></i>
-      <!---->
-    </div>
-  </div>
+  <cell-stub label="title-1" description="" content="" islink="true" arrowdirection="down" class="fx-collapse-item_header"></cell-stub>
   <div class="fx-collapse-item_body fx-horizontal-hairline" style="display: none;">
     <div class="fx-collapse-item_content">content</div>
   </div>

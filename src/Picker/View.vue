@@ -22,11 +22,13 @@
           </li>
         </ul>
       </div>
+      <empty description="暂无选项可选" v-if="cols.length === 0"></empty>
     </div>
   </div>
 </template>
 
 <script>
+import Empty from '../Empty'
 import { frameTo } from '../helpers/animation'
 import mulitSelectorMixin from '../util/mulit-selector/mixin'
 import { hasClassName } from '../helpers/dom'
@@ -34,6 +36,7 @@ import { hasClassName } from '../helpers/dom'
 export default {
   name: 'fx-picker-view',
   mixins: [mulitSelectorMixin],
+  components: { Empty },
   data() {
     return {
       itemHeight: 48,

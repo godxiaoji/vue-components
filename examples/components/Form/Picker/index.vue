@@ -34,28 +34,28 @@
     <fx-group title="PickerPopup">
       <fx-cell
         label="基础"
-        clickable
+        isLink
         @click="visible = true"
         :content="value"
       ></fx-cell>
       <fx-cell
         label="Event:change"
-        clickable
+        isLink
         @click=";(changeEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="Event:confirm/cancel"
-        clickable
+        isLink
         @click=";(clickEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="Event:show/shown/hide/hidden"
-        clickable
+        isLink
         @click=";(otherEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showPicker" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showPicker" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-picker-popup
       :visible.sync="visible"

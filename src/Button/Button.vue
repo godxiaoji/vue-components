@@ -43,7 +43,7 @@ export default {
       default: null
     },
     type: {
-      validator: createEnumsValidator('buttonType'),
+      validator: createEnumsValidator('type'),
       default: null
     },
     pattern: {
@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     typeClassName() {
-      return 'type--' + getEnumsValue('buttonType', this.type)
+      return 'type--' + getEnumsValue('type', this.type)
     },
     patternClassName() {
       return (

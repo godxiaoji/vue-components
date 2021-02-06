@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActionSheet should render prop set options correctly 1`] = `
-<drawer-stub maskclosable="true" showmask="true" placement="bottom" class="fx-action-sheet">
+<drawer-stub maskclosable="true" showmask="true" placement="bottom" enablesafeareainsets="true" class="fx-action-sheet">
   <!---->
   <div class="fx-action-sheet_body">
     <ul class="fx-action-sheet_list">
@@ -27,7 +27,7 @@ exports[`ActionSheet should render prop set options correctly 1`] = `
 `;
 
 exports[`ActionSheet should render props showCancel=true & cancelText="Custom Cancel" correctly 1`] = `
-<drawer-stub maskclosable="true" showmask="true" placement="bottom" class="fx-action-sheet">
+<drawer-stub maskclosable="true" showmask="true" placement="bottom" enablesafeareainsets="true" class="fx-action-sheet">
   <!---->
   <div class="fx-action-sheet_body">
     <ul class="fx-action-sheet_list"></ul>

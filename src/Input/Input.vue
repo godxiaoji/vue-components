@@ -59,7 +59,7 @@
 
 <script>
 import Icon from '../Icon'
-import { inArray, isStringNumberMix } from '../helpers/util'
+import { inArray, isNumeric, isStringNumberMix } from '../helpers/util'
 import formMixin from '../util/form-mixin'
 import { formatInputDigit, formatInputNumber } from '../helpers/input'
 
@@ -79,7 +79,7 @@ export default {
   mixins: [formMixin],
   props: {
     maxlength: {
-      type: Number,
+      validator: isNumeric,
       default: 140
     },
     placeholder: {

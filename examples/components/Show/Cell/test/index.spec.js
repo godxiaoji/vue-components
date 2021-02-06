@@ -42,12 +42,12 @@ describe('Cell', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  test('should render prop clickable=true correctly', () => {
+  test('should render prop isLink=true correctly', () => {
     const wrapper = shallowMount(Cell, {
       propsData: {
         label,
         content,
-        clickable: true
+        isLink: true
       }
     })
 

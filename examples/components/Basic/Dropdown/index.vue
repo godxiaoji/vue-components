@@ -3,7 +3,7 @@
     <fx-group title="基础用法">
       <fx-cell
         label="基础"
-        clickable
+        isLink
         id="dropdownCell"
         @click=";(selector = '#dropdownCell'), (visible = true)"
       />

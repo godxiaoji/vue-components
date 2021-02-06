@@ -2,6 +2,7 @@
   --radio-color: #d9d9d9;
   --radio-active-color: #1890ff;
   --radio-font-color: #262626;
+  --radio-icon-size: 24px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +26,7 @@
 }
 
 .fx-radio_icon, .fx-radio_checked-icon {
-  --size: 24px;
+  --size: var(--radio-icon-size);
   --color: var(--radio-color);
 }
 

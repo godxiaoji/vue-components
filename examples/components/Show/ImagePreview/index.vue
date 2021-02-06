@@ -1,24 +1,24 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="预览图片" clickable @click="onShow({})"></fx-cell>
+      <fx-cell label="预览图片" isLink @click="onShow({})"></fx-cell>
       <fx-cell
         label="指定初始图片"
-        clickable
+        isLink
         @click="
           onShow({ current: 'https://cdn.fox2.cn/vfox/swiper/different-2.jpg' })
         "
       ></fx-cell>
       <fx-cell
         label="展示关闭按钮"
-        clickable
+        isLink
         @click="onShow({ showClose: true })"
       ></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
         label="show/shown/hide/hidden/change"
-        clickable
+        isLink
         @click="
           onShow({
             showEventCallback: true
@@ -27,7 +27,7 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="previewImage" clickable @click="onCallApi"></fx-cell>
+      <fx-cell label="previewImage" isLink @click="onCallApi"></fx-cell>
     </fx-group>
     <fx-image-preview
       :visible.sync="visible"

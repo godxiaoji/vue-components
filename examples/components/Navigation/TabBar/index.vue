@@ -1,24 +1,21 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-tab-bar
-        :options="baseList"
-        :fixed="false"
-        :activeValue.sync="activeValue"
-      />
+      <fx-tab-bar :options="baseList" :activeValue.sync="activeValue" />
     </fx-group>
     <fx-group title="徽标">
-      <fx-tab-bar :options="badgeList" :fixed="false" />
+      <fx-tab-bar :options="badgeList" />
     </fx-group>
     <fx-group title="自定义图标">
-      <fx-tab-bar :options="customIconList" :fixed="false" />
+      <fx-tab-bar :options="customIconList" />
     </fx-group>
     <fx-group title="自定义颜色">
-      <fx-tab-bar
-        class="tab-bar-custom-color"
-        :options="baseList"
-        :fixed="false"
-      />
+      <fx-tab-bar class="tab-bar-custom-color" :options="baseList" />
+    </fx-group>
+    <fx-group title="配合 Fixed 实现置底">
+      <fx-fixed>
+        <fx-tab-bar :options="baseList" :activeValue.sync="activeValue" />
+      </fx-fixed>
     </fx-group>
   </div>
 </template>

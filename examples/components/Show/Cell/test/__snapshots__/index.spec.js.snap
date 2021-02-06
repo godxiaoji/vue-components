@@ -1,53 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cell should render prop clickable=true correctly 1`] = `
-<div class="fx-cell fx-horizontal-hairline clickable">
-  <div class="fx-cell_cover"></div>
-  <div class="fx-cell_inner">
-    <!---->
-    <div class="fx-cell_label">
-      label
-      <!---->
-    </div>
-    <div class="fx-cell_content">content </div> <i class="fx-cell_link-icon">
-      <icon-stub icon="RightOutlined" size="0" width="0" height="0"></icon-stub>
-    </i>
-    <!---->
-  </div>
-</div>
-`;
-
 exports[`Cell should render prop icon="EditOutlined" correctly 1`] = `
 <div class="fx-cell fx-horizontal-hairline has--icon">
   <div class="fx-cell_cover"></div>
-  <div class="fx-cell_inner"><i class="fx-cell_icon">
+  <div class="fx-cell_header">
+    <div class="fx-cell_icon">
       <icon-stub icon="EditOutlined" size="0" width="0" height="0"></icon-stub>
-    </i>
+    </div>
     <div class="fx-cell_label">
       label
       <!---->
     </div>
-    <div class="fx-cell_content">content </div>
-    <!---->
+    <div class="fx-cell_content">content</div>
     <!---->
   </div>
+  <!---->
+</div>
+`;
+
+exports[`Cell should render prop isLink=true correctly 1`] = `
+<div class="fx-cell fx-horizontal-hairline clickable">
+  <div class="fx-cell_cover"></div>
+  <div class="fx-cell_header">
+    <!---->
+    <div class="fx-cell_label">
+      label
+      <!---->
+    </div>
+    <div class="fx-cell_content">content</div>
+    <icon-stub icon="RightOutlined" size="0" width="0" height="0" class="fx-cell_link-icon"></icon-stub>
+  </div>
+  <!---->
 </div>
 `;
 
 exports[`Cell should render set description more correctly 1`] = `
 <div class="fx-cell fx-horizontal-hairline">
   <div class="fx-cell_cover"></div>
-  <div class="fx-cell_inner">
+  <div class="fx-cell_header">
     <!---->
     <div class="fx-cell_label">
       label
       <!---->
     </div>
-    <div class="fx-cell_content">content </div>
+    <div class="fx-cell_content">content</div>
     <!---->
-    <div class="fx-cell_description">
-      description
-    </div>
+  </div>
+  <div class="fx-cell_body">
+    description
   </div>
 </div>
 `;
@@ -55,15 +55,15 @@ exports[`Cell should render set description more correctly 1`] = `
 exports[`Cell should render set label and content correctly 1`] = `
 <div class="fx-cell fx-horizontal-hairline">
   <div class="fx-cell_cover"></div>
-  <div class="fx-cell_inner">
+  <div class="fx-cell_header">
     <!---->
     <div class="fx-cell_label">
       label
       <!---->
     </div>
-    <div class="fx-cell_content">content </div>
-    <!---->
+    <div class="fx-cell_content">content</div>
     <!---->
   </div>
+  <!---->
 </div>
 `;

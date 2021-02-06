@@ -190,6 +190,5 @@ export default {
   padding: 12px 16px;
   display: flex;
   background-color: #fff;
-  border-top: 1px solid $divider-color;
 }
 </style>

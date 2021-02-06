@@ -91,7 +91,7 @@ export default {
             buttons.push(
               Object.assign(cloneData(v), {
                 text: v.text,
-                type: getEnumsValue('buttonType', v.type)
+                type: getEnumsValue('type', v.type)
               })
             )
           }

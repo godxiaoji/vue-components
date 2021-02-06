@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/godxiaoji/vfox/compare/v1.8.0...v1.8.1) (2021-02-06)
+
+
+### Bug Fixes
+
+* add Tag Fixed ([d443810](https://github.com/godxiaoji/vfox/commit/d4438100cb30d70040ae1f07cb94a9f122717d4f))
+
 # [1.8.0](https://github.com/godxiaoji/vfox/compare/v1.7.9...v1.8.0) (2021-02-02)
 
 

@@ -1,24 +1,28 @@
 <template>
   <div
-    :class="[prefix + '-notice-bar', typeClassName]"
+    class="fx-notice-bar"
+    :class="[typeClassName]"
     :style="styles"
     v-show="visible2"
   >
-    <div v-if="leftIcon" :class="[prefix + '-notice-bar_left-icon']">
+    <div v-if="leftIcon" class="fx-notice-bar_left-icon">
       <icon :icon="leftIcon" :style="iconStyle" />
     </div>
-    <div :class="[prefix + '-notice-bar_content']">
+    <div class="fx-notice-bar_content">
       <div
         ref="content"
-        :class="[prefix + '-notice-bar_content-inner', { marquee: !!marquee }]"
+        class="fx-notice-bar_content-inner"
+        :class="{ marquee: !!marquee }"
         :style="contentStyles"
       >
-        {{ title }}
+        <slot>
+          {{ title }}
+        </slot>
       </div>
     </div>
     <div
       v-if="rightIcon2"
-      :class="[prefix + '-notice-bar_right-icon']"
+      class="fx-notice-bar_right-icon"
       @click="onRightIconClick"
     >
       <icon :icon="rightIcon2" :style="iconStyle" />
@@ -28,7 +32,6 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
@@ -41,7 +44,7 @@ const MODE_MAPS = {
 }
 
 export default {
-  name: SDKKey + '-notice-bar',
+  name: 'fx-notice-bar',
   components: { Icon },
   inject: {
     appNotify: {
@@ -56,7 +59,6 @@ export default {
     },
     title: {
       type: String,
-      required: true,
       default: ''
     },
     // 通知栏模式
@@ -99,7 +101,7 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, marqueeX: 0, marqueeDuration: 0, visible2: true }
+    return { marqueeX: 0, marqueeDuration: 0, visible2: true }
   },
   watch: {
     marquee() {
@@ -180,9 +182,11 @@ export default {
       this.stopMarquee()
 
       const $content = this.$refs.content
+      const pW = $content.parentNode.offsetWidth
+      const w = $content.offsetWidth
 
-      if ($content.offsetWidth > $content.parentNode.offsetWidth) {
-        this.marqueeStep($content.offsetWidth)
+      if (w > pW) {
+        this.marqueeStep(w, pW)
       }
     },
 
@@ -193,8 +197,8 @@ export default {
       this.marqueeDuration = 0
     },
 
-    marqueeStep(x) {
-      this.marqueeX = x
+    marqueeStep(x, pW) {
+      this.marqueeX = pW
       this.marqueeDuration = 0
 
       this.marqueeTimer = setTimeout(() => {
@@ -202,8 +206,8 @@ export default {
         this.marqueeDuration = x / 30
 
         this.marqueeTimer = setTimeout(() => {
-          this.marqueeStep(x)
-        }, (x / 30) * 1000)
+          this.marqueeStep(x, pW)
+        }, (x / 28) * 1000)
       }, 17)
     },
 

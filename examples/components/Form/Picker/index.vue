@@ -34,28 +34,30 @@
     <fx-group title="PickerPopup">
       <fx-cell
         label="基础"
-        clickable
+        isLink
         @click="visible = true"
         :content="value"
       ></fx-cell>
+    </fx-group>
+    <fx-group title="PickerPopup Event">
       <fx-cell
-        label="Event:change"
-        clickable
+        label="change"
+        isLink
         @click=";(changeEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
-        label="Event:confirm/cancel"
-        clickable
+        label="confirm/cancel"
+        isLink
         @click=";(clickEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
-        label="Event:show/shown/hide/hidden"
-        clickable
+        label="visible-state-change"
+        isLink
         @click=";(otherEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showPicker" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showPicker" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-picker-popup
       v-model:visible="visible"
@@ -66,10 +68,7 @@
       @change="onChange"
       @confirm="onConfirm"
       @cancel="onCancel"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-picker-popup>
   </div>
@@ -115,14 +114,12 @@ export default {
         }
       }
     },
-    onOtherEvent(type) {
-      // console.log(`${type} 事件触发`)
-
+    onVisibleStateChange({ state }) {
       if (this.otherEvent) {
-        this.$showToast(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
       }
 
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.clickEvent = false
         this.otherEvent = false
         this.changeEvent = false

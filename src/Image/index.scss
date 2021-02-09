@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-image {
+.fx-image {
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: center;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --color: #{$border-color};
       --size: 32px;
     }

@@ -1,17 +1,10 @@
 <template>
-  <div :class="[prefix + '-badge', { animated: !!animated }]">
+  <div class="fx-badge" :class="{ animated: !!animated }">
     <slot></slot>
-    <i
-      v-if="dot && content != null"
-      :class="[prefix + '-badge_dot']"
-      :style="styles"
-    ></i>
-    <span
-      v-else-if="content != null"
-      :class="[prefix + '-badge_num']"
-      :style="styles"
-      >{{ showCount }}</span
-    >
+    <i v-if="dot && content != null" class="fx-badge_dot" :style="styles"></i>
+    <span v-else-if="content != null" class="fx-badge_num" :style="styles">{{
+      showCount
+    }}</span>
   </div>
 </template>
 
@@ -22,11 +15,10 @@ import {
   isStringNumberMix,
   rangeInteger
 } from '../helpers/util'
-import { SDKKey } from '../config'
 import { frameTo } from '../helpers/animation'
 
 export default {
-  name: SDKKey + '-badge',
+  name: 'fx-badge',
   props: {
     // 消息条数
     content: {
@@ -62,7 +54,7 @@ export default {
     }
   },
   data() {
-    return { prefix: SDKKey, content2: 0 }
+    return { content2: 0 }
   },
   watch: {
     content: {

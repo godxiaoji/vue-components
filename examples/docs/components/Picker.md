@@ -222,15 +222,21 @@ xiyiji/guntong
 
 ## PickerPopup Events
 
-| 事件    | 描述                 | 回调函数参数                                                                     |
-| ------- | -------------------- | -------------------------------------------------------------------------------- |
-| cancel  | 点击取消按钮后触发   | {}                                                                               |
-| confirm | 点击确定按钮后触发   | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| change  | 选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| show    | 展示时触发           | {}                                                                               |
-| shown   | 展示且动画结束后触发 | {}                                                                               |
-| hide    | 隐藏时触发           | {}                                                                               |
-| hidden  | 隐藏且动画结束后触发 | {}                                                                               |
+| 事件                 | 描述                 | 回调函数参数                                                                     |
+| -------------------- | -------------------- | -------------------------------------------------------------------------------- |
+| cancel               | 点击取消按钮后触发   | {}                                                                               |
+| confirm              | 点击确定按钮后触发   | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| change               | 选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| visible-state-change | 展示隐藏时触发       | { state: string }                                                                |
+
+### visible-state-change 的 state 值
+
+| 值     | 说明                 | 备注                                              |
+| ------ | -------------------- | ------------------------------------------------- |
+| show   | 展示时触发           |                                                   |
+| shown  | 展示且动画结束后触发 |                                                   |
+| hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
+| hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
 ## PickerView 选择
 

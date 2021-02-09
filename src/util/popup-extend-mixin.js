@@ -5,20 +5,16 @@ export default {
       default: false
     }
   },
-  emits: ['cancel', 'show', 'shown', 'hide', 'hidden', 'update:visible'],
+  emits: ['cancel', 'visible-state-change', 'update:visible'],
   methods: {
-    onShow(res) {
-      this.$emit('show', res)
+    onVisibleStateChange(e) {
+      this.$emit('visible-state-change', e)
+
+      if (e.type === 'hidden') {
+        this.afterHidden()
+      }
     },
-    onShown(res) {
-      this.$emit('shown', res)
-    },
-    onHide(res) {
-      this.$emit('hide', res)
-    },
-    onHidden(res) {
-      this.$emit('hidden', res)
-    },
+    afterHidden() {},
     onCancelClick() {
       this.$refs.popup.onCancelClick()
     },

@@ -1,22 +1,22 @@
 <template>
   <div
-    :class="[prefix + '-swiper', { vertical: direction === 'y' }]"
+    class="fx-swiper"
+    :class="{ vertical: direction === 'y' }"
     @click="onClick"
   >
-    <div :class="[prefix + '-swiper_list']" ref="list">
+    <div class="fx-swiper_list" ref="list">
       <slot></slot>
     </div>
     <div
-      :class="[prefix + '-swiper_indicators', { vertical: direction === 'y' }]"
+      class="fx-swiper_indicators"
+      :class="{ vertical: direction === 'y' }"
       v-show="indicatorDots"
     >
       <span
         v-for="item in pagination"
         :key="item.index"
-        :class="[
-          prefix + '-swiper_indicator',
-          { active: item.index === index }
-        ]"
+        class="fx-swiper_indicator"
+        :class="{ active: item.index === index }"
         :style="{
           background:
             item.index === index ? indicatorActiveColor : indicatorColor
@@ -25,8 +25,8 @@
     </div>
     <fx-button
       v-if="navigationButtons"
-      v-show="this.pagination.length > 1"
-      :class="[prefix + '-swiper_prev']"
+      v-show="pagination.length > 1"
+      class="fx-swiper_prev"
       @click.stop="prev(true)"
       icon="LeftOutlined"
       size="large"
@@ -36,8 +36,8 @@
     ></fx-button>
     <fx-button
       v-if="navigationButtons"
-      v-show="this.pagination.length > 1"
-      :class="[prefix + '-swiper_next']"
+      v-show="pagination.length > 1"
+      class="fx-swiper_next"
       @click.stop="next(true)"
       icon="RightOutlined"
       size="large"
@@ -50,7 +50,6 @@
 
 <script>
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import { resizeDetector } from '../helpers/dom'
 import Exception from '../helpers/exception'
 import {
@@ -69,17 +68,19 @@ const {
   touchend,
   addListeners,
   removeListeners,
-  getTouch
+  getTouch,
+  getStretchOffset
 } = touchEvent
 
 // export
 export default {
-  name: SDKKey + '-swiper',
+  name: 'fx-swiper',
   components: { FxButton },
   mixins: [listMixin],
   provide() {
     return {
-      appSwiper: this
+      appSwiper: this,
+      disableFixed: true
     }
   },
   props: {
@@ -136,8 +137,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       index: 0,
       pagination: [],
       $items: [],
@@ -206,7 +205,7 @@ export default {
         activeIndex < this.$items.length
       ) {
         if (activeIndex !== this.index) {
-          this.to(activeIndex)
+          this.to(activeIndex, false)
         }
       } else {
         console.error(
@@ -373,7 +372,7 @@ export default {
         ((active === 0 && offsetX < 0) ||
           (active === this.getLastIndex() && offsetX > 0))
       ) {
-        transSize += Math.ceil(offsetX / Math.log(Math.abs(offsetX)))
+        transSize += getStretchOffset(offsetX)
       } else {
         transSize += offsetX
       }
@@ -455,7 +454,7 @@ export default {
       }
     },
     // 到指定项
-    to(toIndex) {
+    to(toIndex, animated) {
       const lastIndex = this.getLastIndex()
       let slideIndex = toIndex
 
@@ -464,7 +463,7 @@ export default {
       }
 
       if (toIndex >= 0 && toIndex <= lastIndex && toIndex != this.index) {
-        this.slide(toIndex, slideIndex)
+        this.slide(toIndex, slideIndex, animated)
       } else {
         if (this.circular) {
           if (toIndex < 0) {
@@ -478,7 +477,7 @@ export default {
           toIndex = this.index
         }
 
-        this.slide(toIndex, slideIndex)
+        this.slide(toIndex, slideIndex, animated)
       }
     },
     listMove(transSize, duration = 0) {
@@ -490,7 +489,7 @@ export default {
       this.transSize = transSize
     },
     // 滑动实现
-    slide(toIndex, slideIndex) {
+    slide(toIndex, slideIndex, animated = true) {
       if (this.playing) {
         return
       }
@@ -521,19 +520,40 @@ export default {
         duration = Math.max(100, Math.min(800, duration))
       }
 
+      if (animated === false) {
+        duration = 0
+      }
+
       this.listMove(transSize, duration)
 
       clearTimeout(this.durationTimer)
       this.durationTimer = setTimeout(() => {
-        this.playing = false
-
         this.listMove(transSize, 0)
 
-        // 滑动回调
-        this.onSlide(toIndex, fromIndex)
+        this.animateDone(transSize, toIndex, fromIndex)
+      }, duration)
+    },
+    animateDone(transSize, toIndex, fromIndex) {
+      this.durationTimer = setTimeout(() => {
+        const transform = window.getComputedStyle(this.$refs.list).transform
 
-        this.updateSlideLoop()
-      }, duration + 17)
+        const currentSize = transform
+          .slice(7, transform.length - 1)
+          .split(', ')[this.direction === 'y' ? 5 : 4]
+
+        if (parseFloat(currentSize).toFixed(2) === transSize.toFixed(2)) {
+          // 校对清楚再回调
+          this.playing = false
+
+          // 滑动回调
+          this.onSlide(toIndex, fromIndex)
+
+          this.updateSlideLoop()
+          return
+        } else {
+          this.animateDone(transSize, toIndex, fromIndex)
+        }
+      }, 17)
     },
     updateSlideLoop(offset) {
       if (!this.circular) {

@@ -1,16 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cell should render default correctly 1`] = `
-<div class="fx-cell  fx-horizontal-hairline">
+exports[`Cell should render prop icon="EditOutlined" correctly 1`] = `
+<div class="fx-cell fx-horizontal-hairline has--icon">
   <div class="fx-cell_cover"></div>
-  <div class="fx-cell_inner">
+  <div class="fx-cell_header">
+    <div class="fx-cell_icon">
+      <fx-icon-stub></fx-icon-stub>
+    </div>
+    <div class="fx-cell_label">label
+      <!--v-if-->
+    </div>
+    <div class="fx-cell_content">content</div>
+    <!--v-if-->
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Cell should render prop isLink=true correctly 1`] = `
+<div class="fx-cell fx-horizontal-hairline clickable">
+  <div class="fx-cell_cover"></div>
+  <div class="fx-cell_header">
+    <!--v-if-->
+    <div class="fx-cell_label">label
+      <!--v-if-->
+    </div>
+    <div class="fx-cell_content">content</div>
+    <fx-icon-stub class="fx-cell_link-icon"></fx-icon-stub>
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Cell should render set description more correctly 1`] = `
+<div class="fx-cell fx-horizontal-hairline">
+  <div class="fx-cell_cover"></div>
+  <div class="fx-cell_header">
     <!--v-if-->
     <div class="fx-cell_label">label
       <!--v-if-->
     </div>
     <div class="fx-cell_content">content</div>
     <!--v-if-->
+  </div>
+  <div class="fx-cell_body">description</div>
+</div>
+`;
+
+exports[`Cell should render set label and content correctly 1`] = `
+<div class="fx-cell fx-horizontal-hairline">
+  <div class="fx-cell_cover"></div>
+  <div class="fx-cell_header">
+    <!--v-if-->
+    <div class="fx-cell_label">label
+      <!--v-if-->
+    </div>
+    <div class="fx-cell_content">content</div>
     <!--v-if-->
   </div>
+  <!--v-if-->
 </div>
 `;

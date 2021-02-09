@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-switch {
+.fx-switch {
   --switch-on-color: #{$primary-color};
   --switch-off-color: #{$border-color};
   --switch-size: 32px;

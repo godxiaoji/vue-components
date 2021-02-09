@@ -1,7 +1,7 @@
 @import '../style/var.scss';
 
-.#{$prefix}-pop-menu {
-  .#{$prefix}-mask {
+.fx-pop-menu {
+  .fx-mask {
     background-color: rgba($color: $black-color, $alpha: 0.1);
   }
 
@@ -16,7 +16,7 @@
     cursor: pointer;
 
     &:not(.disabled):active {
-      background-color: rgba($color: $black-color, $alpha: 0.16);
+      @include background-active;
     }
 
     &:not(:last-child)::after {
@@ -36,7 +36,7 @@
       box-sizing: border-box;
       justify-content: center;
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --size: 18px;
         --color: #{$title-color};
         vertical-align: middle;

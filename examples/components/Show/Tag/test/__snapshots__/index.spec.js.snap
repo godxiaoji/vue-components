@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag should render default slot correctly 1`] = `
+<div class="fx-tag type--default size--large pattern--light">
+  <!--v-if-->
+</div>
+`;
+
+exports[`Tag should render prop closable=true correctly 1`] = `
+<div class="fx-tag type--default size--large pattern--light"><svg class="fx-icon">
+    <use xlink:href="#icon-CloseOutlined"></use>
+  </svg></div>
+`;

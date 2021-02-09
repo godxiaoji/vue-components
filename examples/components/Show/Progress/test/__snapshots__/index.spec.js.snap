@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cell should render custom default slot correctly 1`] = `
+<div class="fx-progress">
+  <div class="fx-progress_bar">
+    <div class="fx-progress_track animated" style="width: 0%;"></div>
+  </div>
+  <div class="fx-progress_text">0%</div>
+</div>
+`;
+
+exports[`Cell should render default slot correctly 1`] = `
+<div class="fx-progress">
+  <div class="fx-progress_bar">
+    <div class="fx-progress_track animated" style="width: 0%;"></div>
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Cell should render default slot correctly 2`] = `
+<div class="fx-progress">
+  <div class="fx-progress_bar">
+    <div class="fx-progress_track animated" style="width: 50%;"></div>
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Cell should render default slot correctly 3`] = `
+<div class="fx-progress">
+  <div class="fx-progress_bar">
+    <div class="fx-progress_track animated" style="width: 100%;"></div>
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Cell should render prop showText=true correctly 1`] = `
+<div class="fx-progress">
+  <div class="fx-progress_bar">
+    <div class="fx-progress_track animated" style="width: 0%;"></div>
+  </div>
+  <div class="fx-progress_text">0%</div>
+</div>
+`;

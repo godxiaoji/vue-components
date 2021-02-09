@@ -1,9 +1,10 @@
 @import '../style/var.scss';
 
-.#{$prefix}-radio {
+.fx-radio {
   --radio-color: #{$border-color};
   --radio-active-color: #{$primary-color};
   --radio-font-color: #{$title-color};
+  --radio-icon-size: 20px;
 
   display: inline-flex;
   flex-direction: column;
@@ -13,7 +14,7 @@
   text-align: left;
   position: relative;
 
-  + .#{$prefix}-radio {
+  + .fx-radio {
     margin-left: 16px;
   }
 
@@ -28,7 +29,7 @@
 
   &_icon,
   &_checked-icon {
-    --size: 24px;
+    --size: var(--radio-icon-size);
     --color: var(--radio-color);
   }
 
@@ -43,10 +44,10 @@
     top: 0;
     opacity: 0;
 
-    &:checked + .#{$prefix}-radio_box .#{$prefix}-radio_icon {
+    &:checked + .fx-radio_box .fx-radio_icon {
       display: none;
     }
-    &:checked + .#{$prefix}-radio_box .#{$prefix}-radio_checked-icon {
+    &:checked + .fx-radio_box .fx-radio_checked-icon {
       display: block;
     }
   }

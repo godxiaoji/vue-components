@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BackTop should render default correctly 1`] = `
-<div class="fx-back-top" style="transform: translate3d(0px, 0px, 0px); display: none;"><svg class="fx-icon">
-    <use xlink:href="#icon-UpCircleOutlined"></use>
-  </svg></div>
+<div class="fx-back-top" style="transform: translate3d(0px, 0px, 0px); display: none;">
+  <fx-icon-stub></fx-icon-stub>
+</div>
 `;
+
+exports[`BackTop should render prop offset=[0, -50] correctly 1`] = `
+<div class="fx-back-top" style="transform: translate3d(0px, -50px, 0px); display: none;">
+  <fx-icon-stub></fx-icon-stub>
+</div>
+`;
+
+exports[`BackTop should render set default slot correctly 1`] = `<div class="fx-back-top" style="transform: translate3d(0px, 0px, 0px); display: none;">BackTop</div>`;

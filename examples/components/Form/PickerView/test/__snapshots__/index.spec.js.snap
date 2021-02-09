@@ -25,6 +25,7 @@ exports[`PickerView should render prop set options correctly 1`] = `
         <li class="fx-picker-view_item" data-index="1">柜式空调</li>
       </ul>
     </div>
+    <!--v-if-->
   </div>
 </div>
 `;

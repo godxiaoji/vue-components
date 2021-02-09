@@ -1,24 +1,24 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="预览图片" clickable @click="onShow({})"></fx-cell>
+      <fx-cell label="预览图片" isLink @click="onShow({})"></fx-cell>
       <fx-cell
         label="指定初始图片"
-        clickable
+        isLink
         @click="
           onShow({ current: 'https://cdn.fox2.cn/vfox/swiper/different-2.jpg' })
         "
       ></fx-cell>
       <fx-cell
         label="展示关闭按钮"
-        clickable
+        isLink
         @click="onShow({ showClose: true })"
       ></fx-cell>
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="show/shown/hide/hidden/change"
-        clickable
+        label="visible-state-change/change"
+        isLink
         @click="
           onShow({
             showEventCallback: true
@@ -27,17 +27,15 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="previewImage" clickable @click="onCallApi"></fx-cell>
+      <fx-cell label="previewImage" isLink @click="onCallApi"></fx-cell>
     </fx-group>
     <fx-image-preview
       v-model:visible="visible"
       :urls="imageUrls"
       v-model:current="current"
-      :show-close="showClose"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      :showClose="showClose"
+      :imageHighRendering="false"
+      @visible-state-change="onVisibleStateChange"
       @cancel="onCancel"
       @change="onChange"
     ></fx-image-preview>
@@ -64,7 +62,8 @@ export default {
     onCallApi() {
       this.$previewImage({
         urls: this.imageUrls,
-        showClose: true
+        showClose: true,
+        imageHighRendering: false
       })
     },
     onShow({ showClose, current, showEventCallback }) {
@@ -73,10 +72,9 @@ export default {
       this.showEventCallback = !!showEventCallback
       this.visible = true
     },
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showEventCallback) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
       }
     },
     onChange({ activeIndex, current }) {

@@ -1,7 +1,6 @@
 <script>
 import { h } from 'vue'
-import SkeletonLayout from './Layout.vue'
-import { SDKKey } from '../config'
+import SkeletonLayout from './SkeletonLayout.vue'
 import { inArray } from '../helpers/util'
 import {
   paragraphDefaultRow,
@@ -24,7 +23,7 @@ export default {
       this.$slots.layout
     )
   },
-  name: SDKKey + '-skeleton',
+  name: 'fx-skeleton',
   provide() {
     return {
       skeletonSubOptions: this.subOptions
@@ -68,7 +67,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
       subOptions: {
         avatarShape: AVATAR_SHAPE_NAMES[0],
         buttonShape: BUTTON_SHAPE_NAMES[0],

@@ -4,3 +4,8 @@ exports[`Modal should render default correctly 1`] = `
 <!--teleport start-->
 <!--teleport end-->
 `;
+
+exports[`Modal should render prop showClose=true correctly 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;

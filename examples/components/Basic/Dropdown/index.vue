@@ -3,14 +3,14 @@
     <fx-group title="基础用法">
       <fx-cell
         label="基础"
-        clickable
+        isLink
         id="dropdownCell"
         @click=";(selector = '#dropdownCell'), (visible = true)"
       />
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="show/shown/hide/hidden"
+        label="visible-state-change"
         id="dropdownCellEvent"
         @click="
           ;(selector = '#dropdownCellEvent'),
@@ -22,10 +22,7 @@
     <fx-dropdown
       v-model:visible="visible"
       :selector="selector"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-dropdown>
   </div>
@@ -42,12 +39,12 @@ export default {
     }
   },
   methods: {
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showEventCallback) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.showEventCallback = false
       }
     }

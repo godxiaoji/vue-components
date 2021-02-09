@@ -1,24 +1,23 @@
 <template>
   <div
+    class="fx-cascader"
     :class="[
-      prefix + '-cascader',
       {
         disabled
       }
     ]"
   >
     <div
-      :class="[prefix + '-input', { 'has--value': formLabelString, disabled }]"
+      class="fx-input"
+      :class="{ 'has--value': formLabelString, disabled }"
       @click="onFieldClick"
     >
-      <div
-        :class="[prefix + '-input_input', { placeholder: !formLabelString }]"
-      >
+      <div class="fx-input_input" :class="{ placeholder: !formLabelString }">
         {{ formLabelString || placeholder }}
       </div>
-      <icon :class="[prefix + '-input_arrow']" icon="RightOutlined" />
+      <icon class="fx-input_arrow" icon="RightOutlined" />
       <input
-        :class="[prefix + '-input_cover']"
+        class="fx-input_cover"
         type="text"
         readonly
         :name="formName"
@@ -38,17 +37,15 @@
 </template>
 
 <script>
-import CascaderPopup from './Popup.vue'
-import { SDKKey } from '../config'
-import pickerMixin from '../util/mulit-selector/picker-mixin'
+import CascaderPopup from './CascaderPopup.vue'
+import pickerMixin from '../util/multi-selector/picker-mixin'
 
 export default {
-  name: SDKKey + '-cascader',
+  name: 'fx-cascader',
   mixins: [pickerMixin],
   components: { CascaderPopup },
   data() {
     return {
-      prefix: SDKKey,
       compName: 'cascader'
     }
   }

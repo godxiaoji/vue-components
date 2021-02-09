@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideTab should render set mix options correctly 1`] = `
+<div class="fx-side-tab">
+  <ul class="fx-side-tab_list">
+    <li class="fx-side-tab_item active">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item active-next">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`SideTab should render set options correctly 1`] = `
+<div class="fx-side-tab">
+  <ul class="fx-side-tab_list">
+    <li class="fx-side-tab_item active">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item active-next">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+    <li class="fx-side-tab_item">
+      <fx-badge-stub class="fx-side-tab_item-inner"></fx-badge-stub>
+    </li>
+  </ul>
+</div>
+`;

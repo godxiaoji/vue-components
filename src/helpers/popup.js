@@ -1,15 +1,18 @@
-export const defaultZIndex = 2000
+import { appendToBody } from './dom'
+import { popupZIndex } from './layer'
 
 let puid = 1
-let zIndex = defaultZIndex
+let zIndex = popupZIndex
 
 export function getNewZIndex() {
   return zIndex++
 }
 
 export function createPopup() {
-  const $wrapper = document.createDocumentFragment()
+  const $wrapper = document.createElement('div')
   const id = puid++
+
+  appendToBody($wrapper)
 
   return {
     id,

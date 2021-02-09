@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="scrollTop >= visibleHeight"
-    :class="[prefix + '-back-top']"
+    class="fx-back-top"
     :style="styles"
     @click="onClick"
   >
@@ -12,14 +12,13 @@
 </template>
 
 <script>
+import safeAreaInsets from 'safe-area-insets'
 import Icon from '../Icon'
-import { SDKKey } from '../config'
-import { pageScrollTo } from '../apis/Scroll'
 import { addScrollEvent, removeScrollEvent } from '../helpers/events'
 import { getScrollDom } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-back-top',
+  name: 'fx-back-top',
   components: { Icon },
   props: {
     visibleHeight: {
@@ -37,20 +36,25 @@ export default {
       default() {
         return [0, 0]
       }
+    },
+    // 是否开启安全区
+    enableSafeAreaInsets: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      prefix: SDKKey,
-
       scrollTop: 0,
-      duration: 200
+      duration: 200,
+      safeAreaInsetBottom: 0
     }
   },
   computed: {
     styles() {
       return {
-        transform: `translate3d(${this.offset[0]}px, ${this.offset[1]}px, 0px)`
+        transform: `translate3d(${this.offset[0]}px, ${this.offset[1] -
+          this.safeAreaInsetBottom}px, 0px)`
       }
     }
   },
@@ -59,10 +63,21 @@ export default {
 
     addScrollEvent(this.onScroll)
   },
+  mounted() {
+    safeAreaInsets.onChange(this.updateSafeAreaInsets)
+    this.updateSafeAreaInsets()
+  },
   beforeUnmount() {
+    safeAreaInsets.offChange(this.updateSafeAreaInsets)
     removeScrollEvent(this.onScroll)
   },
   methods: {
+    updateSafeAreaInsets() {
+      this.safeAreaInsetBottom = this.enableSafeAreaInsets
+        ? safeAreaInsets.bottom
+        : 0
+    },
+
     onScroll(e) {
       this.scrollTop = e.target.documentElement.scrollTop
     },
@@ -74,9 +89,9 @@ export default {
     },
 
     toTop() {
-      pageScrollTo({
-        scrollTop: 0,
-        duration: this.duration
+      getScrollDom().scrollTo({
+        top: 0,
+        behavior: this.animated ? 'smooth' : 'instant'
       })
     }
   }

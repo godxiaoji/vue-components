@@ -1,11 +1,13 @@
 @import '../style/var.scss';
 
-.#{$prefix}-input {
+.fx-input {
   --input-height: 48px;
   --input-font-size: 17px;
-  --input-icon-size: 18px;
+  --input-icon-size: 20px;
   --input-color: #{$title-color};
   --input-secondary-color: #{$font3-color};
+  --input-border-color: #{$border-color};
+  --input-focus-border-color: #{$primary-color};
 
   height: var(--input-height);
   width: 100%;
@@ -13,14 +15,15 @@
   display: flex;
   align-items: center;
 
-  border: 1px solid $border-color;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
   box-sizing: border-box;
   padding: 0 16px;
   font-size: var(--input-font-size);
   background-color: #fff;
   color: var(--input-color);
 
-  .#{$prefix}-icon {
+  .fx-icon {
     --size: var(--input-icon-size);
     --color: var(--input-secondary-color);
   }
@@ -47,7 +50,7 @@
   }
 
   &.has--value {
-    .#{$prefix}-input {
+    .fx-input {
       &_arrow {
         --color: var(--input-color);
       }
@@ -64,7 +67,6 @@
     width: 100%;
     height: 100%;
     line-height: calc(var(--input-height) - 2px);
-    width: 100%;
     padding: 0;
     font-size: var(--input-font-size);
     cursor: pointer;
@@ -73,6 +75,8 @@
     box-sizing: border-box;
     box-shadow: none;
     resize: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &:read-only {
       cursor: auto;
@@ -97,7 +101,7 @@
   }
 
   &.focus {
-    border-color: $primary-color;
+    border-color: var(--input-focus-border-color);
   }
 
   &_cover {

@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-stepper {
+.fx-stepper {
   flex: 1 0 0%;
   display: flex;
   height: 32px;
@@ -21,7 +21,7 @@
     outline: 0;
     cursor: pointer;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 20px;
       --color: #{$font-color};
     }
@@ -33,7 +33,7 @@
     &:disabled {
       cursor: not-allowed;
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --color: #{$font3-color};
       }
     }
@@ -41,7 +41,7 @@
 
   &_input {
     height: 28px;
-    width: 64px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;

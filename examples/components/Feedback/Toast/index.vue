@@ -3,41 +3,41 @@
     <fx-group title="基础用法">
       <fx-cell
         label="纯文字"
-        clickable
+        isLink
         @click="onShowToast({ title: '提示文本' })"
       ></fx-cell>
       <fx-cell
         label="长文字"
-        clickable
+        isLink
         @click="
           onShowToast({ title: '提示文本提示文本提示文本提示文本提示文本' })
         "
       ></fx-cell>
       <fx-cell
         label="成功"
-        clickable
+        isLink
         @click="onShowToast({ title: '成功文本', type: 'success' })"
       ></fx-cell>
       <fx-cell
         label="失败"
-        clickable
+        isLink
         @click="onShowToast({ title: '失败文本', type: 'fail' })"
       ></fx-cell>
       <fx-cell
         label="加载中"
-        clickable
+        isLink
         @click="onShowToast({ title: '加载文本', type: 'loading' })"
       ></fx-cell>
     </fx-group>
     <fx-group title="自定义图标">
       <fx-cell
         label="收藏"
-        clickable
+        isLink
         @click="onShowToast({ title: '已收藏', icon: 'StarFilled' })"
       ></fx-cell>
       <fx-cell
         label="警告"
-        clickable
+        isLink
         @click="
           onShowToast({ title: '警告文本', icon: 'ExclamationCircleOutlined' })
         "
@@ -46,28 +46,28 @@
     <fx-group title="其他">
       <fx-cell
         label="自定义时长"
-        clickable
+        isLink
         @click="onShowToast({ title: '5秒后消失', duration: 5000 })"
       ></fx-cell>
       <fx-cell
         label="展示透明蒙层"
-        clickable
+        isLink
         @click="onShowToast({ title: '不可穿透', mask: true })"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
       <fx-cell
         label="showToast"
-        clickable
+        isLink
         @click="$showToast({ title: '提示文本', duration: 5000 })"
       ></fx-cell>
-      <fx-cell label="hideToast" clickable @click="$hideToast()"></fx-cell>
+      <fx-cell label="hideToast" isLink @click="$hideToast()"></fx-cell>
       <fx-cell
         label="showLoading"
-        clickable
+        isLink
         @click="$showLoading({ title: '加载中' })"
       ></fx-cell>
-      <fx-cell label="hideLoading" clickable @click="$hideLoading()"></fx-cell>
+      <fx-cell label="hideLoading" isLink @click="$hideLoading()"></fx-cell>
     </fx-group>
     <fx-toast
       v-model:visible="visible"

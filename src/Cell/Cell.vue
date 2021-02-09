@@ -1,45 +1,43 @@
 <template>
   <div
-    :class="[
-      prefix + '-cell',
-      { clickable, 'has--icon': !!icon, disabled: !!disabled },
-      prefix + '-horizontal-hairline'
-    ]"
+    class="fx-cell fx-horizontal-hairline"
+    :class="{
+      clickable: clickable || isLink,
+      'has--icon': $slots.icon || icon,
+      disabled: !!disabled
+    }"
     @click="onClick"
   >
-    <div :class="[prefix + '-cell_cover']"></div>
-    <div :class="[prefix + '-cell_inner']">
-      <i :class="[prefix + '-cell_icon']" v-if="icon">
-        <icon :icon="icon" />
-      </i>
-      <div :class="[prefix + '-cell_label']">
+    <div class="fx-cell_cover"></div>
+    <div class="fx-cell_header">
+      <div class="fx-cell_icon" v-if="$slots.icon">
+        <slot name="icon"></slot>
+      </div>
+      <div class="fx-cell_icon" v-else-if="icon"><icon :icon="icon" /></div>
+      <div class="fx-cell_label" v-if="label">
         {{ label }}
-        <span :class="[prefix + '-cell_required']" v-if="required">*</span>
+        <span class="fx-cell_required" v-if="required">*</span>
       </div>
-      <div :class="[prefix + '-cell_content']">
-        <template v-if="!$slots.default">{{ content }}</template>
-        <slot></slot>
+      <div class="fx-cell_content">
+        <slot>{{ content }}</slot>
       </div>
-      <i :class="[prefix + '-cell_link-icon']" v-if="clickable">
-        <icon :icon="linkIconName" />
-      </i>
-      <div :class="[prefix + '-cell_description']" v-if="description">
-        {{ description }}
-      </div>
+      <icon class="fx-cell_link-icon" v-if="isLink" :icon="linkIconName" />
+    </div>
+    <div class="fx-cell_body" v-if="description">
+      {{ description }}
     </div>
   </div>
 </template>
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { inArray, capitalize } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
 const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 
 export default {
-  name: SDKKey + '-cell',
+  name: 'fx-cell',
   components: { Icon },
   props: {
     icon: {
@@ -66,6 +64,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isLink: {
+      type: Boolean,
+      default: false
+    },
     arrowDirection: {
       validator(val) {
         return inArray(val, LINK_ICON_NAMES)
@@ -76,9 +78,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   emits: ['click'],
   computed: {
@@ -91,6 +90,7 @@ export default {
     }
   },
   methods: {
+    noop() {},
     onClick(e) {
       if (!this.disabled) {
         this.$emit(e.type, e)

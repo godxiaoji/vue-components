@@ -1,7 +1,7 @@
-import { defaultZIndex, getNewZIndex } from '../helpers/popup'
-import { cloneData, isFunction } from '../helpers/util'
+import { getNewZIndex } from '../helpers/popup'
+import { popupZIndex } from '../helpers/layer'
+import { cloneData, isFunction, isObject } from '../helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '../helpers/dom'
-import { SDKKey } from '../config'
 
 export default {
   props: {
@@ -24,7 +24,7 @@ export default {
       visible2: false,
       forbidScroll: true,
 
-      zIndex: defaultZIndex,
+      zIndex: popupZIndex,
       top: null,
       position: null
     }
@@ -49,7 +49,7 @@ export default {
       return styles
     }
   },
-  emits: ['cancel', 'show', 'shown', 'hide', 'hidden', 'update:visible'],
+  emits: ['cancel', 'visible-state-change', 'update:visible'],
   mounted() {
     if (this.visible) {
       this.show()
@@ -95,7 +95,7 @@ export default {
 
       this.forbidScroll &&
         this.showMask &&
-        addClassName(document.body, SDKKey + '-overflow-hidden')
+        addClassName(document.body, 'fx-overflow-hidden')
 
       if (!this.showMask) {
         this.position = 'absolute'
@@ -124,11 +124,11 @@ export default {
     },
     show() {
       const isSuccess = this._doShow(() => {
-        this.$emit('shown', {})
+        this.emitVisibleState('shown', {})
       })
 
       if (isSuccess) {
-        this.$emit('show', {})
+        this.emitVisibleState('show', {})
         this.afterShow()
       }
     },
@@ -139,7 +139,7 @@ export default {
       }
       this.isHiding = true
       this.isShowing = false
-      removeClassName(document.body, SDKKey + '-overflow-hidden')
+      removeClassName(document.body, 'fx-overflow-hidden')
       this.visible2 = false
 
       clearTimeout(this.visibleTimer)
@@ -161,15 +161,31 @@ export default {
 
       return true
     },
+    emitVisibleState(state, res) {
+      this.$emit(
+        'visible-state-change',
+        Object.assign(
+          {
+            type: 'visible-state-change',
+            state
+          },
+          res
+        )
+      )
+    },
     hide(res, beforeHideFn) {
+      if (!isObject(res)) {
+        res = {}
+      }
+
       const isSuccess = this._doHide(() => {
-        this.$emit('hidden', res)
+        this.emitVisibleState('hidden', res)
         this.afterHidden()
       })
 
       if (isSuccess) {
         if (beforeHideFn) beforeHideFn(cloneData(res))
-        this.$emit('hide', res)
+        this.emitVisibleState('hide', res)
       }
     },
     afterHidden() {}

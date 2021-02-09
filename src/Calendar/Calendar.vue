@@ -1,22 +1,23 @@
 <template>
   <div
+    class="fx-calendar"
     :class="[
-      prefix + '-calendar',
       {
         disabled
       }
     ]"
   >
     <div
-      :class="[prefix + '-input', { 'has--value': formLabel, disabled }]"
+      class="fx-input"
+      :class="{ 'has--value': formLabel, disabled }"
       @click="onFieldClick"
     >
-      <div :class="[prefix + '-input_input', { placeholder: !formLabel }]">
+      <div class="fx-input_input" :class="{ placeholder: !formLabel }">
         {{ formLabel || placeholder }}
       </div>
-      <icon :class="[prefix + '-input_arrow']" icon="RightOutlined" />
+      <icon class="fx-input_arrow" icon="RightOutlined" />
       <input
-        :class="[prefix + '-input_cover']"
+        class="fx-input_cover"
         type="text"
         readonly
         :name="formName"
@@ -37,8 +38,7 @@
 
 <script>
 import Icon from '../Icon'
-import CalendarPopup from './Popup.vue'
-import { SDKKey } from '../config'
+import CalendarPopup from './CalendarPopup.vue'
 import formMixin from '../util/form-mixin'
 import mixin from './mixin'
 import {
@@ -52,7 +52,7 @@ import { isFunction, isUndefined } from '../helpers/util'
 import dayjs from 'dayjs'
 
 export default {
-  name: SDKKey + '-calendar',
+  name: 'fx-calendar',
   components: { Icon, CalendarPopup },
   mixins: [mixin, formMixin],
   props: {
@@ -75,8 +75,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: [],
       formLabel: '',
       detail: getDefaultDetail(),

@@ -128,7 +128,7 @@
         >
         </fx-button>
       </fx-cell>
-      <fx-cell label="show/shown/hide/hidden">
+      <fx-cell label="visible-state-change">
         <fx-button
           size="small"
           id="popDialogPopupEvent"
@@ -164,10 +164,7 @@
       :cancel-text="cancelText"
       @cancel="onCancel"
       @confirm="onConfirm"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-pop-dialog>
     <fx-pop-dialog
@@ -210,12 +207,12 @@ export default {
     }
   },
   methods: {
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showPopupEvent) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.showCancel = true
         this.showPopupEvent = false
         this.showEvent = false

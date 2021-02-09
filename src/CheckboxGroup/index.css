@@ -13,15 +13,15 @@
   min-height: 32px;
 }
 
-.fx-checkbox-group.vertical .fx-checkbox {
+.fx-checkbox-group.vertical > .fx-checkbox {
   display: flex;
   width: 100%;
 }
 
-.fx-checkbox-group.vertical .fx-checkbox + .fx-checkbox {
+.fx-checkbox-group.vertical > .fx-checkbox + .fx-checkbox {
   margin-left: 0;
 }
 
-.fx-checkbox-group.vertical .fx-checkbox + .fx-checkbox::before {
+.fx-checkbox-group.vertical > .fx-checkbox + .fx-checkbox::before {
   content: '';
 }

@@ -1,13 +1,23 @@
 @import '../style/var.scss';
 
-.#{$prefix}-flat-list {
+.fx-flat-list {
   position: relative;
   display: block;
   width: 100%;
 
+  &_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transform: translateZ(0);
+  }
+
   &_item {
     display: flex;
     flex-direction: column;
+    left: 0;
+    top: 0;
 
     &-inner {
       height: 100%;
@@ -17,7 +27,7 @@
 
   &_header,
   &_footer {
-    .#{$prefix}-flat-list.horizontal & {
+    .fx-flat-list.horizontal & {
       display: inline-block;
       vertical-align: top;
     }
@@ -26,13 +36,41 @@
   &.horizontal {
     white-space: nowrap;
 
-    .#{$prefix}-flat-list {
+    .fx-flat-list {
+      &_list {
+        display: inline-flex;
+        height: 100%;
+      }
+
       &_item {
         display: inline-flex;
         flex-direction: row;
         height: 100%;
         vertical-align: top;
       }
+    }
+  }
+
+  &_indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    color: $font-color;
+    box-sizing: border-box;
+    height: 48px;
+
+    .fx-icon {
+      --size: 18px;
+      --color: #{$font-color};
+      margin-right: 8px;
+    }
+
+    span {
+      line-height: 16px;
+      text-align: center;
+      white-space: normal;
     }
   }
 }

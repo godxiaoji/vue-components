@@ -9,7 +9,7 @@ exports[`IndexView IndexView should render default correctly 1`] = `
     <div class="fx-sticky-view">
       <div class="fx-sticky-view_list"></div>
       <div class="fx-sticky fx-sticky-view_top">
-        <div class="fx-sticky_content">
+        <div class="fx-sticky_content" style="top: 0px; left: 0px; width: 0px; height: 0px; z-index: 1000; position: fixed;">
           <div class="fx-sticky-view_fixed" style="transform: translate3d(0px, 0px, 0px);"></div>
         </div>
       </div>
@@ -19,9 +19,10 @@ exports[`IndexView IndexView should render default correctly 1`] = `
 `;
 
 exports[`IndexView IndexViewItem should render default correctly 1`] = `
-<div class="fx-group fx-sticky-view-item fx-index-view-item">
+<div class="fx-group fx-horizontal-hairline fx-sticky-view-item fx-index-view-item">
   <div class="fx-group_header">
     <div class="fx-group_title">item-1</div>
+    <div class="fx-group_more"></div>
   </div>
   <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
     <div class="fx-group_body-inner">content</div>

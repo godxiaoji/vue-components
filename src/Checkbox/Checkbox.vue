@@ -1,26 +1,26 @@
 <template>
   <label
-    :class="[
-      prefix + '-checkbox',
-      prefix + '-horizontal-hairline',
-      { disabled: disabled2 }
-    ]"
+    class="fx-checkbox fx-horizontal-hairline"
+    :class="{ disabled: disabled2 }"
   >
     <input
-      :class="[prefix + '-checkbox_input']"
+      class="fx-checkbox_input"
       type="checkbox"
       :name="formName"
       :value="value"
       :disabled="disabled2"
       @change="onChange"
     />
-    <div :class="[prefix + '-checkbox_box']">
-      <icon :class="[prefix + '-checkbox_icon']" icon="BorderOutlined" />
+    <div class="fx-checkbox_box">
       <icon
-        :class="[prefix + '-checkbox_checked-icon']"
-        icon="CheckSquareFilled"
+        class="fx-checkbox_icon"
+        :icon="circle ? 'CircleOutlined' : 'BorderOutlined'"
       />
-      <span :class="[prefix + '-checkbox_text']" v-if="$slots.default">
+      <icon
+        class="fx-checkbox_checked-icon"
+        :icon="circle ? 'CheckCircleFilled' : 'CheckSquareFilled'"
+      />
+      <span class="fx-checkbox_text" v-if="$slots.default">
         <slot></slot>
       </span>
     </div>
@@ -29,11 +29,10 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import { inArray, isStringNumberMix } from '../helpers/util'
 
 export default {
-  name: SDKKey + '-checkbox',
+  name: 'fx-checkbox',
   components: { Icon },
   inject: {
     appCheckboxGroup: {
@@ -53,6 +52,10 @@ export default {
       type: Boolean,
       default: false
     },
+    circle: {
+      type: Boolean,
+      default: false
+    },
     color: {
       type: String,
       default: ''
@@ -61,9 +64,6 @@ export default {
       type: String,
       default: ''
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     /* 优先接受来自分组的name */

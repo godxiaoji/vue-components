@@ -1,41 +1,29 @@
 @import '../style/var.scss';
 
-.#{$prefix}-tab-bar {
+.fx-tab-bar {
   --tab-bar-color: #{$font-color};
   --tab-bar-active-color: #{$primary-color};
   --tab-bar-background-color: #fff;
 
   height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: var(--tab-bar-background-color);
 
-  &_inner {
-    height: 52px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    background-color: var(--tab-bar-background-color);
+  &::before,
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    content: '';
+  }
 
-    &::before,
-    &::after {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      content: '';
-    }
-
-    &::after {
-      top: auto;
-      bottom: 0;
-    }
-
-    &.fixed {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      z-index: 1;
-      width: 100%;
-    }
+  &::after {
+    top: auto;
+    bottom: 0;
   }
 
   &_list {
@@ -63,7 +51,7 @@
       margin-top: 1px;
     }
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 24px;
       --color: var(--tab-bar-color);
     }
@@ -71,7 +59,7 @@
     &.active {
       color: var(--tab-bar-active-color);
 
-      .#{$prefix}-icon {
+      .fx-icon {
         --color: var(--tab-bar-active-color);
       }
     }

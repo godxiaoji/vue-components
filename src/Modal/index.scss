@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-modal {
+.fx-modal {
   &_box {
     width: 400px;
     box-sizing: border-box;
@@ -18,7 +18,7 @@
   }
 
   &.visible {
-    .#{$prefix}-modal_box {
+    .fx-modal_box {
       opacity: 1;
       transform: scale(1);
     }
@@ -38,7 +38,7 @@
     box-sizing: border-box;
     cursor: pointer;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --size: 32px;
       --color: #{$title-color};
     }
@@ -46,7 +46,7 @@
 }
 
 @media screen and (max-width: 575px) {
-  .#{$prefix}-modal {
+  .fx-modal {
     &_box {
       width: calc(100% - 96px);
     }

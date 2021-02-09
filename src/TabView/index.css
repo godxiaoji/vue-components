@@ -4,14 +4,9 @@
 
 .fx-tab-view_header {
   position: relative;
-  height: 37px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.fx-tab-view_header::after {
-  content: '';
 }
 
 .fx-tab-view_body {

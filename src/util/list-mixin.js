@@ -1,5 +1,3 @@
-import { SDKKey } from '../config'
-
 export default {
   methods: {
     update(lazy = 17) {
@@ -14,10 +12,7 @@ export default {
     },
     getItems(name) {
       return this.$refs.list
-        ? [].slice.call(
-            this.$refs.list.querySelectorAll(`.${SDKKey}-${name}-item`),
-            0
-          )
+        ? [].slice.call(this.$refs.list.querySelectorAll(`.fx-${name}-item`), 0)
         : []
     }
   }

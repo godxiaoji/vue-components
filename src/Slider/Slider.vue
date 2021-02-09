@@ -1,17 +1,14 @@
 <template>
-  <div :class="[prefix + '-slider', { disabled }]">
-    <div :class="[prefix + '-slider_inner']">
-      <div :class="[prefix + '-slider_box']">
-        <div
-          :class="[prefix + '-slider_track']"
-          :style="[{ width: progress }]"
-        ></div>
-        <div :class="[prefix + '-slider_thumb']" :style="[{ left: progress }]">
+  <div class="fx-slider" :class="{ disabled: !!disabled }">
+    <div class="fx-slider_inner">
+      <div class="fx-slider_box">
+        <div class="fx-slider_track" :style="[{ width: progress }]"></div>
+        <div class="fx-slider_thumb" :style="[{ left: progress }]">
           {{ showValue ? formValue : '' }}
         </div>
       </div>
       <input
-        :class="[prefix + '-slider_range']"
+        class="fx-slider_range"
         type="range"
         :disabled="disabled"
         :value="formValue"
@@ -27,12 +24,11 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import { isNumeric } from '../helpers/util'
 
 export default {
-  name: SDKKey + '-slider',
+  name: 'fx-slider',
   mixins: [formMixin],
   props: {
     modelValue: {
@@ -58,8 +54,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: null
     }
   },

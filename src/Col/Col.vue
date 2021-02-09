@@ -5,15 +5,14 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
-import { rangeInteger } from '../helpers/util'
+import { isNumeric, rangeInteger } from '../helpers/util'
 
 function rangeCol(number) {
   return rangeInteger(number, 0, 24)
 }
 
 export default {
-  name: SDKKey + '-col',
+  name: 'fx-col',
   inject: {
     appRowSubOptions: {
       default: null
@@ -22,7 +21,7 @@ export default {
   props: {
     // 栅格占据的列数
     span: {
-      type: Number,
+      validator: isNumeric,
       default: 24
     },
     // 栅格左侧的间隔格数
@@ -41,11 +40,6 @@ export default {
       default: 0
     }
   },
-  data() {
-    return {
-      prefix: SDKKey
-    }
-  },
   computed: {
     styles() {
       const arr = []
@@ -62,18 +56,18 @@ export default {
       return arr
     },
     classNames() {
-      const arr = [`${SDKKey}-col`, `${SDKKey}-col-${rangeCol(this.span)}`]
+      const arr = [`fx-col`, `fx-col-${rangeCol(this.span)}`]
 
       if (this.offset > 0) {
-        arr.push(`${SDKKey}-col-offset-${Math.min(24, rangeCol(this.offset))}`)
+        arr.push(`fx-col-offset-${Math.min(24, rangeCol(this.offset))}`)
       }
 
       if (this.push > 0) {
-        arr.push(`${SDKKey}-col-push-${rangeCol(this.push)}`)
+        arr.push(`fx-col-push-${rangeCol(this.push)}`)
       }
 
       if (this.pull > 0) {
-        arr.push(`${SDKKey}-col-pull-${rangeCol(this.pull)}`)
+        arr.push(`fx-col-pull-${rangeCol(this.pull)}`)
       }
 
       return arr

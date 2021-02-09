@@ -265,6 +265,34 @@ export function isSameArray(a, b) {
 }
 
 /**
+ * 判断一个字段是否为空
+ * @param {any} object
+ * 以下的东西被认为是空的：
+ * - "" (空字符串)
+ * - 0 (作为整数的0)
+ * - 0.0 (作为浮点数的0)
+ * - "0" (作为字符串的0)
+ * - null
+ * - false
+ * - []
+ * - undefined
+ * - NaN
+ * - {}
+ */
+export function isEmpty(object) {
+  return (
+    object == null ||
+    object === '' ||
+    object === '0' ||
+    object === false ||
+    (isNumber(object) && object == 0) ||
+    isNaN(object) ||
+    (isArray(object) && object.length === 0) ||
+    isEmptyObject(object)
+  )
+}
+
+/**
  * 伪数组转为数组
  * @param {ArrayLike} object 伪数组
  */
@@ -393,5 +421,13 @@ export function rangeNumber(number, min, max) {
  * @param {Number} max
  */
 export function rangeInteger(number, min, max) {
+  if (isString(number)) {
+    if (isNumeric(number)) {
+      number = parseFloat(number)
+    } else {
+      number = min
+    }
+  }
+
   return rangeNumber(Math.round(number), Math.ceil(min), Math.floor(max))
 }

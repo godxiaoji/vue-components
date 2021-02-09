@@ -12,7 +12,6 @@
 | lower-threshold        | number/string   | 50     | 否   | 距底部/右边多远时，触发 `scroll-to-lower` 事件                                                        |
 | scroll-top             | number/string   |        | 否   | 设置竖向滚动条位置                                                                                    |
 | scroll-left            | number/string   |        | 否   | 设置横向滚动条位置                                                                                    |
-| scroll-into-view       | string          |        | 否   | 值应为某子元素 id。设置哪个方向可滚动，则在哪个方向滚动到该元素                                       |
 | scroll-animated        | boolean         | false  | 否   | 在设置滚动条位置时使用动画过渡                                                                        |
 | enable-pull-directions | string/string[] | []     | 否   | 开启下拉刷新，可以同时开启多个方向，可选值：'up', 'down', 'left', 'right'，搭配 `refreshing` 事件使用 |
 | pull-refresh-threshold | number          | 48     | 否   | 设置下拉刷新阈值，自定义 indicator slot 时可以配合修改                                                |

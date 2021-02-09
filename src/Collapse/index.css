@@ -18,6 +18,10 @@
   content: '';
 }
 
+.fx-collapse-item_header:not(:last-child)::after {
+  content: none;
+}
+
 .fx-collapse-item_header .fx-cell_link-icon {
   transition: transform 0.2s;
 }

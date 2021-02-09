@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-stepper']">
+  <div class="fx-stepper" :class="{ disabled: !!disabled }">
     <fx-button
       icon="MinusOutlined"
       shape="square"
@@ -8,7 +8,7 @@
       @click="doStep($event, false)"
     />
     <input
-      :class="[prefix + '-stepper_input']"
+      class="fx-stepper_input"
       :type="allowDecimal ? 'text' : 'tel'"
       :inputmode="allowDecimal ? 'decimal' : 'numeric'"
       :name="formName"
@@ -31,13 +31,12 @@
 
 <script>
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import { isStringNumberMix, rangeInteger, rangeNumber } from '../helpers/util'
 import { formatInputNumber } from '../helpers/input'
 
 export default {
-  name: SDKKey + '-stepper',
+  name: 'fx-stepper',
   mixins: [formMixin],
   components: { FxButton },
   props: {
@@ -87,8 +86,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       defaultValue: '1',
       formValue: '1'
     }

@@ -1,28 +1,29 @@
 <template>
   <teleport to="body">
     <div
-      :class="[prefix + '-dropdown', prefix + '-popup', { visible: visible2 }]"
+      class="fx-dropdown fx-popup"
+      :class="{ visible: visible2 }"
       :style="popupStyles"
       v-bind="$attrs"
       v-show="isShow"
+      ref="popup"
     >
-      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-      <div :class="[prefix + '-dropdown_inner']">
-        <slot></slot>
+      <div class="fx-mask" @click="onMaskClick"></div>
+      <div class="fx-dropdown_inner">
+        <slot :height="height"></slot>
       </div>
     </div>
   </teleport>
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { selectorValidator } from '../helpers/validator'
 import Exception from '../helpers/exception'
 import { getElement } from '../helpers/dom'
 
 export default {
-  name: SDKKey + '-dropdown',
+  name: 'fx-dropdown',
   mixins: [popupMixin],
   props: {
     selector: {
@@ -32,9 +33,8 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
-      top: -1
+      top: -1,
+      height: 0
     }
   },
   computed: {
@@ -69,6 +69,9 @@ export default {
       const rect = $target.getBoundingClientRect()
 
       this.top = rect.bottom
+      this.$nextTick(() => {
+        this.height = this.$refs.popup ? this.$refs.popup.offsetHeight : 0
+      })
     },
     afterHidden() {
       this.top = -1

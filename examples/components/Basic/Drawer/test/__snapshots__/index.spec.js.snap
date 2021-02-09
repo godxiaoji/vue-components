@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Drawer should render prop placement="left" correctly 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;
+
+exports[`Drawer should render prop showClose=true correctly 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;
+
 exports[`Drawer should render prop title="Drawer" correctly 1`] = `
 <!--teleport start-->
 <!--teleport end-->

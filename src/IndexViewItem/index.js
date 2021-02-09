@@ -1,7 +1,7 @@
-import IndexViewItem from '../IndexView/Item.vue'
+import IndexViewItem from '../IndexView/IndexViewItem.vue'
 
-IndexViewItem.install = function(Vue) {
-  Vue.component(IndexViewItem.name, IndexViewItem)
+IndexViewItem.install = function(app) {
+  app.component(IndexViewItem.name, IndexViewItem)
 }
 
 export default IndexViewItem

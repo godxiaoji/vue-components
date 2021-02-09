@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-checkbox-group {
+.fx-checkbox-group {
   display: flex;
   height: 32px;
   align-items: center;
@@ -13,11 +13,11 @@
     height: auto;
     min-height: 32px;
 
-    .#{$prefix}-checkbox {
+    > .fx-checkbox {
       display: flex;
       width: 100%;
 
-      + .#{$prefix}-checkbox {
+      + .fx-checkbox {
         margin-left: 0;
 
         &::before {

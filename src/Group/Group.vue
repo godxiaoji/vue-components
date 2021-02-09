@@ -1,16 +1,16 @@
 <template>
-  <div :class="[prefix + '-group', { card: card }]">
-    <div :class="[prefix + '-group_header']">
-      <div :class="[prefix + '-group_title']">{{ title }}</div>
+  <div
+    class="fx-group fx-horizontal-hairline"
+    :class="{ 'strong-header': !!strongHeader }"
+  >
+    <div class="fx-group_header">
+      <div class="fx-group_title">{{ title }}</div>
+      <div class="fx-group_more">
+        <slot name="header"></slot>
+      </div>
     </div>
-    <div
-      :class="[
-        prefix + '-group_body',
-        prefix + '-horizontal-hairline',
-        'hairline-reverse'
-      ]"
-    >
-      <div :class="[prefix + '-group_body-inner']">
+    <div class="fx-group_body fx-horizontal-hairline hairline-reverse">
+      <div class="fx-group_body-inner">
         <slot></slot>
       </div>
     </div>
@@ -18,22 +18,17 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-group',
+  name: 'fx-group',
   props: {
     title: {
       type: String,
       required: true
     },
-    card: {
+    strongHeader: {
       type: Boolean,
       default: false
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   }
 }
 </script>

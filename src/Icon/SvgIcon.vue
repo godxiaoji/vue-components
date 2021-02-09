@@ -5,19 +5,15 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import './lib/load-svg'
 
 export default {
-  name: SDKKey + 'svg-icon',
+  name: 'fx-svg-icon',
   props: {
     iconName: {
       type: String,
       required: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   }
 }
 </script>

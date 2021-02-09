@@ -38,7 +38,8 @@
   "homepage": "https://github.com/godxiaoji/vfox#readme",
   "dependencies": {
     "async-validator": "^3.4.0",
-    "dayjs": "^1.9.7"
+    "dayjs": "^1.9.7",
+    "safe-area-insets": "^1.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

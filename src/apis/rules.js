@@ -11,7 +11,7 @@ import {
   selectorValidator
 } from '../helpers/validator'
 
-import { MODE_NAMES as SELECT_MODE_NAMES } from '../util/mulit-selector'
+import { MODE_NAMES as SELECT_MODE_NAMES } from '../util/multi-selector'
 import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '../Calendar/util'
 
 export const apiRules = {
@@ -205,6 +205,10 @@ export const apiRules = {
     navigationButtons: {
       type: Boolean,
       default: false
+    },
+    imageHighRendering: {
+      type: Boolean,
+      default: true
     }
   },
   showToast: {

@@ -1,12 +1,3 @@
-.fx-form-item {
-  display: block;
-}
-
-.fx-form-item > .fx-cell .fx-cell_description {
+.fx-form-item.fx-cell .fx-cell_body {
   color: #ff4d4f;
-}
-
-.fx-form-item + .fx-form-item .fx-cell::before {
-  content: '';
-  margin-left: 16px;
 }

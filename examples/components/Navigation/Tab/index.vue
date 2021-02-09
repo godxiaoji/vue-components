@@ -8,34 +8,26 @@
         ></fx-tab>
       </div>
     </fx-group>
-    <fx-group title="竖向">
-      <div class="tab-box" style="height: 220px;">
-        <fx-tab
-          :options="shortTabList"
-          v-model:activeValue="shortActiveValue"
-          :vertical="true"
-        ></fx-tab>
-      </div>
-    </fx-group>
     <fx-group title="滚动（阈值 scrollThreshold = 4）">
       <div class="tab-box">
         <fx-tab :options="tabList" v-model:activeValue="activeValue"></fx-tab>
       </div>
     </fx-group>
-    <fx-group title="竖向">
-      <div class="tab-box" style="height: 220px;">
-        <fx-tab
-          :options="tabList"
-          v-model:activeValue="activeValue"
-          :vertical="true"
-        ></fx-tab>
+    <fx-group title="Mix">
+      <div class="tab-box">
+        <fx-tab :options="mixTabList"></fx-tab>
+      </div>
+    </fx-group>
+    <fx-group title="带副标签">
+      <div class="tab-box">
+        <fx-tab :options="subTabList"></fx-tab>
       </div>
     </fx-group>
   </div>
 </template>
 
 <script>
-import { shortTabList, tabList } from './data'
+import { shortTabList, tabList, mixTabList, subTabList } from './data'
 
 export default {
   name: 'Tab',
@@ -45,7 +37,9 @@ export default {
       shortActiveValue: 1,
       activeValue: 1,
       shortTabList,
-      tabList
+      tabList,
+      mixTabList,
+      subTabList
     }
   }
 }
@@ -57,7 +51,5 @@ export default {
 
 .tab-box {
   background-color: $background-color;
-  border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
 }
 </style>

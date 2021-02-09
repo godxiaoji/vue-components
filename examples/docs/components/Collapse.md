@@ -4,14 +4,14 @@
 
 | 属性                | 类型     | 默认值 | 必填 | 说明                                                                |
 | ------------------- | -------- | ------ | ---- | ------------------------------------------------------------------- |
-| v-model:activeNames | string[] | []     | 否   | 当前展开面板的 `name` 列表，需要每个 `CollapseItem` 都设置上 `name` |
+| v-model:active-names | string[] | []     | 否   | 当前展开面板的 `name` 列表，需要每个 `CollapseItem` 都设置上 `name` |
 | accordion           | boolean  | false  | 否   | 是否开启手风琴模式                                                  |
 
 ## Collapse Events
 
 | 事件   | 描述           | 回调函数参数                             |
 | ------ | -------------- | ---------------------------------------- |
-| change | 切换面板时触发 | activeNames: 类型与 v-model 绑定的值一致 |
+| change | 切换面板时触发 | activeNames: 类型与 v-model:active-names 绑定的值一致 |
 
 ## Collapse Slots
 
@@ -47,7 +47,7 @@
 | -------- | ------- | ------ | ---- | ----------------------------------------------- |
 | title    | string  | ''     | 否   | 面板子项标题                                    |
 | icon     | string  |        | 否   | 面板子项标题前图标，使用 [Icon](./Icon.md) 组件 |
-| name     | string  |        | 否   | 唯一标识，设置后可以配合 `v-model` 使用         |
+| name     | string  |        | 否   | 唯一标识，设置后可以配合 `v-model:active-names` 使用         |
 | disabled | boolean | false  | 否   | 是否禁用                                        |
 
 ## CollapseItem Events

@@ -1,4 +1,4 @@
-# Tab 标签列
+# Tab 标签列表
 
 ## Props
 
@@ -7,18 +7,18 @@
 | options              | object[]/string[]/number[] | []                                 | 是   | tab 数据集                                 |
 | v-model:active-value | string, number             |                                    | 否   | 当前激活项的 value 值                      |
 | scroll-threshold     | number                     | 4                                  | 否   | 超过 `scrollThreshold` 个 Tab 使用滚动形式 |
-| vertical             | boolean                    | false                              | 否   | 纵向展示                                   |
 | field-names          | object                     | { label: 'label', value: 'value' } | 否   | 自定义 options 中 label value 的字段 key   |
 
 ### options 的结构
 
-| key         | 类型                 | 默认值 | 必填 | 说明                                                                    |
-| ----------- | -------------------- | ------ | ---- | ----------------------------------------------------------------------- |
-| value       | string/number        |        | 是   | 唯一值（v-model 使用）                                                  |
-| label       | string               |        | 是   | 标签名                                                                  |
-| icon        | string/Component     |        | 否   | 设置图标，使用 [Icon](./Icon.md) 组件                                   |
-| active-icon | string/Component     |        | 否   | 设置激活态图标，没有设置则沿用 `icon` 属性，使用 [Icon](./Icon.md) 组件 |
-| badge       | string/number/object |        | 否   | 徽标，使用 [Badge](./Badge.md) 组件，可传入一个基于 Badge props 的对象  |
+| key        | 类型                 | 默认值 | 必填 | 说明                                                                    |
+| ---------- | -------------------- | ------ | ---- | ----------------------------------------------------------------------- |
+| value      | string/number        |        | 是   | 唯一值（v-model:active-value 使用）                                     |
+| label      | string               |        | 是   | 标签名                                                                  |
+| icon       | string/Component     |        | 否   | 设置图标，使用 [Icon](./Icon.md) 组件                                   |
+| activeIcon | string/Component     |        | 否   | 设置激活态图标，没有设置则沿用 `icon` 属性，使用 [Icon](./Icon.md) 组件 |
+| badge      | string/number/object |        | 否   | 徽标，使用 [Badge](./Badge.md) 组件，可传入一个基于 Badge props 的对象  |
+| subLabel   | string               |        | 否   | 副标签名，如果设置了该字段，则显示带有副标签的列表                      |
 
 ```
 [

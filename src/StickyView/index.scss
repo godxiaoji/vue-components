@@ -1,8 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-sticky-view {
-  --sticky-view-fixed-height: 28px;
-
+.fx-sticky-view {
   position: relative;
 
   &_top {
@@ -11,15 +9,15 @@
     top: 0;
     width: 100%;
 
-    .#{$prefix}-sticky_content {
+    .fx-sticky_content {
       overflow: hidden;
     }
   }
 
   &_fixed {
     width: 100%;
-    height: var(--sticky-view-fixed-height);
-    line-height: var(--sticky-view-fixed-height);
+    height: 28px;
+    line-height: 28px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -31,13 +29,13 @@
   }
 }
 
-.#{$prefix}-sticky-view-item {
+.fx-sticky-view-item {
   &_header {
     width: 100%;
     height: 28px;
     line-height: 28px;
-    height: var(--sticky-view-fixed-height);
-    line-height: var(--sticky-view-fixed-height);
+    height: 28px;
+    line-height: 28px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

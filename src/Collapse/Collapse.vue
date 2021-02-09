@@ -1,17 +1,16 @@
 <template>
-  <div :class="[prefix + '-collapse']">
+  <div class="fx-collapse">
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { cloneData, isArray, inArray, isSameArray } from '../helpers/util'
-import { SDKKey } from '../config'
 import { arrayValueValidator } from '../helpers/validator'
 import groupMixin from '../util/group-mixin'
 
 export default {
-  name: SDKKey + '-collapse',
+  name: 'fx-collapse',
   mixins: [groupMixin],
   provide() {
     return {
@@ -32,8 +31,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       activeNames2: []
     }
   },

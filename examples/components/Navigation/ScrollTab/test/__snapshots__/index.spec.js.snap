@@ -4,9 +4,9 @@ exports[`ScrollTab ScrollTab should render default correctly 1`] = `
 <div class="fx-scroll-tab">
   <div class="fx-scroll-tab_sidebar">
     <div class="fx-sticky">
-      <div class="fx-sticky_content">
-        <div class="fx-tab vertical no--scroll">
-          <ul class="fx-tab_list"></ul>
+      <div class="fx-sticky_content" style="top: 0px; left: 0px; width: 0px; bottom: 0px; z-index: 1000; position: fixed;">
+        <div class="fx-side-tab">
+          <ul class="fx-side-tab_list"></ul>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@ exports[`ScrollTab ScrollTab should render default correctly 1`] = `
     <div class="fx-sticky-view">
       <div class="fx-sticky-view_list"></div>
       <div class="fx-sticky fx-sticky-view_top">
-        <div class="fx-sticky_content">
+        <div class="fx-sticky_content" style="top: 0px; left: 0px; width: 0px; height: 0px; z-index: 1000; position: fixed;">
           <div class="fx-sticky-view_fixed" style="transform: translate3d(0px, 0px, 0px);"></div>
         </div>
       </div>

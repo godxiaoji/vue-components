@@ -13,10 +13,7 @@ describe('Collapse', () => {
 
   test('CollapseItem should render default correctly', () => {
     const wrapper = mount(CollapseItem, {
-      props: { name: 'item-1', title: 'title-1' },
-      slots: {
-        default: 'content'
-      }
+      props: { name: 'item-1', title: 'title-1' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()

@@ -1,4 +1,4 @@
-import TabViewItem from '../Tab/ViewItem.vue'
+import TabViewItem from '../Tab/TabViewItem.vue'
 
 TabViewItem.install = function(Vue) {
   Vue.component(TabViewItem.name, TabViewItem)

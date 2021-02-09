@@ -1,19 +1,20 @@
 <template>
-  <div :class="[prefix + '-image']" @click="onClick">
+  <div class="fx-image" @click="onClick">
     <span
       v-if="aspectRatio != null && aspectRatio > 0"
-      :class="[prefix + '-image_ratio']"
+      class="fx-image_ratio"
       :style="{ 'padding-top': aspectRatio * 100 + '%' }"
     ></span>
-    <i :class="[prefix + '-image_loading']" v-if="loading">
+    <i class="fx-image_loading" v-if="loading">
       <icon icon="ImageOutlined" />
     </i>
-    <i :class="[prefix + '-image_error']" v-if="error">
+    <i class="fx-image_error" v-if="error">
       <icon icon="ImageBreakOutlined" />
     </i>
     <img
       v-if="imgSrc"
-      :class="[prefix + '-image_img', modeClassName]"
+      class="fx-image_img"
+      :class="[modeClassName]"
       :src="imgSrc"
     />
   </div>
@@ -23,7 +24,6 @@
 import Icon from '../Icon'
 import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
 import { inArray } from '../helpers/util'
-import { SDKKey } from '../config'
 
 const MODE_NAMES = [
   'scaleToFill',
@@ -43,7 +43,7 @@ const MODE_NAMES = [
 const LAZY_PRELOAD = 1.3
 
 export default {
-  name: SDKKey + '-image',
+  name: 'fx-image',
   components: { Icon },
   props: {
     // 图片资源地址
@@ -70,8 +70,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       imgSrc: null,
       inViewed: false,
 

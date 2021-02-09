@@ -1,9 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Stepper should render default correctly 1`] = `
-<div class="fx-stepper"><button class="fx-button type--default size--small pattern--default shape--square has--icon" disabled="" type="button"><svg class="fx-icon">
-      <use xlink:href="#icon-MinusOutlined"></use>
-    </svg><span>按钮</span></button><input class="fx-stepper_input" type="text" inputmode="decimal" name="" value="1"><button class="fx-button type--default size--small pattern--default shape--square has--icon" type="button"><svg class="fx-icon">
-      <use xlink:href="#icon-PlusOutlined"></use>
-    </svg><span>按钮</span></button></div>
+<div class="fx-stepper">
+  <fx-button-stub></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" value="1">
+  <fx-button-stub></fx-button-stub>
+</div>
+`;
+
+exports[`Stepper should render prop disabled=true correctly 1`] = `
+<div class="fx-stepper disabled">
+  <fx-button-stub></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" disabled="" value="1">
+  <fx-button-stub></fx-button-stub>
+</div>
 `;

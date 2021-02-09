@@ -1,4 +1,4 @@
-import SkeletonButton from '../Skeleton/Button.vue'
+import SkeletonButton from '../Skeleton/SkeletonButton.vue'
 
 SkeletonButton.install = function(Vue) {
   Vue.component(SkeletonButton.name, SkeletonButton)

@@ -1,28 +1,24 @@
 <template>
   <teleport to="body">
     <div
-      :class="[prefix + '-drawer', prefix + '-popup', { visible: visible2 }]"
+      class="fx-drawer fx-popup"
+      :class="{ visible: visible2 }"
       :style="popupStyles"
       v-bind="$attrs"
       v-show="isShow"
     >
-      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
+      <div class="fx-mask" @click="onMaskClick"></div>
       <div
-        :class="[
-          prefix + '-drawer_inner',
-          alignClassName,
-          { 'has--header': hasHeader }
-        ]"
+        class="fx-drawer_inner"
+        :class="[alignClassName, { 'has--header': hasHeader }]"
+        :style="innerStyles"
       >
-        <div
-          v-show="hasHeader"
-          :class="[prefix + '-drawer_header', prefix + '-horizontal-hairline']"
-        >
-          <div :class="[prefix + '-drawer_header-inner']">
-            <div :class="[prefix + '-drawer_title']">{{ title }}</div>
+        <div v-show="hasHeader" class="fx-drawer_header fx-horizontal-hairline">
+          <div class="fx-drawer_header-inner">
+            <div class="fx-drawer_title">{{ title }}</div>
             <fx-button
               v-if="showClose"
-              :class="[prefix + '-drawer_close']"
+              class="fx-drawer_close"
               shape="square"
               icon="CloseOutlined"
               pattern="borderless"
@@ -30,7 +26,7 @@
             ></fx-button>
           </div>
         </div>
-        <div :class="[prefix + '-drawer_body']">
+        <div class="fx-drawer_body">
           <slot></slot>
         </div>
       </div>
@@ -39,13 +35,13 @@
 </template>
 
 <script>
+import safeAreaInsets from 'safe-area-insets'
 import FxButton from '../Button'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-drawer',
+  name: 'fx-drawer',
   mixins: [popupMixin],
   components: { FxButton },
   props: {
@@ -59,11 +55,21 @@ export default {
     showClose: {
       type: Boolean,
       default: false
+    },
+    // 是否开启安全区
+    enableSafeAreaInsets: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      prefix: SDKKey
+      safeAreaInsets: {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }
     }
   },
   computed: {
@@ -72,6 +78,50 @@ export default {
     },
     hasHeader() {
       return this.title != null || this.showClose
+    },
+    innerStyles() {
+      const placement = getEnumsValue('placement', this.placement)
+
+      let { left, top, right, bottom } = this.safeAreaInsets
+
+      if (placement === 'top') {
+        bottom = 0
+      } else if (placement === 'bottom') {
+        top = 0
+      } else if (placement === 'left') {
+        right = 0
+      } else if (placement === 'right') {
+        left = 0
+      }
+
+      return {
+        padding: top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px'
+      }
+    }
+  },
+  mounted() {
+    safeAreaInsets.onChange(this.updateSafeAreaInsets)
+  },
+  beforeUnmount() {
+    safeAreaInsets.offChange(this.updateSafeAreaInsets)
+  },
+  methods: {
+    updateSafeAreaInsets() {
+      if (this.enableSafeAreaInsets) {
+        this.safeAreaInsets = {
+          top: safeAreaInsets.top,
+          left: safeAreaInsets.left,
+          right: safeAreaInsets.right,
+          bottom: safeAreaInsets.bottom
+        }
+      } else {
+        this.safeAreaInsets = {
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        }
+      }
     }
   }
 }

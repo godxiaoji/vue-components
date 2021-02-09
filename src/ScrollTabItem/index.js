@@ -1,7 +1,7 @@
-import ScrollTabItem from '../Tab/ScrollItem.vue'
+import ScrollTabItem from '../Tab/ScrollTabItem.vue'
 
-ScrollTabItem.install = function(Vue) {
-  Vue.component(ScrollTabItem.name, ScrollTabItem)
+ScrollTabItem.install = function(app) {
+  app.component(ScrollTabItem.name, ScrollTabItem)
 }
 
 export default ScrollTabItem

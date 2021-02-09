@@ -1,6 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Popover should render prop placement="left" correctly 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;
+
 exports[`Popover should render prop set content correctly 1`] = `
+<!--teleport start-->
+<!--teleport end-->
+`;
+
+exports[`Popover should render prop visible=true correctly 1`] = `
 <!--teleport start-->
 <!--teleport end-->
 `;

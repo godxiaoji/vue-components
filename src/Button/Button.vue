@@ -1,7 +1,7 @@
 <template>
   <button
+    class="fx-button"
     :class="[
-      prefix + '-button',
       typeClassName,
       sizeClassName,
       patternClassName,
@@ -19,7 +19,6 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import {
   createEnumsValidator,
   getEnumsValue,
@@ -27,7 +26,7 @@ import {
 } from '../helpers/validator'
 
 export default {
-  name: SDKKey + '-button',
+  name: 'fx-button',
   components: { Icon },
   inject: {
     appButtonGroupSubOptions: {
@@ -43,7 +42,7 @@ export default {
       default: null
     },
     type: {
-      validator: createEnumsValidator('buttonType'),
+      validator: createEnumsValidator('type'),
       default: null
     },
     pattern: {
@@ -75,14 +74,9 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      prefix: SDKKey
-    }
-  }, // 计算属性的 getter
   computed: {
     typeClassName() {
-      return 'type--' + getEnumsValue('buttonType', this.type)
+      return 'type--' + getEnumsValue('type', this.type)
     },
     patternClassName() {
       return (

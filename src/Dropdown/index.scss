@@ -1,11 +1,15 @@
 @import '../style/var.scss';
 
-.#{$prefix}-dropdown {
-  &.#{$prefix}-popup {
+.fx-dropdown {
+  &.fx-popup {
     height: auto;
     right: 0;
     bottom: 0;
     overflow: hidden;
+  }
+
+  .fx-mask {
+    background-color: rgba($color: $black-color, $alpha: 0.1);
   }
 
   &_inner {
@@ -22,7 +26,7 @@
   }
 
   &.visible {
-    .#{$prefix}-dropdown {
+    .fx-dropdown {
       &_inner {
         transform: translate3d(0, 0, 0);
       }

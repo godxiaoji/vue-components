@@ -1,20 +1,18 @@
 <template>
   <teleport to="body">
     <div
-      :class="[prefix + '-modal', prefix + '-popup', { visible: visible2 }]"
+      class="fx-modal fx-popup"
+      :class="{ visible: visible2 }"
       :style="popupStyles"
       v-bind="$attrs"
       v-show="isShow"
     >
-      <div :class="[prefix + '-mask']" @click="onMaskClick"></div>
-      <div :class="[prefix + '-modal_box']" :style="boxStyles">
-        <div :class="[prefix + '-modal_box-inner']">
+      <div class="fx-mask" @click="onMaskClick"></div>
+      <div class="fx-modal_box" :style="boxStyles">
+        <div class="fx-modal_box-inner">
           <slot></slot>
         </div>
-        <i
-          v-if="showClose"
-          :class="[prefix + '-modal_close']"
-          @click="onCloseClick"
+        <i v-if="showClose" class="fx-modal_close" @click="onCloseClick"
           ><icon icon="CloseCircleFilled"></icon
         ></i>
       </div>
@@ -24,11 +22,10 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
 import popupMixin from '../util/popup-mixin'
 
 export default {
-  name: SDKKey + '-modal',
+  name: 'fx-modal',
   components: { Icon },
   mixins: [popupMixin],
   props: {
@@ -40,9 +37,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     boxStyles() {

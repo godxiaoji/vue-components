@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-drawer {
+.fx-drawer {
   &_inner {
     position: absolute;
     left: 0;
@@ -12,6 +12,7 @@
     transition: transform 0.2s;
     background-color: #fff;
     min-height: 100px;
+    box-sizing: border-box;
 
     &.placement--left,
     &.placement--right {
@@ -68,8 +69,8 @@
     overflow: hidden;
     word-break: break-all;
 
-    .#{$prefix}-drawer_inner.placement--top &,
-    .#{$prefix}-drawer_inner.placement--bottom & {
+    .fx-drawer_inner.placement--top &,
+    .fx-drawer_inner.placement--bottom & {
       text-align: center;
     }
   }
@@ -86,14 +87,15 @@
   &_body {
     flex-shrink: 1;
     flex-grow: 1;
+    height: 100%;
 
-    .#{$prefix}-drawer_inner.has--header & {
+    .fx-drawer_inner.has--header & {
       height: calc(100% - 48px);
     }
   }
 
   &.visible {
-    .#{$prefix}-drawer {
+    .fx-drawer {
       &_inner {
         transform: translate3d(0, 0, 0);
       }

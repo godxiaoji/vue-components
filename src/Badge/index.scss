@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-badge {
+.fx-badge {
   display: inline-block;
   position: relative;
   vertical-align: top;
@@ -39,7 +39,7 @@
   }
 
   &.animated {
-    .#{$prefix}-badge {
+    .fx-badge {
       &_num {
         transition: transform 0.2s;
       }

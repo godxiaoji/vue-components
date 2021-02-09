@@ -1,6 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActionSheet should render props set options correctly 1`] = `
-<!--teleport start-->
-<!--teleport end-->
-`;
+exports[`ActionSheet should render prop set options correctly 1`] = `<fx-drawer-stub class="fx-action-sheet" visible="false"></fx-drawer-stub>`;
+
+exports[`ActionSheet should render props showCancel=true & cancelText="Custom Cancel" correctly 1`] = `<fx-drawer-stub class="fx-action-sheet" visible="false"></fx-drawer-stub>`;

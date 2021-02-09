@@ -13,4 +13,24 @@ describe('Drawer', () => {
 
     expect(wrapper.html()).toMatchSnapshot()
   })
+
+  test('should render prop showClose=true correctly', () => {
+    const wrapper = mount(Drawer, {
+      props: {
+        showClose: true
+      }
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  test('should render prop placement="left" correctly', () => {
+    const wrapper = mount(Drawer, {
+      props: {
+        placement: 'left'
+      }
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })

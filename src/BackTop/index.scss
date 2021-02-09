@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-back-top {
+.fx-back-top {
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -15,7 +15,7 @@
   --back-top-color: #{$title-color};
   color: var(--back-top-color);
 
-  .#{$prefix}-icon {
+  .fx-icon {
     --size: 40px;
     --color: var(--back-top-color);
     display: block;

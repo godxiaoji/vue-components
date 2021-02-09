@@ -1,5 +1,5 @@
 <template>
-  <div :class="[prefix + '-rate', { disabled, readonly }]">
+  <div class="fx-rate" :class="{ disabled: !!disabled, readonly: !!readonly }">
     <input
       :name="formName"
       type="hidden"
@@ -7,18 +7,19 @@
       :disabled="disabled"
     />
     <div
-      :class="[
-        prefix + '-rate_item',
-        { active: num - 0.5 <= formValue, half: formValue - num === -0.5 }
-      ]"
+      class="fx-rate_item"
+      :class="{
+        active: num - 0.5 <= formValue,
+        half: formValue - num === -0.5
+      }"
       v-for="num in max"
       :key="num"
       :data-value="num"
     >
-      <i :class="[prefix + '-rate_icon']">
+      <i class="fx-rate_icon">
         <icon :icon="defaultIcon" />
       </i>
-      <i :class="[prefix + '-rate_active-icon']">
+      <i class="fx-rate_active-icon">
         <icon :icon="activeIcon" :style="iconStyles" />
       </i>
     </div>
@@ -28,7 +29,6 @@
 <script>
 import Icon from '../Icon'
 import { inArray, capitalize, isInteger, isNumeric } from '../helpers/util'
-import { SDKKey } from '../config'
 import formMixin from '../util/form-mixin'
 import { touchEvent } from '../helpers/events'
 import { rangeInteger } from '../helpers/util'
@@ -54,7 +54,7 @@ function isIntegerOrHalf(val) {
 }
 
 export default {
-  name: SDKKey + '-rate',
+  name: 'fx-rate',
   mixins: [formMixin],
   components: { Icon },
   props: {
@@ -91,8 +91,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       formValue: 0,
       defaultValue: 0
     }

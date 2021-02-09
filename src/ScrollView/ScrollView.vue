@@ -1,7 +1,7 @@
 <template>
   <div
+    class="fx-scroll-view"
     :class="[
-      prefix + '-scroll-view',
       {
         'scroll-x': scrollX,
         'scroll-y': scrollY,
@@ -11,15 +11,13 @@
     ref="scroll"
     @scroll="onScroll"
   >
-    <div :class="[prefix + '-scroll-view_inner']">
-      <div :class="[prefix + '-scroll-view_content']" :style="contentStyles">
+    <div class="fx-scroll-view_inner">
+      <div class="fx-scroll-view_content" :style="contentStyles">
         <div
           v-show="!lowerLoading"
           v-if="enablePullDirections.length > 0"
-          :class="[
-            prefix + '-scroll-view_pull-refresh',
-            'direction--' + (pullDirection || 'unknown')
-          ]"
+          class="fx-scroll-view_pull-refresh"
+          :class="['direction--' + (pullDirection || 'unknown')]"
         >
           <slot
             v-bind:pullDirection="pullDirection"
@@ -28,7 +26,7 @@
             name="indicator"
           >
             <div
-              :class="[prefix + '-scroll-view_pull-refresh-indicator']"
+              class="fx-scroll-view_pull-refresh-indicator"
               :style="indicatorStyles"
             >
               <icon
@@ -50,20 +48,6 @@
           >
         </div>
         <slot></slot>
-        <div
-          :class="[
-            prefix + '-scroll-view_lower-loading',
-            'direction--' + (pullDirection || 'unknown')
-          ]"
-          v-show="lowerLoading"
-        >
-          <div
-            :class="[prefix + '-scroll-view_lower-loading-indicator']"
-            :style="indicatorStyles"
-          >
-            <icon icon="LoadingOutlined" spin /><span>正在加载</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -71,8 +55,13 @@
 
 <script>
 import Icon from '../Icon'
-import { SDKKey } from '../config'
-import { inArray, isArray, isString, isStringArray } from '../helpers/util'
+import {
+  inArray,
+  isArray,
+  isNumber,
+  isString,
+  isStringArray
+} from '../helpers/util'
 import { touchEvent } from '../helpers/events'
 
 const {
@@ -93,8 +82,13 @@ const PULL_REFRESH_STATE_HOLDING = 'holding'
 const PULL_REFRESH_STATE_REFRESHING = 'refreshing'
 
 export default {
-  name: SDKKey + '-scroll-view',
+  name: 'fx-scroll-view',
   components: { Icon },
+  provide() {
+    return {
+      disableFixed: true
+    }
+  },
   props: {
     // 允许横向滚动
     scrollX: {
@@ -131,11 +125,6 @@ export default {
       type: Number,
       default: 0
     },
-    // 值应为某子元素id（id不能以数字开头）。设置哪个方向可滚动，则在哪个方向滚动到该元素
-    scrollIntoView: {
-      type: String,
-      default: ''
-    },
     // 下拉刷新方向
     enablePullDirections: {
       validator(val) {
@@ -157,8 +146,6 @@ export default {
   },
   data() {
     return {
-      prefix: SDKKey,
-
       pullRefreshState: PULL_REFRESH_STATE_PULLING,
       pullDistance: 0,
       translateDuration: 200,
@@ -211,7 +198,6 @@ export default {
 
     // 处理初始化设置的滚动位置
     this.updateScroll()
-    this.scrollIntoIdView(this.scrollIntoView)
   },
   beforeUnmount() {
     removeListeners(this.$el, this)
@@ -222,24 +208,6 @@ export default {
     },
     scrollTop() {
       this.updateScroll()
-    },
-    scrollIntoView(val) {
-      this.scrollIntoIdView(val)
-    },
-    lowerLoading(val) {
-      if (val) {
-        if (this._isToLowerOrUpperY === SCROLL_STATE_LOWER) {
-          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
-          this.pullDirection = 'up'
-          this.pullDistance = -this.pullRefreshThreshold
-        } else if (this._isToLowerOrUpperX === SCROLL_STATE_LOWER) {
-          this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
-          this.pullDirection = 'left'
-          this.pullDistance = -this.pullRefreshThreshold
-        }
-      } else {
-        this.loadComplete()
-      }
     }
   },
   emits: ['scroll-to-upper', 'scroll-to-lower', 'scroll', 'refreshing'],
@@ -349,18 +317,26 @@ export default {
       const y = this._isToLowerOrUpperY
       const x = this._isToLowerOrUpperX
 
-      if (
-        coords.stop ||
-        (coords.scrollY &&
-          (y === SCROLL_STATE_CENTER ||
-            (y === SCROLL_STATE_UPPER && offsetY < 0) ||
-            (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
-        (coords.scrollX &&
-          (x === SCROLL_STATE_CENTER ||
-            (x === SCROLL_STATE_UPPER && offsetX < 0) ||
-            (x === SCROLL_STATE_LOWER && offsetX > 0)))
-      ) {
-        coords.stop = true
+      if (coords.stop == null) {
+        if (
+          (coords.scrollY &&
+            Math.abs(offsetY) >= Math.abs(offsetX) &&
+            (y === SCROLL_STATE_CENTER ||
+              (y === SCROLL_STATE_UPPER && offsetY < 0) ||
+              (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
+          (coords.scrollX &&
+            Math.abs(offsetX) >= Math.abs(offsetY) &&
+            (x === SCROLL_STATE_CENTER ||
+              (x === SCROLL_STATE_UPPER && offsetX < 0) ||
+              (x === SCROLL_STATE_LOWER && offsetX > 0)))
+        ) {
+          coords.stop = true
+        } else {
+          coords.stop = false
+        }
+      }
+
+      if (coords.stop) {
         e.stopPropagation()
       }
 
@@ -489,6 +465,34 @@ export default {
           })
         }
       }
+    },
+
+    /**
+     * 滚动列表到指定的偏移（以像素为单位）
+     */
+    scrollToOffset(options) {
+      let behavior = 'smooth'
+      let top = 0
+      let left = 0
+
+      if (isNumber(options)) {
+        top = options
+        behavior = 'instant'
+      } else {
+        top = options.offset
+        if (options.animated === false) behavior = 'instant'
+      }
+
+      if (this.scrollX) {
+        // 如果是水平的，数值换一下
+        top = [left, (left = top)][0]
+      }
+
+      this.$el.scrollTo({
+        top,
+        left,
+        behavior
+      })
     },
 
     /**

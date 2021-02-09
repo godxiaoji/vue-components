@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-dialog {
+.fx-dialog {
   &_header {
     flex: 1;
     font-size: 17px;
@@ -16,7 +16,7 @@
     text-align: center;
     white-space: pre-line;
 
-    + .#{$prefix}-dialog_content {
+    + .fx-dialog_content {
       margin-top: 0;
     }
   }
@@ -54,7 +54,7 @@
       justify-content: space-between;
       position: relative;
 
-      > .#{$prefix}-button + .#{$prefix}-button::before {
+      > .fx-button + .fx-button::before {
         height: 100%;
         background-color: $border-color;
       }

@@ -36,7 +36,7 @@
       </fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showCascader" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showCascader" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
   </div>
 </template>

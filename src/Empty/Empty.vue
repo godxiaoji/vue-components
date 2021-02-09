@@ -1,10 +1,10 @@
 <template>
-  <div :class="[prefix + '-empty']">
+  <div class="fx-empty">
     <slot name="image" v-if="$slots.image"></slot>
     <template v-else>
-      <img :class="[prefix + '-empty_image']" :src="imageUrl" />
+      <img class="fx-empty_image" :src="imageUrl" />
     </template>
-    <p :class="[prefix + '-empty_description']" v-show="description">
+    <p class="fx-empty_description" v-show="description">
       {{ description }}
     </p>
     <slot></slot>
@@ -12,13 +12,12 @@
 </template>
 
 <script>
-import { SDKKey } from '../config'
 import { inArray } from '../helpers/util'
 
 const TYPE_NAMES = ['default', 'error', 'network', 'search']
 
 export default {
-  name: SDKKey + '-empty',
+  name: 'fx-empty',
   props: {
     // 描述文字
     description: {
@@ -32,9 +31,6 @@ export default {
       },
       default: TYPE_NAMES[0]
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   computed: {
     imageUrl() {

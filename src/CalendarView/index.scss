@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-calendar-view {
+.fx-calendar-view {
   --calendar-view-color: #{$font-color};
   --calendar-view-highlight-color: #{$primary-color};
   --calendar-view-highlight2-color: #{$danger-color};
@@ -82,7 +82,7 @@
         color: var(--calendar-view-highlight-color);
       }
 
-      &.#{$prefix}-calendar-view_day-bottom.text {
+      &.fx-calendar-view_day-bottom.text {
         margin: 9px 0 0 0;
 
         &.highlight {

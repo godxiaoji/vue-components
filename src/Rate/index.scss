@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-rate {
+.fx-rate {
   --rate-size: 24px;
   --rate-color: #{$border-color};
   --rate-active-color: #{$danger-color};
@@ -22,7 +22,7 @@
     }
 
     &.active {
-      .#{$prefix}-rate {
+      .fx-rate {
         &_icon {
           display: none;
         }
@@ -34,7 +34,7 @@
     }
 
     &.active.half {
-      .#{$prefix}-rate {
+      .fx-rate {
         &_icon {
           width: 50%;
           margin-left: 50%;
@@ -52,7 +52,7 @@
     }
   }
 
-  .#{$prefix}-icon {
+  .fx-icon {
     --size: var(--rate-size);
     --color: var(--rate-color);
     flex-shrink: 0;
@@ -72,7 +72,7 @@
     width: 100%;
     height: 100%;
 
-    .#{$prefix}-icon {
+    .fx-icon {
       --color: var(--rate-active-color);
     }
   }
@@ -86,7 +86,7 @@
   }
 
   &.readonly {
-    .#{$prefix}-rate {
+    .fx-rate {
       &_item {
         cursor: default;
       }
@@ -96,7 +96,7 @@
   &.disabled {
     opacity: 0.2;
 
-    .#{$prefix}-rate {
+    .fx-rate {
       &_item {
         cursor: not-allowed;
       }

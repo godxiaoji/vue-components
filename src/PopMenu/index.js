@@ -1,4 +1,4 @@
-import PopMenu from '../Popover/Menu.vue'
+import PopMenu from '../Popover/PopMenu.vue'
 import { showPopMenu } from '../apis/Popup'
 
 PopMenu.install = function(app) {

@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-popover {
+.fx-popover {
   &_arrow {
     position: absolute;
     width: 10px;
@@ -44,7 +44,7 @@
   }
 
   &.visible {
-    .#{$prefix}-popover {
+    .fx-popover {
       &_inner {
         opacity: 1;
       }

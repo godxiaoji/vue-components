@@ -159,8 +159,10 @@ const ENUM_MAP = {
   buttonSize: ['large', 'middle', 'small'],
   buttonShape: ['rectangle', 'round', 'circle', 'square'],
   buttonPattern: ['default', 'solid', 'dashed', 'borderless', 'gradient'],
-  buttonType: ['default', 'primary', 'warning', 'danger', 'success'],
-  buttonFormType: ['button', 'submit', 'reset']
+  type: ['default', 'primary', 'warning', 'danger', 'success'],
+  buttonFormType: ['button', 'submit', 'reset'],
+  tagPattern: ['light', 'dark', 'plain'],
+  tagSize: ['large', 'middle', 'small']
 }
 
 export function createEnumsValidator(propName) {

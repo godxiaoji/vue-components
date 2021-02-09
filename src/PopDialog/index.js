@@ -1,4 +1,4 @@
-import PopDialog from '../Popover/Dialog.vue'
+import PopDialog from '../Popover/PopDialog.vue'
 import { showPopDialog } from '../apis/Popup'
 
 PopDialog.install = function(app) {

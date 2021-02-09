@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`NavBar should render prop rightButtons=[{ icon: "MenuOutlined", text: "Menu" }] correctly 1`] = `
+<div class="fx-nav-bar">
+  <div class="fx-nav-bar_inner fx-horizontal-hairline">
+    <div class="fx-nav-bar_layout">
+      <div class="fx-nav-bar_left">
+        <!--v-if-->
+      </div>
+      <div class="fx-nav-bar_title"></div>
+      <div class="fx-nav-bar_right">
+        <fx-button-group-stub class="fx-nav-bar_button-group"></fx-button-group-stub>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`NavBar should render prop title="NavBar" correctly 1`] = `
 <div class="fx-nav-bar">
   <div class="fx-nav-bar_inner fx-horizontal-hairline">
@@ -11,6 +27,34 @@ exports[`NavBar should render prop title="NavBar" correctly 1`] = `
       <div class="fx-nav-bar_right">
         <!--v-if-->
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NavBar should render props showBack=true & showHome = true correctly 1`] = `
+<div class="fx-nav-bar">
+  <div class="fx-nav-bar_inner fx-horizontal-hairline">
+    <div class="fx-nav-bar_layout">
+      <div class="fx-nav-bar_left">
+        <fx-button-group-stub class="fx-nav-bar_button-group"></fx-button-group-stub>
+      </div>
+      <div class="fx-nav-bar_title"></div>
+      <div class="fx-nav-bar_right">
+        <!--v-if-->
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NavBar should render set left & right slots correctly 1`] = `
+<div class="fx-nav-bar">
+  <div class="fx-nav-bar_inner fx-horizontal-hairline">
+    <div class="fx-nav-bar_layout">
+      <div class="fx-nav-bar_left">Left Slot</div>
+      <div class="fx-nav-bar_title"></div>
+      <div class="fx-nav-bar_right">Right Slot</div>
     </div>
   </div>
 </div>

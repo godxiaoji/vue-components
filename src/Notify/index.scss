@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-popup.#{$prefix}-notify {
+.fx-popup.fx-notify {
   position: fixed;
   left: 0;
   top: 0;
@@ -8,7 +8,7 @@
   height: auto;
 }
 
-.#{$prefix}-notify {
+.fx-notify {
   &_inner {
     width: 100%;
     transform: translate3d(0, calc(-100%), 0);
@@ -17,7 +17,7 @@
   }
 
   &.visible {
-    .#{$prefix}-notify_inner {
+    .fx-notify_inner {
       transform: translate3d(0, 0, 0);
       opacity: 1;
     }

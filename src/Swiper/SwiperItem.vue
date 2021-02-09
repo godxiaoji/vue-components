@@ -1,21 +1,16 @@
 <template>
-  <div :class="[prefix + '-swiper-item']">
+  <div class="fx-swiper-item">
     <slot></slot>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-swiper-item',
+  name: 'fx-swiper-item',
   inject: {
     appSwiper: {
       default: null
     }
-  },
-  data() {
-    return { prefix: SDKKey }
   },
   mounted() {
     this.update()

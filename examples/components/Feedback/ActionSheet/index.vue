@@ -1,20 +1,20 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="默认" clickable @click="visible = true"></fx-cell>
+      <fx-cell label="默认" isLink @click="visible = true"></fx-cell>
       <fx-cell
         label="展示标题"
-        clickable
+        isLink
         @click=";(title = '标题'), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="展示取消按钮"
-        clickable
+        isLink
         @click=";(showCancel = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="设置取消按钮文案"
-        clickable
+        isLink
         @click="
           ;(showCancel = true),
             (cancelText = '自定义取消按钮文案'),
@@ -25,7 +25,7 @@
     <fx-group title="options 扩展">
       <fx-cell
         label="选项描述"
-        clickable
+        isLink
         @click="
           ;(options = [
             {
@@ -44,7 +44,7 @@
       ></fx-cell>
       <fx-cell
         label="选项高亮"
-        clickable
+        isLink
         @click="
           ;(options = [
             {
@@ -65,19 +65,19 @@
     <fx-group title="事件监听">
       <fx-cell
         label="select/cancel"
-        clickable
+        isLink
         @click="
           ;(showCancel = true), (showSelectEvent = true), (visible = true)
         "
       ></fx-cell>
       <fx-cell
-        label="show/shown/hide/hidden"
-        clickable
+        label="visible-state-change"
+        isLink
         @click=";(showOtherEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showActionSheet" clickable @click="onCallApi()"></fx-cell>
+      <fx-cell label="showActionSheet" isLink @click="onCallApi()"></fx-cell>
     </fx-group>
     <fx-action-sheet
       v-model:visible="visible"
@@ -87,10 +87,7 @@
       :cancel-text="cancelText"
       @select="onSelect"
       @cancel="onCancel"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     ></fx-action-sheet>
   </div>
 </template>
@@ -133,12 +130,12 @@ export default {
     }
   },
   methods: {
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showOtherEvent) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.showCancel = false
         this.cancelText = '取消'
         this.options = options

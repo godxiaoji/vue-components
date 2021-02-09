@@ -1,20 +1,15 @@
 <template>
   <div
-    :class="[
-      prefix + '-divider',
-      prefix + '-horizontal-hairline',
-      { 'has--title': !!title, 'border--dashed': dashed }
-    ]"
+    class="fx-divider fx-horizontal-hairline"
+    :class="{ 'has--title': !!title, 'border--dashed': dashed }"
   >
     <span v-if="title">{{ title }}</span>
   </div>
 </template>
 
 <script>
-import { SDKKey } from '../config'
-
 export default {
-  name: SDKKey + '-divider',
+  name: 'fx-divider',
   props: {
     title: {
       type: String,
@@ -23,11 +18,6 @@ export default {
     dashed: {
       type: Boolean,
       default: false
-    }
-  },
-  data() {
-    return {
-      prefix: SDKKey
     }
   }
 }

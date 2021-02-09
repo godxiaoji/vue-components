@@ -1,6 +1,6 @@
 @import '../style/var.scss';
 
-.#{$prefix}-popup.#{$prefix}-toast {
+.fx-popup.fx-toast {
   width: 0;
   height: 0;
 
@@ -10,7 +10,7 @@
   }
 }
 
-.#{$prefix}-toast {
+.fx-toast {
   width: 0;
   height: 0;
 
@@ -35,7 +35,7 @@
     transform: translate3d(-50%, -50%, 0) scale(0);
 
     &.has--icon {
-      .#{$prefix}-toast {
+      .fx-toast {
         &_icon {
           --size: 21px;
           fill: #fff;
@@ -52,7 +52,7 @@
   }
 
   &.visible {
-    .#{$prefix}-toast_box {
+    .fx-toast_box {
       opacity: 1;
       transform: translate3d(-50%, -50%, 0) scale(1);
     }

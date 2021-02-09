@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Skeleton should render custom layout slot correctly 1`] = `<div class="fx-skeleton"></div>`;
+
 exports[`Skeleton should render default correctly 1`] = `
 <div class="fx-skeleton">
   <div class="fx-skeleton_layout">

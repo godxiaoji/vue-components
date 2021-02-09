@@ -1,26 +1,36 @@
 /* global describe,test,expect */
 
-import { mount } from '@vue/test-utils'
-
+import { shallowMount } from '@vue/test-utils'
 import ActionSheet from '@/ActionSheet'
 
 const options = [
   {
-    name: '选项1'
+    name: 'Option 1'
   },
   {
-    name: '选项2'
+    name: 'Option 2'
   },
   {
-    name: '选项3'
+    name: 'Option 3'
   }
 ]
 
 describe('ActionSheet', () => {
-  test('should render props set options correctly', () => {
-    const wrapper = mount(ActionSheet, {
+  test('should render prop set options correctly', () => {
+    const wrapper = shallowMount(ActionSheet, {
       props: {
         options
+      }
+    })
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  test('should render props showCancel=true & cancelText="Custom Cancel" correctly', () => {
+    const wrapper = shallowMount(ActionSheet, {
+      props: {
+        showCancel: true,
+        cancelText: 'Custom Cancel'
       }
     })
 

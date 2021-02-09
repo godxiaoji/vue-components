@@ -1,3 +1,10 @@
+# [2.0.0-beta.3](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-02-09)
+
+
+### Bug Fixes
+
+* **v1.8:** 同步1.8版本的功能 ([ca9e57b](https://github.com/godxiaoji/vfox/commit/ca9e57b883034a1890310f6cc2bc5f2111f75b04))
+
 # [2.0.0-beta.2](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-01-21)
 
 

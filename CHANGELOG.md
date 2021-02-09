@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/godxiaoji/vfox/compare/v1.8.1...v1.8.2) (2021-02-09)
+
+
+### Bug Fixes
+
+* 优化组件 ([af94fe2](https://github.com/godxiaoji/vfox/commit/af94fe2c403a04725937431342c9d4769cc65d46))
+
 ## [1.8.1](https://github.com/godxiaoji/vfox/compare/v1.8.0...v1.8.1) (2021-02-06)
 
 

@@ -2,14 +2,14 @@
 
 ## Picker/PickerPopup/PickerView 的公共 Props
 
-| 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                                                                    |
-| ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------- |
-| v-modal           | string/number/string[]/number[] | []                                                       | 否   | 选中值                                                                                  |
-| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，设置后忽略 `options`属性  |
-| options           | array                           | []                                                       | 否   | 数据集                                                                                  |
-| format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                                                              |
-| initial-separator | string                          | '/'                                                      | 否   | 分隔符                                                                                  |
-| field-names       | object                          | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key                                       |
+| 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                              |
+| ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | ------------------------------------------------- |
+| v-modal           | string/number/string[]/number[] | []                                                       | 否   | 选中值                                            |
+| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，设置后忽略 `options`属性          |
+| options           | array                           | []                                                       | 否   | 数据集                                            |
+| format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                        |
+| initial-separator | string                          | '/'                                                      | 否   | 分隔符                                            |
+| field-names       | object                          | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key |
 
 ### mode 的合法值</a>
 
@@ -222,15 +222,21 @@ xiyiji/guntong
 
 ## PickerPopup Events
 
-| 事件    | 描述                 | 回调函数参数                                                                     |
-| ------- | -------------------- | -------------------------------------------------------------------------------- |
-| cancel  | 点击取消按钮后触发   | {}                                                                               |
-| confirm | 点击确定按钮后触发   | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| change  | 选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| show    | 展示时触发           | {}                                                                               |
-| shown   | 展示且动画结束后触发 | {}                                                                               |
-| hide    | 隐藏时触发           | {}                                                                               |
-| hidden  | 隐藏且动画结束后触发 | {}                                                                               |
+| 事件                 | 描述                 | 回调函数参数                                                                     |
+| -------------------- | -------------------- | -------------------------------------------------------------------------------- |
+| cancel               | 点击取消按钮后触发   | {}                                                                               |
+| confirm              | 点击确定按钮后触发   | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| change               | 选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| visible-state-change | 展示隐藏时触发       | { state: string }                                                                |
+
+### visible-state-change 的 state 值
+
+| 值     | 说明                 | 备注                                              |
+| ------ | -------------------- | ------------------------------------------------- |
+| show   | 展示时触发           |                                                   |
+| shown  | 展示且动画结束后触发 |                                                   |
+| hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
+| hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
 ## PickerView 选择
 

@@ -65,16 +65,6 @@
         popupValueString
       }}</fx-cell>
       <fx-cell
-        label="Event:confirm"
-        isLink
-        @click="
-          ;(confirmEvent = true),
-            (popupShowConfirm = false),
-            (popupShowClose = false),
-            (popupVisible = true)
-        "
-      ></fx-cell>
-      <fx-cell
         label="showConfirm=true"
         isLink
         @click="
@@ -89,8 +79,20 @@
         isLink
         @click="popupRangeVisible = true"
       ></fx-cell>
+    </fx-group>
+    <fx-group title="CalendarPopup Event">
       <fx-cell
-        label="Event:show/shown/hide/hidden"
+        label="confirm"
+        isLink
+        @click="
+          ;(confirmEvent = true),
+            (popupShowConfirm = false),
+            (popupShowClose = false),
+            (popupVisible = true)
+        "
+      ></fx-cell>
+      <fx-cell
+        label="visible-state-change"
         isLink
         @click="
           ;(otherEvent = true),
@@ -110,10 +112,7 @@
       :show-close="popupShowClose"
       v-model="popupValue"
       @confirm="onConfirm"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     />
     <fx-calendar-popup
       :visible.sync="popupRangeVisible"
@@ -190,14 +189,14 @@ export default {
     onRangeConfirm(detail) {
       this.$showToast(`选择了 ${detail.label}`)
     },
-    onOtherEvent(type) {
+    onVisibleStateChange({ state }) {
       // console.log(`${type} 事件触发`)
 
       if (this.otherEvent) {
-        this.$showToast(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
       }
 
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.otherEvent = false
         this.confirmEvent = false
       }

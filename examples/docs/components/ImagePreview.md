@@ -13,13 +13,19 @@
 
 ## Events
 
-| 事件   | 描述                 | 回调函数参数             |
-| ------ | -------------------- | ------------------------ |
-| show   | 展示时触发           | {}                       |
-| shown  | 展示且动画结束后触发 | {}                       |
-| hide   | 隐藏时触发           | {}                       |
-| hidden | 隐藏且动画结束后触发 | {}                       |
-| change | 隐藏且动画结束后触发 | { activeIndex, current } |
+| 事件                 | 描述                 | 回调函数参数             |
+| -------------------- | -------------------- | ------------------------ |
+| change               | 隐藏且动画结束后触发 | { activeIndex, current } |
+| visible-state-change | 展示隐藏时触发       | { state: string }        |
+
+### visible-state-change 的 state 值
+
+| 值     | 说明                 | 备注                                              |
+| ------ | -------------------- | ------------------------------------------------- |
+| show   | 展示时触发           |                                                   |
+| shown  | 展示且动画结束后触发 |                                                   |
+| hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
+| hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
 ### change 的回调参数
 

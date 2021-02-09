@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import Picker from '../Picker/Popup.vue'
-import Cascader from '../Cascader/Popup.vue'
-import Calendar from '../Calendar/Popup.vue'
+import Picker from '../Picker/PickerPopup.vue'
+import Cascader from '../Cascader/CascaderPopup.vue'
+import Calendar from '../Calendar/CalendarPopup.vue'
 import ActionSheet from '../ActionSheet'
 import Popover from '../Popover'
-import PopMenu from '../Popover/Menu.vue'
-import PopDialog from '../Popover/Dialog.vue'
+import PopMenu from '../Popover/PopMenu.vue'
+import PopDialog from '../Popover/PopDialog.vue'
 import Dialog from '../Dialog'
 import ImagePreview from '../ImagePreview'
 import { createPopup } from '../helpers/popup'
@@ -92,7 +92,7 @@ export function showPicker(object) {
           res.confirm = true
           done(res)
         },
-        onHidden() {
+        afterHidden() {
           this.destroy()
         }
       }
@@ -120,7 +120,7 @@ export function showCascader(object) {
           res.selected = false
           done(res)
         },
-        onHidden() {
+        afterHidden() {
           this.destroy()
         }
       }
@@ -148,7 +148,7 @@ export function showCalendar(object) {
           res.confirm = true
           done(res)
         },
-        onHidden() {
+        afterHidden() {
           this.destroy()
         }
       }
@@ -176,7 +176,7 @@ export function showActionSheet(object) {
           res.selected = false
           done(res)
         },
-        onHidden() {
+        afterHidden() {
           this.destroy()
         }
       }
@@ -274,7 +274,7 @@ export function showDialog(object) {
         afterCancel(res) {
           done(res)
         },
-        onHidden() {
+        afterHidden() {
           this.destroy()
         }
       }

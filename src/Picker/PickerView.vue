@@ -30,12 +30,12 @@
 <script>
 import Empty from '../Empty'
 import { frameTo } from '../helpers/animation'
-import mulitSelectorMixin from '../util/mulit-selector/mixin'
+import multiSelectorMixin from '../util/multi-selector/mixin'
 import { hasClassName } from '../helpers/dom'
 
 export default {
   name: 'fx-picker-view',
-  mixins: [mulitSelectorMixin],
+  mixins: [multiSelectorMixin],
   components: { Empty },
   data() {
     return {

@@ -1,6 +1,6 @@
 import Icon from '../../Icon/Icon.vue'
 import formMixin from '../form-mixin'
-import mulitSelectorPropsMixin from './props-mixin'
+import multiSelectorPropsMixin from './props-mixin'
 import { cloneData, isSameArray, inArray, isEmpty } from '../../helpers/util'
 import {
   getDefaultDetail,
@@ -12,7 +12,7 @@ import {
 
 export default {
   components: { Icon },
-  mixins: [mulitSelectorPropsMixin, formMixin],
+  mixins: [multiSelectorPropsMixin, formMixin],
   props: {
     placeholder: {
       type: String,

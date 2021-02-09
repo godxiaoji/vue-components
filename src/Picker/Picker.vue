@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import PickerPopup from './Popup.vue'
-import pickerMixin from '../util/mulit-selector/picker-mixin'
+import PickerPopup from './PickerPopup.vue'
+import pickerMixin from '../util/multi-selector/picker-mixin'
 
 export default {
   name: 'fx-picker',

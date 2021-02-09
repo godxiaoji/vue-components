@@ -1,5 +1,5 @@
 <script>
-import SkeletonLayout from './Layout.vue'
+import SkeletonLayout from './SkeletonLayout.vue'
 import { inArray } from '../helpers/util'
 import {
   paragraphDefaultRow,

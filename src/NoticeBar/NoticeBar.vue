@@ -182,9 +182,11 @@ export default {
       this.stopMarquee()
 
       const $content = this.$refs.content
+      const pW = $content.parentNode.offsetWidth
+      const w = $content.offsetWidth
 
-      if ($content.offsetWidth > $content.parentNode.offsetWidth) {
-        this.marqueeStep($content.offsetWidth)
+      if (w > pW) {
+        this.marqueeStep(w, pW)
       }
     },
 
@@ -195,8 +197,8 @@ export default {
       this.marqueeDuration = 0
     },
 
-    marqueeStep(x) {
-      this.marqueeX = x
+    marqueeStep(x, pW) {
+      this.marqueeX = pW
       this.marqueeDuration = 0
 
       this.marqueeTimer = setTimeout(() => {
@@ -204,8 +206,8 @@ export default {
         this.marqueeDuration = x / 30
 
         this.marqueeTimer = setTimeout(() => {
-          this.marqueeStep(x)
-        }, (x / 30) * 1000)
+          this.marqueeStep(x, pW)
+        }, (x / 28) * 1000)
       }, 17)
     },
 

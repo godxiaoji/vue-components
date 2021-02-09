@@ -45,7 +45,10 @@
       :visible.sync="suggestVisible"
     >
       <template #default="{ height }">
-        <div class="fx-search_suggest" :style="{ height: height + 'px' }">
+        <div
+          class="fx-search_suggest fx-horizontal-hairline"
+          :style="{ height: height + 'px' }"
+        >
           <div class="fx-search_suggest-list">
             <cell
               v-for="item in suggestList"

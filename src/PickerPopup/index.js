@@ -1,4 +1,4 @@
-import PickerPopup from '../Picker/Popup.vue'
+import PickerPopup from '../Picker/PickerPopup.vue'
 import { showPicker } from '../apis/Popup'
 
 PickerPopup.install = function(Vue) {

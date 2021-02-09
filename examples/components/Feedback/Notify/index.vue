@@ -97,10 +97,7 @@
       :duration="duration"
       :closable="closable"
       @cancel="onCancel"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     ></fx-notify>
   </div>
 </template>
@@ -150,8 +147,8 @@ export default {
       this.duration = duration != null ? duration : 1500
       this.visible = true
     },
-    onOtherEvent(type) {
-      console.log(`${type} 事件触发`)
+    onVisibleStateChange({ state }) {
+      console.log(`${state} 事件触发`)
     },
     onCancel(res) {
       console.log('cancel', res)

@@ -5,10 +5,7 @@
     :visible="visible"
     :title="title || null"
     :show-close="showClose"
-    @show="onShow"
-    @shown="onShown"
-    @hide="onHide"
-    @hidden="onHidden"
+    @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -35,7 +32,7 @@
 </template>
 
 <script>
-import CalendarView from './View.vue'
+import CalendarView from './CalendarView.vue'
 import Drawer from '../Drawer'
 import FxButton from '../Button'
 import popupExtendMixin from '../util/popup-extend-mixin'

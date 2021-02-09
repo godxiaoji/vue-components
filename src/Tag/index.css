@@ -30,9 +30,18 @@
   margin: 0 -2px 0 2px;
 }
 
-.fx-tag .fx-icon:active {
+.fx-tag .fx-icon:not(.disabled):active {
   border-radius: 2px;
   background-color: rgba(0, 0, 0, 0.16);
+}
+
+.fx-tag .fx-icon.disabled {
+  cursor: not-allowed;
+}
+
+.fx-tag.disabled {
+  cursor: not-allowed;
+  opacity: 0.2;
 }
 
 .fx-tag.size--large .fx-icon {

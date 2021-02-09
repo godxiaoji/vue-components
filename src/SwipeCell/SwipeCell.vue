@@ -206,7 +206,7 @@ export default {
         return 0
       })
 
-      addEvent(touchstart, this.hide, document.body)
+      addEvent(touchstart, this.hide, document)
     },
     hide() {
       this.translateX = 0
@@ -215,7 +215,7 @@ export default {
         return 0
       })
 
-      removeEvent(touchstart, this.hide, document.body)
+      removeEvent(touchstart, this.hide, document)
     },
     onButtonClick(item, index) {
       this.$emit('button-click', {

@@ -1,6 +1,6 @@
 import { getNewZIndex } from '../helpers/popup'
 import { popupZIndex } from '../helpers/layer'
-import { cloneData, isFunction } from '../helpers/util'
+import { cloneData, isFunction, isObject } from '../helpers/util'
 import {
   addClassName,
   getScrollDom,
@@ -133,11 +133,11 @@ export default {
     },
     show() {
       const isSuccess = this._doShow(() => {
-        this.$emit('shown', {})
+        this.emitVisibleState('shown', {})
       })
 
       if (isSuccess) {
-        this.$emit('show', {})
+        this.emitVisibleState('show', {})
         this.afterShow()
       }
     },
@@ -170,15 +170,31 @@ export default {
 
       return true
     },
+    emitVisibleState(state, res) {
+      this.$emit(
+        'visible-state-change',
+        Object.assign(
+          {
+            type: 'visible-state-change',
+            state
+          },
+          res
+        )
+      )
+    },
     hide(res, beforeHideFn) {
+      if (!isObject(res)) {
+        res = {}
+      }
+
       const isSuccess = this._doHide(() => {
-        this.$emit('hidden', res)
+        this.emitVisibleState('hidden', res)
         this.afterHidden()
       })
 
       if (isSuccess) {
         if (beforeHideFn) beforeHideFn(cloneData(res))
-        this.$emit('hide', res)
+        this.emitVisibleState('hide', res)
       }
     },
     afterHidden() {}

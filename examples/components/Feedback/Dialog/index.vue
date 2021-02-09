@@ -59,7 +59,7 @@
         "
       ></fx-cell>
       <fx-cell
-        label="show/shown/hide/hidden"
+        label="visible-state-change"
         isLink
         @click="
           onShowDialog(
@@ -85,10 +85,7 @@
       :confirm-text="confirmText"
       @confirm="onConfirm"
       @cancel="onCancel"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-dialog>
   </div>
@@ -152,10 +149,10 @@ export default {
       console.log('cancel', res)
       this.callbackEvent && this.$showToast('点击取消按钮')
     },
-    onOtherEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.otherEvent) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
     }
   }

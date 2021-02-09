@@ -1,4 +1,4 @@
-import CalendarPopup from '../Calendar/Popup.vue'
+import CalendarPopup from '../Calendar/CalendarPopup.vue'
 import { showCalendar } from '../apis/Popup'
 
 CalendarPopup.install = function(Vue) {

@@ -71,7 +71,7 @@
         "
       ></fx-cell>
       <fx-cell
-        label="show/shown/hide/hidden"
+        label="visible-state-change"
         isLink
         @click=";(showOtherEvent = true), (visible = true)"
       ></fx-cell>
@@ -87,10 +87,7 @@
       :cancel-text="cancelText"
       @select="onSelect"
       @cancel="onCancel"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     ></fx-action-sheet>
   </div>
 </template>
@@ -133,12 +130,12 @@ export default {
     }
   },
   methods: {
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showOtherEvent) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.showCancel = false
         this.cancelText = '取消'
         this.options = options

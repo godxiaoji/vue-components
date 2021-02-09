@@ -22,6 +22,10 @@
   }
 
   &_header {
+    &:not(:last-child)::after {
+      content: none;
+    }
+
     .fx-cell_link-icon {
       transition: transform 0.2s;
     }

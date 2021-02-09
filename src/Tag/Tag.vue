@@ -1,8 +1,17 @@
 <template>
-  <div class="fx-tag" :class="[typeClassName, sizeClassName, patternClassName]">
+  <div
+    class="fx-tag"
+    :class="[
+      typeClassName,
+      sizeClassName,
+      patternClassName,
+      { disabled: !!disabled }
+    ]"
+  >
     <slot></slot>
     <icon
       icon="CloseOutlined"
+      :class="{ disabled: !!disabled }"
       @mousedown.native.stop="noop"
       @touchstart.native.stop="noop"
       @click.native="onClose"
@@ -37,6 +46,11 @@ export default {
     closable: {
       type: Boolean,
       default: false
+    },
+    // 禁用的
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -59,14 +73,18 @@ export default {
   methods: {
     noop() {},
     onClose() {
-      this.$emit('close', {
-        type: 'close'
-      })
+      if (!this.disabled) {
+        this.$emit('close', {
+          type: 'close'
+        })
+      }
     },
     onLongPress(e) {
-      this.$emit(e.type, {
-        type: e.e
-      })
+      if (!this.disabled) {
+        this.$emit(e.type, {
+          type: e.e
+        })
+      }
     }
   }
 }

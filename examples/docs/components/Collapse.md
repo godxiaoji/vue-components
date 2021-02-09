@@ -11,7 +11,7 @@
 
 | 事件   | 描述           | 回调函数参数                                    |
 | ------ | -------------- | ----------------------------------------------- |
-| change | 切换面板时触发 | activeNames: 类型与 `active-names` 绑定的值一致 |
+| change | 切换面板时触发 | activeNames: 类型与 `active-names.sync` 绑定的值一致 |
 
 ## Collapse Slots
 
@@ -47,7 +47,7 @@
 | -------- | ------- | ------ | ---- | ----------------------------------------------- |
 | title    | string  | ''     | 否   | 面板子项标题                                    |
 | icon     | string  |        | 否   | 面板子项标题前图标，使用 [Icon](./Icon.md) 组件 |
-| name     | string  |        | 否   | 唯一标识，设置后可以配合 `active-names` 使用    |
+| name     | string  |        | 否   | 唯一标识，设置后可以配合 `active-names.sync` 使用    |
 | disabled | boolean | false  | 否   | 是否禁用                                        |
 
 ## CollapseItem Events

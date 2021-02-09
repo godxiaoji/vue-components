@@ -434,6 +434,11 @@ export default {
      */
     getItemEls() {
       const $els = []
+
+      if (!this.$refs.list) {
+        return $els
+      }
+
       const $children = this.$refs.list.children
 
       for (let i = 0, len = $children.length; i < len; i++) {

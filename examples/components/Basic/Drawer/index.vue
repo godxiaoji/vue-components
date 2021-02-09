@@ -53,7 +53,7 @@
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="show/shown/hide/hidden"
+        label="visible-state-change"
         isLink
         @click="
           onShow({
@@ -70,10 +70,7 @@
       :title="title"
       :placement="placement"
       :show-close="showClose"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     ></fx-drawer>
   </div>
 </template>
@@ -98,10 +95,10 @@ export default {
       this.showEventCallback = !!showEventCallback
       this.drawerVisible = true
     },
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showEventCallback) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
     }
   }

@@ -1,5 +1,6 @@
 <template>
   <div class="fx-fixed" :style="styles">
+    <!--fixed start-->
     <div
       class="fx-fixed_fixed"
       ref="fixed"
@@ -8,6 +9,7 @@
     >
       <slot></slot>
     </div>
+    <!--fixed end-->
   </div>
 </template>
 

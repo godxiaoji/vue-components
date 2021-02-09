@@ -1,4 +1,4 @@
-import SkeletonParagraph from '../Skeleton/Paragraph.vue'
+import SkeletonParagraph from '../Skeleton/SkeletonParagraph.vue'
 
 SkeletonParagraph.install = function(Vue) {
   Vue.component(SkeletonParagraph.name, SkeletonParagraph)

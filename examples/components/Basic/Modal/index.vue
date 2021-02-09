@@ -39,7 +39,7 @@
         "
       ></fx-cell>
       <fx-cell
-        label="show/shown/hide/hidden"
+        label="visible-state-change"
         isLink
         @click="
           onShowModal(
@@ -58,10 +58,7 @@
       :mask-closable="maskClosable"
       :show-close="showClose"
       @cancel="onClose"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-modal>
     <fx-modal :visible.sync="visible2">
@@ -120,10 +117,10 @@ export default {
         }
       }
     },
-    onOtherEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.otherEvent) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
+        console.log(`${state} 事件触发`)
       }
     }
   }

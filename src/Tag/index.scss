@@ -30,10 +30,19 @@
     cursor: pointer;
     margin: 0 -2px 0 2px;
 
-    &:active {
+    &:not(.disabled):active {
       border-radius: 2px;
       @include background-active;
     }
+
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.2;
   }
 
   &.size--large {

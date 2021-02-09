@@ -41,13 +41,19 @@
 
 ## Events
 
-| 事件   | 描述                 | 回调函数参数                       |
-| ------ | -------------------- | ---------------------------------- |
-| select | 确认按钮点击时触发   | detail: {item: any: index: number} |
-| show   | 展示时触发           | {}                                 |
-| shown  | 展示且动画结束后触发 | {}                                 |
-| hide   | 隐藏时触发           | {}                                 |
-| hidden | 隐藏且动画结束后触发 | {}                                 |
+| 事件                 | 描述               | 回调函数参数                       |
+| -------------------- | ------------------ | ---------------------------------- |
+| select               | 确认按钮点击时触发 | detail: {item: any: index: number} |
+| visible-state-change | 展示隐藏时触发     | { state: string }                  |
+
+### visible-state-change 的 state 值
+
+| 值     | 说明                 | 备注                                              |
+| ------ | -------------------- | ------------------------------------------------- |
+| show   | 展示时触发           |                                                   |
+| shown  | 展示且动画结束后触发 |                                                   |
+| hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
+| hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
 ### select 回调参数的 detail 结构
 

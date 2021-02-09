@@ -79,13 +79,19 @@ formatter(value: Date[]) => any
 
 ## CalendarPopup Events
 
-| 事件    | 描述                                                    | 回调函数参数                                        |
-| ------- | ------------------------------------------------------- | --------------------------------------------------- |
-| confirm | 选择完毕后触发 / `show-confirm=true` 点击确定按钮后触发 | { value: array, label: string, rangeCount: number } |
-| show    | 展示时触发                                              | {}                                                  |
-| shown   | 展示且动画结束后触发                                    | {}                                                  |
-| hide    | 隐藏时触发                                              | {}                                                  |
-| hidden  | 隐藏且动画结束后触发                                    | {}                                                  |
+| 事件                 | 描述                                                    | 回调函数参数                                        |
+| -------------------- | ------------------------------------------------------- | --------------------------------------------------- |
+| confirm              | 选择完毕后触发 / `show-confirm=true` 点击确定按钮后触发 | { value: array, label: string, rangeCount: number } |
+| visible-state-change | 展示隐藏时触发                                          | { state: string }                                   |
+
+### visible-state-change 的 state 值
+
+| 值     | 说明                 | 备注                                              |
+| ------ | -------------------- | ------------------------------------------------- |
+| show   | 展示时触发           |                                                   |
+| shown  | 展示且动画结束后触发 |                                                   |
+| hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
+| hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
 ## CalendarView 日历选择
 

@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import SkeletonAvatar from './Avatar.vue'
-import SkeletonTitle from './Title.vue'
-import SkeletonParagraph from './Paragraph.vue'
+import SkeletonAvatar from './SkeletonAvatar.vue'
+import SkeletonTitle from './SkeletonTitle.vue'
+import SkeletonParagraph from './SkeletonParagraph.vue'
 
 export default {
   name: 'fx-skeleton-layout',

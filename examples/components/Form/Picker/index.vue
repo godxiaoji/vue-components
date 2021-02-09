@@ -38,18 +38,20 @@
         @click="visible = true"
         :content="value"
       ></fx-cell>
+    </fx-group>
+    <fx-group title="PickerPopup Event">
       <fx-cell
-        label="Event:change"
+        label="change"
         isLink
         @click=";(changeEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
-        label="Event:confirm/cancel"
+        label="confirm/cancel"
         isLink
         @click=";(clickEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
-        label="Event:show/shown/hide/hidden"
+        label="visible-state-change"
         isLink
         @click=";(otherEvent = true), (visible = true)"
       ></fx-cell>
@@ -66,10 +68,7 @@
       @change="onChange"
       @confirm="onConfirm"
       @cancel="onCancel"
-      @show="onOtherEvent('show')"
-      @shown="onOtherEvent('shown')"
-      @hide="onOtherEvent('hide')"
-      @hidden="onOtherEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
     >
     </fx-picker-popup>
   </div>
@@ -115,14 +114,12 @@ export default {
         }
       }
     },
-    onOtherEvent(type) {
-      // console.log(`${type} 事件触发`)
-
+    onVisibleStateChange({ state }) {
       if (this.otherEvent) {
-        this.$showToast(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
       }
 
-      if (type === 'hidden') {
+      if (state === 'hidden') {
         this.clickEvent = false
         this.otherEvent = false
         this.changeEvent = false

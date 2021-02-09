@@ -17,7 +17,7 @@
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="show/shown/hide/hidden/change"
+        label="visible-state-change/change"
         isLink
         @click="
           onShow({
@@ -35,10 +35,7 @@
       :current.sync="current"
       :showClose="showClose"
       :imageHighRendering="false"
-      @show="onEvent('show')"
-      @shown="onEvent('shown')"
-      @hide="onEvent('hide')"
-      @hidden="onEvent('hidden')"
+      @visible-state-change="onVisibleStateChange"
       @cancel="onCancel"
       @change="onChange"
     ></fx-image-preview>
@@ -65,7 +62,8 @@ export default {
     onCallApi() {
       this.$previewImage({
         urls: this.imageUrls,
-        showClose: true
+        showClose: true,
+        imageHighRendering: false
       })
     },
     onShow({ showClose, current, showEventCallback }) {
@@ -74,10 +72,9 @@ export default {
       this.showEventCallback = !!showEventCallback
       this.visible = true
     },
-    onEvent(type) {
+    onVisibleStateChange({ state }) {
       if (this.showEventCallback) {
-        this.$showToast(`${type} 事件触发`)
-        console.log(`${type} 事件触发`)
+        this.$showToast(`${state} 事件触发`)
       }
     },
     onChange({ activeIndex, current }) {

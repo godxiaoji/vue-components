@@ -38,7 +38,7 @@
 
 <script>
 import Icon from '../Icon'
-import CalendarPopup from './Popup.vue'
+import CalendarPopup from './CalendarPopup.vue'
 import formMixin from '../util/form-mixin'
 import mixin from './mixin'
 import {

@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import CascaderPopup from './Popup.vue'
-import pickerMixin from '../util/mulit-selector/picker-mixin'
+import CascaderPopup from './CascaderPopup.vue'
+import pickerMixin from '../util/multi-selector/picker-mixin'
 
 export default {
   name: 'fx-cascader',

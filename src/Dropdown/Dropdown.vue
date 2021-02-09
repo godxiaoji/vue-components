@@ -4,6 +4,7 @@
     :class="{ visible: visible2 }"
     :style="popupStyles"
     v-show="isShow"
+    ref="popup"
   >
     <div class="fx-mask" @click="onMaskClick"></div>
     <div class="fx-dropdown_inner">
@@ -65,9 +66,8 @@ export default {
       const rect = $target.getBoundingClientRect()
 
       this.top = rect.bottom
-
       this.$nextTick(() => {
-        this.height = this.$el.offsetHeight
+        this.height = this.$refs.popup ? this.$refs.popup.offsetHeight : 0
       })
     },
     afterHidden() {

@@ -33,8 +33,8 @@
 
 <script>
 import Popover from './Popover.vue'
-import FxButton from '../Button/Button.vue'
-import FxButtonGroup from '../Button/Group.vue'
+import FxButton from '../Button'
+import FxButtonGroup from '../ButtonGroup'
 
 export default {
   name: 'fx-pop-dialog',

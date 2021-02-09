@@ -79,10 +79,6 @@
   --color: var(--cell-label-color);
 }
 
-.fx-cell_icon .fx-checkbox {
-  --checkbox-icon-size: 20px;
-}
-
 .fx-cell_link-icon {
   margin-left: 4px;
   --size: 20px;

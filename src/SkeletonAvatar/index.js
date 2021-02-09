@@ -1,4 +1,4 @@
-import SkeletonAvatar from '../Skeleton/Avatar.vue'
+import SkeletonAvatar from '../Skeleton/SkeletonAvatar.vue'
 
 SkeletonAvatar.install = function(Vue) {
   Vue.component(SkeletonAvatar.name, SkeletonAvatar)

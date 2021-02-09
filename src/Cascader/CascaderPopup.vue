@@ -4,10 +4,7 @@
     :title="title2"
     placement="right"
     :visible="visible"
-    @show="onShow"
-    @shown="onShown"
-    @hide="onHide"
-    @hidden="onHidden"
+    @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -42,15 +39,15 @@
 
 <script>
 import Drawer from '../Drawer'
-import { array2String, getDefaultDetail } from '../util/mulit-selector'
+import { array2String, getDefaultDetail } from '../util/multi-selector'
 import { frameTo } from '../helpers/animation'
-import mulitSelectorMixin from '../util/mulit-selector/mixin'
+import multiSelectorMixin from '../util/multi-selector/mixin'
 import popupExtendMixin from '../util/popup-extend-mixin'
 import { isSameArray } from '../helpers/util'
 
 export default {
   name: 'fx-cascader-popup',
-  mixins: [popupExtendMixin, mulitSelectorMixin],
+  mixins: [popupExtendMixin, multiSelectorMixin],
   components: { Drawer },
   props: {
     title: {

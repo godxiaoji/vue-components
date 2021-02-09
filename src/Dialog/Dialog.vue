@@ -4,10 +4,7 @@
     :visible="visible"
     :show-close="false"
     :mask-closable="maskClosable"
-    @show="onShow"
-    @shown="onShown"
-    @hide="onHide"
-    @hidden="onHidden"
+    @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -44,9 +41,9 @@
 </template>
 
 <script>
-import FxButton from '../Button/Button.vue'
-import FxButtonGroup from '../Button/Group.vue'
-import Modal from '../Modal/Modal.vue'
+import FxButton from '../Button'
+import FxButtonGroup from '../ButtonGroup'
+import Modal from '../Modal'
 import popupExtendMixin from '../util/popup-extend-mixin'
 
 export default {

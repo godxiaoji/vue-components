@@ -267,6 +267,7 @@ export default {
 
       const type = 'change'
       this.$emit(type, {
+        type,
         value,
         index: this.activeIndex
       })

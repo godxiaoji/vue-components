@@ -1,7 +1,7 @@
 .fx-button {
   --button-font-color: #fff;
   --button-border-color: transparent;
-  --button-icon-size: 22px;
+  --button-icon-size: 20px;
   --button-size: 48px;
   display: inline-flex;
   flex-grow: 1;

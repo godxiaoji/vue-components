@@ -3,10 +3,7 @@
     class="fx-picker-popup"
     placement="bottom"
     :visible="visible"
-    @show="onShow"
-    @shown="onShown"
-    @hide="onHide"
-    @hidden="onHidden"
+    @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -33,18 +30,18 @@
 </template>
 
 <script>
-import PickerView from './View.vue'
+import PickerView from './PickerView.vue'
 import NavBar from '../NavBar'
 import Drawer from '../Drawer'
 import { cloneData, isSameArray } from '../helpers/util'
 import popupExtendMixin from '../util/popup-extend-mixin'
-import mulitSelectorPropsMixin from '../util/mulit-selector/props-mixin'
-import { getDefaultDetail } from '../util/mulit-selector'
+import multiSelectorPropsMixin from '../util/multi-selector/props-mixin'
+import { getDefaultDetail } from '../util/multi-selector'
 
 export default {
   name: 'fx-picker-popup',
   components: { PickerView, NavBar, Drawer },
-  mixins: [popupExtendMixin, mulitSelectorPropsMixin],
+  mixins: [popupExtendMixin, multiSelectorPropsMixin],
   props: {
     title: {
       type: String,

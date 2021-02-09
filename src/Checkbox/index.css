@@ -2,7 +2,7 @@
   --checkbox-color: #d9d9d9;
   --checkbox-active-color: #1890ff;
   --checkbox-font-color: #262626;
-  --checkbox-icon-size: 24px;
+  --checkbox-icon-size: 20px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;

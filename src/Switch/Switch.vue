@@ -1,24 +1,23 @@
 <template>
-  <label class="fx-switch" :class="{ disabled: !!disabled }">
+  <label class="fx-switch" :class="{ disabled }">
     <input
       class="fx-switch_checkbox"
       type="checkbox"
       :disabled="disabled"
-      @change="onChange"
-    />
-    <input
-      type="hidden"
-      :disabled="disabled"
       :name="formName"
       :value="formValue"
+      @change="onChange"
+      ref="input"
     />
   </label>
 </template>
 
-<script>
-import formMixin from '../util/form-mixin'
+<script lang="ts">
+import { onMounted, ref, toRef, watch, defineComponent } from 'vue'
+import formMixin from '../util/form/options-mixin'
+import useFormItem from '../util/form/use-item'
 
-export default {
+export default defineComponent({
   name: 'fx-switch',
   mixins: [formMixin],
   props: {
@@ -27,55 +26,56 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      formValue: false
-    }
-  },
-  watch: {
-    modelValue(val) {
+  setup(props, ctx) {
+    const { emit } = ctx
+    const formValue = ref(!!props.modelValue)
+
+    const {
+      formName,
+      validateAfterEventTrigger,
+      formReset,
+      getInputEl,
+      hookFormValue
+    } = useFormItem<boolean>(props, ctx, { formValue })
+
+    watch(toRef(props, 'modelValue'), val => {
       val = !!val
 
-      if (val !== this.formValue) {
-        this.getInputEl().checked = this.formValue = val
+      if (val !== formValue.value) {
+        getInputEl().checked = formValue.value = val
       }
+    })
+
+    function onChange(e: Event) {
+      const value = !!(e.target as HTMLInputElement).checked
+
+      formValue.value = value
+
+      if (props.modelValue !== value) {
+        emit('update:modelValue', value)
+      }
+
+      emit('change', { value })
+      validateAfterEventTrigger('change', value)
     }
-  },
-  created() {
-    this.formValue = !!this.modelValue
-  },
-  mounted() {
-    const $el = this.$el
 
-    $el.lastElementChild._app_component = this
-    $el.lastElementChild._app_type = 'switch'
-    $el.firstElementChild.defaultChecked = this.formValue
-    $el.firstElementChild.checked = this.formValue
-  },
-  methods: {
-    onChange(e) {
-      const value = !!e.target.checked
+    function reset() {
+      return formReset(getInputEl().checked)
+    }
 
-      this.formValue = value
+    onMounted(() => {
+      const $input = getInputEl()
 
-      if (this.modelValue !== value) {
-        this.$emit('update:modelValue', value)
-      }
+      $input.defaultChecked = $input.checked = formValue.value
+    })
 
-      this.eventEmit('change', value)
-    },
-    reset() {
-      return this._reset(this.getInputEl().checked)
-    },
-    eventEmit(type, value) {
-      this.$emit(type, {
-        value
-      })
-      this.validateAfterEventTrigger(type, value)
-    },
-    getInputEl() {
-      return this.$el.firstElementChild
+    return {
+      formName,
+      formValue,
+      onChange,
+      reset,
+      hookFormValue
     }
   }
-}
+})
 </script>

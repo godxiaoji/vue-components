@@ -286,7 +286,7 @@ export function isEmpty(object) {
     object === '0' ||
     object === false ||
     (isNumber(object) && object == 0) ||
-    isNaN(object) ||
+    (typeof object === 'number' && isNaN(object)) ||
     (isArray(object) && object.length === 0) ||
     isEmptyObject(object)
   )

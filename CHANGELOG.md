@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/godxiaoji/vfox/compare/v1.8.2...v1.8.3) (2021-02-24)
+
+
+### Bug Fixes
+
+* 修正isEmpty方法判断出错的bug ([840dacf](https://github.com/godxiaoji/vfox/commit/840dacf94be66e837f2a29718a9efc54787dad0a))
+
 ## [1.8.2](https://github.com/godxiaoji/vfox/compare/v1.8.1...v1.8.2) (2021-02-09)
 
 

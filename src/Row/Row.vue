@@ -4,23 +4,23 @@
   </div>
 </template>
 
-<script>
-import { isNumber, isArray } from '../helpers/util'
+<script lang="ts">
+import { computed, defineComponent, provide, reactive, watch } from 'vue'
+import { isNumber, isArray, isNumeric } from '../helpers/util'
+import { StyleObject } from '../utils/types'
+import { createEnumsValidator } from '../utils/validator'
 
-export default {
+type PropGutter = number | string | number[]
+
+export default defineComponent({
   name: 'fx-row',
-  provide() {
-    return {
-      appRowSubOptions: this.subOptions
-    }
-  },
   props: {
     // 栅格间隔
     gutter: {
-      validator(value) {
-        if (isNumber(value)) {
+      validator: (value: PropGutter) => {
+        if (isNumeric(value)) {
           return true
-        } else if (isArray(value) && isNumber(value[0])) {
+        } else if (isArray(value) && isNumber((value as number[])[0])) {
           return true
         }
 
@@ -30,76 +30,79 @@ export default {
     },
     // 水平排列方式
     justify: {
-      validator(value) {
-        return (
-          ['start', 'end', 'center', 'space-around', 'space-between'].indexOf(
-            value
-          ) !== -1
-        )
-      },
+      type: String,
+      validator: createEnumsValidator([
+        'start',
+        'end',
+        'center',
+        'space-around',
+        'space-between'
+      ]),
       default: 'start'
     },
     // 垂直对齐方式
     align: {
-      validator(value) {
-        return ['top', 'middle', 'bottom'].indexOf(value) !== -1
-      },
+      type: String,
+      validator: createEnumsValidator(['top', 'middle', 'bottom']),
       default: 'top'
     }
   },
-  data() {
-    return {
-      subOptions: {
-        gutter: [0, 0]
-      }
-    }
-  },
-  computed: {
-    styles() {
-      const [gH, gV] = this.subOptions.gutter
+  setup(props) {
+    const gutter = reactive([0, 0])
+
+    const styles = computed(() => {
+      const [gH, gV] = gutter
+      const styles: StyleObject = {}
 
       if (gH > 0 || gV > 0) {
-        return {
-          margin: `-${gV / 2}px -${gH / 2}px ${gV / 2}px `
-        }
+        styles.margin = `-${gV / 2}px -${gH / 2}px ${gV / 2}px `
       }
 
-      return {}
-    },
-    classNames() {
+      return styles
+    })
+
+    const classNames = computed(() => {
       const arr = [`fx-row`]
 
-      if (this.justify !== 'start') {
-        arr.push(`justify--${this.justify}`)
+      if (props.justify !== 'start') {
+        arr.push(`justify--${props.justify}`)
       }
 
-      if (this.align !== 'top') {
-        arr.push(`align--${this.align}`)
+      if (props.align !== 'top') {
+        arr.push(`align--${props.align}`)
       }
 
       return arr
-    }
-  },
-  watch: {
-    gutter: {
-      immediate: true,
-      handler(newVal) {
-        const arr = [0, 0]
+    })
 
-        if (isNumber(newVal)) {
-          arr[0] = Math.max(0, newVal)
-        } else if (isArray(newVal)) {
-          if (isNumber(newVal[0])) {
-            arr[0] = Math.max(0, newVal[0])
+    watch(
+      () => props.gutter,
+      (val: PropGutter) => {
+        if (isNumeric(val)) {
+          gutter[0] = Math.max(0, val as number)
+          gutter[1] = 0
+        } else if (isArray(val)) {
+          val = val as number[]
+
+          if (isNumber(val[0])) {
+            gutter[0] = Math.max(0, val[0])
           }
-          if (isNumber(newVal[1])) {
-            arr[1] = Math.max(0, newVal[1])
+          if (isNumber(val[1])) {
+            gutter[1] = Math.max(0, val[1])
           }
         }
-
-        this.subOptions.gutter = arr
+      },
+      {
+        immediate: true
       }
+    )
+
+    provide('fxRowGutter', gutter)
+
+    return {
+      styles,
+      classNames
     }
   }
-}
+})
 </script>

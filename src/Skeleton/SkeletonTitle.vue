@@ -2,14 +2,12 @@
   <div class="fx-skeleton-title" :class="{ animated: useAnimation }"></div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useSubSkeleton } from './util'
+
+export default defineComponent({
   name: 'fx-skeleton-title',
-  inject: {
-    skeletonSubOptions: {
-      default: null
-    }
-  },
   props: {
     // 是否显示动画
     animated: {
@@ -17,13 +15,12 @@ export default {
       default: false
     }
   },
-  computed: {
-    useAnimation() {
-      if (this.skeletonSubOptions) {
-        return this.skeletonSubOptions.animated
-      }
-      return this.animated
+  setup(props) {
+    const { useAnimation } = useSubSkeleton(props, 'image')
+
+    return {
+      useAnimation
     }
   }
-}
+})
 </script>

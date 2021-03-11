@@ -23,6 +23,7 @@
         :name="formName"
         :disabled="disabled"
         :value="formValueString"
+        ref="input"
       />
     </div>
     <picker-popup
@@ -36,18 +37,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import PickerPopup from './PickerPopup.vue'
-import pickerMixin from '../util/multi-selector/picker-mixin'
+import Icon from '../Icon'
+import { formItemEmits, formItemProps } from '../Form/form-item'
+import { usePicker, pickerEmits, pickerProps } from '../multi-selector/picker'
+import commonProps from '../multi-selector/props'
 
-export default {
+export default defineComponent({
   name: 'fx-picker',
-  mixins: [pickerMixin],
-  components: { PickerPopup },
-  data() {
+  components: { PickerPopup, Icon },
+  props: { ...formItemProps, ...commonProps, ...pickerProps },
+  emits: [...formItemEmits, ...pickerEmits],
+  setup(props, ctx) {
     return {
-      compName: 'picker'
+      ...usePicker(props, ctx, { name: 'picker' })
     }
   }
-}
+})
 </script>

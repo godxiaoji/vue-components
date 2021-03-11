@@ -1,61 +1,86 @@
-import { inject, computed, onMounted, getCurrentInstance, defineComponent, ref, watch, toRef, openBlock, createBlock, createVNode } from 'vue';
-
-var formMixin = {
-    props: {
-        name: {
-            type: String,
-            default: ''
-        },
-        disabled: {
-            type: Boolean,
-            default: false
-        }
-    },
-    emits: ['update:modelValue', 'change', 'reset']
-};
+import { ref, inject, isRef, computed, onMounted, getCurrentInstance, defineComponent, watch, openBlock, createBlock, createVNode } from 'vue';
 
 /**
  * 将字段名转为驼峰式格式
  * @param {string} name 字段名
  */
-
 /**
  * 深度拷贝对象
- * @param {Object} data 对象
+ * @param object 对象
  */
-function cloneData(data) {
-  return JSON.parse(JSON.stringify(data))
+function cloneData(object) {
+    return JSON.parse(JSON.stringify(object));
 }
 
-function userFormItem(props, { emit }, { hookFormValue, formValue }) {
-    const appFormItem = inject('appFormItem', null);
+const formItemEmits = ['update:modelValue', 'change', 'reset'];
+const formItemProps = {
+    name: {
+        type: String,
+        default: ''
+    },
+    disabled: {
+        type: Boolean,
+        default: false
+    }
+};
+function useFormItem(props, { emit }, { hookFormValue, formValue }) {
+    const root = ref();
+    const formItem = inject('fxFormItem', null);
     let $input;
     const newHookFormValue = hookFormValue
         ? hookFormValue
         : function () {
-            return cloneData(formValue.value);
+            return isRef(formValue) ? formValue.value : cloneData(formValue);
         };
     const formName = computed(() => {
-        if (appFormItem) {
-            return appFormItem.name || '';
+        if (formItem) {
+            return formItem.props.name || '';
         }
         return props.name || '';
     });
     function validateAfterEventTrigger(type, value) {
-        appFormItem && appFormItem.validateAfterEventTrigger(type, value);
+        formItem && formItem.validateAfterEventTrigger(type, value);
     }
     function formReset(value) {
-        formValue.value = value;
+        if (isRef(formValue)) {
+            formValue.value = value;
+        }
         if (value != props.value) {
             emit('update:modelValue', newHookFormValue());
         }
     }
+    function eventEmit(type) {
+        const value = newHookFormValue();
+        emit(type, {
+            type,
+            value
+        });
+        validateAfterEventTrigger(type, value);
+    }
     function getInputEl() {
         return $input;
+    }
+    function setItemOut($el, uid) {
+        $el._fxFormItemOut = {
+            uid,
+            getFormName() {
+                return formItem?.props.name || '';
+            },
+            hookFormValue: newHookFormValue
+        };
     }
     onMounted(() => {
         const vm = getCurrentInstance();
         $input = vm.refs.input;
+        if (!$input) {
+            const $inputs = root.value.querySelectorAll('.fx-form-input');
+            for (let i = 0; i < $inputs.length; i++) {
+                setItemOut($inputs[i], vm.uid);
+            }
+        }
+        else {
+            setItemOut($input, vm.uid);
+        }
         // $input._app_component = {
         //   $: {
         //     uid: vm.uid
@@ -65,28 +90,31 @@ function userFormItem(props, { emit }, { hookFormValue, formValue }) {
         // }
     });
     return {
+        root,
         formName,
         validateAfterEventTrigger,
         formReset,
         getInputEl,
-        hookFormValue: newHookFormValue
+        hookFormValue: newHookFormValue,
+        eventEmit
     };
 }
 
 var script = defineComponent({
     name: 'fx-switch',
-    mixins: [formMixin],
     props: {
+        ...formItemProps,
         modelValue: {
             type: Boolean,
             default: false
         }
     },
+    emits: formItemEmits,
     setup(props, ctx) {
         const { emit } = ctx;
         const formValue = ref(!!props.modelValue);
-        const { formName, validateAfterEventTrigger, formReset, getInputEl, hookFormValue } = userFormItem(props, ctx, { formValue });
-        watch(toRef(props, 'modelValue'), val => {
+        const { formName, validateAfterEventTrigger, formReset, getInputEl, hookFormValue, eventEmit } = useFormItem(props, ctx, { formValue });
+        watch(() => props.modelValue, val => {
             val = !!val;
             if (val !== formValue.value) {
                 getInputEl().checked = formValue.value = val;
@@ -98,8 +126,7 @@ var script = defineComponent({
             if (props.modelValue !== value) {
                 emit('update:modelValue', value);
             }
-            emit('change', { value });
-            validateAfterEventTrigger('change', value);
+            eventEmit(e.type);
         }
         function reset() {
             return formReset(getInputEl().checked);
@@ -113,7 +140,8 @@ var script = defineComponent({
             formValue,
             onChange,
             reset,
-            hookFormValue
+            hookFormValue,
+            validateAfterEventTrigger
         };
     }
 });

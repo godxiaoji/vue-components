@@ -1,21 +1,19 @@
 <template>
   <div
     class="fx-scroll-view"
-    :class="[
-      {
-        'scroll-x': scrollX,
-        'scroll-y': scrollY,
-        smooth: scrollAnimated
-      }
-    ]"
-    ref="scroll"
+    :class="{
+      'scroll-x': scrollX,
+      'scroll-y': scrollY,
+      smooth: scrollAnimated
+    }"
+    ref="root"
     @scroll="onScroll"
   >
     <div class="fx-scroll-view_inner">
       <div class="fx-scroll-view_content" :style="contentStyles">
         <div
           v-show="!lowerLoading"
-          v-if="enablePullDirections.length > 0"
+          v-if="enablePullDirections && enablePullDirections.length > 0"
           class="fx-scroll-view_pull-refresh"
           :class="['direction--' + (pullDirection || 'unknown')]"
         >
@@ -31,16 +29,16 @@
             >
               <icon
                 :icon="
-                  pullRefreshState === PULL_REFRESH_STATE_REFRESHING
+                  pullRefreshState === PullRefreshState.Refreshing
                     ? 'LoadingOutlined'
                     : 'CircleOutlined'
                 "
-                :spin="pullRefreshState === PULL_REFRESH_STATE_REFRESHING"
+                :spin="pullRefreshState === PullRefreshState.Refreshing"
               />
               <span>{{
-                pullRefreshState === PULL_REFRESH_STATE_REFRESHING
+                pullRefreshState === PullRefreshState.Refreshing
                   ? '正在刷新'
-                  : pullRefreshState === PULL_REFRESH_STATE_HOLDING
+                  : pullRefreshState === PullRefreshState.Holding
                   ? '松开刷新'
                   : pullDirectionNames[pullDirection] + '拉刷新'
               }}</span>
@@ -53,35 +51,43 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, ref, onMounted, watch, reactive } from 'vue'
 import Icon from '../Icon'
 import {
+  enum2Map,
   inArray,
-  isArray,
+  stringMix2StringArray,
   isNumber,
   isString,
   isStringArray
 } from '../helpers/util'
-import { touchEvent } from '../helpers/events'
+import { ScrollToOffsetOptions, StyleObject } from '../utils/types'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
 
-const {
-  touchstart,
-  touchmove,
-  touchend,
-  addListeners,
-  removeListeners,
-  getTouch
-} = touchEvent
+enum ScrollState {
+  Center,
+  Upper,
+  Lower
+}
+enum PullRefreshState {
+  Pulling,
+  Holding,
+  Refreshing
+}
 
-const SCROLL_STATE_CENTER = 0
-const SCROLL_STATE_UPPER = 1
-const SCROLL_STATE_LOWER = 2
+type PullDirection = 'up' | 'right' | 'down' | 'left'
 
-const PULL_REFRESH_STATE_PULLING = 'pulling'
-const PULL_REFRESH_STATE_HOLDING = 'holding'
-const PULL_REFRESH_STATE_REFRESHING = 'refreshing'
+interface ScrollCoords extends UseTouchCoords {
+  pageX: number
+  pageY: number
+  scrollX: boolean
+  scrollY: boolean
+  directions?: PullDirection[]
+  direction?: PullDirection
+}
 
-export default {
+export default defineComponent({
   name: 'fx-scroll-view',
   components: { Icon },
   provide() {
@@ -127,12 +133,10 @@ export default {
     },
     // 下拉刷新方向
     enablePullDirections: {
-      validator(val) {
+      validator: (val: PullDirection | PullDirection[]) => {
         return isString(val) || isStringArray(val)
       },
-      default() {
-        return []
-      }
+      default: null
     },
     // 下拉刷新阈值
     pullRefreshThreshold: {
@@ -146,100 +150,44 @@ export default {
   },
   data() {
     return {
-      pullRefreshState: PULL_REFRESH_STATE_PULLING,
-      pullDistance: 0,
-      translateDuration: 200,
-      pullDirection: '',
-
       pullDirectionNames: {
         '': '下',
         up: '上',
         down: '下',
         left: '左',
         right: '右'
-      },
-      pullIndicatorSafeArea: {
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-      },
-
-      PULL_REFRESH_STATE_PULLING,
-      PULL_REFRESH_STATE_HOLDING,
-      PULL_REFRESH_STATE_REFRESHING
-    }
-  },
-  computed: {
-    contentStyles() {
-      const styles = {
-        transition: `transform ${this.translateDuration}ms`
       }
-
-      styles.transform = inArray(this.pullDirection, ['up', 'down'])
-        ? `translate3d(0, ${this.pullDistance}px, 0)`
-        : `translate3d(${this.pullDistance}px, 0, 0)`
-
-      return styles
-    },
-    indicatorStyles() {
-      return {
-        padding: `${this.pullIndicatorSafeArea.top}px ${this.pullIndicatorSafeArea.right}px ${this.pullIndicatorSafeArea.bottom}px ${this.pullIndicatorSafeArea.left}px`
-      }
-    }
-  },
-  mounted() {
-    this._isToLowerOrUpperY = SCROLL_STATE_UPPER
-    this._isToLowerOrUpperX = SCROLL_STATE_UPPER
-    this._prevY = 0
-    this._prevX = 0
-
-    addListeners(this.$el, this)
-
-    // 处理初始化设置的滚动位置
-    this.updateScroll()
-  },
-  beforeUnmount() {
-    removeListeners(this.$el, this)
-  },
-  watch: {
-    scrollLeft() {
-      this.updateScroll()
-    },
-    scrollTop() {
-      this.updateScroll()
     }
   },
   emits: ['scroll-to-upper', 'scroll-to-lower', 'scroll', 'refreshing'],
-  methods: {
-    loadComplete() {
-      this.pullRefreshState = PULL_REFRESH_STATE_PULLING
-      this.pullDistance = 0
-    },
+  setup(props, ctx) {
+    const { emit } = ctx
+    let _isToLowerOrUpperY = ScrollState.Upper
+    let _isToLowerOrUpperX = ScrollState.Upper
+    let _prevY = 0
+    let _prevX = 0
+    let coords: ScrollCoords | null
 
-    /**
-     * 事件
-     * @param {Event} e
-     */
-    handleEvent(e) {
-      switch (e.type) {
-        case touchstart:
-          this.onTouchStart(e)
-          break
-        case touchmove:
-          this.onTouchMove(e)
-          break
-        case touchend:
-          this.onTouchEnd(e)
-          break
-        default:
-          break
-      }
-    },
+    const pullRefreshState = ref(PullRefreshState.Pulling)
+    const root = ref<HTMLElement>()
+    const pullDistance = ref(0)
+    const translateDuration = ref(0)
+    const pullDirection = ref('')
+    const pullIndicatorSafeArea = reactive({
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    })
 
-    onTouchStart(e) {
-      const { pageX, pageY } = getTouch(e)
-      const $scroll = this.$refs.scroll
+    function loadComplete() {
+      pullRefreshState.value = PullRefreshState.Pulling
+      pullDistance.value = 0
+    }
+
+    function onTouchStart(e: UseTouchEvent) {
+      const { pageX, pageY } = e.touchObject
+      const $scroll = root.value as HTMLElement
       const {
         scrollHeight,
         scrollTop,
@@ -249,35 +197,35 @@ export default {
         clientWidth
       } = $scroll
 
-      this.touchCoords = {
+      coords = {
         pageX,
         pageY,
-        scrollY: this.scrollY && scrollHeight > clientHeight,
-        scrollX: this.scrollX && scrollWidth > clientWidth
+        scrollX: props.scrollX && scrollWidth > clientWidth,
+        scrollY: props.scrollY && scrollHeight > clientHeight
       }
 
-      if (this.lowerLoading) {
+      if (props.lowerLoading) {
         return
       }
 
-      if (this.pullRefreshState === PULL_REFRESH_STATE_REFRESHING) {
+      if (pullRefreshState.value === PullRefreshState.Refreshing) {
         return
       }
 
-      const allowPullDirections = isArray(this.enablePullDirections)
-        ? this.enablePullDirections
-        : [this.enablePullDirections]
+      const allowPullDirections = stringMix2StringArray(
+        props.enablePullDirections
+      )
 
       if (allowPullDirections.length === 0) {
         return
       }
 
-      this.pullDistance = 0
-      this.translateDuration = 0
-      this.pullDirection = ''
+      pullDistance.value = 0
+      translateDuration.value = 0
+      pullDirection.value = ''
 
       // 猜想可能刷新的方向，0-4个都有可能
-      const directions = []
+      const directions: PullDirection[] = []
 
       if (scrollTop === 0 && inArray('down', allowPullDirections)) {
         directions.push('down')
@@ -300,35 +248,34 @@ export default {
 
       if (directions[0]) {
         // 只要命中一个方向
-        this.touchCoords.directions = directions
+        coords.directions = directions
       }
-    },
+    }
 
-    onTouchMove(e) {
-      if (!this.touchCoords) {
+    function onTouchMove(e: UseTouchEvent) {
+      if (!coords) {
         return
       }
 
       // 处理滑动穿透
-      const coords = this.touchCoords
-      const { pageX, pageY } = getTouch(e)
+      const { pageX, pageY } = e.touchObject
       const offsetX = pageX - coords.pageX
       const offsetY = pageY - coords.pageY
-      const y = this._isToLowerOrUpperY
-      const x = this._isToLowerOrUpperX
+      const y = _isToLowerOrUpperY
+      const x = _isToLowerOrUpperX
 
       if (coords.stop == null) {
         if (
           (coords.scrollY &&
             Math.abs(offsetY) >= Math.abs(offsetX) &&
-            (y === SCROLL_STATE_CENTER ||
-              (y === SCROLL_STATE_UPPER && offsetY < 0) ||
-              (y === SCROLL_STATE_LOWER && offsetY > 0))) ||
+            (y === ScrollState.Center ||
+              (y === ScrollState.Upper && offsetY < 0) ||
+              (y === ScrollState.Lower && offsetY > 0))) ||
           (coords.scrollX &&
             Math.abs(offsetX) >= Math.abs(offsetY) &&
-            (x === SCROLL_STATE_CENTER ||
-              (x === SCROLL_STATE_UPPER && offsetX < 0) ||
-              (x === SCROLL_STATE_LOWER && offsetX > 0)))
+            (x === ScrollState.Center ||
+              (x === ScrollState.Upper && offsetX < 0) ||
+              (x === ScrollState.Lower && offsetX > 0)))
         ) {
           coords.stop = true
         } else {
@@ -345,9 +292,9 @@ export default {
         return
       }
 
-      let pullDirection = coords.direction
+      let _pullDirection = coords.direction
 
-      if (!pullDirection) {
+      if (!_pullDirection) {
         // 如果可能存在两个方向，继续验证会走的方向
         if (Math.abs(offsetY) >= Math.abs(offsetX)) {
           coords.directions = coords.directions.filter(v => {
@@ -365,162 +312,97 @@ export default {
           })
         }
 
-        coords.direction = pullDirection = coords.directions[0]
+        coords.direction = _pullDirection = coords.directions[0]
       }
 
-      if (!pullDirection) {
+      if (!_pullDirection) {
         delete coords.directions
         return
       }
 
       e.preventDefault()
 
-      if (!coords.safeArea) {
-        const safeArea = {
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0
-        }
-        const $scroll = this.$refs.scroll
+      if (!coords.isSetSafeArea) {
+        const $scroll = root.value as HTMLElement
 
-        if (inArray(pullDirection, ['up', 'down'])) {
-          safeArea.left = $scroll.scrollLeft
-          safeArea.right =
+        pullIndicatorSafeArea.top = 0
+        pullIndicatorSafeArea.right = 0
+        pullIndicatorSafeArea.bottom = 0
+        pullIndicatorSafeArea.left = 0
+
+        if (inArray(_pullDirection, ['up', 'down'])) {
+          pullIndicatorSafeArea.left = $scroll.scrollLeft
+          pullIndicatorSafeArea.right =
             $scroll.scrollWidth - $scroll.scrollLeft - $scroll.clientWidth
         } else {
-          safeArea.top = $scroll.scrollTop
-          safeArea.bottom =
+          pullIndicatorSafeArea.top = $scroll.scrollTop
+          pullIndicatorSafeArea.bottom =
             $scroll.scrollHeight - $scroll.scrollTop - $scroll.clientHeight
         }
 
-        this.pullIndicatorSafeArea = safeArea
-        coords.safeArea = safeArea
+        coords.isSetSafeArea = true
       }
 
-      this.pullDirection = pullDirection
+      pullDirection.value = _pullDirection
 
       let distance
-      if (inArray(this.pullDirection, ['up', 'down'])) {
+      if (inArray(pullDirection.value, ['up', 'down'])) {
         distance = offsetY
       } else {
         distance = offsetX
       }
       distance = Math.abs(distance)
+      const pullRefreshThreshold = props.pullRefreshThreshold
 
-      if (distance >= this.pullRefreshThreshold) {
-        if (this.pullRefreshState === PULL_REFRESH_STATE_PULLING) {
-          this.pullRefreshState = PULL_REFRESH_STATE_HOLDING
+      if (distance >= pullRefreshThreshold) {
+        if (pullRefreshState.value === PullRefreshState.Pulling) {
+          pullRefreshState.value = PullRefreshState.Holding
         }
 
         distance =
-          this.pullRefreshThreshold +
+          pullRefreshThreshold +
           Math.ceil(
-            (distance - this.pullRefreshThreshold) /
-              Math.log(Math.abs(distance - this.pullRefreshThreshold) / 2)
+            (distance - pullRefreshThreshold) /
+              Math.log(Math.abs(distance - pullRefreshThreshold) / 2)
           ) // 除于2比不除更好拉一点
       }
 
-      this.pullDistance = inArray(this.pullDirection, ['down', 'right'])
+      pullDistance.value = inArray(pullDirection.value, ['down', 'right'])
         ? distance
         : -distance
-    },
+    }
 
-    onTouchEnd() {
-      if (!this.touchCoords) {
+    function onTouchEnd() {
+      if (!coords) {
         return
       }
-      this.touchCoords = null
+      coords = null
 
-      this.translateDuration = 200
+      translateDuration.value = 200
 
-      if (this.pullRefreshState === PULL_REFRESH_STATE_HOLDING) {
-        this.pullRefreshState = PULL_REFRESH_STATE_REFRESHING
-        this.pullDistance = inArray(this.pullDirection, ['down', 'right'])
-          ? this.pullRefreshThreshold
-          : -this.pullRefreshThreshold
+      if (pullRefreshState.value === PullRefreshState.Holding) {
+        pullRefreshState.value = PullRefreshState.Refreshing
+        pullDistance.value = inArray(pullDirection.value, ['down', 'right'])
+          ? props.pullRefreshThreshold
+          : -props.pullRefreshThreshold
 
-        this.$emit(
+        emit(
           'refreshing',
           {
-            pullDirection: this.pullDirection
+            pullDirection: pullDirection.value
           },
-          this.loadComplete
+          loadComplete
         )
       } else {
-        this.pullDistance = 0
+        pullDistance.value = 0
       }
-    },
-
-    /**
-     * 滚动到指定Id元素
-     */
-    scrollIntoIdView(id) {
-      if (id) {
-        const $view = this.$el.getElementById(id)
-
-        if ($view) {
-          $view.scrollIntoView({
-            behavior: this.scrollAnimated ? 'smooth' : 'auto'
-          })
-        }
-      }
-    },
-
-    /**
-     * 滚动列表到指定的偏移（以像素为单位）
-     */
-    scrollToOffset(options) {
-      let behavior = 'smooth'
-      let top = 0
-      let left = 0
-
-      if (isNumber(options)) {
-        top = options
-        behavior = 'instant'
-      } else {
-        top = options.offset
-        if (options.animated === false) behavior = 'instant'
-      }
-
-      if (this.scrollX) {
-        // 如果是水平的，数值换一下
-        top = [left, (left = top)][0]
-      }
-
-      this.$el.scrollTo({
-        top,
-        left,
-        behavior
-      })
-    },
-
-    /**
-     * 接收更新滚动的位置
-     */
-    updateScroll() {
-      let { scrollY, scrollX, scrollLeft, scrollTop } = this
-      if (!scrollY) {
-        scrollTop = 0
-      }
-      if (!scrollX) {
-        scrollLeft = 0
-      }
-
-      if (scrollTop > 0 || scrollTop > 0) {
-        this.$el.scrollTo({
-          top: scrollTop,
-          left: scrollLeft,
-          behavior: this.scrollAnimated ? 'smooth' : 'instant'
-        })
-      }
-    },
+    }
 
     /**
      * 滚动事件处理
      */
-    onScroll(e) {
-      const { upperThreshold, lowerThreshold, scrollX, scrollY, $el } = this
+    function onScroll(e: Event) {
+      const { upperThreshold, lowerThreshold, scrollX, scrollY } = props
       const {
         scrollTop,
         scrollLeft,
@@ -528,7 +410,7 @@ export default {
         scrollHeight,
         clientHeight,
         clientWidth
-      } = $el
+      } = root.value as HTMLElement
 
       let isToLowerY = false
       let isToUpperY = false
@@ -539,7 +421,7 @@ export default {
       const typeUpper = 'scroll-to-upper'
 
       // 滚动事件
-      this.$emit(e.type, {
+      emit(e.type as 'scroll', {
         scrollTop,
         scrollLeft,
         scrollWidth,
@@ -552,81 +434,164 @@ export default {
       if (scrollY) {
         if (
           scrollTop + clientHeight + lowerThreshold >= scrollHeight &&
-          scrollTop > this._prevY
+          scrollTop > _prevY
         ) {
           isToLowerY = true
-        } else if (scrollTop <= upperThreshold && scrollTop < this._prevY) {
+        } else if (scrollTop <= upperThreshold && scrollTop < _prevY) {
           isToUpperY = true
         }
       }
 
       // 左右滚动
       if (scrollX) {
-        if (scrollLeft + clientWidth + lowerThreshold >= scrollWidth) {
+        if (
+          scrollLeft + clientWidth + lowerThreshold >= scrollWidth &&
+          scrollLeft > _prevX
+        ) {
           isToLowerX = true
-        } else if (scrollLeft <= upperThreshold) {
+        } else if (scrollLeft <= upperThreshold && scrollLeft < _prevX) {
           isToUpperX = true
         }
       }
 
       // 防止重复报
       if (isToUpperY || isToLowerY) {
-        if (this._isToLowerOrUpperY === SCROLL_STATE_UPPER) {
+        if (_isToLowerOrUpperY === ScrollState.Upper) {
           // 当前在触顶期间
           isToUpperY = false
-        } else if (this._isToLowerOrUpperY === SCROLL_STATE_LOWER) {
+        } else if (_isToLowerOrUpperY === ScrollState.Lower) {
           // 当前在触底期间
           isToLowerY = false
         }
       } else {
-        this._isToLowerOrUpperY = SCROLL_STATE_CENTER
+        _isToLowerOrUpperY = ScrollState.Center
       }
       if (isToUpperX || isToLowerX) {
-        if (this._isToLowerOrUpperX === SCROLL_STATE_UPPER) {
+        if (_isToLowerOrUpperX === ScrollState.Upper) {
           // 当前在触顶期间
           isToUpperX = false
-        } else if (this._isToLowerOrUpperX === SCROLL_STATE_LOWER) {
+        } else if (_isToLowerOrUpperX === ScrollState.Lower) {
           // 当前在触底期间
           isToLowerX = false
         }
       } else {
-        this._isToLowerOrUpperX = SCROLL_STATE_CENTER
+        _isToLowerOrUpperX = ScrollState.Center
       }
 
       if (isToUpperY) {
         // 触顶
-        this._isToLowerOrUpperY = SCROLL_STATE_UPPER
+        _isToLowerOrUpperY = ScrollState.Upper
 
-        this.$emit(typeUpper, {
+        emit(typeUpper, {
           direction: 'top'
         })
       } else if (isToLowerY) {
         // 触底
-        this._isToLowerOrUpperY = SCROLL_STATE_LOWER
+        _isToLowerOrUpperY = ScrollState.Lower
 
-        this.$emit(typeLower, {
+        emit(typeLower, {
           direction: 'bottom'
         })
       }
       if (isToUpperX) {
         // 触顶
-        this._isToLowerOrUpperX = SCROLL_STATE_UPPER
+        _isToLowerOrUpperX = ScrollState.Upper
 
-        this.$emit(typeUpper, {
+        emit(typeUpper, {
           direction: 'left'
         })
       } else if (isToLowerX) {
         // 触底
-        this._isToLowerOrUpperX = SCROLL_STATE_LOWER
+        _isToLowerOrUpperX = ScrollState.Lower
 
-        this.$emit(typeLower, {
+        emit(typeLower, {
           direction: 'right'
         })
       }
 
-      this._prevY = scrollTop
-      this._prevX = scrollLeft
+      _prevY = scrollTop
+      _prevX = scrollLeft
+    }
+
+    function updateScroll() {
+      const { scrollY, scrollX } = props
+
+      if ((scrollY || scrollX) && root.value) {
+        ;(root.value as HTMLElement).scrollTo({
+          top: scrollY ? props.scrollTop : 0,
+          left: scrollX ? props.scrollLeft : 0,
+          behavior: props.scrollAnimated ? 'smooth' : 'auto'
+        })
+      }
+    }
+
+    onMounted(() => updateScroll)
+    watch([() => props.scrollLeft, () => props.scrollTop], updateScroll)
+
+    const contentStyles = computed(() => {
+      return {
+        transition: `transform ${translateDuration.value}ms`,
+        transform: inArray(pullDirection.value, ['up', 'down'])
+          ? `translate3d(0, ${pullDistance.value}px, 0)`
+          : `translate3d(${pullDistance.value}px, 0, 0)`
+      } as StyleObject
+    })
+
+    const indicatorStyles = computed(() => {
+      return {
+        padding: `${pullIndicatorSafeArea.top}px ${pullIndicatorSafeArea.right}px ${pullIndicatorSafeArea.bottom}px ${pullIndicatorSafeArea.left}px`
+      }
+    })
+
+    useTouch({
+      el: root,
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd
+    })
+
+    /**
+     * 滚动列表到指定的偏移（以像素为单位）
+     */
+    function scrollToOffset(options: number | ScrollToOffsetOptions) {
+      let behavior: ScrollBehavior = 'smooth'
+      let top = 0
+      let left = 0
+
+      if (isNumber(options)) {
+        top = options as number
+        behavior = 'auto'
+      } else {
+        options = options as ScrollToOffsetOptions
+        top = options.offset
+        if (options.animated === false) behavior = 'auto'
+      }
+
+      if (props.scrollX) {
+        // 如果是水平的，数值换一下
+        top = [left, (left = top)][0]
+      }
+
+      root.value &&
+        (root.value as HTMLElement).scrollTo({
+          top,
+          left,
+          behavior
+        })
+    }
+
+    return {
+      pullRefreshState,
+      pullDistance,
+      pullDirection,
+      root,
+      contentStyles,
+      indicatorStyles,
+      onScroll,
+      pullIndicatorSafeArea: pullIndicatorSafeArea,
+      PullRefreshState: enum2Map(PullRefreshState),
+      scrollToOffset
     }
   }
-}
+})
 </script>

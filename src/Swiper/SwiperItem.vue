@@ -1,35 +1,39 @@
 <template>
-  <div class="fx-swiper-item">
+  <div class="fx-swiper-item" ref="root">
     <slot></slot>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {
+  ref,
+  defineComponent,
+  onMounted,
+  inject,
+  onUnmounted,
+  onUpdated
+} from 'vue'
+
+export default defineComponent({
   name: 'fx-swiper-item',
-  inject: {
-    appSwiper: {
-      default: null
-    }
-  },
-  mounted() {
-    this.update()
-  },
-  unmounted() {
-    this.update()
-  },
-  updated() {
-    if (this.$el.offsetWidth === 0 || this.$el.offsetHeight === 0) {
-      // 解决默认 hidden 的问题
-      this.update()
-    }
-  },
-  methods: {
-    update() {
-      if (this.appSwiper) {
-        this.appSwiper.update()
+  setup() {
+    const root = ref<HTMLElement>()
+    const update = inject('fxSwiperUpdate', (lazy?: number) => {})
+
+    onMounted(() => update())
+    onUnmounted(() => update())
+    onUpdated(() => {
+      const $item = root.value as HTMLElement
+
+      if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
+        // 解决默认 hidden 的问题
+        update()
       }
+    })
+
+    return {
+      root
     }
   }
-}
+})
 </script>

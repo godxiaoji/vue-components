@@ -33,17 +33,27 @@
   </div>
 </template>
 
-<script>
-import tabMixin from './tab-mixin'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Icon from '../Icon'
+import Badge from '../Badge'
+import { useTab, tabEmits, tabProps } from './tab'
 
-export default {
+export default defineComponent({
   name: 'fx-tab',
-  mixins: [tabMixin],
+  components: { Icon, Badge },
   props: {
+    ...tabProps,
     scrollThreshold: {
       type: Number,
       default: 4
     }
+  },
+  emits: tabEmits,
+  setup(props, ctx) {
+    return {
+      ...useTab(props, ctx, 'Tab')
+    }
   }
-}
+})
 </script>

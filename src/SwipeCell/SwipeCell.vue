@@ -1,5 +1,5 @@
 <template>
-  <div class="fx-swipe-cell fx-horizontal-hairline">
+  <div class="fx-swipe-cell fx-horizontal-hairline" ref="root">
     <div
       class="fx-swipe-cell_inner"
       :style="{
@@ -8,7 +8,7 @@
       }"
     >
       <slot></slot>
-      <div class="fx-swipe-cell_buttons" ref="buttons">
+      <div class="fx-swipe-cell_buttons" ref="buttonEls">
         <button
           class="fx-swipe-cell_button"
           :class="['type--' + item.type]"
@@ -32,8 +32,9 @@
   </div>
 </template>
 
-<script>
-import { getEnumsValue } from '../helpers/validator'
+<script lang="ts">
+import { ref, defineComponent, computed, reactive } from 'vue'
+import { getEnumsValue } from '../utils/validator'
 import {
   cloneData,
   isArray,
@@ -41,24 +42,33 @@ import {
   isString,
   rangeNumber
 } from '../helpers/util'
-import { addEvent, removeEvent, touchEvent } from '../helpers/events'
+import {
+  addTouchDelegateEvent,
+  removeTouchDelegateEvent
+} from '../helpers/events'
+import { StateTypes, STATE_TYPES } from '../utils/constants'
+import { PropType } from 'vue'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
+import { getStretchOffset } from '../helpers/animation'
 
-const {
-  touchstart,
-  touchmove,
-  touchend,
-  addListeners,
-  removeListeners,
-  getTouch,
-  getStretchOffset
-} = touchEvent
+interface ButtonOptions {
+  text: string
+  type?: StateTypes
+}
 
-export default {
+interface SwipeCellCoords extends UseTouchCoords {
+  startX: number
+  buttonsW: number
+  isShow: boolean
+  isSwipe: boolean
+}
+
+export default defineComponent({
   name: 'fx-swipe-cell',
-  components: {},
   props: {
     buttons: {
-      validator(val) {
+      type: Array as PropType<ButtonOptions[]>,
+      validator: (val: any[]) => {
         if (isArray(val)) {
           for (let i = 0; i < val.length; i++) {
             if (!(isObject(val[i]) && isString(val[i].text))) return false
@@ -68,104 +78,49 @@ export default {
           return false
         }
       },
-      default() {
-        return []
-      }
+      default: () => []
     }
-  },
-  data() {
-    return {
-      translateX: 0,
-      duration: 0,
-
-      buttonTranslateXs: []
-    }
-  },
-  computed: {
-    buttons2() {
-      const buttons = []
-
-      if (isArray(this.buttons)) {
-        this.buttons.forEach(v => {
-          if (isObject(v) && isString(v.text)) {
-            buttons.push(
-              Object.assign(cloneData(v), {
-                text: v.text,
-                type: getEnumsValue('type', v.type)
-              })
-            )
-          }
-        })
-      }
-
-      return buttons
-    }
-  },
-  mounted() {
-    addListeners(this.$el, this)
-  },
-  beforeUnmount() {
-    removeListeners(this.$el, this)
   },
   emits: ['button-click'],
-  methods: {
-    noop() {},
-    /**
-     * 事件
-     * @param {Event} e
-     */
-    handleEvent(e) {
-      switch (e.type) {
-        case touchstart:
-          this.onTouchStart(e)
-          break
-        case touchmove:
-          this.onTouchMove(e)
-          break
-        case touchend:
-          this.onTouchEnd(e)
-          break
-        case 'mouseleave':
-          this.onTouchEnd(e)
-          break
-        default:
-          break
-      }
-    },
-    onTouchStart(e) {
-      if (this.buttons.length === 0) {
+  setup(props, ctx) {
+    const root = ref<HTMLElement>()
+    const buttonEls = ref<HTMLElement>()
+    const translateX = ref(0)
+    const duration = ref(0)
+    const buttonTranslateXs = reactive<number[]>([])
+    let coords: SwipeCellCoords | null
+
+    function onTouchStart(e: UseTouchEvent) {
+      if (props.buttons.length === 0) {
         return
       }
 
-      const { clientX } = getTouch(e)
-      const $buttons = this.$refs.buttons
-
-      this.coords = {
-        startX: clientX,
-        buttonsW: $buttons.clientWidth,
-        isShow: this.translateX > 0
+      coords = {
+        startX: e.touchObject.clientX,
+        buttonsW: (buttonEls.value as HTMLElement).clientWidth,
+        isShow: translateX.value > 0,
+        isSwipe: false
       }
 
-      if (this.coords.isShow) {
+      if (coords.isShow) {
         e.stopPropagation()
       }
-    },
+    }
 
-    onTouchMove(e) {
-      if (!this.coords) {
+    function onTouchMove(e: UseTouchEvent) {
+      if (!coords) {
         return
       }
 
-      const { clientX } = getTouch(e)
-      const { startX, buttonsW, isSwipe, isShow } = this.coords
+      const { startX, buttonsW, isSwipe, isShow } = coords
 
-      let x = startX - clientX
+      let x = startX - e.touchObject.clientX
 
       if (!isShow && !isSwipe && x < 0) {
-        delete this.coords
+        coords = null
         return
       }
-      this.coords.isSwipe = true
+      coords.isSwipe = true
 
       if (isShow) {
         x += buttonsW
@@ -173,58 +128,101 @@ export default {
 
       const max = rangeNumber(x, 0, buttonsW)
 
-      this.$refs.buttons.children.forEach(($child, index) => {
-        this.buttonTranslateXs[index] =
-          ($child.offsetLeft * (buttonsW - max)) / buttonsW
-      })
+      const $children = (buttonEls.value as HTMLElement).children
 
-      this.translateX =
+      for (let i = 0, len = $children.length; i < len; i++) {
+        buttonTranslateXs[i] =
+          (($children[i] as HTMLElement).offsetLeft * (buttonsW - max)) /
+          buttonsW
+      }
+
+      translateX.value =
         max + (x > buttonsW ? getStretchOffset(x - buttonsW) : 0)
-      this.duration = 0
+      duration.value = 0
 
       e.stopPropagation()
-    },
+    }
 
-    onTouchEnd(e) {
-      if (this.coords) {
-        const { isSwipe, buttonsW } = this.coords
+    function onTouchEnd(e: UseTouchEvent) {
+      if (coords) {
+        const { isSwipe, buttonsW } = coords
 
-        if (isSwipe && this.translateX > buttonsW / 2) {
+        if (isSwipe && translateX.value > buttonsW / 2) {
           // 展示
-          this.show(buttonsW)
+          show(buttonsW)
         } else {
-          this.hide()
+          hide()
         }
 
-        delete this.coords
+        coords = null
         e.stopPropagation()
       }
-    },
-    show(x) {
-      this.translateX = x
-      this.duration = 0.6
-      this.buttonTranslateXs = this.buttonTranslateXs.map(() => {
-        return 0
+    }
+
+    function show(x: number) {
+      translateX.value = x
+      duration.value = 0.6
+
+      buttonTranslateXs.forEach((v, k) => {
+        buttonTranslateXs[k] = 0
       })
 
-      addEvent(touchstart, this.hide, document)
-    },
-    hide() {
-      this.translateX = 0
-      this.duration = 0.6
-      this.buttonTranslateXs = this.buttonTranslateXs.map(() => {
-        return 0
+      addTouchDelegateEvent(hide)
+    }
+
+    function hide() {
+      translateX.value = 0
+      duration.value = 0.6
+
+      buttonTranslateXs.forEach((v, k) => {
+        buttonTranslateXs[k] = 0
       })
 
-      removeEvent(touchstart, this.hide, document)
-    },
-    onButtonClick(item, index) {
-      this.$emit('button-click', {
+      removeTouchDelegateEvent(hide)
+    }
+
+    function onButtonClick(item: ButtonOptions, index: number) {
+      ctx.emit('button-click', {
         item: cloneData(item),
         index
       })
-      this.hide()
+      hide()
+    }
+
+    const buttons2 = computed(() => {
+      const buttons: ButtonOptions[] = []
+
+      if (isArray(props.buttons)) {
+        props.buttons.forEach(v => {
+          if (isObject(v) && isString(v.text)) {
+            buttons.push({
+              text: v.text,
+              type: getEnumsValue(STATE_TYPES, v.type) as StateTypes
+            })
+          }
+        })
+      }
+
+      return buttons
+    })
+
+    useTouch({
+      el: root,
+      onTouchStart,
+      onTouchMove,
+      onTouchEnd
+    })
+
+    return {
+      root,
+      buttonEls,
+      buttonTranslateXs,
+      translateX,
+      duration,
+      buttons2,
+      noop() {},
+      onButtonClick
     }
   }
-}
+})
 </script>

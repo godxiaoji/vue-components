@@ -21,20 +21,22 @@
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
 import NoticeBar from '../NoticeBar'
-import popupMixin from '../util/popup-mixin'
+import { defineComponent, onBeforeUnmount } from 'vue'
+import { popupEmits, popupProps, usePopup } from '../utils/popup'
+import { iconValidator } from '../utils/validator'
 
-export default {
+export default defineComponent({
   name: 'fx-notify',
   components: { NoticeBar },
-  mixins: [popupMixin],
   provide() {
     return {
       appNotify: this
     }
   },
   props: {
+    ...popupProps,
     closable: {
       type: Boolean,
       default: false
@@ -44,7 +46,7 @@ export default {
       default: null
     },
     icon: {
-      type: String,
+      validator: iconValidator,
       default: null
     },
     // 背景颜色
@@ -68,33 +70,39 @@ export default {
       default: 'primary'
     }
   },
-  beforeUnmount() {
-    this.removeAutoClose()
-  },
-  methods: {
-    setAutoClose() {
-      if (this.duration > 0) {
-        this.durationTimer = setTimeout(() => {
-          this.close('auto')
-        }, this.duration)
+  emits: [...popupEmits, 'close-click'],
+  setup(props, ctx) {
+    let durationTimer: number
+
+    const popup = usePopup(props, ctx, {
+      forbidScroll: false,
+      afterCancel: removeAutoClose,
+      afterShow: setAutoClose
+    })
+
+    function removeAutoClose() {
+      clearTimeout(durationTimer)
+    }
+
+    function setAutoClose() {
+      if (props.duration > 0) {
+        durationTimer = window.setTimeout(() => {
+          popup.customCancel('auto', true)
+        }, props.duration)
       }
-    },
-    close(source) {
-      this.customCancel(source, true)
-    },
-    afterCancel() {
-      this.removeAutoClose()
-    },
-    removeAutoClose() {
-      clearTimeout(this.durationTimer)
-    },
-    afterShow() {
-      this.setAutoClose()
-    },
-    onClose() {
-      this.$emit('close-click', {})
-      this.close('activeClick')
+    }
+
+    function onClose() {
+      ctx.emit('close-click', {})
+      popup.customCancel('activeClick', true)
+    }
+
+    onBeforeUnmount(removeAutoClose)
+
+    return {
+      ...popup,
+      onClose
     }
   }
-}
+})
 </script>

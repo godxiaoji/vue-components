@@ -17,8 +17,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'fx-group',
   props: {
     title: {
@@ -30,5 +32,5 @@ export default {
       default: false
     }
   }
-}
+})
 </script>

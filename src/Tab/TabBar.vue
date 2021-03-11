@@ -22,37 +22,27 @@
   </div>
 </template>
 
-<script>
-import tabMixin from './tab-mixin'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Icon from '../Icon'
+import Badge from '../Badge'
+import { useTab, tabEmits, tabProps } from './tab'
 
-export default {
+export default defineComponent({
   name: 'fx-tab-bar',
-  mixins: [tabMixin],
+  components: { Icon, Badge },
   props: {
-    fixed: {
-      type: Boolean,
-      default: true
-    },
-    zIndex: {
+    ...tabProps,
+    scrollThreshold: {
       type: Number,
-      default: 1
+      default: 4
     }
   },
-  data() {
+  emits: tabEmits,
+  setup(props, ctx) {
     return {
-      tabName: 'TabBar'
-    }
-  },
-  computed: {
-    innerStyles() {
-      const styles = {}
-
-      if (this.fixed) {
-        styles.zIndex = this.zIndex
-      }
-
-      return styles
+      ...useTab(props, ctx, 'TabBar')
     }
   }
-}
+})
 </script>

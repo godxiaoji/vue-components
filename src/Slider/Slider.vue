@@ -18,32 +18,38 @@
         :name="formName"
         @input="onInput"
         @change="onChange"
+        ref="input"
       />
     </div>
   </div>
 </template>
 
-<script>
-import formMixin from '../util/form-mixin'
+<script lang="ts">
+import { onMounted, ref, defineComponent, watch, computed, nextTick } from 'vue'
 import { isNumeric } from '../helpers/util'
+import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
 
-export default {
+export default defineComponent({
   name: 'fx-slider',
-  mixins: [formMixin],
   props: {
+    ...formItemProps,
     modelValue: {
+      type: [Number, String],
       validator: isNumeric,
       default: null
     },
     min: {
+      type: [Number, String],
       validator: isNumeric,
       default: 0
     },
     max: {
+      type: [Number, String],
       validator: isNumeric,
       default: 100
     },
     step: {
+      type: [Number, String],
       validator: isNumeric,
       default: 1
     },
@@ -52,82 +58,96 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      formValue: null
-    }
-  },
-  computed: {
-    progress() {
-      return ((this.formValue - this.min) / (this.max - this.min)) * 100 + '%'
-    }
-  },
-  watch: {
-    modelValue(val) {
-      this.formValue = val
+  emits: [...formItemEmits, 'input'],
+  setup(props, ctx) {
+    const formValue = ref('')
+    const { emit } = ctx
 
-      this.$nextTick(() => {
-        this.updateValue()
-      })
-    },
-    min() {
-      this.$nextTick(() => {
-        this.updateValue()
-        this.inputModel()
-      })
-    },
-    max() {
-      this.$nextTick(() => {
-        this.updateValue()
-        this.inputModel()
-      })
-    }
-  },
-  emits: ['input'],
-  mounted() {
-    const $input = this.getInputEl()
-
-    $input._app_component = this
-    $input._app_type = 'slider'
-
-    this.formValue = $input.value
-    this.inputModel()
-  },
-  methods: {
-    updateValue() {
-      this.formValue = this.getInputEl().value
-    },
-    inputModel() {
-      if (
-        this.modelValue == null ||
-        this.formValue !== this.modelValue.toString()
-      ) {
-        this.$emit('update:modelValue', this.hookFormValue())
+    const {
+      formName,
+      validateAfterEventTrigger,
+      formReset,
+      getInputEl,
+      hookFormValue,
+      eventEmit
+    } = useFormItem<string>(props, ctx, {
+      formValue,
+      hookFormValue() {
+        return parseFloat(formValue.value)
       }
-    },
-    onInput(e) {
-      this.formValue = e.target.value
-      this.inputModel()
+    })
 
-      this.eventEmit(e.type)
-    },
-    onChange(e) {
-      this.eventEmit(e.type)
-    },
-    eventEmit(type) {
-      const value = this.hookFormValue()
+    function updateValue() {
+      formValue.value = getInputEl().value
+    }
 
-      this.$emit(type, {
-        value
+    function inputModel() {
+      if (
+        props.modelValue == null ||
+        formValue.value !== props.modelValue.toString()
+      ) {
+        emit('update:modelValue', hookFormValue())
+      }
+    }
+
+    function onInput(e: Event) {
+      formValue.value = (e.target as HTMLInputElement).value
+
+      inputModel()
+
+      eventEmit(e.type)
+    }
+
+    function onChange(e: Event) {
+      eventEmit(e.type)
+    }
+
+    function reset() {
+      return formReset(getInputEl().value)
+    }
+
+    const progress = computed(() => {
+      return (
+        ((parseFloat(formValue.value) - parseFloat(props.min as string)) /
+          (parseFloat(props.max as string) - parseFloat(props.min as string))) *
+          100 +
+        '%'
+      )
+    })
+
+    watch(
+      () => props.modelValue,
+      val => {
+        formValue.value = val.toString()
+
+        nextTick(() => {
+          updateValue()
+        })
+      }
+    )
+
+    watch([() => props.min, () => props.max], () => {
+      nextTick(() => {
+        updateValue()
+        inputModel()
       })
-      this.validateAfterEventTrigger(type, value)
-    },
-    hookFormValue() {
-      return parseFloat(this.formValue)
-    },
-    reset() {
-      return this._reset(this.getInputEl().value)
+    })
+
+    onMounted(() => {
+      formValue.value = getInputEl().value
+
+      inputModel()
+    })
+
+    return {
+      progress,
+      onChange,
+      onInput,
+      reset,
+      formName,
+      formValue,
+      validateAfterEventTrigger
     }
   }
-}
+})
 </script>

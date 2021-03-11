@@ -5,17 +5,13 @@
   ></div>
 </template>
 
-<script>
-import { inArray } from '../helpers/util'
-import { BUTTON_SHAPE_NAMES } from './util'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { createEnumsValidator } from '../utils/validator'
+import { BUTTON_SHAPE_NAMES, ButtonShapeNames, useSubSkeleton } from './util'
 
-export default {
+export default defineComponent({
   name: 'fx-skeleton-button',
-  inject: {
-    skeletonSubOptions: {
-      default: null
-    }
-  },
   props: {
     // 是否显示动画
     animated: {
@@ -24,34 +20,18 @@ export default {
     },
     // 指定按钮的形状
     shape: {
-      validator(val) {
-        return inArray(val, BUTTON_SHAPE_NAMES)
-      }
+      type: String as PropType<ButtonShapeNames>,
+      validator: createEnumsValidator(BUTTON_SHAPE_NAMES),
+      default: null
     }
   },
-  computed: {
-    shapeClassName() {
-      let shape
+  setup(props) {
+    const { shapeClassName, useAnimation } = useSubSkeleton(props, 'button')
 
-      if (this.shape == null) {
-        if (this.skeletonSubOptions && this.skeletonSubOptions.buttonShape) {
-          shape = this.skeletonSubOptions.buttonShape
-        }
-      } else {
-        shape = this.shape
-      }
-
-      return (
-        'shape--' +
-        (inArray(shape, BUTTON_SHAPE_NAMES) ? shape : BUTTON_SHAPE_NAMES[0])
-      )
-    },
-    useAnimation() {
-      if (this.skeletonSubOptions) {
-        return this.skeletonSubOptions.animated
-      }
-      return this.animated
+    return {
+      shapeClassName,
+      useAnimation
     }
   }
-}
+})
 </script>

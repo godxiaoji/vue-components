@@ -1,12 +1,8 @@
 <template>
   <div
     class="fx-tag"
-    :class="[
-      typeClassName,
-      sizeClassName,
-      patternClassName,
-      { disabled: !!disabled }
-    ]"
+    :class="[classNames, { disabled: !!disabled }]"
+    ref="root"
   >
     <slot></slot>
     <icon
@@ -20,26 +16,45 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  ref
+} from 'vue'
 import Icon from '../Icon'
-import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
 import { addLongPressEvent } from '../helpers/events'
+import {
+  SizeTypes,
+  SIZE_TYPES,
+  StateTypes,
+  STATE_TYPES,
+  TagPatternTypes,
+  TAG_PATTERN_TYPES
+} from '../utils/constants'
 
-export default {
+export default defineComponent({
   name: 'fx-tag',
   components: { Icon },
   props: {
     size: {
-      validator: createEnumsValidator('tagSize'),
+      type: String as PropType<SizeTypes>,
+      validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     type: {
-      validator: createEnumsValidator('type'),
+      type: String as PropType<StateTypes>,
+      validator: createEnumsValidator(STATE_TYPES),
       default: null
     },
     // 款式
     pattern: {
-      validator: createEnumsValidator('tagPattern'),
+      type: String as PropType<TagPatternTypes>,
+      validator: createEnumsValidator(TAG_PATTERN_TYPES),
       default: null
     },
     // 可关闭的
@@ -53,40 +68,49 @@ export default {
       default: false
     }
   },
-  computed: {
-    typeClassName() {
-      return 'type--' + getEnumsValue('type', this.type)
-    },
-    sizeClassName() {
-      return 'size--' + getEnumsValue('tagSize', this.size)
-    },
-    patternClassName() {
-      return 'pattern--' + getEnumsValue('tagPattern', this.pattern)
-    }
-  },
-  mounted() {
-    this.removeLongPressEvent = addLongPressEvent(this.$el, this.onLongPress)
-  },
-  beforeUnmount() {
-    this.removeLongPressEvent && this.removeLongPressEvent()
-  },
   emits: ['close', 'click', 'long-press'],
-  methods: {
-    noop() {},
-    onClose() {
-      if (!this.disabled) {
-        this.$emit('close', {
+  setup(props, { emit }) {
+    const root = ref<HTMLElement>()
+    let longPressOff: Function
+
+    function onClose() {
+      if (!props.disabled) {
+        emit('close', {
           type: 'close'
         })
       }
-    },
-    onLongPress(e) {
-      if (!this.disabled) {
-        this.$emit(e.type, {
-          type: e.e
-        })
+    }
+
+    function onLongPress(e: { type: string }) {
+      if (!props.disabled) {
+        emit(e.type as 'click' | 'long-press', e)
       }
     }
+
+    const classNames = computed(() => {
+      return [
+        'type--' + getEnumsValue(STATE_TYPES, props.type),
+        'size--' + getEnumsValue(SIZE_TYPES, props.size),
+        'pattern--' + getEnumsValue(TAG_PATTERN_TYPES, props.pattern)
+      ]
+    })
+
+    onMounted(
+      () =>
+        (longPressOff = addLongPressEvent(
+          root.value as HTMLElement,
+          onLongPress
+        ))
+    )
+
+    onBeforeUnmount(() => longPressOff())
+
+    return {
+      root,
+      classNames,
+      noop() {},
+      onClose
+    }
   }
-}
+})
 </script>

@@ -23,14 +23,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  ComponentPublicInstance,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  shallowRef
+} from 'vue'
 import SideTab from '../SideTab'
-import Sticky from '../Sticky'
-import StickyView from '../StickyView'
-import { querySelector } from '../helpers/dom'
-import { sizeValidator } from '../helpers/validator'
+import Sticky from '../Sticky/Sticky.vue'
+import StickyView from '../Sticky/StickyView.vue'
+import { sizeValidator } from '../utils/validator'
+import { ScrollToIndexOptions } from '../utils/types'
 
-export default {
+export default defineComponent({
   name: 'fx-scroll-tab',
   components: { SideTab, Sticky, StickyView },
   props: {
@@ -43,53 +51,69 @@ export default {
       default: 0
     }
   },
-  data() {
-    return {
-      activeIndex: 0,
-
-      tabList: []
-    }
-  },
-  mounted() {
-    this.resetContainer(document)
-  },
   emits: ['change'],
-  methods: {
-    resetContainer(containSelector) {
-      const $container = querySelector(containSelector)
+  setup(props, { emit }) {
+    const sidebar = shallowRef<ComponentPublicInstance<typeof Sticky>>()
+    const body = shallowRef<ComponentPublicInstance<typeof StickyView>>()
+    const tabList = reactive<
+      {
+        value: number
+        label: string
+      }[]
+    >([])
+    const activeIndex = ref(0)
 
-      this.$refs.sidebar.resetContainer($container)
-      this.$refs.body.resetContainer($container)
-    },
+    function resetContainer(containSelector: any) {
+      sidebar.value && sidebar.value.resetContainer(containSelector)
+      body.value && body.value.resetContainer(containSelector)
+    }
 
-    onResetItems(list) {
-      this.tabList = list.map(({ name, index }) => {
-        return {
-          label: name,
-          value: index
-        }
-      })
-    },
+    function onResetItems(items: { name: string; index: number }[]) {
+      tabList.splice(
+        0,
+        Infinity,
+        ...items.map(item => {
+          return {
+            value: item.index,
+            label: item.name
+          }
+        })
+      )
+    }
 
-    onChange(res) {
-      this.$emit('change', res)
-    },
+    function onChange(res: { activeIndex: number }) {
+      emit('change', res)
+    }
 
     /**
      * 滚动到第index个
-     * @param {Number} index
+     * @param index 索引
      */
-    scrollToIndex(index) {
-      this.$refs.body.scrollToIndex(index)
-    },
+    function scrollToIndex(index: number | ScrollToIndexOptions) {
+      body.value && body.value.scrollToIndex(index)
+    }
 
     /**
      * 滚到到指定位置
-     * @param {Number} scrollTop
+     * @param scrollTop 位置值
      */
-    scrollTo(scrollTop) {
-      this.$refs.body.scrollTo(scrollTop)
+    function scrollToOffset(scrollTop: number | ScrollToOptions) {
+      body.value && body.value.scrollToOffset(scrollTop)
+    }
+
+    onMounted(() => resetContainer(document))
+
+    return {
+      sidebar,
+      body,
+      activeIndex,
+      tabList,
+      onChange,
+      scrollToIndex,
+      scrollToOffset,
+      resetContainer,
+      onResetItems
     }
   }
-}
+})
 </script>

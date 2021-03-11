@@ -4,100 +4,97 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, onMounted, watch, provide } from 'vue'
 import { cloneData, isArray, inArray, isSameArray } from '../helpers/util'
-import { arrayValueValidator } from '../helpers/validator'
-import groupMixin from '../util/group-mixin'
+import { stringNumberArrayMixValidator } from '../utils/validator'
+import { useGroup } from '../utils/group'
 
-export default {
+type CollapseActiveNames = (string | number)[]
+
+export default defineComponent({
   name: 'fx-collapse',
-  mixins: [groupMixin],
-  provide() {
-    return {
-      appCollapse: this
-    }
-  },
   props: {
     activeNames: {
-      validator: arrayValueValidator,
-      default() {
-        return []
-      }
+      validator: stringNumberArrayMixValidator,
+      default: () => []
     },
     accordion: {
       type: Boolean,
       default: false
     }
   },
-  data() {
-    return {
-      activeNames2: []
-    }
-  },
-  watch: {
-    activeNames(val) {
-      this.updateValue(val)
-    }
-  },
-  mounted() {
-    this.updateValue(this.activeNames)
-  },
   emits: ['update:activeNames', 'change'],
-  methods: {
-    updateValue(val) {
-      if (isArray(val) && isSameArray(val, this.activeNames2)) {
-        return
-      }
+  setup(props, { emit }) {
+    let activeNames2: CollapseActiveNames = []
 
-      let values = arrayValueValidator(val) ? (isArray(val) ? val : [val]) : []
+    const { children } = useGroup('collapse')
 
-      if (this.accordion) {
+    function updateValue(val: string | number | CollapseActiveNames) {
+      let values = cloneData(
+        stringNumberArrayMixValidator(val) ? (isArray(val) ? val : [val]) : []
+      ) as CollapseActiveNames
+
+      if (props.accordion) {
         // 手风琴模式只保留一个值
         values = values.slice(0, 1)
       }
-      values = cloneData(values)
 
-      const activeNames = []
+      if (isArray(values) && isSameArray(values, activeNames2)) {
+        return
+      }
 
-      this.childrenForEach(child => {
-        if (child.name && inArray(child.name, values)) {
-          activeNames.push(name)
+      activeNames2 = []
+
+      children.forEach(child => {
+        const childName = child.getName()
+
+        if (childName && inArray(childName, values)) {
+          activeNames2.push(childName)
           child.show()
         } else {
           child.hide()
         }
       })
+    }
 
-      this.activeNames2 = activeNames
-    },
+    function onChange(uid: number) {
+      activeNames2 = []
 
-    onChange({ name, active, $: { uid } }) {
-      let activeNames = []
-
-      if (this.accordion) {
-        activeNames = name && active ? [name] : []
-
-        if (active) {
-          this.childrenForEach(child => {
-            if (child.$.uid !== uid) {
-              child.hide()
-            }
-          })
-        }
-      } else {
-        this.childrenForEach(child => {
-          if (child.active && child.name) {
-            activeNames.push(child.name)
+      if (props.accordion) {
+        children.forEach(child => {
+          if (child.uid === uid) {
+            child.getActive() &&
+              child.getName() &&
+              activeNames2.push(child.getName())
+          } else {
+            child.hide()
           }
+        })
+      } else {
+        children.forEach(child => {
+          child.getActive() &&
+            child.getName() &&
+            activeNames2.push(child.getName())
         })
       }
 
-      this.activeNames2 = activeNames
-      this.$emit('update:activeNames', cloneData(activeNames))
-      this.$emit('change', {
-        activeNames: cloneData(activeNames)
+      emit('update:activeNames', cloneData(activeNames2))
+      emit('change', {
+        activeNames: cloneData(activeNames2)
       })
     }
+
+    onMounted(() => updateValue(props.activeNames))
+
+    watch(
+      () => props.activeNames,
+      val => updateValue(val)
+    )
+
+    provide('fxCollapseChange', onChange)
+
+    return {}
   }
-}
+})
 </script>

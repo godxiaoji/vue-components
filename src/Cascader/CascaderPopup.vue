@@ -37,54 +37,41 @@
   </drawer>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, nextTick, ref, computed } from 'vue'
 import Drawer from '../Drawer'
-import { array2String, getDefaultDetail } from '../util/multi-selector'
 import { frameTo } from '../helpers/animation'
-import multiSelectorMixin from '../util/multi-selector/mixin'
-import popupExtendMixin from '../util/popup-extend-mixin'
 import { isSameArray } from '../helpers/util'
+import { useView, viewEmits } from '../multi-selector/view'
+import commonProps from '../multi-selector/props'
+import {
+  usePopupExtend,
+  popupExtendEmits,
+  popupExtendProps
+} from '../utils/popup'
+import { ColRow, Values } from '../multi-selector/types'
 
-export default {
+export default defineComponent({
   name: 'fx-cascader-popup',
-  mixins: [popupExtendMixin, multiSelectorMixin],
   components: { Drawer },
   props: {
+    ...popupExtendProps,
+    ...commonProps,
     title: {
       type: String,
       default: ''
     }
   },
-  data() {
-    return {
-      detail: getDefaultDetail(),
+  emits: [...viewEmits, ...popupExtendEmits],
+  setup(props, ctx) {
+    const { emit } = ctx
+    const dropdown = ref<HTMLElement>()
 
-      cascader: true
-    }
-  },
-  computed: {
-    title2() {
-      if (this.cacheLabel[0]) {
-        return array2String(this.cacheLabel, this.mode, this.separator)
-      }
+    const popup = usePopupExtend(ctx)
 
-      return this.title || ' '
-    }
-  },
-  watch: {
-    visible: {
-      handler(val) {
-        if (val) {
-          this.update(this.formValue)
-        }
-      }
-    }
-  },
-  emits: ['select'],
-  methods: {
-    afterUpdate() {
-      this.$nextTick(() => {
-        const $dropdown = this.$refs.dropdown
+    function updateLayout() {
+      nextTick(() => {
+        const $dropdown = dropdown.value as HTMLElement
 
         if (!$dropdown) {
           return
@@ -94,19 +81,19 @@ export default {
         const $selecteds = $dropdown.querySelectorAll('.selected')
 
         if ($lists[1]) {
-          let $next
+          let $next: HTMLElement
           if ($lists.length > $selecteds.length) {
             // 还有未选择
-            $next = $lists[$selecteds.length]
+            $next = $lists[$selecteds.length] as HTMLElement
           } else {
             // 选择完毕
-            $next = $lists[$lists.length - 1]
+            $next = $lists[$lists.length - 1] as HTMLElement
           }
 
-          $next = $next.parentNode
-          const $groups = $next.parentNode
+          $next = $next.parentElement as HTMLElement
+          const $groups = $next.parentElement as HTMLElement
 
-          let to
+          let to: number
 
           if ($next.offsetWidth >= document.documentElement.offsetWidth * 0.9) {
             to = $next.offsetLeft
@@ -136,7 +123,7 @@ export default {
           if ($selecteds[index]) {
             frameTo({
               from: $list.scrollTop,
-              to: $selecteds[index].offsetTop,
+              to: ($selecteds[index] as HTMLElement).offsetTop,
               duration: 100,
               progress(res) {
                 $list.scrollTop = res.current
@@ -147,50 +134,75 @@ export default {
           }
         })
       })
-    },
+    }
 
-    /**
-     * 选项点击
-     */
-    onItemClick(e, item) {
+    function onItemClick(e: Event, item: ColRow) {
       if (item.disabled) {
         return
       }
 
+      const selecteds = getValuesByRow(item)
+
       if (item.hasChildren) {
-        this.update(item.values)
+        update(selecteds)
       } else {
-        if (!isSameArray(this.formValue, item.values)) {
-          this.formValue = item.values
-          this.formLabel = item.labels
-
-          this.select()
-
-          this.$emit('update:modelValue', this.hookFormValue())
-          this.$emit('change', this.getDetail())
-          this.afterChange(this.getDetail())
+        if (!isSameArray(formValue, selecteds)) {
+          onSelect(selecteds)
+          emitValue()
+          emit('change', getDetail())
         } else {
-          this.select()
+          onSelect(selecteds)
         }
-
-        this.onUpdateVisible(false)
       }
-    },
+    }
 
-    select() {
-      const selectDetail = this.getDetail()
-      this.$emit('select', selectDetail)
-      this.afterSelect(selectDetail)
-    },
+    function onSelect(selecteds: Values) {
+      const confirmDetail = updateValue(selecteds)
+      ctx.emit('confirm', confirmDetail)
+      popup.customConfirm(confirmDetail, 'selected')
+    }
 
-    afterSelect() {},
+    function emitValue() {
+      const { value, valueString } = getDetail()
+      emit('update:modelValue', props.formatString ? valueString : value)
+    }
 
-    afterChange() {},
+    const {
+      format2String,
+      cacheLabel,
+      getDetail,
+      formLabel,
+      formValue,
+      cols,
+      update,
+      getValuesByRow,
+      updateValue
+    } = useView(props, 'cascader', updateLayout)
 
-    hookFormValue() {
-      const { value, valueString } = this.getDetail()
-      return this.formatString ? valueString : value
+    const title2 = computed(() => {
+      return format2String(cacheLabel) || props.title
+    })
+
+    return {
+      ...popup,
+      title2,
+      dropdown,
+      cols,
+      getDetail,
+      formLabel,
+      formValue,
+      updateValue,
+      onItemClick
     }
   }
-}
+  // watch: {
+  //   visible: {
+  //     handler(val) {
+  //       if (val) {
+  //         this.update(this.formValue)
+  //       }
+  //     }
+  //   }
+  // }
+})
 </script>

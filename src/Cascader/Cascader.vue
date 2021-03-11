@@ -23,6 +23,7 @@
         :name="formName"
         :disabled="disabled"
         :value="formValueString"
+        ref="input"
       />
     </div>
     <cascader-popup
@@ -36,18 +37,23 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import CascaderPopup from './CascaderPopup.vue'
-import pickerMixin from '../util/multi-selector/picker-mixin'
+import Icon from '../Icon'
+import { formItemEmits, formItemProps } from '../Form/form-item'
+import { usePicker, pickerEmits, pickerProps } from '../multi-selector/picker'
+import commonProps from '../multi-selector/props'
 
-export default {
+export default defineComponent({
   name: 'fx-cascader',
-  mixins: [pickerMixin],
-  components: { CascaderPopup },
-  data() {
+  components: { CascaderPopup, Icon },
+  props: { ...formItemProps, ...commonProps, ...pickerProps },
+  emits: [...formItemEmits, ...pickerEmits],
+  setup(props, ctx) {
     return {
-      compName: 'cascader'
+      ...usePicker(props, ctx, { name: 'cascader' })
     }
   }
-}
+})
 </script>

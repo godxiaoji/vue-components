@@ -4,12 +4,13 @@
     :class="{ disabled: disabled2 }"
   >
     <input
-      class="fx-checkbox_input"
+      class="fx-checkbox_input fx-form-input"
       type="checkbox"
       :name="formName"
       :value="value"
       :disabled="disabled2"
       @change="onChange"
+      ref="input"
     />
     <div class="fx-checkbox_box">
       <icon
@@ -27,21 +28,17 @@
   </label>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Icon from '../Icon'
-import { inArray, isStringNumberMix } from '../helpers/util'
+import { useCheckboxOrRadio } from '../utils/checkbox-radio'
 
-export default {
+export default defineComponent({
   name: 'fx-checkbox',
   components: { Icon },
-  inject: {
-    appCheckboxGroup: {
-      default: null
-    }
-  },
   props: {
     value: {
-      validator: isStringNumberMix,
+      type: [Number, String],
       default: ''
     },
     checked: {
@@ -65,79 +62,9 @@ export default {
       default: ''
     }
   },
-  computed: {
-    /* 优先接受来自分组的name */
-    formName() {
-      if (this.appCheckboxGroup) {
-        return this.appCheckboxGroup.formName
-      }
-
-      return this.name || ''
-    },
-    disabled2() {
-      if (this.appCheckboxGroup) {
-        return this.appCheckboxGroup.disabled
-      }
-
-      return this.disabled
-    }
-  },
-  watch: {
-    checked() {
-      if (this.appCheckboxGroup) {
-        return
-      }
-
-      const $input = this.getInputEl()
-      const checked = !!this.checked
-
-      if (checked !== $input.checked) {
-        $input.checked = checked
-      }
-    }
-  },
-  created() {
-    this.appCheckboxGroup && this.appCheckboxGroup.addChild(this)
-  },
-  mounted() {
-    const $input = this.getInputEl()
-
-    let checked
-    if (this.appCheckboxGroup) {
-      checked = inArray(this.value, this.appCheckboxGroup.modelValue)
-    } else {
-      checked = !!this.checked
-    }
-
-    if (checked !== $input.checked) {
-      $input.defaultChecked = checked
-      $input.checked = checked
-    }
-
-    $input._app_component = this.appCheckboxGroup || this
-    $input._app_type = 'checkbox'
-  },
-  beforeUnmount() {
-    this.appCheckboxGroup && this.appCheckboxGroup.removeChild(this)
-  },
   emits: ['update:checked'],
-  methods: {
-    onChange(e) {
-      if (this.appCheckboxGroup) {
-        this.appCheckboxGroup.onChange(this)
-      } else {
-        this.$emit('update:checked', e.target.checked)
-      }
-    },
-    getInputEl() {
-      return this.$el && this.$el.firstElementChild
-    },
-    getInputChecked() {
-      return !!this.getInputEl().checked
-    },
-    setChecked(checked = true) {
-      this.getInputEl().checked = checked
-    }
+  setup(props, ctx) {
+    return useCheckboxOrRadio(props, ctx, 'checkbox')
   }
-}
+})
 </script>

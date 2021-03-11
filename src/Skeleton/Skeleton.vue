@@ -1,34 +1,18 @@
-<script>
-import { h } from 'vue'
+<script lang="ts">
+import { defineComponent, h, provide } from 'vue'
 import SkeletonLayout from './SkeletonLayout.vue'
-import { inArray } from '../helpers/util'
 import {
   paragraphDefaultRow,
   AVATAR_SHAPE_NAMES,
-  BUTTON_SHAPE_NAMES
+  BUTTON_SHAPE_NAMES,
+  ButtonShapeNames,
+  AvatarShapeNames
 } from './util'
+import { createEnumsValidator } from '../utils/validator'
+import { PropType } from 'vue'
 
-export default {
-  render() {
-    if (!this.loading) {
-      return this.$slots.default ? this.$slots.default() : null
-    }
-
-    return h(
-      SkeletonLayout,
-      {
-        animated: this.animated,
-        avatar: this.avatar
-      },
-      this.$slots.layout
-    )
-  },
+export default defineComponent({
   name: 'fx-skeleton',
-  provide() {
-    return {
-      skeletonSubOptions: this.subOptions
-    }
-  },
   props: {
     // 是否加载中
     loading: {
@@ -47,17 +31,15 @@ export default {
     },
     // 指定头像的形状
     avatarShape: {
-      validator(val) {
-        return inArray(val, AVATAR_SHAPE_NAMES)
-      },
-      default: AVATAR_SHAPE_NAMES[0]
+      type: String as PropType<AvatarShapeNames>,
+      validator: createEnumsValidator(AVATAR_SHAPE_NAMES),
+      default: null
     },
     // 指定按钮的形状
     buttonShape: {
-      validator(val) {
-        return inArray(val, BUTTON_SHAPE_NAMES)
-      },
-      default: BUTTON_SHAPE_NAMES[0]
+      type: String as PropType<ButtonShapeNames>,
+      validator: createEnumsValidator(BUTTON_SHAPE_NAMES),
+      default: null
     },
     // 设置段落占位图的行数
     paragraphRow: {
@@ -65,44 +47,23 @@ export default {
       default: paragraphDefaultRow
     }
   },
-  data() {
-    return {
-      subOptions: {
-        avatarShape: AVATAR_SHAPE_NAMES[0],
-        buttonShape: BUTTON_SHAPE_NAMES[0],
-        paragraphRow: paragraphDefaultRow,
-        animated: false
+  setup(props, { slots }) {
+    provide('fxSkeletonProps', props)
+
+    return () => {
+      if (!props.loading) {
+        return slots.default ? slots.default() : null
       }
+
+      return h(
+        SkeletonLayout,
+        {
+          animated: props.animated,
+          avatar: props.avatar
+        },
+        slots.layout
+      )
     }
-  },
-  watch: {
-    avatarShape: {
-      immediate: true,
-      handler(val) {
-        this.subOptions.avatarShape = val
-      }
-    },
-    buttonShape: {
-      immediate: true,
-      handler(val) {
-        this.subOptions.buttonShape = val
-      }
-    },
-    paragraphRow: {
-      immediate: true,
-      handler(val) {
-        this.subOptions.paragraphRow = val
-      }
-    },
-    animated: {
-      immediate: true,
-      handler(val) {
-        this.subOptions.animated = val
-      }
-    }
-  },
-  created() {
-    this._app_skeleton = true
   }
-}
+})
 </script>

@@ -40,17 +40,22 @@
   </modal>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
 import Modal from '../Modal'
-import popupExtendMixin from '../util/popup-extend-mixin'
+import {
+  usePopupExtend,
+  popupExtendEmits,
+  popupExtendProps
+} from '../utils/popup'
 
-export default {
+export default defineComponent({
   name: 'fx-dialog',
   components: { FxButton, FxButtonGroup, Modal },
-  mixins: [popupExtendMixin],
   props: {
+    ...popupExtendProps,
     title: {
       type: String,
       default: null
@@ -76,14 +81,19 @@ export default {
       default: null
     }
   },
-  emits: ['confirm'],
-  methods: {
-    onConfirmClick() {
-      this.$emit('confirm', {})
-      this.afterConfirm({})
+  emits: popupExtendEmits,
+  setup(props, ctx) {
+    const popup = usePopupExtend(ctx)
 
-      this.onUpdateVisible(false)
+    function onConfirmClick() {
+      ctx.emit('confirm', {})
+      popup.customConfirm({})
+    }
+
+    return {
+      ...popup,
+      onConfirmClick
     }
   }
-}
+})
 </script>

@@ -8,7 +8,12 @@
       v-show="isShow"
     >
       <div class="fx-mask" @click="onMaskClick"></div>
-      <div class="fx-modal_box" :style="boxStyles">
+      <div
+        class="fx-modal_box"
+        :style="{
+          width
+        }"
+      >
         <div class="fx-modal_box-inner">
           <slot></slot>
         </div>
@@ -20,34 +25,32 @@
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { popupEmits, popupProps, usePopup } from '../utils/popup'
 import Icon from '../Icon'
-import popupMixin from '../util/popup-mixin'
 
-export default {
+export default defineComponent({
   name: 'fx-modal',
   components: { Icon },
-  mixins: [popupMixin],
   props: {
+    ...popupProps,
     width: {
       type: String,
-      default: ''
+      default: null
     },
     showClose: {
       type: Boolean,
       default: true
     }
   },
-  computed: {
-    boxStyles() {
-      const styles = {}
+  emits: popupEmits,
+  setup(props, ctx) {
+    const popup = usePopup(props, ctx, {})
 
-      if (this.width) {
-        styles.width = this.width
-      }
-
-      return styles
+    return {
+      ...popup
     }
   }
-}
+})
 </script>

@@ -11,12 +11,13 @@
   </div>
 </template>
 
-<script>
-import { inArray } from '../helpers/util'
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
 
 const TYPE_NAMES = ['default', 'error', 'network', 'search']
 
-export default {
+export default defineComponent({
   name: 'fx-empty',
   props: {
     // 描述文字
@@ -26,18 +27,22 @@ export default {
     },
     // 类型
     type: {
-      validator(val) {
-        return inArray(val, TYPE_NAMES)
-      },
+      type: String as PropType<'default' | 'error' | 'network' | 'search'>,
+      validator: createEnumsValidator(TYPE_NAMES),
       default: TYPE_NAMES[0]
     }
   },
-  computed: {
-    imageUrl() {
-      return `https://cdn.fox2.cn/vfox/empty/${
-        inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
-      }@2x.png`
+  setup(props) {
+    const imageUrl = computed(() => {
+      return `https://cdn.fox2.cn/vfox/empty/${getEnumsValue(
+        TYPE_NAMES,
+        props.type
+      )}@2x.png`
+    })
+
+    return {
+      imageUrl
     }
   }
-}
+})
 </script>

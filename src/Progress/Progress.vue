@@ -15,15 +15,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
 import { isNumeric, rangeInteger } from '../helpers/util'
 
-export default {
+export default defineComponent({
   name: 'fx-progress',
   props: {
     percentage: {
-      validator(val) {
-        return isNumeric(val) && parseFloat(val) >= 0 && parseFloat(val) <= 100
+      type: [String, Number],
+      validator: (val: string | number) => {
+        return (
+          isNumeric(val) &&
+          parseFloat(val as string) >= 0 &&
+          parseFloat(val as string) <= 100
+        )
       },
       default: 0,
       required: true
@@ -41,10 +47,12 @@ export default {
       default: false
     }
   },
-  computed: {
-    progress() {
-      return rangeInteger(this.percentage, 0, 100) + '%'
+  setup(props) {
+    return {
+      progress: computed(() => {
+        return rangeInteger(props.percentage, 0, 100) + '%'
+      })
     }
   }
-}
+})
 </script>

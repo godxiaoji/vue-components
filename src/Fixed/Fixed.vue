@@ -1,5 +1,5 @@
 <template>
-  <div class="fx-fixed" :style="styles">
+  <div class="fx-fixed" :style="styles" ref="root">
     <!--fixed start-->
     <div
       class="fx-fixed_fixed"
@@ -13,13 +13,25 @@
   </div>
 </template>
 
-<script>
-import safeAreaInsets from 'safe-area-insets'
-import { resizeDetector } from '../helpers/dom'
-import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  ref,
+  toRef
+} from 'vue'
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
 import { capitalize } from '../helpers/util'
+import { PlacementTypes, PLACEMENT_TYPES } from '../utils/constants'
+import { useResizeDetector } from '../utils/resize-detector'
+import { useSafeAreaInsets } from '../utils/safe-area-insets'
+import { StyleObject } from '../utils/types'
 
-export default {
+export default defineComponent({
   name: 'fx-fixed',
   inject: {
     disableFixed: {
@@ -29,7 +41,8 @@ export default {
   props: {
     // 固定方向
     placement: {
-      validator: createEnumsValidator('placement'),
+      type: String as PropType<PlacementTypes>,
+      validator: createEnumsValidator(PLACEMENT_TYPES),
       default: null
     },
     // 是否开启安全区
@@ -50,74 +63,75 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      width: 0,
-      height: 0,
-      safeAreaInsets: {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }
-    }
-  },
-  computed: {
-    placementClassName() {
-      return 'placement--' + getEnumsValue('placement', this.placement)
-    },
-    fixedStyles() {
-      const styles = { background: this.background, zIndex: this.zIndex }
-      const placement = getEnumsValue('placement', this.placement)
+  setup(props) {
+    const width = ref(0)
+    const height = ref(0)
+    const root = ref<HTMLElement>()
+    const fixed = ref<HTMLElement>()
+    const disableFixed = inject('disableFixed', false)
 
-      if (this.enableSafeAreaInsets && safeAreaInsets.support) {
+    const safeAreaInsets = useSafeAreaInsets(
+      toRef(props, 'enableSafeAreaInsets')
+    )
+
+    function updateSize() {
+      const { offsetWidth, offsetHeight } = fixed.value as HTMLElement
+
+      width.value = offsetWidth
+      height.value = offsetHeight
+    }
+
+    const placementClassName = computed(
+      () => 'placement--' + getEnumsValue(PLACEMENT_TYPES, props.placement)
+    )
+
+    const styles = computed(() => {
+      return {
+        width: (props.spaceHold ? width.value : 0) + 'px',
+        height: (props.spaceHold ? height.value : 0) + 'px'
+      }
+    })
+
+    const fixedStyles = computed(() => {
+      const styles: StyleObject = {
+        background: props.background,
+        zIndex: props.zIndex.toString()
+      }
+
+      const placement = getEnumsValue(PLACEMENT_TYPES, props.placement)
+      if (props.enableSafeAreaInsets && safeAreaInsets.support) {
         styles['padding' + capitalize(placement)] =
-          this.safeAreaInsets[placement] + 'px'
+          safeAreaInsets[placement as 'top'] + 'px'
       }
 
       return styles
-    },
-    styles() {
-      return {
-        width: (this.spaceHold ? this.width : 0) + 'px',
-        height: (this.spaceHold ? this.height : 0) + 'px'
-      }
-    }
-  },
-  mounted() {
-    this.offResizeDetector = resizeDetector(this.$refs.fixed, () => {
-      this.updateSize()
     })
-    safeAreaInsets.onChange(this.updateSize)
 
-    if (this.disableFixed) {
-      // 针对在tranform下 fixed 会失效的问题
-      document.body.append(this.$refs.fixed)
-    }
+    useResizeDetector(fixed, updateSize)
 
-    this.updateSize()
-  },
-  beforeUnmount() {
-    this.offResizeDetector()
-    safeAreaInsets.offChange(this.updateSize)
-
-    if (this.disableFixed) {
-      this.$el.append(this.$refs.fixed)
-    }
-  },
-  methods: {
-    updateSize() {
-      const { offsetWidth, offsetHeight } = this.$refs.fixed
-
-      this.width = offsetWidth
-      this.height = offsetHeight
-      this.safeAreaInsets = {
-        top: safeAreaInsets.top,
-        left: safeAreaInsets.left,
-        right: safeAreaInsets.right,
-        bottom: safeAreaInsets.bottom
+    onMounted(() => {
+      if (disableFixed) {
+        // 针对在tranform下 fixed 会失效的问题
+        document.body.append(fixed.value as HTMLElement)
       }
+
+      updateSize()
+    })
+
+    onBeforeUnmount(() => {
+      if (disableFixed) {
+        ;(root.value as HTMLElement).append(fixed.value as HTMLElement)
+      }
+    })
+
+    return {
+      root,
+      fixed,
+      placementClassName,
+      styles,
+      fixedStyles,
+      safeAreaInsets
     }
   }
-}
+})
 </script>

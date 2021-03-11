@@ -23,6 +23,7 @@
         :name="formName"
         :disabled="disabled"
         :value="formLabel"
+        ref="input"
       />
     </div>
     <calendar-popup
@@ -36,26 +37,39 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  shallowRef,
+  ComponentPublicInstance,
+  onMounted,
+  reactive,
+  ref,
+  watch
+} from 'vue'
 import Icon from '../Icon'
 import CalendarPopup from './CalendarPopup.vue'
-import formMixin from '../util/form-mixin'
-import mixin from './mixin'
 import {
   cloneDetail,
   getDefaultDetail,
-  getDetail,
-  isSameDate,
-  parseValues
+  getDetail as _getDetail,
+  isSameDateArray,
+  parseValues,
+  TYPE_NAMES
 } from './util'
 import { isFunction, isUndefined } from '../helpers/util'
 import dayjs from 'dayjs'
+import commonProps from './props'
+import { formItemEmits, formItemProps, useFormItem } from '../Form/form-item'
+import { getEnumsValue } from '../utils/validator'
+import { DetailObject } from './types'
 
-export default {
+export default defineComponent({
   name: 'fx-calendar',
   components: { Icon, CalendarPopup },
-  mixins: [mixin, formMixin],
   props: {
+    ...commonProps,
+    ...formItemProps,
     placeholder: {
       type: String,
       default: ''
@@ -73,103 +87,128 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      formValue: [],
-      formLabel: '',
-      detail: getDefaultDetail(),
-      defaultDetail: getDefaultDetail(),
+  emits: [...formItemEmits],
+  setup(props, ctx) {
+    const { emit } = ctx
+    const isInitPopup = ref(false)
+    const popupVisible = ref(true)
+    const formLabel = ref('')
+    const formValue = reactive<Date[]>([])
+    const popup = shallowRef<ComponentPublicInstance<typeof CalendarPopup>>()
 
-      isInitPopup: false,
-      popupVisible: true
-    }
-  },
-  watch: {
-    modelValue: {
-      handler(val) {
-        if (!isUndefined(this._changeValue) && this._changeValue == val) {
-          //
-        } else {
-          this.updateValue(val)
-        }
+    const type = getEnumsValue(TYPE_NAMES, props.initialType)
+    let detail = getDefaultDetail()
+    let _changeValue: any = null
 
-        delete this._changeValue
+    function updateValue(val: unknown) {
+      if (popup.value) {
+        updateDetail(popup.value.updateValue(val))
+      } else {
+        updateDetail(_getDetail(parseValues(val, type), type))
       }
     }
-  },
-  created() {
-    this.updateValue(this.modelValue)
-    this.defaultDetail = cloneDetail(this.detail)
-  },
-  mounted() {
-    const $input = this.getInputEl()
 
-    $input._app_component = this
-    $input._app_type = 'calendar'
-    $input.defaultValue = $input.value
-  },
-  methods: {
-    onFieldClick() {
-      if (!this.disabled) {
-        if (!this.isInitPopup) {
-          this.isInitPopup = true
+    function updateDetail(_detail: DetailObject) {
+      detail = _detail
+      formLabel.value = _detail.label
+      formValue.splice(0, Infinity, ...getDetail().value)
+    }
+
+    function onFieldClick() {
+      if (!props.disabled) {
+        if (!isInitPopup.value) {
+          isInitPopup.value = true
         } else {
-          this.popupVisible = true
+          popupVisible.value = true
         }
       }
-    },
+    }
 
-    onConfirm(detail) {
-      if (isSameDate(detail.value, this.detail.value)) {
+    function getDetail() {
+      return cloneDetail(detail)
+    }
+
+    function onConfirm(_detail: DetailObject) {
+      if (isSameDateArray(detail.value, _detail.value)) {
         return
       }
 
-      this.updateDetail(detail)
-      const formatValue = this.hookFormValue()
-      this._changeValue = formatValue
-      this.$emit('update:modelValue', formatValue)
-      this.$emit('change', cloneDetail(detail))
+      updateDetail(_detail)
+      const formatValue = hookFormValue()
+      _changeValue = formatValue
+      emit('update:modelValue', formatValue)
+      emit('change', getDetail())
 
-      this.validateAfterEventTrigger('change', this.formValue)
-    },
+      validateAfterEventTrigger('change', formatValue)
+    }
 
-    updateValue(val) {
-      if (this.$refs.popup) {
-        this.updateDetail(this.$refs.popup.updateValue(val))
-      } else {
-        this.updateDetail(
-          getDetail(parseValues(val, this.initialType), this.initialType)
-        )
-      }
-    },
+    // function reset() {
+    //   updateValue(this.defaultDetail.value)
 
-    updateDetail(detail) {
-      this.detail = detail
-      this.formValue = detail.value
-      this.formLabel = detail.label
-    },
+    //   emit('update:modelValue', hookFormValue())
 
-    hookFormValue() {
-      const newValue = cloneDetail(this.detail).value
-      if (isFunction(this.formatter)) {
-        return this.formatter(newValue, function formatter(template) {
-          return newValue.map(date => {
-            return dayjs(date).format(template)
+    //   emit('reset', { name: this.formName, value: hookFormValue() })
+
+    //   return hookFormValue()
+    // }
+
+    const {
+      formName,
+      validateAfterEventTrigger,
+      formReset,
+      getInputEl,
+      hookFormValue
+    } = useFormItem<Date>(props, ctx, {
+      formValue,
+      hookFormValue() {
+        const newValue = cloneDetail(detail).value
+        if (isFunction(props.formatter)) {
+          return props.formatter(newValue, function formatter(
+            template: string
+          ) {
+            return newValue.map(date => {
+              return dayjs(date).format(template)
+            })
           })
-        })
+        }
+        return newValue
       }
-      return newValue
-    },
+    })
+    watch(
+      () => props.modelValue,
+      val => {
+        if (!isUndefined(_changeValue) && _changeValue == val) {
+          //
+        } else {
+          updateValue(val)
+        }
 
-    reset() {
-      this.updateValue(this.defaultDetail.value)
+        _changeValue = null
+      }
+    )
 
-      this.$emit('update:modelValue', this.hookFormValue())
+    updateValue(props.modelValue)
 
-      this.$emit('reset', { name: this.formName, value: this.hookFormValue() })
+    // let defaultDetail = cloneDetail(detail)
 
-      return this.hookFormValue()
+    onMounted(() => {
+      const $input = getInputEl() as HTMLInputElement
+
+      $input.defaultValue = $input.value
+    })
+
+    return {
+      isInitPopup,
+      popupVisible,
+      formName,
+      formLabel,
+      formValue,
+      popup,
+      hookFormValue,
+      validateAfterEventTrigger,
+      onFieldClick,
+      onConfirm
     }
   }
-}
+})
 </script>

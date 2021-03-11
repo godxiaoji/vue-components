@@ -1,5 +1,5 @@
 <template>
-  <div class="fx-image" @click="onClick">
+  <div class="fx-image" @click="onClick" ref="root">
     <span
       v-if="aspectRatio != null && aspectRatio > 0"
       class="fx-image_ratio"
@@ -12,18 +12,50 @@
       <icon icon="ImageBreakOutlined" />
     </i>
     <img
-      v-if="imgSrc"
+      v-if="currentSrc"
       class="fx-image_img"
       :class="[modeClassName]"
-      :src="imgSrc"
+      :src="currentSrc"
     />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Icon from '../Icon'
-import { addLazyQueue, loadNow, removeComponentFromLazy } from './load-image'
-import { inArray } from '../helpers/util'
+import {
+  addLazyQueue,
+  loadNow,
+  removeComponentFromLazy,
+  ImageLoadObject,
+  ImageLoadedResource
+} from './load-image'
+import {
+  defineComponent,
+  onMounted,
+  PropType,
+  ref,
+  getCurrentInstance,
+  watch,
+  onBeforeUnmount,
+  computed,
+  ComponentInternalInstance
+} from 'vue'
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
+import Exception from '../helpers/exception'
+
+type ModeNames =
+  | 'scaleToFill'
+  | 'aspectFit'
+  | 'aspectFill'
+  | 'widthFix'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top left'
+  | 'top right'
+  | 'bottom left'
+  | 'bottom right'
 
 const MODE_NAMES = [
   'scaleToFill',
@@ -42,7 +74,7 @@ const MODE_NAMES = [
 
 const LAZY_PRELOAD = 1.3
 
-export default {
+export default defineComponent({
   name: 'fx-image',
   components: { Icon },
   props: {
@@ -52,10 +84,9 @@ export default {
       default: ''
     },
     mode: {
-      validator(value) {
-        return inArray(value, MODE_NAMES)
-      },
-      default: MODE_NAMES[0]
+      type: String as PropType<ModeNames>,
+      validator: createEnumsValidator(MODE_NAMES),
+      default: null
     },
     // 图片懒加载，在即将进入一定范围(preload=1.3)时才开始加载
     lazyLoad: {
@@ -68,85 +99,87 @@ export default {
       default: null
     }
   },
-  data() {
-    return {
-      imgSrc: null,
-      inViewed: false,
+  setup(props, { emit }) {
+    const instance = getCurrentInstance() as ComponentInternalInstance
+    const loading = ref(true)
+    const error = ref(false)
+    const root = ref<HTMLElement>()
+    const currentSrc = ref<string | null>(null)
 
-      loading: true,
-      error: false
-    }
-  },
-  computed: {
-    // 计算属性的 getter
-    modeClassName() {
-      // `this` 指向 vm 实例
-      const mode = inArray(this.mode, MODE_NAMES) ? this.mode : MODE_NAMES[0]
-      return 'mode--' + mode.replace(/\s+/g, '-')
-    }
-  },
-  watch: {
-    src() {
-      if (this.lazyLoad) {
-        addLazyQueue(this)
-      } else {
-        loadNow(this)
+    function load() {
+      const loadObject: ImageLoadObject = {
+        src: props.src,
+        uid: instance.uid,
+        checkInView,
+        onLoad,
+        onError
       }
-    }
-  },
-  mounted() {
-    if (this.src) {
-      this.loading = true
-      this.error = false
 
-      if (this.lazyLoad) {
-        addLazyQueue(this)
-      } else {
-        loadNow(this)
-      }
+      props.lazyLoad ? addLazyQueue(loadObject) : loadNow(loadObject)
     }
-  },
-  beforeUnmount() {
-    removeComponentFromLazy(this)
-  },
-  methods: {
-    getRect() {
-      this.rect = this.$el.getBoundingClientRect()
-    },
-    checkInView() {
-      this.getRect()
+
+    function checkInView() {
+      const {
+        top,
+        right,
+        bottom,
+        left
+      } = (root.value as HTMLElement).getBoundingClientRect()
+
       return (
-        this.rect.top < window.innerHeight * LAZY_PRELOAD &&
-        this.rect.bottom > 0 &&
-        this.rect.left < window.innerWidth * LAZY_PRELOAD &&
-        this.rect.right > 0
+        top < window.innerHeight * LAZY_PRELOAD &&
+        bottom > 0 &&
+        left < window.innerWidth * LAZY_PRELOAD &&
+        right > 0
       )
-    },
-    onLoad(res) {
-      if (res.src === this.src) {
+    }
+
+    function onLoad(res: ImageLoadedResource) {
+      if (res.src === props.src) {
         // 防止多次变更图片导致的图片不正确
-        this.loading = false
-        this.error = false
-        this.imgSrc = res.src
+        loading.value = false
+        error.value = false
+        currentSrc.value = res.src
       }
 
-      const type = 'load'
-
-      this.$emit(type, {
+      emit('load', {
         width: res.naturalWidth,
         height: res.naturalHeight,
-        src: this.imgSrc
+        src: res.src
       })
-    },
-    onError(e) {
-      this.loading = false
-      this.error = true
+    }
 
-      this.$emit('error', e)
-    },
-    onClick(e) {
-      this.$emit(e.type, e)
+    function onError(e: Exception) {
+      loading.value = false
+      error.value = true
+
+      emit('error', e)
+    }
+
+    function onClick(e: Event) {
+      emit(e.type, e)
+    }
+
+    onMounted(() => props.src && load())
+
+    onBeforeUnmount(() => removeComponentFromLazy(instance.uid))
+
+    watch(() => props.src, load)
+
+    const modeClassName = computed(() => {
+      return (
+        'mode--' + getEnumsValue(MODE_NAMES, props.mode).replace(/\s+/g, '-')
+      )
+    })
+
+    return {
+      currentSrc,
+      modeClassName,
+      loading,
+      error,
+      root,
+      onClick
     }
   }
-}
+})
 </script>

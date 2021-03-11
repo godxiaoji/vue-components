@@ -17,7 +17,7 @@
           >
             <li
               class="fx-pop-menu_item fx-horizontal-hairline"
-              :class="{ disabled: !!item.disabled }"
+              :class="{ disabled: item.disabled }"
               v-for="(item, index) in options2"
               :key="index"
               @click="onItemClick(index)"
@@ -37,42 +37,33 @@
   </teleport>
 </template>
 
-<script>
-import Popover from './Popover.vue'
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
+import { popoverProps, popoverEmits, usePopover } from './popover'
 import Icon from '../Icon'
 import { cloneData, isArray, isObject } from '../helpers/util'
 
-export default {
+interface OptionItem {
+  name: string
+  icon?: any
+  disabled?: boolean
+}
+
+export default defineComponent({
   name: 'fx-pop-menu',
-  extends: Popover,
   components: { Icon },
   props: {
+    ...popoverProps,
     options: {
-      type: Array,
-      default() {
-        return []
-      }
+      type: Array as PropType<OptionItem[]>
     }
   },
-  computed: {
-    options2() {
-      if (isArray(this.options)) {
-        return this.options.map(v => {
-          if (isObject(v)) {
-            return cloneData(v)
-          }
-          return {
-            name: v.toString()
-          }
-        })
-      }
-      return []
-    }
-  },
-  emits: ['select'],
-  methods: {
-    onItemClick(index) {
-      const item = this.options[index]
+  emits: [...popoverEmits, 'select'],
+  setup(props, ctx) {
+    const popoverHook = usePopover(props, ctx)
+
+    function onItemClick(index: number) {
+      const item = props.options?.[index]
 
       if (!item || item.disabled) {
         return
@@ -83,12 +74,35 @@ export default {
         index
       }
 
-      this.$emit('select', detail)
-      this.afterSelect(detail)
+      popoverHook.customConfirm(detail, 'selected')
+    }
 
-      this.hide()
-    },
-    afterSelect() {}
+    const options2 = computed(() => {
+      const options: OptionItem[] = []
+
+      if (isArray(props.options)) {
+        props.options?.forEach(v => {
+          isObject(v)
+            ? options.push({
+                icon: v.icon || null,
+                name: v.name,
+                disabled: !!v.disabled
+              })
+            : options.push({
+                icon: null,
+                name: v.toString(),
+                disabled: false
+              })
+        })
+      }
+      return options
+    })
+
+    return {
+      ...popoverHook,
+      onItemClick,
+      options2
+    }
   }
-}
+})
 </script>

@@ -4,45 +4,51 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType, provide } from 'vue'
 import { inArray, isUndefined } from '../helpers/util'
-import groupMixin from '../util/group-mixin'
+import { useGroup } from '../utils/group'
+import { DataObject } from '../utils/types'
+import { FormRules, FormInputElement, FormGroupItemOut } from './types'
 
-export default {
+export default defineComponent({
   name: 'fx-form',
-  mixins: [groupMixin],
   provide() {
     return {
       appForm: this
     }
   },
   props: {
-    rules: Object
+    rules: Object as PropType<FormRules>
   },
   emits: ['validate-submit', 'submit', 'reset'],
-  methods: {
-    onSubmit(e) {
-      const inputEls = e.target.elements
-      const value = {}
+  setup(props, { emit }) {
+    const { children } = useGroup<FormGroupItemOut>('form')
+
+    function onSubmit(e: Event) {
+      const inputEls = (e.target as HTMLFormElement).elements
+      const value: DataObject<any> = {}
       const uids = []
 
-      inputEls.forEach(el => {
-        const _ac = el._app_component
-        if (_ac) {
-          // 主要用于排重checbox等多选的情况
-          if (!inArray(_ac.$.uid, uids)) {
+      for (let i = 0, len = inputEls.length; i < len; i++) {
+        const el = inputEls[i]
+        const out = (el as FormInputElement)._fxFormItemOut
+
+        if (out) {
+          const uid = out.uid
+          const formName = out.getFormName()
+
+          if (!inArray(uid, uids)) {
             // 获取配套表单组件
-            uids.push(_ac.$.uid)
-            if (_ac.formName || _ac.name) {
-              value[_ac.formName || _ac.name] = _ac.hookFormValue
-                ? _ac.hookFormValue()
-                : _ac.formValue
+            uids.push(uid)
+
+            if (formName) {
+              value[formName] = out.hookFormValue()
             }
           }
         } else {
-          // 原生组件
-          if (el.name) {
-            const { type, name, checked } = el
+          if ((el as HTMLInputElement).name) {
+            const { type, name, checked } = el as HTMLInputElement
 
             if (type === 'checkbox') {
               // 数组类型
@@ -51,7 +57,7 @@ export default {
               }
 
               if (checked) {
-                value[name].push(el.value)
+                value[name].push((el as HTMLInputElement).value)
               }
             } else if (type === 'radio') {
               if (value[name] == null) {
@@ -59,11 +65,11 @@ export default {
               }
               // 需要判断checked
               if (checked) {
-                value[name] = el.value
+                value[name] = (el as HTMLInputElement).value
               }
             } else if (type === 'select-multiple') {
               // 多项选择，不能直接获取值
-              const selectOptions = el.options
+              const selectOptions = (el as HTMLSelectElement).options
               const selectedValues = []
               for (let i = 0; i < selectOptions.length; i++) {
                 // 如果该option被选中，则将它的value存入数组
@@ -79,25 +85,26 @@ export default {
               type === 'hidden'
             ) {
               // input
-              value[name] = el.value
+              value[name] = (el as HTMLInputElement).value
             }
           }
         }
-      })
+      }
 
-      this.$emit(e.type, {
+      emit('submit', {
+        type: 'submit',
         value
       })
 
-      const validateEmit = vaild => {
-        const type = 'validate-submit'
-        this.$emit(type, {
-          vaild,
+      const validateEmit = (valid: boolean) => {
+        emit('validate-submit', {
+          type: 'validate-submit',
+          valid,
           value
         })
       }
 
-      this.validate(value)
+      validate(value)
         .then(() => {
           validateEmit(true)
         })
@@ -106,56 +113,60 @@ export default {
         })
 
       return false
-    },
+    }
 
-    validate(value) {
-      const retList = []
+    function validate(value: DataObject<any>) {
+      const retList: Promise<any>[] = []
 
-      this.childrenForEach($child => {
-        if ($child.name && !isUndefined(value[$child.name])) {
-          retList.push($child.validate(value[$child.name]))
+      children.forEach(child => {
+        const formName = child.getFormName()
+
+        if (formName && !isUndefined(value[formName])) {
+          retList.push(child.validate(value[formName]))
         }
       })
 
       return Promise.all(retList)
-    },
-
-    onReset(e) {
-      const inputEls = e.target.elements
-
-      setTimeout(() => {
-        const value = {}
-        const uids = []
-
-        inputEls.forEach(el => {
-          const _ac = el._app_component
-
-          if (
-            _ac &&
-            !inArray(_ac.$.uid, uids) // 主要用于排重checbox等多选的情况
-          ) {
-            // 获取配套表单组件
-            uids.push(_ac.$.uid)
-
-            if (_ac.reset) {
-              _ac.reset()
-            }
-
-            if (_ac.formName || _ac.name) {
-              value[_ac.formName || _ac.name] = _ac.hookFormValue
-                ? _ac.hookFormValue()
-                : _ac.formValue
-            }
-          } else {
-            // 原生组件
-          }
-        })
-
-        this.$emit(e.type, {
-          value
-        })
-      }, 17)
     }
-  }
-}
+
+    function onReset(e: Event) {
+      // const inputEls = (e.target as HTMLFormElement).elements
+      // setTimeout(() => {
+      //   const value = {}
+      //   const uids = []
+      //   inputEls.forEach(el => {
+      //     const _ac = el._app_component
+      //     if (
+      //       _ac &&
+      //       !inArray(_ac.$.uid, uids) // 主要用于排重checbox等多选的情况
+      //     ) {
+      //       // 获取配套表单组件
+      //       uids.push(_ac.$.uid)
+      //       if (_ac.reset) {
+      //         _ac.reset()
+      //       }
+      //       if (_ac.formName || _ac.name) {
+      //         value[_ac.formName || _ac.name] = _ac.hookFormValue
+      //           ? _ac.hookFormValue()
+      //           : _ac.formValue
+      //       }
+      //     } else {
+      //       // 原生组件
+      //     }
+      //   })
+      //   emit(e.type, {
+      //     value
+      //   })
+      // }, 17)
+    }
+
+    provide('fxFormRules', props.rules)
+
+    return {
+      onSubmit,
+      onReset
+    }
+  },
+  methods: {}
+})
 </script>

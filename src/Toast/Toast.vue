@@ -22,31 +22,33 @@
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, onBeforeUnmount, PropType } from 'vue'
 import Icon from '../Icon'
-import popupMixin from '../util/popup-mixin'
+import { popupEmits, popupProps, usePopup } from '../utils/popup'
 import { isUndefined } from '../helpers/util'
-import { iconValidator } from '../helpers/validator'
+import { iconValidator } from '../utils/validator'
 
-const TYPE_MAP = {
-  default: null,
-  success: 'CheckCircleOutlined',
-  loading: 'LoadingOutlined',
-  fail: 'CloseCircleOutlined'
-}
+const typeMaps = new Map([
+  ['default', null],
+  ['success', 'CheckCircleOutlined'],
+  ['loading', 'LoadingOutlined'],
+  ['fail', 'CloseCircleOutlined']
+])
 
-export default {
+export default defineComponent({
   name: 'fx-toast',
   components: { Icon },
-  mixins: [popupMixin],
   props: {
+    ...popupProps,
     title: {
       type: String,
       required: true
     },
     type: {
-      validator(val) {
-        return !isUndefined(TYPE_MAP[val])
+      type: String as PropType<'default' | 'success' | 'loading' | 'fail'>,
+      validator: (val: string) => {
+        return !isUndefined(typeMaps.get(val))
       },
       default: 'default'
     },
@@ -64,43 +66,38 @@ export default {
       default: 0
     }
   },
-  data() {
-    return { forbidScroll: false }
-  },
-  computed: {
-    iconName() {
-      if (this.icon) {
-        return this.icon
-      } else if (TYPE_MAP[this.type]) {
-        return TYPE_MAP[this.type]
-      }
+  emits: popupEmits,
+  setup(props, ctx) {
+    let durationTimer: number
 
-      return null
+    const popup = usePopup(props, ctx, {
+      forbidScroll: false,
+      afterCancel: removeAutoClose,
+      afterShow: setAutoClose
+    })
+
+    function removeAutoClose() {
+      clearTimeout(durationTimer)
     }
-  },
-  beforeUnmount() {
-    this.removeAutoClose()
-  },
-  methods: {
-    setAutoClose() {
-      if (this.duration > 0) {
-        this.durationTimer = setTimeout(() => {
-          this.close('auto')
-        }, this.duration)
+
+    function setAutoClose() {
+      if (props.duration > 0) {
+        durationTimer = window.setTimeout(() => {
+          popup.customCancel('auto', true)
+        }, props.duration)
       }
-    },
-    close(source) {
-      this.customCancel(source, true)
-    },
-    afterCancel() {
-      this.removeAutoClose()
-    },
-    removeAutoClose() {
-      clearTimeout(this.durationTimer)
-    },
-    afterShow() {
-      this.setAutoClose()
+    }
+
+    const iconName = computed(() => {
+      return props.icon || (typeMaps.get(props.type) ?? null)
+    })
+
+    onBeforeUnmount(removeAutoClose)
+
+    return {
+      ...popup,
+      iconName
     }
   }
-}
+})
 </script>

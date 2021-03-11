@@ -1,5 +1,5 @@
 <template>
-  <div class="fx-picker-view" ref="picker">
+  <div class="fx-picker-view" ref="root">
     <div class="fx-picker-view_cols">
       <div
         class="fx-picker-view_col"
@@ -27,52 +27,64 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, nextTick, ref } from 'vue'
 import Empty from '../Empty'
 import { frameTo } from '../helpers/animation'
-import multiSelectorMixin from '../util/multi-selector/mixin'
 import { hasClassName } from '../helpers/dom'
+import { useView, viewEmits } from '../multi-selector/view'
+import commonProps from '../multi-selector/props'
 
-export default {
+interface ScrollElement extends HTMLElement {
+  scrolling?: boolean
+  scrollTimer?: number
+}
+
+export default defineComponent({
   name: 'fx-picker-view',
-  mixins: [multiSelectorMixin],
   components: { Empty },
-  data() {
-    return {
-      itemHeight: 48,
-      picker: true
+  props: {
+    ...commonProps
+  },
+  // created() {
+  //   this.formLabel = this.cacheLabel
+  //   this.formValue = this.cacheValue
+
+  //   // 需要立即同步好数据
+  //   emit('update:modelValue', this.hookFormValue())
+  // },
+  emits: viewEmits,
+  setup(props, { emit }) {
+    const root = ref<HTMLElement>()
+
+    const defaultItemHeight = 48
+
+    const {
+      getDetail,
+      formLabel,
+      formValue,
+      cols,
+      isCascade,
+      update,
+      updateColSelected,
+      getValuesByRow,
+      updateValue
+    } = useView(props, 'picker', updatePos)
+
+    function emitValue() {
+      const { value, valueString } = getDetail()
+      emit('update:modelValue', props.formatString ? valueString : value)
     }
-  },
-  created() {
-    this.formLabel = this.cacheLabel
-    this.formValue = this.cacheValue
 
-    // 需要立即同步好数据
-    this.$emit('update:modelValue', this.hookFormValue())
-  },
-  methods: {
-    onChange() {
-      this.$emit('update:modelValue', this.hookFormValue())
-      this.$emit('change', this.getDetail())
-    },
+    function onChange() {
+      emitValue()
+      emit('change', getDetail())
+    }
 
-    hookFormValue() {
-      const { value, valueString } = this.getDetail()
-      return this.formatString ? valueString : value
-    },
-
-    afterUpdate() {
-      this.formLabel = this.cacheLabel
-      this.formValue = this.cacheValue
-
-      // 把选择数据展示在选择框内
-      this.updatePos()
-    },
-
-    updatePos() {
-      this.$nextTick(() => {
+    function updatePos() {
+      nextTick(() => {
         // 把选择数据展示在选择框内
-        const $picker = this.$refs.picker
+        const $picker = root.value as HTMLElement
 
         if ($picker) {
           const $lists = $picker.querySelectorAll(`.fx-picker-view_list`)
@@ -80,19 +92,23 @@ export default {
 
           if ($firstList && $firstList.firstElementChild) {
             const itemHeight =
-              $firstList.firstElementChild.clientHeight || this.itemHeight
+              $firstList.firstElementChild.clientHeight || defaultItemHeight
+
             const $selecteds = $picker.querySelectorAll('.selected')
+
             $selecteds.forEach(($selected, index) => {
-              const itemIndex = parseInt($selected.dataset.index)
+              const itemIndex = parseInt(
+                ($selected as HTMLElement).dataset.index as string
+              )
               $lists[index].scrollTop = itemHeight * itemIndex
             })
           }
         }
       })
-    },
+    }
 
-    onListScroll(e) {
-      const $list = e.currentTarget
+    function onListScroll(e: Event) {
+      const $list = e.currentTarget as ScrollElement
 
       if ($list.scrolling) {
         return
@@ -101,8 +117,9 @@ export default {
       clearTimeout($list.scrollTimer)
 
       const $items = $list.children
-      const itemHeight = $list.firstElementChild.clientHeight || this.itemHeight
-      const groupIndex = parseInt($list.dataset.index)
+      const itemHeight =
+        $list.firstElementChild?.clientHeight || defaultItemHeight
+      const groupIndex = parseInt($list.dataset.index as string)
       let current = Math.round($list.scrollTop / itemHeight)
       let oldSelectIndex = 0
 
@@ -131,12 +148,12 @@ export default {
 
       isChange = current !== oldSelectIndex
 
-      const item = this.cols[groupIndex][current]
+      const item = cols[groupIndex][current]
 
       if (current * itemHeight === $list.scrollTop && !isChange) {
         // 如果一致 就不需要修正了
       } else {
-        $list.scrollTimer = setTimeout(() => {
+        $list.scrollTimer = window.setTimeout(() => {
           // $list.scrollTop = current * itemHeight
           $list.scrolling = true
 
@@ -151,19 +168,31 @@ export default {
               $list.scrolling = false
             }
           })
-
           if (isChange) {
-            if (this.isCascade) {
-              this.update(item.values)
+            if (isCascade.value) {
+              update(getValuesByRow(item))
             } else {
-              this.updateColSelected(groupIndex, current)
+              updateColSelected(groupIndex, current)
             }
 
-            this.onChange()
+            onChange()
           }
         }, 400)
       }
     }
+
+    emitValue()
+
+    return {
+      root,
+      cols,
+      getDetail,
+      formLabel,
+      formValue,
+      onListScroll,
+      updatePos,
+      updateValue
+    }
   }
-}
+})
 </script>

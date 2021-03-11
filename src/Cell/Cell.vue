@@ -29,14 +29,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
 import Icon from '../Icon'
-import { inArray, capitalize } from '../helpers/util'
-import { iconValidator } from '../helpers/validator'
+import { capitalize } from '../helpers/util'
+import {
+  createEnumsValidator,
+  getEnumsValue,
+  iconValidator
+} from '../utils/validator'
 
 const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 
-export default {
+export default defineComponent({
   name: 'fx-cell',
   components: { Icon },
   props: {
@@ -69,9 +74,8 @@ export default {
       default: false
     },
     arrowDirection: {
-      validator(val) {
-        return inArray(val, LINK_ICON_NAMES)
-      },
+      type: String as PropType<'right' | 'up' | 'down' | 'left'>,
+      validator: createEnumsValidator(LINK_ICON_NAMES),
       default: LINK_ICON_NAMES[0]
     },
     disabled: {
@@ -80,22 +84,23 @@ export default {
     }
   },
   emits: ['click'],
-  computed: {
-    linkIconName() {
+  setup(props, { emit }) {
+    const linkIconName = computed(() => {
       return `${capitalize(
-        inArray(this.arrowDirection, LINK_ICON_NAMES)
-          ? this.arrowDirection
-          : LINK_ICON_NAMES[0]
+        getEnumsValue(LINK_ICON_NAMES, props.arrowDirection)
       )}Outlined`
-    }
-  },
-  methods: {
-    noop() {},
-    onClick(e) {
-      if (!this.disabled) {
-        this.$emit(e.type, e)
+    })
+
+    function onClick(e: Event) {
+      if (!props.disabled) {
+        emit('click', e)
       }
     }
+
+    return {
+      linkIconName,
+      onClick
+    }
   }
-}
+})
 </script>

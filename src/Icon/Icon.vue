@@ -2,23 +2,20 @@
   <component
     :is="component"
     class="fx-icon"
-    :class="[moreClassName]"
-    :style="[iconColor, iconSize]"
+    :class="{ spin }"
+    :style="iconStyles"
     :icon-name="iconName"
   >
   </component>
 </template>
 
-<script>
-import { isObject } from '../helpers/util'
-import SvgIcon from './SvgIcon'
-import { iconValidator } from '../helpers/validator'
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+import SvgIcon from './SvgIcon.vue'
+import { iconValidator, isSvgComponent } from '../utils/validator'
+import { StyleObject } from '../utils/types'
 
-function isComponent(value) {
-  return isObject(value) && value.functional
-}
-
-export default {
+export default defineComponent({
   name: 'fx-icon',
   props: {
     icon: {
@@ -46,45 +43,36 @@ export default {
       default: null
     }
   },
-  computed: {
-    component() {
-      if (isComponent(this.icon)) {
-        return this.icon
+  setup(props) {
+    const iconStyles = computed(() => {
+      const obj: StyleObject = {}
+
+      props.color && (obj.color = props.color)
+
+      if (props.width > 0 && props.height > 0) {
+        obj.width = props.width + 'px'
+        obj.height = props.height + 'px'
+      } else if (props.size > 0) {
+        obj.width = props.size + 'px'
+        obj.height = props.size + 'px'
       }
 
-      return SvgIcon
-    },
-    moreClassName() {
-      return {
-        spin: this.spin
-      }
-    },
-    iconName() {
-      return `#icon-${isComponent(this.icon) ? 'component' : this.icon}`
-    },
-    iconColor() {
-      if (this.color) {
-        return {
-          fill: this.color
-        }
-      }
-      return null
-    },
-    iconSize() {
-      if (this.width > 0 && this.height > 0) {
-        return {
-          width: this.width + 'px',
-          height: this.height + 'px'
-        }
-      }
-      if (this.size > 0) {
-        return {
-          width: this.size + 'px',
-          height: this.size + 'px'
-        }
-      }
-      return null
+      return obj
+    })
+
+    const component = computed(() => {
+      return isSvgComponent(props.icon) ? props.icon : SvgIcon
+    })
+
+    const iconName = computed(() => {
+      return `#icon-${isSvgComponent(props.icon) ? 'component' : props.icon}`
+    })
+
+    return {
+      iconName,
+      iconStyles,
+      component
     }
   }
-}
+})
 </script>

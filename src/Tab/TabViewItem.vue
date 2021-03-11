@@ -1,31 +1,28 @@
 <template>
-  <div class="fx-swiper-item fx-tab-view-item">
+  <div
+    class="fx-swiper-item fx-tab-view-item"
+    :data-name="name"
+    :data-subName="subName"
+    ref="root"
+  >
     <slot></slot>
   </div>
 </template>
 
-<script>
-import { touchEvent } from '../helpers/events'
+<script lang="ts">
+import {
+  ref,
+  defineComponent,
+  onMounted,
+  inject,
+  onUnmounted,
+  onUpdated
+} from 'vue'
+import { createUpdateInItem } from '../utils/list'
+import { useTouch, UseTouchEvent } from '../utils/touch'
 
-const {
-  touchstart,
-  touchmove,
-  touchend,
-  addListeners,
-  removeListeners,
-  getTouch
-} = touchEvent
-
-export default {
+export default defineComponent({
   name: 'fx-tab-view-item',
-  inject: {
-    appSwiper: {
-      default: null
-    },
-    appTabView: {
-      default: null
-    }
-  },
   props: {
     name: {
       type: String,
@@ -36,129 +33,105 @@ export default {
       default: null
     }
   },
-  mounted() {
-    const $el = this.$el
+  setup() {
+    const root = ref<HTMLElement>()
+    const swiperUpdate = inject('fxSwiperUpdate', (lazy?: number) => {})
+    const tabViewUpdate = inject(
+      'fxTabViewUpdate',
+      createUpdateInItem('tab-view')
+    )
+    const vertical = inject('fxTabViewVertical', false)
 
-    $el._app_component = this
-    $el._app_name = 'tab-view-item'
-
-    addListeners($el, this)
-
-    this.update()
-  },
-  beforeUnmount() {
-    removeListeners(this.$el, this)
-  },
-  unmounted() {
-    this.update()
-  },
-  updated() {
-    if (this.$el.offsetWidth === 0 || this.$el.offsetHeight === 0) {
-      // 解决默认 hidden 的问题
-      this.update()
+    function update() {
+      swiperUpdate()
+      tabViewUpdate()
     }
-  },
-  methods: {
-    /**
-     * 事件
-     * @param {Event} e
-     */
-    handleEvent(e) {
-      if (!this.appTabView) {
-        return
+
+    onMounted(() => update())
+    onUnmounted(() => update())
+    onUpdated(() => {
+      const $item = root.value as HTMLElement
+
+      if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
+        // 解决默认 hidden 的问题
+        update()
       }
+    })
 
-      switch (e.type) {
-        case touchstart:
-          this.onTouchStart(e)
-          break
-        case touchmove:
-          this.onTouchMove(e)
-          break
-        case touchend:
-          this.onTouchEnd(e)
-          break
-        default:
-          break
-      }
-    },
-    onTouchStart(e) {
-      const {
-        scrollHeight,
-        scrollTop,
-        clientHeight,
-        scrollLeft,
-        scrollWidth,
-        clientWidth
-      } = e.currentTarget
-      const vertical = this.appTabView.vertical
+    let coords: any
 
-      const touch = getTouch(e)
+    useTouch({
+      el: root,
+      onTouchStart(e: UseTouchEvent) {
+        const {
+          scrollHeight,
+          scrollTop,
+          clientHeight,
+          scrollLeft,
+          scrollWidth,
+          clientWidth
+        } = e.currentTarget as HTMLElement
 
-      if (
-        (vertical &&
-          (scrollHeight === scrollTop + clientHeight || scrollTop === 0)) ||
-        (!vertical &&
-          (scrollWidth === scrollLeft + clientWidth || scrollLeft === 0))
-      ) {
-        if (scrollHeight !== clientHeight || scrollWidth !== clientWidth) {
-          this.touchCoords = {
-            vertical,
-            position:
-              (vertical && scrollTop === 0) || (!vertical && scrollLeft === 0)
-                ? 1
-                : 2,
-            startX: touch.pageX,
-            startY: touch.pageY,
-            timeStamp: e.timeStamp
+        const touch = e.touchObject
+
+        if (
+          (vertical &&
+            (scrollHeight === scrollTop + clientHeight || scrollTop === 0)) ||
+          (!vertical &&
+            (scrollWidth === scrollLeft + clientWidth || scrollLeft === 0))
+        ) {
+          if (scrollHeight !== clientHeight || scrollWidth !== clientWidth) {
+            coords = {
+              vertical,
+              position:
+                (vertical && scrollTop === 0) || (!vertical && scrollLeft === 0)
+                  ? 1
+                  : 2,
+              startX: touch.pageX,
+              startY: touch.pageY,
+              timeStamp: e.timeStamp
+            }
           }
+        } else {
+          // 滚动到中间，直接拒绝掉
+          coords = {
+            stop: true
+          }
+          // e.stopPropagation()
         }
-      } else {
-        // 滚动到中间，直接拒绝掉
-        this.touchCoords = {
-          stop: true
+      },
+      onTouchMove(e) {
+        if (!coords) {
+          return
         }
-        // e.stopPropagation()
-      }
-    },
-    onTouchMove(e) {
-      if (!this.touchCoords) {
-        return
-      }
 
-      if (this.touchCoords.stop) {
-        e.stopPropagation()
-        return
-      }
+        if (coords.stop) {
+          e.stopPropagation()
+          return
+        }
 
-      const { pageX, pageY } = getTouch(e)
-      const coords = this.touchCoords
+        const { pageX, pageY } = e.touchObject
 
-      const offset = coords.vertical
-        ? coords.startY - pageY
-        : coords.startX - pageX
+        const offset = coords.vertical
+          ? coords.startY - pageY
+          : coords.startX - pageX
 
-      if (
-        (coords.position === 1 && offset > 0) ||
-        (coords.position === 2 && offset < 0)
-      ) {
-        coords.stop = true
-        e.stopPropagation()
+        if (
+          (coords.position === 1 && offset > 0) ||
+          (coords.position === 2 && offset < 0)
+        ) {
+          coords.stop = true
+          e.stopPropagation()
+        }
+      },
+      onTouchEnd() {
+        coords = null
       }
-    },
-    onTouchEnd() {
-      // this.onScroll(e)
+    })
 
-      delete this.touchCoords
-    },
-    update() {
-      if (this.appSwiper) {
-        this.appSwiper.update()
-      }
-      if (this.appTabView) {
-        this.appTabView.update()
-      }
+    return {
+      root
     }
   }
-}
+})
 </script>

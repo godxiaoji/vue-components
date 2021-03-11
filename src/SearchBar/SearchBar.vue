@@ -67,7 +67,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import Icon from '../Icon'
 import FxInput from '../Input'
 import FxButton from '../Button'
@@ -82,7 +83,15 @@ import {
   isStringNumberMix
 } from '../helpers/util'
 
-export default {
+type Placeholders = string | string[]
+
+interface SuggestItem {
+  text: string | number
+  tags?: string[]
+}
+type SuggestList = (string | number | SuggestItem)[]
+
+export default defineComponent({
   name: 'fx-search-bar',
   components: { Icon, FxInput, FxButton, Dropdown, Cell, Tag },
   props: {
@@ -112,140 +121,161 @@ export default {
       default: null
     },
     placeholders: {
-      validator(val) {
+      validator: (val: Placeholders) => {
         return isString(val) || isStringArray(val)
       },
-      default() {
-        return []
-      }
+      default: () => []
     },
     placeholderInterval: {
       type: Number,
       default: 5000
     }
   },
-  data() {
-    return {
-      placeholder: '',
-      placeholderIndex: 0,
-      searchText: '',
-      enableDropdown: false,
-      suggestVisible: false,
-      suggestList: []
-    }
-  },
-  watch: {
-    placeholders: {
-      immediate: true,
-      handler(val) {
-        clearInterval(this.placeholderTimer)
-
-        if (isString(val)) {
-          this.placeholder = val
-        } else if (isStringArray(val)) {
-          this.placeholderIndex = 0
-          this.placeholder = val[this.placeholderIndex]
-
-          this.placeholderTimer = setInterval(() => {
-            this.placeholderIndex = (this.placeholderIndex + 1) % val.length
-            this.placeholder = val[this.placeholderIndex]
-          }, this.placeholderInterval)
-        } else {
-          this.placeholder = ''
-        }
-      }
-    }
-  },
-  beforeUnmount() {
-    clearInterval(this.placeholderTimer)
-  },
   emits: ['input', 'click', 'search', 'cancel', 'focus', 'blur'],
-  methods: {
-    proxyEvent(e) {
-      const searchText = this.searchText
+  setup(props, { emit }) {
+    const placeholder = ref('')
+    const searchText = ref('')
+    const enableDropdown = ref(false)
+    const suggestVisible = ref(false)
+    const suggestList = reactive<SuggestItem[]>([])
 
-      this.$emit(
-        e.type,
+    function proxyEvent(e: Event) {
+      const text = searchText.value
+
+      emit(
+        e.type as 'focus',
         {
           type: e.type,
-          text: searchText
+          text
         },
-        res => {
-          this.setSuggestList(res, searchText !== this.searchText)
+        (res: SuggestList) => {
+          setSuggestList(res, text !== searchText.value)
         }
       )
-    },
-    onInput(e) {
-      const searchText = e.value
+    }
 
-      this.$emit(
-        'input',
+    function onInput(e: { value: string; type: string }) {
+      const text = e.value
+
+      emit(
+        e.type as 'input',
         {
           type: e.type,
-          text: searchText
+          text
         },
-        res => {
-          this.setSuggestList(res, searchText !== this.searchText)
+        (res: SuggestList) => {
+          setSuggestList(res, text !== searchText.value)
         }
       )
-    },
-    setSuggestList(res, expired) {
+    }
+
+    function setSuggestList(res: SuggestList, expired: boolean) {
       if (expired) {
         return
       }
 
-      const suggestList = []
+      suggestList.length = 0
 
       if (isArray(res)) {
         res.forEach(v => {
           if (isStringNumberMix(v)) {
             suggestList.push({
-              text: v.toString(),
+              text: (v as string | number).toString(),
               tags: []
             })
-          } else if (isObject(v) && isStringNumberMix(v.text)) {
-            v.text = v.text.toString()
-            v.tags = isStringArray(v.tags) ? v.tags : []
-            suggestList.push(v)
+          } else if (isObject(v)) {
+            v = v as SuggestItem
+
+            if (isStringNumberMix(v.text)) {
+              v.text = v.text.toString()
+              v.tags = isStringArray(v.tags) ? v.tags : []
+              suggestList.push(v)
+            }
           }
         })
       }
 
       if (suggestList.length > 0) {
-        this.enableDropdown = true
-        this.suggestVisible = true
+        enableDropdown.value = true
+        suggestVisible.value = true
       } else {
-        this.suggestVisible = false
+        suggestVisible.value = false
+      }
+    }
+
+    function onSearch(text: string, source = 'search') {
+      suggestVisible.value = false
+
+      if (text === '' && placeholder.value) {
+        searchText.value = text = placeholder.value
       }
 
-      this.suggestList = suggestList
-    },
-    onSearch(text, source = 'search') {
-      this.suggestVisible = false
-
-      if (text === '' && this.placeholder) {
-        this.searchText = text = this.placeholder
-      }
-
-      this.$emit('search', {
+      emit('search', {
         text,
         source
       })
-    },
-    onSuggestItemClick(text) {
-      this.searchText = text
+    }
 
-      this.onSearch(text, 'suggest')
-    },
-    onCancel() {
-      this.$emit('cancel', { type: 'cancel' })
-    },
-    onClick(e) {
-      this.$emit(e.type, {
+    function onSuggestItemClick(text: string) {
+      searchText.value = text
+
+      onSearch(text, 'suggest')
+    }
+
+    function onCancel() {
+      emit('cancel', { type: 'cancel' })
+    }
+
+    function onClick(e: Event) {
+      emit(e.type as 'click', {
         type: e.type,
-        searchText: this.searchText || this.placeholder
+        searchText: searchText.value || placeholder.value
       })
     }
+
+    let placeholderTimer: number
+    let placeholderIndex = 0
+
+    onBeforeUnmount(() => clearInterval(placeholderTimer))
+
+    watch(
+      () => props.placeholders,
+      (val: Placeholders) => {
+        clearInterval(placeholderTimer)
+
+        if (isString(val)) {
+          placeholder.value = val as string
+        } else if (isStringArray(val)) {
+          placeholderIndex = 0
+          placeholder.value = val[placeholderIndex]
+
+          placeholderTimer = window.setInterval(() => {
+            placeholderIndex = (placeholderIndex + 1) % val.length
+            placeholder.value = val[placeholderIndex]
+          }, props.placeholderInterval)
+        } else {
+          placeholder.value = ''
+        }
+      },
+      {
+        deep: true,
+        immediate: true
+      }
+    )
+
+    return {
+      placeholder,
+      enableDropdown,
+      suggestVisible,
+      suggestList,
+      searchText,
+      proxyEvent,
+      onInput,
+      onSearch,
+      onSuggestItemClick,
+      onCancel,
+      onClick
+    }
   }
-}
+})
 </script>

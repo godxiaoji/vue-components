@@ -34,23 +34,27 @@
   </teleport>
 </template>
 
-<script>
-import safeAreaInsets from 'safe-area-insets'
+<script lang="ts">
+import { defineComponent, computed, toRef, PropType } from 'vue'
 import FxButton from '../Button'
-import popupMixin from '../util/popup-mixin'
-import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
+import { popupEmits, popupProps, usePopup } from '../utils/popup'
+import { useSafeAreaInsets } from '../utils/safe-area-insets'
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
+import { PlacementTypes, PLACEMENT_TYPES } from '../utils/constants'
 
-export default {
+export default defineComponent({
   name: 'fx-drawer',
-  mixins: [popupMixin],
   components: { FxButton },
   props: {
+    ...popupProps,
     title: {
       type: String,
       default: null
     },
     placement: {
-      validator: createEnumsValidator('placement')
+      type: String as PropType<PlacementTypes>,
+      validator: createEnumsValidator(PLACEMENT_TYPES),
+      default: getEnumsValue(PLACEMENT_TYPES)
     },
     showClose: {
       type: Boolean,
@@ -62,27 +66,26 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      safeAreaInsets: {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }
-    }
-  },
-  computed: {
-    alignClassName() {
-      return 'placement--' + getEnumsValue('placement', this.placement)
-    },
-    hasHeader() {
-      return this.title != null || this.showClose
-    },
-    innerStyles() {
-      const placement = getEnumsValue('placement', this.placement)
+  emits: popupEmits,
+  setup(props, ctx) {
+    const popup = usePopup(props, ctx, {})
+    const safeAreaInsets = useSafeAreaInsets(
+      toRef(props, 'enableSafeAreaInsets')
+    )
 
-      let { left, top, right, bottom } = this.safeAreaInsets
+    const alignClassName = computed(
+      () => 'placement--' + getEnumsValue(PLACEMENT_TYPES, props.placement)
+    )
+
+    const hasHeader = computed(() => props.title != null || props.showClose)
+
+    const innerStyles = computed(() => {
+      const placement = getEnumsValue(PLACEMENT_TYPES, props.placement)
+
+      let left = safeAreaInsets.left
+      let top = safeAreaInsets.top
+      let right = safeAreaInsets.right
+      let bottom = safeAreaInsets.bottom
 
       if (placement === 'top') {
         bottom = 0
@@ -97,32 +100,14 @@ export default {
       return {
         padding: top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px'
       }
-    }
-  },
-  mounted() {
-    safeAreaInsets.onChange(this.updateSafeAreaInsets)
-  },
-  beforeUnmount() {
-    safeAreaInsets.offChange(this.updateSafeAreaInsets)
-  },
-  methods: {
-    updateSafeAreaInsets() {
-      if (this.enableSafeAreaInsets) {
-        this.safeAreaInsets = {
-          top: safeAreaInsets.top,
-          left: safeAreaInsets.left,
-          right: safeAreaInsets.right,
-          bottom: safeAreaInsets.bottom
-        }
-      } else {
-        this.safeAreaInsets = {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0
-        }
-      }
+    })
+
+    return {
+      ...popup,
+      alignClassName,
+      hasHeader,
+      innerStyles
     }
   }
-}
+})
 </script>

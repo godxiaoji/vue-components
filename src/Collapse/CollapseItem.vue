@@ -21,11 +21,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  ref,
+  getCurrentInstance,
+  inject,
+  ComponentInternalInstance
+} from 'vue'
 import Cell from '../Cell'
-import { iconValidator } from '../helpers/validator'
+import { iconValidator } from '../utils/validator'
+import { useGroupItem } from '../utils/group'
+import Exception from '../helpers/exception'
 
-export default {
+export default defineComponent({
   name: 'fx-collapse-item',
   components: { Cell },
   inject: {
@@ -51,78 +60,99 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      active: false
+  emits: ['toggle'],
+  setup(props, { emit }) {
+    const active = ref(false)
+    const body = ref<HTMLElement>()
+    const onChange = inject('fxCollapseChange', collapseItemChange)
+    const instance = getCurrentInstance() as ComponentInternalInstance
+
+    function collapseItemChange(uid: number) {
+      new Exception(
+        `CollapseItem uid=${uid} is not in Collapse`,
+        Exception.TYPE.DEFAULT,
+        'CollapseItem'
+      )
     }
-  },
-  created() {
-    this.appCollapse && this.appCollapse.addChild(this)
-  },
-  beforeUnmount() {
-    this.appCollapse && this.appCollapse.removeChild(this)
-  },
-  methods: {
-    onClick() {
-      if (!this.active) {
-        this.show()
-      } else {
-        this.hide()
-      }
-    },
-    show() {
-      if (this.active) {
+
+    let visibleTimer: number
+
+    function show(isClick = false) {
+      if (active.value) {
         return
       }
-      this.active = true
+      active.value = true
 
-      clearTimeout(this.visibleTimer)
+      clearTimeout(visibleTimer)
 
-      const $body = this.$refs.body
+      const $body = body.value as HTMLElement
 
       $body.style.cssText = 'position: absolute; opacity: 0;'
       const contentHeight = $body.getBoundingClientRect().height
       $body.style.cssText = 'height: 0px;'
 
-      this.visibleTimer = setTimeout(() => {
+      visibleTimer = window.setTimeout(() => {
         $body.style.cssText = `height: ${contentHeight}px;`
 
-        this.visibleTimer = setTimeout(() => {
-          $body.style.cssText = null
+        visibleTimer = window.setTimeout(() => {
+          $body.style.cssText = ''
         }, 210)
       }, 17)
 
-      this.$emit('toggle', {
-        spread: true
-      })
+      emitToggle(true)
 
-      this.appCollapse && this.appCollapse.onChange(this)
-    },
-    hide() {
-      if (!this.active) {
+      isClick && onChange(instance.uid)
+    }
+
+    function hide(isClick = false) {
+      if (!active.value) {
         return
       }
-      this.active = false
+      active.value = false
 
-      clearTimeout(this.visibleTimer)
+      clearTimeout(visibleTimer)
 
-      const $body = this.$refs.body
+      const $body = body.value as HTMLElement
       $body.style.cssText = `height: ${$body.getBoundingClientRect().height}px;`
 
-      this.visibleTimer = setTimeout(() => {
+      visibleTimer = window.setTimeout(() => {
         $body.style.cssText = 'height: 0px;'
 
-        this.visibleTimer = setTimeout(() => {
+        visibleTimer = window.setTimeout(() => {
           $body.style.cssText = 'display: none;'
         }, 210)
       }, 17)
 
-      this.$emit('toggle', {
-        spread: false
-      })
+      emitToggle(false)
 
-      this.appCollapse && this.appCollapse.onChange(this)
+      isClick && onChange(instance.uid)
+    }
+
+    function emitToggle(spread: boolean) {
+      emit('toggle', {
+        name: props.name,
+        type: 'toggle',
+        spread
+      })
+    }
+
+    function onClick() {
+      active.value ? hide(true) : show(true)
+    }
+
+    useGroupItem('collapse', {
+      uid: instance.uid,
+      getName: () => props.name,
+      getActive: () => active.value,
+      show,
+      hide
+    })
+
+    return {
+      active,
+      body,
+      onClick
     }
   }
-}
+})
 </script>

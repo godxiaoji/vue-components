@@ -4,12 +4,13 @@
     :class="{ disabled: disabled2 }"
   >
     <input
-      class="fx-radio_input"
+      class="fx-radio_input fx-form-input"
       type="radio"
       :name="formName"
       :value="value"
       :disabled="disabled2"
       @change="onChange"
+      ref="input"
     />
     <div class="fx-radio_box">
       <icon class="fx-radio_icon" icon="CircleOutlined" />
@@ -21,21 +22,17 @@
   </label>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Icon from '../Icon'
-import { isStringNumberMix } from '../helpers/util'
+import { useCheckboxOrRadio } from '../utils/checkbox-radio'
 
-export default {
+export default defineComponent({
   name: 'fx-radio',
   components: { Icon },
-  inject: {
-    appRadioGroup: {
-      default: null
-    }
-  },
   props: {
     value: {
-      validator: isStringNumberMix,
+      type: [Number, String],
       default: ''
     },
     checked: {
@@ -55,79 +52,9 @@ export default {
       default: ''
     }
   },
-  computed: {
-    /* 优先接受来自分组的name */
-    formName() {
-      if (this.appRadioGroup) {
-        return this.appRadioGroup.formName
-      }
-
-      return this.name || ''
-    },
-    disabled2() {
-      if (this.appRadioGroup) {
-        return this.appRadioGroup.disabled
-      }
-
-      return this.disabled
-    }
-  },
-  watch: {
-    checked() {
-      if (this.appRadioGroup) {
-        return
-      }
-
-      const $input = this.getInputEl()
-      const checked = !!this.checked
-
-      if (checked !== $input.checked) {
-        $input.checked = checked
-      }
-    }
-  },
-  created() {
-    this.appRadioGroup && this.appRadioGroup.addChild(this)
-  },
-  mounted() {
-    const $input = this.getInputEl()
-
-    let checked
-    if (this.appRadioGroup) {
-      checked = this.appRadioGroup.modelValue == this.value
-    } else {
-      checked = !!this.checked
-    }
-
-    if (checked !== $input.checked) {
-      $input.defaultChecked = checked
-      $input.checked = checked
-    }
-
-    $input._app_component = this.appRadioGroup || this
-    $input._app_type = 'radio'
-  },
-  beforeUnmount() {
-    this.appRadioGroup && this.appRadioGroup.removeChild(this)
-  },
   emits: ['update:checked'],
-  methods: {
-    onChange(e) {
-      if (this.appRadioGroup) {
-        this.appRadioGroup.onChange(this)
-      } else {
-        this.$emit('update:checked', e.target.checked)
-      }
-    },
-    getInputEl() {
-      return this.$el && this.$el.firstElementChild
-    },
-    getInputChecked() {
-      return !!this.getInputEl().checked
-    },
-    setChecked(checked = true) {
-      this.getInputEl().checked = checked
-    }
+  setup(props, ctx) {
+    return useCheckboxOrRadio(props, ctx, 'radio')
   }
-}
+})
 </script>

@@ -34,7 +34,7 @@ export function createIntersectionObserver(root, options) {
   // let _initialRatio = 0 // 暂时未理解该字段含义
   let _observeAll = false
   let _rootMargins = '0px 0px 0px 0px'
-  let _ios = []
+  const _ios = []
 
   if (root) {
     if (root.$el && root.$el.nodeType === 1) {
@@ -119,7 +119,7 @@ export function createIntersectionObserver(root, options) {
         } = entry
 
         // 结构转义
-        let res = {
+        const res = {
           intersectionRatio,
           intersectionRect: {
             left: intersectionRect.left,

@@ -17,93 +17,105 @@
       @right-button-click="onConfirmClick"
     >
     </nav-bar>
-    <picker-view
-      ref="view"
-      :modelValue="modelValue"
-      :initial-mode="initialMode"
-      :initial-separator="initialSeparator"
-      :format-string="formatString"
-      :options="options"
-      :field-names="fieldNames"
-    />
+    <picker-view ref="pickerView" v-bind="$props" />
   </drawer>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  shallowRef,
+  ComponentPublicInstance,
+  watch,
+  onMounted
+} from 'vue'
 import PickerView from './PickerView.vue'
 import NavBar from '../NavBar'
 import Drawer from '../Drawer'
 import { cloneData, isSameArray } from '../helpers/util'
-import popupExtendMixin from '../util/popup-extend-mixin'
-import multiSelectorPropsMixin from '../util/multi-selector/props-mixin'
-import { getDefaultDetail } from '../util/multi-selector'
+import { viewEmits } from '../multi-selector/view'
+import commonProps from '../multi-selector/props'
+import { getDefaultDetail } from '../multi-selector/util'
+import {
+  usePopupExtend,
+  popupExtendEmits,
+  popupExtendProps
+} from '../utils/popup'
+import { isEmpty } from '../helpers/util'
 
-export default {
+export default defineComponent({
   name: 'fx-picker-popup',
   components: { PickerView, NavBar, Drawer },
-  mixins: [popupExtendMixin, multiSelectorPropsMixin],
   props: {
+    ...popupExtendProps,
+    ...commonProps,
     title: {
       type: String,
       default: ''
     }
   },
-  data() {
-    return {
-      detail: getDefaultDetail()
-    }
-  },
-  watch: {
-    modelValue: {
-      handler(val) {
-        this.updateValue(val)
-      }
-    },
-    visible: {
-      handler(val) {
-        if (val) {
-          this.$refs.view.updatePos()
-        }
-      }
-    }
-  },
-  emits: ['confirm', 'update:modelValue', 'change'],
-  methods: {
-    updateValue(val) {
-      this.detail = this.$refs.view.updateValue(val)
+  emits: [...viewEmits, ...popupExtendEmits],
+  setup(props, ctx) {
+    const { emit } = ctx
+    const pickerView = shallowRef<ComponentPublicInstance<typeof PickerView>>()
 
-      return cloneData(this.detail)
-    },
+    const popup = usePopupExtend(ctx)
 
-    onConfirmClick() {
-      const detail = this.$refs.view.getDetail()
-      const oldDetail = this.detail
-      this.detail = detail
+    let detail = getDefaultDetail()
 
-      const confirmDetail = this.getDetail()
-      this.$emit('confirm', confirmDetail)
-      this.afterConfirm(confirmDetail)
+    function onConfirmClick() {
+      const oldDetail = detail
+      detail = pickerView.value?.getDetail() || getDefaultDetail()
+
+      const confirmDetail = getDetail()
+      ctx.emit('confirm', confirmDetail)
+      popup.customConfirm(confirmDetail)
 
       if (!isSameArray(oldDetail.value, detail.value)) {
         // 跟picker-view不一样，改变数值时机是确定按钮
-        this.$emit('update:modelValue', this.hookFormValue())
-        this.$emit('change', cloneData(detail))
-        this.afterChange(cloneData(detail))
+        const { value, valueString } = getDetail()
+        emit('update:modelValue', props.formatString ? valueString : value)
+        emit('change', cloneData(detail))
+        // this.afterChange(cloneData(detail))
       }
+    }
 
-      this.onUpdateVisible(false)
-    },
+    function getDetail() {
+      return cloneData(detail)
+    }
 
-    afterChange() {},
+    function updateValue(val: unknown) {
+      pickerView.value && (detail = pickerView.value.updateValue(val))
 
-    hookFormValue() {
-      const { value, valueString } = this.getDetail()
-      return this.formatString ? valueString : value
-    },
+      return getDetail()
+    }
 
-    getDetail() {
-      return cloneData(this.detail)
+    watch(
+      () => props.modelValue,
+      val => updateValue(val),
+      {
+        immediate: true
+      }
+    )
+
+    watch(
+      () => props.visible,
+      val => val && pickerView.value?.updatePos()
+    )
+
+    onMounted(
+      () =>
+        (!isEmpty(props.modelValue) || props.modelValue === 0) &&
+        updateValue(props.modelValue)
+    )
+
+    return {
+      ...popup,
+      pickerView,
+      onConfirmClick,
+      updateValue,
+      getDetail
     }
   }
-}
+})
 </script>

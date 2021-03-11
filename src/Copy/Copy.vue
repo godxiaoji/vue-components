@@ -5,8 +5,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'fx-copy',
   props: {
     // 需要复制的文本
@@ -19,7 +21,7 @@ export default {
     /**
      * 复制
      */
-    onCopy(e) {
+    onCopy(e: Event) {
       const $el = this.$el
 
       try {
@@ -36,5 +38,5 @@ export default {
       this.$emit(e.type, e)
     }
   }
-}
+})
 </script>

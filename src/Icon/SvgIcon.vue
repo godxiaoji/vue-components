@@ -4,10 +4,11 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import './lib/load-svg'
 
-export default {
+export default defineComponent({
   name: 'fx-svg-icon',
   props: {
     iconName: {
@@ -15,5 +16,5 @@ export default {
       required: true
     }
   }
-}
+})
 </script>

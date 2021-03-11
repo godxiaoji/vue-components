@@ -1,11 +1,11 @@
 <template>
-  <div class="fx-stepper" :class="{ disabled: !!disabled }">
+  <div class="fx-stepper" :class="{ disabled }">
     <fx-button
       icon="MinusOutlined"
       shape="square"
       size="small"
       :disabled="disabled || disabledMinus || formValue <= min"
-      @click="doStep($event, false)"
+      @click="onMinusOrPlusClick(false)"
     />
     <input
       class="fx-stepper_input"
@@ -18,30 +18,32 @@
       @focus="onFocus"
       @blur="onBlur"
       @change="onChange"
+      ref="input"
     />
     <fx-button
       icon="PlusOutlined"
       shape="square"
       size="small"
       :disabled="disabled || disabledPlus || formValue >= max"
-      @click="doStep($event, true)"
+      @click="onMinusOrPlusClick(true)"
     />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { onMounted, ref, defineComponent, watch } from 'vue'
 import FxButton from '../Button'
-import formMixin from '../util/form-mixin'
-import { isStringNumberMix, rangeInteger, rangeNumber } from '../helpers/util'
+import { rangeInteger, rangeNumber } from '../helpers/util'
 import { formatInputNumber } from '../helpers/input'
+import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
 
-export default {
+export default defineComponent({
   name: 'fx-stepper',
-  mixins: [formMixin],
   components: { FxButton },
   props: {
+    ...formItemProps,
     modelValue: {
-      validator: isStringNumberMix,
+      type: [Number, String],
       default: null
     },
     color: {
@@ -84,125 +86,143 @@ export default {
       default: null
     }
   },
-  data() {
-    return {
-      defaultValue: '1',
-      formValue: '1'
-    }
-  },
-  watch: {
-    modelValue: {
-      immediate: true,
-      handler(val) {
-        if (parseFloat(val) !== parseFloat(this.formValue)) {
-          this.updateValue(val, false)
-        }
-      }
-    }
-  },
-  created() {
-    this.defaultValue = this.formValue
-  },
-  mounted() {
-    const $input = this.getInputEl()
+  emits: [
+    ...formItemEmits,
+    'plus-click',
+    'minus-click',
+    'input',
+    'focus',
+    'blur'
+  ],
+  setup(props, ctx) {
+    const { emit } = ctx
+    const formValue = ref('1')
 
-    $input._app_component = this
-    $input._app_type = 'stepper'
-    $input.value = this.formValue
-    $input.defaultValue = this.formValue
-  },
-  emits: ['plus-click', 'minus-click', 'input', 'focus', 'blur'],
-  methods: {
-    doStep(e, isPlus = true) {
-      const step = parseFloat(this.step)
+    const {
+      formName,
+      validateAfterEventTrigger,
+      formReset,
+      getInputEl,
+      hookFormValue
+    } = useFormItem<string>(props, ctx, { formValue })
+
+    function onMinusOrPlusClick(isPlus = true) {
       let type = 'plus-click'
 
       if (isPlus) {
-        this.updateValue(parseFloat(this.formValue) + step)
+        updateValue(parseFloat(formValue.value) + props.step)
       } else {
-        this.updateValue(parseFloat(this.formValue) - step)
+        updateValue(parseFloat(formValue.value) - props.step)
         type = 'minus-click'
       }
 
-      this.$emit(type, {})
-    },
-    getRangeNumber(value) {
-      value = this.formateNumber(value)
+      emit(type, { type })
+    }
 
-      if (value === '') {
-        value = this.min
+    function updateValue(value: any, eventChange = true) {
+      const newValue = getRangeNumber(value)
+
+      if (newValue !== formValue.value) {
+        formValue.value = newValue
+        if (eventChange) {
+          const eventType = 'change'
+
+          emit(eventType, {
+            value: newValue
+          })
+
+          validateAfterEventTrigger(eventType, newValue)
+        }
       }
 
-      if (this.allowDecimal) {
-        value = rangeNumber(value, this.min, this.max)
+      const $input = getInputEl()
+      if ($input) {
+        $input.value = newValue
+      }
 
-        if (this.decimalLength > 0) {
-          value = value.toFixed(this.decimalLength)
-        }
+      if (newValue !== props.modelValue) {
+        emit('update:modelValue', newValue)
+      }
+
+      return newValue
+    }
+
+    function getRangeNumber(value: string | number) {
+      value = formateNumber(value)
+
+      if (value === '') {
+        value = props.min
+      }
+
+      if (props.allowDecimal) {
+        value = rangeNumber(parseFloat(value as string), props.min, props.max)
       } else {
-        value = rangeInteger(Math.floor(value), this.min, this.max)
+        value = rangeInteger(Math.floor(value as number), props.min, props.max)
       }
 
       return value.toString()
-    },
+    }
 
-    updateValue(value, eventChange = true) {
-      value = this.getRangeNumber(value)
+    function formateNumber(value: string | number): string {
+      return formatInputNumber(value, props.decimalLength)
+    }
 
-      if (value !== this.formValue) {
-        this.formValue = value
-        if (eventChange) {
-          this.afterChange(value)
+    function proxyEvent(e: Event) {
+      emit(e.type, e)
+    }
+
+    function onChange(e: Event) {
+      updateValue((e.target as HTMLInputElement).value)
+    }
+
+    function onInput(e: Event) {
+      const $input = e.target as HTMLInputElement
+
+      const value = formateNumber($input.value)
+
+      $input.value = value
+
+      emit(e.type, {
+        value
+      })
+    }
+
+    function reset() {
+      return formReset(getInputEl().value)
+    }
+
+    watch(
+      () => props.modelValue,
+      val => {
+        if (
+          val != null &&
+          parseFloat(val.toString()) !== parseFloat(formValue.value)
+        ) {
+          updateValue(val, false)
         }
       }
+    )
 
-      const $input = this.getInputEl()
-      if ($input) {
-        $input.value = value
-      }
+    onMounted(() => {
+      const $input = getInputEl()
 
-      if (value !== this.modelValue) {
-        this.$emit('update:modelValue', value)
-      }
+      $input.defaultValue = $input.value = formValue.value
+    })
 
-      return value
-    },
-    onFocus(e) {
-      this.$emit(e.type, e)
-    },
-    onBlur(e) {
-      this.$emit(e.type, e)
-    },
-    onChange(e) {
-      this.updateValue(e.target.value)
-    },
-    formateNumber(value) {
-      return formatInputNumber(
-        value,
-        !this.allowDecimal ? 0 : this.decimalLength
-      )
-    },
-    onInput(e) {
-      const value = this.formateNumber(e.target.value)
+    updateValue(props.modelValue, false)
 
-      e.target.value = value
-
-      this.$emit(e.type, {
-        value
-      })
-    },
-    reset() {
-      return this._reset(this.getInputEl().value)
-    },
-    afterChange(value) {
-      const type = 'change'
-
-      this.$emit(type, {
-        value
-      })
-
-      this.validateAfterEventTrigger(type, value)
+    return {
+      formName,
+      formValue,
+      validateAfterEventTrigger,
+      onFocus: proxyEvent,
+      onBlur: proxyEvent,
+      onChange,
+      onInput,
+      onMinusOrPlusClick,
+      hookFormValue,
+      reset
     }
   }
-}
+})
 </script>

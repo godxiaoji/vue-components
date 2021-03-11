@@ -1,13 +1,7 @@
 <template>
   <button
     class="fx-button"
-    :class="[
-      typeClassName,
-      sizeClassName,
-      patternClassName,
-      shapeClassName,
-      { 'has--icon': loading || icon, ghost: !!ghost }
-    ]"
+    :class="[classNames, { 'has--icon': loading || icon, ghost: !!ghost }]"
     :disabled="disabled"
     :type="realFormType"
   >
@@ -17,44 +11,63 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 import Icon from '../Icon'
 import {
   createEnumsValidator,
   getEnumsValue,
   iconValidator
-} from '../helpers/validator'
+} from '../utils/validator'
+import {
+  inject,
+  defineComponent,
+  computed,
+  getCurrentInstance,
+  PropType,
+  ComponentInternalInstance
+} from 'vue'
+import {
+  SIZE_TYPES,
+  SizeTypes,
+  BUTTON_PATTERN_TYPES,
+  ButtonPatternTypes,
+  BUTTON_SHAPE_TYPES,
+  ButtonShapeTypes,
+  STATE_TYPES,
+  StateTypes
+} from '../utils/constants'
+import { useGroupItem } from '../utils/group'
 
-export default {
+const FORM_TYPES = ['button', 'submit', 'reset']
+type FormTypes = 'button' | 'submit' | 'reset'
+
+export default defineComponent({
   name: 'fx-button',
   components: { Icon },
-  inject: {
-    appButtonGroupSubOptions: {
-      default: null
-    },
-    appButtonGroup: {
-      default: null
-    }
-  },
   props: {
     size: {
-      validator: createEnumsValidator('buttonSize'),
+      type: String as PropType<SizeTypes>,
+      validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     type: {
-      validator: createEnumsValidator('type'),
+      type: String as PropType<StateTypes>,
+      validator: createEnumsValidator(STATE_TYPES),
       default: null
     },
     pattern: {
-      validator: createEnumsValidator('buttonPattern'),
+      type: String as PropType<ButtonPatternTypes>,
+      validator: createEnumsValidator(BUTTON_PATTERN_TYPES),
       default: null
     },
     shape: {
-      validator: createEnumsValidator('buttonShape'),
+      type: String as PropType<ButtonShapeTypes>,
+      validator: createEnumsValidator(BUTTON_SHAPE_TYPES),
       default: null
     },
     formType: {
-      validator: createEnumsValidator('buttonFormType'),
+      type: String as PropType<FormTypes>,
+      validator: createEnumsValidator(FORM_TYPES),
       default: null
     },
     loading: {
@@ -74,55 +87,31 @@ export default {
       default: false
     }
   },
-  computed: {
-    typeClassName() {
-      return 'type--' + getEnumsValue('type', this.type)
-    },
-    patternClassName() {
-      return (
-        'pattern--' +
-        getEnumsValue(
-          'buttonPattern',
-          this.appButtonGroupSubOptions
-            ? this.appButtonGroupSubOptions.pattern
-            : this.pattern
-        )
-      )
-    },
-    sizeClassName() {
-      return (
-        'size--' +
-        getEnumsValue(
-          'buttonSize',
-          this.appButtonGroupSubOptions
-            ? this.appButtonGroupSubOptions.size
-            : this.size
-        )
-      )
-    },
-    shapeClassName() {
-      return (
-        'shape--' +
-        getEnumsValue(
-          'buttonShape',
-          this.appButtonGroupSubOptions
-            ? this.appButtonGroupSubOptions.shape
-            : this.shape
-        )
-      )
-    },
-    realFormType() {
-      return getEnumsValue('buttonFormType', this.formType)
+  setup(props) {
+    const uid = (getCurrentInstance() as ComponentInternalInstance).uid
+    const buttonGroupOptions = inject('fxButtonGroupOptions', null)
+
+    const classNames = computed(() => {
+      const { size, pattern, shape } = buttonGroupOptions || props
+
+      return [
+        'type--' + getEnumsValue(STATE_TYPES, props.type),
+        'pattern--' + getEnumsValue(BUTTON_PATTERN_TYPES, pattern),
+        'size--' + getEnumsValue(SIZE_TYPES, size),
+        'shape--' + getEnumsValue(BUTTON_SHAPE_TYPES, shape)
+      ]
+    })
+
+    const realFormType = computed(() => {
+      return getEnumsValue(FORM_TYPES, props.formType)
+    })
+
+    useGroupItem('button', uid)
+
+    return {
+      realFormType,
+      classNames
     }
-  },
-  created() {
-    this.appButtonGroup && this.appButtonGroup.addChild(this)
-  },
-  mounted() {
-    this.$el._app_type = 'button'
-  },
-  unmounted() {
-    this.appButtonGroup && this.appButtonGroup.removeChild(this)
   }
-}
+})
 </script>

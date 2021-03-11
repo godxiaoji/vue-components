@@ -47,16 +47,28 @@
   </drawer>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, PropType, defineComponent } from 'vue'
 import Drawer from '../Drawer'
 import { isArray, isObject, cloneData } from '../helpers/util'
-import popupExtendMixin from '../util/popup-extend-mixin'
+import {
+  usePopupExtend,
+  popupExtendEmits,
+  popupExtendProps
+} from '../utils/popup'
 
-export default {
+interface ActionSheetItem {
+  name: string
+  highlight?: boolean
+  description?: string
+  disabled?: boolean
+}
+
+export default defineComponent({
   name: 'fx-action-sheet',
   components: { Drawer },
-  mixins: [popupExtendMixin],
   props: {
+    ...popupExtendProps,
     title: {
       type: String,
       default: null
@@ -70,42 +82,46 @@ export default {
       default: '取消'
     },
     options: {
-      type: Array,
-      default() {
-        return []
-      }
+      type: Array as PropType<ActionSheetItem[]>,
+      default: () => []
     }
   },
-  computed: {
-    options2() {
-      if (isArray(this.options)) {
-        return this.options.map(v => {
-          if (isObject(v)) {
-            return cloneData(v)
-          }
-          return {
-            name: v.toString()
-          }
-        })
-      }
-      return []
-    }
-  },
-  emits: ['select'],
-  methods: {
-    onItemClick(index) {
+  emits: popupExtendEmits,
+  setup(props, ctx) {
+    const popup = usePopupExtend(ctx)
+
+    function onItemClick(index: number) {
       const detail = {
-        item: cloneData(this.options[index]),
+        item: cloneData(props.options[index]),
         index
       }
 
-      this.$emit('select', detail)
-      this.afterSelect(detail)
+      ctx.emit('confirm', detail)
+      popup.customConfirm(detail, 'selected')
+    }
 
-      this.onUpdateVisible(false)
-    },
+    const options2 = computed(() => {
+      const options: ActionSheetItem[] = []
 
-    afterSelect() {}
+      if (isArray(props.options)) {
+        props.options.forEach(v => {
+          options.push(
+            isObject(v)
+              ? cloneData<ActionSheetItem>(v)
+              : {
+                  name: v.toString()
+                }
+          )
+        })
+      }
+      return options
+    })
+
+    return {
+      ...popup,
+      options2,
+      onItemClick
+    }
   }
-}
+})
 </script>

@@ -9,12 +9,21 @@
   </cell>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, inject, PropType, provide, ref } from 'vue'
 import Cell from '../Cell'
 import Schema from 'async-validator'
 import { isArray, isBoolean, isNumber } from '../helpers/util'
+import {
+  FormItemProvide,
+  FormRuleItem,
+  FormRules,
+  FormRuleType,
+  FormRuleValidate
+} from './types'
+import { useGroupItem } from '../utils/group'
 
-export default {
+export default defineComponent({
   name: 'fx-form-item',
   components: { Cell },
   provide() {
@@ -32,39 +41,29 @@ export default {
       type: String,
       required: true
     },
-    rules: Array,
+    rules: Array as PropType<FormRuleItem[]>,
     label: String,
     required: {
       type: Boolean,
       default: false
     }
   },
-  data() {
-    return { errMsg: '' }
-  },
-  created() {
-    this.appForm && this.appForm.addChild(this)
-  },
-  beforeUnmount() {
-    this.appForm && this.appForm.removeChild(this)
-  },
-  methods: {
-    getRulesByName(name, value) {
-      let rules = []
+  setup(props, { emit }) {
+    const errMsg = ref('')
+    const formRules = inject<FormRules>('fxFormRules', {})
 
-      if (this.rules && this.rules[0]) {
-        rules = this.rules
-      } else if (
-        this.appForm &&
-        this.appForm.rules &&
-        isArray(this.appForm.rules[name])
-      ) {
-        rules = this.appForm.rules[name]
+    function getRulesByName(name: string, value: any) {
+      let rules: FormRuleItem[] = []
+
+      if (props.rules && props.rules[0]) {
+        rules = props.rules
+      } else if (isArray(formRules[name])) {
+        rules = formRules[name]
       }
 
-      if (rules.length === 0 && this.required) {
+      if (rules.length === 0 && props.required) {
         // 如果没有规则，根据required情况默认规则
-        let valueType = 'string'
+        let valueType: FormRuleType = 'string'
 
         if (isArray(value)) {
           valueType = 'array'
@@ -78,16 +77,16 @@ export default {
       }
 
       return rules
-    },
+    }
 
-    validateAfterEventTrigger(event, value) {
-      if (!this.name) {
+    function validateAfterEventTrigger(event: string, value: any) {
+      if (!props.name) {
         return
       }
 
-      const name = this.name
+      const name = props.name
 
-      const rules = this.getRulesByName(name, value).filter(v => {
+      const rules = getRulesByName(name, value).filter(v => {
         if (v) {
           if (v.trigger === event) {
             return true
@@ -100,19 +99,19 @@ export default {
       })
 
       if (rules[0]) {
-        this.validate(value, rules)
+        validate(value, rules)
       }
-    },
+    }
 
-    validate(value, rules) {
-      if (!this.name) {
-        return this.clearValidate()
+    const validate: FormRuleValidate = (value, rules) => {
+      if (!props.name) {
+        return clearValidate()
       }
 
-      const name = this.name
+      const name = props.name
 
       if (!rules) {
-        rules = this.getRulesByName(name, value)
+        rules = getRulesByName(name, value)
       }
 
       if (rules[0]) {
@@ -120,37 +119,56 @@ export default {
           [name]: rules
         })
 
-        return validator.validate({ [name]: value }, errors => {
+        return validator.validate({ [name]: value }, {}, errors => {
           if (errors) {
             // validation failed, errors is an array of all errors
             // fields is an object keyed by field name with an array of
             // errors per field
-            // this.errMsg = errors
+            // errMsg.value = errors
             //   .map(v => {
             //     return v.message
             //   })
             //   .join(' ')
 
-            this.errMsg = (errors[0] && errors[0].message) || 'error'
+            errMsg.value = (errors[0] && errors[0].message) || 'error'
           } else {
             // validation passed
-            this.clearValidate()
+            clearValidate()
           }
         })
       } else {
-        return this.clearValidate()
+        return clearValidate()
       }
-    },
+    }
 
-    clearValidate() {
-      this.errMsg = ''
+    function clearValidate() {
+      errMsg.value = ''
 
       return Promise.resolve(true)
-    },
+    }
 
-    onClick(e) {
-      this.$emit(e.type, e)
+    function onClick(e: Event) {
+      emit(e.type, e)
+    }
+
+    provide('fxFormItem', {
+      props,
+      validateAfterEventTrigger
+    } as FormItemProvide)
+
+    useGroupItem('form', {
+      getFormName() {
+        return props.name
+      },
+      validate
+    })
+
+    return {
+      errMsg,
+      clearValidate,
+      onClick,
+      validateAfterEventTrigger
     }
   }
-}
+})
 </script>

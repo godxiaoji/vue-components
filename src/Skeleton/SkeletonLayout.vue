@@ -14,12 +14,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import SkeletonAvatar from './SkeletonAvatar.vue'
 import SkeletonTitle from './SkeletonTitle.vue'
 import SkeletonParagraph from './SkeletonParagraph.vue'
 
-export default {
+export default defineComponent({
   name: 'fx-skeleton-layout',
   props: { animated: Boolean, avatar: Boolean },
   components: {
@@ -27,5 +28,5 @@ export default {
     SkeletonTitle,
     SkeletonParagraph
   }
-}
+})
 </script>

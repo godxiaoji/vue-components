@@ -2,71 +2,72 @@
   <div
     class="fx-button-group"
     :class="[
-      'size--' + subOptions.size,
-      'pattern--' + subOptions.pattern,
-      'shape--' + subOptions.shape,
-      'count--' + (appChildren.length || 1)
+      'size--' + options.size,
+      'pattern--' + options.pattern,
+      'shape--' + options.shape,
+      'count--' + (children.length || 1)
     ]"
   >
     <slot></slot>
   </div>
 </template>
 
-<script>
-import groupMixin from '../util/group-mixin'
-import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
+<script lang="ts">
+import { createEnumsValidator, getEnumsValue } from '../utils/validator'
+import {
+  SIZE_TYPES,
+  SizeTypes,
+  BUTTON_PATTERN_TYPES,
+  ButtonPatternTypes,
+  BUTTON_SHAPE_TYPES,
+  ButtonShapeTypes
+} from '../utils/constants'
+import { useGroup } from '../utils/group'
+import { defineComponent, PropType, provide, reactive, watch } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'fx-button-group',
-  provide() {
-    return {
-      appButtonGroupSubOptions: this.subOptions,
-      appButtonGroup: this
-    }
-  },
-  mixins: [groupMixin],
   props: {
     size: {
-      validator: createEnumsValidator('buttonSize'),
+      type: String as PropType<SizeTypes>,
+      validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     pattern: {
-      validator: createEnumsValidator('buttonPattern'),
+      type: String as PropType<ButtonPatternTypes>,
+      validator: createEnumsValidator(BUTTON_PATTERN_TYPES),
       default: null
     },
     shape: {
-      validator: createEnumsValidator('buttonShape'),
+      type: String as PropType<ButtonShapeTypes>,
+      validator: createEnumsValidator(BUTTON_SHAPE_TYPES),
       default: null
     }
   },
-  data() {
-    return {
-      subOptions: {
-        pattern: '',
-        size: '',
-        shape: ''
+  setup(props) {
+    const { children } = useGroup('button')
+
+    const options = reactive({
+      size: '',
+      pattern: '',
+      shape: ''
+    })
+
+    watch(
+      props,
+      val => {
+        options.size = getEnumsValue(SIZE_TYPES, val.size)
+        options.pattern = getEnumsValue(BUTTON_PATTERN_TYPES, val.pattern)
+        options.shape = getEnumsValue(BUTTON_SHAPE_TYPES, val.shape)
+      },
+      {
+        immediate: true
       }
-    }
-  },
-  watch: {
-    size: {
-      immediate: true,
-      handler(newVal) {
-        this.subOptions.size = getEnumsValue('buttonSize', newVal)
-      }
-    },
-    pattern: {
-      immediate: true,
-      handler(newVal) {
-        this.subOptions.pattern = getEnumsValue('buttonPattern', newVal)
-      }
-    },
-    shape: {
-      immediate: true,
-      handler(newVal) {
-        this.subOptions.shape = getEnumsValue('buttonShape', newVal)
-      }
-    }
+    )
+
+    provide('fxButtonGroupOptions', options)
+
+    return { children, options }
   }
-}
+})
 </script>

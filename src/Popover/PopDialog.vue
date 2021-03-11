@@ -38,16 +38,17 @@
   </teleport>
 </template>
 
-<script>
-import Popover from './Popover.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { popoverProps, popoverEmits, usePopover } from './popover'
 import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
 
-export default {
+export default defineComponent({
   name: 'fx-pop-dialog',
-  extends: Popover,
   components: { FxButton, FxButtonGroup },
   props: {
+    ...popoverProps,
     content: {
       type: String,
       default: '',
@@ -66,15 +67,18 @@ export default {
       default: '确定'
     }
   },
-  emits: ['confirm'],
-  methods: {
-    onConfirmClick() {
-      this.$emit('confirm', {})
-      this.afterConfirm({})
+  emits: [...popoverEmits, 'confirm'],
+  setup(props, ctx) {
+    const popoverHook = usePopover(props, ctx)
 
-      this.hide()
-    },
-    afterConfirm() {}
+    function onConfirmClick() {
+      popoverHook.customConfirm({})
+    }
+
+    return {
+      ...popoverHook,
+      onConfirmClick
+    }
   }
-}
+})
 </script>

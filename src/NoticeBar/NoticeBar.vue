@@ -6,7 +6,7 @@
     v-show="visible2"
   >
     <div v-if="leftIcon" class="fx-notice-bar_left-icon">
-      <icon :icon="leftIcon" :style="iconStyle" />
+      <icon :icon="leftIcon" :style="iconStyles" />
     </div>
     <div class="fx-notice-bar_content">
       <div
@@ -25,25 +25,38 @@
       class="fx-notice-bar_right-icon"
       @click="onRightIconClick"
     >
-      <icon :icon="rightIcon2" :style="iconStyle" />
+      <icon :icon="rightIcon2" :style="iconStyles" />
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  inject,
+  ref,
+  watch,
+  PropType
+} from 'vue'
 import Icon from '../Icon'
-import { inArray } from '../helpers/util'
-import { iconValidator } from '../helpers/validator'
+import {
+  createEnumsValidator,
+  getEnumsValue,
+  iconValidator
+} from '../utils/validator'
+import  type {  StyleObject } from '../utils/types'
+import { StateTypes, STATE_TYPES } from '../utils/constants'
 
-const TYPE_NAMES = ['primary', 'success', 'warning', 'danger']
+const modeMaps = new Map([
+  ['default', ''],
+  ['clickable', 'RightOutlined'],
+  ['closable', 'CloseOutlined']
+])
 
-const MODE_MAPS = {
-  default: '',
-  clickable: 'RightOutlined',
-  closable: 'CloseOutlined'
-}
-
-export default {
+export default defineComponent({
   name: 'fx-notice-bar',
   components: { Icon },
   inject: {
@@ -63,8 +76,9 @@ export default {
     },
     // 通知栏模式
     mode: {
-      validator(val) {
-        return MODE_MAPS[val] != null
+      type: String as PropType<'default' | 'clickable' | 'closable'>,
+      validator: (val: string) => {
+        return modeMaps.get(val) != null
       },
       default: 'default'
     },
@@ -94,148 +108,147 @@ export default {
       default: false
     },
     type: {
-      validator(val) {
-        return inArray(val, TYPE_NAMES)
-      },
-      default: TYPE_NAMES[2]
-    }
-  },
-  data() {
-    return { marqueeX: 0, marqueeDuration: 0, visible2: true }
-  },
-  watch: {
-    marquee() {
-      this.resetMarquee()
-    },
-    title() {
-      this.resetMarquee()
-    },
-    visible: {
-      immediate: true,
-      handler(val) {
-        this.visible2 = !!val
-      }
+      type: String as PropType<StateTypes>,
+      validator: createEnumsValidator(STATE_TYPES),
+      default: null
     }
   },
   emits: ['update:visible', 'show', 'hide', 'close-click'],
-  computed: {
-    rightIcon2() {
-      if (this.rightIcon) {
-        return this.rightIcon
-      }
+  setup(props, ctx) {
+    const { emit } = ctx
+    const appNotify = inject('appNotify', null)
+    const visible2 = ref(!!props.visible)
+    const marqueeX = ref(0)
+    const marqueeDuration = ref(0)
+    const content = ref<HTMLElement>()
+    let marqueeTimer: number
 
-      if (this.mode) {
-        return MODE_MAPS[this.mode] || null
-      }
+    function marqueeStep(x: number, pW: number) {
+      marqueeX.value = pW
+      marqueeDuration.value = 0
 
-      return null
-    },
-    styles() {
-      const obj = {}
+      marqueeTimer = window.setTimeout(() => {
+        marqueeX.value = -x
+        marqueeDuration.value = x / 30
 
-      if (this.backgroundColor) obj.backgroundColor = this.backgroundColor
-      if (this.color) obj.color = this.color
-
-      return obj
-    },
-    iconStyle() {
-      const obj = {}
-
-      if (this.color) obj.fill = this.color
-
-      return obj
-    },
-    contentStyles() {
-      const obj = {}
-
-      if (this.marqueeX !== 0) obj.transform = `translateX(${this.marqueeX}px)`
-      if (this.marqueeDuration > 0)
-        obj.transitionDuration = `${this.marqueeDuration}s`
-
-      return obj
-    },
-    // 计算属性的 getter
-    typeClassName() {
-      return (
-        'type--' + (inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0])
-      )
-    }
-  },
-  mounted() {
-    if (this.marquee) {
-      this.startMarquee()
-    }
-  },
-  unmounted() {
-    this.stopMarquee()
-  },
-  methods: {
-    resetMarquee() {
-      if (this.marquee) {
-        this.startMarquee()
-      } else {
-        this.stopMarquee()
-      }
-    },
-
-    startMarquee() {
-      this.stopMarquee()
-
-      const $content = this.$refs.content
-      const pW = $content.parentNode.offsetWidth
-      const w = $content.offsetWidth
-
-      if (w > pW) {
-        this.marqueeStep(w, pW)
-      }
-    },
-
-    stopMarquee() {
-      clearTimeout(this.marqueeTimer)
-
-      this.marqueeX = 0
-      this.marqueeDuration = 0
-    },
-
-    marqueeStep(x, pW) {
-      this.marqueeX = pW
-      this.marqueeDuration = 0
-
-      this.marqueeTimer = setTimeout(() => {
-        this.marqueeX = -x
-        this.marqueeDuration = x / 30
-
-        this.marqueeTimer = setTimeout(() => {
-          this.marqueeStep(x, pW)
+        marqueeTimer = window.setTimeout(() => {
+          marqueeStep(x, pW)
         }, (x / 28) * 1000)
       }, 17)
-    },
+    }
 
-    show() {
-      if (!this.visible2) {
-        this.$emit('update:visible', true)
-        this.visible2 = true
+    function stopMarquee() {
+      clearTimeout(marqueeTimer)
 
-        this.$emit('show', {})
-      }
-    },
-    hide() {
-      if (this.visible2) {
-        this.$emit('update:visible', false)
-        this.visible2 = false
+      marqueeX.value = 0
+      marqueeDuration.value = 0
+    }
 
-        this.$emit('hide', {})
-      }
-    },
-    onRightIconClick() {
-      if (this.mode === 'closable') {
-        if (!this.appNotify) {
-          this.hide()
-        }
+    function startMarquee() {
+      stopMarquee()
 
-        this.$emit('close-click', {})
+      const $content = content.value as HTMLElement
+
+      const w = $content.offsetWidth
+      const pW = ($content.parentElement as HTMLElement).offsetWidth
+
+      if (w > pW) {
+        marqueeStep(w, pW)
       }
     }
+
+    function resetMarquee() {
+      props.marquee ? startMarquee() : stopMarquee()
+    }
+
+    function show() {
+      if (!visible2.value) {
+        emit('update:visible', true)
+        visible2.value = true
+
+        emit('show', {})
+      }
+    }
+    function hide() {
+      if (visible2.value) {
+        emit('update:visible', false)
+        visible2.value = false
+
+        emit('hide', {})
+      }
+    }
+
+    function onRightIconClick() {
+      if (props.mode === 'closable') {
+        if (!appNotify) {
+          hide()
+        }
+
+        emit('close-click', {})
+      }
+    }
+
+    onMounted(() => props.marquee && startMarquee())
+
+    onBeforeUnmount(() => stopMarquee())
+
+    watch([() => props.marquee, () => props.title], () => {
+      resetMarquee()
+    })
+
+    const rightIcon2 = computed(() => {
+      return props.rightIcon || modeMaps.get(props.mode) || null
+    })
+
+    const styles = computed(() => {
+      const obj: StyleObject = {}
+
+      props.backgroundColor && (obj.backgroundColor = props.backgroundColor)
+      props.color && (obj.color = props.color)
+
+      return obj
+    })
+
+    const iconStyles = computed(() => {
+      const obj: StyleObject = {}
+
+      props.color && (obj.fill = props.color)
+
+      return obj
+    })
+
+    const contentStyles = computed(() => {
+      const obj: StyleObject = {}
+
+      marqueeX.value !== 0 &&
+        (obj.transform = `translateX(${marqueeX.value}px)`)
+      marqueeDuration.value > 0 &&
+        (obj.transitionDuration = `${marqueeDuration.value}s`)
+
+      return obj
+    })
+
+    // 计算属性的 getter
+    const typeClassName = computed(() => {
+      return 'type--' + getEnumsValue(STATE_TYPES, props.type)
+    })
+
+    watch(() => props.visible, val => {
+      visible2.value = !!val
+    })
+
+    return {
+      show,
+      hide,
+      content,
+      visible2,
+      rightIcon2,
+      styles,
+      iconStyles,
+      contentStyles,
+      typeClassName,
+      onRightIconClick
+    }
   }
-}
+})
 </script>

@@ -15,7 +15,7 @@
     <div class="fx-flat-list_header" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
-    <ul class="fx-flat-list_list" ref="list">
+    <ul class="fx-flat-list_list" ref="listEl">
       <li
         class="fx-flat-list_item"
         v-for="(item, index) in list"
@@ -54,23 +54,45 @@
   </scroll-view>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  nextTick,
+  watch,
+  ComponentPublicInstance,
+  shallowRef
+} from 'vue'
 import Icon from '../Icon'
 import {
-  capitalize,
   cloneData,
   isFunction,
+  isInNumberRange,
   isInteger,
   isNumber,
   isNumberArray,
-  isObject,
   rangeInteger
 } from '../helpers/util'
-import ScrollView from '../ScrollView/ScrollView.vue'
+import ScrollView from '../ScrollView'
 import Exception from '../helpers/exception'
-import { getRelativeOffset, resizeDetector } from '../helpers/dom'
+import { getRelativeOffset } from '../helpers/dom'
+import { useResizeDetector } from '../utils/resize-detector'
+import {
+  ScrollToIndexOptions,
+  ScrollToOffsetOptions,
+  StyleObject
+} from '../utils/types'
 
-export default {
+interface FlatItemElement extends HTMLElement {
+  _recycled?: boolean
+  _translateOffset?: number
+}
+
+export default defineComponent({
   name: 'fx-flat-list',
   components: { ScrollView, Icon },
   props: {
@@ -79,11 +101,9 @@ export default {
       default: null
     },
     data: {
-      type: Array,
+      type: Array as PropType<any[]>,
       required: true,
-      default() {
-        return []
-      }
+      default: () => []
     },
     getItemSize: {
       type: Function,
@@ -122,275 +142,165 @@ export default {
       default: false
     },
     waterfallColCount: {
-      validator(value) {
-        return isInteger(value) && value >= 2 && value <= 5
+      type: Number,
+      validator: (val: number) => {
+        return isInteger(val) && isInNumberRange(val, 2, 5)
       },
       default: 2
     },
     itemGutter: {
-      validator(value) {
-        return isNumber(value) || (isNumberArray(value) && value.length === 2)
+      validator: (val: number | number[]) => {
+        return (
+          isNumber(val) ||
+          (isNumberArray(val) && (val as number[]).length === 2)
+        )
       },
       default: 0
     }
   },
-  data() {
-    return {
-      wrapperSize: 0,
-      scrollX: false,
-      scrollY: true,
-      horizontal: false,
+  emits: ['recycle-change', 'end-reached', 'scroll', 'refreshing'],
+  setup(props, ctx) {
+    const { emit } = ctx
+    const cols = reactive<number[]>([])
+    const list = reactive<
+      {
+        data: any
+        recycled: boolean
+      }[]
+    >([])
+    const scrollView = shallowRef<ComponentPublicInstance<typeof ScrollView>>()
+    const listEl = ref<HTMLElement>()
 
-      colSize: 0,
-      cols: [],
+    let wrapperSize = 0
+    let scrollX = false
+    let scrollY = true
+    let scrollCount = 0
+    let horizontal = false
+    let colSize = 0
 
-      list: []
-    }
-  },
-  computed: {
-    sizeFixed() {
-      return this.getItemSize != null || this.itemSize != null
-    },
-    lowerThreshold() {
-      return this.wrapperSize * this.endReachedThreshold
-    },
-    itemStyles() {
-      const styles = {}
-      const gutter = this.itemGutter
-
-      if (isNumberArray(gutter) && gutter.length === 2) {
-        styles.padding = `${gutter[1]}px ${gutter[0]}px`
-      } else if (isNumber(gutter) && gutter > 0) {
-        styles.padding = gutter + 'px'
-      }
-
-      return styles
-    },
-    enablePullDirections() {
-      if (this.enablePullRefresh) {
-        return this.horizontal ? ['right'] : ['down']
-      }
-
-      return []
-    }
-  },
-  watch: {
-    data: {
-      handler(val) {
-        this.dataToList(val)
-        this.$nextTick(() => {
-          this.updateItems(null, 'dataChange')
-        })
-      }
-    },
-    itemSize() {
-      this.updateItems()
-    }
-  },
-  created() {
-    this.scrollCount = 0
-
-    if (this.initialWaterfall) {
+    if (props.initialWaterfall) {
       for (
-        let i = 0, len = rangeInteger(this.waterfallColCount, 2, 5);
+        let i = 0, len = rangeInteger(props.waterfallColCount, 2, 5);
         i < len;
         i++
       ) {
-        this.cols.push(0)
+        cols.push(0)
       }
-    } else if (this.initialHorizontal) {
-      this.horizontal = true
+    } else if (props.initialHorizontal) {
+      horizontal = true
     }
 
-    if (this.horizontal) {
-      this.scrollX = true
-      this.scrollY = false
+    if (horizontal) {
+      scrollX = true
+      scrollY = false
     }
 
-    this.dataToList(this.data)
-  },
-  mounted() {
-    this.updateSize()
-    this.updateItems(null, 'init')
+    function isSizeFixed() {
+      return props.getItemSize != null || props.itemSize != null
+    }
 
-    this.offResizeDetector = resizeDetector(this.$el, () => {
-      this.onResize()
-    })
-  },
-  beforeUnmount() {
-    this.offResizeDetector()
-  },
-  emits: ['recycle-change', 'end-reached', 'scroll', 'refreshing'],
-  methods: {
-    updateSize() {
-      this.wrapperSize = this.getElSize(this.$el)
-      this.colSize = this.$el.offsetWidth / this.cols.length
-    },
-
-    onRefreshing(res, done) {
-      this.$emit('refreshing', res, done)
-    },
-
-    getScrollSize() {
-      return this.$el[this.scrollX ? 'scrollLeft' : 'scrollTop']
-    },
-    dataToList(data) {
-      const newList = []
+    function dataToList(data: any[]) {
+      const newList: any[] = []
+      const dataKey = props.dataKey
 
       data.forEach((v, k) => {
-        const oldItem = this.list[k]
+        const oldItem = list[k]
         // 如果没有固定高度（或宽度），默认不回收，因为需要展示以获取当前高度
-        const newItem = { data: v, recycled: this.sizeFixed ? true : false }
+        const newItem = { data: v, recycled: isSizeFixed() }
 
         if (oldItem) {
-          if (this.dataKey === '*this' && v === oldItem.data) {
+          if (dataKey === '*this' && v === oldItem.data) {
             newItem.recycled = oldItem.recycled
-          } else if (
-            this.dataKey &&
-            v[this.dataKey] === oldItem.data[this.dataKey]
-          ) {
+          } else if (dataKey && v[dataKey] === oldItem.data[dataKey]) {
             newItem.recycled = oldItem.recycled
-          } else if (!this.dataKey) {
+          } else if (!dataKey) {
             newItem.recycled = oldItem.recycled
           }
         }
 
         newList.push(newItem)
       })
-      this.list = newList
-    },
-    onScroll(res) {
-      const scrollSize = res[this.scrollX ? 'scrollLeft' : 'scrollTop']
 
-      if (this.scrollCount > 10) {
-        // 每轮询10次更新一次
-        this.scrollCount = 0
-        clearTimeout(this.scrollTimer)
-        this.updateItems(scrollSize, 'scroll')
-      } else {
-        clearTimeout(this.scrollTimer)
-        this.scrollTimer = setTimeout(() => {
-          this.scrollCount = 0
-          this.updateItems(scrollSize, 'scroll')
-        }, 17)
-        this.scrollCount++
-      }
+      list.splice(0, Infinity, ...newList)
+    }
 
-      // scroll 事件回调
-      this.$emit('scroll', res)
-    },
-    onScrollToLower() {
-      const $el = this.$el
-      const distanceFromEnd = this.scrollX
-        ? $el.scrollWidth - $el.scrollLeft - $el.offsetWidth
-        : $el.scrollHeight - $el.scrollTop - $el.offsetHeight
+    function getRootEl() {
+      return scrollView.value?.$el as HTMLElement
+    }
 
-      if (!this.lowerLoading) {
-        this.$emit('end-reached', {
-          distanceFromEnd
-        })
-      }
-    },
-    onResize() {
-      this.updateSize()
-      this.updateItems(null, 'resize')
-    },
-    getElSize($el) {
-      return $el[this.scrollX ? 'offsetWidth' : 'offsetHeight']
-    },
-    getItemLayout($el, index) {
-      if (isFunction(this.getItemSize)) {
-        try {
-          const size = this.getItemSize(cloneData(this.data[index]), index)
+    function updateSize() {
+      const $root = getRootEl()
 
-          if (isNumber(size)) {
-            return {
-              fixed: true,
-              size
-            }
-          }
-        } catch (error) {
-          console.error(
-            new Exception(
-              'The object.size value returned by getItemSize should be a Number type.',
-              Exception.TYPE.PROP_ERROR,
-              'FlatList'
-            )
-          )
-        }
-      } else if (isNumber(this.itemSize)) {
-        return {
-          fixed: true,
-          size: this.itemSize
-        }
-      }
+      wrapperSize = getElSize($root)
+      colSize = $root.offsetWidth / cols.length
+    }
 
-      return {
-        size: this.getElSize($el),
-        fixed: false
-      }
-    },
-    /**
-     * 设置列表项的尺寸，只在固定尺寸下生效
-     */
-    setItemsSize() {
-      this.getItemEls().forEach(($item, index) => {
-        const sizeKey = this.scrollX ? 'width' : 'height'
-        const itemLayout = this.getItemLayout($item, index)
+    function getElSize($el: HTMLElement) {
+      return $el[scrollX ? 'offsetWidth' : 'offsetHeight']
+    }
 
-        if (itemLayout.fixed) {
-          $item.style[sizeKey] = itemLayout.size + 'px'
-        }
-      })
-    },
+    function getScrollSize() {
+      return getRootEl()[scrollX ? 'scrollLeft' : 'scrollTop']
+    }
+
+    function onRefreshing(
+      res: {
+        pullDirection: string
+      },
+      done: () => void
+    ) {
+      emit('refreshing', res, done)
+    }
+
     /**
      * 重新计算列表元素
-     * @param {Number?} scrollSize 滚动值
-     * @param {String?} source 调用来源
+     * @param scrollSize 滚动值
+     * @param source 调用来源
      */
-    updateItems(scrollSize) {
-      const wrapperSize = this.wrapperSize
-      const $list = this.$refs.list
-      const cols = this.cols.map(() => {
+    function updateItems(scrollSize: number | null, source?: string) {
+      // console.log('updateItems', source)
+
+      const $list = listEl.value as HTMLElement
+      const newCols = cols.map(() => {
         return 0
       })
 
-      if (scrollSize == null) {
-        scrollSize = this.getScrollSize()
-      }
+      const _scrollSize =
+        scrollSize == null ? getScrollSize() : (scrollSize as number)
 
-      this.getItemEls().forEach(($item, index) => {
+      getItemEls().forEach(($item, index) => {
         let offset = $list.offsetTop
-        const sizeKey = this.scrollX ? 'width' : 'height'
-        const itemLayout = this.getItemLayout($item, index)
+        const sizeKey = scrollX ? 'width' : 'height'
+        const itemLayout = getItemLayout($item, index)
 
         if (itemLayout.fixed) {
           $item.style[sizeKey] = itemLayout.size + 'px'
         } else {
-          $item.style[sizeKey] = $item[`offset${capitalize(sizeKey)}`] + 'px'
+          $item.style[sizeKey] =
+            $item[scrollX ? 'offsetWidth' : 'offsetHeight'] + 'px'
         }
 
-        if (cols.length > 1) {
-          const colMin = Math.min.apply(null, cols)
-          const colMinIndex = cols.indexOf(colMin)
+        if (newCols.length > 1) {
+          const colMin = Math.min.apply(null, newCols)
+          const colMinIndex = newCols.indexOf(colMin)
 
-          $item.style.width = this.colSize + 'px'
+          $item.style.width = colSize + 'px'
           $item.style.position = 'absolute'
           $item.style.transform = `translate3d(${colMinIndex *
-            this.colSize}px, ${colMin}px, 0)`
+            colSize}px, ${colMin}px, 0)`
 
-          cols[colMinIndex] = colMin + $item.offsetHeight
+          newCols[colMinIndex] = colMin + $item.offsetHeight
           $item._translateOffset = offset = colMin
         } else {
-          offset = $item[this.scrollX ? 'offsetLeft' : 'offsetTop']
+          offset = $item[scrollX ? 'offsetLeft' : 'offsetTop']
         }
 
-        const item = this.list[index]
+        const item = list[index]
 
-        const change = recycled => {
+        const change = (recycled: boolean) => {
           $item._recycled = recycled
 
-          this.$emit('recycle-change', {
+          emit('recycle-change', {
             recycled,
             index,
             item: cloneData(item.data)
@@ -398,8 +308,8 @@ export default {
         }
 
         if (
-          offset >= scrollSize - wrapperSize * this.preLoad &&
-          offset <= scrollSize + wrapperSize * (this.preLoad + 1)
+          offset >= _scrollSize - wrapperSize * props.preLoad &&
+          offset <= _scrollSize + wrapperSize * (props.preLoad + 1)
         ) {
           // 展示
           // if (!itemLayout.fixed) {
@@ -425,90 +335,258 @@ export default {
         }
       })
 
-      if (cols.length > 1) {
-        $list.style.height = Math.max.apply(null, cols) + 'px'
-        this.cols = cols
+      if (newCols.length > 1) {
+        $list.style.height = Math.max.apply(null, newCols) + 'px'
+        cols.splice(0, Infinity, ...newCols)
       }
-    },
+    }
+
     /**
      * 获取列表元素
      */
-    getItemEls() {
-      const $els = []
+    function getItemEls() {
+      const $list = listEl.value as HTMLElement
+      const $els: FlatItemElement[] = []
 
-      if (!this.$refs.list) {
+      if (!$list) {
         return $els
       }
 
-      const $children = this.$refs.list.children
+      const $children = $list.children
 
       for (let i = 0, len = $children.length; i < len; i++) {
         const $el = $children[i]
         if ($el.className.indexOf('item') > -1) {
-          $els.push($el)
+          $els.push($el as FlatItemElement)
         }
       }
 
       return $els
-    },
+    }
+
+    function getItemLayout($el: HTMLElement, index: number) {
+      if (isFunction(props.getItemSize)) {
+        try {
+          const size = props.getItemSize(cloneData(props.data[index]), index)
+
+          if (isNumber(size)) {
+            return {
+              fixed: true,
+              size
+            }
+          }
+        } catch (error) {
+          console.error(
+            new Exception(
+              'The object.size value returned by getItemSize should be a Number type.',
+              Exception.TYPE.PROP_ERROR,
+              'FlatList'
+            )
+          )
+        }
+      } else if (isNumber(props.itemSize)) {
+        return {
+          fixed: true,
+          size: props.itemSize
+        }
+      }
+
+      return {
+        size: getElSize($el),
+        fixed: false
+      }
+    }
+
+    // /**
+    //  * 设置列表项的尺寸，只在固定尺寸下生效
+    //  */
+    // function setItemsSize() {
+    //   getItemEls().forEach(($item, index) => {
+    //     const itemLayout = getItemLayout($item, index)
+
+    //     if (itemLayout.fixed) {
+    //       $item.style[scrollX ? 'width' : 'height'] = itemLayout.size + 'px'
+    //     }
+    //   })
+    // }
+
+    /**
+     * 主动通知列表发生了一个事件，以使列表重新计算可视区域
+     */
+    function recordInteraction() {
+      updateItems(null, 'recordInteraction')
+    }
+
+    function onResize() {
+      updateSize()
+      updateItems(null, 'resize')
+    }
+
+    let scrollTimer: number
+
+    function onScroll(res: { scrollLeft: number; scrollTop: number }) {
+      const scrollSize = res[scrollX ? 'scrollLeft' : 'scrollTop']
+
+      if (scrollCount > 10) {
+        // 每轮询10次更新一次
+        scrollCount = 0
+        clearTimeout(scrollTimer)
+        updateItems(scrollSize, 'scroll')
+      } else {
+        clearTimeout(scrollTimer)
+        scrollTimer = window.setTimeout(() => {
+          scrollCount = 0
+          updateItems(scrollSize, 'scroll')
+        }, 17)
+        scrollCount++
+      }
+
+      // scroll 事件回调
+      emit('scroll', res)
+    }
+
+    function onScrollToLower() {
+      const $el = getRootEl()
+      const distanceFromEnd = scrollX
+        ? $el.scrollWidth - $el.scrollLeft - $el.offsetWidth
+        : $el.scrollHeight - $el.scrollTop - $el.offsetHeight
+
+      if (!props.lowerLoading) {
+        emit('end-reached', {
+          distanceFromEnd
+        })
+      }
+    }
+
+    /**
+     * 滚动列表到指定的偏移（以像素为单位）
+     */
+    function scrollToOffset(options: ScrollToOffsetOptions) {
+      scrollView.value && scrollView.value.scrollToOffset(options)
+    }
+
     /**
      * 滑动到第index个元素
      */
-    scrollToIndex(options) {
-      let index
+    function scrollToIndex(options: number | ScrollToIndexOptions) {
+      let index: number
+      let animated = true
 
       if (isNumber(options)) {
-        index = options
-        options = {}
+        index = options as number
+        options = {
+          index
+        }
       } else {
-        index = options.index
+        index = (options as ScrollToIndexOptions).index
+        animated = !((options as ScrollToIndexOptions).animated === false)
       }
 
-      const $view = this.getItemEls()[index]
+      const $view = getItemEls()[index]
 
       if ($view) {
         const parentOffset = getRelativeOffset(
           $view,
-          this.$el,
-          options.viewPosition
+          getRootEl(),
+          (options as ScrollToIndexOptions).viewPosition
         )
 
-        let offset =
-          parentOffset[this.scrollX ? 'offsetLeft' : 'offsetTop'] +
+        const offset =
+          parentOffset[scrollX ? 'offsetLeft' : 'offsetTop'] +
           ($view._translateOffset || 0)
 
-        this.scrollToOffset({
+        scrollToOffset({
           offset,
-          animated: options.animated
+          animated
         })
       }
-    },
-    /**
-     * 滚动列表到指定的偏移（以像素为单位）
-     */
-    scrollToOffset(options) {
-      this.$refs.scrollView.scrollToOffset(options)
-    },
+    }
+
     /**
      * 滚动到底部
      */
-    scrollToEnd(options) {
-      let offset = this.scrollX ? this.$el.scrollWidth : this.$el.scrollHeight
+    function scrollToEnd(animated = false) {
+      const $root = getRootEl()
 
-      if (isObject(options)) {
-        options.offset = offset
-      } else {
-        options = { offset }
+      if (!$root) {
+        return
       }
 
-      this.scrollToOffset(options)
-    },
-    /**
-     * 主动通知列表发生了一个事件，以使列表重新计算可视区域
-     */
-    recordInteraction() {
-      this.updateItems(null, 'recordInteraction')
+      scrollToOffset({
+        offset: scrollX ? $root.scrollWidth : $root.scrollHeight,
+        animated
+      })
+    }
+
+    const lowerThreshold = computed(() => {
+      return wrapperSize * props.endReachedThreshold
+    })
+
+    const itemStyles = computed(() => {
+      const styles: StyleObject = {}
+      const gutter: any = props.itemGutter
+
+      if (isNumberArray(gutter) && gutter.length === 2) {
+        styles.padding = `${gutter[1]}px ${gutter[0]}px`
+      } else if (isNumber(gutter) && gutter > 0) {
+        styles.padding = gutter + 'px'
+      }
+
+      return styles
+    })
+
+    const enablePullDirections = computed(() => {
+      if (props.enablePullRefresh) {
+        return horizontal ? ['right'] : ['down']
+      }
+
+      return []
+    })
+
+    watch(
+      () => props.data,
+      val => {
+        dataToList(val)
+        nextTick(() => updateItems(null, 'dataChange'))
+      },
+      {
+        deep: true
+      }
+    )
+
+    watch(
+      () => props.itemSize,
+      () => updateItems(null, 'itemSizeChange')
+    )
+
+    dataToList(props.data)
+
+    useResizeDetector(scrollView, onResize)
+
+    onMounted(() => {
+      updateSize()
+      updateItems(null, 'init')
+    })
+
+    return {
+      listEl,
+      scrollView,
+      scrollX,
+      scrollY,
+      horizontal,
+      list,
+      cols,
+      lowerThreshold,
+      enablePullDirections,
+      itemStyles,
+      onRefreshing,
+      recordInteraction,
+      onScroll,
+      onScrollToLower,
+      scrollToOffset,
+      scrollToIndex,
+      scrollToEnd
     }
   }
-}
+})
 </script>

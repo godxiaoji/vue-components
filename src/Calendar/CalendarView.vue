@@ -59,16 +59,57 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, reactive, watch } from 'vue'
 import dayjs from 'dayjs'
-import { isDate } from '../helpers/util'
+import { isDate, isInNumberRange, isEmpty } from '../helpers/util'
 import { showToast } from '../apis/Toast'
-import mixin from './mixin'
-import { DEFAULT_MONTH_RANGE, getDetail, parseValues, TYPE_NAMES } from './util'
-import { isSameArray, inArray } from '../helpers/util'
+import {
+  DEFAULT_MONTH_RANGE,
+  getDetail as _getDetail,
+  parseValues,
+  TYPE_NAMES
+} from './util'
+import { isSameArray } from '../helpers/util'
 import Exception from '../helpers/exception'
+import commonProps from './props'
+import { getEnumsValue } from '../utils/validator'
+import { Dayjs } from 'dayjs'
 
-const weekDays = [
+interface WeekDay {
+  label: string
+  value: number
+}
+
+interface SelectDay {
+  dateString: string
+  timestamp: number
+  monthIndex: number
+  dayIndex: number
+  state?: string
+}
+
+interface DayInfo {
+  cover?: boolean
+  topHighlight?: boolean
+  topText?: string
+  state: string
+  bottomHighlight?: boolean
+  bottomText?: string
+  text: string
+  dateString: string
+  date?: Date
+  timestamp: number
+}
+
+interface Month {
+  caption: string
+  monthString: string
+  days: DayInfo[]
+  startDay: number
+}
+
+const defaultWeekDays: WeekDay[] = [
   { label: '日', value: 0 },
   { label: '一', value: 1 },
   { label: '二', value: 2 },
@@ -78,148 +119,41 @@ const weekDays = [
   { label: '六', value: 6 }
 ]
 
-function printError(message) {
+function printError(message: string) {
   console.error(new Exception(message, Exception.TYPE.PROP_ERROR, 'Calendar'))
 }
 
-export default {
+export default defineComponent({
   name: 'fx-calendar-view',
   inject: {
     appCalendarPopup: {
       default: null
     }
   },
-  mixins: [mixin],
-  data() {
-    return {
-      type: TYPE_NAMES[0],
+  props: { ...commonProps },
 
-      weekDays: [],
-      months: [],
-
-      start: {
-        dateString: '',
-        timestamp: 0,
-        monthIndex: 0,
-        dayIndex: 0
-      },
-
-      end: {
-        dateString: '',
-        timestamp: 0,
-        monthIndex: 0,
-        dayIndex: 0
-      },
-
-      rangeCount: 0,
-
-      minTimestamp: 0,
-      maxTimestamp: 0
-    }
-  },
-  watch: {
-    minDate: {
-      handler() {
-        this.reset()
-      }
-    },
-    maxDate: {
-      handler() {
-        this.reset()
-      }
-    },
-    value: {
-      handler(val) {
-        this.updateValue(this.parseValues(val))
-      }
-    }
-  },
-  created() {
-    this.type = inArray(this.initialType, TYPE_NAMES)
-      ? this.initialType
-      : TYPE_NAMES[0]
-
-    const popup = this.appCalendarPopup
-
-    this.updateOptions()
-    this.updateValue(
-      this.parseValues(
-        popup && popup.modelValue != null ? popup.modelValue : this.modelValue
-      )
-    )
-
-    if (popup) {
-      popup.detail = this.getDetail()
-      popup.updateValue = val => {
-        return this.updateValue(this.parseValues(val))
-      }
-      popup.initialized()
-    }
-  },
   emits: ['select', 'update:modelValue'],
-  methods: {
-    reset() {
-      clearTimeout(this.updateOptionsTimer)
-      this.updateOptionsTimer = setTimeout(() => {
-        this.setSelected('start', null)
-        this.setSelected('end', null)
-        this.updateOptions()
-        const values = [this.start.timestamp, this.end.timestamp]
+  setup(props, { emit }) {
+    const weekDays = reactive<WeekDay[]>([])
+    const months = reactive<Month[]>([])
 
-        this.updateValue(values)
-      }, 17)
-    },
+    const type = getEnumsValue(TYPE_NAMES, props.initialType)
+    let start: SelectDay = getDefaultSelectDay()
+    let end: SelectDay = getDefaultSelectDay()
 
-    parseValues(val) {
-      return parseValues(val, this.type)
-    },
-    updateValue(values) {
-      if (!isSameArray(values, [this.start.timestamp, this.end.timestamp])) {
-        if (values.length === 0) {
-          this.setSelected('start', null)
-          this.setSelected('end', null)
-          this.updateStates()
-        } else if (this.type === 'range') {
-          const start = this.getSelectedInfo(values[0])
-          const end = this.getSelectedInfo(values[1])
-
-          if (start && end) {
-            const { rangeCount, hasDisabled } = this.getRangeInfo(start, end)
-
-            if (hasDisabled) {
-              printError('"modelValue"值的范围包含有禁用的天数.')
-            } else if (rangeCount > this.maxRange) {
-              printError(
-                `"modelValue"值得范围有${rangeCount}天，不能超过${this.maxRange}天.`
-              )
-            } else {
-              this.start = start
-              this.end = end
-              this.updateStates()
-            }
-          } else {
-            printError(`"modelValue"值不在可选范围内.`)
-          }
-        } else {
-          const select = this.getSelectedInfo(values[0])
-
-          if (select) {
-            this.start = select
-            this.setSelected('end', null)
-            this.updateStates()
-          } else {
-            printError(`"modelValue"值不在可选范围内.`)
-          }
-        }
+    function getDefaultSelectDay() {
+      return {
+        dateString: '',
+        timestamp: 0,
+        monthIndex: 0,
+        dayIndex: 0
       }
+    }
 
-      return this.getDetail()
-    },
-
-    getSelectedInfo(timestamp) {
-      for (let i = 0; i < this.months.length; i++) {
-        for (let j = 0; j < this.months[i].days.length; j++) {
-          const day = this.months[i].days[j]
+    function getSelectedInfo(timestamp: number): SelectDay | null {
+      for (let i = 0; i < months.length; i++) {
+        for (let j = 0; j < months[i].days.length; j++) {
+          const day = months[i].days[j]
 
           if (day.state !== 'disabled') {
             if (timestamp === day.timestamp) {
@@ -235,34 +169,90 @@ export default {
       }
 
       return null
-    },
+    }
 
-    getState(timestamp) {
+    function updateValue(val: unknown) {
+      const timeArr = parseValues(val, type)
+
+      if (!isSameArray(timeArr, [start.timestamp, end.timestamp])) {
+        if (timeArr.length === 0) {
+          setSelected('start', null)
+          setSelected('end', null)
+          updateStates()
+        } else if (type === 'range') {
+          const _start = getSelectedInfo(timeArr[0])
+          const _end = getSelectedInfo(timeArr[1])
+
+          if (_start && _end) {
+            const { rangeCount, hasDisabled } = getRangeInfo(_start, _end)
+
+            if (hasDisabled) {
+              printError('"modelValue"值的范围包含有禁用的天数.')
+            } else if (rangeCount > props.maxRange) {
+              printError(
+                `"modelValue"值得范围有${rangeCount}天，不能超过${props.maxRange}天.`
+              )
+            } else {
+              start = _start as SelectDay
+              end = _end as SelectDay
+              updateStates()
+            }
+          } else {
+            printError(`"modelValue"值不在可选范围内.`)
+          }
+        } else {
+          const select = getSelectedInfo(timeArr[0])
+
+          if (select) {
+            start = select
+            setSelected('end', null)
+            updateStates()
+          } else {
+            printError(`"modelValue"值不在可选范围内.`)
+          }
+        }
+      }
+
+      return getDetail()
+    }
+
+    function setSelected(name: string, day: SelectDay | null) {
+      if (day) {
+        name === 'start' ? (start = day) : (end = day)
+      } else {
+        name === 'start'
+          ? (start = getDefaultSelectDay())
+          : (end = getDefaultSelectDay())
+      }
+    }
+
+    function getState(timestamp: number) {
       let state = ''
 
       if (
-        (this.type === 'range' &&
-          timestamp >= this.start.timestamp &&
-          timestamp <= this.end.timestamp) ||
-        timestamp === this.start.timestamp
+        (type === 'range' &&
+          timestamp >= start.timestamp &&
+          timestamp <= end.timestamp) ||
+        timestamp === start.timestamp
       ) {
         state = 'selected'
       }
-      if (this.type === 'range' && state == 'selected') {
-        if (timestamp === this.end.timestamp) {
+      if (type === 'range' && state == 'selected') {
+        if (timestamp === end.timestamp) {
           state = 'endSelected'
-        } else if (timestamp === this.start.timestamp) {
+        } else if (timestamp === start.timestamp) {
           state = 'startSelected'
         }
       }
 
       return state
-    },
-    getDayInfo(day, extend = {}) {
+    }
+
+    function getDayInfo(day: Dayjs, extend: { state: string }): DayInfo {
       const dateString = day.format('YYYY-MM-DD')
       const state = extend.state
 
-      let dayInfo = {
+      let dayInfo: DayInfo = {
         topHighlight: false,
         topText:
           state === 'startSelected'
@@ -274,12 +264,13 @@ export default {
         bottomHighlight: false,
         bottomText: '',
         text: day.date().toString(),
-        dateString
+        dateString,
+        timestamp: day.valueOf()
       }
 
-      if (this.dayHandler) {
+      if (props.dayHandler) {
         dayInfo.date = day.toDate()
-        dayInfo = this.dayHandler(Object.assign(dayInfo, extend))
+        dayInfo = props.dayHandler(Object.assign(dayInfo, extend))
         delete day.date
       }
 
@@ -291,14 +282,16 @@ export default {
         dateString,
         timestamp: day.valueOf()
       })
-    },
-    getFirstDayOfWeek() {
-      return this.firstDayOfWeek >= 0 && this.firstDayOfWeek <= 6
-        ? parseInt(this.firstDayOfWeek)
+    }
+
+    function getFirstDayOfWeek() {
+      return isInNumberRange(props.firstDayOfWeek, 0, 6)
+        ? Math.round(props.firstDayOfWeek)
         : 0
-    },
-    getStartMonth(day) {
-      const month = {
+    }
+
+    function getStartMonth(day: Dayjs) {
+      const month: Month = {
         caption: day.format('YYYY年MM月'),
         monthString: day.format('YYYY-MM'),
         days: [],
@@ -308,97 +301,98 @@ export default {
       let day2 = day.startOf('month')
 
       // 头部周偏移占位
-      for (
-        let i = 0, len = day2.day() - this.getFirstDayOfWeek();
-        i < len;
-        i++
-      ) {
+      for (let i = 0, len = day2.day() - getFirstDayOfWeek(); i < len; i++) {
         month.days.push({
           cover: true,
           text: '',
-          state: 'disabled'
+          state: 'disabled',
+          dateString: '',
+          timestamp: 0
         })
       }
 
       while (day2.date() < month.startDay) {
-        month.days.push(this.getDayInfo(day2, { state: 'disabled' }))
+        month.days.push(getDayInfo(day2, { state: 'disabled' }))
         day2 = day2.add(1, 'day')
       }
 
       return month
-    },
+    }
 
-    updateWeekDays() {
-      let i = this.getFirstDayOfWeek()
-      const newWeekDays = []
+    function updateWeekDays() {
+      let i = getFirstDayOfWeek()
+      const newWeekDays: WeekDay[] = []
 
-      let weekDay
+      let weekDay: WeekDay
       while (newWeekDays.length < 7) {
-        weekDay = weekDays[i]
+        weekDay = defaultWeekDays[i]
         newWeekDays.push(weekDay)
         i = (i + 1) % 7
       }
 
-      this.weekDays = newWeekDays
-    },
+      weekDays.splice(0, Infinity, ...newWeekDays)
+    }
 
-    updateOptions() {
-      if (isDate(this.minDate)) {
-        this.minTimestamp = dayjs(this.minDate)
+    let minTimestamp = 0
+    let maxTimestamp = 0
+
+    function updateOptions() {
+      if (isDate(props.minDate)) {
+        minTimestamp = dayjs(props.minDate)
           .startOf('day')
           .valueOf()
       } else {
         printError(`"minDate"必须是 Date 类型.`)
-        this.minTimestamp = dayjs()
+        minTimestamp = dayjs()
           .startOf('day')
           .valueOf()
       }
 
-      if (isDate(this.maxDate)) {
-        if (this.maxDate.getTime() < this.minTimestamp) {
+      if (isDate(props.maxDate)) {
+        if ((props.maxDate as any).getTime() < minTimestamp) {
           printError(`"maxDate"不能小于"minDate".`)
-          this.maxTimestamp = dayjs(this.minTimestamp)
+          maxTimestamp = dayjs(minTimestamp)
             .add(DEFAULT_MONTH_RANGE, 'month')
             .valueOf()
         } else {
-          this.maxTimestamp = dayjs(this.maxDate)
+          maxTimestamp = dayjs(props.maxDate)
             .startOf('day')
             .valueOf()
         }
       } else {
         printError(`"maxDate"必须是 Date 类型.`)
-        this.maxTimestamp = dayjs(this.minTimestamp)
+        maxTimestamp = dayjs(minTimestamp)
           .add(DEFAULT_MONTH_RANGE, 'month')
           .valueOf()
       }
 
-      this.updateWeekDays()
+      updateWeekDays()
 
-      const maxDay = dayjs(this.maxTimestamp)
-      const months = []
+      const maxDay = dayjs(maxTimestamp)
+      const _months = []
 
-      let day = dayjs(this.minTimestamp)
+      let day = dayjs(minTimestamp)
       let monthKey = day.month()
-      let month = this.getStartMonth(day)
+      let month = getStartMonth(day)
 
       while (!day.isAfter(maxDay)) {
         if (day.month() !== monthKey) {
           monthKey = day.month()
-          months.push(month)
-          month = this.getStartMonth(day)
+          _months.push(month)
+          month = getStartMonth(day)
         }
 
-        const dayInfo = this.getDayInfo(day, {
-          state: this.getState(day.valueOf())
+        const dayInfo = getDayInfo(day, {
+          state: getState(day.valueOf())
         })
 
         // if (
         //   dayInfo.state === 'startSelected' ||
-        //   (this.type === 'single' && dayInfo.state === 'selected')
+        //   (type === 'single' && dayInfo.state === 'selected')
         // ) {
-        //   this.setSelected('start', dayInfo, months.length, month.days.length)
+        //   setSelected('start', dayInfo, _months.length, month.days.length)
         // } else if (dayInfo.state === 'endSelected') {
-        //   this.setSelected('end', dayInfo, months.length, month.days.length)
+        //   setSelected('end', dayInfo, _months.length, month.days.length)
         // }
 
         month.days.push(dayInfo)
@@ -408,7 +402,7 @@ export default {
       // 补上最后一个月结尾的天数
       while (day.month() === monthKey) {
         month.days.push(
-          this.getDayInfo(day, {
+          getDayInfo(day, {
             state: 'disabled'
           })
         )
@@ -416,77 +410,72 @@ export default {
         day = day.add(1, 'day')
       }
 
-      months.push(month)
+      _months.push(month)
 
-      this.months = months
-    },
+      months.splice(0, Infinity, ..._months)
+    }
 
-    setSelected(name, day, monthIndex, dayIndex) {
-      if (day) {
-        this[name] = {
-          dateString: day.dateString,
-          timestamp: day.timestamp,
-          monthIndex,
-          dayIndex
-        }
-      } else {
-        this[name] = {
-          dateString: '',
-          timestamp: 0,
-          monthIndex: 0,
-          dayIndex: 0
-        }
+    function dayInfo2SelectDay(
+      day: DayInfo,
+      monthIndex: number,
+      dayIndex: number
+    ): SelectDay {
+      return {
+        dateString: day.dateString,
+        timestamp: day.timestamp,
+        state: day.state,
+        monthIndex,
+        dayIndex
       }
-    },
+    }
 
-    onDaysClick(e) {
-      let $day
+    function onDaysClick(e: Event) {
+      const target = e.target as HTMLElement
+      let $day: HTMLElement | null = null
 
-      if (e.target.tagName === 'SPAN') {
-        $day = e.target.parentNode
-      } else if (e.target !== e.currentTarget) {
-        $day = e.target
+      if (target.tagName === 'SPAN') {
+        $day = target.parentElement as HTMLElement
+      } else if (target !== e.currentTarget) {
+        $day = target
       }
 
       if (!$day) {
         return
       }
 
-      const monthIndex = parseInt(e.currentTarget.dataset.index)
-      const dayIndex = parseInt($day.dataset.index)
-
-      const day = this.months[monthIndex].days[dayIndex]
+      const monthIndex = parseInt(
+        (e.currentTarget as HTMLElement).dataset.index as string
+      )
+      const dayIndex = parseInt($day.dataset.index as string)
+      const day = months[monthIndex].days[dayIndex]
 
       if (day.state === 'disabled') {
         return
       }
 
-      if (this.type === 'range') {
+      if (type === 'range') {
         // 范围
-        if (
-          (this.start.dateString && this.end.dateString) ||
-          !this.start.dateString
-        ) {
-          this.setSelected('end', null, monthIndex, dayIndex)
+        if ((start.dateString && end.dateString) || !start.dateString) {
+          setSelected('end', null)
         } else {
           if (
-            day.timestamp > this.start.timestamp ||
-            (this.allowSameDay && day.timestamp === this.start.timestamp)
+            day.timestamp > start.timestamp ||
+            (props.allowSameDay && day.timestamp === start.timestamp)
           ) {
             // 范围
-            const { rangeCount, hasDisabled } = this.getRangeInfo(this.start, {
+            const { rangeCount, hasDisabled } = getRangeInfo(start, {
               monthIndex,
               dayIndex
             })
 
             if (!hasDisabled) {
-              if (rangeCount > this.maxRange) {
-                showToast(`选择天数不能超过${this.maxRange}天`)
+              if (rangeCount > props.maxRange) {
+                showToast(`选择天数不能超过${props.maxRange}天`)
               } else {
-                this.setSelected('end', day, monthIndex, dayIndex)
-                this.rangeCount = rangeCount
-                this.updateStates()
-                this.onSelect()
+                setSelected('end', dayInfo2SelectDay(day, monthIndex, dayIndex))
+                // this.rangeCount = rangeCount
+                updateStates()
+                onSelect()
               }
               return
             }
@@ -494,60 +483,60 @@ export default {
         }
       } else {
         // 单选
-        this.setSelected('start', day, monthIndex, dayIndex)
-        this.rangeCount = 1
-        this.updateStates()
-        this.onSelect()
+        setSelected('start', dayInfo2SelectDay(day, monthIndex, dayIndex))
+        // this.rangeCount = 1
+        updateStates()
+        onSelect()
         return
       }
 
       // 设置开始时间
-      this.setSelected('start', day, monthIndex, dayIndex)
-      this.updateStates()
-    },
+      setSelected('start', dayInfo2SelectDay(day, monthIndex, dayIndex))
+      updateStates()
+    }
 
-    updateStates() {
-      for (let i = 0; i < this.months.length; i++) {
-        for (let j = 0; j < this.months[i].days.length; j++) {
-          const day = this.months[i].days[j]
+    function updateStates() {
+      for (let i = 0; i < months.length; i++) {
+        for (let j = 0; j < months[i].days.length; j++) {
+          const day = months[i].days[j]
 
           if (day.state !== 'disabled') {
-            const newState = this.getState(day.timestamp)
+            const newState = getState(day.timestamp)
 
             if (newState !== day.state) {
-              this.months[i].days[j] = this.getDayInfo(dayjs(day.timestamp), {
+              months[i].days[j] = getDayInfo(dayjs(day.timestamp), {
                 state: newState
               })
             }
           }
         }
       }
-    },
+    }
 
-    onSelect() {
-      let value
+    function onSelect() {
+      let value: Date | Date[]
 
-      if (this.type === 'range') {
-        value = [
-          dayjs(this.start.timestamp).toDate(),
-          dayjs(this.end.timestamp).toDate()
-        ]
+      if (type === 'range') {
+        value = [dayjs(start.timestamp).toDate(), dayjs(end.timestamp).toDate()]
       } else {
-        value = dayjs(this.start.timestamp).toDate()
+        value = dayjs(start.timestamp).toDate()
       }
 
-      this.$emit('update:modelValue', value)
-      this.$emit('select', this.getDetail())
-    },
+      emit('update:modelValue', value)
+      emit('select', getDetail())
+    }
 
-    getDetail() {
-      return getDetail([this.start.timestamp, this.end.timestamp], this.type)
-    },
+    function getDetail() {
+      return _getDetail([start.timestamp, end.timestamp], type)
+    }
 
     /**
      * 判断所选范围内有没有 disabled
      */
-    getRangeInfo(start, end) {
+    function getRangeInfo(
+      start: { monthIndex: number; dayIndex: number },
+      end: { monthIndex: number; dayIndex: number }
+    ) {
       let hasDisabled = false
       let rangeCount =
         start.monthIndex === end.monthIndex && start.dayIndex === end.dayIndex
@@ -557,12 +546,11 @@ export default {
       for (let i = start.monthIndex; i <= end.monthIndex; i++) {
         for (
           let j = i === start.monthIndex ? start.dayIndex + 1 : 0,
-            len =
-              i === end.monthIndex ? end.dayIndex : this.months[i].days.length;
+            len = i === end.monthIndex ? end.dayIndex : months[i].days.length;
           j < len;
           j++
         ) {
-          const day = this.months[i].days[j]
+          const day = months[i].days[j]
 
           if (!day.cover) {
             if (day.state === 'disabled') {
@@ -579,6 +567,57 @@ export default {
         rangeCount
       }
     }
+
+    let updateOptionsTimer: number
+
+    function reset() {
+      clearTimeout(updateOptionsTimer)
+      updateOptionsTimer = window.setTimeout(() => {
+        setSelected('start', null)
+        setSelected('end', null)
+        updateOptions()
+        const values = [start.timestamp, end.timestamp]
+
+        updateValue(values)
+      }, 17)
+    }
+
+    watch([() => props.minDate, () => props.maxDate], reset, {
+      deep: true
+    })
+
+    watch(
+      () => props.modelValue,
+      val => updateValue(val)
+    )
+
+    updateOptions()
+    !isEmpty(props.modelValue) && updateValue(props.modelValue)
+
+    // const popup = this.appCalendarPopup
+
+    // updateValue(
+    //   _parseValues(
+    //     popup && popup.modelValue != null ? popup.modelValue : this.modelValue
+    //   )
+    // )
+
+    // if (popup) {
+    //   popup.detail = getDetail()
+    //   popup.updateValue = val => {
+    //     return updateValue(_parseValues(val))
+    //   }
+    //   popup.initialized()
+    // }
+
+    return {
+      type,
+      weekDays,
+      months,
+      onDaysClick,
+      getDetail,
+      updateValue
+    }
   }
-}
+})
 </script>

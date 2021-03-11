@@ -6,12 +6,12 @@ export function createStorage(areaName, options) {
     options = {}
   }
 
-  let { areaName: prefix, perLimitSize, limitSize } = parseParamsByRules(
+  const { areaName: _areaName, perLimitSize, limitSize } = parseParamsByRules(
     Object.assign({ areaName }, options),
     'createStorage'
   )
 
-  prefix += ':'
+  const prefix = _areaName + ':'
 
   class StorageArea {
     /**
@@ -30,7 +30,7 @@ export function createStorage(areaName, options) {
 
       if (value) {
         try {
-          let ret = JSON.parse(value)
+          const ret = JSON.parse(value)
 
           if (ret.isApp) {
             return ret.isDate ? new Date(ret.data) : ret.data

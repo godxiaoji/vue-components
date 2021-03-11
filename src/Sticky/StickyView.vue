@@ -1,5 +1,5 @@
 <template>
-  <div class="fx-sticky-view">
+  <div class="fx-sticky-view" ref="root">
     <div class="fx-sticky-view_list" ref="list">
       <slot></slot>
     </div>
@@ -17,22 +17,33 @@
   </div>
 </template>
 
-<script>
-import Sticky from '../Sticky'
-import { addScrollEvent, removeScrollEvent } from '../helpers/events'
-import { getRelativeOffset, getSizeValue, querySelector } from '../helpers/dom'
-import { eventSelectorValidator, sizeValidator } from '../helpers/validator'
-import listMixin from '../util/list-mixin'
+<script lang="ts">
+import {
+  ComponentPublicInstance,
+  computed,
+  defineComponent,
+  onMounted,
+  provide,
+  ref,
+  shallowRef,
+  watch
+} from 'vue'
+import Sticky from '../Sticky/Sticky.vue'
+import {
+  getRelativeOffset,
+  getScrollDom,
+  getSizeValue,
+  querySelector
+} from '../helpers/dom'
+import { selectorValidator, sizeValidator } from '../utils/validator'
+import { OnScrollCallback, useScrollEvent } from '../utils/scroll'
+import { isNumber } from '../helpers/util'
+import { useList } from '../utils/list'
+import { ScrollToOptions, ScrollToIndexOptions } from '../utils/types'
 
-export default {
+export default defineComponent({
   name: 'fx-sticky-view',
   components: { Sticky },
-  mixins: [listMixin],
-  provide() {
-    return {
-      appSticky: this
-    }
-  },
   props: {
     // 纵向
     activeIndex: {
@@ -40,10 +51,11 @@ export default {
       default: 0
     },
     containSelector: {
-      validator: eventSelectorValidator,
+      validator: selectorValidator,
       default: null
     },
     offsetTop: {
+      type: [Number, String],
       validator: sizeValidator,
       default: 0
     },
@@ -52,103 +64,69 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      $items: [],
-
-      index: 0,
-
-      tabList: [],
-      title: '',
-      titleY: 0,
-
-      isSelfContainer: false
-    }
-  },
-  computed: {
-    fixedStyles() {
-      return {
-        transform: `translate3d(0px, ${
-          this.titleY === null ? '-100%' : this.titleY + 'px'
-        }, 0px)`
-      }
-    }
-  },
-  watch: {
-    activeIndex(val) {
-      this.scrollToIndex({ index: val })
-    }
-  },
-  mounted() {
-    this.resetItems()
-
-    this.resetContainer(this.containSelector)
-  },
-  beforeUnmount() {
-    removeScrollEvent(this.onScroll, this.$container)
-  },
   emits: ['reset-items', 'update:activeIndex', 'change'],
-  methods: {
-    resetContainer(containSelector) {
-      if (this.$container) {
-        removeScrollEvent(this.onScroll, this.$container)
+  setup(props, ctx) {
+    const { emit } = ctx
+    const root = ref<HTMLElement>()
+    const fixed = ref<HTMLElement>()
+    const sticky = shallowRef<ComponentPublicInstance<typeof Sticky>>()
+    const index = ref(0)
+    const title = ref('')
+    const titleY = ref<number | null>(0)
+    const isSelfContainer = ref(false)
+
+    let $items: HTMLElement[] = []
+    let isScrollTo = false
+
+    function getItemName(index: number) {
+      return $items[index]?.dataset.name || ''
+    }
+
+    let $container: HTMLElement
+    let scrollOff: () => void
+
+    function resetContainer(containSelector: any) {
+      scrollOff && scrollOff()
+      $container = querySelector(containSelector) || (root.value as HTMLElement)
+
+      if ($container === root.value) {
+        isSelfContainer.value = true
       }
 
-      const $container = querySelector(containSelector) || this.$el
+      sticky.value && sticky.value.resetContainer($container)
 
-      this.$container = $container
+      scrollOff = useScrollEvent($container, onScroll)
 
-      if ($container === this.$el) {
-        this.isSelfContainer = true
-      }
+      updateFixed(null)
+    }
 
-      this.$refs.sticky.resetContainer($container)
+    const onScroll: OnScrollCallback = (e: Event, { scrollTop }) => {
+      updateFixed(scrollTop)
+    }
 
-      addScrollEvent(this.onScroll, $container)
+    function updateFixed(scrollTop: number | null) {
+      const $fixed = fixed.value as HTMLElement
 
-      this.updateFixed($container.scrollTop)
-    },
-
-    resetItems() {
-      if (this.$.isUnmounted) {
+      if (!$fixed) {
         return
       }
 
-      const $items = this.getItems('sticky-view').map(v => {
-        return v._app_component
-      })
+      const h = $fixed.clientHeight
 
-      this.$items = $items
-
-      this.updateFixed(this.$refs.list.scrollTop)
-
-      this.$emit(
-        'reset-items',
-        $items.map((v, k) => {
-          return {
-            name: v.name,
-            index: k
-          }
-        })
-      )
-    },
-
-    updateFixed(scrollTop) {
-      if (!this.$refs.fixed) {
+      if ($items.length === 0) {
+        title.value = ''
+        titleY.value = -h
         return
       }
 
-      const h = this.$refs.fixed.clientHeight
+      scrollTop =
+        scrollTop == null
+          ? getScrollDom($container).scrollTop
+          : (scrollTop as number)
 
-      if (this.$items.length === 0) {
-        this.title = ''
-        this.titleY = -h
-        return
-      }
-
-      const activeIndex = this.index
+      const activeIndex = index.value
       const nextIndex = activeIndex + 1
-      const offsetTops = this.getOffsetTops()
+      const offsetTops = getOffsetTops()
       //   console.log(offsetTops, scrollTop)
       const current = offsetTops[activeIndex]
       const next =
@@ -156,99 +134,160 @@ export default {
       const first = offsetTops[0]
 
       if (scrollTop < first) {
-        this.title = ''
-        this.titleY = null
+        title.value = ''
+        titleY.value = null
       } else if (scrollTop >= current) {
         if (scrollTop >= next) {
-          this.index = nextIndex
-          this.title = this.$items[nextIndex].name
-          this.titleY = 0
+          index.value = nextIndex
+          title.value = getItemName(nextIndex)
+          titleY.value = 0
 
           if (
             offsetTops[nextIndex + 1] &&
             scrollTop >= offsetTops[nextIndex + 1]
           ) {
             // 超过了
-            this.updateFixed(scrollTop)
+            updateFixed(scrollTop)
           } else {
-            if (!this.isScrollTo) {
-              this.$emit('update:activeIndex', this.index)
+            if (!isScrollTo) {
+              emit('update:activeIndex', index.value)
             }
-            this.$emit('change', {
-              activeIndex: this.index
+            emit('change', {
+              activeIndex: index.value
             })
           }
         } else if (next - scrollTop < h) {
-          this.titleY = next - scrollTop - h
+          titleY.value = next - scrollTop - h
         } else {
-          this.title = this.$items[activeIndex].name
-          this.titleY = 0
+          title.value = getItemName(activeIndex)
+          titleY.value = 0
         }
       } else {
         if (current - scrollTop < h) {
-          this.title = this.$items[activeIndex - 1].name
-          this.titleY = current - scrollTop - h
+          title.value = getItemName(activeIndex - 1)
+          titleY.value = current - scrollTop - h
         } else {
-          this.index = activeIndex - 1
-          this.title = this.$items[this.index].name
-          this.titleY = 0
+          index.value = activeIndex - 1
+          title.value = getItemName(index.value)
+          titleY.value = 0
 
           if (
             offsetTops[activeIndex - 1] &&
             offsetTops[activeIndex - 1] > scrollTop
           ) {
-            this.updateFixed(scrollTop)
+            updateFixed(scrollTop)
           } else {
-            if (!this.isScrollTo) {
-              this.$emit('update:activeIndex', this.index)
+            if (!isScrollTo) {
+              emit('update:activeIndex', index.value)
             }
 
-            this.$emit('change', {
-              activeIndex: this.index
+            emit('change', {
+              activeIndex: index.value
             })
           }
         }
       }
 
-      delete this.isScrollTo
-    },
+      isScrollTo = false
+    }
+
+    function getOffsetTops() {
+      const offset =
+        getRelativeOffset(list.value as HTMLElement, $container).offsetTop -
+        getSizeValue(props.offsetTop)
+
+      return $items.map($el => {
+        return $el.offsetTop + offset
+      })
+    }
 
     /**
      * 滚动到第index个
-     * @param {Object} options
+     * @param options
      */
-    scrollToIndex({ index }) {
-      if (this.$items[index] && index != this.index) {
-        this.scrollToOffset({
-          offset: getRelativeOffset(this.$items[index].$el, this.$container)
-            .offsetTop
+    function scrollToIndex(options: number | ScrollToIndexOptions) {
+      let _index: number
+
+      if (isNumber(options)) {
+        _index = options as number
+      } else {
+        _index = (options as ScrollToIndexOptions).index
+      }
+
+      if ($items[_index] && _index != index.value) {
+        scrollTo({
+          offset: getRelativeOffset($items[_index], $container).offsetTop
         })
       }
-    },
+    }
 
     /**
      * 滚到到指定位置
-     * @param {Object} options
+     * @param options
      */
-    scrollToOffset({ offset }) {
-      this.isScrollTo = true
-      this.$container.scrollTop = offset
-    },
+    function scrollTo(options: number | ScrollToOptions) {
+      let offset: number
 
-    getOffsetTops() {
-      const offset =
-        getRelativeOffset(this.$refs.list, this.$container).offsetTop -
-        getSizeValue(this.offsetTop)
+      if (isNumber(options)) {
+        offset = options as number
+      } else {
+        offset = (options as ScrollToOptions).offset
+      }
 
-      return this.$items.map(v => {
-        return v.$el.offsetTop + offset
-      })
-    },
+      isScrollTo = true
+      getScrollDom($container).scrollTop = offset
+    }
 
-    onScroll(e, { scrollTop }) {
-      // console.log(scrollTop)
-      this.updateFixed(scrollTop)
+    function resetItems(res: HTMLElement[]) {
+      $items = res
+
+      updateFixed(null)
+
+      emit(
+        'reset-items',
+        $items.map((v, k) => {
+          return {
+            name: getItemName(k),
+            index: k
+          }
+        })
+      )
+    }
+
+    const { list, update } = useList('sticky-view', resetItems)
+
+    const fixedStyles = computed(() => {
+      return {
+        transform: `translate3d(0px, ${
+          titleY.value === null ? '-100%' : titleY.value + 'px'
+        }, 0px)`
+      }
+    })
+
+    watch(
+      () => props.activeIndex,
+      val => scrollToIndex({ index: val })
+    )
+
+    onMounted(() => {
+      resetContainer(props.containSelector)
+    })
+
+    provide('fxStickyViewUpdate', update)
+
+    return {
+      root,
+      list,
+      fixed,
+      sticky,
+      index,
+      title,
+      isSelfContainer,
+      fixedStyles,
+      resetContainer,
+      scrollToIndex,
+      scrollTo
     }
   }
-}
+})
 </script>

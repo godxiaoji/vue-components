@@ -1,18 +1,33 @@
 <template>
-  <div class="fx-sticky" :style="styles">
+  <div class="fx-sticky" :style="styles" ref="root">
     <div class="fx-sticky_content" ref="content">
       <slot></slot>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  computed,
+  ref,
+  onMounted,
+  inject,
+  watch,
+  onBeforeUnmount
+} from 'vue'
 import { widgetZIndex } from '../helpers/layer'
-import { addScrollEvent, removeScrollEvent } from '../helpers/events'
-import { eventSelectorValidator, sizeValidator } from '../helpers/validator'
-import { getRelativeOffset, getSizeValue, querySelector } from '../helpers/dom'
+import { selectorValidator, sizeValidator } from '../utils/validator'
+import { OnScrollCallback, useScrollEvent } from '../utils/scroll'
+import {
+  getRelativeOffset,
+  getScrollDom,
+  getSizeValue,
+  querySelector
+} from '../helpers/dom'
+import { StyleObject } from '../utils/types'
 
-export default {
+export default defineComponent({
   name: 'fx-sticky',
   inject: {
     disableFixed: {
@@ -21,14 +36,16 @@ export default {
   },
   props: {
     containSelector: {
-      validator: eventSelectorValidator,
+      validator: selectorValidator,
       default: null
     },
     offsetTop: {
+      type: [Number, String],
       validator: sizeValidator,
       default: 0
     },
     offsetBottom: {
+      type: [Number, String],
       validator: sizeValidator,
       default: null
     },
@@ -37,118 +54,120 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      height: null,
-      width: null
+  setup(props) {
+    const root = ref<HTMLElement>()
+    const content = ref<HTMLElement>()
+    const width = ref<number | null>(null)
+    const height = ref<number | null>(null)
+    const disableFixed = inject('disableFixed', false)
+
+    const onScroll: OnScrollCallback = (e: Event, { scrollTop }) => {
+      updateFixed(scrollTop)
     }
-  },
-  computed: {
-    styles() {
-      const styles = {}
 
-      if (this.height != null) {
-        styles.height = this.height + 'px'
-      }
-
-      return styles
-    }
-  },
-  watch: {
-    disabled: {
-      handler() {
-        this.updateFixed(this.$container.scrollTop)
-      }
-    }
-  },
-  mounted() {
-    this.resetContainer(this.containSelector)
-  },
-  beforeUnmount() {
-    if (this.disableFixed) {
-      this.$el.append(this.$refs.content)
-    }
-    removeScrollEvent(this.onScroll, this.$container)
-  },
-  methods: {
-    getOffsetTop() {
-      return this.offsetTop
-    },
-
-    resetContainer(containSelector) {
-      if (this.$container) {
-        removeScrollEvent(this.onScroll, this.$container)
-      }
-
-      const $container = querySelector(containSelector) || document
-
-      this.$container = $container
-
-      addScrollEvent(this.onScroll, $container)
-
-      this.updateFixed($container.scrollTop)
-    },
-
-    updateFixed(scrollTop) {
-      if (!this.$el) {
+    function updateFixed(scrollTop: number | null) {
+      if (!root.value || !$container) {
         return
       }
 
-      if (this.disabled) {
-        this.updateStyles(false)
+      if (props.disabled) {
+        updateStyles(false)
         return
       }
 
-      const { clientHeight, clientWidth } = this.$el
+      if (scrollTop == null) {
+        scrollTop = getScrollDom($container).scrollTop
+      }
 
-      const offsetTop = getRelativeOffset(this.$el, this.$container).offsetTop
+      const $root = root.value as HTMLElement
+      const { clientHeight, clientWidth } = $root
 
-      // console.log(scrollTop, offsetTop, getSizeValue(this.offsetTop), this.$el.offsetTop, this.$container)
-      if (scrollTop >= offsetTop - getSizeValue(this.offsetTop)) {
-        this.height = clientHeight
-        this.width = clientWidth
-        this.updateStyles(true)
+      const offsetTop = getRelativeOffset($root, $container).offsetTop
+
+      // console.log(scrollTop, offsetTop, getSizeValue(props.offsetTop), $root.offsetTop, $container)
+      if (scrollTop >= offsetTop - getSizeValue(props.offsetTop)) {
+        height.value = clientHeight
+        width.value = clientWidth
+        updateStyles(true)
       } else {
-        this.height = null
-        this.width = null
-        this.updateStyles(false)
+        height.value = null
+        width.value = null
+        updateStyles(false)
       }
-    },
+    }
 
-    updateStyles(fixed) {
-      const $content = this.$refs.content
+    function updateStyles(fixed: boolean) {
+      const $root = root.value as HTMLElement
+      const $content = content.value as HTMLElement
       const styles = $content.style
 
       if (fixed) {
-        const { offsetTop } = getRelativeOffset(this.$container)
-        const { offsetLeft } = getRelativeOffset(this.$el)
+        const { offsetTop } = getRelativeOffset($container)
+        const { offsetLeft } = getRelativeOffset($root)
 
-        styles.top = offsetTop + getSizeValue(this.offsetTop) + 'px'
+        styles.top = offsetTop + getSizeValue(props.offsetTop) + 'px'
         styles.left = offsetLeft + 'px'
-        styles.width = this.width + 'px'
-        if (this.offsetBottom != null) {
-          styles.bottom = getSizeValue(this.offsetBottom) + 'px'
+        styles.width = width.value + 'px'
+        if (props.offsetBottom != null) {
+          styles.bottom = getSizeValue(props.offsetBottom) + 'px'
         } else {
-          styles.height = this.height + 'px'
+          styles.height = height.value + 'px'
         }
-        styles.zIndex = widgetZIndex
+        styles.zIndex = widgetZIndex.toString()
         styles.position = 'fixed'
 
-        if (this.disableFixed) {
+        if (disableFixed) {
           // 针对在tranform下 fixed 会失效的问题
           document.body.append($content)
         }
       } else {
-        styles.cssText = null
-        if (this.disableFixed) {
-          this.$el.append($content)
+        styles.cssText = ''
+        if (disableFixed) {
+          $root.append($content)
         }
       }
-    },
+    }
 
-    onScroll(e, { scrollTop }) {
-      this.updateFixed(scrollTop)
+    let $container: HTMLElement
+    let scrollOff: () => void
+
+    function resetContainer(containSelector: any) {
+      scrollOff && scrollOff()
+      $container = querySelector(containSelector) || document.documentElement
+
+      scrollOff = useScrollEvent($container, onScroll)
+
+      updateFixed(null)
+    }
+
+    const styles = computed(() => {
+      const styles: StyleObject = {}
+
+      if (height.value != null) {
+        styles.height = height.value + 'px'
+      }
+
+      return styles
+    })
+
+    watch(
+      () => props.disabled,
+      () => updateFixed(null)
+    )
+
+    onMounted(() => resetContainer(props.containSelector))
+
+    onBeforeUnmount(() => {
+      disableFixed &&
+        (root.value as HTMLElement).append(content.value as HTMLElement)
+    })
+
+    return {
+      root,
+      content,
+      styles,
+      resetContainer
     }
   }
-}
+})
 </script>

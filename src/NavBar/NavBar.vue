@@ -10,7 +10,7 @@
           <fx-button-group
             v-else-if="leftButtons.length > 0 || showBack || showHome"
             class="fx-nav-bar_button-group"
-            :shape="buttonShape"
+            :shape="iconOnly ? 'square' : 'rectangle'"
             pattern="borderless"
           >
             <template v-if="leftButtons.length > 0">
@@ -56,7 +56,7 @@
           <template v-else>
             <fx-button-group
               class="fx-nav-bar_button-group"
-              :shape="buttonShape"
+              :shape="iconOnly ? 'square' : 'rectangle'"
               pattern="borderless"
               v-if="rightButtons.length > 0"
             >
@@ -77,31 +77,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
-import { isArray, isString } from '../helpers/util'
-import { iconValidator } from '../helpers/validator'
+import { isArray, isString, isObject } from '../helpers/util'
+import { iconValidator } from '../utils/validator'
 
-function validateButtons(val) {
-  if (isArray(val)) {
-    if (val.length === 0) {
-      return true
-    }
-
-    for (let i = 0; i < val.length; i++) {
-      if (!(isString(val[i].text) && iconValidator(val[i].icon))) {
-        return false
-      }
-    }
-
-    return true
-  }
-
-  return false
+interface ButtonOptions {
+  text: string
+  icon: any
 }
 
-export default {
+const validateButtons = (val: any[]) => {
+  if (isArray(val)) {
+    for (let i = 0; i < val.length; i++) {
+      if (
+        !(
+          isObject(val[i]) &&
+          isString(val[i].text) &&
+          iconValidator(val[i].icon)
+        )
+      )
+        return false
+    }
+    return true
+  } else {
+    return false
+  }
+}
+
+export default defineComponent({
   name: 'fx-nav-bar',
   components: { FxButton, FxButtonGroup },
   props: {
@@ -126,29 +132,18 @@ export default {
       default: false
     },
     leftButtons: {
-      validator(val) {
-        return validateButtons(val)
-      },
-      default() {
-        return []
-      }
+      type: Array as PropType<ButtonOptions[]>,
+      validator: validateButtons,
+      default: () => []
     },
     rightButtons: {
-      validator(val) {
-        return validateButtons(val)
-      },
-      default() {
-        return []
-      }
+      type: Array as PropType<ButtonOptions[]>,
+      validator: validateButtons,
+      default: () => []
     },
     iconOnly: {
       type: Boolean,
       default: true
-    }
-  },
-  computed: {
-    buttonShape() {
-      return this.iconOnly ? 'square' : 'rectangle'
     }
   },
   emits: [
@@ -158,39 +153,65 @@ export default {
     'right-button-click',
     'title-dbclick'
   ],
-  methods: {
-    onBack() {
-      this.$emit('back-click', {})
-    },
-    onBackHome() {
-      this.$emit('home-click', {})
-    },
-    onLeftIconClick(item, index) {
-      this.$emit('left-button-click', {
+  setup(props, { emit }) {
+    function onBack() {
+      eventEmit('back-click')
+    }
+
+    function onBackHome() {
+      eventEmit('home-click')
+    }
+
+    function onLeftIconClick(item: ButtonOptions, index: number) {
+      eventEmit('left-button-click', {
         icon: item.icon,
         text: item.text,
         index
       })
-    },
-    onRightIconClick(item, index) {
-      this.$emit('right-button-click', {
+    }
+
+    function onRightIconClick(item: ButtonOptions, index: number) {
+      eventEmit('right-button-click', {
         icon: item.icon,
         text: item.text,
         index
       })
-    },
-    onTitleStart(e) {
-      if (!this.dbClickTag) {
-        this.dbClickTag = e.type
-        this.dbClickTimer = setTimeout(() => {
-          this.dbClickTag = null
+    }
+
+    let dbClickTag: string | null = null
+    let dbClickTimer: number
+    function onTitleStart(e: Event) {
+      if (!dbClickTag) {
+        dbClickTag = e.type
+        dbClickTimer = window.setTimeout(() => {
+          dbClickTag = null
         }, 300)
-      } else if (this.dbClickTag === e.type) {
-        clearTimeout(this.dbClickTimer)
-        this.dbClickTag = null
-        this.$emit('title-dbclick', {})
+      } else if (dbClickTag === e.type) {
+        clearTimeout(dbClickTimer)
+        dbClickTag = null
+        eventEmit('title-dbclick')
       }
     }
+
+    function eventEmit(type: string, res = {}) {
+      emit(
+        type as 'back-click',
+        Object.assign(
+          {
+            type
+          },
+          res
+        )
+      )
+    }
+
+    return {
+      onBack,
+      onBackHome,
+      onLeftIconClick,
+      onRightIconClick,
+      onTitleStart
+    }
   }
-}
+})
 </script>

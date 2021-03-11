@@ -26,7 +26,7 @@ function getDataset(object) {
 export function createSelectorQuery() {
   let _root = null
   let _selectorQuery
-  let _execQueue = []
+  const _execQueue = []
 
   class SelectorQuery {
     constructor() {

@@ -1,7 +1,7 @@
 <template>
   <div class="fx-index-view">
     <div class="fx-index-view_sidebar">
-      <ul class="fx-index-view_list" ref="list">
+      <ul class="fx-index-view_list" ref="navigation">
         <li
           :class="{ active: item.value === activeIndex }"
           v-for="item in indexList"
@@ -26,23 +26,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  ComponentPublicInstance,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  shallowRef
+} from 'vue'
 import StickyView from '../StickyView'
-import { querySelector } from '../helpers/dom'
-import { sizeValidator } from '../helpers/validator'
-import { touchEvent } from '../helpers/events'
+import { sizeValidator } from '../utils/validator'
 import { rangeInteger } from '../helpers/util'
+import { ScrollToIndexOptions, ScrollToOptions } from '../utils/types'
+import { useTouch } from '../utils/touch'
 
-const {
-  touchstart,
-  touchmove,
-  touchend,
-  addListeners,
-  removeListeners,
-  getTouch
-} = touchEvent
-
-export default {
+export default defineComponent({
   name: 'fx-index-view',
   components: { StickyView },
   props: {
@@ -51,148 +50,143 @@ export default {
       default: 0
     }
   },
-  data() {
-    return {
-      activeIndex: 0,
-
-      indexList: []
-    }
-  },
-  mounted() {
-    this.resetContainer(document)
-
-    addListeners(this.$refs.list, this)
-  },
-  beforeUnmount() {
-    removeListeners(this.$refs.list, this)
-  },
   emits: ['change'],
-  methods: {
-    /**
-     * 事件
-     * @param {Event} e
-     */
-    handleEvent(e) {
-      switch (e.type) {
-        case touchstart:
-          this.onTouchStart(e)
-          break
-        case touchmove:
-          this.onTouchMove(e)
-          break
-        case touchend:
-          this.onTouchEnd(e)
-          break
-        case 'mouseleave':
-          this.onTouchEnd(e)
-          break
-        default:
-          break
-      }
-    },
+  setup(props, { emit }) {
+    const navigation = ref<HTMLElement>()
+    const body = shallowRef<ComponentPublicInstance<typeof StickyView>>()
+    const indexList = reactive<
+      {
+        value: number
+        label: string
+      }[]
+    >([])
+    const activeIndex = ref(0)
 
-    onTouchStart(e) {
-      const { clientY } = getTouch(e)
+    function resetContainer(containSelector: any) {
+      body.value && body.value.resetContainer(containSelector)
+    }
 
-      const $target = e.target
-      const value = parseInt($target.dataset.value)
-      const rects = $target.getClientRects()[0]
+    function onResetItems(items: { name: string; index: number }[]) {
+      indexList.splice(
+        0,
+        Infinity,
+        ...items.map(item => {
+          return {
+            value: item.index,
+            label: item.name
+          }
+        })
+      )
+    }
 
-      this.coords = {
-        size: rects.height,
-        offsetY: clientY - rects.top,
-        startY: clientY,
-        current: value
-      }
-
-      clearTimeout(this.changeTimer)
-      this.changeTimer = setTimeout(() => {
-        this.activeIndex = value
-      }, 500)
-
-      e.preventDefault()
-    },
-
-    onTouchMove(e) {
-      if (!this.coords) {
-        return
-      }
-
-      const { clientY } = getTouch(e)
-      const { startY, size, offsetY, current } = this.coords
-
-      const y = clientY - startY
-
-      let offsetCount = 0
-
-      if (y > 0) {
-        offsetCount = Math.floor(y / size) + (y % size > size - offsetY ? 1 : 0)
-      } else if (y < 0) {
-        offsetCount = -Math.floor(-y / size) + (-y % size > offsetY ? -1 : 0)
-      }
-
-      if (offsetCount !== 0) {
-        clearTimeout(this.changeTimer)
-        this.coords.isChange = true
-
-        this.changeTimer = setTimeout(() => {
-          this.activeIndex = rangeInteger(
-            current + offsetCount,
-            0,
-            this.indexList.length - 1
-          )
-        }, 100)
-      }
-
-      e.stopPropagation()
-    },
-
-    onTouchEnd(e) {
-      if (this.coords) {
-        if (!this.coords.isChange) {
-          clearTimeout(this.changeTimer)
-          this.activeIndex = this.coords.current
-        }
-
-        delete this.coords
-        e.stopPropagation()
-      }
-    },
-
-    resetContainer(containSelector) {
-      const $container = querySelector(containSelector)
-
-      this.$refs.body.resetContainer($container)
-    },
-
-    onResetItems(list) {
-      this.indexList = list.map(({ name, index }) => {
-        return {
-          label: name.substr(0, 1),
-          value: index
-        }
-      })
-    },
-
-    onChange(res) {
-      this.$emit('change', res)
-    },
+    function onChange(res: { activeIndex: number }) {
+      emit('change', res)
+    }
 
     /**
      * 滚动到第index个
-     * @param {Object} options
+     * @param index 索引
      */
-    scrollToIndex(options) {
-      this.$refs.body.scrollToIndex(options)
-    },
+    function scrollToIndex(index: number | ScrollToIndexOptions) {
+      body.value && body.value.scrollToIndex(index)
+    }
 
     /**
      * 滚到到指定位置
-     * @param {Object} options
+     * @param scrollTop 位置值
      */
-    scrollToOffset(options) {
-      this.$refs.body.scrollToOffset(options)
+    function scrollToOffset(scrollTop: number | ScrollToOptions) {
+      body.value && body.value.scrollToOffset(scrollTop)
+    }
+
+    let coords: any
+    let changeTimer: number
+
+    useTouch({
+      el: navigation,
+      onTouchStart(e) {
+        const { clientY } = e.touchObject
+
+        const $target = e.target as HTMLElement
+        const value = parseInt($target.dataset.value as string)
+        const rects = $target.getClientRects()[0]
+
+        coords = {
+          size: rects.height,
+          offsetY: clientY - rects.top,
+          startY: clientY,
+          current: value
+        }
+
+        clearTimeout(changeTimer)
+        changeTimer = window.setTimeout(() => {
+          activeIndex.value = value
+        }, 500)
+
+        e.preventDefault()
+      },
+
+      onTouchMove(e) {
+        if (!coords) {
+          return
+        }
+
+        const { clientY } = e.touchObject
+        const { startY, size, offsetY, current } = coords
+
+        const y = clientY - startY
+
+        let offsetCount = 0
+
+        if (y > 0) {
+          offsetCount =
+            Math.floor(y / size) + (y % size > size - offsetY ? 1 : 0)
+        } else if (y < 0) {
+          offsetCount = -Math.floor(-y / size) + (-y % size > offsetY ? -1 : 0)
+        }
+
+        if (offsetCount !== 0) {
+          clearTimeout(changeTimer)
+          coords.isChange = true
+
+          changeTimer = window.setTimeout(() => {
+            activeIndex.value = rangeInteger(
+              current + offsetCount,
+              0,
+              indexList.length - 1
+            )
+          }, 100)
+        }
+
+        e.stopPropagation()
+      },
+
+      onTouchEnd(e) {
+        if (coords) {
+          if (!coords.isChange) {
+            clearTimeout(changeTimer)
+            activeIndex.value = coords.current
+          }
+
+          coords = null
+          e.stopPropagation()
+        }
+      }
+    })
+
+    onMounted(() => resetContainer(document))
+
+    return {
+      navigation,
+      body,
+      activeIndex,
+      indexList,
+      onChange,
+      scrollToIndex,
+      scrollToOffset,
+      resetContainer,
+      onResetItems
     }
   }
-}
+})
 </script>

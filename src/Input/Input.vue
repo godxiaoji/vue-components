@@ -57,11 +57,13 @@
   </label>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import Icon from '../Icon'
-import { inArray, isNumeric, isStringNumberMix } from '../helpers/util'
-import formMixin from '../util/form-mixin'
+import { isNumeric, isStringNumberMix } from '../helpers/util'
 import { formatInputDigit, formatInputNumber } from '../helpers/input'
+import { getEnumsValue } from '../utils/validator'
+import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
 
 const TYPE_NAMES = [
   'text',
@@ -73,12 +75,13 @@ const TYPE_NAMES = [
   'textarea'
 ]
 
-export default {
+export default defineComponent({
   name: 'fx-input',
   components: { Icon },
-  mixins: [formMixin],
   props: {
+    ...formItemProps,
     maxlength: {
+      type: [String, Number],
       validator: isNumeric,
       default: 140
     },
@@ -91,6 +94,7 @@ export default {
       default: 'text'
     },
     modelValue: {
+      type: [String, Number],
       validator: isStringNumberMix,
       default: null
     },
@@ -107,29 +111,119 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      formValue: '',
+  emits: [...formItemEmits, 'input', 'focus', 'blur'],
+  setup(props, ctx) {
+    const focus2 = ref(false)
+    const formValue = ref('')
+    const { emit } = ctx
 
-      focus2: false
+    const {
+      formName,
+      validateAfterEventTrigger,
+      formReset,
+      getInputEl,
+      hookFormValue,
+      eventEmit
+    } = useFormItem<string>(props, ctx, {
+      formValue
+    })
+
+    function updateValue(value: string | number) {
+      value = value.toString() as string
+
+      switch (props.type) {
+        case 'digit':
+          value = formatInputDigit(value)
+          break
+
+        case 'number':
+          value = formatInputNumber(value)
+          break
+
+        default:
+          break
+      }
+
+      const $input = getInputEl()
+      let isChange = false
+
+      if ($input.value != value) {
+        $input.value = value.toString()
+      }
+
+      value = $input.value
+
+      if (value !== formValue.value) {
+        formValue.value = value
+        isChange = true
+      }
+
+      if (value != props.modelValue) {
+        emit('update:modelValue', formValue.value)
+      }
+
+      return { value, isChange }
     }
-  },
-  computed: {
-    inputType() {
-      if (this.type === 'number') {
+
+    function updateInput(newVal: string) {
+      const { value, isChange } = updateValue(newVal)
+
+      isChange && emit('input', { value, type: 'input' })
+    }
+
+    let isComposition = false
+
+    function onCompositionStart() {
+      isComposition = true
+    }
+
+    function onCompositionEnd(e: Event) {
+      isComposition = false
+      updateInput((e.target as HTMLInputElement).value)
+    }
+
+    function onFocus(e: Event) {
+      focus2.value = true
+      emit(e.type, e)
+    }
+
+    function onBlur(e: Event) {
+      focus2.value = false
+      emit(e.type, e)
+
+      validateAfterEventTrigger(e.type, formValue.value)
+    }
+
+    function onInput(e: Event) {
+      if (!isComposition) {
+        updateInput((e.target as HTMLInputElement).value)
+      }
+    }
+
+    function onChange(e: Event) {
+      eventEmit(e.type)
+    }
+
+    function onClear() {
+      updateInput('')
+    }
+
+    const inputType = computed(() => {
+      if (props.type === 'number') {
         return 'text'
       }
 
-      if (this.type === 'digit') {
+      if (props.type === 'digit') {
         return 'tel'
       }
 
-      return inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
-    },
-    inputMode() {
+      return getEnumsValue(TYPE_NAMES, props.type)
+    })
+
+    const inputMode = computed(() => {
       let mode = ''
 
-      switch (this.type) {
+      switch (props.type) {
         case 'search':
           mode = 'search'
           break
@@ -155,125 +249,48 @@ export default {
       }
 
       return mode
-    }
-  },
-  watch: {
-    modelValue(val) {
-      if (val != this.formValue) {
-        this.updateValue(val)
+    })
+
+    watch(
+      () => props.modelValue,
+      val => {
+        val != formValue.value && updateValue(val ?? '')
       }
-    },
-    focus(val) {
-      const $input = this.getInputEl()
+    )
 
-      if (val) {
-        $input.focus()
-      } else {
-        $input.blur()
+    watch(
+      () => props.focus,
+      val => {
+        const $input = getInputEl()
+
+        $input && ($input as HTMLInputElement)[val ? 'focus' : 'blur']()
       }
-    }
-  },
-  mounted() {
-    this.updateValue(this.modelValue == null ? '' : this.modelValue)
+    )
 
-    const $input = this.getInputEl()
+    onMounted(() => {
+      updateValue(props.modelValue ?? '')
 
-    $input.defaultValue = $input.value
+      const $input = getInputEl() as HTMLInputElement
 
-    if (this.focus) {
-      $input.focus()
-    }
+      $input.defaultValue = $input.value
+      props.focus && $input.focus()
+    })
 
-    $input._app_component = this
-  },
-  emits: ['input', 'focus', 'blur'],
-  methods: {
-    onCompositionStart() {
-      this.isComposition = true
-    },
-    onCompositionEnd(e) {
-      this.isComposition = false
-      this.updateInput(e.target.value)
-    },
-    updateValue(value) {
-      switch (this.type) {
-        case 'digit':
-          value = formatInputDigit(value)
-          break
-
-        case 'number':
-          value = formatInputNumber(value)
-          break
-
-        default:
-          break
-      }
-
-      const $input = this.getInputEl()
-      let isChange = false
-
-      if ($input.value != value) {
-        $input.value = value.toString()
-      }
-
-      value = $input.value
-
-      if (value !== this.formValue) {
-        this.formValue = value
-        isChange = true
-      }
-
-      if (value != this.modelValue) {
-        this.$emit('update:modelValue', this.formValue)
-      }
-
-      return { value, isChange }
-    },
-    /**
-     * 输入改变时触发
-     */
-    onInput(e) {
-      if (!this.isComposition) {
-        this.updateInput(e.target.value)
-      }
-    },
-    updateInput(newVal) {
-      const { value, isChange } = this.updateValue(newVal)
-
-      if (isChange) {
-        const type = 'input'
-
-        this.$emit(type, {
-          value
-        })
-      }
-    },
-    onFocus(e) {
-      this.focus2 = true
-      this.$emit(e.type, e)
-    },
-    onBlur(e) {
-      this.focus2 = false
-      this.$emit(e.type, e)
-
-      this.validateAfterEventTrigger(e.type, this.formValue)
-    },
-    onChange(e) {
-      this.$emit(e.type, {
-        value: this.formValue
-      })
-
-      this.validateAfterEventTrigger(e.type, this.formValue)
-    },
-    getInputEl() {
-      return this.$refs.input
-    },
-    reset() {
-      return this._reset(this.getInputEl().value)
-    },
-    onClear() {
-      this.updateInput('')
+    return {
+      formName,
+      formValue,
+      focus2,
+      onCompositionStart,
+      onCompositionEnd,
+      onFocus,
+      onBlur,
+      onInput,
+      onChange,
+      onClear,
+      hookFormValue,
+      inputType,
+      inputMode
     }
   }
-}
+})
 </script>

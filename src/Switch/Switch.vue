@@ -13,19 +13,19 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, toRef, watch, defineComponent } from 'vue'
-import formMixin from '../util/form/options-mixin'
-import useFormItem from '../util/form/use-item'
+import { onMounted, ref, watch, defineComponent } from 'vue'
+import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
 
 export default defineComponent({
   name: 'fx-switch',
-  mixins: [formMixin],
   props: {
+    ...formItemProps,
     modelValue: {
       type: Boolean,
       default: false
     }
   },
+  emits: formItemEmits,
   setup(props, ctx) {
     const { emit } = ctx
     const formValue = ref(!!props.modelValue)
@@ -35,16 +35,20 @@ export default defineComponent({
       validateAfterEventTrigger,
       formReset,
       getInputEl,
-      hookFormValue
+      hookFormValue,
+      eventEmit
     } = useFormItem<boolean>(props, ctx, { formValue })
 
-    watch(toRef(props, 'modelValue'), val => {
-      val = !!val
+    watch(
+      () => props.modelValue,
+      val => {
+        val = !!val
 
-      if (val !== formValue.value) {
-        getInputEl().checked = formValue.value = val
+        if (val !== formValue.value) {
+          getInputEl().checked = formValue.value = val
+        }
       }
-    })
+    )
 
     function onChange(e: Event) {
       const value = !!(e.target as HTMLInputElement).checked
@@ -55,8 +59,7 @@ export default defineComponent({
         emit('update:modelValue', value)
       }
 
-      emit('change', { value })
-      validateAfterEventTrigger('change', value)
+      eventEmit(e.type)
     }
 
     function reset() {
@@ -74,7 +77,8 @@ export default defineComponent({
       formValue,
       onChange,
       reset,
-      hookFormValue
+      hookFormValue,
+      validateAfterEventTrigger
     }
   }
 })

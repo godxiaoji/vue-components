@@ -2,27 +2,23 @@
   <div
     class="fx-radio-group"
     :class="{ vertical: !inline, disabled: !!disabled }"
+    ref="root"
   >
     <slot></slot>
   </div>
 </template>
 
-<script>
-import { cloneData, isStringNumberMix } from '../helpers/util'
-import formMixin from '../util/form-mixin'
-import groupMixin from '../util/group-mixin'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { formItemEmits, formItemProps } from '../Form/form-item'
+import { useCheckboxOrRadioGroup, ModelValue } from '../utils/checkbox-radio'
 
-export default {
+export default defineComponent({
   name: 'fx-radio-group',
-  mixins: [formMixin, groupMixin],
-  provide() {
-    return {
-      appRadioGroup: this
-    }
-  },
   props: {
+    ...formItemProps,
     modelValue: {
-      validator: isStringNumberMix,
+      type: [Number, String],
       default: null
     },
     inline: {
@@ -30,92 +26,51 @@ export default {
       default: false
     }
   },
-  data() {
+  emits: formItemEmits,
+  setup(props, ctx) {
+    const formValue = ref<ModelValue>('')
+
+    const group = useCheckboxOrRadioGroup(props, ctx, {
+      name: 'radio',
+      updateValue({ isChange, uid, children, hookFormValue }) {
+        let hasChecked = false
+
+        children.forEach(child => {
+          const checked = uid ? uid === child.uid : child.getInputChecked()
+
+          if (!hasChecked && checked) {
+            hasChecked = true
+            formValue.value = child.getValue()
+            child.setChecked(true)
+          } else {
+            child.setChecked(false)
+          }
+        })
+
+        if (isChange && formValue.value !== props.modelValue) {
+          ctx.emit('update:modelValue', hookFormValue())
+        }
+      },
+      watchValue({ children, value }) {
+        let hasChecked = false
+
+        children.forEach(child => {
+          if (!hasChecked && child.getValue() === value) {
+            hasChecked = true
+            formValue.value = value
+            child.setChecked(true)
+          } else {
+            child.setChecked(false)
+          }
+        })
+      },
+      formValue
+    })
+
     return {
-      formValue: ''
-    }
-  },
-  watch: {
-    modelValue: {
-      handler(val) {
-        if (val != this.formValue) {
-          let formValue = ''
-          let hasChecked = false
-
-          this.childrenForEach(child => {
-            const checked = child.value == val
-
-            if (checked && !hasChecked) {
-              hasChecked = true
-              formValue = child.value
-              child.setChecked(true)
-            } else {
-              child.setChecked(false)
-            }
-          })
-
-          this.formValue = formValue
-        }
-      }
-    }
-  },
-  mounted() {
-    for (let i = 0; i < this.appChildren.length; i++) {
-      const child = this.appChildren[i]
-
-      if (child.getInputChecked()) {
-        this.formValue = child.value
-        break
-      }
-    }
-  },
-  methods: {
-    updateValue(vm) {
-      let value = ''
-
-      for (let i = 0; i < this.appChildren.length; i++) {
-        const child = this.appChildren[i]
-
-        if (child.$.uid === vm.$.uid) {
-          value = cloneData(vm.value)
-        } else if (child.getInputChecked()) {
-          child.setChecked(false)
-        }
-      }
-
-      this.formValue = value
-
-      if (value !== this.modelValue) {
-        this.$emit('update:modelValue', value)
-      }
-    },
-
-    onChange(vm) {
-      this.updateValue(vm)
-
-      const type = 'change'
-
-      this.$emit(type, {
-        value: this.hookFormValue()
-      })
-
-      this.validateAfterEventTrigger(type, this.hookFormValue())
-    },
-
-    reset() {
-      let value = ''
-
-      for (let i = 0; i < this.appChildren.length; i++) {
-        const child = this.appChildren[i]
-
-        if (child.getInputChecked()) {
-          value = cloneData(child.value)
-          break
-        }
-      }
-
-      return this._reset(value)
+      ...group,
+      formValue
     }
   }
-}
+})
 </script>

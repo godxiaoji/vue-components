@@ -8,21 +8,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
-  isNumber,
-  isString,
-  isStringNumberMix,
-  rangeInteger
-} from '../helpers/util'
-import { frameTo } from '../helpers/animation'
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  PropType,
+  ref,
+  toRef,
+  watch
+} from 'vue'
+import { isNumber, isString, rangeInteger } from '../helpers/util'
+import { StyleObject } from '../utils/types'
+import { AnimationFrameTask, frameTo } from '../helpers/animation'
 
-export default {
+export default defineComponent({
   name: 'fx-badge',
   props: {
     // 消息条数
     content: {
-      validator: isStringNumberMix,
+      type: [String, Number],
       default: 0
     },
     // 最大完全显示消息条数
@@ -47,87 +52,95 @@ export default {
     },
     // 偏移量，格式为 [x, y]
     offset: {
-      type: Array,
-      default() {
+      type: Array as PropType<number[]>,
+      default: () => {
         return [0, 0]
       }
     }
   },
-  data() {
-    return { content2: 0 }
-  },
-  watch: {
-    content: {
-      handler(val) {
-        this.frameTask && this.frameTask.stop()
+  setup(props) {
+    const content2 = ref<string | number>(
+      isString(props.content)
+        ? props.content
+        : isNumber(props.content)
+        ? rangeInteger(props.content, 0, props.maxCount)
+        : 0
+    )
+
+    let frameTask: AnimationFrameTask
+
+    const showCount = computed(() => {
+      if (isString(content2.value)) {
+        return content2.value as string
+      }
+
+      if (props.content > props.maxCount && content2.value === props.maxCount) {
+        return content2.value + '+'
+      }
+      return content2.value.toString()
+    })
+
+    const styles = computed(() => {
+      return {
+        transform: `translate3d(50%, -50%, 0px) scale(${
+          (isString(props.content) && props.content) ||
+          props.showZero ||
+          props.content > 0
+            ? 1
+            : 0
+        })`,
+        right: `${-props.offset[0]}px`,
+        top: `${props.offset[1]}px`
+      } as StyleObject
+    })
+
+    watch(
+      () => props.content,
+      val => {
+        frameTask && frameTask.stop()
 
         if (isString(val)) {
-          this.content2 = val
+          content2.value = val as string
           return
         }
         if (!isNumber(val)) {
           return
         }
 
-        const currentIsShow = this.showZero || this.content2 > 0
-        const isReadyToHide = !this.showZero && val === 0
+        const currentIsShow = props.showZero || content2.value > 0
+        const isReadyToHide = !props.showZero && val === 0
 
         if (!currentIsShow || isReadyToHide) {
-          this.content2 = val
+          content2.value = val
         } else {
-          const to = rangeInteger(val, 0, this.maxCount)
+          const to = rangeInteger(val, 0, props.maxCount)
 
-          this.frameTask = frameTo({
-            from: this.content2,
+          frameTask = frameTo({
+            from: content2.value as number,
             to,
-            duration: Math.min(Math.abs(to - this.content2) * 50, 1000),
+            duration: Math.min(
+              Math.abs(to - (content2.value as number)) * 50,
+              1000
+            ),
             progress: ({ current, frameIndex }) => {
               if (frameIndex % 3 === 0) {
-                this.content2 = Math.round(current)
+                content2.value = Math.round(current)
               }
             },
             complete: ({ current }) => {
-              this.content2 = current
+              content2.value = current
             }
           })
         }
       }
-    }
-  },
-  computed: {
-    showCount() {
-      if (isString(this.content2)) {
-        return this.content2
-      }
+    )
 
-      if (this.content > this.maxCount && this.content2 === this.maxCount) {
-        return this.content2 + '+'
-      }
-      return this.content2.toString()
-    },
-    styles() {
-      return {
-        transform: `translate3d(50%, -50%, 0px) scale(${
-          (isString(this.content) && this.content) ||
-          this.showZero ||
-          this.content > 0
-            ? 1
-            : 0
-        })`,
-        right: `${-this.offset[0]}px`,
-        top: `${this.offset[1]}px`
-      }
+    onBeforeUnmount(() => frameTask && frameTask.stop())
+
+    return {
+      showCount,
+      styles
     }
-  },
-  created() {
-    if (isString(this.content)) {
-      this.content2 = this.content
-    } else if (isNumber(this.content)) {
-      this.content2 = rangeInteger(this.content, 0, this.maxCount)
-    }
-  },
-  unmounted() {
-    this.frameTask && this.frameTask.stop()
   }
-}
+})
 </script>

@@ -28,30 +28,9 @@ import tabMixin from './tab-mixin'
 export default {
   name: 'fx-tab-bar',
   mixins: [tabMixin],
-  props: {
-    fixed: {
-      type: Boolean,
-      default: true
-    },
-    zIndex: {
-      type: Number,
-      default: 1
-    }
-  },
   data() {
     return {
       tabName: 'TabBar'
-    }
-  },
-  computed: {
-    innerStyles() {
-      const styles = {}
-
-      if (this.fixed) {
-        styles.zIndex = this.zIndex
-      }
-
-      return styles
     }
   }
 }

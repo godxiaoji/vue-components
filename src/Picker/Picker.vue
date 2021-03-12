@@ -37,13 +37,14 @@
 </template>
 
 <script>
+import Icon from '../Icon'
 import PickerPopup from './PickerPopup.vue'
 import pickerMixin from '../util/multi-selector/picker-mixin'
 
 export default {
   name: 'fx-picker',
   mixins: [pickerMixin],
-  components: { PickerPopup },
+  components: { PickerPopup, Icon },
   data() {
     return {
       compName: 'picker'

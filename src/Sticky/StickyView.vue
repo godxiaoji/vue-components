@@ -58,7 +58,6 @@ export default {
 
       index: 0,
 
-      tabList: [],
       title: '',
       titleY: 0,
 

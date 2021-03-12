@@ -91,7 +91,7 @@ export default {
     toTop() {
       getScrollDom().scrollTo({
         top: 0,
-        behavior: this.animated ? 'smooth' : 'instant'
+        behavior: this.animated ? 'smooth' : 'auto'
       })
     }
   }

@@ -344,7 +344,7 @@ export const apiRules = {
   showPopover: {
     selector: {
       validator: selectorValidator,
-      requird: true
+      required: true
     },
     content: {
       type: String,
@@ -357,7 +357,7 @@ export const apiRules = {
   showPopDialog: {
     selector: {
       validator: selectorValidator,
-      requird: true
+      required: true
     },
     content: {
       type: String,
@@ -383,7 +383,7 @@ export const apiRules = {
   showPopMenu: {
     selector: {
       validator: selectorValidator,
-      requird: true
+      required: true
     },
     placement: {
       validator: createEnumsValidator('placement')

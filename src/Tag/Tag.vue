@@ -82,7 +82,7 @@ export default {
     onLongPress(e) {
       if (!this.disabled) {
         this.$emit(e.type, {
-          type: e.e
+          type: e.type
         })
       }
     }

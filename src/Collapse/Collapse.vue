@@ -60,7 +60,7 @@ export default {
 
       this.childrenForEach(child => {
         if (child.name && inArray(child.name, values)) {
-          activeNames.push(name)
+          activeNames.push(child.name)
           child.show()
         } else {
           child.hide()

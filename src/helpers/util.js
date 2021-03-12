@@ -85,7 +85,12 @@ export function isNumber(object) {
  * @param {any} object 值
  */
 export function isNumeric(object) {
-  return object != null && !isNaN(parseFloat(object))
+  return (
+    isNumber(object) ||
+    (isString(object) &&
+      !isNaN(parseFloat(object)) &&
+      isFinite(parseFloat(object)))
+  )
 }
 
 /**

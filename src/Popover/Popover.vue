@@ -35,7 +35,7 @@ export default {
   props: {
     selector: {
       validator: selectorValidator,
-      requird: true
+      required: true
     },
     content: {
       type: String,

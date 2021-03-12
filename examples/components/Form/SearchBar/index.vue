@@ -73,7 +73,7 @@ export default {
       )
     },
     onInput2(e, fn) {
-      this.$showToast(`搜索了 ${e.text}`)
+      this.$showToast(`输入了 ${e.text}`)
 
       this.onInput(e, fn)
     },

@@ -64,7 +64,7 @@ export default {
   },
   watch: {
     modelValue(val) {
-      this.formValue = val
+      this.formValue = val.toString()
 
       this.$nextTick(() => {
         this.updateValue()

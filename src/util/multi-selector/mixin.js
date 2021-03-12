@@ -25,7 +25,7 @@ export default {
       separator: '',
       options2: [],
       isCascade: true,
-      extactData: []
+      extraData: []
     }
   },
   computed: {
@@ -97,7 +97,7 @@ export default {
     addCache(item) {
       this.cacheValue.push(item.value)
       this.cacheLabel.push(item.label)
-      this.extactData.push(cloneData(item.extactData))
+      this.extraData.push(cloneData(item.extraData))
     },
 
     /**
@@ -106,7 +106,7 @@ export default {
     updateCols(selecteds) {
       this.cacheValue = []
       this.cacheLabel = []
-      this.extactData = []
+      this.extraData = []
 
       if (this.options2.length === 0) {
         this.cols = []
@@ -151,7 +151,7 @@ export default {
     updateCascadeCols(selecteds) {
       this.cacheValue = []
       this.cacheLabel = []
-      this.extactData = []
+      this.extraData = []
 
       let optionList = this.parseColList(0)
 
@@ -335,7 +335,7 @@ export default {
         labelString: array2String(this.formLabel, this.mode, this.separator),
         value: cloneData(this.formValue),
         label: cloneData(this.formLabel),
-        extactData: cloneData(this.extactData)
+        extraData: cloneData(this.extraData)
       }
 
       return detail

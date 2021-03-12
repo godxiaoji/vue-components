@@ -149,16 +149,14 @@ export default {
         e.stopPropagation()
 
         this.touchCoords = {
-          start: [
-            {
-              pageX: e.touches[0].pageX,
-              pageY: e.touches[0].pageY
-            },
-            {
-              pageX: e.touches[1].pageX,
-              pageY: e.touches[1].pageY
-            }
-          ],
+          start: {
+            pageX: e.touches[0].pageX,
+            pageY: e.touches[0].pageY
+          },
+          start2: {
+            pageX: e.touches[1].pageX,
+            pageY: e.touches[1].pageY
+          },
           image: {
             width: item.width,
             height: item.height
@@ -194,7 +192,7 @@ export default {
           coords.hasZoom = true
           const scale =
             this.getDistance(e.touches[0], e.touches[1]) /
-            this.getDistance(coords.start[0], coords.start[1])
+            this.getDistance(coords.start, coords.start2)
 
           item.width = coords.image.width * scale
           item.height = coords.image.height * scale
@@ -353,7 +351,7 @@ export default {
     updateCurrent(val) {
       let hasUrl = false
 
-      for (let i = 0; i < this.urls.length; i++) {
+      for (let i = 0, len = this.images.length; i < len; i++) {
         if (this.images[i].src === val) {
           if (this.activeIndex !== i) {
             this.activeIndex = i

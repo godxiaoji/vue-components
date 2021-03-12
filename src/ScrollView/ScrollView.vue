@@ -452,21 +452,6 @@ export default {
     },
 
     /**
-     * 滚动到指定Id元素
-     */
-    scrollIntoIdView(id) {
-      if (id) {
-        const $view = this.$el.getElementById(id)
-
-        if ($view) {
-          $view.scrollIntoView({
-            behavior: this.scrollAnimated ? 'smooth' : 'auto'
-          })
-        }
-      }
-    },
-
-    /**
      * 滚动列表到指定的偏移（以像素为单位）
      */
     scrollToOffset(options) {
@@ -506,11 +491,11 @@ export default {
         scrollLeft = 0
       }
 
-      if (scrollTop > 0 || scrollTop > 0) {
+      if (scrollTop > 0 || scrollLeft > 0) {
         this.$el.scrollTo({
           top: scrollTop,
           left: scrollLeft,
-          behavior: this.scrollAnimated ? 'smooth' : 'instant'
+          behavior: this.scrollAnimated ? 'smooth' : 'auto'
         })
       }
     },
@@ -561,9 +546,12 @@ export default {
 
       // 左右滚动
       if (scrollX) {
-        if (scrollLeft + clientWidth + lowerThreshold >= scrollWidth) {
+        if (
+          scrollLeft + clientWidth + lowerThreshold >= scrollWidth &&
+          scrollLeft > this._prevX
+        ) {
           isToLowerX = true
-        } else if (scrollLeft <= upperThreshold) {
+        } else if (scrollLeft <= upperThreshold && scrollLeft < this._prevX) {
           isToUpperX = true
         }
       }

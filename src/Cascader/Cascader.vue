@@ -37,13 +37,14 @@
 </template>
 
 <script>
+import Icon from '../Icon'
 import CascaderPopup from './CascaderPopup.vue'
 import pickerMixin from '../util/multi-selector/picker-mixin'
 
 export default {
   name: 'fx-cascader',
   mixins: [pickerMixin],
-  components: { CascaderPopup },
+  components: { CascaderPopup, Icon },
   data() {
     return {
       compName: 'cascader'

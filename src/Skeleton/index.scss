@@ -80,13 +80,8 @@
   border-radius: 2px;
   @include skeleton-background;
 
-  &.shape--circle {
-    border-radius: 50%;
-    width: 44px;
-  }
-
   &.shape--round {
-    border-radius: 22px;
+    border-radius: 14px;
   }
 
   &.animated {

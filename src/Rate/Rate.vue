@@ -192,7 +192,6 @@ export default {
       }
       this.coords.isHalf = this.coords.offsetX < this.coords.size / 2
 
-      clearTimeout(this.changeTimer)
       this._change(value, this.coords.isHalf)
 
       e.preventDefault()
@@ -218,7 +217,6 @@ export default {
 
       const isHalf = (offsetX + x) % size < size / 2
 
-      clearTimeout(this.changeTimer)
       this.coords.isChange = true
 
       this._change(rangeInteger(current + offsetCount, 1, this.max), isHalf)

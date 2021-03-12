@@ -34,7 +34,8 @@ export function parseDateList(index, parent, options = {}) {
         value: yearStr,
         labels: [yearStr],
         values: [yearStr],
-        hasChildren: true
+        hasChildren: true,
+        extraData: {}
       })
     }
   } else if (index === 1) {
@@ -57,7 +58,8 @@ export function parseDateList(index, parent, options = {}) {
         value: monthStr,
         labels: parent.labels.concat(monthStr),
         values: parent.values.concat(monthStr),
-        hasChildren: true
+        hasChildren: true,
+        extraData: {}
       })
     }
   } else if (index === 2) {
@@ -81,7 +83,8 @@ export function parseDateList(index, parent, options = {}) {
         value: dayStr,
         labels: parent.labels.concat(dayStr),
         values: parent.values.concat(dayStr),
-        hasChildren: options.isDatetime ? true : false
+        hasChildren: options.isDatetime ? true : false,
+        extraData: {}
       })
     }
   }
@@ -107,7 +110,8 @@ export function parseTimeList(index) {
     list.push({
       label: numStr,
       value: numStr,
-      hasChildren: index >= 2 ? false : true
+      hasChildren: index >= 2 ? false : true,
+      extraData: {}
     })
   }
 

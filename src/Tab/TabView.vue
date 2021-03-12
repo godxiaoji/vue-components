@@ -99,7 +99,7 @@ export default {
     onChange(res) {
       this.$emit('change', res)
 
-      if (this.backTopWhenChange) {
+      if (this.backUpperWhenChange) {
         // 切换时回到顶部
         const $viewItem = this.$refs.swiper.$items[res.activeIndex]
 
@@ -117,7 +117,7 @@ export default {
             $firstChild.scrollTo({
               top: 0,
               left: 0,
-              behavior: 'instant'
+              behavior: 'auto'
             })
           }
         }

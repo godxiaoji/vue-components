@@ -128,7 +128,7 @@ export default {
         this.reset()
       }
     },
-    value: {
+    modelValue: {
       handler(val) {
         this.updateValue(this.parseValues(val))
       }

@@ -134,17 +134,17 @@ export function parseOptions(options, fieldNames) {
           label: option.toString(),
           value: option,
           disabled: false,
-          extactData: {}
+          extraData: {}
         })
       } else if (
         isObject(option) &&
         (isNumber(option[fieldNames.value]) ||
           isString(option[fieldNames.value]))
       ) {
-        const extactData = cloneData(option)
-        delete extactData[fieldNames.label]
-        delete extactData[fieldNames.value]
-        delete extactData[fieldNames.children]
+        const extraData = cloneData(option)
+        delete extraData[fieldNames.label]
+        delete extraData[fieldNames.value]
+        delete extraData[fieldNames.children]
 
         newOptions.push({
           label:
@@ -154,7 +154,7 @@ export function parseOptions(options, fieldNames) {
           value: option[fieldNames.value],
           disabled: option.disabled ? true : false,
           children: parseOptions(option[fieldNames.children], fieldNames),
-          extactData
+          extraData
         })
       }
     })
@@ -173,7 +173,7 @@ export function getDefaultDetail() {
     value: [],
     labelString: '',
     label: [],
-    extactData: []
+    extraData: []
   }
 }
 
@@ -191,7 +191,7 @@ function validateCols(values, options) {
   let selectCount = 0
   const value = []
   const label = []
-  const extactData = []
+  const extraData = []
 
   cols.forEach((list, colIndex) => {
     for (let i = 0; i < list.length; i++) {
@@ -200,7 +200,7 @@ function validateCols(values, options) {
         selectCount++
         value.push(item.value)
         label.push(item.label)
-        extactData.push(cloneData(item.extactData))
+        extraData.push(cloneData(item.extraData))
         break
       }
     }
@@ -211,13 +211,13 @@ function validateCols(values, options) {
         vaild: true,
         value,
         label,
-        extactData
+        extraData
       }
     : {
         vaild: false,
         value: [],
         label: [],
-        extactData: []
+        extraData: []
       }
 }
 
@@ -229,12 +229,12 @@ function validateCols(values, options) {
 function validateCascadeCols(values, options, mode) {
   const value = []
   const label = []
-  const extactData = []
+  const extraData = []
 
   function addData(optionItem) {
     value.push(optionItem.value)
     label.push(optionItem.label)
-    extactData.push(cloneData(optionItem.extactData))
+    extraData.push(cloneData(optionItem.extraData))
   }
 
   const deep = (index, parent) => {
@@ -266,13 +266,13 @@ function validateCascadeCols(values, options, mode) {
         vaild: true,
         value,
         label,
-        extactData
+        extraData
       }
     : {
         vaild: false,
         value: [],
         label: [],
-        extactData: []
+        extraData: []
       }
 }
 

@@ -1,3 +1,11 @@
+## [1.8.4](https://github.com/godxiaoji/vfox/compare/v1.8.3...v1.8.4) (2021-03-12)
+
+
+### Bug Fixes
+
+* requird -> required ([f34d2a2](https://github.com/godxiaoji/vfox/commit/f34d2a2789f2d830efb8bc0ff73e4334677e0d29))
+* 修复各种bug ([2c5eb20](https://github.com/godxiaoji/vfox/commit/2c5eb20f449e7ba1eae4a1cc316480008d0c43a5))
+
 ## [1.8.3](https://github.com/godxiaoji/vfox/compare/v1.8.2...v1.8.3) (2021-02-24)
 
 

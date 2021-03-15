@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Notify from './Notify.vue'
-import { showNotify, hideNotify } from '../apis/Notify'
+import { showNotify, hideNotify } from '@/apis/Notify'
 
 const _Notify: SFCWithInstall<typeof Notify> = Object.assign(Notify, {
   install: function(app: App) {

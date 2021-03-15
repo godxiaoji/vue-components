@@ -40,8 +40,8 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { popoverProps, popoverEmits, usePopover } from './popover'
-import Icon from '../Icon'
-import { cloneData, isArray, isObject } from '../helpers/util'
+import Icon from '@/Icon'
+import { cloneData, isArray, isObject } from '@/helpers/util'
 
 interface OptionItem {
   name: string

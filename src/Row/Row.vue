@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, provide, reactive, watch } from 'vue'
-import { isNumber, isArray, isNumeric } from '../helpers/util'
-import { StyleObject } from '../utils/types'
-import { createEnumsValidator } from '../utils/validator'
+import { isNumber, isArray, isNumeric } from '@/helpers/util'
+import { StyleObject } from '@/utils/types'
+import { createEnumsValidator } from '@/utils/validator'
 
 type PropGutter = number | string | number[]
 

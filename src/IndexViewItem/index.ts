@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import IndexViewItem from '../IndexView/IndexViewItem.vue'
 
 const _IndexViewItem: SFCWithInstall<typeof IndexViewItem> = Object.assign(IndexViewItem, {

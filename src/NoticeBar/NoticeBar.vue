@@ -41,14 +41,14 @@ import {
   watch,
   PropType
 } from 'vue'
-import Icon from '../Icon'
+import Icon from '@/Icon'
 import {
   createEnumsValidator,
   getEnumsValue,
   iconValidator
-} from '../utils/validator'
-import  type {  StyleObject } from '../utils/types'
-import { StateTypes, STATE_TYPES } from '../utils/constants'
+} from '@/utils/validator'
+import  type {  StyleObject } from '@/utils/types'
+import { StateTypes, STATE_TYPES } from '@/utils/constants'
 
 const modeMaps = new Map([
   ['default', ''],

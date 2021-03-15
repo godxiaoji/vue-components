@@ -30,16 +30,16 @@ import {
   onMounted,
   reactive
 } from 'vue'
-import CalendarView from './CalendarView.vue'
-import Drawer from '../Drawer'
-import FxButton from '../Button'
+import CalendarView from '@/CalendarView'
+import Drawer from '@/Drawer'
+import FxButton from '@/Button'
 import { getDefaultDetail, cloneDetail } from './util'
 import commonProps from './props'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '../utils/popup'
+} from '@/utils/popup'
 import { DetailObject } from './types'
 
 export default defineComponent({

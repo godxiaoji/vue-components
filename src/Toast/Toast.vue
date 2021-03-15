@@ -24,10 +24,10 @@
 
 <script lang="ts">
 import { defineComponent, computed, onBeforeUnmount, PropType } from 'vue'
-import Icon from '../Icon'
-import { popupEmits, popupProps, usePopup } from '../utils/popup'
-import { isUndefined } from '../helpers/util'
-import { iconValidator } from '../utils/validator'
+import Icon from '@/Icon'
+import { popupEmits, popupProps, usePopup } from '@/utils/popup'
+import { isUndefined } from '@/helpers/util'
+import { iconValidator } from '@/utils/validator'
 
 const typeMaps = new Map([
   ['default', null],

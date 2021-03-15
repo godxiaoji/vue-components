@@ -1,7 +1,7 @@
-import Toast from '../Toast'
-import { isObject, isString } from '../helpers/util'
-import { baseShow, baseHide } from './Notify'
-import { ApiOptions } from './types'
+import Toast from '@/Toast'
+import { isObject, isString } from '@/helpers/util'
+import { baseShow, baseHide } from '@/apis/Notify'
+import { ApiOptions } from '@/apis/types'
 
 type ShowToastApiOptions = {
   title: string

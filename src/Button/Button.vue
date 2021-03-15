@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts">
-import Icon from '../Icon'
+import Icon from '@/Icon'
 import {
   createEnumsValidator,
   getEnumsValue,
   iconValidator
-} from '../utils/validator'
+} from '@/utils/validator'
 import {
   inject,
   defineComponent,
@@ -35,8 +35,8 @@ import {
   ButtonShapeTypes,
   STATE_TYPES,
   StateTypes
-} from '../utils/constants'
-import { useGroupItem } from '../utils/group'
+} from '@/utils/constants'
+import { useGroupItem } from '@/utils/group'
 
 const FORM_TYPES = ['button', 'submit', 'reset']
 type FormTypes = 'button' | 'submit' | 'reset'

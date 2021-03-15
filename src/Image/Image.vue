@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import Icon from '../Icon'
+import Icon from '@/Icon'
 import {
   addLazyQueue,
   loadNow,
@@ -40,8 +40,8 @@ import {
   computed,
   ComponentInternalInstance
 } from 'vue'
-import { createEnumsValidator, getEnumsValue } from '../utils/validator'
-import Exception from '../helpers/exception'
+import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import Exception from '@/helpers/exception'
 
 type ModeNames =
   | 'scaleToFill'

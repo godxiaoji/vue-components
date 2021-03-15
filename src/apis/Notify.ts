@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
-import Notify from '../Notify'
-import { isObject, isString } from '../helpers/util'
-import { parseParamsByRules } from './rules'
-import { getCallbackFns } from './callback'
-import Exception from '../helpers/exception'
-import { createPopup, PopupBridge } from '../utils/popup'
-import { ApiOptions } from './types'
-import { StateTypes } from '../utils/constants'
+import Notify from '@/Notify'
+import { isObject, isString } from '@/helpers/util'
+import { parseParamsByRules } from '@/apis/rules'
+import { getCallbackFns } from '@/apis/callback'
+import Exception from '@/helpers/exception'
+import { createPopup, PopupBridge } from '@/utils/popup'
+import { ApiOptions } from '@/apis/types'
+import { StateTypes } from '@/utils/constants'
 
 type ShowNotifyApiOptions = {
   title: string

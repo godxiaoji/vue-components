@@ -39,11 +39,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import CascaderPopup from './CascaderPopup.vue'
-import Icon from '../Icon'
-import { formItemEmits, formItemProps } from '../Form/form-item'
-import { usePicker, pickerEmits, pickerProps } from '../multi-selector/picker'
-import commonProps from '../multi-selector/props'
+import CascaderPopup from '@/CascaderPopup'
+import Icon from '@/Icon'
+import { formItemEmits, formItemProps } from '@/utils/form'
+import { usePicker, pickerEmits, pickerProps } from '@/multi-selector/picker'
+import commonProps from '@/multi-selector/props'
 
 export default defineComponent({
   name: 'fx-cascader',

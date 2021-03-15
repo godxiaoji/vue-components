@@ -1,4 +1,4 @@
-import { isStringNumberMixArray } from './../helpers/util'
+import { isStringNumberMixArray } from '@/helpers/util'
 import {
   OptionItem,
   Labels,
@@ -29,8 +29,8 @@ import {
   isObject,
   isString,
   isStringNumberMix
-} from '../helpers/util'
-import Exception from '../helpers/exception'
+} from '@/helpers/util'
+import Exception from '@/helpers/exception'
 
 export { dateString2Array, timeString2Array, datetimeString2Array }
 

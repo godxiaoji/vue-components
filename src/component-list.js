@@ -66,12 +66,12 @@ export default [
   'IndexView',
   'IndexViewItem',
   'TabBar',
-  // 'Scroll',
-  // 'LocalStorage',
   'SearchBar',
   'SwipeCell',
   'SideTab',
   'Progress',
   'Tag',
-  'Fixed'
+  'Fixed',
+  // // 'Scroll',
+  // // 'LocalStorage'
 ]

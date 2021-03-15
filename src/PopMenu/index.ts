@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import PopMenu from '../Popover/PopMenu.vue'
-import { showPopMenu } from '../apis/Popup'
+import { showPopMenu } from '@/apis/Popup'
 
 const _PopMenu: SFCWithInstall<typeof PopMenu> = Object.assign(PopMenu, {
   install: function(app: App) {

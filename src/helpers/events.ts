@@ -1,5 +1,5 @@
-import { isIOS, isMobile } from './device'
-import { objectForEach, isFunction } from './util'
+import { isIOS, isMobile } from '@/helpers/device'
+import { objectForEach, isFunction } from '@/helpers/util'
 
 export function getDataset(object: any) {
   const dataset: any = {}

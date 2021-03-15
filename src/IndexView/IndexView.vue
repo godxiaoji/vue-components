@@ -35,11 +35,11 @@ import {
   ref,
   shallowRef
 } from 'vue'
-import StickyView from '../StickyView'
-import { sizeValidator } from '../utils/validator'
-import { rangeInteger } from '../helpers/util'
-import { ScrollToIndexOptions, ScrollToOptions } from '../utils/types'
-import { useTouch } from '../utils/touch'
+import StickyView from '@/StickyView'
+import { sizeValidator } from '@/utils/validator'
+import { rangeInteger } from '@/helpers/util'
+import { ScrollToIndexOptions, ScrollToOptions } from '@/utils/types'
+import { useTouch } from '@/utils/touch'
 
 export default defineComponent({
   name: 'fx-index-view',

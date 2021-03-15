@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import SwipeCell from './SwipeCell.vue'
 
 const _SwipeCell: SFCWithInstall<typeof SwipeCell> = Object.assign(SwipeCell, {

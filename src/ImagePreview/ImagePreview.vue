@@ -53,16 +53,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from 'vue'
-import FxButton from '../Button'
-import FxImage from '../Image'
-import Swiper from '../Swiper'
-import SwiperItem from '../SwiperItem'
-import { isStringArray, rangeNumber } from '../helpers/util'
-import { popupEmits, popupProps, usePopup } from '../utils/popup'
-import { DataObject } from '../utils/types'
-import { PropType } from 'vue'
-import { UseTouchCoords } from '../utils/touch'
+import { defineComponent, reactive, ref, watch, PropType } from 'vue'
+import FxButton from '@/Button'
+import FxImage from '@/Image'
+import Swiper from '@/Swiper'
+import SwiperItem from '@/SwiperItem'
+import { isStringArray, rangeNumber } from '@/helpers/util'
+import { popupEmits, popupProps, usePopup } from '@/utils/popup'
+import { DataObject } from '@/utils/types'
+import { UseTouchCoords } from '@/utils/touch'
 
 interface ImageObject {
   src: string

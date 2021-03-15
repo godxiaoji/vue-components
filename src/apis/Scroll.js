@@ -1,7 +1,7 @@
-import { frameTo } from '../helpers/animation'
-import { getScrollDom } from '../helpers/dom'
-import { getCallbackFns } from './callback'
-import { parseParamsByRules } from './rules'
+import { frameTo } from '@/helpers/animation'
+import { getScrollDom } from '@/helpers/dom'
+import { getCallbackFns } from '@/apis/callback'
+import { parseParamsByRules } from '@/apis/rules'
 
 /**
  * 将页面滚动到目标位置（可以设置滚动动画时长）

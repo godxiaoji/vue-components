@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
-import { isInNumberRange, isInteger } from '../helpers/util'
+import { isInNumberRange, isInteger } from '@/helpers/util'
 import { DEFAULT_MONTH_RANGE, TYPE_NAMES } from './util'
-import { calendarValueValidator } from '../utils/validator'
-import { createEnumsValidator } from '../utils/validator'
+import { calendarValueValidator } from '@/utils/validator'
+import { createEnumsValidator } from '@/utils/validator'
 
 export default {
   modelValue: {

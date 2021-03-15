@@ -41,8 +41,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { popoverProps, popoverEmits, usePopover } from './popover'
-import FxButton from '../Button'
-import FxButtonGroup from '../ButtonGroup'
+import FxButton from '@/Button'
+import FxButtonGroup from '@/ButtonGroup'
 
 export default defineComponent({
   name: 'fx-pop-dialog',

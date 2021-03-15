@@ -18,10 +18,10 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, nextTick } from 'vue'
-import { popupEmits, popupProps, usePopup } from '../utils/popup'
-import { selectorValidator } from '../utils/validator'
-import Exception from '../helpers/exception'
-import { querySelector, DomSelector } from '../helpers/dom'
+import { popupEmits, popupProps, usePopup } from '@/utils/popup'
+import { selectorValidator } from '@/utils/validator'
+import Exception from '@/helpers/exception'
+import { querySelector, DomSelector } from '@/helpers/dom'
 
 export default defineComponent({
   name: 'fx-dropdown',

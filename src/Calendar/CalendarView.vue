@@ -62,18 +62,18 @@
 <script lang="ts">
 import { defineComponent, reactive, watch } from 'vue'
 import dayjs from 'dayjs'
-import { isDate, isInNumberRange, isEmpty } from '../helpers/util'
-import { showToast } from '../apis/Toast'
+import { isDate, isInNumberRange, isEmpty } from '@/helpers/util'
+import { showToast } from '@/apis/Toast'
 import {
   DEFAULT_MONTH_RANGE,
   getDetail as _getDetail,
   parseValues,
   TYPE_NAMES
 } from './util'
-import { isSameArray } from '../helpers/util'
-import Exception from '../helpers/exception'
+import { isSameArray } from '@/helpers/util'
+import Exception from '@/helpers/exception'
 import commonProps from './props'
-import { getEnumsValue } from '../utils/validator'
+import { getEnumsValue } from '@/utils/validator'
 import { Dayjs } from 'dayjs'
 
 interface WeekDay {
@@ -271,7 +271,7 @@ export default defineComponent({
       if (props.dayHandler) {
         dayInfo.date = day.toDate()
         dayInfo = props.dayHandler(Object.assign(dayInfo, extend))
-        delete day.date
+        delete dayInfo.date
       }
 
       if (dayInfo.state === 'disabled' && !extend.state) {

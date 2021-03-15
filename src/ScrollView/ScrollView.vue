@@ -53,17 +53,16 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted, watch, reactive } from 'vue'
-import Icon from '../Icon'
+import Icon from '@/Icon'
 import {
-  enum2Map,
   inArray,
   stringMix2StringArray,
   isNumber,
   isString,
   isStringArray
-} from '../helpers/util'
-import { ScrollToOffsetOptions, StyleObject } from '../utils/types'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
+} from '@/helpers/util'
+import { ScrollToOffsetOptions, StyleObject } from '@/utils/types'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
 
 enum ScrollState {
   Center,
@@ -85,6 +84,8 @@ interface ScrollCoords extends UseTouchCoords {
   scrollY: boolean
   directions?: PullDirection[]
   direction?: PullDirection
+  stop: boolean | null
+  isSetSafeArea?: boolean
 }
 
 export default defineComponent({
@@ -201,7 +202,8 @@ export default defineComponent({
         pageX,
         pageY,
         scrollX: props.scrollX && scrollWidth > clientWidth,
-        scrollY: props.scrollY && scrollHeight > clientHeight
+        scrollY: props.scrollY && scrollHeight > clientHeight,
+        stop: null
       }
 
       if (props.lowerLoading) {
@@ -589,7 +591,11 @@ export default defineComponent({
       indicatorStyles,
       onScroll,
       pullIndicatorSafeArea: pullIndicatorSafeArea,
-      PullRefreshState: enum2Map(PullRefreshState),
+      PullRefreshState: {
+        Pulling: 0,
+        Holding: 1,
+        Refreshing: 2
+      },
       scrollToOffset
     }
   }

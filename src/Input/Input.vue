@@ -59,11 +59,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
-import Icon from '../Icon'
-import { isNumeric, isStringNumberMix } from '../helpers/util'
-import { formatInputDigit, formatInputNumber } from '../helpers/input'
-import { getEnumsValue } from '../utils/validator'
-import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
+import Icon from '@/Icon'
+import { isNumeric, isStringNumberMix } from '@/helpers/util'
+import { formatInputDigit, formatInputNumber } from '@/helpers/input'
+import { getEnumsValue } from '@/utils/validator'
+import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
 
 const TYPE_NAMES = [
   'text',
@@ -154,7 +154,7 @@ export default defineComponent({
       value = $input.value
 
       if (value !== formValue.value) {
-        formValue.value = value
+        formValue.value = value.toString()
         isChange = true
       }
 

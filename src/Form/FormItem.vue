@@ -11,17 +11,17 @@
 
 <script lang="ts">
 import { defineComponent, inject, PropType, provide, ref } from 'vue'
-import Cell from '../Cell'
+import Cell from '@/Cell'
 import Schema from 'async-validator'
-import { isArray, isBoolean, isNumber } from '../helpers/util'
+import { isArray, isBoolean, isNumber } from '@/helpers/util'
 import {
   FormItemProvide,
   FormRuleItem,
   FormRules,
   FormRuleType,
   FormRuleValidate
-} from './types'
-import { useGroupItem } from '../utils/group'
+} from '@/utils/form'
+import { useGroupItem } from '@/utils/group'
 
 export default defineComponent({
   name: 'fx-form-item',

@@ -39,17 +39,17 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, ref, computed } from 'vue'
-import Drawer from '../Drawer'
-import { frameTo } from '../helpers/animation'
-import { isSameArray } from '../helpers/util'
-import { useView, viewEmits } from '../multi-selector/view'
-import commonProps from '../multi-selector/props'
+import Drawer from '@/Drawer'
+import { frameTo } from '@/helpers/animation'
+import { isSameArray } from '@/helpers/util'
+import { useView, viewEmits } from '@/multi-selector/view'
+import commonProps from '@/multi-selector/props'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '../utils/popup'
-import { ColRow, Values } from '../multi-selector/types'
+} from '@/utils/popup'
+import { ColRow, Values } from '@/multi-selector/types'
 
 export default defineComponent({
   name: 'fx-cascader-popup',

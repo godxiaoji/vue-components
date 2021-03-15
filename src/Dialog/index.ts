@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Dialog from './Dialog.vue'
-import { showDialog } from '../apis/Popup'
+import { showDialog } from '@/apis/Popup'
 
 const _Dialog: SFCWithInstall<typeof Dialog> = Object.assign(Dialog, {
   install: function(app: App) {

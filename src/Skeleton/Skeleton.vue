@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, provide } from 'vue'
+import { defineComponent, h, provide, PropType } from 'vue'
 import SkeletonLayout from './SkeletonLayout.vue'
 import {
   paragraphDefaultRow,
@@ -7,9 +7,8 @@ import {
   BUTTON_SHAPE_NAMES,
   ButtonShapeNames,
   AvatarShapeNames
-} from './util'
-import { createEnumsValidator } from '../utils/validator'
-import { PropType } from 'vue'
+} from '@/utils/skeleton'
+import { createEnumsValidator } from '@/utils/validator'
 
 export default defineComponent({
   name: 'fx-skeleton',

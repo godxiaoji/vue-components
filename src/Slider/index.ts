@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Slider from './Slider.vue'
 
 const _Slider: SFCWithInstall<typeof Slider> = Object.assign(Slider, {

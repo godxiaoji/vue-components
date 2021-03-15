@@ -49,13 +49,13 @@
 
 <script lang="ts">
 import { computed, PropType, defineComponent } from 'vue'
-import Drawer from '../Drawer'
-import { isArray, isObject, cloneData } from '../helpers/util'
+import Drawer from '@/Drawer'
+import { isArray, isObject, cloneData } from '@/helpers/util'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '../utils/popup'
+} from '@/utils/popup'
 
 interface ActionSheetItem {
   name: string

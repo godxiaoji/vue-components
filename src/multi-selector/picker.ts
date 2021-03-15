@@ -7,7 +7,7 @@ import {
   ComponentPublicInstance,
   watch
 } from 'vue'
-import { cloneData, isSameArray, isEmpty } from '../helpers/util'
+import { cloneData, isSameArray, isEmpty } from '@/helpers/util'
 import {
   getDefaultDetail,
   getFormatOptions,
@@ -16,10 +16,10 @@ import {
   validateValues,
   updateArray
 } from './util'
-import { UseProps } from '../utils/types'
+import { UseProps } from '@/utils/types'
 import { DetailObject, Labels, Values } from './types'
-import { getEnumsValue } from '../utils/validator'
-import { useFormItem } from '../Form/form-item'
+import { getEnumsValue } from '@/utils/validator'
+import { useFormItem } from '@/utils/form'
 
 interface UseOptions {
   name: string

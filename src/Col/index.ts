@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Col from './Col.vue'
 
 const _Col: SFCWithInstall<typeof Col> = Object.assign(Col, {

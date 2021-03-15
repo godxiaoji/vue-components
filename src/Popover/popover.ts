@@ -1,14 +1,14 @@
 import { computed, SetupContext, PropType, ref, nextTick } from 'vue'
-import { cloneData } from '../helpers/util'
+import { cloneData } from '@/helpers/util'
 import {
   selectorValidator,
   createEnumsValidator,
   getEnumsValue
-} from '../utils/validator'
-import { querySelector } from '../helpers/dom'
-import { PlacementTypes, PLACEMENT_TYPES } from '../utils/constants'
-import { usePopup, popupProps, popupEmits } from '../utils/popup'
-import { StyleObject, UseProps } from '../utils/types'
+} from '@/utils/validator'
+import { querySelector } from '@/helpers/dom'
+import { PlacementTypes, PLACEMENT_TYPES } from '@/utils/constants'
+import { usePopup, popupProps, popupEmits } from '@/utils/popup'
+import { StyleObject, UseProps } from '@/utils/types'
 
 type PopoverPos = {
   t: number | null

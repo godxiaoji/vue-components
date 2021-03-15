@@ -6,10 +6,10 @@
 
 <script lang="ts">
 import { defineComponent, PropType, provide } from 'vue'
-import { inArray, isUndefined } from '../helpers/util'
-import { useGroup } from '../utils/group'
-import { DataObject } from '../utils/types'
-import { FormRules, FormInputElement, FormGroupItemOut } from './types'
+import { inArray, isUndefined } from '@/helpers/util'
+import { useGroup } from '@/utils/group'
+import { DataObject } from '@/utils/types'
+import { FormRules, FormInputElement, FormGroupItemOut } from '@/utils/form'
 
 export default defineComponent({
   name: 'fx-form',

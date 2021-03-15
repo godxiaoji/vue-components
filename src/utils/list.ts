@@ -1,11 +1,11 @@
-import Exception from '../helpers/exception'
+import Exception from '@/helpers/exception'
 import {
   getCurrentInstance,
   ref,
   onBeforeUnmount,
   ComponentInternalInstance
 } from 'vue'
-import { kebabCase2CamelCase } from '../helpers/util'
+import { kebabCase2CamelCase } from '@/helpers/util'
 
 type ListUpdateCallback = ($items: HTMLElement[]) => void
 
@@ -31,7 +31,7 @@ export function useList(name: string, updateCallback: ListUpdateCallback) {
     }
 
     clearTimeout(updateTimer)
-    updateTimer = setTimeout(() => {
+    updateTimer = window.setTimeout(() => {
       if (!(instance as ComponentInternalInstance).isUnmounted) {
         updateCallback(getItems())
       }

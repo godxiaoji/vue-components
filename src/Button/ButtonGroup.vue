@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { createEnumsValidator, getEnumsValue } from '../utils/validator'
+import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
 import {
   SIZE_TYPES,
   SizeTypes,
@@ -21,8 +21,8 @@ import {
   ButtonPatternTypes,
   BUTTON_SHAPE_TYPES,
   ButtonShapeTypes
-} from '../utils/constants'
-import { useGroup } from '../utils/group'
+} from '@/utils/constants'
+import { useGroup } from '@/utils/group'
 import { defineComponent, PropType, provide, reactive, watch } from 'vue'
 
 export default defineComponent({

@@ -8,10 +8,15 @@ import {
   shallowRef,
   ComponentPublicInstance
 } from 'vue'
-import { isFunction, isObject } from '../helpers/util'
-import { addClassName, getScrollDom, removeClassName } from '../helpers/dom'
-import { popupZIndex } from '../helpers/layer'
-import { UseProps, DataObject } from './types'
+import { isFunction, isObject } from '@/helpers/util'
+import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
+import { popupZIndex } from '@/helpers/layer'
+import { UseProps, DataObject } from '@/utils/types'
+
+interface PopupPublicInstance {
+  customCancel: (key: string, focus?: boolean) => void
+  customConfirm: (res?: any, key?: string) => void
+}
 
 interface UseOptions {
   forbidScroll?: boolean
@@ -116,10 +121,10 @@ export function usePopup(
     zIndex.value = getNewZIndex()
     isShow.value = true
 
-    visibleTimer = setTimeout(() => {
+    visibleTimer = window.setTimeout(() => {
       visible2.value = true
 
-      visibleTimer = setTimeout(() => {
+      visibleTimer = window.setTimeout(() => {
         isShowing = false
         callback()
       }, 210)
@@ -155,7 +160,7 @@ export function usePopup(
     visible2.value = false
 
     clearTimeout(visibleTimer)
-    visibleTimer = setTimeout(() => {
+    visibleTimer = window.setTimeout(() => {
       isShow.value = false
       isHiding = false
 
@@ -292,11 +297,6 @@ export const popupExtendProps = {
     type: Boolean,
     default: false
   }
-}
-
-interface PopupPublicInstance {
-  customCancel: (key: string, focus?: boolean) => void
-  customConfirm: (res?: any, key?: string) => void
 }
 
 export function usePopupExtend({ emit }: SetupContext<any>) {

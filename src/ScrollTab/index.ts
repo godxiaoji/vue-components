@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import ScrollTab from '../Tab/ScrollTab.vue'
 
 const _ScrollTab: SFCWithInstall<typeof ScrollTab> = Object.assign(ScrollTab, {

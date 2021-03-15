@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Tag from './Tag.vue'
 
 const _Tag: SFCWithInstall<typeof Tag> = Object.assign(Tag, {

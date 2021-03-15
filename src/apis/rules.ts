@@ -1,5 +1,5 @@
-import Exception from '../helpers/exception'
-import { isObject, inArray, isFunction } from '../helpers/util'
+import Exception from '@/helpers/exception'
+import { isObject, inArray, isFunction } from '@/helpers/util'
 import {
   notNullValidator,
   stringArrayValidator,
@@ -10,13 +10,13 @@ import {
   stringNumberArrayMixValidator,
   selectorValidator,
   Validator
-} from '../utils/validator'
+} from '@/utils/validator'
 
-import { MODE_NAMES as SELECT_MODE_NAMES } from '../multi-selector/util'
-import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '../Calendar/util'
-import { PLACEMENT_TYPES } from '../utils/constants'
-import { DataObject } from '../utils/types'
-import { ApiOptions } from './types'
+import { MODE_NAMES as SELECT_MODE_NAMES } from '@/multi-selector/util'
+import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '@/Calendar/util'
+import { PLACEMENT_TYPES } from '@/utils/constants'
+import { DataObject } from '@/utils/types'
+import { ApiOptions } from '@/apis/types'
 
 const placementValidator = createEnumsValidator(PLACEMENT_TYPES)
 

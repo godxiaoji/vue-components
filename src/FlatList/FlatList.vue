@@ -67,7 +67,7 @@ import {
   ComponentPublicInstance,
   shallowRef
 } from 'vue'
-import Icon from '../Icon'
+import Icon from '@/Icon'
 import {
   cloneData,
   isFunction,
@@ -76,16 +76,16 @@ import {
   isNumber,
   isNumberArray,
   rangeInteger
-} from '../helpers/util'
-import ScrollView from '../ScrollView'
-import Exception from '../helpers/exception'
-import { getRelativeOffset } from '../helpers/dom'
-import { useResizeDetector } from '../utils/resize-detector'
+} from '@/helpers/util'
+import ScrollView from '@/ScrollView'
+import Exception from '@/helpers/exception'
+import { getRelativeOffset } from '@/helpers/dom'
+import { useResizeDetector } from '@/utils/resize-detector'
 import {
   ScrollToIndexOptions,
   ScrollToOffsetOptions,
   StyleObject
-} from '../utils/types'
+} from '@/utils/types'
 
 interface FlatItemElement extends HTMLElement {
   _recycled?: boolean

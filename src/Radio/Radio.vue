@@ -24,8 +24,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '../Icon'
-import { useCheckboxOrRadio } from '../utils/checkbox-radio'
+import Icon from '@/Icon'
+import { useCheckboxOrRadio } from '@/utils/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-radio',

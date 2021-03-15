@@ -29,19 +29,19 @@ import {
   watch,
   onMounted
 } from 'vue'
-import PickerView from './PickerView.vue'
-import NavBar from '../NavBar'
-import Drawer from '../Drawer'
-import { cloneData, isSameArray } from '../helpers/util'
-import { viewEmits } from '../multi-selector/view'
-import commonProps from '../multi-selector/props'
-import { getDefaultDetail } from '../multi-selector/util'
+import PickerView from '@/PickerView'
+import NavBar from '@/NavBar'
+import Drawer from '@/Drawer'
+import { cloneData, isSameArray } from '@/helpers/util'
+import { viewEmits } from '@/multi-selector/view'
+import commonProps from '@/multi-selector/props'
+import { getDefaultDetail } from '@/multi-selector/util'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '../utils/popup'
-import { isEmpty } from '../helpers/util'
+} from '@/utils/popup'
+import { isEmpty } from '@/helpers/util'
 
 export default defineComponent({
   name: 'fx-picker-popup',

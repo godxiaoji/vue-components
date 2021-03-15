@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { paragraphDefaultRow, useSubSkeleton } from './util'
+import { paragraphDefaultRow, useSubSkeleton } from '@/utils/skeleton'
 
 export default defineComponent({
   name: 'fx-skeleton-paragraph',

@@ -3,9 +3,9 @@ import {
   ApiOptionsComplete,
   ApiOptionsFail,
   ApiOptionsSuccess
-} from './types'
-import Exception from '../helpers/exception'
-import { noop, isFunction } from '../helpers/util'
+} from '@/apis/types'
+import Exception from '@/helpers/exception'
+import { noop, isFunction } from '@/helpers/util'
 
 /**
  * 获取回调函数

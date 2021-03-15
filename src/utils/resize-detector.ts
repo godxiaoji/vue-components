@@ -1,4 +1,4 @@
-import { removeEl } from '../helpers/dom'
+import { removeEl } from '@/helpers/dom'
 import {
   ComponentPublicInstance,
   isRef,
@@ -6,7 +6,7 @@ import {
   onMounted,
   Ref
 } from 'vue'
-import { isElement } from '../helpers/util'
+import { isElement } from '@/helpers/util'
 
 type ResizeDetectorStopHandle = () => void
 type ResizeDetectorCallback = () => void

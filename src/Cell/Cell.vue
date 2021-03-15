@@ -31,13 +31,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import Icon from '../Icon'
-import { capitalize } from '../helpers/util'
+import Icon from '@/Icon'
+import { capitalize } from '@/helpers/util'
 import {
   createEnumsValidator,
   getEnumsValue,
   iconValidator
-} from '../utils/validator'
+} from '@/utils/validator'
 
 const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 

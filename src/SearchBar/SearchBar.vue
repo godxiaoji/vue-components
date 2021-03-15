@@ -69,19 +69,19 @@
 
 <script lang="ts">
 import { defineComponent, onBeforeUnmount, reactive, ref, watch } from 'vue'
-import Icon from '../Icon'
-import FxInput from '../Input'
-import FxButton from '../Button'
-import Dropdown from '../Dropdown'
-import Cell from '../Cell'
-import Tag from '../Tag'
+import Icon from '@/Icon'
+import FxInput from '@/Input'
+import FxButton from '@/Button'
+import Dropdown from '@/Dropdown'
+import Cell from '@/Cell'
+import Tag from '@/Tag'
 import {
   isArray,
   isObject,
   isString,
   isStringArray,
   isStringNumberMix
-} from '../helpers/util'
+} from '@/helpers/util'
 
 type Placeholders = string | string[]
 

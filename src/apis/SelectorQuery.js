@@ -3,7 +3,7 @@ import {
   isStringArray,
   inArray,
   objectForEach
-} from '../helpers/util'
+} from '@/helpers/util'
 
 function getDataset(object) {
   const dataset = {}

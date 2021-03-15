@@ -12,8 +12,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import SvgIcon from './SvgIcon.vue'
-import { iconValidator, isSvgComponent } from '../utils/validator'
-import { StyleObject } from '../utils/types'
+import { iconValidator, isSvgComponent } from '@/utils/validator'
+import { StyleObject } from '@/utils/types'
 
 export default defineComponent({
   name: 'fx-icon',

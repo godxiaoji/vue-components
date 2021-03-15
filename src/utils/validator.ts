@@ -1,15 +1,6 @@
 import {
   isString,
   inArray,
-  // isFunction,
-  // isNumber,
-  // isSymbol,
-  // isStringArray,
-  // isArray,
-  // isDate,
-  // isDateArray,
-  // isNumberArray,
-  // isStringNumberMixArray,
   isObject,
   isHTMLElement,
   isStringNumberMixArray,
@@ -21,9 +12,9 @@ import {
   isFunction,
   isSymbol,
   isArray
-} from '../helpers/util'
+} from '@/helpers/util'
 import dayjs from 'dayjs'
-import { DomSelector, getSizeValue } from '../helpers/dom'
+import { DomSelector, getSizeValue } from '@/helpers/dom'
 
 export interface Validator {
   (value: any): boolean

@@ -58,15 +58,15 @@ import {
   onBeforeUnmount,
   provide
 } from 'vue'
-import FxButton from '../Button'
-import Exception from '../helpers/exception'
-import { isNumber } from '../helpers/util'
-import { useList } from '../utils/list'
-import { useResizeDetector } from '../utils/resize-detector'
-import { getStretchOffset } from '../helpers/animation'
-import { StyleObject } from '../utils/types'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
-import { styleObject2CssText } from '../helpers/dom'
+import FxButton from '@/Button'
+import Exception from '@/helpers/exception'
+import { isNumber } from '@/helpers/util'
+import { useList } from '@/utils/list'
+import { useResizeDetector } from '@/utils/resize-detector'
+import { getStretchOffset } from '@/helpers/animation'
+import { StyleObject } from '@/utils/types'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
+import { styleObject2CssText } from '@/helpers/dom'
 
 interface SwiperCoords extends UseTouchCoords {
   offset: boolean | null
@@ -521,7 +521,7 @@ export default defineComponent({
       /**
        * 滑动过程事件-判断横竖向，跟随滑动
        */
-      onTouchMove(e) {
+      onTouchMove(e: UseTouchEvent) {
         if (!inMove || !coords) {
           return
         }
@@ -585,7 +585,7 @@ export default defineComponent({
       /**
        * 滑动结束事件-滑到指定位置，重置状态
        */
-      onTouchEnd(e) {
+      onTouchEnd(e: UseTouchEvent) {
         if (!inMove) {
           return
         }

@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { defineComponent, inject, computed } from 'vue'
-import { isNumeric, rangeInteger } from '../helpers/util'
-import { StyleObject } from '../utils/types'
+import { isNumeric, rangeInteger } from '@/helpers/util'
+import { StyleObject } from '@/utils/types'
 
 function rangeCol(number: number | string) {
   return rangeInteger(number, 0, 24)

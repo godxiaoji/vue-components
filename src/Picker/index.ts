@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Picker from './Picker.vue'
-import { showPicker } from '../apis/Popup'
+import { showPicker } from '@/apis/Popup'
 
 const _Picker: SFCWithInstall<typeof Picker> = Object.assign(
   Picker,

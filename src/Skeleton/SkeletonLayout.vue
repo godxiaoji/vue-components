@@ -16,9 +16,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import SkeletonAvatar from './SkeletonAvatar.vue'
-import SkeletonTitle from './SkeletonTitle.vue'
-import SkeletonParagraph from './SkeletonParagraph.vue'
+import SkeletonAvatar from '@/SkeletonAvatar'
+import SkeletonTitle from '@/SkeletonTitle'
+import SkeletonParagraph from '@/SkeletonParagraph'
 
 export default defineComponent({
   name: 'fx-skeleton-layout',

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import SwiperItem from '../Swiper/SwiperItem.vue'
 
 const _SwiperItem: SFCWithInstall<typeof SwiperItem> = Object.assign(

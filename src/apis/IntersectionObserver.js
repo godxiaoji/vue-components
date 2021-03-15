@@ -4,7 +4,7 @@ import {
   arrayLike2Array,
   isNumber,
   isObject
-} from '../helpers/util'
+} from '@/helpers/util'
 
 /**
  * 将margins对象转为css字符串

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import CollapseItem from '../Collapse/CollapseItem.vue'
 
 const _CollapseItem: SFCWithInstall<typeof CollapseItem> = Object.assign(

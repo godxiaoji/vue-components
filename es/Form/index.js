@@ -1,52 +1,6 @@
-import { reactive, provide, defineComponent, openBlock, createBlock, withModifiers, renderSlot } from 'vue';
-
-/**
- * 将字段名转为驼峰式格式
- * @param {string} name 字段名
- */
-/**
- * 是否undefined
- * @param object 值
- */
-function isUndefined(object) {
-    return typeof object === 'undefined';
-}
-/**
- * 判断值是否在数组中
- * @param value 值
- * @param array 数组
- */
-function inArray(value, array) {
-    return array.indexOf(value) !== -1;
-}
-/**
- * 首字母大写
- * @param value 值
- */
-function capitalize(value) {
-    if (!value)
-        return '';
-    value = value.toString();
-    return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
-function getKey(name) {
-    return `fx${capitalize(name)}Group`;
-}
-function useGroup(name) {
-    const children = reactive([]);
-    provide(getKey(name), {
-        addChild(obj) {
-            children.push(obj);
-        },
-        removeChild(obj) {
-            children.splice(children.indexOf(obj), 1);
-        }
-    });
-    return {
-        children
-    };
-}
+import { defineComponent, provide, openBlock, createBlock, withModifiers, renderSlot } from 'vue';
+import { inArray, isUndefined } from '../helpers/util';
+import { useGroup } from '../utils/group';
 
 var script = defineComponent({
     name: 'fx-form',

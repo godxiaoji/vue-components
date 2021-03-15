@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import FlatList from './FlatList.vue'
 
 const _FlatList: SFCWithInstall<typeof FlatList> = Object.assign(FlatList, {

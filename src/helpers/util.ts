@@ -465,22 +465,3 @@ export const isInNumberRange = (number: unknown, min: number, max: number) => {
     isNumber(number) && (number as number) >= min && (number as number) <= max
   )
 }
-
-interface EnumMap {
-  [propName: string]: number
-}
-
-/**
- * 枚举转为map
- * @param enums TS枚举值
- */
-export function enum2Map(enums: any) {
-  const enumMap: EnumMap = {}
-  let i = -1
-
-  while (!isUndefined(enums[++i])) {
-    enumMap[enums[i]] = enums[enums[i]]
-  }
-
-  return enumMap
-}

@@ -1,5 +1,5 @@
 import { computed, reactive, ref, watch } from 'vue'
-import { isArray, cloneData, isSameArray } from '../helpers/util'
+import { isArray, cloneData, isSameArray } from '@/helpers/util'
 import {
   getDefaultSelecteds,
   array2String,
@@ -10,7 +10,7 @@ import {
   getDateTimeRows,
   updateArray
 } from './util'
-import { getEnumsValue } from '../utils/validator'
+import { getEnumsValue } from '@/utils/validator'
 import {
   ColRow,
   Labels,
@@ -19,7 +19,7 @@ import {
   Values,
   ExtraData
 } from './types'
-import { UseProps } from '../utils/types'
+import { UseProps } from '@/utils/types'
 
 export const viewEmits = ['change', 'update:modelValue']
 

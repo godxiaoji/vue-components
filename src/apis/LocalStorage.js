@@ -1,5 +1,5 @@
-import { isDate, isObject } from '../helpers/util'
-import { parseParamsByRules } from './rules'
+import { isDate, isObject } from '@/helpers/util'
+import { parseParamsByRules } from '@/apis/rules'
 
 export function createStorage(areaName, options) {
   if (!isObject(options)) {

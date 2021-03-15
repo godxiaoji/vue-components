@@ -1,4 +1,4 @@
-import { DataObject } from '../utils/types'
+import { DataObject } from '@/utils/types'
 
 export interface UserFieldNames {
   label?: string

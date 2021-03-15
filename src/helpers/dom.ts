@@ -5,7 +5,7 @@ import {
   isNumber,
   isString,
   objectForEach
-} from './util'
+} from '@/helpers/util'
 
 const docEl = document.documentElement
 

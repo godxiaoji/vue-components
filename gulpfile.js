@@ -7,5 +7,5 @@ gulp.task('build', function() {
     .src('src/**/*.scss')
     .pipe(sass({ outputStyle: 'expanded' }))
     .pipe(autoprefixer({ cascade: false }))
-    .pipe(gulp.dest('src'))
+    .pipe(gulp.dest('es'))
 })

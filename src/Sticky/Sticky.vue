@@ -16,16 +16,16 @@ import {
   watch,
   onBeforeUnmount
 } from 'vue'
-import { widgetZIndex } from '../helpers/layer'
-import { selectorValidator, sizeValidator } from '../utils/validator'
-import { OnScrollCallback, useScrollEvent } from '../utils/scroll'
+import { widgetZIndex } from '@/helpers/layer'
+import { selectorValidator, sizeValidator } from '@/utils/validator'
+import { OnScrollCallback, useScrollEvent } from '@/utils/scroll'
 import {
   getRelativeOffset,
   getScrollDom,
   getSizeValue,
   querySelector
-} from '../helpers/dom'
-import { StyleObject } from '../utils/types'
+} from '@/helpers/dom'
+import { StyleObject } from '@/utils/types'
 
 export default defineComponent({
   name: 'fx-sticky',

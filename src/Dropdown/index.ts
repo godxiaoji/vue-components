@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Dropdown from './Dropdown.vue'
 
 const _Dropdown: SFCWithInstall<typeof Dropdown> = Object.assign(Dropdown, {

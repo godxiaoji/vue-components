@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { onMounted, ref, watch, defineComponent } from 'vue'
-import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
+import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
 
 export default defineComponent({
   name: 'fx-switch',

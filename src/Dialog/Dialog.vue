@@ -42,14 +42,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import FxButton from '../Button'
-import FxButtonGroup from '../ButtonGroup'
-import Modal from '../Modal'
+import FxButton from '@/Button'
+import FxButtonGroup from '@/ButtonGroup'
+import Modal from '@/Modal'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '../utils/popup'
+} from '@/utils/popup'
 
 export default defineComponent({
   name: 'fx-dialog',

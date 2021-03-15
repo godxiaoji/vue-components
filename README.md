@@ -13,7 +13,7 @@
 
 ### 附言
 
-由于是从 v1 版本快速适配过来的，目前还是基于 `Template` 和 `Option API`，会在后续版本改造为 `Composition API` 和 支持 `Typescipt`。
+该版本已使用 `Composition API` 和 `Typescript` 重构，目前构建还不完善，仅供交流学习用。
 
 [Demo](https://cdn.fox2.cn/vfox/)
 
@@ -56,7 +56,7 @@ module.exports = {
       "import",
       {
         libraryName: "vfox",
-        libraryDirectory: "src",
+        libraryDirectory: "es",
         style: true,
         camel2DashComponentName: false
       },

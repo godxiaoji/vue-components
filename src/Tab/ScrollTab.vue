@@ -32,11 +32,11 @@ import {
   ref,
   shallowRef
 } from 'vue'
-import SideTab from '../SideTab'
-import Sticky from '../Sticky/Sticky.vue'
-import StickyView from '../Sticky/StickyView.vue'
-import { sizeValidator } from '../utils/validator'
-import { ScrollToIndexOptions } from '../utils/types'
+import SideTab from '@/SideTab'
+import Sticky from '@/Sticky'
+import StickyView from '@/StickyView'
+import { sizeValidator } from '@/utils/validator'
+import { ScrollToIndexOptions } from '@/utils/types'
 
 export default defineComponent({
   name: 'fx-scroll-tab',

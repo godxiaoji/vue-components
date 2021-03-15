@@ -28,18 +28,18 @@ import {
   shallowRef,
   watch
 } from 'vue'
-import Sticky from '../Sticky/Sticky.vue'
+import Sticky from '@/Sticky'
 import {
   getRelativeOffset,
   getScrollDom,
   getSizeValue,
   querySelector
-} from '../helpers/dom'
-import { selectorValidator, sizeValidator } from '../utils/validator'
-import { OnScrollCallback, useScrollEvent } from '../utils/scroll'
-import { isNumber } from '../helpers/util'
-import { useList } from '../utils/list'
-import { ScrollToOptions, ScrollToIndexOptions } from '../utils/types'
+} from '@/helpers/dom'
+import { selectorValidator, sizeValidator } from '@/utils/validator'
+import { OnScrollCallback, useScrollEvent } from '@/utils/scroll'
+import { isNumber } from '@/helpers/util'
+import { useList } from '@/utils/list'
+import { ScrollToOptions, ScrollToIndexOptions } from '@/utils/types'
 
 export default defineComponent({
   name: 'fx-sticky-view',

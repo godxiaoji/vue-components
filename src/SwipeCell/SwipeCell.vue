@@ -33,23 +33,22 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, computed, reactive } from 'vue'
-import { getEnumsValue } from '../utils/validator'
+import { ref, defineComponent, computed, reactive, PropType } from 'vue'
+import { getEnumsValue } from '@/utils/validator'
 import {
   cloneData,
   isArray,
   isObject,
   isString,
   rangeNumber
-} from '../helpers/util'
+} from '@/helpers/util'
 import {
   addTouchDelegateEvent,
   removeTouchDelegateEvent
-} from '../helpers/events'
-import { StateTypes, STATE_TYPES } from '../utils/constants'
-import { PropType } from 'vue'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
-import { getStretchOffset } from '../helpers/animation'
+} from '@/helpers/events'
+import { StateTypes, STATE_TYPES } from '@/utils/constants'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
+import { getStretchOffset } from '@/helpers/animation'
 
 interface ButtonOptions {
   text: string

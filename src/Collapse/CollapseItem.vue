@@ -29,10 +29,10 @@ import {
   inject,
   ComponentInternalInstance
 } from 'vue'
-import Cell from '../Cell'
-import { iconValidator } from '../utils/validator'
-import { useGroupItem } from '../utils/group'
-import Exception from '../helpers/exception'
+import Cell from '@/Cell'
+import { iconValidator } from '@/utils/validator'
+import { useGroupItem } from '@/utils/group'
+import Exception from '@/helpers/exception'
 
 export default defineComponent({
   name: 'fx-collapse-item',

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Divider from './Divider.vue'
 
 const _Divider: SFCWithInstall<typeof Divider> = Object.assign(Divider, {

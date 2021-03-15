@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import ScrollView from './ScrollView.vue'
 
 const _ScrollView: SFCWithInstall<typeof ScrollView> = Object.assign(ScrollView, {

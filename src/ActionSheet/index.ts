@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import ActionSheet from './ActionSheet.vue'
-import { showActionSheet } from '../apis/Popup'
+import { showActionSheet } from '@/apis/Popup'
 
 const _ActionSheet: SFCWithInstall<typeof ActionSheet> = Object.assign(
   ActionSheet,

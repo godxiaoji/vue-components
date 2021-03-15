@@ -26,9 +26,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '../Icon'
-import Badge from '../Badge'
-import { useTab, tabEmits, tabProps } from './tab'
+import Icon from '@/Icon'
+import Badge from '@/Badge'
+import { useTab, tabEmits, tabProps } from '@/utils/tab'
 
 export default defineComponent({
   name: 'fx-side-tab',

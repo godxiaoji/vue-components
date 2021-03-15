@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Calendar from './Calendar.vue'
-import { showCalendar } from '../apis/Popup'
+import { showCalendar } from '@/apis/Popup'
 
 const _Calendar: SFCWithInstall<typeof Calendar> = Object.assign(
   Calendar,

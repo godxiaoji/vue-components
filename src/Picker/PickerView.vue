@@ -29,11 +29,11 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, ref } from 'vue'
-import Empty from '../Empty'
-import { frameTo } from '../helpers/animation'
-import { hasClassName } from '../helpers/dom'
-import { useView, viewEmits } from '../multi-selector/view'
-import commonProps from '../multi-selector/props'
+import Empty from '@/Empty'
+import { frameTo } from '@/helpers/animation'
+import { hasClassName } from '@/helpers/dom'
+import { useView, viewEmits } from '@/multi-selector/view'
+import commonProps from '@/multi-selector/props'
 
 interface ScrollElement extends HTMLElement {
   scrolling?: boolean

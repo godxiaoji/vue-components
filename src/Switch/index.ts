@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Switch from './Switch.vue'
 
 const _Switch: SFCWithInstall<typeof Switch> = Object.assign(Switch, {

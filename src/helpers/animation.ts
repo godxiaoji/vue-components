@@ -1,4 +1,4 @@
-import { isFunction } from './util'
+import { isFunction } from '@/helpers/util'
 
 type TaskRef = {
   idle: number | null

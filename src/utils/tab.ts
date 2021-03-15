@@ -1,6 +1,6 @@
-import { frameTo } from '../helpers/animation'
-import Exception from '../helpers/exception'
-import { iconValidator } from '../utils/validator'
+import { frameTo } from '@/helpers/animation'
+import Exception from '@/helpers/exception'
+import { iconValidator } from '@/utils/validator'
 import {
   getCurrentInstance,
   ComponentInternalInstance,
@@ -16,7 +16,7 @@ import {
   isObject,
   isString,
   isStringNumberMix
-} from '../helpers/util'
+} from '@/helpers/util'
 
 interface PropsOptions {
   options: OptionList

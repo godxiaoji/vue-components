@@ -3,7 +3,7 @@
   "version": "2.0.0-beta.3",
   "description": "Vue components include form, toast, modal, etc.",
   "main": "./dist/index.js",
-  "module": "./src/index.js",
+  "module": "./es/index.js",
   "directories": {
     "doc": "./examples/docs"
   },
@@ -14,6 +14,10 @@
     "lint": "eslint ./src/**/*.js",
     "build:css": "gulp build",
     "build:component": "rollup -c ./build/rollup.config.js",
+    "build:all": "rollup -c ./build/rollup.build.config.js",
+    "build:util": "cross-env BABEL_ENV=utils babel src/utils --extensions .ts --out-dir es/utils",
+    "build:utils": "rollup -c ./build/rollup.utils.js",
+    "build:index": "rollup -c ./build/rollup.index.js",
     "semantic-release": "semantic-release"
   },
   "repository": {
@@ -43,9 +47,11 @@
     "safe-area-insets": "^1.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.13.0",
     "@babel/runtime-corejs3": "^7.12.5",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
@@ -60,6 +66,7 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-require-context-hook": "^1.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.4.2",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^6.7.2",
@@ -76,6 +83,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.19.1",
     "rollup": "^2.39.0",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.30.0",

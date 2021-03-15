@@ -27,8 +27,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { popupEmits, popupProps, usePopup } from '../utils/popup'
-import Icon from '../Icon'
+import { popupEmits, popupProps, usePopup } from '@/utils/popup'
+import Icon from '@/Icon'
 
 export default defineComponent({
   name: 'fx-modal',

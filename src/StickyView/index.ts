@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import StickyView from '../Sticky/StickyView.vue'
 
 const _StickyView: SFCWithInstall<typeof StickyView> = Object.assign(

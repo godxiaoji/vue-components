@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Radio from './Radio.vue'
 
 const _Radio: SFCWithInstall<typeof Radio> = Object.assign(Radio, {

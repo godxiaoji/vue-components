@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { createEnumsValidator } from '../utils/validator'
-import { BUTTON_SHAPE_NAMES, ButtonShapeNames, useSubSkeleton } from './util'
+import { createEnumsValidator } from '@/utils/validator'
+import { BUTTON_SHAPE_NAMES, ButtonShapeNames, useSubSkeleton } from '@/utils/skeleton'
 
 export default defineComponent({
   name: 'fx-skeleton-button',

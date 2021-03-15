@@ -36,10 +36,10 @@ import {
   ComponentPublicInstance,
   shallowRef
 } from 'vue'
-import Tab from '../Tab'
-import SideTab from '../SideTab'
-import Swiper from '../Swiper'
-import { useList } from '../utils/list'
+import Tab from '@/Tab'
+import SideTab from '@/SideTab'
+import Swiper from '@/Swiper'
+import { useList } from '@/utils/list'
 
 interface SwiperCallbackRes {
   activeIndex: number

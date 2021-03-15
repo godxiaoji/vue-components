@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { isNumeric, rangeInteger } from '../helpers/util'
+import { isNumeric, rangeInteger } from '@/helpers/util'
 
 export default defineComponent({
   name: 'fx-progress',

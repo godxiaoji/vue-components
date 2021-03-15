@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import SkeletonButton from '../Skeleton/SkeletonButton.vue'
 
 const _SkeletonButton: SFCWithInstall<typeof SkeletonButton> = Object.assign(SkeletonButton, {

@@ -18,9 +18,9 @@ import {
   toRef,
   watch
 } from 'vue'
-import { isNumber, isString, rangeInteger } from '../helpers/util'
-import { StyleObject } from '../utils/types'
-import { AnimationFrameTask, frameTo } from '../helpers/animation'
+import { isNumber, isString, rangeInteger } from '@/helpers/util'
+import { StyleObject } from '@/utils/types'
+import { AnimationFrameTask, frameTo } from '@/helpers/animation'
 
 export default defineComponent({
   name: 'fx-badge',
@@ -122,12 +122,18 @@ export default defineComponent({
               Math.abs(to - (content2.value as number)) * 50,
               1000
             ),
-            progress: ({ current, frameIndex }) => {
+            progress: ({
+              current,
+              frameIndex
+            }: {
+              current: number
+              frameIndex: number
+            }) => {
               if (frameIndex % 3 === 0) {
                 content2.value = Math.round(current)
               }
             },
-            complete: ({ current }) => {
+            complete: ({ current }: { current: number }) => {
               content2.value = current
             }
           })

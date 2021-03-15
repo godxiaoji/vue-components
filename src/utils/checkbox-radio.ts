@@ -1,4 +1,4 @@
-import { useFormItem } from '../Form/form-item'
+import { useFormItem } from '@/utils/form'
 import {
   computed,
   onMounted,
@@ -11,9 +11,9 @@ import {
   provide,
   Ref
 } from 'vue'
-import { capitalize, inArray } from '../helpers/util'
-import { useGroup, useGroupItem } from './group'
-import { UseProps } from './types'
+import { capitalize, inArray } from '@/helpers/util'
+import { useGroup, useGroupItem } from '@/utils/group'
+import { UseProps } from '@/utils/types'
 
 interface Options {
   formName: string

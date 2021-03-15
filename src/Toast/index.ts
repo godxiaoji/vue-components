@@ -1,7 +1,7 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '../utils/types'
+import { SFCWithInstall } from '@/utils/types'
 import Toast from './Toast.vue'
-import { showToast, showLoading, hideLoading, hideToast } from '../apis/Toast'
+import { showToast, showLoading, hideLoading, hideToast } from '@/apis/Toast'
 
 const _Toast: SFCWithInstall<typeof Toast> = Object.assign(Toast, {
   install: function(app: App) {

@@ -47,8 +47,8 @@ import {
   ref,
   watch
 } from 'vue'
-import Icon from '../Icon'
-import CalendarPopup from './CalendarPopup.vue'
+import Icon from '@/Icon'
+import CalendarPopup from '@/CalendarPopup'
 import {
   cloneDetail,
   getDefaultDetail,
@@ -57,11 +57,11 @@ import {
   parseValues,
   TYPE_NAMES
 } from './util'
-import { isFunction, isUndefined } from '../helpers/util'
+import { isFunction, isUndefined } from '@/helpers/util'
 import dayjs from 'dayjs'
 import commonProps from './props'
-import { formItemEmits, formItemProps, useFormItem } from '../Form/form-item'
-import { getEnumsValue } from '../utils/validator'
+import { formItemEmits, formItemProps, useFormItem } from '@/utils/form'
+import { getEnumsValue } from '@/utils/validator'
 import { DetailObject } from './types'
 
 export default defineComponent({

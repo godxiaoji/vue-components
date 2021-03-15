@@ -33,13 +33,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, PropType, watch } from 'vue'
-import Icon from '../Icon'
-import { capitalize, isInteger, isNumeric } from '../helpers/util'
-import { rangeInteger } from '../helpers/util'
-import { createEnumsValidator, getEnumsValue } from '../utils/validator'
-import { useFormItem, formItemEmits, formItemProps } from '../Form/form-item'
-import { StyleObject } from '../utils/types'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '../utils/touch'
+import Icon from '@/Icon'
+import { capitalize, isInteger, isNumeric } from '@/helpers/util'
+import { rangeInteger } from '@/helpers/util'
+import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
+import { StyleObject } from '@/utils/types'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
 
 interface RateCoords extends UseTouchCoords {
   size: number

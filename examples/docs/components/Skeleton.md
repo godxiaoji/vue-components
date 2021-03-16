@@ -8,7 +8,7 @@
 | avatar        | boolean | false     | 否   | 是否显示头像占位图                          |
 | animated      | boolean | false     | 否   | 是否开启动画                                |
 | avatar-shape  | string  | 'default' | 否   | 可选 'default', 'circle'                    |
-| button-shape  | string  | 'default' | 否   | 可选 'default', 'round', 'circle'           |
+| button-shape  | string  | 'default' | 否   | 可选 'default', 'round'                     |
 | paragraph-row | number  | 3         | 否   | 段落占位图行数                              |
 
 ## Skeleton Slots
@@ -68,5 +68,5 @@
 
 | 属性     | 类型    | 默认值    | 必填 | 说明                                     |
 | -------- | ------- | --------- | ---- | ---------------------------------------- |
-| shape    | string  | 'default' | 否   | 可选 'default', 'round', 'circle'        |
+| shape    | string  | 'default' | 否   | 可选 'default', 'round'                  |
 | animated | boolean | false     | 否   | 是否开启动画，仅在单独使用头像骨架时生效 |

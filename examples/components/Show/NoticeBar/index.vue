@@ -34,22 +34,34 @@
       >
       </fx-notice-bar>
     </fx-group>
+    <fx-group title="type=success/primary/danger">
+      <fx-notice-bar
+        left-icon="SoundOutlined"
+        class="notice-bar-item"
+        type="success"
+        :title="text1"
+      />
+      <fx-notice-bar
+        left-icon="SoundOutlined"
+        class="notice-bar-item"
+        type="primary"
+        :title="text1"
+      />
+      <fx-notice-bar
+        left-icon="SoundOutlined"
+        class="notice-bar-item"
+        type="danger"
+        :title="text1"
+      />
+    </fx-group>
     <fx-group title="自定义颜色">
       <fx-notice-bar
         class="notice-bar-item"
         left-icon="SoundOutlined"
         :title="text1"
-        color="#1890FF"
-        background-color="#E6F7FF"
-      >
-      </fx-notice-bar>
-      <fx-notice-bar
-        class="notice-bar-item"
-        :title="text2"
-        color="#52C41A"
-        background-color="#F0FFE0"
-      >
-      </fx-notice-bar>
+        color="#fff"
+        background-color="#262626"
+      />
     </fx-group>
   </div>
 </template>

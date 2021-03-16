@@ -23,7 +23,7 @@
         </fx-radio-group>
       </fx-cell>
       <fx-cell label="内联">
-        <fx-radio-group inline>
+        <fx-radio-group inline v-model="groupValue">
           <fx-radio value="man">男</fx-radio>
           <fx-radio value="woman">女</fx-radio>
         </fx-radio-group>
@@ -51,7 +51,7 @@ export default {
   name: 'Radio',
   props: {},
   data() {
-    return { value: null, groupValue: 'man' }
+    return { value: false, groupValue: 'man' }
   },
   methods: {
     onChange({ value }) {

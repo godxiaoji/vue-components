@@ -85,7 +85,7 @@
       :options="options"
       :show-cancel="showCancel"
       :cancel-text="cancelText"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
       @visible-state-change="onVisibleStateChange"
     ></fx-action-sheet>
@@ -144,8 +144,8 @@ export default {
         this.showSelectEvent = false
       }
     },
-    onSelect(res) {
-      console.log('select', res)
+    onConfirm(res) {
+      console.log('confirm', res)
       if (this.showSelectEvent) {
         this.$showDialog({
           title: '选择了',
@@ -163,7 +163,11 @@ export default {
         title: '标题',
         options: this.options,
         showCancel: true,
-        success: ({ selected, detail }) => {
+        success: res => {
+          console.log(res)
+
+          const { selected, detail } = res
+
           if (selected) {
             this.$showDialog({
               title: '选择了',

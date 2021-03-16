@@ -128,7 +128,7 @@
       v-model:visible="visible"
       :selector="selector"
       :options="options"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
       @visible-state-change="onVisibleStateChange"
     >
@@ -138,7 +138,7 @@
       :selector="selector2"
       :placement="placement2"
       :options="options"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
     >
     </fx-pop-menu>
@@ -147,7 +147,7 @@
       selector="#popMenuNoMask"
       :options="options"
       :show-mask="false"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
     >
     </fx-pop-menu>
@@ -197,8 +197,8 @@ export default {
         this.showEvent = false
       }
     },
-    onSelect(res) {
-      console.log('select', res)
+    onConfirm(res) {
+      console.log('confirm', res)
       if (this.showEvent) {
         this.$showDialog({
           title: '选择了',

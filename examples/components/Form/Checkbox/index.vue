@@ -6,7 +6,7 @@
         <fx-checkbox />
       </fx-cell>
       <fx-cell label="带文案">
-        <fx-checkbox v-model="checked">勾选</fx-checkbox>
+        <fx-checkbox v-model:checked="checked">勾选</fx-checkbox>
       </fx-cell>
       <fx-cell label="默认激活">
         <fx-checkbox checked>勾选</fx-checkbox>
@@ -31,7 +31,7 @@
         </fx-checkbox-group>
       </fx-cell>
       <fx-cell label="禁用">
-        <fx-checkbox-group modelValue="A" disabled>
+        <fx-checkbox-group :modelValue="['A']" disabled>
           <fx-checkbox v-for="item in groups" :key="item" :value="item">{{
             item
           }}</fx-checkbox>

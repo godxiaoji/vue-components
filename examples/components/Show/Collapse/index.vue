@@ -86,7 +86,7 @@
     </fx-group>
     <fx-group title="CollapseItem 的事件 toggle">
       <fx-collapse>
-        <fx-collapse-item title="标题1" @toggle="onToggle">
+        <fx-collapse-item title="标题1" name="row1" @toggle="onToggle">
           <div class="collapse-pad">
             代码是写出来给人看的，附带能在机器上运行
           </div>
@@ -114,8 +114,9 @@ export default {
         activeNames.length > 0 ? activeNames.join('，') : '没有项' + '展开'
       )
     },
-    onToggle({ spread }) {
-      this.$showToast(spread ? '展开' : '收起')
+    onToggle(res) {
+      console.log(res)
+      this.$showToast(res.spread ? '展开' : '收起')
     }
   }
 }

@@ -40,7 +40,7 @@
 | --------------- | ---------------------------------- | ---------------------------------------- |
 | submit          | 携带 form 中的数据触发 submit 事件 | { value : {'name': 'value'} }            |
 | reset           | 表单重置时会触发 reset 事件        | {}                                       |
-| validate-submit | 有检验情况下，表单 submit 触发时   | { vaild: true, value : {'name': 'value'} |
+| validate-submit | 有检验情况下，表单 submit 触发时   | { valid: true, value : {'name': 'value'} |
 
 ### 回调参数 value 的结构
 

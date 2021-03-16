@@ -1,3 +1,10 @@
+# [2.0.0-beta.4](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-03-16)
+
+
+### Bug Fixes
+
+* **capi+ts:** 使用 `Composition API` 和 `Typescript` 重构 ([00fdf57](https://github.com/godxiaoji/vfox/commit/00fdf579a16c3a9044a14c0da1ea0758ff13313c))
+
 # [2.0.0-beta.3](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-02-09)
 
 

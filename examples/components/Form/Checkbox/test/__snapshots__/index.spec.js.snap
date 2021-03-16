@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Checkbox should render default correctly 1`] = `
-<label class="fx-checkbox fx-horizontal-hairline"><input class="fx-checkbox_input" type="checkbox" name="" value="">
+<label class="fx-checkbox fx-horizontal-hairline"><input class="fx-checkbox_input fx-form-input" type="checkbox" name="" value="">
   <div class="fx-checkbox_box">
     <fx-icon-stub class="fx-checkbox_icon"></fx-icon-stub>
     <fx-icon-stub class="fx-checkbox_checked-icon"></fx-icon-stub>
@@ -11,7 +11,7 @@ exports[`Checkbox should render default correctly 1`] = `
 `;
 
 exports[`Checkbox should render prop disabled=true correctly 1`] = `
-<label class="fx-checkbox fx-horizontal-hairline disabled"><input class="fx-checkbox_input" type="checkbox" name="" value="" disabled="">
+<label class="fx-checkbox fx-horizontal-hairline disabled"><input class="fx-checkbox_input fx-form-input" type="checkbox" name="" value="" disabled="">
   <div class="fx-checkbox_box">
     <fx-icon-stub class="fx-checkbox_icon"></fx-icon-stub>
     <fx-icon-stub class="fx-checkbox_checked-icon"></fx-icon-stub>
@@ -22,4 +22,4 @@ exports[`Checkbox should render prop disabled=true correctly 1`] = `
 
 exports[`CheckboxGroup should render 2 Checkbox slot correctly 1`] = `<div class="fx-checkbox-group vertical"></div>`;
 
-exports[`CheckboxGroup should render prop disabled=true correctly 1`] = `<div class="fx-checkbox-group vertical"></div>`;
+exports[`CheckboxGroup should render prop disabled=true correctly 1`] = `<div class="fx-checkbox-group vertical disabled"></div>`;

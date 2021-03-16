@@ -1,6 +1,6 @@
 const { relative } = require('path')
 
-function kebabCase2Pascalcase(name) {
+function kebabCase2PascalCase(name) {
   name = name.replace(/-(\w)/g, (all, letter) => {
     return letter.toUpperCase()
   })
@@ -14,11 +14,11 @@ function getSymbolId(filePath, iconsPath) {
 
   const fileName = paths.pop().replace('.svg', '')
 
-  return 'icon-' + kebabCase2Pascalcase([fileName].concat(paths).join('-'))
+  return 'icon-' + kebabCase2PascalCase([fileName].concat(paths).join('-'))
 }
 
 module.exports = {
-  kebabCase2Pascalcase,
+  kebabCase2PascalCase,
   getSymbolId,
   svgLoader(config, iconsPath) {
     config.module

@@ -1,43 +1,11 @@
+/* eslint-disable */
 import vue from 'rollup-plugin-vue'
 import typescript from 'rollup-plugin-typescript2'
-import resolve from 'rollup-plugin-node-resolve'
+import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import pkg from '../package.json'
+import inputs from './util-list'
 // import babel from 'rollup-plugin-babel'
-
-const inputs = [
-  // apis
-  'apis/callback',
-  'apis/Notify',
-  'apis/Popup',
-  'apis/rules',
-  'apis/Toast',
-  'apis/types',
-  // utils
-  'utils/checkbox-radio',
-  'utils/constants',
-  'utils/form',
-  'utils/group',
-  'utils/list',
-  'utils/popup',
-  'utils/resize-detector',
-  'utils/safe-area-insets',
-  'utils/scroll',
-  'utils/skeleton',
-  'utils/tab',
-  'utils/touch',
-  'utils/types',
-  'utils/validator',
-  // helpers
-  'helpers/animation',
-  'helpers/device',
-  'helpers/dom',
-  'helpers/events',
-  'helpers/exception',
-  'helpers/input',
-  'helpers/util',
-  'index'
-]
 
 const deps = Object.keys(pkg.dependencies)
 
@@ -74,7 +42,7 @@ export default inputs.map(name => {
       return false
     },
     plugins: [
-      resolve(),
+      nodeResolve(),
       commonjs({
         include: 'node_modules/**'
       }),

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Radio should render default correctly 1`] = `
-<label class="fx-radio fx-horizontal-hairline"><input class="fx-radio_input" type="radio" name="" value="">
+<label class="fx-radio fx-horizontal-hairline"><input class="fx-radio_input fx-form-input" type="radio" name="" value="">
   <div class="fx-radio_box">
     <fx-icon-stub class="fx-radio_icon"></fx-icon-stub>
     <fx-icon-stub class="fx-radio_checked-icon"></fx-icon-stub>
@@ -11,7 +11,7 @@ exports[`Radio should render default correctly 1`] = `
 `;
 
 exports[`Radio should render prop disabled=true correctly 1`] = `
-<label class="fx-radio fx-horizontal-hairline disabled"><input class="fx-radio_input" type="radio" name="" value="" disabled="">
+<label class="fx-radio fx-horizontal-hairline disabled"><input class="fx-radio_input fx-form-input" type="radio" name="" value="" disabled="">
   <div class="fx-radio_box">
     <fx-icon-stub class="fx-radio_icon"></fx-icon-stub>
     <fx-icon-stub class="fx-radio_checked-icon"></fx-icon-stub>

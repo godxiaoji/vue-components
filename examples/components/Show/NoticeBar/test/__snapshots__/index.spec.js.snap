@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoticeBar should render default correctly 1`] = `
-<div class="fx-notice-bar type--warning">
+<div class="fx-notice-bar type--default">
   <!--v-if-->
   <div class="fx-notice-bar_content">
     <div class="fx-notice-bar_content-inner">title</div>
@@ -11,7 +11,7 @@ exports[`NoticeBar should render default correctly 1`] = `
 `;
 
 exports[`NoticeBar should render prop leftIcon="SoundOutlined" correctly 1`] = `
-<div class="fx-notice-bar type--warning">
+<div class="fx-notice-bar type--default">
   <div class="fx-notice-bar_left-icon"><svg class="fx-icon">
       <use xlink:href="#icon-SoundOutlined"></use>
     </svg></div>
@@ -23,7 +23,7 @@ exports[`NoticeBar should render prop leftIcon="SoundOutlined" correctly 1`] = `
 `;
 
 exports[`NoticeBar should render prop mode="clickable" correctly 1`] = `
-<div class="fx-notice-bar type--warning">
+<div class="fx-notice-bar type--default">
   <!--v-if-->
   <div class="fx-notice-bar_content">
     <div class="fx-notice-bar_content-inner">title</div>
@@ -35,7 +35,7 @@ exports[`NoticeBar should render prop mode="clickable" correctly 1`] = `
 `;
 
 exports[`NoticeBar should render prop mode="closable" correctly 1`] = `
-<div class="fx-notice-bar type--warning">
+<div class="fx-notice-bar type--default">
   <!--v-if-->
   <div class="fx-notice-bar_content">
     <div class="fx-notice-bar_content-inner">title</div>

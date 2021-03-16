@@ -13,7 +13,7 @@ import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
 import { popupZIndex } from '@/helpers/layer'
 import { UseProps, DataObject } from '@/utils/types'
 
-interface PopupPublicInstance {
+export interface PopupPublicInstance {
   customCancel: (key: string, focus?: boolean) => void
   customConfirm: (res?: any, key?: string) => void
 }
@@ -28,7 +28,7 @@ interface UseOptions {
 
 type VisibleState = 'show' | 'shown' | 'hide' | 'hidden'
 
-interface VisibleStateChangeRes {
+export interface VisibleStateChangeRes {
   type: string
   state: VisibleState
   [propName: string]: any

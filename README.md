@@ -13,7 +13,7 @@
 
 ### 附言
 
-该版本已使用 `Composition API` 和 `Typescript` 重构，目前构建还不完善，仅供交流学习用。
+该版本已使用 `Composition API` 和 `Typescript` 重构。
 
 [Demo](https://cdn.fox2.cn/vfox/)
 
@@ -79,7 +79,7 @@ app.use(Button)
 在不使用插件的情况下，可以手动引入需要的组件。
 
 ```
-import { Button } from 'vfox/src/Button'
+import { Button } from 'vfox/es/Button'
 import 'vfox/src/Button/style'
 
 app.use(Button)

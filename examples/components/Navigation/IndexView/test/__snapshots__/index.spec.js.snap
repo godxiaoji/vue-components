@@ -19,7 +19,7 @@ exports[`IndexView IndexView should render default correctly 1`] = `
 `;
 
 exports[`IndexView IndexViewItem should render default correctly 1`] = `
-<div class="fx-group fx-horizontal-hairline fx-sticky-view-item fx-index-view-item">
+<div class="fx-group fx-horizontal-hairline fx-sticky-view-item fx-index-view-item" data-name="item-1">
   <div class="fx-group_header">
     <div class="fx-group_title">item-1</div>
     <div class="fx-group_more"></div>

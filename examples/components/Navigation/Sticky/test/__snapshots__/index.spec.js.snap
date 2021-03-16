@@ -12,7 +12,7 @@ exports[`StickyView StickyView should render default correctly 1`] = `
 `;
 
 exports[`StickyView StickyViewItem should render default correctly 1`] = `
-<div class="fx-sticky-view-item">
+<div class="fx-sticky-view-item" data-name="item-1">
   <div class="fx-sticky-view-item_header">item-1</div>
   <div class="fx-sticky-view-item_body">content</div>
 </div>

@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   'ScrollView',
   'Swiper',
   'SwiperItem',
@@ -71,7 +71,7 @@ export default [
   'SideTab',
   'Progress',
   'Tag',
-  'Fixed',
+  'Fixed'
   // // 'Scroll',
   // // 'LocalStorage'
 ]

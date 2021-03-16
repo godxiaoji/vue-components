@@ -4,8 +4,8 @@ exports[`Slider should render default correctly 1`] = `
 <div class="fx-slider">
   <div class="fx-slider_inner">
     <div class="fx-slider_box">
-      <div class="fx-slider_track" style="width: 0%;"></div>
-      <div class="fx-slider_thumb" style="left: 0%;"></div>
+      <div class="fx-slider_track"></div>
+      <div class="fx-slider_thumb"></div>
     </div><input class="fx-slider_range" type="range" min="0" max="100" step="1" name="">
   </div>
 </div>
@@ -15,8 +15,8 @@ exports[`Slider should render prop disabled=true correctly 1`] = `
 <div class="fx-slider disabled">
   <div class="fx-slider_inner">
     <div class="fx-slider_box">
-      <div class="fx-slider_track" style="width: 0%;"></div>
-      <div class="fx-slider_thumb" style="left: 0%;"></div>
+      <div class="fx-slider_track"></div>
+      <div class="fx-slider_thumb"></div>
     </div><input class="fx-slider_range" type="range" disabled="" min="0" max="100" step="1" name="">
   </div>
 </div>
@@ -26,8 +26,8 @@ exports[`Slider should render prop showValue=true correctly 1`] = `
 <div class="fx-slider">
   <div class="fx-slider_inner">
     <div class="fx-slider_box">
-      <div class="fx-slider_track" style="width: 0%;"></div>
-      <div class="fx-slider_thumb" style="left: 0%;"></div>
+      <div class="fx-slider_track"></div>
+      <div class="fx-slider_thumb"></div>
     </div><input class="fx-slider_range" type="range" min="0" max="100" step="1" name="">
   </div>
 </div>

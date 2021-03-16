@@ -1,7 +1,9 @@
+/* eslint-disable */
 import vue from 'rollup-plugin-vue'
 import typescript from 'rollup-plugin-typescript2'
-import resolve from 'rollup-plugin-node-resolve'
+import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import sass from 'rollup-plugin-sass'
 import pkg from '../package.json'
 
 const deps = Object.keys(pkg.dependencies)
@@ -11,7 +13,7 @@ export default [
     input: `./src/index.ts`,
     output: {
       format: 'esm',
-      file: `es/index.js`,
+      file: `es/index.full.js`,
       paths(id) {
         if (/^@\//.test(id)) {
           return id.replace('@/', '../')
@@ -23,9 +25,9 @@ export default [
         return true
       }
 
-      if (/^@\//.test(id)) {
-        return true
-      }
+      //   if (/^@\//.test(id)) {
+      //     return true
+      //   }
 
       if (deps.some(k => new RegExp('^' + k).test(id))) {
         return true
@@ -34,7 +36,10 @@ export default [
       return false
     },
     plugins: [
-      resolve(),
+      sass({
+        output: true
+      }),
+      nodeResolve(),
       commonjs({
         include: 'node_modules/**'
       }),

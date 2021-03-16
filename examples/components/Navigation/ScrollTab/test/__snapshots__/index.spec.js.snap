@@ -25,7 +25,7 @@ exports[`ScrollTab ScrollTab should render default correctly 1`] = `
 `;
 
 exports[`ScrollTab ScrollTabItem should render default correctly 1`] = `
-<div class="fx-sticky-view-item fx-scroll-tab-item">
+<div class="fx-sticky-view-item fx-scroll-tab-item" data-name="item-1">
   <div class="fx-sticky-view-item_header">item-1</div>
   <div class="fx-sticky-view-item_body">content</div>
 </div>

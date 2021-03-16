@@ -1,7 +1,9 @@
 module.exports = {
   moduleFileExtensions: [
+    'ts',
     'js',
     'jsx',
+    'tsx',
     'json',
     // tell Jest to handle *.vue files
     'vue'
@@ -9,6 +11,7 @@ module.exports = {
   transform: {
     // process *.vue files with vue-jest
     '^.+\\.vue$': require.resolve('vue-jest'),
+    '^.+\\.tsx?$': require.resolve('ts-jest'),
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': require.resolve(
       'jest-transform-stub'
     ),

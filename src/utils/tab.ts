@@ -27,7 +27,7 @@ export const tabEmits = ['update:activeValue', 'change']
 
 type OptionValue = number | string
 
-interface OptionItem {
+export interface OptionItem {
   label: string
   value: OptionValue
   icon?: any

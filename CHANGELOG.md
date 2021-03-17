@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/godxiaoji/vfox/compare/v1.8.4...v1.8.5) (2021-03-17)
+
+
+### Bug Fixes
+
+* 修复valid写成vaild的bug ([9346ef8](https://github.com/godxiaoji/vfox/commit/9346ef8cdf9dc6e63f6158ba0e25fdc26cf3a339))
+
 ## [1.8.4](https://github.com/godxiaoji/vfox/compare/v1.8.3...v1.8.4) (2021-03-12)
 
 

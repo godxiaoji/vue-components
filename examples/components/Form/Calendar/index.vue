@@ -152,7 +152,6 @@ export default {
       placeholder: ''
     }
   },
-  created() {},
   computed: {
     popupValueString() {
       return dayjs(this.popupValue).format('YYYY-MM-DD')

@@ -2,13 +2,13 @@
 
 exports[`Button should render add icon correctly 1`] = `
 <button type="button" class="fx-button type--default size--large pattern--default shape--rectangle has--icon">
-  <icon-stub icon="EditOutlined" size="0" width="0" height="0"></icon-stub> <span>content</span>
+  <icon-stub icon="EditOutlined" size="0" width="0" height="0"></icon-stub> <span>按钮</span>
 </button>
 `;
 
 exports[`Button should render default slot correctly 1`] = `
 <button type="button" class="fx-button type--default size--large pattern--default shape--rectangle">
-  <!----> <span>content</span>
+  <!----> <span>按钮</span>
 </button>
 `;
 

@@ -94,7 +94,6 @@ export default {
       regionOptions
     }
   },
-  created() {},
   methods: {
     onChange(res) {
       console.log('change', res)

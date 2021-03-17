@@ -6,11 +6,7 @@ import ButtonGroup from '@/ButtonGroup'
 
 describe('Button', () => {
   test('should render default slot correctly', () => {
-    const wrapper = shallowMount(Button, {
-      slots: {
-        default: 'content'
-      }
-    })
+    const wrapper = shallowMount(Button, {})
 
     expect(wrapper.html()).toMatchSnapshot()
   })
@@ -19,9 +15,6 @@ describe('Button', () => {
     const wrapper = shallowMount(Button, {
       propsData: {
         icon: 'EditOutlined'
-      },
-      slots: {
-        default: 'content'
       }
     })
 

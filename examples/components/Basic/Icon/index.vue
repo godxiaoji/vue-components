@@ -90,17 +90,54 @@
         </fx-row>
       </div>
     </fx-group>
+    <fx-group title="颜色">
+      <div class="icon-grid">
+        <fx-row :gutter="[16, 16]" align="bottom">
+          <fx-col :span="6">
+            <fx-icon class="icon-icon color-primary" :icon="QqSvg"></fx-icon>
+            <span class="icon-text">QQ</span>
+          </fx-col>
+          <fx-col :span="6">
+            <fx-icon
+              class="icon-icon color-success"
+              :icon="WechatSvg"
+            ></fx-icon>
+            <span class="icon-text">微信</span>
+          </fx-col>
+          <fx-col :span="6">
+            <fx-icon
+              class="icon-icon color-warning"
+              :icon="TaobaoSvg"
+            ></fx-icon>
+            <span class="icon-text">淘宝</span>
+          </fx-col>
+          <fx-col :span="6">
+            <fx-icon class="icon-icon color-danger" :icon="WeiboSvg"></fx-icon>
+            <span class="icon-text">微博</span>
+          </fx-col>
+        </fx-row>
+      </div>
+    </fx-group>
   </div>
 </template>
 
 <script>
+import TaobaoSvg from './svgs/taobao.svg'
+import QqSvg from './svgs/qq.svg'
+import WechatSvg from './svgs/wechat.svg'
+import WeiboSvg from './svgs/weibo.svg'
+
 export default {
   name: 'Icon',
   props: {},
   data() {
-    return {}
-  },
-  methods: {}
+    return {
+      TaobaoSvg: TaobaoSvg,
+      QqSvg: QqSvg,
+      WechatSvg: WechatSvg,
+      WeiboSvg: WeiboSvg
+    }
+  }
 }
 </script>
 

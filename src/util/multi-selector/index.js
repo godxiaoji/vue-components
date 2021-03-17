@@ -208,13 +208,13 @@ function validateCols(values, options) {
 
   return selectCount === cols.length
     ? {
-        vaild: true,
+        valid: true,
         value,
         label,
         extraData
       }
     : {
-        vaild: false,
+        valid: false,
         value: [],
         label: [],
         extraData: []
@@ -263,13 +263,13 @@ function validateCascadeCols(values, options, mode) {
 
   return deep(0, options)
     ? {
-        vaild: true,
+        valid: true,
         value,
         label,
         extraData
       }
     : {
-        vaild: false,
+        valid: false,
         value: [],
         label: [],
         extraData: []
@@ -284,7 +284,7 @@ export function validateValues(values, options, mode, separator, isCascade) {
   if (values instanceof Error) {
     console.error(values.message)
     ret = {
-      vaild: false,
+      valid: false,
       value: [],
       label: [],
       valueString: '',
@@ -293,7 +293,7 @@ export function validateValues(values, options, mode, separator, isCascade) {
   } else if (values.length === 0) {
     // 空数组也算符合
     ret = {
-      vaild: true,
+      valid: true,
       value: [],
       label: []
     }
@@ -302,7 +302,7 @@ export function validateValues(values, options, mode, separator, isCascade) {
       ? validateCascadeCols(values, options, mode)
       : validateCols(values, options)
 
-    if (!ret.vaild) {
+    if (!ret.valid) {
       console.error(
         new Exception(
           '"value" is not in "options".',

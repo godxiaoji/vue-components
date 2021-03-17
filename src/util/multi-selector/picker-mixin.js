@@ -94,8 +94,8 @@ export default {
           isCascade
         )
 
-        if (validateRet.vaild) {
-          delete validateRet.vaild
+        if (validateRet.valid) {
+          delete validateRet.valid
           this.updateDetail(validateRet)
         }
       }

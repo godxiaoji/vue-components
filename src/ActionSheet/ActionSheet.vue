@@ -98,13 +98,13 @@ export default {
         index
       }
 
-      this.$emit('select', detail)
-      this.afterSelect(detail)
+      this.$emit('confirm', detail)
+      this.afterConfirm(detail)
 
       this.onUpdateVisible(false)
     },
 
-    afterSelect() {}
+    afterConfirm() {}
   }
 }
 </script>

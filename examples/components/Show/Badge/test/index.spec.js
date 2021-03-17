@@ -1,15 +1,11 @@
 /* global describe,test,expect */
 
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import Badge from '@/Badge'
 
 describe('Badge', () => {
   test('should render default slot correctly', () => {
-    const wrapper = shallowMount(Badge, {
-      slots: {
-        default: 'content'
-      }
-    })
+    const wrapper = mount(Badge, {})
 
     expect(wrapper.html()).toMatchSnapshot()
   })

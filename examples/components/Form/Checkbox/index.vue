@@ -31,7 +31,7 @@
         </fx-checkbox-group>
       </fx-cell>
       <fx-cell label="禁用">
-        <fx-checkbox-group modelValue="A" disabled>
+        <fx-checkbox-group :modelValue="['A']" disabled>
           <fx-checkbox v-for="item in groups" :key="item" :value="item">{{
             item
           }}</fx-checkbox>

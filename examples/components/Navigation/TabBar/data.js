@@ -1,7 +1,7 @@
-import TaobaoSvg from './svg/taobao.svg'
-import QqSvg from './svg/qq.svg'
-import WechatSvg from './svg/wechat.svg'
-import WeiboSvg from './svg/weibo.svg'
+import TaobaoSvg from '../../Basic/Icon/svgs/taobao.svg'
+import QqSvg from '../../Basic/Icon/svgs/qq.svg'
+import WechatSvg from '../../Basic/Icon/svgs/wechat.svg'
+import WeiboSvg from '../../Basic/Icon/svgs/weibo.svg'
 
 export const customIconList = [
   {

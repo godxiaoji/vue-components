@@ -1,6 +1,6 @@
 /* global describe,test,expect */
 
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import BackTop from '@/BackTop'
 
 describe('BackTop', () => {
@@ -21,7 +21,7 @@ describe('BackTop', () => {
   })
 
   test('should render set default slot correctly', () => {
-    const wrapper = shallowMount(BackTop, {
+    const wrapper = mount(BackTop, {
       slots: {
         default: 'BackTop'
       }

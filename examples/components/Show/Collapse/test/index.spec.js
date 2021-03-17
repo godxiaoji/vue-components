@@ -13,10 +13,7 @@ describe('Collapse', () => {
 
   test('CollapseItem should render default correctly', () => {
     const wrapper = shallowMount(CollapseItem, {
-      propsData: { name: 'item-1', title: 'title-1' },
-      slots: {
-        default: 'content'
-      }
+      propsData: { name: 'item-1', title: 'title-1' }
     })
 
     expect(wrapper.html()).toMatchSnapshot()

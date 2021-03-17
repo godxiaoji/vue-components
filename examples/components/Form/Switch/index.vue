@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     onChange({ value }) {
+      console.log(value)
       this.$showToast(value ? '开' : '关')
     }
   }

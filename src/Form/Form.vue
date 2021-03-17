@@ -88,10 +88,10 @@ export default {
         value
       })
 
-      const validateEmit = vaild => {
+      const validateEmit = valid => {
         const type = 'validate-submit'
         this.$emit(type, {
-          vaild,
+          valid,
           value
         })
       }

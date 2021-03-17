@@ -63,9 +63,9 @@ export default {
   },
   methods: {
     updateValue(val, forceUpdate = false) {
-      const { vaild, value } = this.validateValues(val)
+      const { valid, value } = this.validateValues(val)
 
-      if ((vaild && !isSameArray(value, this.formValue)) || forceUpdate) {
+      if ((valid && !isSameArray(value, this.formValue)) || forceUpdate) {
         this.update(value)
 
         if (value.length > 0 || this.picker) {

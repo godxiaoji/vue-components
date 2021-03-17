@@ -169,11 +169,10 @@ export default {
       }
     }
   },
-  created() {},
   methods: {
     onSubmit(res) {
       console.log(res)
-      this.$showToast(res.vaild ? '校验通过' : '校验失败')
+      this.$showToast(res.valid ? '校验通过' : '校验失败')
     },
     onReset(res) {
       console.log(res)

@@ -1,6 +1,6 @@
 /* global describe,test,expect */
 
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import NavBar from '@/NavBar'
 
 describe('NavBar', () => {
@@ -36,7 +36,7 @@ describe('NavBar', () => {
   })
 
   test('should render set left & right slots correctly', () => {
-    const wrapper = shallowMount(NavBar, {
+    const wrapper = mount(NavBar, {
       slots: {
         left: 'Left Slot',
         right: 'Right Slot'

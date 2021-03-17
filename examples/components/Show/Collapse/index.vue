@@ -114,8 +114,9 @@ export default {
         activeNames.length > 0 ? activeNames.join('，') : '没有项' + '展开'
       )
     },
-    onToggle({ spread }) {
-      this.$showToast(spread ? '展开' : '收起')
+    onToggle(res) {
+      console.log(res)
+      this.$showToast(res.spread ? '展开' : '收起')
     }
   }
 }

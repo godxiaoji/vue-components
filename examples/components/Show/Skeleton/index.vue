@@ -12,7 +12,7 @@
     </fx-group>
     <fx-group title="带动画">
       <div class="skeleton-panel">
-        <fx-skeleton avatar animated :avatar-shape="'circle'" />
+        <fx-skeleton avatar :animated="animated" :avatarShape="avatarShape" />
       </div>
     </fx-group>
     <fx-group title="显示子组件">
@@ -33,7 +33,7 @@
     </fx-group>
     <fx-group title="自由组合">
       <div class="skeleton-panel">
-        <fx-skeleton class="skeleton-custom">
+        <fx-skeleton class="skeleton-custom" :buttonShape="buttonShape">
           <template #layout>
             <fx-skeleton-image />
             <fx-skeleton-title />
@@ -52,6 +52,9 @@ export default {
   props: {},
   data() {
     return {
+      animated: true,
+      avatarShape: 'circle',
+      buttonShape: 'default',
       loadingSwitch: false
     }
   }

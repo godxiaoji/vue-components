@@ -85,7 +85,7 @@
       </div>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="select/cancel">
+      <fx-cell label="confirm/cancel">
         <fx-button
           size="small"
           id="popMenuEvent"
@@ -128,7 +128,7 @@
       :visible.sync="visible"
       :selector="selector"
       :options="options"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
       @visible-state-change="onVisibleStateChange"
     >
@@ -138,7 +138,7 @@
       :selector="selector2"
       :placement="placement2"
       :options="options"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
     >
     </fx-pop-menu>
@@ -147,7 +147,7 @@
       selector="#popMenuNoMask"
       :options="options"
       :show-mask="false"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
     >
     </fx-pop-menu>
@@ -197,8 +197,8 @@ export default {
         this.showEvent = false
       }
     },
-    onSelect(res) {
-      console.log('select', res)
+    onConfirm(res) {
+      console.log('confirm', res)
       if (this.showEvent) {
         this.$showDialog({
           title: '选择了',
@@ -217,7 +217,7 @@ export default {
         options: this.options,
         placement: 'top',
         success: res => {
-          console.log('select', res)
+          console.log('confirm', res)
           if (res.selected) {
             this.$showToast(`选择了 ${res.detail.item.name}`)
           } else {

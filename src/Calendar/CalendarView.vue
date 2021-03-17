@@ -279,7 +279,7 @@ export default {
       if (this.dayHandler) {
         dayInfo.date = day.toDate()
         dayInfo = this.dayHandler(Object.assign(dayInfo, extend))
-        delete day.date
+        delete dayInfo.date
       }
 
       if (dayInfo.state === 'disabled' && !extend.state) {

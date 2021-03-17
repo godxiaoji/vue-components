@@ -64,11 +64,9 @@
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="select/cancel"
+        label="confirm/cancel"
         isLink
-        @click="
-          ;(showCancel = true), (showSelectEvent = true), (visible = true)
-        "
+        @click=";(showCancel = true), (showEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="visible-state-change"
@@ -85,7 +83,7 @@
       :options="options"
       :show-cancel="showCancel"
       :cancel-text="cancelText"
-      @select="onSelect"
+      @confirm="onConfirm"
       @cancel="onCancel"
       @visible-state-change="onVisibleStateChange"
     ></fx-action-sheet>
@@ -141,12 +139,12 @@ export default {
         this.options = options
         this.title = null
         this.showOtherEvent = false
-        this.showSelectEvent = false
+        this.showEvent = false
       }
     },
-    onSelect(res) {
-      console.log('select', res)
-      if (this.showSelectEvent) {
+    onConfirm(res) {
+      console.log('confirm', res)
+      if (this.showEvent) {
         this.$showDialog({
           title: '选择了',
           showCancel: false,
@@ -156,14 +154,17 @@ export default {
     },
     onCancel(res) {
       console.log('cancel', res)
-      this.showSelectEvent && this.$showToast(`取消事件触发`)
+      this.showEvent && this.$showToast(`取消事件触发`)
     },
     onCallApi() {
       this.$showActionSheet({
         title: '标题',
         options: this.options,
         showCancel: true,
-        success: ({ selected, detail }) => {
+        success: res => {
+          console.log('confirm', res)
+          const { selected, detail } = res
+
           if (selected) {
             this.$showDialog({
               title: '选择了',

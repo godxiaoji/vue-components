@@ -165,7 +165,7 @@ export function showActionSheet(object) {
     return {
       extends: ActionSheet,
       methods: {
-        afterSelect(detail) {
+        afterConfirm(detail) {
           done({
             cancel: false,
             selected: true,
@@ -240,7 +240,7 @@ export function showPopMenu(object) {
     return {
       extends: PopMenu,
       methods: {
-        afterSelect(detail) {
+        afterConfirm(detail) {
           done({
             cancel: false,
             selected: true,

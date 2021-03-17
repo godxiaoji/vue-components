@@ -15,7 +15,7 @@ export interface FieldNames {
 export type Values = (string | number)[]
 export type Labels = string[]
 
-export interface ExtraData extends DataObject<any> {}
+export type ExtraData = DataObject<any>
 
 export interface DetailObject {
   valueString: string
@@ -25,7 +25,7 @@ export interface DetailObject {
   extraData: ExtraData[]
 }
 
-export interface UserOptionItem extends DataObject<any> {}
+export type UserOptionItem = DataObject<any>
 
 export interface OptionItem {
   label: string

@@ -1,4 +1,4 @@
-import { ColRow, Values, ModeNames } from './types'
+import { ColRow, Values } from './types'
 import dayjs from 'dayjs'
 
 export function dateString2Array(string: string) {

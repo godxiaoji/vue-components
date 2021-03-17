@@ -64,11 +64,9 @@
     </fx-group>
     <fx-group title="事件监听">
       <fx-cell
-        label="select/cancel"
+        label="confirm/cancel"
         isLink
-        @click="
-          ;(showCancel = true), (showSelectEvent = true), (visible = true)
-        "
+        @click=";(showCancel = true), (showEvent = true), (visible = true)"
       ></fx-cell>
       <fx-cell
         label="visible-state-change"
@@ -141,12 +139,12 @@ export default {
         this.options = options
         this.title = null
         this.showOtherEvent = false
-        this.showSelectEvent = false
+        this.showEvent = false
       }
     },
     onConfirm(res) {
       console.log('confirm', res)
-      if (this.showSelectEvent) {
+      if (this.showEvent) {
         this.$showDialog({
           title: '选择了',
           showCancel: false,
@@ -156,7 +154,7 @@ export default {
     },
     onCancel(res) {
       console.log('cancel', res)
-      this.showSelectEvent && this.$showToast(`取消事件触发`)
+      this.showEvent && this.$showToast(`取消事件触发`)
     },
     onCallApi() {
       this.$showActionSheet({
@@ -164,8 +162,7 @@ export default {
         options: this.options,
         showCancel: true,
         success: res => {
-          console.log(res)
-
+          console.log('confirm', res)
           const { selected, detail } = res
 
           if (selected) {

@@ -1,31 +1,3 @@
-// import TaobaoSvg from './svg/taobao.svg'
-// import QqSvg from './svg/qq.svg'
-// import WechatSvg from './svg/wechat.svg'
-// import WeiboSvg from './svg/weibo.svg'
-
-// export const customIconList = [
-//   {
-//     value: 'wechat',
-//     label: '微信',
-//     icon: WechatSvg
-//   },
-//   {
-//     value: 'qq',
-//     label: 'QQ',
-//     icon: QqSvg
-//   },
-//   {
-//     value: 'weibo',
-//     label: '微博',
-//     icon: WeiboSvg
-//   },
-//   {
-//     value: 'taobao',
-//     label: '淘宝',
-//     icon: TaobaoSvg
-//   }
-// ]
-
 export const baseList = [
   {
     value: 1,

@@ -85,7 +85,7 @@
       </div>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="select/cancel">
+      <fx-cell label="confirm/cancel">
         <fx-button
           size="small"
           id="popMenuEvent"
@@ -217,7 +217,7 @@ export default {
         options: this.options,
         placement: 'top',
         success: res => {
-          console.log('select', res)
+          console.log('confirm', res)
           if (res.selected) {
             this.$showToast(`选择了 ${res.detail.item.name}`)
           } else {

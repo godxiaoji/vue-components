@@ -6,9 +6,9 @@
     <fx-group title="徽标">
       <fx-tab-bar :options="badgeList" />
     </fx-group>
-    <!-- <fx-group title="自定义图标">
+    <fx-group title="自定义图标">
       <fx-tab-bar :options="customIconList" />
-    </fx-group> -->
+    </fx-group>
     <fx-group title="自定义颜色">
       <fx-tab-bar class="tab-bar-custom-color" :options="baseList" />
     </fx-group>
@@ -22,6 +22,34 @@
 
 <script>
 import { baseList, badgeList } from './data'
+import { markRaw } from 'vue'
+import TaobaoSvg from '../../Basic/Icon/svgs/taobao.svg'
+import QqSvg from '../../Basic/Icon/svgs/qq.svg'
+import WechatSvg from '../../Basic/Icon/svgs/wechat.svg'
+import WeiboSvg from '../../Basic/Icon/svgs/weibo.svg'
+
+const customIconList = [
+  {
+    value: 'wechat',
+    label: '微信',
+    icon: markRaw(WechatSvg)
+  },
+  {
+    value: 'qq',
+    label: 'QQ',
+    icon: markRaw(QqSvg)
+  },
+  {
+    value: 'weibo',
+    label: '微博',
+    icon: markRaw(WeiboSvg)
+  },
+  {
+    value: 'taobao',
+    label: '淘宝',
+    icon: markRaw(TaobaoSvg)
+  }
+]
 
 export default {
   name: 'TabBar',
@@ -29,6 +57,7 @@ export default {
   data() {
     return {
       activeValue: 1,
+      customIconList,
       baseList,
       badgeList
     }

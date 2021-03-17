@@ -131,7 +131,6 @@ import WeiboSvg from './svgs/weibo.svg'
 export default {
   name: 'Icon',
   props: {},
-  methods: {},
   setup() {
     return {
       TaobaoSvg: markRaw(TaobaoSvg),

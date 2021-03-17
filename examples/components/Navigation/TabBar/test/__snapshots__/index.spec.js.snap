@@ -37,9 +37,3 @@ exports[`Tab should render set options correctly 1`] = `
   </ul>
 </div>
 `;
-
-exports[`Tab should render use custom icons correctly 1`] = `
-<div class="fx-tab-bar fx-horizontal-hairline">
-  <ul class="fx-tab-bar_list"></ul>
-</div>
-`;

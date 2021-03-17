@@ -50,7 +50,6 @@ export interface FormItemProvide {
   validateAfterEventTrigger: (type: string, value: any) => void
 }
 
-
 type FormValue = string | number | boolean | Date | (string | number | Date)[]
 interface UseOptions<T> {
   hookFormValue?: HookFormValue

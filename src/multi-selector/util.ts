@@ -1,7 +1,6 @@
 import { isStringNumberMixArray } from '@/helpers/util'
 import {
   OptionItem,
-  Labels,
   ModeNames,
   UserOptionItem,
   UserFieldNames,

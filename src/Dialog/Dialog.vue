@@ -49,7 +49,7 @@ import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '@/utils/popup'
+} from '@/hooks/popup'
 
 export default defineComponent({
   name: 'fx-dialog',

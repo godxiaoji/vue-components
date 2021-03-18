@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 
 const TYPE_NAMES = ['default', 'error', 'network', 'search']
 

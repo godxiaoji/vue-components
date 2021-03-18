@@ -26,7 +26,7 @@ import {
   ref
 } from 'vue'
 import Icon from '@/Icon'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { addLongPressEvent } from '@/helpers/events'
 import {
   SizeTypes,
@@ -35,7 +35,7 @@ import {
   STATE_TYPES,
   TagPatternTypes,
   TAG_PATTERN_TYPES
-} from '@/utils/constants'
+} from '@/hooks/constants'
 
 export default defineComponent({
   name: 'fx-tag',

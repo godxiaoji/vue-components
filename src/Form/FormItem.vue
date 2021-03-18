@@ -20,8 +20,8 @@ import {
   FormRules,
   FormRuleType,
   FormRuleValidate
-} from '@/utils/form'
-import { useGroupItem } from '@/utils/group'
+} from '@/hooks/form'
+import { useGroupItem } from '@/hooks/group'
 
 export default defineComponent({
   name: 'fx-form-item',

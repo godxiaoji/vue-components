@@ -35,11 +35,11 @@ import {
   getSizeValue,
   querySelector
 } from '@/helpers/dom'
-import { selectorValidator, sizeValidator } from '@/utils/validator'
-import { OnScrollCallback, useScrollEvent } from '@/utils/scroll'
+import { selectorValidator, sizeValidator } from '@/helpers/validator'
+import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
 import { isNumber } from '@/helpers/util'
-import { useList } from '@/utils/list'
-import { ScrollToOptions, ScrollToIndexOptions } from '@/utils/types'
+import { useList } from '@/hooks/list'
+import { ScrollToOptions, ScrollToIndexOptions } from '@/helpers/types'
 
 export default defineComponent({
   name: 'fx-sticky-view',

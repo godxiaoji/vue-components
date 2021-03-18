@@ -80,12 +80,12 @@ import {
 import ScrollView from '@/ScrollView'
 import Exception from '@/helpers/exception'
 import { getRelativeOffset } from '@/helpers/dom'
-import { useResizeDetector } from '@/utils/resize-detector'
+import { useResizeDetector } from '@/hooks/resize-detector'
 import {
   ScrollToIndexOptions,
   ScrollToOffsetOptions,
   StyleObject
-} from '@/utils/types'
+} from '@/helpers/types'
 
 interface FlatItemElement extends HTMLElement {
   _recycled?: boolean

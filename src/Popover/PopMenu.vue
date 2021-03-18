@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { popoverProps, popoverEmits, usePopover } from './popover'
+import { popoverProps, popoverEmits, usePopover } from '@/hooks/popover'
 import Icon from '@/Icon'
 import { cloneData, isArray, isObject } from '@/helpers/util'
 
@@ -81,7 +81,7 @@ export default defineComponent({
       const options: OptionItem[] = []
 
       if (isArray(props.options)) {
-        props.options?.forEach(v => {
+        props.options?.forEach((v: OptionItem) => {
           isObject(v)
             ? options.push({
                 icon: v.icon || null,

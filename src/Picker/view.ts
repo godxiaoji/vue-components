@@ -9,8 +9,8 @@ import {
   getColRows,
   getDateTimeRows,
   updateArray
-} from './util'
-import { getEnumsValue } from '@/utils/validator'
+} from '@/Picker/util'
+import { getEnumsValue } from '@/helpers/validator'
 import {
   ColRow,
   Labels,
@@ -18,8 +18,8 @@ import {
   OptionItem,
   Values,
   ExtraData
-} from './types'
-import { UseProps } from '@/utils/types'
+} from '@/Picker/types'
+import { UseProps } from '@/helpers/types'
 
 export const viewEmits = ['change', 'update:modelValue']
 

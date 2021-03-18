@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Modal from './Modal.vue'
 
 const _Modal: SFCWithInstall<typeof Modal> = Object.assign(Modal, {

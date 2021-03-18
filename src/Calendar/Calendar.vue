@@ -56,13 +56,13 @@ import {
   isSameDateArray,
   parseValues,
   TYPE_NAMES
-} from './util'
+} from '@/Calendar/util'
 import { isFunction, isUndefined } from '@/helpers/util'
 import dayjs from 'dayjs'
-import commonProps from './props'
-import { formItemEmits, formItemProps, useFormItem } from '@/utils/form'
-import { getEnumsValue } from '@/utils/validator'
-import { DetailObject } from './types'
+import commonProps from '@/Calendar/props'
+import { formItemEmits, formItemProps, useFormItem } from '@/hooks/form'
+import { getEnumsValue } from '@/helpers/validator'
+import { DetailObject } from '@/Calendar/types'
 
 export default defineComponent({
   name: 'fx-calendar',

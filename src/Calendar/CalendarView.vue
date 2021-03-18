@@ -69,11 +69,11 @@ import {
   getDetail as _getDetail,
   parseValues,
   TYPE_NAMES
-} from './util'
+} from '@/Calendar/util'
 import { isSameArray } from '@/helpers/util'
 import Exception from '@/helpers/exception'
-import commonProps from './props'
-import { getEnumsValue } from '@/utils/validator'
+import commonProps from '@/Calendar/props'
+import { getEnumsValue } from '@/helpers/validator'
 import { Dayjs } from 'dayjs'
 
 interface WeekDay {

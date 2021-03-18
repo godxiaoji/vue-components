@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Toast from './Toast.vue'
 import { showToast, showLoading, hideLoading, hideToast } from '@/apis/Toast'
 

@@ -15,11 +15,11 @@ import {
   string2Array,
   validateValues,
   updateArray
-} from './util'
-import { UseProps } from '@/utils/types'
-import { DetailObject, Labels, Values } from './types'
-import { getEnumsValue } from '@/utils/validator'
-import { useFormItem } from '@/utils/form'
+} from '@/Picker/util'
+import { UseProps } from '@/helpers/types'
+import { DetailObject, Labels, Values } from '@/Picker/types'
+import { getEnumsValue } from '@/helpers/validator'
+import { useFormItem } from '@/hooks/form'
 
 interface UseOptions {
   name: string

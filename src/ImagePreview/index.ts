@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import ImagePreview from './ImagePreview.vue'
 import { previewImage } from '@/apis/Popup'
 

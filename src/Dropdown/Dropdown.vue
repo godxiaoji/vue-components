@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, nextTick } from 'vue'
-import { popupEmits, popupProps, usePopup } from '@/utils/popup'
-import { selectorValidator } from '@/utils/validator'
+import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
+import { selectorValidator } from '@/helpers/validator'
 import Exception from '@/helpers/exception'
 import { querySelector, DomSelector } from '@/helpers/dom'
 

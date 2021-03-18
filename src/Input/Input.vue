@@ -62,8 +62,8 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import Icon from '@/Icon'
 import { isNumeric, isStringNumberMix } from '@/helpers/util'
 import { formatInputDigit, formatInputNumber } from '@/helpers/input'
-import { getEnumsValue } from '@/utils/validator'
-import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
+import { getEnumsValue } from '@/helpers/validator'
+import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
 
 const TYPE_NAMES = [
   'text',

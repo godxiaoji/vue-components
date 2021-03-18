@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import ActionSheet from './ActionSheet.vue'
 import { showActionSheet } from '@/apis/Popup'
 

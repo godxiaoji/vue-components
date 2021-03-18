@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import PopMenu from '../Popover/PopMenu.vue'
 import { showPopMenu } from '@/apis/Popup'
 

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import NavBar from './NavBar.vue'
 
 const _NavBar: SFCWithInstall<typeof NavBar> = Object.assign(NavBar, {

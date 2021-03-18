@@ -12,7 +12,7 @@ import { isObject } from '@/helpers/util'
 import { getCallbackFns } from '@/apis/callback'
 import { parseParamsByRules } from '@/apis/rules'
 import { ApiOptions } from '@/apis/types'
-import { PopupBridge, PopupRes, createPopup } from '@/utils/popup'
+import { PopupBridge, PopupRes, createPopup } from '@/hooks/popup'
 
 type Hook = (hookName: string, res: PopupRes) => void
 type Done = (res: PopupRes) => void

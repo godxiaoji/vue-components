@@ -4,11 +4,11 @@ import {
   selectorValidator,
   createEnumsValidator,
   getEnumsValue
-} from '@/utils/validator'
+} from '@/helpers/validator'
 import { querySelector } from '@/helpers/dom'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/utils/constants'
-import { usePopup, popupProps, popupEmits } from '@/utils/popup'
-import { StyleObject, UseProps } from '@/utils/types'
+import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
+import { usePopup, popupProps, popupEmits } from '@/hooks/popup'
+import { StyleObject, UseProps } from '@/helpers/types'
 
 type PopoverPos = {
   t: number | null

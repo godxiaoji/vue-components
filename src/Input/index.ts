@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Input from './Input.vue'
 
 const _Input: SFCWithInstall<typeof Input> = Object.assign(Input, {

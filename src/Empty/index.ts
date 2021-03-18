@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Empty from './Empty.vue'
 
 const _Empty: SFCWithInstall<typeof Empty> = Object.assign(Empty, {

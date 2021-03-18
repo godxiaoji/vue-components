@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import { defineComponent, reactive, PropType } from 'vue'
-import { formItemEmits, formItemProps } from '@/utils/form'
+import { formItemEmits, formItemProps } from '@/hooks/form'
 import {
   isStringNumberMixArray,
   cloneData,
   isSameArray,
   inArray
 } from '@/helpers/util'
-import { useCheckboxOrRadioGroup, ModelValue } from '@/utils/checkbox-radio'
+import { useCheckboxOrRadioGroup, ModelValue } from '@/hooks/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-checkbox-group',

@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { popupEmits, popupProps, usePopup } from '@/utils/popup'
+import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import Icon from '@/Icon'
 
 export default defineComponent({

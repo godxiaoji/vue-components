@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import NoticeBar from './NoticeBar.vue'
 
 const _NoticeBar: SFCWithInstall<typeof NoticeBar> = Object.assign(NoticeBar, {

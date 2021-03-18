@@ -30,8 +30,8 @@ import {
   ComponentInternalInstance
 } from 'vue'
 import Cell from '@/Cell'
-import { iconValidator } from '@/utils/validator'
-import { useGroupItem } from '@/utils/group'
+import { iconValidator } from '@/helpers/validator'
+import { useGroupItem } from '@/hooks/group'
 import Exception from '@/helpers/exception'
 
 export default defineComponent({

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import CalendarPopup from '../Calendar/CalendarPopup.vue'
 import { showCalendar } from '@/apis/Popup'
 

@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Notify from './Notify.vue'
 import { showNotify, hideNotify } from '@/apis/Notify'
 

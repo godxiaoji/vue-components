@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import RadioGroup from '../Radio/RadioGroup.vue'
 
 const _RadioGroup: SFCWithInstall<typeof RadioGroup> = Object.assign(

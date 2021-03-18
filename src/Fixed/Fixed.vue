@@ -24,12 +24,12 @@ import {
   ref,
   toRef
 } from 'vue'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { capitalize } from '@/helpers/util'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/utils/constants'
-import { useResizeDetector } from '@/utils/resize-detector'
-import { useSafeAreaInsets } from '@/utils/safe-area-insets'
-import { StyleObject } from '@/utils/types'
+import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
+import { useResizeDetector } from '@/hooks/resize-detector'
+import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
+import { StyleObject } from '@/helpers/types'
 
 export default defineComponent({
   name: 'fx-fixed',

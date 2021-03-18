@@ -32,8 +32,8 @@ import { defineComponent, nextTick, ref } from 'vue'
 import Empty from '@/Empty'
 import { frameTo } from '@/helpers/animation'
 import { hasClassName } from '@/helpers/dom'
-import { useView, viewEmits } from '@/multi-selector/view'
-import commonProps from '@/multi-selector/props'
+import { useView, viewEmits } from '@/Picker/view'
+import commonProps from '@/Picker/props'
 
 interface ScrollElement extends HTMLElement {
   scrolling?: boolean

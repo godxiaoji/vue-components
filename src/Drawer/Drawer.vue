@@ -37,10 +37,10 @@
 <script lang="ts">
 import { defineComponent, computed, toRef, PropType } from 'vue'
 import FxButton from '@/Button'
-import { popupEmits, popupProps, usePopup } from '@/utils/popup'
-import { useSafeAreaInsets } from '@/utils/safe-area-insets'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/utils/constants'
+import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
+import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
+import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
 
 export default defineComponent({
   name: 'fx-drawer',

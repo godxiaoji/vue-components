@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import SkeletonImage from '../Skeleton/SkeletonImage.vue'
 
 const _SkeletonImage: SFCWithInstall<typeof SkeletonImage> = Object.assign(

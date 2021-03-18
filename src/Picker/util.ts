@@ -9,7 +9,7 @@ import {
   ExtraData,
   ColRow,
   FieldNames
-} from './types'
+} from '@/Picker/types'
 import {
   getDateValues,
   getTimeValues,
@@ -20,7 +20,7 @@ import {
   parseDateList,
   parseTimeList,
   parseDatetimeList
-} from './date'
+} from '@/Picker/date'
 import {
   cloneData,
   isArray,

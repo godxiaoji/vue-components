@@ -82,7 +82,7 @@ import { defineComponent, PropType } from 'vue'
 import FxButton from '@/Button'
 import FxButtonGroup from '@/ButtonGroup'
 import { isArray, isString, isObject } from '@/helpers/util'
-import { iconValidator } from '@/utils/validator'
+import { iconValidator } from '@/helpers/validator'
 
 interface ButtonOptions {
   text: string

@@ -42,14 +42,14 @@ import { defineComponent, nextTick, ref, computed } from 'vue'
 import Drawer from '@/Drawer'
 import { frameTo } from '@/helpers/animation'
 import { isSameArray } from '@/helpers/util'
-import { useView, viewEmits } from '@/multi-selector/view'
-import commonProps from '@/multi-selector/props'
+import { useView, viewEmits } from '@/Picker/view'
+import commonProps from '@/Picker/props'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '@/utils/popup'
-import { ColRow, Values } from '@/multi-selector/types'
+} from '@/hooks/popup'
+import { ColRow, Values } from '@/Picker/types'
 
 export default defineComponent({
   name: 'fx-cascader-popup',

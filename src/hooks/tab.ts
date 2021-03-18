@@ -1,6 +1,3 @@
-import { frameTo } from '@/helpers/animation'
-import Exception from '@/helpers/exception'
-import { iconValidator } from '@/utils/validator'
 import {
   getCurrentInstance,
   ComponentInternalInstance,
@@ -17,10 +14,13 @@ import {
   isString,
   isStringNumberMix
 } from '@/helpers/util'
+import { frameTo } from '@/helpers/animation'
+import Exception from '@/helpers/exception'
+import { iconValidator } from '@/helpers/validator'
+import { UseProps } from '@/helpers/types'
 
-interface PropsOptions {
+interface TabProps extends UseProps {
   options: OptionList
-  [propName: string]: any
 }
 
 export const tabEmits = ['update:activeValue', 'change']
@@ -74,7 +74,7 @@ export const tabProps = {
 }
 
 export function useTab(
-  props: PropsOptions,
+  props: TabProps,
   { emit }: SetupContext<any>,
   tabName: string
 ) {

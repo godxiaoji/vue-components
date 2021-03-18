@@ -18,8 +18,8 @@ import {
   onUnmounted,
   onUpdated
 } from 'vue'
-import { createUpdateInItem } from '@/utils/list'
-import { useTouch, UseTouchEvent } from '@/utils/touch'
+import { createUpdateInItem } from '@/hooks/list'
+import { useTouch, UseTouchEvent } from '@/hooks/touch'
 
 export default defineComponent({
   name: 'fx-tab-view-item',

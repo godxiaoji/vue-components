@@ -7,8 +7,8 @@ import {
   BUTTON_SHAPE_NAMES,
   ButtonShapeNames,
   AvatarShapeNames
-} from '@/utils/skeleton'
-import { createEnumsValidator } from '@/utils/validator'
+} from '@/hooks/skeleton'
+import { createEnumsValidator } from '@/helpers/validator'
 
 export default defineComponent({
   name: 'fx-skeleton',

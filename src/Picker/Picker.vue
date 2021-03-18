@@ -41,9 +41,9 @@
 import { defineComponent } from 'vue'
 import PickerPopup from '@/PickerPopup'
 import Icon from '@/Icon'
-import { formItemEmits, formItemProps } from '@/utils/form'
-import { usePicker, pickerEmits, pickerProps } from '@/multi-selector/picker'
-import commonProps from '@/multi-selector/props'
+import { formItemEmits, formItemProps } from '@/hooks/form'
+import { usePicker, pickerEmits, pickerProps } from '@/Picker/picker'
+import commonProps from '@/Picker/props'
 
 export default defineComponent({
   name: 'fx-picker',

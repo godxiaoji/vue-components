@@ -39,7 +39,7 @@ import {
 import Tab from '@/Tab'
 import SideTab from '@/SideTab'
 import Swiper from '@/Swiper'
-import { useList } from '@/utils/list'
+import { useList } from '@/hooks/list'
 
 interface SwiperCallbackRes {
   activeIndex: number

@@ -7,8 +7,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, watch, provide } from 'vue'
 import { cloneData, isArray, inArray, isSameArray } from '@/helpers/util'
-import { stringNumberArrayMixValidator } from '@/utils/validator'
-import { useGroup } from '@/utils/group'
+import { stringNumberArrayMixValidator } from '@/helpers/validator'
+import { useGroup } from '@/hooks/group'
 
 type CollapseActiveNames = (string | number)[]
 

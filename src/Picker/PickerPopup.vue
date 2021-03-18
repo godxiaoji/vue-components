@@ -33,14 +33,14 @@ import PickerView from '@/PickerView'
 import NavBar from '@/NavBar'
 import Drawer from '@/Drawer'
 import { cloneData, isSameArray } from '@/helpers/util'
-import { viewEmits } from '@/multi-selector/view'
-import commonProps from '@/multi-selector/props'
-import { getDefaultDetail } from '@/multi-selector/util'
+import { viewEmits } from '@/Picker/view'
+import commonProps from '@/Picker/props'
+import { getDefaultDetail } from '@/Picker/util'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
-} from '@/utils/popup'
+} from '@/hooks/popup'
 import { isEmpty } from '@/helpers/util'
 
 export default defineComponent({

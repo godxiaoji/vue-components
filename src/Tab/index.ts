@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Tab from './Tab.vue'
 
 const _Tab: SFCWithInstall<typeof Tab> = Object.assign(Tab, {

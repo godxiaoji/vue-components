@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useSubSkeleton } from '@/utils/skeleton'
+import { useSubSkeleton } from '@/hooks/skeleton'
 
 export default defineComponent({
   name: 'fx-skeleton-image',

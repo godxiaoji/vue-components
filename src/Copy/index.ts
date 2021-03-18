@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Copy from './Copy.vue'
 
 const _Copy: SFCWithInstall<typeof Copy> = Object.assign(Copy, {

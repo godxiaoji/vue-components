@@ -4,9 +4,9 @@ import { isObject, isString } from '@/helpers/util'
 import { parseParamsByRules } from '@/apis/rules'
 import { getCallbackFns } from '@/apis/callback'
 import Exception from '@/helpers/exception'
-import { createPopup, PopupBridge } from '@/utils/popup'
+import { createPopup, PopupBridge } from '@/hooks/popup'
 import { ApiOptions } from '@/apis/types'
-import { StateTypes } from '@/utils/constants'
+import { StateTypes } from '@/hooks/constants'
 
 type ShowNotifyApiOptions = {
   title: string

@@ -36,10 +36,10 @@ import { computed, defineComponent, ref, PropType, watch } from 'vue'
 import Icon from '@/Icon'
 import { capitalize, isInteger, isNumeric } from '@/helpers/util'
 import { rangeInteger } from '@/helpers/util'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
-import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
-import { StyleObject } from '@/utils/types'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
+import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
+import { StyleObject } from '@/helpers/types'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 
 interface RateCoords extends UseTouchCoords {
   size: number

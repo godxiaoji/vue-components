@@ -6,14 +6,14 @@ const vue = require('rollup-plugin-vue')
 const rollup = require('rollup')
 const typescript = require('rollup-plugin-typescript2')
 const commonjs = require('rollup-plugin-commonjs')
-const componentList = require('./component-list')
+const tss = require('./ts.json')
 
 const deps = Object.keys(pkg.dependencies)
 
 const runBuild = async () => {
   let index = 0
 
-  const inputs = componentList.slice(process.argv[2], process.argv[3])
+  const inputs = tss.slice(process.argv[2], process.argv[3])
 
   build(inputs[index])
 
@@ -21,7 +21,7 @@ const runBuild = async () => {
     if (!name) return
 
     const inputOptions = {
-      input: resolve(__dirname, `../src/${name}/index.ts`), // 必须，入口文件
+      input: resolve(__dirname, `../src/${name}.ts`), // 必须，入口文件
       external: id => {
         if (id === 'vue') {
           return true
@@ -42,21 +42,22 @@ const runBuild = async () => {
         commonjs({
           include: 'node_modules/**'
         }),
+        vue({
+          target: 'browser',
+          css: false
+        }),
         typescript({
           tsconfigOverride: {
             compilerOptions: {
               declaration: false
             },
-            include: ['src/**/*'],
+            // include: ['src/**/*'],
             exclude: ['node_modules', '__tests__']
           },
-          abortOnError: false,
-          clean: true
-        }),
-        vue({
-          target: 'browser',
-          css: false
+          abortOnError: false
+          // clean: true
         })
+
         // babel({
         //   runtimeHelpers: true,
         //   // 只转换源代码，不运行外部依赖
@@ -68,8 +69,8 @@ const runBuild = async () => {
     }
 
     const outOptions = {
-      format: 'esm',
-      file: `es/${name}/index.js`,
+      format: 'es',
+      file: `es/${name}.js`,
       paths(id) {
         if (/^@\//.test(id)) {
           return id.replace('@/', '../')

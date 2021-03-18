@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { ref, defineComponent, computed, reactive, PropType } from 'vue'
-import { getEnumsValue } from '@/utils/validator'
+import { getEnumsValue } from '@/helpers/validator'
 import {
   cloneData,
   isArray,
@@ -46,8 +46,8 @@ import {
   addTouchDelegateEvent,
   removeTouchDelegateEvent
 } from '@/helpers/events'
-import { StateTypes, STATE_TYPES } from '@/utils/constants'
-import { useTouch, UseTouchCoords, UseTouchEvent } from '@/utils/touch'
+import { StateTypes, STATE_TYPES } from '@/hooks/constants'
+import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { getStretchOffset } from '@/helpers/animation'
 
 interface ButtonOptions {

@@ -1,7 +1,7 @@
-import { getEnumsValue } from '@/utils/validator'
 import { computed, ComputedRef, inject } from 'vue'
-import { UseProps } from '@/utils/types'
+import { UseProps } from '@/helpers/types'
 import { isNumber } from '@/helpers/util'
+import { getEnumsValue } from '@/helpers/validator'
 
 export const paragraphDefaultRow = 3
 

@@ -28,7 +28,7 @@ import {
   removeComponentFromLazy,
   ImageLoadObject,
   ImageLoadedResource
-} from './load-image'
+} from '@/Image/load-image'
 import {
   defineComponent,
   onMounted,
@@ -40,7 +40,7 @@ import {
   computed,
   ComponentInternalInstance
 } from 'vue'
-import { createEnumsValidator, getEnumsValue } from '@/utils/validator'
+import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import Exception from '@/helpers/exception'
 
 type ModeNames =

@@ -18,7 +18,7 @@ import {
   watch
 } from 'vue'
 import { isNumber, isString, rangeInteger } from '@/helpers/util'
-import { StyleObject } from '@/utils/types'
+import { StyleObject } from '@/helpers/types'
 import { AnimationFrameTask, frameTo } from '@/helpers/animation'
 
 export default defineComponent({

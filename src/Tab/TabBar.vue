@@ -26,7 +26,7 @@
 import { defineComponent } from 'vue'
 import Icon from '@/Icon'
 import Badge from '@/Badge'
-import { useTab, tabEmits, tabProps } from '@/utils/tab'
+import { useTab, tabEmits, tabProps } from '@/hooks/tab'
 
 export default defineComponent({
   name: 'fx-tab-bar',

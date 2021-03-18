@@ -7,12 +7,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { createEnumsValidator } from '@/utils/validator'
+import { createEnumsValidator } from '@/helpers/validator'
 import {
   AVATAR_SHAPE_NAMES,
   AvatarShapeNames,
   useSubSkeleton
-} from '@/utils/skeleton'
+} from '@/hooks/skeleton'
 
 export default defineComponent({
   name: 'fx-skeleton-avatar',

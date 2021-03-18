@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import CascaderPopup from '../Cascader/CascaderPopup.vue'
 import { showCascader } from '@/apis/Popup'
 

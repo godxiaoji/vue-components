@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import CheckboxGroup from '../Checkbox/CheckboxGroup.vue'
 
 const _CheckboxGroup: SFCWithInstall<typeof CheckboxGroup> = Object.assign(

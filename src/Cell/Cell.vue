@@ -37,7 +37,7 @@ import {
   createEnumsValidator,
   getEnumsValue,
   iconValidator
-} from '@/utils/validator'
+} from '@/helpers/validator'
 
 const LINK_ICON_NAMES = ['right', 'up', 'down', 'left']
 

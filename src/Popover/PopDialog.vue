@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { popoverProps, popoverEmits, usePopover } from './popover'
+import { popoverProps, popoverEmits, usePopover } from '@/hooks/popover'
 import FxButton from '@/Button'
 import FxButtonGroup from '@/ButtonGroup'
 

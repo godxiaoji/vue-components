@@ -11,7 +11,7 @@ import {
 import { isFunction, isObject } from '@/helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
 import { popupZIndex } from '@/helpers/layer'
-import { UseProps, DataObject } from '@/utils/types'
+import { UseProps, DataObject } from '@/helpers/types'
 
 export interface PopupPublicInstance {
   customCancel: (key: string, focus?: boolean) => void

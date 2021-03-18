@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import BackTop from './BackTop.vue'
 
 const _BackTop: SFCWithInstall<typeof BackTop> = Object.assign(BackTop, {

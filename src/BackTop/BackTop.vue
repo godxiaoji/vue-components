@@ -10,9 +10,9 @@
 import { defineComponent, computed, toRef, ref } from 'vue'
 import Icon from '@/Icon'
 import { getScrollDom } from '@/helpers/dom'
-import { useSafeAreaInsets } from '@/utils/safe-area-insets'
+import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { isNumber, isNumberArray } from '@/helpers/util'
-import { OnScrollCallback, useScrollEvent } from '@/utils/scroll'
+import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
 
 export default defineComponent({
   name: 'fx-back-top',

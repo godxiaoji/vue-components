@@ -1,5 +1,5 @@
-import { getDefaultFieldNames, MODE_NAMES } from './util'
-import { stringNumberArrayMixValidator } from '@/utils/validator'
+import { getDefaultFieldNames, MODE_NAMES } from '@/Picker/util'
+import { stringNumberArrayMixValidator } from '@/helpers/validator'
 
 export default {
   modelValue: {

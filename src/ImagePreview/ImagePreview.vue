@@ -59,9 +59,9 @@ import FxImage from '@/Image'
 import Swiper from '@/Swiper'
 import SwiperItem from '@/SwiperItem'
 import { isStringArray, rangeNumber } from '@/helpers/util'
-import { popupEmits, popupProps, usePopup } from '@/utils/popup'
-import { DataObject } from '@/utils/types'
-import { UseTouchCoords } from '@/utils/touch'
+import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
+import { DataObject } from '@/helpers/types'
+import { UseTouchCoords } from '@/hooks/touch'
 
 interface ImageObject {
   src: string

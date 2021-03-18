@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { SFCWithInstall } from '@/utils/types'
+import { SFCWithInstall } from '@/helpers/types'
 import Drawer from './Drawer.vue'
 
 const _Drawer: SFCWithInstall<typeof Drawer> = Object.assign(Drawer, {

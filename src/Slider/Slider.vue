@@ -27,7 +27,7 @@
 <script lang="ts">
 import { onMounted, ref, defineComponent, watch, computed, nextTick } from 'vue'
 import { isNumeric } from '@/helpers/util'
-import { useFormItem, formItemEmits, formItemProps } from '@/utils/form'
+import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
 
 export default defineComponent({
   name: 'fx-slider',

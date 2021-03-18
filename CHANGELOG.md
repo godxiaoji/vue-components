@@ -1,3 +1,10 @@
+# [2.0.0-beta.5](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-03-18)
+
+
+### Bug Fixes
+
+* **build es6:** 优化构建 ([9501b72](https://github.com/godxiaoji/vfox/commit/9501b727087cced4a436508e79abda03ae3d314a))
+
 # [2.0.0-beta.4](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-03-16)
 
 

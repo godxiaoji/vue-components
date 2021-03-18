@@ -6,7 +6,7 @@ const vue = require('rollup-plugin-vue')
 const rollup = require('rollup')
 const typescript = require('rollup-plugin-typescript2')
 const commonjs = require('rollup-plugin-commonjs')
-const tss = require('./ts.json')
+const tss = require('./ts-files.json')
 
 const deps = Object.keys(pkg.dependencies)
 

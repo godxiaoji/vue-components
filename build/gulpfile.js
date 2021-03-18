@@ -46,7 +46,7 @@ function cacheTsPath() {
     .on('data', function(data) {
       paths.push(data)
     })
-    .pipe(fs.createWriteStream('ts.txt'))
+    .pipe(fs.createWriteStream('ts-files.txt'))
 }
 
 exports.build = gulp.series(sass2css, copyStyle)

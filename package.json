@@ -13,9 +13,10 @@
     "build:svg": "webpack --config=./build/webpack.svg.config.js",
     "lint": "eslint ./src/**/*.js",
     "build:css": "gulp build --gulpfile build/gulpfile.js",
-    "build:component": "gulp cts --gulpfile build/gulpfile.js & node ./build/bincomp.js",
-    "build:es": "gulp build --gulpfile build/gulpfile.js & rollup -c ./build/build.full.js & gulp dts --gulpfile build/gulpfile.js & gulp cts --gulpfile build/gulpfile.js & node ./build/bincomp.js",
+    "build:component": "node ./build/bincomp.js",
+    "build:es": "gulp build --gulpfile build/gulpfile.js & rollup -c ./build/build.full.js & gulp dts --gulpfile build/gulpfile.js & node ./build/bincomp.js",
     "build:full": "rollup -c ./build/build.full.js & gulp dts --gulpfile build/gulpfile.js",
+    "build:mainfest": "node build/build.mainfest.js",
     "semantic-release": "semantic-release"
   },
   "repository": {

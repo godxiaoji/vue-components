@@ -1,3 +1,10 @@
+# [2.0.0-beta.6](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-03-19)
+
+
+### Bug Fixes
+
+* **popup:** 优化popup类组件和api ([9eb75cd](https://github.com/godxiaoji/vfox/commit/9eb75cdf0c292e35b31dc5f2bc7e2d7102f0deca))
+
 # [2.0.0-beta.5](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-03-18)
 
 

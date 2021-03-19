@@ -1,5 +1,5 @@
 import { isStringNumberMixArray } from '@/helpers/util'
-import {
+import type {
   OptionItem,
   ModeNames,
   UserOptionItem,
@@ -9,7 +9,7 @@ import {
   ExtraData,
   ColRow,
   FieldNames
-} from '@/Picker/types'
+} from './types'
 import {
   getDateValues,
   getTimeValues,
@@ -30,8 +30,7 @@ import {
   isStringNumberMix
 } from '@/helpers/util'
 import Exception from '@/helpers/exception'
-
-export { dateString2Array, timeString2Array, datetimeString2Array }
+import type { DataObject } from '../helpers/types'
 
 export function getDateTimeRows(
   mode: ModeNames,
@@ -127,7 +126,7 @@ export function parseOptions(options: any[], fieldNames: FieldNames) {
 
   if (isArray(options)) {
     options.forEach(
-      (option: string | number | UserOptionItem | UserOptionItem[]) => {
+      (option: UserOptionItem | UserOptionItem[]) => {
         if (isArray(option)) {
           // 二维数组
           const subOptions = parseOptions(
@@ -148,7 +147,7 @@ export function parseOptions(options: any[], fieldNames: FieldNames) {
             extraData: {}
           })
         } else if (isObject(option)) {
-          option = option as UserOptionItem
+          option = option as DataObject<any>
 
           if (isStringNumberMix(option[fieldNames.value])) {
             const extraData = cloneData(option)

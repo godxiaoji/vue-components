@@ -1,4 +1,4 @@
-import { UseProps } from '@/helpers/types'
+import type { UseProps } from '../helpers/types'
 import {
   ref,
   computed,

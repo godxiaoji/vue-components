@@ -62,8 +62,9 @@
 <script lang="ts">
 import { defineComponent, reactive, watch } from 'vue'
 import dayjs from 'dayjs'
+import { Dayjs } from 'dayjs'
 import { isDate, isInNumberRange, isEmpty } from '@/helpers/util'
-import { showToast } from '@/apis/Toast'
+import Toast from '@/Toast'
 import {
   DEFAULT_MONTH_RANGE,
   getDetail as _getDetail,
@@ -74,7 +75,7 @@ import { isSameArray } from '@/helpers/util'
 import Exception from '@/helpers/exception'
 import commonProps from '@/Calendar/props'
 import { getEnumsValue } from '@/helpers/validator'
-import { Dayjs } from 'dayjs'
+import type { DayInfo } from './types'
 
 interface WeekDay {
   label: string
@@ -87,19 +88,6 @@ interface SelectDay {
   monthIndex: number
   dayIndex: number
   state?: string
-}
-
-interface DayInfo {
-  cover?: boolean
-  topHighlight?: boolean
-  topText?: string
-  state: string
-  bottomHighlight?: boolean
-  bottomText?: string
-  text: string
-  dateString: string
-  date?: Date
-  timestamp: number
 }
 
 interface Month {
@@ -470,7 +458,7 @@ export default defineComponent({
 
             if (!hasDisabled) {
               if (rangeCount > props.maxRange) {
-                showToast(`选择天数不能超过${props.maxRange}天`)
+                Toast.showToast(`选择天数不能超过${props.maxRange}天`)
               } else {
                 setSelected('end', dayInfo2SelectDay(day, monthIndex, dayIndex))
                 // this.rangeCount = rangeCount

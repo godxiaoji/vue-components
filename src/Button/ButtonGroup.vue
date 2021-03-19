@@ -16,12 +16,14 @@
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import {
   SIZE_TYPES,
-  SizeTypes,
   BUTTON_PATTERN_TYPES,
-  ButtonPatternTypes,
   BUTTON_SHAPE_TYPES,
-  ButtonShapeTypes
 } from '@/hooks/constants'
+import type {
+  SizeType,
+  ButtonPatternType,
+  ButtonShapeType,
+} from '../hooks/constants'
 import { useGroup } from '@/hooks/group'
 import { defineComponent, PropType, provide, reactive, watch } from 'vue'
 
@@ -29,17 +31,17 @@ export default defineComponent({
   name: 'fx-button-group',
   props: {
     size: {
-      type: String as PropType<SizeTypes>,
+      type: String as PropType<SizeType>,
       validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     pattern: {
-      type: String as PropType<ButtonPatternTypes>,
+      type: String as PropType<ButtonPatternType>,
       validator: createEnumsValidator(BUTTON_PATTERN_TYPES),
       default: null
     },
     shape: {
-      type: String as PropType<ButtonShapeTypes>,
+      type: String as PropType<ButtonShapeType>,
       validator: createEnumsValidator(BUTTON_SHAPE_TYPES),
       default: null
     }

@@ -47,8 +47,9 @@ import {
   getEnumsValue,
   iconValidator
 } from '@/helpers/validator'
-import  type {  StyleObject } from '@/helpers/types'
-import { StateTypes, STATE_TYPES } from '@/hooks/constants'
+import type { StyleObject } from '../helpers/types'
+import { STATE_TYPES } from '@/hooks/constants'
+import type { StateType } from '../hooks/constants'
 
 const modeMaps = new Map([
   ['default', ''],
@@ -108,7 +109,7 @@ export default defineComponent({
       default: false
     },
     type: {
-      type: String as PropType<StateTypes>,
+      type: String as PropType<StateType>,
       validator: createEnumsValidator(STATE_TYPES),
       default: null
     }

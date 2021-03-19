@@ -1,4 +1,4 @@
-import Exception from '@/helpers/exception'
+import Exception from '../helpers/exception'
 
 export interface ApiOptionsSuccess {
   (...args: any[]): void

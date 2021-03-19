@@ -113,8 +113,6 @@ export function getSizeValue(size: number | string, defaultValue = 0) {
   return defaultValue
 }
 
-export type DomSelector = HTMLElement | string | Document
-
 /**
  * 指定条件获取 HTMLElement
  * @param selector 选择参数

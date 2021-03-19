@@ -62,7 +62,7 @@ import dayjs from 'dayjs'
 import commonProps from '@/Calendar/props'
 import { formItemEmits, formItemProps, useFormItem } from '@/hooks/form'
 import { getEnumsValue } from '@/helpers/validator'
-import { DetailObject } from '@/Calendar/types'
+import type { DetailObject } from './types'
 
 export default defineComponent({
   name: 'fx-calendar',

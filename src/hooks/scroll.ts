@@ -1,11 +1,7 @@
 import { onBeforeUnmount } from 'vue'
 import { getScrollDom } from '@/helpers/dom'
-import {
-  addEvent,
-  EventCallback,
-  EventElement,
-  removeEvent
-} from '@/helpers/events'
+import { addEvent, removeEvent } from '@/helpers/events'
+import type { EventElement, EventCallback } from '../helpers/types'
 
 export interface OnScrollCallback {
   (

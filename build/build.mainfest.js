@@ -47,6 +47,7 @@ const buildJSON = code => {
       )
     })
     .map(v => v.replace(/.ts$/, ''))
+    .sort()
 
   fs.writeFileSync(resolve(__dirname, './ts-files.json'), JSON.stringify(paths))
   fs.unlinkSync(resolve(__dirname, './ts-files.txt'))

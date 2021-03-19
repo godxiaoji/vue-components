@@ -81,11 +81,11 @@ import ScrollView from '@/ScrollView'
 import Exception from '@/helpers/exception'
 import { getRelativeOffset } from '@/helpers/dom'
 import { useResizeDetector } from '@/hooks/resize-detector'
-import {
+import type {
   ScrollToIndexOptions,
   ScrollToOffsetOptions,
   StyleObject
-} from '@/helpers/types'
+} from '../helpers/types'
 
 interface FlatItemElement extends HTMLElement {
   _recycled?: boolean
@@ -103,7 +103,7 @@ export default defineComponent({
     data: {
       type: Array as PropType<any[]>,
       required: true,
-      default: () => []
+      default: () => [] as any[]
     },
     getItemSize: {
       type: Function,

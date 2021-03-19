@@ -14,12 +14,8 @@ import {
   isArray
 } from '@/helpers/util'
 import dayjs from 'dayjs'
-import { DomSelector, getSizeValue } from '@/helpers/dom'
-
-export interface Validator {
-  (value: any): boolean
-  _type: string
-}
+import { getSizeValue } from '@/helpers/dom'
+import type { Validator, DomSelector } from './types'
 
 const emptys = ['null', 'undefined', 'NaN']
 
@@ -27,7 +23,7 @@ const emptys = ['null', 'undefined', 'NaN']
  * dom
  * @param value
  */
-export const elementValidator = (value: unknown) => {
+export const elementValidator: Validator = (value: unknown) => {
   return isHTMLElement(value)
 }
 elementValidator._type = `HTMLElement`
@@ -36,7 +32,7 @@ elementValidator._type = `HTMLElement`
  * 字符串数组
  * @param value
  */
-export const stringArrayValidator = (value: unknown) => {
+export const stringArrayValidator: Validator = (value: unknown) => {
   return isStringArray(value)
 }
 stringArrayValidator._type = `String[]`
@@ -45,7 +41,7 @@ stringArrayValidator._type = `String[]`
  * 非空校验器
  * @param value
  */
-export const notNullValidator = (value: unknown) => {
+export const notNullValidator: Validator = (value: unknown) => {
   if (value == null || (typeof value === 'number' && isNaN(value))) {
     return false
   }
@@ -69,8 +65,8 @@ notNullValidator._type = `any(not in [${emptys
 
 // /**
 //  * 创建数值范围验证器
-//  * @param {Number} min
-//  * @param {Number} max
+//  * @param min
+//  * @param max
 //  */
 // export function createNumberRangeValidator(min = -Infinity, max = Infinity) {
 //   /**
@@ -88,7 +84,7 @@ notNullValidator._type = `any(not in [${emptys
 //   return numberRangeValidator
 // }
 
-export function calendarValueValidator(value: unknown) {
+export const calendarValueValidator: Validator = (value: unknown) => {
   if (value == null) {
     return true
   } else if (isDateArray(value)) {
@@ -135,23 +131,23 @@ export function getType(obj: unknown) {
   return typeof obj
 }
 
-export const selectorValidator = (value: DomSelector) => {
+export const selectorValidator: Validator = (value: DomSelector) => {
   return isString(value) || isHTMLElement(value) || value === document
 }
 selectorValidator._type = 'Element, Document Or string'
 
-export const stringNumberArrayMixValidator = (value: unknown) => {
+export const stringNumberArrayMixValidator: Validator = (value: unknown) => {
   return isStringNumberMixArray(value) || isString(value) || isNumber(value)
 }
 stringNumberArrayMixValidator._type = 'number, string, (number | string)[]'
 
-export const sizeValidator = (value: number | string) => {
+export const sizeValidator: Validator = (value: number | string) => {
   return getSizeValue(value, Infinity) !== Infinity
 }
 sizeValidator._type = 'number or string(eg: 10px, 5vw, 1vh)'
 
 export const createEnumsValidator = (enums: string[]) => {
-  const validator = function(value: string) {
+  const validator: Validator = function(value: string) {
     return inArray(value, enums)
   }
 
@@ -161,7 +157,7 @@ export const createEnumsValidator = (enums: string[]) => {
     })
     .join(', ')}]`
 
-  return validator as Validator
+  return validator
 }
 
 export function getEnumsValue<T = string>(enums: T[], value?: unknown): T {
@@ -180,7 +176,7 @@ export function isSvgComponent(value: any) {
   )
 }
 
-export const iconValidator = (value: unknown) => {
+export const iconValidator: Validator = (value: unknown) => {
   return isString(value) || isSvgComponent(value)
 }
 iconValidator._type = 'string Or SVG Component'

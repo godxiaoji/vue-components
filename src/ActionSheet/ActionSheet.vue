@@ -56,13 +56,7 @@ import {
   popupExtendEmits,
   popupExtendProps
 } from '@/hooks/popup'
-
-interface ActionSheetItem {
-  name: string
-  highlight?: boolean
-  description?: string
-  disabled?: boolean
-}
+import type { ActionSheetItem } from './types'
 
 export default defineComponent({
   name: 'fx-action-sheet',
@@ -83,7 +77,7 @@ export default defineComponent({
     },
     options: {
       type: Array as PropType<ActionSheetItem[]>,
-      default: () => []
+      default: () => [] as ActionSheetItem[]
     }
   },
   emits: popupExtendEmits,

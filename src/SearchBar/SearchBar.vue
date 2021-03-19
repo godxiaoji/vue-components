@@ -124,7 +124,7 @@ export default defineComponent({
       validator: (val: Placeholders) => {
         return isString(val) || isStringArray(val)
       },
-      default: () => []
+      default: () => [] as string[]
     },
     placeholderInterval: {
       type: Number,

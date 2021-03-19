@@ -46,13 +46,14 @@ import {
   addTouchDelegateEvent,
   removeTouchDelegateEvent
 } from '@/helpers/events'
-import { StateTypes, STATE_TYPES } from '@/hooks/constants'
+import { STATE_TYPES } from '@/hooks/constants'
+import type { StateType } from '../hooks/constants'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { getStretchOffset } from '@/helpers/animation'
 
 interface ButtonOptions {
   text: string
-  type?: StateTypes
+  type?: StateType
 }
 
 interface SwipeCellCoords extends UseTouchCoords {
@@ -77,7 +78,7 @@ export default defineComponent({
           return false
         }
       },
-      default: () => []
+      default: () => [] as ButtonOptions[]
     }
   },
   emits: ['button-click'],
@@ -196,7 +197,7 @@ export default defineComponent({
           if (isObject(v) && isString(v.text)) {
             buttons.push({
               text: v.text,
-              type: getEnumsValue(STATE_TYPES, v.type) as StateTypes
+              type: getEnumsValue(STATE_TYPES, v.type) as StateType
             })
           }
         })

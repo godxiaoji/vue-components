@@ -64,7 +64,7 @@ import { isNumber } from '@/helpers/util'
 import { useList } from '@/hooks/list'
 import { useResizeDetector } from '@/hooks/resize-detector'
 import { getStretchOffset } from '@/helpers/animation'
-import { StyleObject } from '@/helpers/types'
+import type { StyleObject } from '../helpers/types'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { styleObject2CssText } from '@/helpers/dom'
 

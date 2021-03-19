@@ -38,7 +38,7 @@ import { capitalize, isInteger, isNumeric } from '@/helpers/util'
 import { rangeInteger } from '@/helpers/util'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
-import { StyleObject } from '@/helpers/types'
+import type { StyleObject } from '../helpers/types'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 
 interface RateCoords extends UseTouchCoords {

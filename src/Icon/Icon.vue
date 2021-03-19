@@ -13,7 +13,7 @@
 import { computed, defineComponent } from 'vue'
 import SvgIcon from './SvgIcon.vue'
 import { iconValidator, isSvgComponent } from '@/helpers/validator'
-import { StyleObject } from '@/helpers/types'
+import type { StyleObject } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-icon',

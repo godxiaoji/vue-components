@@ -28,10 +28,17 @@ const runBuild = async () => {
         }
 
         if (/^@\//.test(id)) {
+          // @开头不做打包
           return true
         }
 
         if (deps.some(k => new RegExp('^' + k).test(id))) {
+          // 依赖包不做打包
+          return true
+        }
+
+        if (id === './style' || id === './components') {
+          // 样式不做打包
           return true
         }
 

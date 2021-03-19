@@ -1,7 +1,17 @@
 import { App } from 'vue'
-import * as Components from './component'
-import { init as initEvent } from '@/helpers/events'
-import '@/style'
+import * as Components from './components'
+import { isIOS, isMobile } from './helpers/device'
+import './style'
+
+// iOS点击态
+function initEvent() {
+  if (isMobile) {
+    if (isIOS) {
+      // console.log('support active')
+      document.addEventListener('touchstart', function() {}, false)
+    }
+  }
+}
 
 const Vfox = {
   install(app: App) {
@@ -12,7 +22,5 @@ const Vfox = {
     initEvent()
   }
 }
-
-export * from './component'
 
 export default Vfox

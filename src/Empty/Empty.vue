@@ -15,7 +15,14 @@
 import { computed, defineComponent, PropType } from 'vue'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 
-const TYPE_NAMES = ['default', 'error', 'network', 'search']
+const TYPE_NAMES = [
+  'default',
+  'error',
+  'network',
+  'search',
+  'permission',
+  'service'
+]
 
 export default defineComponent({
   name: 'fx-empty',
@@ -27,7 +34,9 @@ export default defineComponent({
     },
     // 类型
     type: {
-      type: String as PropType<'default' | 'error' | 'network' | 'search'>,
+      type: String as PropType<
+        'default' | 'error' | 'network' | 'search' | 'permission' | 'service'
+      >,
       validator: createEnumsValidator(TYPE_NAMES),
       default: TYPE_NAMES[0]
     }
@@ -37,7 +46,7 @@ export default defineComponent({
       return `https://cdn.fox2.cn/vfox/empty/${getEnumsValue(
         TYPE_NAMES,
         props.type
-      )}@2x.png`
+      )}@3x.png`
     })
 
     return {

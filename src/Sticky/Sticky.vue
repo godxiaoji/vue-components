@@ -25,7 +25,7 @@ import {
   getSizeValue,
   querySelector
 } from '@/helpers/dom'
-import { StyleObject } from '@/helpers/types'
+import type { StyleObject } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-sticky',

@@ -16,8 +16,8 @@ import {
   validateValues,
   updateArray
 } from '@/Picker/util'
-import { UseProps } from '@/helpers/types'
-import { DetailObject, Labels, Values } from '@/Picker/types'
+import type { UseProps } from '../helpers/types'
+import type { DetailObject, Labels, Values } from './types'
 import { getEnumsValue } from '@/helpers/validator'
 import { useFormItem } from '@/hooks/form'
 

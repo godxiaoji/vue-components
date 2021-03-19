@@ -1,4 +1,4 @@
-import { DataObject } from '@/helpers/types'
+import type { DataObject } from '../helpers/types'
 
 export interface UserFieldNames {
   label?: string
@@ -11,6 +11,8 @@ export interface FieldNames {
   value: string
   children: string
 }
+
+export type ModelValue = string | number | Values
 
 export type Values = (string | number)[]
 export type Labels = string[]
@@ -25,7 +27,7 @@ export interface DetailObject {
   extraData: ExtraData[]
 }
 
-export type UserOptionItem = DataObject<any>
+export type UserOptionItem = string | number | DataObject<any>
 
 export interface OptionItem {
   label: string

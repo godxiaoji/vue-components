@@ -17,7 +17,8 @@ import {
   isSameArray,
   inArray
 } from '@/helpers/util'
-import { useCheckboxOrRadioGroup, ModelValue } from '@/hooks/checkbox-radio'
+import { useCheckboxOrRadioGroup } from '@/hooks/checkbox-radio'
+import type { ModelValue } from '../hooks/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-checkbox-group',

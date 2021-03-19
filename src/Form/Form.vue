@@ -8,8 +8,8 @@
 import { defineComponent, PropType, provide } from 'vue'
 import { inArray, isUndefined } from '@/helpers/util'
 import { useGroup } from '@/hooks/group'
-import { DataObject } from '@/helpers/types'
-import { FormRules, FormInputElement, FormGroupItemOut } from '@/hooks/form'
+import type { DataObject } from '../helpers/types'
+import type { FormRules, FormInputElement, FormGroupItemOut } from '../hooks/form'
 
 export default defineComponent({
   name: 'fx-form',

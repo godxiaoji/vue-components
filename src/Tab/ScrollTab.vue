@@ -36,7 +36,7 @@ import SideTab from '@/SideTab'
 import Sticky from '@/Sticky'
 import StickyView from '@/StickyView'
 import { sizeValidator } from '@/helpers/validator'
-import { ScrollToIndexOptions } from '@/helpers/types'
+import type { ScrollToIndexOptions } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-scroll-tab',

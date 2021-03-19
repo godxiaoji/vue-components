@@ -1,6 +1,6 @@
 import { cloneData, isDate, isArray } from '@/helpers/util'
 import dayjs from 'dayjs'
-import { CalendarType, DetailObject } from '@/Calendar/types'
+import type { CalendarType, DetailObject } from './types'
 
 export const DEFAULT_MONTH_RANGE = 6
 export const TYPE_NAMES: CalendarType[] = ['single', 'range']

@@ -39,7 +39,7 @@ import { selectorValidator, sizeValidator } from '@/helpers/validator'
 import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
 import { isNumber } from '@/helpers/util'
 import { useList } from '@/hooks/list'
-import { ScrollToOptions, ScrollToIndexOptions } from '@/helpers/types'
+import type { ScrollToOptions, ScrollToIndexOptions } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-sticky-view',

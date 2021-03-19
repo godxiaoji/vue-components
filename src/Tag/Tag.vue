@@ -28,32 +28,26 @@ import {
 import Icon from '@/Icon'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { addLongPressEvent } from '@/helpers/events'
-import {
-  SizeTypes,
-  SIZE_TYPES,
-  StateTypes,
-  STATE_TYPES,
-  TagPatternTypes,
-  TAG_PATTERN_TYPES
-} from '@/hooks/constants'
+import { SIZE_TYPES, STATE_TYPES, TAG_PATTERN_TYPES } from '@/hooks/constants'
+import type { SizeType, StateType, TagPatternType } from '../hooks/constants'
 
 export default defineComponent({
   name: 'fx-tag',
   components: { Icon },
   props: {
     size: {
-      type: String as PropType<SizeTypes>,
+      type: String as PropType<SizeType>,
       validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     type: {
-      type: String as PropType<StateTypes>,
+      type: String as PropType<StateType>,
       validator: createEnumsValidator(STATE_TYPES),
       default: null
     },
     // 款式
     pattern: {
-      type: String as PropType<TagPatternTypes>,
+      type: String as PropType<TagPatternType>,
       validator: createEnumsValidator(TAG_PATTERN_TYPES),
       default: null
     },

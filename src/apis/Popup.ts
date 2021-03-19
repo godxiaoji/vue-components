@@ -1,46 +1,64 @@
 import { createApp } from 'vue'
-import Picker from '@/PickerPopup'
-import Cascader from '@/CascaderPopup'
-import Calendar from '@/CalendarPopup'
-import ActionSheet from '@/ActionSheet'
-import Popover from '@/Popover'
-import PopMenu from '@/PopMenu'
-import PopDialog from '@/PopDialog'
-import Dialog from '@/Dialog'
-import ImagePreview from '@/ImagePreview'
-import { isObject } from '@/helpers/util'
+import { isObject, isString } from '@/helpers/util'
 import { getCallbackFns } from '@/apis/callback'
 import { parseParamsByRules } from '@/apis/rules'
-import { ApiOptions } from '@/apis/types'
-import { PopupBridge, PopupRes, createPopup } from '@/hooks/popup'
+import type { ApiOptions } from '../apis/types'
+import type { PopupBridge, PopupRes } from '../hooks/popup'
+import { createPopup } from '@/hooks/popup'
+import Exception from '@/helpers/exception'
 
-type Hook = (hookName: string, res: PopupRes) => void
-type Done = (res: PopupRes) => void
+export type PopupHook = (hookName: string, res: PopupRes) => void
+type PopupDone = (res: PopupRes) => void
+
+interface RefFns {
+  [propName: string]: Function
+}
+
+const $refs: {
+  [propName: string]: {
+    uid: number
+    fns: RefFns
+  }
+} = {}
 
 /**
  * 展示弹窗
  * @param object 参数
  */
-function show(
-  object: ApiOptions,
+export function showPopup(
+  object: string | ApiOptions,
   apiName: string,
-  getOptions: (done: Done) => { component: any; hook?: Hook }
+  getOptions: (
+    done: PopupDone
+  ) => { component: any; hook?: PopupHook; singleMode?: boolean }
 ) {
-  if (!isObject(object)) {
-    object = {}
+  let options: ApiOptions
+
+  if (isString(object)) {
+    options = {
+      title: object
+    }
+  } else if (!isObject(object)) {
+    options = {}
+  } else {
+    options = object as ApiOptions
   }
 
-  const { success, fail, complete } = getCallbackFns(object)
+  const { success, fail, complete } = getCallbackFns(options)
 
   return new Promise<PopupRes>(function(resolve, reject) {
     try {
-      const done: Done = function(res) {
+      const key = apiName.replace('show', '')
+      const { component, hook, singleMode } = getOptions(function(res) {
         success(res)
         complete()
         resolve(res)
-      }
+      })
 
-      const propsData: any = parseParamsByRules(object, apiName)
+      singleMode && clear(key)
+
+      const fns: RefFns = {}
+      const propsData: any = parseParamsByRules(options, apiName)
 
       if (propsData.mode) {
         propsData.initialMode = propsData.mode
@@ -51,7 +69,6 @@ function show(
         delete propsData.value
       }
 
-      const { component, hook } = getOptions(done)
       const { $wrapper } = createPopup()
 
       const app = createApp(
@@ -65,6 +82,7 @@ function show(
           switch (hookName) {
             case 'afterHidden': {
               app.unmount($wrapper)
+              singleMode && remove(key, $ref.uid)
               break
             }
             default: {
@@ -72,9 +90,20 @@ function show(
               break
             }
           }
+        },
+        out(key: string, value: any) {
+          fns[key] = value
         }
       } as PopupBridge)
       app.mount($wrapper)
+
+      const $ref = {
+        uid: app._uid,
+        fns
+      }
+
+      // 单例：如Toast
+      singleMode && ($refs[key] = $ref)
 
       return app
     } catch (e) {
@@ -85,173 +114,36 @@ function show(
   })
 }
 
-/**
- * 展示选择器
- * @param object 参数
- */
-export function showPicker(object: ApiOptions) {
-  return show(object, 'showPicker', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
+function clear(key: string) {
+  if ($refs[key]) {
+    $refs[key].fns.customCancel('clear', true)
+    delete $refs[key]
+  }
+}
 
-    return {
-      component: Picker,
-      hook
-    }
-  })
+function remove(key: string, uid: number) {
+  if ($refs[key] && $refs[key].uid === uid) {
+    delete $refs[key]
+  }
 }
 
 /**
- * 展示级联选择器
+ * 隐藏弹窗
  * @param object 参数
  */
-export function showCascader(object: ApiOptions) {
-  return show(object, 'showCascader', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
+export function hidePopup(object: ApiOptions, apiName: string) {
+  if (!isObject(object)) {
+    object = {}
+  }
 
-    return {
-      component: Cascader,
-      hook
-    }
-  })
-}
+  const { success, fail, complete } = getCallbackFns(object)
 
-/**
- * 展示日历选择器
- * @param object 参数
- */
-export function showCalendar(object: ApiOptions) {
-  return show(object, 'showCalendar', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
+  try {
+    clear(apiName.replace('hide', ''))
 
-    return {
-      component: Calendar,
-      hook
-    }
-  })
-}
-
-/**
- * 展示动作面板
- * @param object 参数
- */
-export function showActionSheet(object: ApiOptions) {
-  return show(object, 'showActionSheet', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
-    return {
-      component: ActionSheet,
-      hook
-    }
-  })
-}
-
-/**
- * 展示气泡
- * @param object 参数
- */
-export function showPopover(object: ApiOptions) {
-  return show(object, 'showPopover', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterShow') {
-        done(res)
-      }
-    }
-
-    return {
-      component: Popover,
-      hook
-    }
-  })
-}
-
-/**
- * 展示气泡对话框
- * @param object 参数
- */
-export function showPopDialog(object: ApiOptions) {
-  return show(object, 'showPopDialog', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
-    return {
-      component: PopDialog,
-      hook
-    }
-  })
-}
-
-/**
- * 展示气泡菜单
- * @param object 参数
- */
-export function showPopMenu(object: ApiOptions) {
-  return show(object, 'showPopMenu', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
-    return {
-      component: PopMenu,
-      hook
-    }
-  })
-}
-
-/**
- * 展示对话框
- * @param object 参数
- */
-export function showDialog(object: ApiOptions) {
-  return show(object, 'showDialog', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
-    return {
-      component: Dialog,
-      hook
-    }
-  })
-}
-
-/**
- * 展示图片预览
- * @param object 参数
- */
-export function previewImage(object: ApiOptions) {
-  return show(object, 'previewImage', function(done) {
-    const hook: Hook = (hookName, res) => {
-      if (hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
-    return {
-      component: ImagePreview,
-      hook
-    }
-  })
+    success()
+  } catch (e) {
+    fail(new Exception(e.message))
+  }
+  complete()
 }

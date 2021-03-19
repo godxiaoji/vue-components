@@ -40,7 +40,8 @@ import FxButton from '@/Button'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
+import { PLACEMENT_TYPES } from '@/hooks/constants'
+import type { PlacementType } from '../hooks/constants'
 
 export default defineComponent({
   name: 'fx-drawer',
@@ -52,7 +53,7 @@ export default defineComponent({
       default: null
     },
     placement: {
-      type: String as PropType<PlacementTypes>,
+      type: String as PropType<PlacementType>,
       validator: createEnumsValidator(PLACEMENT_TYPES),
       default: getEnumsValue(PLACEMENT_TYPES)
     },

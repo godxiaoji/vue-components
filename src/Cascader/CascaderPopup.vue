@@ -49,7 +49,7 @@ import {
   popupExtendEmits,
   popupExtendProps
 } from '@/hooks/popup'
-import { ColRow, Values } from '@/Picker/types'
+import type { ColRow, Values } from '../Picker/types'
 
 export default defineComponent({
   name: 'fx-cascader-popup',

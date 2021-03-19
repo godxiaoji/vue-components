@@ -11,15 +11,15 @@ import {
   updateArray
 } from '@/Picker/util'
 import { getEnumsValue } from '@/helpers/validator'
-import {
+import type {
   ColRow,
   Labels,
   ModeNames,
   OptionItem,
   Values,
   ExtraData
-} from '@/Picker/types'
-import { UseProps } from '@/helpers/types'
+} from './types'
+import type { UseProps } from '../helpers/types'
 
 export const viewEmits = ['change', 'update:modelValue']
 
@@ -176,7 +176,7 @@ export function useView(
 
   /**
    * 日期等更新模式
-   * @param {Array} selecteds
+   * @param selecteds 选择值
    */
   function updateVirtualOptionsCols(selecteds: Values) {
     clearCache()
@@ -258,7 +258,7 @@ export function useView(
 
   /**
    * 级联更新模式
-   * @param {Array} selecteds
+   * @param selecteds 选择值
    */
   function updateCascadeCols(selecteds: Values) {
     if (mode !== MODE_NAMES[0]) {

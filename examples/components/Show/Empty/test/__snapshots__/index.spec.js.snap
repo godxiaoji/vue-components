@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty should render prop set description correctly 1`] = `
-<div class="fx-empty"><img class="fx-empty_image" src="https://cdn.fox2.cn/vfox/empty/default@2x.png">
+<div class="fx-empty"><img class="fx-empty_image" src="https://cdn.fox2.cn/vfox/empty/default@3x.png">
   <p class="fx-empty_description">description</p>
 </div>
 `;

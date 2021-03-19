@@ -1,5 +1,6 @@
-import { isIOS, isMobile } from '@/helpers/device'
+import { isMobile } from '@/helpers/device'
 import { objectForEach, isFunction } from '@/helpers/util'
+import type { EventElement, EventCallback } from './types'
 
 export function getDataset(object: any) {
   const dataset: any = {}
@@ -18,15 +19,9 @@ export function getDataset(object: any) {
   return dataset
 }
 
-export type EventElement = HTMLElement | Document
-
 type EventTargetWithUID = {
   _euid: number
 } & EventElement
-
-export interface EventCallback {
-  (e: Event, $el: HTMLElement): void
-}
 
 let euid = 0
 
@@ -175,15 +170,6 @@ export function removeEvent(
 //     }
 //   }
 // }
-
-export function init() {
-  if (isMobile) {
-    if (isIOS) {
-      // console.log('support active')
-      document.addEventListener('touchstart', function() {}, false)
-    }
-  }
-}
 
 let passiveSupported = false
 try {

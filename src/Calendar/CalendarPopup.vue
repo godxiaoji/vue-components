@@ -40,7 +40,7 @@ import {
   popupExtendEmits,
   popupExtendProps
 } from '@/hooks/popup'
-import { DetailObject } from '@/Calendar/types'
+import type { DetailObject } from './types'
 
 export default defineComponent({
   name: 'fx-calendar-popup',

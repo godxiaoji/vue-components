@@ -20,6 +20,7 @@ import Input from '@/Input'
 import Form from '@/Form'
 import FormItem from '@/FormItem'
 import Cascader from '@/Cascader'
+import CascaderPopup from '@/CascaderPopup'
 import Rate from '@/Rate'
 import Stepper from '@/Stepper'
 import PickerView from '@/PickerView'
@@ -103,6 +104,7 @@ export {
   Input,
   Form,
   Cascader,
+  CascaderPopup,
   FormItem,
   Rate,
   Toast,

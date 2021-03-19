@@ -25,3 +25,16 @@ export interface ScrollToOffsetOptions {
   offset: number
   animated?: boolean
 }
+
+export interface Validator {
+  (value: any): boolean
+  _type: string
+}
+
+export type DomSelector = HTMLElement | string | Document
+
+export type EventElement = HTMLElement | Document
+
+export interface EventCallback {
+  (e: Event, $el: HTMLElement): void
+}

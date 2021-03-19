@@ -17,7 +17,7 @@ export default defineComponent({
   props: {
     activeNames: {
       validator: stringNumberArrayMixValidator,
-      default: () => []
+      default: () => [] as CollapseActiveNames
     },
     accordion: {
       type: Boolean,

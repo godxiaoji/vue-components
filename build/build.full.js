@@ -29,6 +29,11 @@ export default [
       //     return true
       //   }
 
+      if (id === './style') {
+        // 样式不做打包
+        return true
+      }
+
       if (deps.some(k => new RegExp('^' + k).test(id))) {
         return true
       }
@@ -36,6 +41,13 @@ export default [
       return false
     },
     plugins: [
+      {
+        name: 'replaceAlias',
+        transform(code, id) {
+          console.log(`Build: ${id} ...`)
+          return code.replace(/@\//, '../')
+        }
+      },
       sass({
         output: true
       }),

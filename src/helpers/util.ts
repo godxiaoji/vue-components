@@ -276,8 +276,8 @@ export function isDateArray(object: any) {
 
 /**
  * 是否相同的数组
- * @param {Array} a 数组a
- * @param {Array} b 数组b
+ * @param a 数组a
+ * @param b 数组b
  */
 export function isSameArray(a: any[], b: any[]): boolean {
   if (a.length === b.length) {

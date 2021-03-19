@@ -26,10 +26,11 @@ import {
 } from 'vue'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { capitalize } from '@/helpers/util'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
+import { PLACEMENT_TYPES } from '@/hooks/constants'
+import type { PlacementType } from '../hooks/constants'
 import { useResizeDetector } from '@/hooks/resize-detector'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
-import { StyleObject } from '@/helpers/types'
+import { StyleObject } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-fixed',
@@ -41,7 +42,7 @@ export default defineComponent({
   props: {
     // 固定方向
     placement: {
-      type: String as PropType<PlacementTypes>,
+      type: String as PropType<PlacementType>,
       validator: createEnumsValidator(PLACEMENT_TYPES),
       default: null
     },

@@ -6,9 +6,10 @@ import {
   getEnumsValue
 } from '@/helpers/validator'
 import { querySelector } from '@/helpers/dom'
-import { PlacementTypes, PLACEMENT_TYPES } from '@/hooks/constants'
+import { PLACEMENT_TYPES } from '@/hooks/constants'
+import type { PlacementType } from '../hooks/constants'
 import { usePopup, popupProps, popupEmits } from '@/hooks/popup'
-import { StyleObject, UseProps } from '@/helpers/types'
+import type { StyleObject, UseProps } from '../helpers/types'
 
 type PopoverPos = {
   t: number | null
@@ -44,7 +45,7 @@ export const popoverProps = {
     required: true
   },
   placement: {
-    type: String as PropType<PlacementTypes>,
+    type: String as PropType<PlacementType>,
     validator: createEnumsValidator(PLACEMENT_TYPES),
     default: getEnumsValue(PLACEMENT_TYPES)
   }

@@ -1,7 +1,80 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import Toast from './Toast.vue'
-import { showToast, showLoading, hideLoading, hideToast } from '@/apis/Toast'
+import { showPopup, hidePopup, PopupHook } from '@/apis/Popup'
+import type { ApiOptions } from '../apis/types'
+import { isObject, isString } from '@/helpers/util'
+
+type ShowToastOptions = {
+  title: string
+  type?: 'default' | 'success' | 'loading' | 'fail'
+  icon?: string
+  duration?: number
+  mask?: boolean
+} & ApiOptions
+
+type ShowLoadingOptions = {
+  title: string
+  duration?: number
+  mask?: boolean
+} & ApiOptions
+
+const showToast = function(object: string | ShowToastOptions) {
+  return showPopup(object, 'showToast', function(done) {
+    const hook: PopupHook = (hookName, res) => {
+      if (hookName === 'afterShow') {
+        done(res)
+      }
+    }
+
+    return {
+      component: Toast,
+      hook,
+      singleMode: true
+    }
+  })
+}
+
+const showLoading = function(object: string | ShowLoadingOptions) {
+  let newObject: ShowLoadingOptions
+
+  if (isString(object)) {
+    newObject = {
+      title: object as string
+    }
+  } else if (!isObject(object)) {
+    newObject = {
+      title: ''
+    }
+  } else {
+    newObject = object as ShowLoadingOptions
+  }
+
+  newObject.type = 'loading'
+  newObject.duration = 0
+
+  return showPopup(newObject, 'showLoading', function(done) {
+    const hook: PopupHook = (hookName, res) => {
+      if (hookName === 'afterShow') {
+        done(res)
+      }
+    }
+
+    return {
+      component: Toast,
+      hook,
+      singleMode: true
+    }
+  })
+}
+
+const hideToast = function(object: ApiOptions) {
+  return hidePopup(object, 'hideToast')
+}
+
+const hideLoading = function(object: ApiOptions) {
+  return hidePopup(object, 'hideLoading')
+}
 
 const _Toast: SFCWithInstall<typeof Toast> = Object.assign(Toast, {
   install: function(app: App) {

@@ -9,14 +9,12 @@ import {
   createEnumsValidator,
   stringNumberArrayMixValidator,
   selectorValidator,
-  Validator
 } from '@/helpers/validator'
-
 import { MODE_NAMES as SELECT_MODE_NAMES } from '@/Picker/util'
 import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '@/Calendar/util'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import { DataObject } from '@/helpers/types'
-import { ApiOptions } from '@/apis/types'
+import type { DataObject, Validator } from '../helpers/types'
+import type { ApiOptions } from '../apis/types'
 
 const placementValidator = createEnumsValidator(PLACEMENT_TYPES)
 
@@ -413,6 +411,7 @@ export const apiRules: ApiRules = {
     },
     options: {
       type: Array,
+      required: true,
       default() {
         return []
       }

@@ -16,9 +16,9 @@ class Exception extends Error {
 
   /**
    * 构造
-   * @param {Error} error
-   * @param {String} type
-   * @param {String} source
+   * @param error 错误
+   * @param type 出错类型
+   * @param source 出错来源
    */
   constructor(
     error: string | Exception | Error,

@@ -21,7 +21,8 @@ import { defineComponent, computed, ref, nextTick } from 'vue'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { selectorValidator } from '@/helpers/validator'
 import Exception from '@/helpers/exception'
-import { querySelector, DomSelector } from '@/helpers/dom'
+import { querySelector } from '@/helpers/dom'
+import type { DomSelector } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-dropdown',

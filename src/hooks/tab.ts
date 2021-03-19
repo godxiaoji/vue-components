@@ -17,7 +17,7 @@ import {
 import { frameTo } from '@/helpers/animation'
 import Exception from '@/helpers/exception'
 import { iconValidator } from '@/helpers/validator'
-import { UseProps } from '@/helpers/types'
+import type { UseProps } from '../helpers/types'
 
 interface TabProps extends UseProps {
   options: OptionList
@@ -65,7 +65,7 @@ export const tabProps = {
       return true
     },
     required: true,
-    default: () => []
+    default: () => [] as OptionItem[]
   },
   activeValue: {
     type: [String, Number],

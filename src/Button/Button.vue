@@ -28,14 +28,16 @@ import {
 } from 'vue'
 import {
   SIZE_TYPES,
-  SizeTypes,
   BUTTON_PATTERN_TYPES,
-  ButtonPatternTypes,
   BUTTON_SHAPE_TYPES,
-  ButtonShapeTypes,
-  STATE_TYPES,
-  StateTypes
+  STATE_TYPES
 } from '@/hooks/constants'
+import type {
+  SizeType,
+  ButtonPatternType,
+  ButtonShapeType,
+  StateType
+} from '../hooks/constants'
 import { useGroupItem } from '@/hooks/group'
 
 const FORM_TYPES = ['button', 'submit', 'reset']
@@ -46,22 +48,22 @@ export default defineComponent({
   components: { Icon },
   props: {
     size: {
-      type: String as PropType<SizeTypes>,
+      type: String as PropType<SizeType>,
       validator: createEnumsValidator(SIZE_TYPES),
       default: null
     },
     type: {
-      type: String as PropType<StateTypes>,
+      type: String as PropType<StateType>,
       validator: createEnumsValidator(STATE_TYPES),
       default: null
     },
     pattern: {
-      type: String as PropType<ButtonPatternTypes>,
+      type: String as PropType<ButtonPatternType>,
       validator: createEnumsValidator(BUTTON_PATTERN_TYPES),
       default: null
     },
     shape: {
-      type: String as PropType<ButtonShapeTypes>,
+      type: String as PropType<ButtonShapeType>,
       validator: createEnumsValidator(BUTTON_SHAPE_TYPES),
       default: null
     },

@@ -1,4 +1,6 @@
+import { PropType } from 'vue'
 import { getDefaultFieldNames, MODE_NAMES } from '@/Picker/util'
+import type { UserFieldNames, ModeNames, UserOptionItem } from './types'
 import { stringNumberArrayMixValidator } from '@/helpers/validator'
 
 export default {
@@ -17,14 +19,14 @@ export default {
   },
   options: {
     type: Array,
-    default: () => []
+    default: () => [] as UserOptionItem[]
   },
   initialMode: {
-    type: String,
+    type: String as PropType<ModeNames>,
     default: MODE_NAMES[0]
   },
   fieldNames: {
-    type: Object,
+    type: Object as PropType<UserFieldNames>,
     default: getDefaultFieldNames
   }
 }

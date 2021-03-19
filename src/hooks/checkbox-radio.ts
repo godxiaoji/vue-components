@@ -13,7 +13,7 @@ import {
 } from 'vue'
 import { capitalize, inArray } from '@/helpers/util'
 import { useGroup, useGroupItem } from '@/hooks/group'
-import { UseProps } from '@/helpers/types'
+import type { UseProps } from '../helpers/types'
 
 interface Options {
   formName: string

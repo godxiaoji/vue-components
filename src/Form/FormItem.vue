@@ -14,13 +14,13 @@ import { defineComponent, inject, PropType, provide, ref } from 'vue'
 import Cell from '@/Cell'
 import Schema from 'async-validator'
 import { isArray, isBoolean, isNumber } from '@/helpers/util'
-import {
+import type {
   FormItemProvide,
   FormRuleItem,
   FormRules,
   FormRuleType,
   FormRuleValidate
-} from '@/hooks/form'
+} from '../hooks/form'
 import { useGroupItem } from '@/hooks/group'
 
 export default defineComponent({

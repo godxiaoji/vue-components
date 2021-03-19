@@ -134,12 +134,12 @@ export default defineComponent({
     leftButtons: {
       type: Array as PropType<ButtonOptions[]>,
       validator: validateButtons,
-      default: () => []
+      default: () => [] as ButtonOptions[]
     },
     rightButtons: {
       type: Array as PropType<ButtonOptions[]>,
       validator: validateButtons,
-      default: () => []
+      default: () => [] as ButtonOptions[]
     },
     iconOnly: {
       type: Boolean,

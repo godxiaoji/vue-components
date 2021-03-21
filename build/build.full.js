@@ -45,7 +45,7 @@ export default [
         name: 'replaceAlias',
         transform(code, id) {
           console.log(`Build: ${id} ...`)
-          return code.replace(/@\//, '../')
+          return code.replace(/@\//g, '../')
         }
       },
       sass({

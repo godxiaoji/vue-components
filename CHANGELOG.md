@@ -1,3 +1,10 @@
+# [2.0.0-beta.7](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-03-21)
+
+
+### Bug Fixes
+
+* 修复打包bug ([ad96a0b](https://github.com/godxiaoji/vfox/commit/ad96a0b89d28de47b59c297f900a42d04d606b60))
+
 # [2.0.0-beta.6](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-03-19)
 
 

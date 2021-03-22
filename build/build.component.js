@@ -15,6 +15,8 @@ const runBuild = async () => {
 
   const inputs = tss.slice(process.argv[2], process.argv[3])
 
+  console.log(`Start: ${inputs.join(',')}`)
+
   build(inputs[index])
 
   async function build(name) {

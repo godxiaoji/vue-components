@@ -1,3 +1,15 @@
+# [2.0.0-beta.8](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-03-23)
+
+
+### Bug Fixes
+
+* **drawer:** 优化Drawer的header适配性 ([f318645](https://github.com/godxiaoji/vfox/commit/f3186459e4d2ffb1ab771ce24274cff1e72cf1d5))
+
+
+### Features
+
+* add NumberKeyboard ([0b73cc2](https://github.com/godxiaoji/vfox/commit/0b73cc2a038257f77671f24650f65e4dddb07835))
+
 # [2.0.0-beta.7](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-03-21)
 
 

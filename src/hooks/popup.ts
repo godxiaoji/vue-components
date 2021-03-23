@@ -12,6 +12,7 @@ import { isFunction, isObject } from '@/helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
 import { popupZIndex } from '@/helpers/layer'
 import type { UseProps, DataObject } from '../helpers/types'
+import { useBlur } from '@/hooks/blur'
 
 export interface PopupPublicInstance {
   customCancel: (key: string, focus?: boolean) => void
@@ -20,6 +21,7 @@ export interface PopupPublicInstance {
 
 interface UseOptions {
   forbidScroll?: boolean
+  useBlur?: boolean
   afterConfirm?: Function
   afterCancel?: Function
   afterShow?: Function
@@ -69,10 +71,6 @@ export const popupProps = {
   maskClosable: {
     type: Boolean,
     default: true
-  },
-  showMask: {
-    type: Boolean,
-    default: true
   }
 }
 
@@ -100,6 +98,8 @@ export function usePopup(
   let isHiding = false
   let visibleTimer: number
 
+  const visibleBlur = useBlur(onBlur)
+
   function doShow(callback: Function) {
     if (isShowing) {
       return false
@@ -109,13 +109,15 @@ export function usePopup(
 
     clearTimeout(visibleTimer)
 
-    useOptions.forbidScroll !== false &&
-      props.showMask &&
+    // 如果禁止滚动
+    if (useOptions.forbidScroll !== false) {
       addClassName(document.body, 'fx-overflow-hidden')
-
-    if (!props.showMask) {
+    } else {
       position.value = 'absolute'
       top.value = getScrollDom().scrollTop + 'px'
+    }
+    if (useOptions.useBlur) {
+      visibleBlur.addEvent()
     }
 
     zIndex.value = getNewZIndex()
@@ -137,8 +139,7 @@ export function usePopup(
     return true
   }
 
-  function show() {
-    const res = {}
+  function show(res: DataObject<any> = {}) {
 
     const isSuccess = doShow(() => {
       emitVisibleState('shown', res)
@@ -191,6 +192,8 @@ export function usePopup(
       lifeName && afterCall(lifeName, res)
       emitVisibleState('hide', res)
     }
+
+    visibleBlur.removeEvent()
   }
 
   function afterCall(lifeName: string, res: unknown) {
@@ -211,6 +214,10 @@ export function usePopup(
         res
       )
     )
+  }
+
+  function onBlur() {
+    customCancel('blur')
   }
 
   function onMaskClick() {
@@ -263,7 +270,7 @@ export function usePopup(
   watch(
     () => props.visible,
     (val: boolean) => {
-      val ? show() : hide()
+      val ? show({visible: true}) : hide({visible: false})
     }
   )
 

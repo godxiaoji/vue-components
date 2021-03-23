@@ -42,14 +42,11 @@ import {
   isString,
   rangeNumber
 } from '@/helpers/util'
-import {
-  addTouchDelegateEvent,
-  removeTouchDelegateEvent
-} from '@/helpers/events'
 import { STATE_TYPES } from '@/hooks/constants'
 import type { StateType } from '../hooks/constants'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { getStretchOffset } from '@/helpers/animation'
+import { useBlur } from '@/hooks/blur'
 
 interface ButtonOptions {
   text: string
@@ -159,6 +156,8 @@ export default defineComponent({
       }
     }
 
+    const swipeBlur = useBlur(hide)
+
     function show(x: number) {
       translateX.value = x
       duration.value = 0.6
@@ -167,7 +166,7 @@ export default defineComponent({
         buttonTranslateXs[k] = 0
       })
 
-      addTouchDelegateEvent(hide)
+      swipeBlur.addEvent()
     }
 
     function hide() {
@@ -178,7 +177,7 @@ export default defineComponent({
         buttonTranslateXs[k] = 0
       })
 
-      removeTouchDelegateEvent(hide)
+      swipeBlur.removeEvent()
     }
 
     function onButtonClick(item: ButtonOptions, index: number) {

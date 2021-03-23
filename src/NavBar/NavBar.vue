@@ -16,6 +16,7 @@
             <template v-if="leftButtons.length > 0">
               <fx-button
                 class="fx-nav-bar_button"
+                transparent
                 :type="item.type || 'default'"
                 :icon="item.icon"
                 v-for="(item, index) in leftButtons"
@@ -29,6 +30,7 @@
                 class="fx-nav-bar_button"
                 type="default"
                 icon="LeftOutlined"
+                transparent
                 v-if="showBack"
                 @click="onBack"
                 >返回</fx-button
@@ -37,6 +39,7 @@
                 class="fx-nav-bar_button"
                 type="default"
                 icon="HomeOutlined"
+                transparent
                 v-if="showHome"
                 @click="onBackHome"
                 >首页</fx-button
@@ -66,6 +69,7 @@
                 :icon="item.icon"
                 v-for="(item, index) in rightButtons"
                 :key="index"
+                transparent
                 @click="onRightIconClick(item, index)"
                 >{{ item.text }}</fx-button
               >
@@ -95,8 +99,7 @@ const validateButtons = (val: any[]) => {
       if (
         !(
           isObject(val[i]) &&
-          isString(val[i].text) &&
-          iconValidator(val[i].icon)
+          (isString(val[i].text) || iconValidator(val[i].icon))
         )
       )
         return false

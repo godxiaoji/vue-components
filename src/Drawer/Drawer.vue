@@ -2,30 +2,34 @@
   <teleport to="body">
     <div
       class="fx-drawer fx-popup"
-      :class="{ visible: visible2 }"
+      :class="{ visible: visible2, 'no--mask': !showMask }"
       :style="popupStyles"
       v-bind="$attrs"
       v-show="isShow"
     >
       <div class="fx-mask" @click="onMaskClick"></div>
       <div
-        class="fx-drawer_inner"
+        class="fx-drawer_inner fx-horizontal-hairline"
         :class="[alignClassName, { 'has--header': hasHeader }]"
         :style="innerStyles"
       >
-        <div v-show="hasHeader" class="fx-drawer_header fx-horizontal-hairline">
-          <div class="fx-drawer_header-inner">
-            <div class="fx-drawer_title">{{ title }}</div>
-            <fx-button
-              v-if="showClose"
-              class="fx-drawer_close"
-              shape="square"
-              icon="CloseOutlined"
-              pattern="borderless"
-              @click="onCloseClick"
-            ></fx-button>
-          </div>
-        </div>
+        <nav-bar
+          v-if="hasHeader"
+          class="fx-drawer_header"
+          :title="title"
+          :left-buttons="showCancel ? [{ text: '取消', type: 'primary' }] : []"
+          :right-buttons="
+            showClose
+              ? [{ text: '关闭', type: 'primary' }]
+              : showConfirm
+              ? [{ text: '完成', type: 'primary' }]
+              : []
+          "
+          :icon-only="false"
+          @left-button-click="onHeaderLeftClick"
+          @right-button-click="onHeaderRightClick"
+        >
+        </nav-bar>
         <div class="fx-drawer_body">
           <slot></slot>
         </div>
@@ -35,8 +39,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRef, PropType } from 'vue'
-import FxButton from '@/Button'
+import { defineComponent, computed, toRef, PropType, watch } from 'vue'
+import NavBar from '@/NavBar'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
@@ -45,7 +49,7 @@ import type { PlacementType } from '../hooks/constants'
 
 export default defineComponent({
   name: 'fx-drawer',
-  components: { FxButton },
+  components: { NavBar },
   props: {
     ...popupProps,
     title: {
@@ -57,7 +61,15 @@ export default defineComponent({
       validator: createEnumsValidator(PLACEMENT_TYPES),
       default: getEnumsValue(PLACEMENT_TYPES)
     },
+    showCancel: {
+      type: Boolean,
+      default: false
+    },
     showClose: {
+      type: Boolean,
+      default: false
+    },
+    showConfirm: {
       type: Boolean,
       default: false
     },
@@ -65,11 +77,19 @@ export default defineComponent({
     enableSafeAreaInsets: {
       type: Boolean,
       default: true
+    },
+    showMask: {
+      type: Boolean,
+      default: true
     }
   },
   emits: popupEmits,
   setup(props, ctx) {
-    const popup = usePopup(props, ctx, {})
+    const popupOptions = {
+      useBlur: false
+    }
+
+    const popup = usePopup(props, ctx, popupOptions)
     const safeAreaInsets = useSafeAreaInsets(
       toRef(props, 'enableSafeAreaInsets')
     )
@@ -78,7 +98,13 @@ export default defineComponent({
       () => 'placement--' + getEnumsValue(PLACEMENT_TYPES, props.placement)
     )
 
-    const hasHeader = computed(() => props.title != null || props.showClose)
+    const hasHeader = computed(
+      () =>
+        props.title != null ||
+        props.showClose ||
+        props.showCancel ||
+        props.showConfirm
+    )
 
     const innerStyles = computed(() => {
       const placement = getEnumsValue(PLACEMENT_TYPES, props.placement)
@@ -103,11 +129,31 @@ export default defineComponent({
       }
     })
 
+    function onHeaderLeftClick() {
+      popup.onCancelClick()
+    }
+
+    function onHeaderRightClick() {
+      if (props.showClose) {
+        popup.onCloseClick()
+      } else if (props.showConfirm) {
+        popup.customConfirm({})
+      }
+    }
+
+    watch(
+      () => props.showMask,
+      val => (popupOptions.useBlur = !val),
+      { immediate: true }
+    )
+
     return {
       ...popup,
       alignClassName,
       hasHeader,
-      innerStyles
+      innerStyles,
+      onHeaderLeftClick,
+      onHeaderRightClick
     }
   }
 })

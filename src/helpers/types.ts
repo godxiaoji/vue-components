@@ -38,3 +38,7 @@ export type EventElement = HTMLElement | Document
 export interface EventCallback {
   (e: Event, $el: HTMLElement): void
 }
+
+export interface MixEventCallback {
+  (res: { type: string } & DataObject<any>): void
+}

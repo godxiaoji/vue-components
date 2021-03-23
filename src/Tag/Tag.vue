@@ -17,18 +17,11 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  PropType,
-  ref
-} from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import Icon from '@/Icon'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
-import { addLongPressEvent } from '@/helpers/events'
 import { SIZE_TYPES, STATE_TYPES, TAG_PATTERN_TYPES } from '@/hooks/constants'
+import { useLongPress } from '@/hooks/long-press'
 import type { SizeType, StateType, TagPatternType } from '../hooks/constants'
 
 export default defineComponent({
@@ -65,7 +58,6 @@ export default defineComponent({
   emits: ['close', 'click', 'long-press'],
   setup(props, { emit }) {
     const root = ref<HTMLElement>()
-    let longPressOff: Function
 
     function onClose() {
       if (!props.disabled) {
@@ -89,15 +81,7 @@ export default defineComponent({
       ]
     })
 
-    onMounted(
-      () =>
-        (longPressOff = addLongPressEvent(
-          root.value as HTMLElement,
-          onLongPress
-        ))
-    )
-
-    onBeforeUnmount(() => longPressOff())
+    useLongPress(root, onLongPress)
 
     return {
       root,

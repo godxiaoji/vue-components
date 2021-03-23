@@ -1,7 +1,14 @@
 <template>
   <button
     class="fx-button"
-    :class="[classNames, { 'has--icon': loading || icon, ghost: !!ghost }]"
+    :class="[
+      classNames,
+      {
+        'has--icon': loading || icon,
+        ghost: !!ghost,
+        transparent: !!transparent
+      }
+    ]"
     :disabled="disabled"
     :type="realFormType"
   >
@@ -85,6 +92,10 @@ export default defineComponent({
       default: null
     },
     ghost: {
+      type: Boolean,
+      default: false
+    },
+    transparent: {
       type: Boolean,
       default: false
     }

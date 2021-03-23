@@ -1,4 +1,4 @@
-import { computed, SetupContext, PropType, ref, nextTick } from 'vue'
+import { computed, SetupContext, PropType, ref, nextTick, watch } from 'vue'
 import { cloneData } from '@/helpers/util'
 import {
   selectorValidator,
@@ -48,6 +48,10 @@ export const popoverProps = {
     type: String as PropType<PlacementType>,
     validator: createEnumsValidator(PLACEMENT_TYPES),
     default: getEnumsValue(PLACEMENT_TYPES)
+  },
+  showMask: {
+    type: Boolean,
+    default: true
   }
 }
 
@@ -58,7 +62,8 @@ export function usePopover(props: UseProps, ctx: SetupContext<any>) {
   const inner = ref<HTMLElement>()
   const isShow = ref(false)
   let pos = cloneData<PopoverPos>(DEFAULT_POS)
-  const popup = usePopup(props, ctx, {
+
+  const popupOptions = {
     afterShow() {
       nextTick(() => {
         updatePos()
@@ -67,8 +72,12 @@ export function usePopover(props: UseProps, ctx: SetupContext<any>) {
     afterHidden() {
       pos = cloneData(DEFAULT_POS)
       isShow.value = false
-    }
-  })
+    },
+    forbidScroll: true,
+    useBlur: false
+  }
+
+  const popup = usePopup(props, ctx, popupOptions)
 
   function updatePos() {
     const $target = querySelector(props.selector)
@@ -165,6 +174,17 @@ export function usePopover(props: UseProps, ctx: SetupContext<any>) {
 
     return styles
   })
+
+  watch(
+    () => props.showMask,
+    val => {
+      popupOptions.forbidScroll = !!val
+      popupOptions.useBlur = !val
+    },
+    {
+      immediate: true
+    }
+  )
 
   return {
     ...popup,

@@ -1,6 +1,6 @@
 import { isMobile } from '@/helpers/device'
 import { objectForEach, isFunction } from '@/helpers/util'
-import type { EventElement, EventCallback } from './types'
+import type { EventElement, EventCallback, MixEventCallback } from './types'
 
 export function getDataset(object: any) {
   const dataset: any = {}
@@ -235,37 +235,43 @@ export const touchEvent = {
   }
 }
 
-interface CallbackFn {
-  (res: CallbackRes): void
-}
+// /**
+//  * 添加Touch委托事件，主要是挟持页面点击，取消一些弹出行为
+//  * @param callback 回调函数
+//  * @param $el 被委托元素
+//  */
+// export function addTouchDelegateEvent(
+//   callback: EventCallback,
+//   $el: EventElement = document
+// ) {
+//   addEvent(touchstart, callback, $el)
+// }
 
-interface CallbackRes {
-  type: string
-}
+// /**
+//  * 删除Touch委托事件
+//  * @param callback 回调函数
+//  * @param $el 被委托元素
+//  */
+// export function removeTouchDelegateEvent(
+//   callback: EventCallback,
+//   $el: EventElement = document
+// ) {
+//   removeEvent(touchstart, callback, $el)
+// }
 
-/**
- * 添加Touch委托事件，主要是挟持页面点击，取消一些弹出行为
- * @param callback 回调函数
- * @param $el 被委托元素
- */
-export function addTouchDelegateEvent(
-  callback: EventCallback,
-  $el: EventElement = document
-) {
-  addEvent(touchstart, callback, $el)
-}
+// export function addBlurEvent(callback: EventCallback) {
+//   addEvent('click', callback, document)
 
-/**
- * 删除Touch委托事件
- * @param callback 回调函数
- * @param $el 被委托元素
- */
-export function removeTouchDelegateEvent(
-  callback: EventCallback,
-  $el: EventElement = document
-) {
-  removeEvent(touchstart, callback, $el)
-}
+//   let isOff = false
+
+//   return function removeBlurEvent() {
+//     if (!isOff) {
+//       isOff = true
+
+//       removeEvent('click', callback, document)
+//     }
+//   }
+// }
 
 interface LongPressCoords {
   startX: number
@@ -278,7 +284,7 @@ interface LongPressCoords {
  * @param {Element} $el 绑定的元素
  * @param {Function} callback 回调函数
  */
-export function addLongPressEvent($el: HTMLElement, callback: CallbackFn) {
+export function addLongPressEvent($el: HTMLElement, callback: MixEventCallback) {
   let coords: LongPressCoords | null
 
   const object = {

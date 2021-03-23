@@ -13,12 +13,7 @@ export const STATE_TYPES: StateType[] = [
   'danger',
   'success'
 ]
-export type StateType =
-  | 'default'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'danger'
+export type StateType = 'default' | 'primary' | 'success' | 'warning' | 'danger'
 
 export const SIZE_TYPES: SizeType[] = ['large', 'middle', 'small']
 export type SizeType = 'large' | 'middle' | 'small'

@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/godxiaoji/vfox/compare/v1.8.5...v1.9.0) (2021-03-23)
+
+
+### Features
+
+* add NumberKeyboard ([6624761](https://github.com/godxiaoji/vfox/commit/66247619876e092021b05bfa632b126453606858))
+
 ## [1.8.5](https://github.com/godxiaoji/vfox/compare/v1.8.4...v1.8.5) (2021-03-17)
 
 

@@ -1,8 +1,0 @@
-.fx-sticky {
-  --sticky-background-color: transparent;
-  background-color: var(--sticky-background-color);
-}
-
-.fx-sticky_content {
-  background-color: var(--sticky-background-color);
-}

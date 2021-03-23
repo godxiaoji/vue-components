@@ -1,2 +1,2 @@
-import '../../style/hairline.css'
-import '../index.css'
+import '../../style/hairline.scss'
+import '../index.scss'

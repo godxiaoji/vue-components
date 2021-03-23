@@ -1,3 +1,3 @@
-import '../../Icon/index.scss'
-import '../../Badge/index.scss'
-import '../index.scss'
+import '../../Icon/index.css'
+import '../../Badge/index.css'
+import '../index.css'

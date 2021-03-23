@@ -8,19 +8,16 @@ const { resolve } = require('path')
 const spinner = ora(`${chalk.blue('Building...')}`).start()
 
 const build = () => {
-  cp.exec(
-    `gulp cts --gulpfile ${resolve(__dirname, './gulpfile.js')}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        spinner.warn(chalk.red(error))
-        return
-      }
-      spinner.info(chalk.blue(stdout))
-
-      buildJSON(0)
-      // console.error(`stderr: ${stderr}`)
+  cp.exec('gulp cts --gulpfile build/gulpfile.js', (error, stdout, stderr) => {
+    if (error) {
+      spinner.warn(chalk.red(error))
+      return
     }
-  )
+    spinner.info(chalk.blue(stdout))
+
+    buildJSON(0)
+    // console.error(`stderr: ${stderr}`)
+  })
 
   //   const c1 = cp.spawn('gulp', ['cts', '--gulpfile', 'build/gulpfile.js'])
   //   c1.stdout.on('data', function(data) {

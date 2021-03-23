@@ -1,0 +1,64 @@
+.fx-slider {
+  --slider-track-color: #d9d9d9;
+  --slider-track-active-color: #1890ff;
+  position: relative;
+  height: 32px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.fx-slider_inner {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 13px 12px;
+}
+
+.fx-slider_box {
+  position: relative;
+  height: 2px;
+  width: 100%;
+  background: var(--slider-track-color);
+  border-radius: 2px;
+}
+
+.fx-slider_track {
+  width: 100%;
+  height: 100%;
+  background: var(--slider-track-active-color);
+  border-radius: 2px;
+}
+
+.fx-slider_thumb {
+  position: absolute;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0;
+  font-size: 12px;
+  transform: translate3d(-50%, -13px, 0);
+  color: var(--slider-track-active-color);
+}
+
+.fx-slider_range {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.fx-slider.disabled {
+  opacity: 0.2;
+}

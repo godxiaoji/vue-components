@@ -1,3 +1,3 @@
-import '../../style/hairline.scss'
-import '../../Group/index.scss'
-import '../../IndexView/index.scss'
+import '../../style/hairline.css'
+import '../../Group/index.css'
+import '../../IndexView/index.css'

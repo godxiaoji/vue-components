@@ -1,2 +1,2 @@
-import '../../Empty/index.scss'
-import '../index.scss'
+import '../../Empty/index.css'
+import '../index.css'

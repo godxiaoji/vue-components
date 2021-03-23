@@ -1,0 +1,88 @@
+.fx-rate {
+  --rate-size: 24px;
+  --rate-color: #d9d9d9;
+  --rate-active-color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.fx-rate_item {
+  width: var(--rate-size);
+  height: var(--rate-size);
+  font-size: var(--rate-size);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.fx-rate_item:last-child {
+  margin-right: 0;
+}
+
+.fx-rate_item.active .fx-rate_icon {
+  display: none;
+}
+
+.fx-rate_item.active .fx-rate_active-icon {
+  display: block;
+}
+
+.fx-rate_item.active.half .fx-rate_icon {
+  width: 50%;
+  margin-left: 50%;
+  display: flex;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.fx-rate_item.active.half .fx-rate_active-icon {
+  display: block;
+  width: 50%;
+  overflow: hidden;
+}
+
+.fx-rate .fx-icon {
+  --size: var(--rate-size);
+  --color: var(--rate-color);
+  flex-shrink: 0;
+  display: block;
+}
+
+.fx-rate_icon {
+  width: 100%;
+  height: 100%;
+}
+
+.fx-rate_active-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.fx-rate_active-icon .fx-icon {
+  --color: var(--rate-active-color);
+}
+
+.fx-rate_half {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.fx-rate.readonly .fx-rate_item {
+  cursor: default;
+}
+
+.fx-rate.disabled {
+  opacity: 0.2;
+}
+
+.fx-rate.disabled .fx-rate_item {
+  cursor: not-allowed;
+}

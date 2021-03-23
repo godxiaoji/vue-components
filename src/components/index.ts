@@ -30,7 +30,6 @@ import CalendarView from '@/CalendarView'
 import CalendarPopup from '@/CalendarPopup'
 import Calendar from '@/Calendar'
 import SearchBar from '@/SearchBar'
-import NumberKeyboard from '@/NumberKeyboard'
 
 /* Feedback */
 import Toast from '@/Toast'
@@ -163,6 +162,5 @@ export {
   SideTab,
   Progress,
   Tag,
-  Fixed,
-  NumberKeyboard
+  Fixed
 }

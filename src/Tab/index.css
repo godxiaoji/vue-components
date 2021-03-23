@@ -1,0 +1,132 @@
+.fx-tab {
+  --tab-active-color: #1890ff;
+  --tab-color: #595959;
+  background-color: #fff;
+}
+
+.fx-tab_list {
+  padding: 0 4px;
+  margin: 0;
+  width: 100%;
+  height: 36px;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.fx-tab_item {
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 12px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.fx-tab_item .fx-icon {
+  --size: 20px;
+  --color: var(--tab-color);
+  margin-right: 4px;
+}
+
+.fx-tab_item:active {
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.fx-tab_item-inner {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--tab-color);
+}
+
+.fx-tab_item-inner::before {
+  content: none;
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 16px;
+  height: 16px;
+  z-index: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(24, 144, 255, 0.3) 13.5%, rgba(24, 144, 255, 0.05) 86.5%);
+}
+
+.fx-tab_item-text {
+  display: block;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.fx-tab_item-sub-text {
+  display: block;
+  height: 17px;
+  line-height: 17px;
+  padding: 0 5px;
+  border-radius: 2px;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.fx-tab_item.active .fx-icon {
+  --color: var(--tab-active-color);
+}
+
+.fx-tab_item.active .fx-tab_item-inner {
+  font-weight: 700;
+  color: var(--tab-active-color);
+}
+
+.fx-tab_item.active .fx-tab_item-inner::before {
+  content: '';
+}
+
+.fx-tab_item.active .fx-tab_item-sub-text {
+  background-color: var(--tab-active-color);
+  color: #fff;
+}
+
+.fx-tab.no--scroll:not(.vertical) .fx-tab_list {
+  display: flex;
+  padding: 0;
+}
+
+.fx-tab.no--scroll:not(.vertical) .fx-tab_item {
+  flex: 1;
+  padding: 0;
+}
+
+.fx-tab.no--scroll:not(.vertical) .fx-tab_item-text {
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fx-tab.has--sub .fx-tab_list {
+  height: 48px;
+}
+
+.fx-tab.has--sub .fx-tab_item::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  height: 20px;
+  margin-top: -10px;
+}
+
+.fx-tab.has--sub .fx-tab_item-inner::before {
+  content: none;
+}

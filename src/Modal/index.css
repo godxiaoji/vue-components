@@ -1,0 +1,46 @@
+.fx-modal_box {
+  width: 400px;
+  box-sizing: border-box;
+  transform: scale(0);
+  transition: all 0.2s;
+  opacity: 0;
+  position: relative;
+}
+
+.fx-modal_box-inner {
+  min-height: 100px;
+  border-radius: 4px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.fx-modal.visible .fx-modal_box {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fx-modal_close {
+  position: absolute;
+  left: 50%;
+  bottom: -50px;
+  margin: 0 0 0 -16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.fx-modal_close .fx-icon {
+  --size: 32px;
+  --color: #262626;
+}
+
+@media screen and (max-width: 575px) {
+  .fx-modal_box {
+    width: calc(100% - 96px);
+  }
+}

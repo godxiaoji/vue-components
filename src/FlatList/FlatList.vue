@@ -66,7 +66,7 @@ import {
   isObject,
   rangeInteger
 } from '../helpers/util'
-import ScrollView from '../ScrollView/ScrollView.vue'
+import ScrollView from '../ScrollView'
 import Exception from '../helpers/exception'
 import { getRelativeOffset, resizeDetector } from '../helpers/dom'
 

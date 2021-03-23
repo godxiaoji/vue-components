@@ -40,9 +40,7 @@
   }
 
   &.no--mask {
-    &.visible {
-      height: 0;
-    }
+    height: 0;
 
     > .fx-mask {
       display: none;

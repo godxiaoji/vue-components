@@ -6,6 +6,7 @@
     :visible="visible"
     @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
+    @confirm="onConfirm"
     @update:visible="onUpdateVisible"
     ref="popup"
   >
@@ -163,20 +164,16 @@ export default {
           this.formValue = item.values
           this.formLabel = item.labels
 
-          this.select()
-
           this.$emit('update:modelValue', this.hookFormValue())
           this.$emit('change', this.getDetail())
           this.afterChange(this.getDetail())
-        } else {
-          this.select()
         }
 
-        this.onUpdateVisible(false)
+        this.customConfirm({})
       }
     },
 
-    select() {
+    onConfirm() {
       const selectDetail = this.getDetail()
       this.$emit('select', selectDetail)
       this.afterSelect(selectDetail)

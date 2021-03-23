@@ -9,6 +9,7 @@
   margin: 0;
   width: 100%;
   white-space: nowrap;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   position: relative;
   overflow-x: hidden;
@@ -21,14 +22,22 @@
 
 .fx-side-tab_item {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
   position: relative;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   color: var(--side-tab-color);
   min-height: 40px;
@@ -56,9 +65,13 @@
 }
 
 .fx-side-tab_item-inner {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   vertical-align: middle;
   position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 

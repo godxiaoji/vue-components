@@ -1,5 +1,6 @@
 .fx-collapse-item_body {
   overflow: hidden;
+  -webkit-transition: height 0.2s;
   transition: height 0.2s;
   will-change: height;
 }
@@ -23,9 +24,13 @@
 }
 
 .fx-collapse-item_header .fx-cell_link-icon {
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
 }
 
 .fx-collapse-item.active .fx-collapse-item_header .fx-cell_link-icon {
+  -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }

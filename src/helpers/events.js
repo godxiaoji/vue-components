@@ -304,6 +304,20 @@ export const touchEvent = {
   }
 }
 
+export function addBlurEvent(callback) {
+  addEvent('click', callback, document)
+
+  let isOff = false
+
+  return function removeBlurEvent() {
+    if (!isOff) {
+      isOff = true
+
+      removeEvent('click', callback, document)
+    }
+  }
+}
+
 /**
  * 绑定长按事件
  * @param {Element} $el 绑定的元素

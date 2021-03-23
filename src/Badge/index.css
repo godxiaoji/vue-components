@@ -11,15 +11,21 @@
   height: 15px;
   line-height: 15px;
   min-width: 15px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 0 4px;
   border-radius: 7.5px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-size: 11px;
   font-weight: 400;
   color: var(--badge-color);
   background-color: var(--badge-background-color);
+  -webkit-transform: scale(0);
   transform: scale(0);
 }
 
@@ -30,17 +36,25 @@
   height: 10px;
   width: 10px;
   border-radius: 5px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   color: var(--badge-color);
   background-color: var(--badge-background-color);
   border: 1px solid var(--border-color);
+  -webkit-transform: scale(0);
   transform: scale(0);
 }
 
 .fx-badge.animated .fx-badge_num {
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
 }
 
 .fx-badge.animated .fx-badge_dot {
+  -webkit-transition: -webkit-transform 0.1s;
+  transition: -webkit-transform 0.1s;
   transition: transform 0.1s;
+  transition: transform 0.1s, -webkit-transform 0.1s;
 }

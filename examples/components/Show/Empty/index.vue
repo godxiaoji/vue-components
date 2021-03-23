@@ -7,6 +7,8 @@
       <fx-empty description="出错了" type="error"></fx-empty>
       <fx-empty description="网络错误" type="network"></fx-empty>
       <fx-empty description="搜索不到" type="search"></fx-empty>
+      <fx-empty description="服务器出错" type="service"></fx-empty>
+      <fx-empty description="权限不足" type="permission"></fx-empty>
     </fx-group>
     <fx-group title="Slot default">
       <fx-empty description="网络错误" type="network">

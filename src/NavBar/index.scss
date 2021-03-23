@@ -2,6 +2,7 @@
 
 .fx-nav-bar {
   --nav-bar-height: 52px;
+  --nav-bar-background: #fff;
 
   position: relative;
   height: var(--nav-bar-height);
@@ -11,6 +12,10 @@
   &_inner {
     position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: var(--nav-bar-height);
+    background: var(--nav-bar-background);
 
     &.fixed {
       position: fixed;
@@ -25,10 +30,10 @@
   }
 
   &_layout {
+    position: relative;
     display: flex;
     align-items: center;
-    background: #ffffff;
-    height: var(--nav-bar-height);
+    flex-grow: 1;
   }
 
   &_title {
@@ -36,9 +41,9 @@
     margin: 0 90px;
     font-weight: 500;
     font-size: 17px;
-    color: $black-color;
-    height: var(--nav-bar-height);
-    line-height: var(--nav-bar-height);
+    color: $title-color;
+    height: 24px;
+    line-height: 24px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -51,7 +56,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: var(--nav-bar-height);
+    height: 100%;
     display: flex;
     align-items: center;
   }
@@ -66,7 +71,7 @@
     max-height: 64px;
   }
 
-  &_button {
+  &_button.fx-button {
     border-radius: 0;
     height: 100%;
   }

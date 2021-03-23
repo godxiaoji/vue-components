@@ -3,11 +3,31 @@
 .fx-action-sheet {
   --action-sheet-highlight-color: #{$danger-color};
 
+  &.fx-drawer .fx-nav-bar {
+    --nav-bar-height: 56px;
+
+    &_title {
+      font-size: 14px;
+      font-weight: 400;
+      color: $font2-color;
+    }
+  }
+
+  .fx-drawer {
+    &_body {
+      background-color: $background-color;
+    }
+  }
+
   &_list {
     list-style: none;
     padding: 0;
     margin: 0;
     background-color: #fff;
+
+    + .fx-action-sheet_list {
+      margin-top: 8px;
+    }
   }
 
   &_item {
@@ -71,31 +91,5 @@
       cursor: not-allowed;
       opacity: 0.2;
     }
-  }
-
-  &_header {
-    &::after {
-      content: '';
-    }
-  }
-
-  &_title {
-    padding: 8px 16px;
-    height: 56px;
-    overflow: hidden;
-    line-height: 20px;
-    font-size: 14px;
-    color: $font2-color;
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  &_footer {
-    background-color: $background-color;
-    padding-top: 8px;
   }
 }

@@ -2,7 +2,11 @@
   --rate-size: 24px;
   --rate-color: #d9d9d9;
   --rate-active-color: #ff4d4f;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   height: 32px;
 }
@@ -31,7 +35,11 @@
 .fx-rate_item.active.half .fx-rate_icon {
   width: 50%;
   margin-left: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
   overflow: hidden;
 }
@@ -45,6 +53,7 @@
 .fx-rate .fx-icon {
   --size: var(--rate-size);
   --color: var(--rate-color);
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   display: block;
 }

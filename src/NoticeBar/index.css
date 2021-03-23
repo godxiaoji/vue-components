@@ -2,15 +2,22 @@
   --notice-bar-color: #db8f02;
   --notice-bar-background-color: #fffae0;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 10px 0 10px 16px;
   min-height: 40px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background-color: var(--notice-bar-background-color);
   color: var(--notice-bar-color);
   line-height: 20px;
   font-size: 14px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
@@ -30,10 +37,15 @@
 }
 
 .fx-notice-bar_left-icon, .fx-notice-bar_right-icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   height: 100%;
   margin-right: 8px;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
@@ -48,6 +60,8 @@
 }
 
 .fx-notice-bar_content {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
   overflow: hidden;
   margin-right: 16px;
@@ -63,5 +77,6 @@
 .fx-notice-bar_content-inner.marquee {
   position: absolute;
   white-space: nowrap;
+  -webkit-transition-timing-function: linear;
   transition-timing-function: linear;
 }

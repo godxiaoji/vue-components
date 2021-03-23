@@ -1,15 +1,30 @@
 .fx-drawer_inner {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   border: none;
   border-radius: 0;
+  -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
   background-color: #fff;
   min-height: 100px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.fx-drawer_inner .fx-nav-bar {
+  --nav-bar-height: 48px;
+  --nav-bar-background: transparent;
+}
+
+.fx-drawer_inner .fx-nav-bar_title {
+  color: #595959;
+  margin: 0 48px;
 }
 
 .fx-drawer_inner.placement--left, .fx-drawer_inner.placement--right {
@@ -19,69 +34,55 @@
   width: auto;
   height: 100%;
   top: 0;
+  -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
+}
+
+.fx-drawer_inner.placement--left .fx-nav-bar_title, .fx-drawer_inner.placement--right .fx-nav-bar_title {
+  margin: 0 48px 0 12px;
 }
 
 .fx-drawer_inner.placement--right {
   left: auto;
   right: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 
 .fx-drawer_inner.placement--top {
   top: 0;
   bottom: auto;
+  -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
 
-.fx-drawer_header {
-  flex-shrink: 0;
-  flex-direction: column;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.fx-drawer_header::after {
+.fx-drawer_inner.placement--top::after {
   content: '';
+  position: absolute;
+  bottom: 0;
 }
 
-.fx-drawer_header-inner {
-  height: 48px;
-  box-sizing: border-box;
-  display: flex;
-  position: relative;
-}
-
-.fx-drawer_title {
-  flex: 1;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 48px;
-  height: 48px;
-  color: #262626;
-  padding: 0 12px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  word-break: break-all;
-}
-
-.fx-drawer_inner.placement--top .fx-drawer_title,
-.fx-drawer_inner.placement--bottom .fx-drawer_title {
-  text-align: center;
+.fx-drawer_inner.placement--bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
 }
 
 .fx-drawer_close.type--default {
   position: absolute;
   top: 0;
   right: 0;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   border-radius: 0;
   --button-font-color: #bfbfbf;
 }
 
 .fx-drawer_body {
+  -ms-flex-negative: 1;
   flex-shrink: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
   height: 100%;
 }
@@ -91,5 +92,6 @@
 }
 
 .fx-drawer.visible .fx-drawer_inner {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }

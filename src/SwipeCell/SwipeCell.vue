@@ -41,7 +41,7 @@ import {
   isString,
   rangeNumber
 } from '../helpers/util'
-import { addEvent, removeEvent, touchEvent } from '../helpers/events'
+import { addBlurEvent, touchEvent } from '../helpers/events'
 
 const {
   touchstart,
@@ -106,6 +106,11 @@ export default {
   },
   beforeDestroy() {
     removeListeners(this.$el, this)
+
+    if (this.removeBlurEvent) {
+      this.removeBlurEvent()
+      delete this.removeBlurEvent
+    }
   },
   methods: {
     noop() {},
@@ -206,7 +211,7 @@ export default {
         return 0
       })
 
-      addEvent(touchstart, this.hide, document)
+      this.removeBlurEvent = addBlurEvent(this.hide)
     },
     hide() {
       this.translateX = 0
@@ -215,7 +220,10 @@ export default {
         return 0
       })
 
-      removeEvent(touchstart, this.hide, document)
+      if (this.removeBlurEvent) {
+        this.removeBlurEvent()
+        delete this.removeBlurEvent
+      }
     },
     onButtonClick(item, index) {
       this.$emit('button-click', {

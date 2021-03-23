@@ -3,10 +3,19 @@
   --button-border-color: transparent;
   --button-icon-size: 20px;
   --button-size: 48px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   border-radius: 4px;
@@ -21,10 +30,13 @@
   font-weight: 500;
   color: var(--button-font-color);
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   position: relative;
   overflow: hidden;
   -webkit-appearance: none;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
 
@@ -40,6 +52,7 @@
   top: 50%;
   height: 12px;
   width: 1px;
+  -webkit-transform: translate3d(0, -50%, 0) scaleX(1);
   transform: translate3d(0, -50%, 0) scaleX(1);
   background-color: var(--button-border-color);
 }
@@ -51,6 +64,7 @@
   top: 0;
   right: 0;
   bottom: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border: 0 solid var(--button-border-color);
 }
@@ -64,6 +78,7 @@
 }
 
 .fx-button .fx-icon {
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   --color: var(--button-font-color);
   --size: var(--button-icon-size);
@@ -78,7 +93,10 @@
 }
 
 .fx-button.shape--square, .fx-button.shape--circle {
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
   flex-grow: 0;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
   --button-icon-size: 24px;
 }
@@ -160,6 +178,10 @@
   --button-border-color: #d9d9d9;
 }
 
+.fx-button.type--default.transparent {
+  background-color: transparent;
+}
+
 .fx-button.type--default.ghost {
   background-color: transparent;
   --button-font-color: #fff;
@@ -170,18 +192,19 @@
   background-color: #1890ff;
 }
 
-.fx-button.type--primary.pattern--solid, .fx-button.type--primary.pattern--dashed, .fx-button.type--primary.pattern--borderless, .fx-button.type--primary.ghost {
+.fx-button.type--primary.pattern--solid, .fx-button.type--primary.pattern--dashed, .fx-button.type--primary.pattern--borderless, .fx-button.type--primary.ghost, .fx-button.type--primary.transparent {
   background-color: #fff;
   --button-font-color: #1890ff;
   --button-border-color: #40a9ff;
 }
 
 .fx-button.type--primary.pattern--gradient {
+  background-image: -webkit-gradient(linear, left top, right top, from(#40a9ff), to(#1890ff));
   background-image: linear-gradient(90deg, #40a9ff 0%, #1890ff 100%);
   --button-border-color: transparent;
 }
 
-.fx-button.type--primary.ghost {
+.fx-button.type--primary.ghost, .fx-button.type--primary.transparent {
   background-color: transparent;
 }
 
@@ -189,18 +212,19 @@
   background-color: #52c41a;
 }
 
-.fx-button.type--success.pattern--solid, .fx-button.type--success.pattern--dashed, .fx-button.type--success.pattern--borderless, .fx-button.type--success.ghost {
+.fx-button.type--success.pattern--solid, .fx-button.type--success.pattern--dashed, .fx-button.type--success.pattern--borderless, .fx-button.type--success.ghost, .fx-button.type--success.transparent {
   background-color: #fff;
   --button-font-color: #52c41a;
   --button-border-color: #73d13d;
 }
 
 .fx-button.type--success.pattern--gradient {
+  background-image: -webkit-gradient(linear, left top, right top, from(#73d13d), to(#52c41a));
   background-image: linear-gradient(90deg, #73d13d 0%, #52c41a 100%);
   --button-border-color: transparent;
 }
 
-.fx-button.type--success.ghost {
+.fx-button.type--success.ghost, .fx-button.type--success.transparent {
   background-color: transparent;
 }
 
@@ -208,18 +232,19 @@
   background-color: #faad14;
 }
 
-.fx-button.type--warning.pattern--solid, .fx-button.type--warning.pattern--dashed, .fx-button.type--warning.pattern--borderless, .fx-button.type--warning.ghost {
+.fx-button.type--warning.pattern--solid, .fx-button.type--warning.pattern--dashed, .fx-button.type--warning.pattern--borderless, .fx-button.type--warning.ghost, .fx-button.type--warning.transparent {
   background-color: #fff;
   --button-font-color: #faad14;
   --button-border-color: #ffc53d;
 }
 
 .fx-button.type--warning.pattern--gradient {
+  background-image: -webkit-gradient(linear, left top, right top, from(#ffc53d), to(#faad14));
   background-image: linear-gradient(90deg, #ffc53d 0%, #faad14 100%);
   --button-border-color: transparent;
 }
 
-.fx-button.type--warning.ghost {
+.fx-button.type--warning.ghost, .fx-button.type--warning.transparent {
   background-color: transparent;
 }
 
@@ -227,29 +252,32 @@
   background-color: #ff4d4f;
 }
 
-.fx-button.type--danger.pattern--solid, .fx-button.type--danger.pattern--dashed, .fx-button.type--danger.pattern--borderless, .fx-button.type--danger.ghost {
+.fx-button.type--danger.pattern--solid, .fx-button.type--danger.pattern--dashed, .fx-button.type--danger.pattern--borderless, .fx-button.type--danger.ghost, .fx-button.type--danger.transparent {
   background-color: #fff;
   --button-font-color: #ff4d4f;
   --button-border-color: #ff7875;
 }
 
 .fx-button.type--danger.pattern--gradient {
+  background-image: -webkit-gradient(linear, left top, right top, from(#ff7875), to(#ff4d4f));
   background-image: linear-gradient(90deg, #ff7875 0%, #ff4d4f 100%);
   --button-border-color: transparent;
 }
 
-.fx-button.type--danger.ghost {
+.fx-button.type--danger.ghost, .fx-button.type--danger.transparent {
   background-color: transparent;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
   .fx-button::before {
+    -webkit-transform: translate3d(0, -50%, 0) scaleX(0.5);
     transform: translate3d(0, -50%, 0) scaleX(0.5);
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 3) {
   .fx-button::before {
+    -webkit-transform: translate3d(0, -50%, 0) scaleX(0.33333);
     transform: translate3d(0, -50%, 0) scaleX(0.33333);
   }
 }

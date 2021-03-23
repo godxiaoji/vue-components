@@ -10,12 +10,13 @@
           <fx-button-group
             v-else-if="leftButtons.length > 0 || showBack || showHome"
             class="fx-nav-bar_button-group"
-            :shape="buttonShape"
+            :shape="iconOnly ? 'square' : 'rectangle'"
             pattern="borderless"
           >
             <template v-if="leftButtons.length > 0">
               <fx-button
                 class="fx-nav-bar_button"
+                transparent
                 :type="item.type || 'default'"
                 :icon="item.icon"
                 v-for="(item, index) in leftButtons"
@@ -29,6 +30,7 @@
                 class="fx-nav-bar_button"
                 type="default"
                 icon="LeftOutlined"
+                transparent
                 v-if="showBack"
                 @click="onBack"
                 >返回</fx-button
@@ -37,6 +39,7 @@
                 class="fx-nav-bar_button"
                 type="default"
                 icon="HomeOutlined"
+                transparent
                 v-if="showHome"
                 @click="onBackHome"
                 >首页</fx-button
@@ -56,7 +59,7 @@
           <template v-else>
             <fx-button-group
               class="fx-nav-bar_button-group"
-              :shape="buttonShape"
+              :shape="iconOnly ? 'square' : 'rectangle'"
               pattern="borderless"
               v-if="rightButtons.length > 0"
             >
@@ -66,6 +69,7 @@
                 :icon="item.icon"
                 v-for="(item, index) in rightButtons"
                 :key="index"
+                transparent
                 @click="onRightIconClick(item, index)"
                 >{{ item.text }}</fx-button
               >
@@ -80,25 +84,24 @@
 <script>
 import FxButton from '../Button'
 import FxButtonGroup from '../ButtonGroup'
-import { isArray, isString } from '../helpers/util'
+import { isArray, isObject, isString } from '../helpers/util'
 import { iconValidator } from '../helpers/validator'
 
 function validateButtons(val) {
   if (isArray(val)) {
-    if (val.length === 0) {
-      return true
-    }
-
     for (let i = 0; i < val.length; i++) {
-      if (!(isString(val[i].text) && iconValidator(val[i].icon))) {
+      if (
+        !(
+          isObject(val[i]) &&
+          (isString(val[i].text) || iconValidator(val[i].icon))
+        )
+      )
         return false
-      }
     }
-
     return true
+  } else {
+    return false
   }
-
-  return false
 }
 
 export default {
@@ -144,11 +147,6 @@ export default {
     iconOnly: {
       type: Boolean,
       default: true
-    }
-  },
-  computed: {
-    buttonShape() {
-      return this.iconOnly ? 'square' : 'rectangle'
     }
   },
   methods: {

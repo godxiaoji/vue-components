@@ -1,4 +1,6 @@
 .fx-scroll-tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   overflow-y: auto;
   position: relative;
@@ -8,10 +10,14 @@
 .fx-scroll-tab_sidebar {
   width: 80px;
   height: 100%;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
   flex-grow: 0;
   background-color: #f5f5f5;
 }
 
 .fx-scroll-tab_body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
 }

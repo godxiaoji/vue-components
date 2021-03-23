@@ -1,4 +1,4 @@
-import Icon from '../../Icon/Icon.vue'
+import Icon from '../../Icon'
 import formMixin from '../form-mixin'
 import multiSelectorPropsMixin from './props-mixin'
 import { cloneData, isSameArray, inArray, isEmpty } from '../../helpers/util'

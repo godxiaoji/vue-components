@@ -43,6 +43,10 @@ export default {
     },
     placement: {
       validator: createEnumsValidator('placement')
+    },
+    showMask: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -106,6 +110,16 @@ export default {
       }
 
       return styles
+    }
+  },
+
+  watch: {
+    showMask: {
+      immediate: true,
+      handler(val) {
+        this.forbidScroll = !!val
+        this.useBlur = !val
+      }
     }
   },
 

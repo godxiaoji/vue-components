@@ -9,10 +9,15 @@
   height: var(--input-height);
   width: 100%;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   border: 1px solid var(--input-border-color);
   border-radius: 4px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0 16px;
   font-size: var(--input-font-size);
@@ -33,7 +38,11 @@
 }
 
 .fx-input_prepend, .fx-input_append {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 0 8px 0 0;
   color: var(--input-secondary-color);
@@ -48,6 +57,8 @@
 }
 
 .fx-input_input {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   display: block;
   overflow: hidden;
@@ -62,11 +73,17 @@
   cursor: pointer;
   color: #262626;
   background: none;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-shadow: none;
   box-shadow: none;
   resize: none;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.fx-input_input:-moz-read-only {
+  cursor: auto;
 }
 
 .fx-input_input:read-only {
@@ -87,6 +104,8 @@
   opacity: 1;
   cursor: not-allowed;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 

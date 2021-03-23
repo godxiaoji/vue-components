@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import StickyViewItem from '../Sticky/StickyViewItem.vue'
+import StickyViewItem from '../StickyViewItem'
 
 export default {
   name: 'fx-scroll-tab-item',

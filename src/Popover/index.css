@@ -2,20 +2,30 @@
   position: absolute;
   width: 10px;
   height: 10px;
+  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   background-color: #fff;
   opacity: 0;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
   z-index: 0;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .fx-popover_inner {
   position: absolute;
   border-radius: 4px;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   opacity: 0;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
 
@@ -27,6 +37,7 @@
   background-color: #fff;
   border-radius: 4px;
   color: #262626;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
   overflow: hidden;
 }

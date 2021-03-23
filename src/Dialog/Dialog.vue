@@ -6,6 +6,7 @@
     :mask-closable="maskClosable"
     @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
+    @confirm="onConfirm"
     @update:visible="onUpdateVisible"
     ref="popup"
   >
@@ -78,10 +79,7 @@ export default {
   },
   methods: {
     onConfirmClick() {
-      this.$emit('confirm', {})
-      this.afterConfirm({})
-
-      this.onUpdateVisible(false)
+      this.customConfirm({})
     }
   }
 }

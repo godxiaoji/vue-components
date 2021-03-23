@@ -9,11 +9,17 @@
   margin: 0;
   padding: 0;
   position: relative;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
 
 .fx-flat-list_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   left: 0;
   top: 0;
@@ -21,6 +27,8 @@
 
 .fx-flat-list_item-inner {
   height: 100%;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
@@ -34,24 +42,38 @@
 }
 
 .fx-flat-list.horizontal .fx-flat-list_list {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   height: 100%;
 }
 
 .fx-flat-list.horizontal .fx-flat-list_item {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
   height: 100%;
   vertical-align: top;
 }
 
 .fx-flat-list_indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
   font-size: 14px;
   color: #595959;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   height: 48px;
 }

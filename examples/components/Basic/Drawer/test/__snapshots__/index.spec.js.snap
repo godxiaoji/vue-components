@@ -3,13 +3,8 @@
 exports[`Drawer should render prop placement="left" correctly 1`] = `
 <div class="fx-drawer fx-popup" style="z-index: 2000; display: none;">
   <div class="fx-mask"></div>
-  <div class="fx-drawer_inner placement--left" style="padding: 0px 0px 0px 0px;">
-    <div class="fx-drawer_header fx-horizontal-hairline" style="display: none;">
-      <div class="fx-drawer_header-inner">
-        <div class="fx-drawer_title"></div>
-        <!---->
-      </div>
-    </div>
+  <div class="fx-drawer_inner fx-horizontal-hairline placement--left" style="padding: 0px 0px 0px 0px;">
+    <!---->
     <div class="fx-drawer_body"></div>
   </div>
 </div>
@@ -18,13 +13,8 @@ exports[`Drawer should render prop placement="left" correctly 1`] = `
 exports[`Drawer should render prop showClose=true correctly 1`] = `
 <div class="fx-drawer fx-popup" style="z-index: 2000; display: none;">
   <div class="fx-mask"></div>
-  <div class="fx-drawer_inner placement--bottom has--header" style="padding: 0px 0px 0px 0px;">
-    <div class="fx-drawer_header fx-horizontal-hairline">
-      <div class="fx-drawer_header-inner">
-        <div class="fx-drawer_title"></div>
-        <fx-button-stub pattern="borderless" shape="square" icon="CloseOutlined" class="fx-drawer_close"></fx-button-stub>
-      </div>
-    </div>
+  <div class="fx-drawer_inner fx-horizontal-hairline placement--bottom has--header" style="padding: 0px 0px 0px 0px;">
+    <nav-bar-stub leftbuttons="" rightbuttons="[object Object]" class="fx-drawer_header"></nav-bar-stub>
     <div class="fx-drawer_body"></div>
   </div>
 </div>
@@ -33,13 +23,8 @@ exports[`Drawer should render prop showClose=true correctly 1`] = `
 exports[`Drawer should render prop title="Drawer" correctly 1`] = `
 <div class="fx-drawer fx-popup" style="z-index: 2000; display: none;">
   <div class="fx-mask"></div>
-  <div class="fx-drawer_inner placement--bottom has--header" style="padding: 0px 0px 0px 0px;">
-    <div class="fx-drawer_header fx-horizontal-hairline">
-      <div class="fx-drawer_header-inner">
-        <div class="fx-drawer_title">Drawer</div>
-        <!---->
-      </div>
-    </div>
+  <div class="fx-drawer_inner fx-horizontal-hairline placement--bottom has--header" style="padding: 0px 0px 0px 0px;">
+    <nav-bar-stub title="Drawer" leftbuttons="" rightbuttons="" class="fx-drawer_header"></nav-bar-stub>
     <div class="fx-drawer_body"></div>
   </div>
 </div>

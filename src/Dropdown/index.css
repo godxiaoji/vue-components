@@ -17,11 +17,16 @@
   width: 100%;
   border: none;
   border-radius: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
   background-color: #fff;
 }
 
 .fx-dropdown.visible .fx-dropdown_inner {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }

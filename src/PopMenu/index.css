@@ -23,16 +23,25 @@
 
 .fx-pop-menu_item-inner {
   height: 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   font-size: 16px;
   line-height: 22px;
   color: #262626;
   text-align: center;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   padding: 0 24px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
 }
 
@@ -41,6 +50,7 @@
   --color: #262626;
   vertical-align: middle;
   margin: 0 12px 0 0;
+  -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
@@ -48,11 +58,14 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  -ms-flex-negative: 1;
   flex-shrink: 1;
   overflow: hidden;
 }
 
 .fx-pop-menu_item-inner.has--icon {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
   padding: 0 20px;
 }

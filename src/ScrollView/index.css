@@ -21,6 +21,7 @@
   min-height: 100%;
   min-width: 100%;
   overflow: hidden;
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
 
@@ -48,19 +49,33 @@
   top: 0;
   left: 0;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
   align-items: flex-end;
+  -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
 
 .fx-scroll-view_pull-refresh-indicator, .fx-scroll-view_lower-loading-indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
   font-size: 14px;
   color: #595959;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   height: 48px;
 }
@@ -84,7 +99,10 @@
 .fx-scroll-view_pull-refresh.direction--up, .fx-scroll-view_lower-loading.direction--up {
   top: auto;
   bottom: 0;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
   align-items: flex-start;
+  -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
 
@@ -93,14 +111,22 @@
   top: 0;
   bottom: 0;
   height: auto;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
 
 .fx-scroll-view_pull-refresh.direction--left .fx-scroll-view_pull-refresh-indicator, .fx-scroll-view_pull-refresh.direction--right .fx-scroll-view_pull-refresh-indicator, .fx-scroll-view_lower-loading.direction--left .fx-scroll-view_pull-refresh-indicator, .fx-scroll-view_lower-loading.direction--right .fx-scroll-view_pull-refresh-indicator {
   width: 48px;
   height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -115,6 +141,9 @@
 .fx-scroll-view_pull-refresh.direction--left, .fx-scroll-view_lower-loading.direction--left {
   left: auto;
   right: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
 }

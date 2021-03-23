@@ -1,4 +1,5 @@
 .fx-swipe-cell {
+  cursor: -webkit-grab;
   cursor: grab;
   overflow: hidden;
 }
@@ -9,7 +10,10 @@
 }
 
 .fx-swipe-cell_inner {
+  -webkit-transition: -webkit-transform 0s ease;
+  transition: -webkit-transform 0s ease;
   transition: transform 0s ease;
+  transition: transform 0s ease, -webkit-transform 0s ease;
   position: relative;
 }
 
@@ -19,12 +23,17 @@
   height: 100%;
   white-space: nowrap;
   right: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 
 .fx-swipe-cell_button {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   vertical-align: top;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 0 12px;
   position: relative;
@@ -39,7 +48,10 @@
   color: #262626;
   white-space: pre-line;
   overflow: visible;
+  -webkit-transition: -webkit-transform 0s ease;
+  transition: -webkit-transform 0s ease;
   transition: transform 0s ease;
+  transition: transform 0s ease, -webkit-transform 0s ease;
 }
 
 .fx-swipe-cell_button::before {
@@ -49,6 +61,7 @@
   top: 0;
   height: 100%;
   width: 100vw;
+  -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
   background-color: #fff;
 }

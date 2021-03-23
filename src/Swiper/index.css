@@ -1,5 +1,6 @@
 .fx-swiper {
   position: relative;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -8,7 +9,10 @@
   left: 50%;
   bottom: 6px;
   text-align: center;
+  -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -16,7 +20,11 @@
   left: 6px;
   top: 50%;
   bottom: auto;
+  -webkit-transform: translate3d(0, -50%, 0);
   transform: translate3d(0, -50%, 0);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -27,6 +35,7 @@
   height: 6px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.4);
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -38,6 +47,7 @@
   position: absolute;
   left: 12px;
   top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
   transform: translate3d(0, -50%, 0);
   background-color: rgba(0, 0, 0, 0.2);
 }

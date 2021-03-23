@@ -1,4 +1,5 @@
 > 1%
 not dead
-not ie <= 11
-iOS >= 10
+not ie <= 12
+android >= 4
+ios >= 8

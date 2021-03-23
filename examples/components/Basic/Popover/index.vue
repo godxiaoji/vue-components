@@ -184,7 +184,7 @@ export default {
       this.noMaskVisible = true
       setTimeout(() => {
         this.noMaskVisible = false
-      }, 3000)
+      }, 5000)
     },
     onVisibleStateChange({ state }) {
       if (this.showEventCallback) {

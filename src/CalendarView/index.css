@@ -14,8 +14,12 @@
 }
 
 .fx-calendar-view_weekdays {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -51,7 +55,10 @@
 
 .fx-calendar-view_days {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   z-index: 0;
 }
@@ -59,8 +66,14 @@
 .fx-calendar-view_day {
   width: 14.285%;
   height: 64px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   position: relative;
   font-size: 17px;

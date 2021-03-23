@@ -1,7 +1,11 @@
 .fx-divider {
   --divider-font-color: #bfbfbf;
   --divider-border-color: #f0f0f0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   margin: 12px 0;
   border: 0 solid var(--divider-border-color);
@@ -9,6 +13,8 @@
 }
 
 .fx-divider.fx-horizontal-hairline::before, .fx-divider.fx-horizontal-hairline::after {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   border-color: inherit;
   border-style: inherit;

@@ -1,29 +1,33 @@
 <template>
   <div
     class="fx-drawer fx-popup"
-    :class="{ visible: visible2 }"
+    :class="{ visible: visible2, 'no--mask': !showMask }"
     :style="popupStyles"
     v-show="isShow"
   >
     <div class="fx-mask" @click="onMaskClick"></div>
     <div
-      class="fx-drawer_inner"
+      class="fx-drawer_inner fx-horizontal-hairline"
       :class="[alignClassName, { 'has--header': hasHeader }]"
       :style="innerStyles"
     >
-      <div v-show="hasHeader" class="fx-drawer_header fx-horizontal-hairline">
-        <div class="fx-drawer_header-inner">
-          <div class="fx-drawer_title">{{ title }}</div>
-          <fx-button
-            v-if="showClose"
-            class="fx-drawer_close"
-            shape="square"
-            icon="CloseOutlined"
-            pattern="borderless"
-            @click="onCloseClick"
-          ></fx-button>
-        </div>
-      </div>
+      <nav-bar
+        v-if="hasHeader"
+        class="fx-drawer_header"
+        :title="title"
+        :left-buttons="showCancel ? [{ text: '取消', type: 'primary' }] : []"
+        :right-buttons="
+          showClose
+            ? [{ text: '关闭', type: 'primary' }]
+            : showConfirm
+            ? [{ text: '完成', type: 'primary' }]
+            : []
+        "
+        :icon-only="false"
+        @left-button-click="onHeaderLeftClick"
+        @right-button-click="onHeaderRightClick"
+      >
+      </nav-bar>
       <div class="fx-drawer_body">
         <slot></slot>
       </div>
@@ -33,14 +37,14 @@
 
 <script>
 import safeAreaInsets from 'safe-area-insets'
-import FxButton from '../Button'
+import NavBar from '../NavBar'
 import popupMixin from '../util/popup-mixin'
 import { createEnumsValidator, getEnumsValue } from '../helpers/validator'
 
 export default {
   name: 'fx-drawer',
   mixins: [popupMixin],
-  components: { FxButton },
+  components: { NavBar },
   props: {
     title: {
       type: String,
@@ -49,12 +53,24 @@ export default {
     placement: {
       validator: createEnumsValidator('placement')
     },
+    showCancel: {
+      type: Boolean,
+      default: false
+    },
     showClose: {
+      type: Boolean,
+      default: false
+    },
+    showConfirm: {
       type: Boolean,
       default: false
     },
     // 是否开启安全区
     enableSafeAreaInsets: {
+      type: Boolean,
+      default: true
+    },
+    showMask: {
       type: Boolean,
       default: true
     }
@@ -74,7 +90,12 @@ export default {
       return 'placement--' + getEnumsValue('placement', this.placement)
     },
     hasHeader() {
-      return this.title != null || this.showClose
+      return (
+        this.title != null ||
+        this.showClose ||
+        this.showCancel ||
+        this.showConfirm
+      )
     },
     innerStyles() {
       const placement = getEnumsValue('placement', this.placement)
@@ -93,6 +114,14 @@ export default {
 
       return {
         padding: top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px'
+      }
+    }
+  },
+  watch: {
+    showMask: {
+      immediate: true,
+      handler(val) {
+        this.useBlur = !val
       }
     }
   },
@@ -118,6 +147,16 @@ export default {
           right: 0,
           bottom: 0
         }
+      }
+    },
+    onHeaderLeftClick() {
+      this.onCancelClick()
+    },
+    onHeaderRightClick() {
+      if (this.showClose) {
+        this.onCloseClick()
+      } else if (this.showConfirm) {
+        this.customConfirm({})
       }
     }
   }

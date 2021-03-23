@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import StickyViewItem from '../Sticky/StickyViewItem.vue'
+import StickyViewItem from '../StickyViewItem'
 import Group from '../Group'
 
 export default {

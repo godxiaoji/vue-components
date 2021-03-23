@@ -30,7 +30,7 @@
 <script>
 import Tab from '../Tab'
 import SideTab from '../SideTab'
-import Swiper from '../Swiper/Swiper.vue'
+import Swiper from '../Swiper'
 import listMixin from '../util/list-mixin'
 
 export default {

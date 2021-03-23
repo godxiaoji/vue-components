@@ -8,12 +8,15 @@
 
 .fx-notify_inner {
   width: 100%;
+  -webkit-transform: translate3d(0, calc(-100%), 0);
   transform: translate3d(0, calc(-100%), 0);
+  -webkit-transition: all 0.2s;
   transition: all 0.2s;
   opacity: 0;
 }
 
 .fx-notify.visible .fx-notify_inner {
+  -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   opacity: 1;
 }

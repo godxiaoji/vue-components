@@ -1,43 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActionSheet should render prop set options correctly 1`] = `
-<drawer-stub maskclosable="true" showmask="true" placement="bottom" enablesafeareainsets="true" class="fx-action-sheet">
-  <!---->
-  <div class="fx-action-sheet_body">
-    <ul class="fx-action-sheet_list">
-      <li class="fx-action-sheet_item fx-horizontal-hairline">
-        <div class="fx-action-sheet_item-inner"><span>Option 1</span>
-          <!---->
-        </div>
-      </li>
-      <li class="fx-action-sheet_item fx-horizontal-hairline">
-        <div class="fx-action-sheet_item-inner"><span>Option 2</span>
-          <!---->
-        </div>
-      </li>
-      <li class="fx-action-sheet_item fx-horizontal-hairline">
-        <div class="fx-action-sheet_item-inner"><span>Option 3</span>
-          <!---->
-        </div>
-      </li>
-    </ul>
-  </div>
+<drawer-stub maskclosable="true" placement="bottom" enablesafeareainsets="true" showmask="true" class="fx-action-sheet">
+  <ul class="fx-action-sheet_list">
+    <li class="fx-action-sheet_item fx-horizontal-hairline">
+      <div class="fx-action-sheet_item-inner"><span>Option 1</span>
+        <!---->
+      </div>
+    </li>
+    <li class="fx-action-sheet_item fx-horizontal-hairline">
+      <div class="fx-action-sheet_item-inner"><span>Option 2</span>
+        <!---->
+      </div>
+    </li>
+    <li class="fx-action-sheet_item fx-horizontal-hairline">
+      <div class="fx-action-sheet_item-inner"><span>Option 3</span>
+        <!---->
+      </div>
+    </li>
+  </ul>
   <!---->
 </drawer-stub>
 `;
 
 exports[`ActionSheet should render props showCancel=true & cancelText="Custom Cancel" correctly 1`] = `
-<drawer-stub maskclosable="true" showmask="true" placement="bottom" enablesafeareainsets="true" class="fx-action-sheet">
-  <!---->
-  <div class="fx-action-sheet_body">
-    <ul class="fx-action-sheet_list"></ul>
-  </div>
-  <div class="fx-action-sheet_footer">
-    <ul class="fx-action-sheet_list">
-      <li class="fx-action-sheet_item fx-horizontal-hairline">
-        <div class="fx-action-sheet_item-inner align--center"><span>Custom Cancel</span></div>
-      </li>
-    </ul>
-  </div>
+<drawer-stub maskclosable="true" placement="bottom" enablesafeareainsets="true" showmask="true" class="fx-action-sheet">
+  <ul class="fx-action-sheet_list"></ul>
+  <ul class="fx-action-sheet_list">
+    <li class="fx-action-sheet_item fx-horizontal-hairline">
+      <div class="fx-action-sheet_item-inner align--center"><span>Custom Cancel</span></div>
+    </li>
+  </ul>
 </drawer-stub>
 `;

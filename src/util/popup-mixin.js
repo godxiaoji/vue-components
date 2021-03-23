@@ -7,6 +7,7 @@ import {
   removeClassName,
   removeEl
 } from '../helpers/dom'
+import { addBlurEvent } from '../helpers/events'
 
 export default {
   props: {
@@ -17,10 +18,6 @@ export default {
     maskClosable: {
       type: Boolean,
       default: true
-    },
-    showMask: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -28,6 +25,7 @@ export default {
       isShow: false,
       visible2: false,
       forbidScroll: true,
+      useBlur: false,
 
       zIndex: popupZIndex,
       top: null,
@@ -37,9 +35,13 @@ export default {
   watch: {
     visible(newVal) {
       if (newVal) {
-        this.show()
+        this.show({
+          visible: true
+        })
       } else {
-        this.hide()
+        this.hide({
+          visible: false
+        })
       }
     }
   },
@@ -59,6 +61,12 @@ export default {
 
     if (this.visible) {
       this.show()
+    }
+  },
+  beforeDestroy() {
+    if (this.removeBlurEvent) {
+      this.removeBlurEvent()
+      delete this.removeBlurEvent
     }
   },
   destroyed() {
@@ -89,7 +97,21 @@ export default {
       this.hide({ cancel: true, [key]: true }, this.afterCancel)
     },
 
+    customConfirm(res, key) {
+      this.$emit('confirm', res)
+
+      const afterRes = { confirm: true, detail: res }
+      key && (afterRes[key] = true)
+
+      this.hide(afterRes, this.afterConfirm)
+    },
+
+    onBlur() {
+      this.customCancel('blur')
+    },
+
     afterCancel() {},
+    afterConfirm() {},
 
     noop() {},
 
@@ -102,13 +124,15 @@ export default {
 
       clearTimeout(this.visibleTimer)
 
-      this.forbidScroll &&
-        this.showMask &&
+      // 如果禁止滚动
+      if (this.forbidScroll) {
         addClassName(document.body, 'fx-overflow-hidden')
-
-      if (!this.showMask) {
+      } else {
         this.position = 'absolute'
         this.top = getScrollDom().scrollTop + 'px'
+      }
+      if (this.useBlur) {
+        this.removeBlurEvent = addBlurEvent(this.onBlur)
       }
 
       this.zIndex = getNewZIndex()
@@ -131,13 +155,13 @@ export default {
 
       return true
     },
-    show() {
+    show(res = {}) {
       const isSuccess = this._doShow(() => {
-        this.emitVisibleState('shown', {})
+        this.emitVisibleState('shown', res)
       })
 
       if (isSuccess) {
-        this.emitVisibleState('show', {})
+        this.emitVisibleState('show', res)
         this.afterShow()
       }
     },
@@ -195,6 +219,11 @@ export default {
       if (isSuccess) {
         if (beforeHideFn) beforeHideFn(cloneData(res))
         this.emitVisibleState('hide', res)
+      }
+
+      if (this.removeBlurEvent) {
+        this.removeBlurEvent()
+        delete this.removeBlurEvent
       }
     },
     afterHidden() {}

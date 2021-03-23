@@ -6,7 +6,11 @@
       sizeClassName,
       patternClassName,
       shapeClassName,
-      { 'has--icon': loading || icon, ghost: !!ghost }
+      {
+        'has--icon': loading || icon,
+        ghost: !!ghost,
+        transparent: !!transparent
+      }
     ]"
     :disabled="disabled"
     :type="realFormType"
@@ -71,6 +75,10 @@ export default {
       default: null
     },
     ghost: {
+      type: Boolean,
+      default: false
+    },
+    transparent: {
       type: Boolean,
       default: false
     }

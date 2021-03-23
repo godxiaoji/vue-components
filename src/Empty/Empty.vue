@@ -14,7 +14,14 @@
 <script>
 import { inArray } from '../helpers/util'
 
-const TYPE_NAMES = ['default', 'error', 'network', 'search']
+const TYPE_NAMES = [
+  'default',
+  'error',
+  'network',
+  'search',
+  'permission',
+  'service'
+]
 
 export default {
   name: 'fx-empty',
@@ -36,7 +43,7 @@ export default {
     imageUrl() {
       return `https://cdn.fox2.cn/vfox/empty/${
         inArray(this.type, TYPE_NAMES) ? this.type : TYPE_NAMES[0]
-      }@2x.png`
+      }@3x.png`
     }
   }
 }

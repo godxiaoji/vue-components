@@ -1,5 +1,6 @@
 .fx-nav-bar {
   --nav-bar-height: 52px;
+  --nav-bar-background: #fff;
   position: relative;
   height: var(--nav-bar-height);
   width: 100%;
@@ -9,6 +10,15 @@
 .fx-nav-bar_inner {
   position: relative;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: var(--nav-bar-height);
+  background: var(--nav-bar-background);
 }
 
 .fx-nav-bar_inner.fixed {
@@ -23,20 +33,28 @@
 }
 
 .fx-nav-bar_layout {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
-  background: #ffffff;
-  height: var(--nav-bar-height);
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .fx-nav-bar_title {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   margin: 0 90px;
   font-weight: 500;
   font-size: 17px;
-  color: #000000;
-  height: var(--nav-bar-height);
-  line-height: var(--nav-bar-height);
+  color: #262626;
+  height: 24px;
+  line-height: 24px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -48,8 +66,12 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: var(--nav-bar-height);
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -63,7 +85,7 @@
   max-height: 64px;
 }
 
-.fx-nav-bar_button {
+.fx-nav-bar_button.fx-button {
   border-radius: 0;
   height: 100%;
 }

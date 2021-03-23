@@ -7,6 +7,7 @@
     :show-close="showClose"
     @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
+    @confirm="onConfirm"
     @update:visible="onUpdateVisible"
     ref="popup"
   >
@@ -87,11 +88,11 @@ export default {
       this.detail = detail
 
       if (!this.showConfirm) {
-        this.confirm()
+        this.customConfirm({})
       }
     },
 
-    confirm() {
+    onConfirm() {
       this.detail = this.$refs.view.getDetail()
 
       this.$emit('update:modelValue', this.getDetail().value)
@@ -99,14 +100,12 @@ export default {
       const confirmDetail = this.getDetail()
       this.$emit('confirm', confirmDetail)
       this.afterConfirm(confirmDetail)
-
-      this.onUpdateVisible(false)
     },
 
     afterConfirm() {},
 
     onConfirmClick() {
-      this.confirm()
+      this.customConfirm({})
     },
 
     getDetail() {

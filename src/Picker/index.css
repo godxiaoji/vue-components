@@ -1,4 +1,6 @@
 .fx-picker {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   position: relative;

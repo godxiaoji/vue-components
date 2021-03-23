@@ -3,20 +3,14 @@
     class="fx-picker-popup"
     placement="bottom"
     :visible="visible"
+    :showCancel="true"
+    :showConfirm="true"
     @visible-state-change="onVisibleStateChange"
     @cancel="onCancel"
+    @confirm="onConfirm"
     @update:visible="onUpdateVisible"
     ref="popup"
   >
-    <nav-bar
-      :title="title"
-      :right-buttons="[{ icon: '', text: '确定', type: 'primary' }]"
-      :left-buttons="[{ icon: '', text: '取消' }]"
-      :icon-only="false"
-      @left-button-click="onCancelClick"
-      @right-button-click="onConfirmClick"
-    >
-    </nav-bar>
     <picker-view
       ref="view"
       :modelValue="modelValue"
@@ -31,7 +25,6 @@
 
 <script>
 import PickerView from './PickerView.vue'
-import NavBar from '../NavBar'
 import Drawer from '../Drawer'
 import { cloneData, isSameArray } from '../helpers/util'
 import popupExtendMixin from '../util/popup-extend-mixin'
@@ -40,7 +33,7 @@ import { getDefaultDetail } from '../util/multi-selector'
 
 export default {
   name: 'fx-picker-popup',
-  components: { PickerView, NavBar, Drawer },
+  components: { PickerView, Drawer },
   mixins: [popupExtendMixin, multiSelectorPropsMixin],
   props: {
     title: {
@@ -78,7 +71,7 @@ export default {
       return cloneData(this.detail)
     },
 
-    onConfirmClick() {
+    onConfirm() {
       const detail = this.$refs.view.getDetail()
       const oldDetail = this.detail
       this.detail = detail
@@ -93,8 +86,6 @@ export default {
         this.$emit('change', cloneData(detail))
         this.afterChange(cloneData(detail))
       }
-
-      this.onUpdateVisible(false)
     },
 
     afterChange() {},

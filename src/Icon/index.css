@@ -1,8 +1,21 @@
-@keyframes fx-rotate-360 {
+@-webkit-keyframes fx-rotate-360 {
   0% {
+    -webkit-transform: rotate(0);
     transform: rotate(0);
   }
   100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fx-rotate-360 {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
@@ -19,5 +32,6 @@
 }
 
 .fx-icon.spin {
+  -webkit-animation: fx-rotate-360 800ms infinite linear both;
   animation: fx-rotate-360 800ms infinite linear both;
 }

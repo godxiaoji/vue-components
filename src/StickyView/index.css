@@ -24,6 +24,7 @@
   background-color: #fff;
   color: #595959;
   font-size: 14px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -40,5 +41,6 @@
   background-color: #fff;
   color: #595959;
   font-size: 14px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }

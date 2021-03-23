@@ -1,6 +1,5 @@
 > 1%
 not dead
-iOS >= 11
-last 2 versions
-Android >= 5
-not ie <= 11
+not ie <= 12
+android >= 4
+ios >= 8

@@ -1,1 +1,1 @@
-import '../../StickyView/index.css'
+import '../../StickyView/index.scss'

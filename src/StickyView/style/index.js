@@ -1,2 +1,2 @@
-import '../../Sticky/index.css'
-import '../index.css'
+import '../../Sticky/index.scss'
+import '../index.scss'

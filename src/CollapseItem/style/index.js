@@ -1,2 +1,2 @@
-import '../../Cell/index.css'
-import '../../Collapse/index.css'
+import '../../Cell/index.scss'
+import '../../Collapse/index.scss'

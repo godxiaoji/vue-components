@@ -1,1 +1,1 @@
-import '../../Skeleton/index.css'
+import '../../Skeleton/index.scss'

@@ -81,7 +81,7 @@ export function showPopup(
         in(hookName, res) {
           switch (hookName) {
             case 'afterHidden': {
-              app.unmount()
+              app.unmount($wrapper)
               singleMode && remove(key, $ref.uid)
               break
             }

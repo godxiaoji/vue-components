@@ -6,7 +6,7 @@
 
 ### 特性
 
-- 提供 60+ 组件，覆盖移动端各类场景
+- 提供 70+ 组件，覆盖移动端各类场景
 - 100+单元测试覆盖
 - 支持 Vue 2 和 Vue 3
 - 支持按需引入
@@ -15,9 +15,10 @@
 
 该版本已使用 `Composition API` 和 `Typescript` 重构。
 
-[Demo](https://cdn.fox2.cn/vfox/)
+[Demo](https://cdn.fox2.cn/2.x/demo/)
 
-[Docs](https://cdn.fox2.cn/vfox-docs/)
+[Docs](https://cdn.fox2.cn/2.x/docs/)
+
 
 ## 安装
 

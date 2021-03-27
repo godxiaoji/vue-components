@@ -10,14 +10,18 @@ sidebarDepth: 2
 
 ### 特性
 
-- 提供 60+ 组件，覆盖移动端各类场景
+- 提供 70+ 组件，覆盖移动端各类场景
 - 100+单元测试覆盖
 - 支持 Vue 2 和 Vue 3
 - 支持按需引入
 
 ### 附言
 
-由于是从 v1 版本快速适配过来的，目前还是基于 `Template` 和 `Option API`，会在后续版本改造为 `Composition API` 和 支持 `Typescipt`。
+该版本已使用 `Composition API` 和 `Typescript` 重构。
+
+[Demo](https://cdn.fox2.cn/2.x/demo/)
+
+[Docs](https://cdn.fox2.cn/2.x/docs/)
 
 ## 安装
 
@@ -56,7 +60,7 @@ module.exports = {
       "import",
       {
         libraryName: "vfox",
-        libraryDirectory: "src",
+        libraryDirectory: "es",
         style: true,
         camel2DashComponentName: false
       },
@@ -79,7 +83,7 @@ app.use(Button)
 在不使用插件的情况下，可以手动引入需要的组件。
 
 ```
-import { Button } from 'vfox/src/Button'
+import { Button } from 'vfox/es/Button'
 import 'vfox/src/Button/style'
 
 app.use(Button)

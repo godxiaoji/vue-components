@@ -3,8 +3,8 @@
 exports[`Radio should render default correctly 1`] = `
 <label class="fx-radio fx-horizontal-hairline"><input class="fx-radio_input fx-form-input" type="radio" name="" value="">
   <div class="fx-radio_box">
-    <fx-icon-stub class="fx-radio_icon"></fx-icon-stub>
-    <fx-icon-stub class="fx-radio_checked-icon"></fx-icon-stub>
+    <fx-icon-stub class="fx-radio_icon" icon="CircleOutlined"></fx-icon-stub>
+    <fx-icon-stub class="fx-radio_icon fx-radio_checked-icon" icon="CircleOutlined"></fx-icon-stub>
     <!--v-if-->
   </div>
 </label>
@@ -13,8 +13,8 @@ exports[`Radio should render default correctly 1`] = `
 exports[`Radio should render prop disabled=true correctly 1`] = `
 <label class="fx-radio fx-horizontal-hairline disabled"><input class="fx-radio_input fx-form-input" type="radio" name="" value="" disabled="">
   <div class="fx-radio_box">
-    <fx-icon-stub class="fx-radio_icon"></fx-icon-stub>
-    <fx-icon-stub class="fx-radio_checked-icon"></fx-icon-stub>
+    <fx-icon-stub class="fx-radio_icon" icon="CircleOutlined"></fx-icon-stub>
+    <fx-icon-stub class="fx-radio_icon fx-radio_checked-icon" icon="CircleOutlined"></fx-icon-stub>
     <!--v-if-->
   </div>
 </label>

@@ -1,6 +1,4 @@
-# NumberKeyboard
-
-数字键盘。
+# NumberKeyboard 数字键盘
 
 ## Props
 

@@ -4,16 +4,16 @@ exports[`Tab should render set badge correctly 1`] = `
 <div class="fx-tab-bar fx-horizontal-hairline">
   <ul class="fx-tab-bar_list">
     <li class="fx-tab-bar_item active">
-      <fx-badge-stub class="fx-tab-bar_item-icon"></fx-badge-stub><span class="fx-tab-bar_item-text">首页</span>
+      <fx-badge-stub class="fx-tab-bar_item-icon" content="热"></fx-badge-stub><span class="fx-tab-bar_item-text">首页</span>
     </li>
     <li class="fx-tab-bar_item">
-      <fx-badge-stub class="fx-tab-bar_item-icon"></fx-badge-stub><span class="fx-tab-bar_item-text">搜索</span>
+      <fx-badge-stub class="fx-tab-bar_item-icon" content="热"></fx-badge-stub><span class="fx-tab-bar_item-text">搜索</span>
     </li>
     <li class="fx-tab-bar_item">
-      <fx-badge-stub class="fx-tab-bar_item-icon"></fx-badge-stub><span class="fx-tab-bar_item-text">我的</span>
+      <fx-badge-stub class="fx-tab-bar_item-icon" content="热"></fx-badge-stub><span class="fx-tab-bar_item-text">我的</span>
     </li>
     <li class="fx-tab-bar_item">
-      <fx-badge-stub class="fx-tab-bar_item-icon"></fx-badge-stub><span class="fx-tab-bar_item-text">设置</span>
+      <fx-badge-stub class="fx-tab-bar_item-icon" content="热"></fx-badge-stub><span class="fx-tab-bar_item-text">设置</span>
     </li>
   </ul>
 </div>

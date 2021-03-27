@@ -16,6 +16,7 @@
       class="fx-image_img"
       :class="[modeClassName]"
       :src="currentSrc"
+      @dragstart="onDrag"
     />
   </div>
 </template>
@@ -97,6 +98,11 @@ export default defineComponent({
     aspectRatio: {
       type: Number,
       default: null
+    },
+    // 允许拖拽
+    draggable: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props, { emit }) {
@@ -160,6 +166,12 @@ export default defineComponent({
       emit(e.type, e)
     }
 
+    function onDrag(e: Event) {
+      if (!props.draggable) {
+        e.preventDefault()
+      }
+    }
+
     onMounted(() => props.src && load())
 
     onBeforeUnmount(() => removeComponentFromLazy(instance.uid))
@@ -178,7 +190,8 @@ export default defineComponent({
       loading,
       error,
       root,
-      onClick
+      onClick,
+      onDrag
     }
   }
 })

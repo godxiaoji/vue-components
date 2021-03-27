@@ -3,8 +3,8 @@
 exports[`Checkbox should render default correctly 1`] = `
 <label class="fx-checkbox fx-horizontal-hairline"><input class="fx-checkbox_input fx-form-input" type="checkbox" name="" value="">
   <div class="fx-checkbox_box">
-    <fx-icon-stub class="fx-checkbox_icon"></fx-icon-stub>
-    <fx-icon-stub class="fx-checkbox_checked-icon"></fx-icon-stub>
+    <fx-icon-stub class="fx-checkbox_icon" icon="BorderOutlined"></fx-icon-stub>
+    <fx-icon-stub class="fx-checkbox_icon fx-checkbox_checked-icon" icon="BorderOutlined"></fx-icon-stub>
     <!--v-if-->
   </div>
 </label>
@@ -13,8 +13,8 @@ exports[`Checkbox should render default correctly 1`] = `
 exports[`Checkbox should render prop disabled=true correctly 1`] = `
 <label class="fx-checkbox fx-horizontal-hairline disabled"><input class="fx-checkbox_input fx-form-input" type="checkbox" name="" value="" disabled="">
   <div class="fx-checkbox_box">
-    <fx-icon-stub class="fx-checkbox_icon"></fx-icon-stub>
-    <fx-icon-stub class="fx-checkbox_checked-icon"></fx-icon-stub>
+    <fx-icon-stub class="fx-checkbox_icon" icon="BorderOutlined"></fx-icon-stub>
+    <fx-icon-stub class="fx-checkbox_icon fx-checkbox_checked-icon" icon="BorderOutlined"></fx-icon-stub>
     <!--v-if-->
   </div>
 </label>

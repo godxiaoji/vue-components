@@ -465,3 +465,14 @@ export const isInNumberRange = (number: unknown, min: number, max: number) => {
     isNumber(number) && (number as number) >= min && (number as number) <= max
   )
 }
+
+/**
+ * 是否Promise
+ * @param object 值
+ * @returns boolean
+ */
+export const isPromiseLike = (object: unknown) => {
+  return (
+    (isObject(object) || isFunction(object)) && isFunction((object as any).then)
+  )
+}

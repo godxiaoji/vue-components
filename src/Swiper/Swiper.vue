@@ -323,7 +323,7 @@ export default defineComponent({
      * 滑动实现
      */
     function slide(toIndex: number, slideIndex: number, animated = true) {
-      if (playing) {
+      if (itemSize === 0 || playing) {
         return
       }
 
@@ -364,16 +364,17 @@ export default defineComponent({
       durationTimer = window.setTimeout(() => {
         updateListStyle(transSize, 0)
 
-        animateDone(transSize, toIndex, fromIndex)
+        animateDone(transSize, toIndex, fromIndex, 0)
       }, duration)
     }
 
     function animateDone(
       transSize: number,
       toIndex: number,
-      fromIndex: number
+      fromIndex: number,
+      frameNumber: number
     ) {
-      durationTimer = window.setTimeout(() => {
+      durationTimer = requestAnimationFrame(() => {
         const transform = window.getComputedStyle(list.value as HTMLElement)
           .transform
 
@@ -381,7 +382,7 @@ export default defineComponent({
           .slice(7, transform.length - 1)
           .split(', ')[direction.value === 'y' ? 5 : 4]
 
-        if (parseFloat(currentSize).toFixed(2) === transSize.toFixed(2)) {
+        if (parseFloat(currentSize).toFixed(2) === transSize.toFixed(2) || frameNumber > 0) {
           // 校对清楚再回调
           playing = false
 
@@ -390,12 +391,12 @@ export default defineComponent({
 
           updateSwipeLoop()
         } else {
-          animateDone(transSize, toIndex, fromIndex)
+          animateDone(transSize, toIndex, fromIndex, ++frameNumber)
         }
-      }, 17)
+      })
     }
 
-    let isFirst = false
+    let isFirst = true
 
     function resetItems(res: HTMLElement[]) {
       $items = res
@@ -403,8 +404,8 @@ export default defineComponent({
 
       const last = getLastIndex()
 
-      if (!isFirst) {
-        isFirst = true
+      if (isFirst) {
+        isFirst = false
 
         if (props.activeIndex !== 0) {
           swipeTo(props.activeIndex)

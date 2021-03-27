@@ -12,8 +12,7 @@ export default defineComponent({
   name: 'fx-svg-icon',
   props: {
     iconName: {
-      type: String,
-      required: true
+      type: String
     }
   }
 })

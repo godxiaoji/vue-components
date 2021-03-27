@@ -30,12 +30,18 @@ export function useList(name: string, updateCallback: ListUpdateCallback) {
       return
     }
 
-    clearTimeout(updateTimer)
-    updateTimer = window.setTimeout(() => {
+    if (lazy === 0) {
       if (!(instance as ComponentInternalInstance).isUnmounted) {
         updateCallback(getItems())
       }
-    }, lazy)
+    } else {
+      clearTimeout(updateTimer)
+      updateTimer = window.setTimeout(() => {
+        if (!(instance as ComponentInternalInstance).isUnmounted) {
+          updateCallback(getItems())
+        }
+      }, lazy)
+    }
   }
 
   function getItems(): HTMLElement[] {

@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order should render default slot correctly 1`] = `
+<div class="fx-order" style="height: 0px;"></div>
+<fx-drawer-stub class="fx-order_delete" placement="bottom" visible="false" showmask="false"></fx-drawer-stub>
+`;

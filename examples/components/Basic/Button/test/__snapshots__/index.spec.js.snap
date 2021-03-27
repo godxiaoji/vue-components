@@ -2,7 +2,7 @@
 
 exports[`Button should render add icon correctly 1`] = `
 <button class="fx-button type--default pattern--default size--large shape--rectangle has--icon" type="button">
-  <fx-icon-stub></fx-icon-stub><span>按钮</span>
+  <fx-icon-stub icon="EditOutlined"></fx-icon-stub><span>按钮</span>
 </button>
 `;
 

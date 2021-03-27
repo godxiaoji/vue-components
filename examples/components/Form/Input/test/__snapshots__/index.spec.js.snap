@@ -27,7 +27,7 @@ exports[`Input should render prop maxlength=200 correctly 1`] = `
 exports[`Input should render prop showClear=true correctly 1`] = `
 <label class="fx-input">
   <!--v-if--><input class="fx-input_input" name="" type="text" inputmode="text" placeholder="" maxlength="140" value="">
-  <fx-icon-stub class="fx-input_clear" style="display: none;"></fx-icon-stub>
+  <fx-icon-stub class="fx-input_clear" icon="CloseCircleFilled" style="display: none;"></fx-icon-stub>
   <!--v-if-->
 </label>
 `;

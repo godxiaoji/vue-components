@@ -9,7 +9,7 @@ exports[`NavBar should render prop rightButtons=[{ icon: "MenuOutlined", text: "
       </div>
       <div class="fx-nav-bar_title"></div>
       <div class="fx-nav-bar_right">
-        <fx-button-group-stub class="fx-nav-bar_button-group"></fx-button-group-stub>
+        <fx-button-group-stub class="fx-nav-bar_button-group" shape="square" pattern="borderless"></fx-button-group-stub>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@ exports[`NavBar should render props showBack=true & showHome = true correctly 1`
   <div class="fx-nav-bar_inner fx-horizontal-hairline">
     <div class="fx-nav-bar_layout">
       <div class="fx-nav-bar_left">
-        <fx-button-group-stub class="fx-nav-bar_button-group"></fx-button-group-stub>
+        <fx-button-group-stub class="fx-nav-bar_button-group" shape="square" pattern="borderless"></fx-button-group-stub>
       </div>
       <div class="fx-nav-bar_title"></div>
       <div class="fx-nav-bar_right">

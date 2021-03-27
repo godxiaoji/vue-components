@@ -31,6 +31,7 @@ import CalendarPopup from '@/CalendarPopup'
 import Calendar from '@/Calendar'
 import SearchBar from '@/SearchBar'
 import NumberKeyboard from '@/NumberKeyboard'
+import ImageUploader from '@/ImageUploader'
 
 /* Feedback */
 import Toast from '@/Toast'
@@ -81,6 +82,7 @@ import CollapseItem from '@/CollapseItem'
 import Badge from '@/Badge'
 import Progress from '@/Progress'
 import Tag from '@/Tag'
+import Order from '@/Order'
 
 /* Other */
 import Copy from '@/Copy'
@@ -164,5 +166,7 @@ export {
   Progress,
   Tag,
   Fixed,
-  NumberKeyboard
+  NumberKeyboard,
+  Order,
+  ImageUploader
 }

@@ -1,9 +1,14 @@
 import { onBeforeUnmount, onMounted, Ref } from 'vue'
 import { touchEvent } from '@/helpers/events'
-import type { DataObject } from '../helpers/types'
+import { DataObject } from '../helpers/types'
 
 export interface UseTouchEvent extends Event {
-  touchObject: any
+  touchObject: {
+    pageX: number
+    pageY: number
+    clientX: number
+    clientY: number
+  }
   target: HTMLElement
 }
 

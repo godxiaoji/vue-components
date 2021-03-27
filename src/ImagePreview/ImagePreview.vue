@@ -9,6 +9,7 @@
     >
       <div class="fx-mask"></div>
       <swiper
+        v-if="swiperInit"
         v-model:activeIndex="activeIndex"
         :navigation-buttons="navigationButtons"
         @click="onPreviewClick"
@@ -38,16 +39,19 @@
       <div class="fx-preview-image_pagination">
         {{ activeIndex + 1 }} / {{ urls.length }}
       </div>
-      <fx-button
-        v-if="showClose"
-        class="fx-preview-image_close"
-        @click.stop="onCloseClick"
-        icon="CloseOutlined"
-        size="large"
-        pattern="borderless"
-        shape="square"
-        :ghost="true"
-      ></fx-button>
+      <div class="fx-preview-image_close">
+        <slot name="close" :activeIndex="activeIndex">
+          <fx-button
+            v-if="showClose"
+            @click.stop="onCloseClick"
+            icon="CloseOutlined"
+            size="large"
+            pattern="borderless"
+            shape="square"
+            :ghost="true"
+          ></fx-button>
+        </slot>
+      </div>
     </div>
   </teleport>
 </template>
@@ -60,7 +64,7 @@ import Swiper from '@/Swiper'
 import SwiperItem from '@/SwiperItem'
 import { isStringArray, rangeNumber } from '@/helpers/util'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
-import type { DataObject } from '../helpers/types'
+import { DataObject } from '../helpers/types'
 import { UseTouchCoords } from '@/hooks/touch'
 
 interface ImageObject {
@@ -139,6 +143,7 @@ export default defineComponent({
     const activeIndex = ref(0)
     const images = reactive<ImageObject[]>([])
     const zoomAnimated = ref(false)
+    const swiperInit = ref(false)
 
     let coords: ImageCoords | null
 
@@ -349,6 +354,7 @@ export default defineComponent({
       }
 
       if (!hasUrl && images[0]) {
+        activeIndex.value = 0
         emit('update:current', images[0].src)
       }
     }
@@ -454,16 +460,17 @@ export default defineComponent({
               loaded: false
             })
           }
-
-          if (props.current && props.current === url) {
-            activeIndex.value = index
-          }
         })
+
+        // updateCurrent(props.current)
       },
       {
-        immediate: true
+        immediate: true,
+        deep: true
       }
     )
+
+    const popup = usePopup(props, ctx, {})
 
     watch(
       () => props.current,
@@ -473,10 +480,13 @@ export default defineComponent({
       }
     )
 
-    const popup = usePopup(props, ctx, {})
+    watch(popup.isShow, () => {
+      swiperInit.value = true
+    })
 
     return {
       ...popup,
+      swiperInit,
       activeIndex,
       images,
       zoomAnimated,

@@ -45,7 +45,7 @@ import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import type { PlacementType } from '../hooks/constants'
+import { PlacementType } from '../hooks/constants'
 
 export default defineComponent({
   name: 'fx-drawer',

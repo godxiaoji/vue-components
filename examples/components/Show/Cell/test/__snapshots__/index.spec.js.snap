@@ -5,7 +5,7 @@ exports[`Cell should render prop icon="EditOutlined" correctly 1`] = `
   <div class="fx-cell_cover"></div>
   <div class="fx-cell_header">
     <div class="fx-cell_icon">
-      <fx-icon-stub></fx-icon-stub>
+      <fx-icon-stub icon="EditOutlined"></fx-icon-stub>
     </div>
     <div class="fx-cell_label">label
       <!--v-if-->
@@ -26,7 +26,7 @@ exports[`Cell should render prop isLink=true correctly 1`] = `
       <!--v-if-->
     </div>
     <div class="fx-cell_content">content</div>
-    <fx-icon-stub class="fx-cell_link-icon"></fx-icon-stub>
+    <fx-icon-stub class="fx-cell_link-icon" icon="RightOutlined"></fx-icon-stub>
   </div>
   <!--v-if-->
 </div>

@@ -3,7 +3,7 @@
 exports[`SearchBar should render default correctly 1`] = `
 <div class="fx-search">
   <form class="fx-search_inner">
-    <fx-input-stub class="fx-search_field"></fx-input-stub><button class="fx-search_button">Search</button>
+    <fx-input-stub class="fx-search_field" type="search" disabled="false" modelvalue="" maxlength="100" showclear=""></fx-input-stub><button class="fx-search_button">Search</button>
     <!--v-if-->
   </form>
   <!--v-if-->
@@ -13,8 +13,8 @@ exports[`SearchBar should render default correctly 1`] = `
 exports[`SearchBar should render prop ghost=true slots correctly 1`] = `
 <div class="fx-search">
   <form class="fx-search_inner has--cancel">
-    <fx-input-stub class="fx-search_field ghost"></fx-input-stub><button class="fx-search_button">Search</button>
-    <fx-button-stub class="fx-search_cancel-button"></fx-button-stub>
+    <fx-input-stub class="fx-search_field ghost" type="search" disabled="false" modelvalue="" maxlength="100" showclear=""></fx-input-stub><button class="fx-search_button">Search</button>
+    <fx-button-stub class="fx-search_cancel-button" size="large" type="default" pattern="borderless" ghost="true"></fx-button-stub>
   </form>
   <!--v-if-->
 </div>
@@ -23,7 +23,7 @@ exports[`SearchBar should render prop ghost=true slots correctly 1`] = `
 exports[`SearchBar should render prop set placeholders correctly 1`] = `
 <div class="fx-search">
   <form class="fx-search_inner">
-    <fx-input-stub class="fx-search_field"></fx-input-stub><button class="fx-search_button">Search</button>
+    <fx-input-stub class="fx-search_field" placeholder="冰箱" type="search" disabled="false" modelvalue="" maxlength="100" showclear=""></fx-input-stub><button class="fx-search_button">Search</button>
     <!--v-if-->
   </form>
   <!--v-if-->
@@ -33,8 +33,8 @@ exports[`SearchBar should render prop set placeholders correctly 1`] = `
 exports[`SearchBar should render prop showCancel=true correctly 1`] = `
 <div class="fx-search">
   <form class="fx-search_inner has--cancel">
-    <fx-input-stub class="fx-search_field"></fx-input-stub><button class="fx-search_button">Search</button>
-    <fx-button-stub class="fx-search_cancel-button"></fx-button-stub>
+    <fx-input-stub class="fx-search_field" type="search" disabled="false" modelvalue="" maxlength="100" showclear=""></fx-input-stub><button class="fx-search_button">Search</button>
+    <fx-button-stub class="fx-search_cancel-button" size="large" type="default" pattern="borderless" ghost="false"></fx-button-stub>
   </form>
   <!--v-if-->
 </div>

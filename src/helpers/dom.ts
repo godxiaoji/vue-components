@@ -162,3 +162,15 @@ export function styleObject2CssText(object: StyleObject) {
 
   return arr.join('; ')
 }
+
+export function getParentTarget($el: HTMLElement, className: string) {
+  while ($el) {
+    if (hasClassName($el, className)) {
+      return $el
+    }
+
+    $el = $el.parentElement as HTMLElement
+  }
+
+  return null
+}

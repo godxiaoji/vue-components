@@ -2,14 +2,14 @@
 
 exports[`Stepper should render default correctly 1`] = `
 <div class="fx-stepper">
-  <fx-button-stub></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" value="1">
-  <fx-button-stub></fx-button-stub>
+  <fx-button-stub icon="MinusOutlined" shape="square" size="small" disabled="true"></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" value="1">
+  <fx-button-stub icon="MinusOutlined" shape="square" size="small" disabled="true"></fx-button-stub>
 </div>
 `;
 
 exports[`Stepper should render prop disabled=true correctly 1`] = `
 <div class="fx-stepper disabled">
-  <fx-button-stub></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" disabled="" value="1">
-  <fx-button-stub></fx-button-stub>
+  <fx-button-stub icon="MinusOutlined" shape="square" size="small" disabled="true"></fx-button-stub><input class="fx-stepper_input" type="text" inputmode="decimal" name="" disabled="" value="1">
+  <fx-button-stub icon="MinusOutlined" shape="square" size="small" disabled="true"></fx-button-stub>
 </div>
 `;

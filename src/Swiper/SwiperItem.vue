@@ -22,14 +22,14 @@ export default defineComponent({
 
     onMounted(() => update())
     onUnmounted(() => update())
-    onUpdated(() => {
-      const $item = root.value as HTMLElement
+    // onUpdated(() => {
+    //   const $item = root.value as HTMLElement
 
-      if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
-        // 解决默认 hidden 的问题
-        update()
-      }
-    })
+    //   if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
+    //     // 解决默认 hidden 的问题
+    //     update()
+    //   }
+    // })
 
     return {
       root

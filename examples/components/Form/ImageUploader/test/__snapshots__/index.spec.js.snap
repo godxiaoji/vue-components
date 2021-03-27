@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageUploader should render default slot correctly 1`] = `
+<div class="fx-image-uploader">
+  <fx-order-stub columnnumber="3" deletable="true" items="[object Object]"></fx-order-stub><input type="hidden" name="">
+</div>
+<fx-image-preview-stub class="fx-image-uploader_preview" urls="" visible="false" current="" showclose=""></fx-image-preview-stub>
+`;

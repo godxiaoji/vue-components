@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NumberKeyboard should render default correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard"></fx-drawer-stub>`;
+exports[`NumberKeyboard should render default correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard" placement="bottom" visible="false" showmask="false" showconfirm="false"></fx-drawer-stub>`;
 
-exports[`NumberKeyboard should render props customKey="." correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard"></fx-drawer-stub>`;
+exports[`NumberKeyboard should render props customKey="." correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard" placement="bottom" visible="false" showmask="false" showconfirm="true"></fx-drawer-stub>`;
 
-exports[`NumberKeyboard should render props type="rightColumn" and customKey=["00", "."] correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard"></fx-drawer-stub>`;
+exports[`NumberKeyboard should render props type="rightColumn" and customKey=["00", "."] correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard" placement="bottom" visible="false" showmask="false" showconfirm="false"></fx-drawer-stub>`;
 
-exports[`NumberKeyboard should render props type="rightColumn" correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard"></fx-drawer-stub>`;
+exports[`NumberKeyboard should render props type="rightColumn" correctly 1`] = `<fx-drawer-stub class="fx-number-keyboard" placement="bottom" visible="false" showmask="false" showconfirm="false"></fx-drawer-stub>`;

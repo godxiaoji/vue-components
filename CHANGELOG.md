@@ -1,3 +1,10 @@
+# [2.0.0-beta.9](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-03-27)
+
+
+### Features
+
+* add Order & ImageUploader ([3cef658](https://github.com/godxiaoji/vfox/commit/3cef65886a98150746614ce8d14d765438ceb130))
+
 # [2.0.0-beta.8](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-03-23)
 
 

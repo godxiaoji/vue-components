@@ -13,7 +13,7 @@
 
 [Demo](https://cdn.fox2.cn/1.x/demo/)
 
-[Docs](https://cdn.fox2.cn/2.x/docs/)
+[Docs](https://cdn.fox2.cn/1.x/docs/)
 
 ## 安装
 

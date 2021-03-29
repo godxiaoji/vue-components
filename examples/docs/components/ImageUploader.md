@@ -5,18 +5,19 @@
 
 ## Props
 
-| 属性          | 类型     | 默认值 | 必填 | 说明                                                                           |
-| ------------- | -------- | ------ | ---- | ------------------------------------------------------------------------------ |
-| v-model       | string[] |        | 是   | 已上传的图片 URL 列表                                                          |
-| accept        | string   |        | 否   | 默认 'all', 可选 'jpg' 'jpeg' 'png' 'webp'，目前移动端图片类型不多，限制比较死 |
-| column-number | number   | 3      | 否   | 渲染列数，同 [Order](./Order.md) 组件                                          |
-| max-count     | number   | 9      | 否   | 文件上传数量限制，上传中/上传失败也会占一个坑位                                |
-| preview       | boolean  | true   | 否   | 是否在点击缩略图后展示全屏图片预览                                             |
-| disabled      | boolean  | false  | 否   | 是否禁用文件上传                                                               |
-| multiple      | boolean  | false  | 否   | 是否开启图片多选，部分安卓机型不支持                                           |
-| deletable     | boolean  | true   | 否   | 是否允许删除图片                                                               |
-| before-upload | Function |        | 否   | 文件读取前的回调函数，返回 false 或 Promise<false> 可终止文件上传              |
-| upload-ready  | Function |        | 否   | 转入上传文件操作的回调函数                                                     |
+| 属性          | 类型     | 默认值       | 必填 | 说明                                                                           |
+| ------------- | -------- | ------------ | ---- | ------------------------------------------------------------------------------ |
+| v-model       | string[] |              | 是   | 已上传的图片 URL 列表                                                          |
+| accept        | string   |              | 否   | 默认 'all', 可选 'jpg' 'jpeg' 'png' 'webp'，目前移动端图片类型不多，限制比较死 |
+| column-number | number   | 3            | 否   | 渲染列数，同 [Order](./Order.md) 组件                                          |
+| max-count     | number   | 9            | 否   | 文件上传数量限制，上传中/上传失败也会占一个坑位                                |
+| preview       | boolean  | true         | 否   | 是否在点击缩略图后展示全屏图片预览                                             |
+| disabled      | boolean  | false        | 否   | 是否禁用文件上传                                                               |
+| multiple      | boolean  | false        | 否   | 是否开启图片多选，部分安卓机型不支持                                           |
+| deletable     | boolean  | true         | 否   | 是否允许删除图片                                                               |
+| image-mode    | string   | 'aspectFill' | 否   | 图片的填充模式，通 [Image](./Image.md) 组件的 mode 属性                        |
+| before-upload | Function |              | 否   | 文件读取前的回调函数，返回 false 或 Promise<false> 可终止文件上传              |
+| upload-ready  | Function |              | 否   | 转入上传文件操作的回调函数                                                     |
 
 ### beforeUpload(file: File, handlers: Object) => boolean | file | Promise<boolean | file>
 

@@ -1,4 +1,4 @@
-import type { UseProps } from '../helpers/types'
+import { UseProps } from '../helpers/types'
 import {
   ref,
   computed,
@@ -10,7 +10,7 @@ import {
   SetupContext,
   isRef
 } from 'vue'
-import { cloneData } from '@/helpers/util'
+import { cloneData, isArray, isSameArray } from '@/helpers/util'
 import { RuleItem, RuleType } from 'async-validator'
 
 export interface FormRuleItem extends RuleItem {
@@ -29,6 +29,7 @@ export interface FormItemOut {
   uid: number
   getFormName: () => string
   hookFormValue: HookFormValue
+  reset?: () => void
 }
 
 export interface FormGroupItemOut {
@@ -54,6 +55,7 @@ type FormValue = string | number | boolean | Date | (string | number | Date)[]
 interface UseOptions<T> {
   hookFormValue?: HookFormValue
   formValue: Ref<T> | Array<T>
+  hookResetValue?: (input: HTMLInputElement) => T | T[]
 }
 
 export const formItemEmits = ['update:modelValue', 'change', 'reset']
@@ -72,11 +74,12 @@ export const formItemProps = {
 export function useFormItem<T extends FormValue = string>(
   props: UseProps,
   { emit }: SetupContext<any>,
-  { hookFormValue, formValue }: UseOptions<T>
+  { hookFormValue, formValue, hookResetValue }: UseOptions<T>
 ) {
   const root = ref<HTMLElement>()
   const formItem = inject<FormItemProvide | null>('fxFormItem', null)
   let $input: FormInputElement
+
   const newHookFormValue: HookFormValue = hookFormValue
     ? hookFormValue
     : function() {
@@ -94,16 +97,22 @@ export function useFormItem<T extends FormValue = string>(
     formItem && formItem.validateAfterEventTrigger(type, value)
   }
 
-  function formReset(value: T) {
+  function formReset(value: T | T[]) {
     if (isRef(formValue)) {
-      formValue.value = value
+      formValue.value = value as T
     } else {
-      // (formValue as Array) = value
+      formValue.splice(0, Infinity, ...(value as T[]))
     }
 
-    if (value != props.value) {
+    if (
+      (isArray(formValue) &&
+        !isSameArray(formValue as T[], props.modelValue)) ||
+      (isRef(formValue) && formValue.value != props.modelValue)
+    ) {
       emit('update:modelValue', newHookFormValue())
     }
+
+    return cloneData(value)
   }
 
   function eventEmit(type: string) {
@@ -126,7 +135,14 @@ export function useFormItem<T extends FormValue = string>(
       getFormName() {
         return formItem?.props.name || ''
       },
-      hookFormValue: newHookFormValue
+      hookFormValue: newHookFormValue,
+      reset() {
+        return formReset(
+          hookResetValue
+            ? hookResetValue(getInputEl())
+            : ((getInputEl()?.value || '') as T)
+        )
+      }
     }
   }
 
@@ -160,7 +176,6 @@ export function useFormItem<T extends FormValue = string>(
     root,
     formName,
     validateAfterEventTrigger,
-    formReset,
     getInputEl,
     hookFormValue: newHookFormValue,
     eventEmit

@@ -8,8 +8,8 @@
 import { defineComponent, PropType, provide } from 'vue'
 import { inArray, isUndefined } from '@/helpers/util'
 import { useGroup } from '@/hooks/group'
-import type { DataObject } from '../helpers/types'
-import type { FormRules, FormInputElement, FormGroupItemOut } from '../hooks/form'
+import { DataObject } from '../helpers/types'
+import { FormRules, FormInputElement, FormGroupItemOut } from '../hooks/form'
 
 export default defineComponent({
   name: 'fx-form',
@@ -130,34 +130,39 @@ export default defineComponent({
     }
 
     function onReset(e: Event) {
-      // const inputEls = (e.target as HTMLFormElement).elements
-      // setTimeout(() => {
-      //   const value = {}
-      //   const uids = []
-      //   inputEls.forEach(el => {
-      //     const _ac = el._app_component
-      //     if (
-      //       _ac &&
-      //       !inArray(_ac.$.uid, uids) // 主要用于排重checbox等多选的情况
-      //     ) {
-      //       // 获取配套表单组件
-      //       uids.push(_ac.$.uid)
-      //       if (_ac.reset) {
-      //         _ac.reset()
-      //       }
-      //       if (_ac.formName || _ac.name) {
-      //         value[_ac.formName || _ac.name] = _ac.hookFormValue
-      //           ? _ac.hookFormValue()
-      //           : _ac.formValue
-      //       }
-      //     } else {
-      //       // 原生组件
-      //     }
-      //   })
-      //   emit(e.type, {
-      //     value
-      //   })
-      // }, 17)
+      const inputEls = (e.target as HTMLFormElement).elements
+      const values: DataObject<any> = {}
+      const uids: number[] = []
+
+      setTimeout(() => {
+        for (let i = 0, len = inputEls.length; i < len; i++) {
+          const el = inputEls[i]
+          const out = (el as FormInputElement)._fxFormItemOut
+
+          if (out) {
+            const uid = out.uid
+            const formName = out.getFormName()
+
+            if (!inArray(uid, uids)) {
+              // 获取配套表单组件
+              uids.push(uid)
+
+              if (out.reset) {
+                const value = out.reset()
+
+                if (formName) {
+                  values[formName] = value
+                }
+              }
+            }
+          }
+        }
+      }, 17)
+
+      emit('reset', {
+        type: 'reset',
+        value: values
+      })
     }
 
     provide('fxFormRules', props.rules)

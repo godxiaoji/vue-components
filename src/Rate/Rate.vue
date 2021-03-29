@@ -101,11 +101,11 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       hookFormValue,
       eventEmit
     } = useFormItem<number>(props, ctx, {
-      formValue
+      formValue,
+      hookResetValue: () => defaultValue
     })
 
     function change(value: number, isHalf = false) {

@@ -66,7 +66,6 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       getInputEl,
       hookFormValue,
       eventEmit
@@ -100,10 +99,6 @@ export default defineComponent({
 
     function onChange(e: Event) {
       eventEmit(e.type)
-    }
-
-    function reset() {
-      return formReset(getInputEl().value)
     }
 
     const progress = computed(() => {
@@ -143,7 +138,6 @@ export default defineComponent({
       progress,
       onChange,
       onInput,
-      reset,
       formName,
       formValue,
       validateAfterEventTrigger

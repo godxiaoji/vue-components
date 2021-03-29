@@ -101,7 +101,6 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       getInputEl,
       hookFormValue
     } = useFormItem<string>(props, ctx, { formValue })
@@ -187,10 +186,6 @@ export default defineComponent({
       })
     }
 
-    function reset() {
-      return formReset(getInputEl().value)
-    }
-
     watch(
       () => props.modelValue,
       val => {
@@ -220,8 +215,7 @@ export default defineComponent({
       onChange,
       onInput,
       onMinusOrPlusClick,
-      hookFormValue,
-      reset
+      hookFormValue
     }
   }
 })

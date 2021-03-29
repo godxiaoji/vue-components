@@ -43,20 +43,7 @@ import {
 } from 'vue'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import Exception from '@/helpers/exception'
-
-type ModeNames =
-  | 'scaleToFill'
-  | 'aspectFit'
-  | 'aspectFill'
-  | 'widthFix'
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'top left'
-  | 'top right'
-  | 'bottom left'
-  | 'bottom right'
+import { ImageModes } from './types'
 
 const MODE_NAMES = [
   'scaleToFill',
@@ -85,7 +72,7 @@ export default defineComponent({
       default: ''
     },
     mode: {
-      type: String as PropType<ModeNames>,
+      type: String as PropType<ImageModes>,
       validator: createEnumsValidator(MODE_NAMES),
       default: null
     },

@@ -1,5 +1,9 @@
 <template>
-  <div class="fx-image-uploader" v-bind="$attrs">
+  <div
+    class="fx-image-uploader"
+    :class="['column-' + columnNumber]"
+    v-bind="$attrs"
+  >
     <order
       :columnNumber="columnNumber"
       :deletable="deletable"
@@ -30,7 +34,7 @@
           @contextmenu.prevent="noop"
           @click="onItemClick(item)"
         >
-          <fx-image :src="item.url" :draggable="false" />
+          <fx-image :src="item.url" :draggable="false" :mode="imageMode" />
           <div
             class="fx-image-uploader_item-status"
             v-if="item.status !== 'uploaded' && item.status !== 'reading'"
@@ -77,7 +81,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, computed, watch, ref } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  PropType,
+  computed,
+  watch,
+  ref,
+  onMounted
+} from 'vue'
 import FxImage from '@/Image'
 import FxButton from '@/Button'
 import Icon from '@/Icon'
@@ -95,6 +107,7 @@ import {
 import { formatFileSize } from '@/helpers/file'
 import { DataObject } from '../helpers/types'
 import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
+import { ImageModes } from '../Image/types'
 
 type Accept = 'all' | 'png' | 'jpeg' | 'jpg' | 'webp'
 type UploadStatus = 'reading' | 'uploading' | 'uploaded' | 'failed'
@@ -197,6 +210,11 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
+    // 图片填充模式
+    imageMode: {
+      type: String as PropType<ImageModes>,
+      default: 'aspectFill'
+    },
     // 上传前处理函数，主要是判断大小，压缩等
     beforeUpload: {
       type: Function as PropType<
@@ -229,12 +247,12 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       getInputEl,
       hookFormValue,
       eventEmit
     } = useFormItem<string>(props, ctx, {
-      formValue
+      formValue,
+      hookResetValue: input => (input.value ? input.value.split(',') : [])
     })
 
     function onAddFiles(e: Event) {
@@ -553,6 +571,12 @@ export default defineComponent({
     watch(() => props.maxCount, updateUploadButton)
 
     updateUploadButton()
+
+    onMounted(() => {
+      const $input = getInputEl() as HTMLInputElement
+
+      $input.defaultValue = $input.value
+    })
 
     return {
       formName,

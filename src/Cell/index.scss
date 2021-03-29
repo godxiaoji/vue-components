@@ -161,5 +161,19 @@
     &-picker-view {
       margin: -8px 0;
     }
+
+    &-image-uploader {
+      padding: 0;
+      width: 192px;
+      margin-left: auto;
+
+      &.column-2 {
+        width: 128px;
+      }
+
+      &.column-1 {
+        width: 64px;
+      }
+    }
   }
 }

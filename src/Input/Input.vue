@@ -120,7 +120,6 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       getInputEl,
       hookFormValue,
       eventEmit

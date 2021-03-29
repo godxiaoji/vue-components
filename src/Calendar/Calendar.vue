@@ -42,7 +42,6 @@ import {
   defineComponent,
   shallowRef,
   ComponentPublicInstance,
-  onMounted,
   reactive,
   ref,
   watch
@@ -62,7 +61,7 @@ import dayjs from 'dayjs'
 import commonProps from '@/Calendar/props'
 import { formItemEmits, formItemProps, useFormItem } from '@/hooks/form'
 import { getEnumsValue } from '@/helpers/validator'
-import type { DetailObject } from './types'
+import { DetailObject } from './types'
 
 export default defineComponent({
   name: 'fx-calendar',
@@ -102,9 +101,9 @@ export default defineComponent({
 
     function updateValue(val: unknown) {
       if (popup.value) {
-        updateDetail(popup.value.updateValue(val))
+        return updateDetail(popup.value.updateValue(val))
       } else {
-        updateDetail(_getDetail(parseValues(val, type), type))
+        return updateDetail(_getDetail(parseValues(val, type), type))
       }
     }
 
@@ -112,6 +111,8 @@ export default defineComponent({
       detail = _detail
       formLabel.value = _detail.label
       formValue.splice(0, Infinity, ...getDetail().value)
+
+      return getDetail()
     }
 
     function onFieldClick() {
@@ -142,23 +143,9 @@ export default defineComponent({
       validateAfterEventTrigger('change', formatValue)
     }
 
-    // function reset() {
-    //   updateValue(this.defaultDetail.value)
-
-    //   emit('update:modelValue', hookFormValue())
-
-    //   emit('reset', { name: this.formName, value: hookFormValue() })
-
-    //   return hookFormValue()
-    // }
-
-    const {
-      formName,
-      validateAfterEventTrigger,
-      formReset,
-      getInputEl,
-      hookFormValue
-    } = useFormItem<Date>(props, ctx, {
+    const { formName, validateAfterEventTrigger, hookFormValue } = useFormItem<
+      Date
+    >(props, ctx, {
       formValue,
       hookFormValue() {
         const newValue = cloneDetail(detail).value
@@ -172,7 +159,8 @@ export default defineComponent({
           })
         }
         return newValue
-      }
+      },
+      hookResetValue: () => updateValue(defaultValue).value
     })
     watch(
       () => props.modelValue,
@@ -189,13 +177,7 @@ export default defineComponent({
 
     updateValue(props.modelValue)
 
-    // let defaultDetail = cloneDetail(detail)
-
-    onMounted(() => {
-      const $input = getInputEl() as HTMLInputElement
-
-      $input.defaultValue = $input.value
-    })
+    const defaultValue = cloneDetail(detail).value
 
     return {
       isInitPopup,
@@ -207,7 +189,8 @@ export default defineComponent({
       hookFormValue,
       validateAfterEventTrigger,
       onFieldClick,
-      onConfirm
+      onConfirm,
+      defaultValue
     }
   }
 })

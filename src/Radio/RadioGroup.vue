@@ -12,7 +12,7 @@
 import { defineComponent, ref } from 'vue'
 import { formItemEmits, formItemProps } from '@/hooks/form'
 import { useCheckboxOrRadioGroup } from '@/hooks/checkbox-radio'
-import type { ModelValue } from '../hooks/checkbox-radio'
+import { ModelValue } from '../hooks/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-radio-group',
@@ -35,22 +35,27 @@ export default defineComponent({
       name: 'radio',
       updateValue({ isChange, uid, children, hookFormValue }) {
         let hasChecked = false
+        let value = ''
 
         children.forEach(child => {
           const checked = uid ? uid === child.uid : child.getInputChecked()
 
           if (!hasChecked && checked) {
             hasChecked = true
-            formValue.value = child.getValue()
+            value = child.getValue()
             child.setChecked(true)
           } else {
             child.setChecked(false)
           }
         })
 
+        formValue.value = value
+
         if (isChange && formValue.value !== props.modelValue) {
           ctx.emit('update:modelValue', hookFormValue())
         }
+
+        return value
       },
       watchValue({ children, value }) {
         let hasChecked = false

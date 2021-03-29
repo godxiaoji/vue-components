@@ -9,11 +9,12 @@ import {
   getCurrentInstance,
   ComponentInternalInstance,
   provide,
-  Ref
+  Ref,
+  isRef
 } from 'vue'
-import { capitalize, inArray } from '@/helpers/util'
+import { capitalize, cloneData, inArray } from '@/helpers/util'
 import { useGroup, useGroupItem } from '@/hooks/group'
-import type { UseProps } from '../helpers/types'
+import { UseProps } from '../helpers/types'
 
 interface Options {
   formName: string
@@ -130,7 +131,7 @@ interface WatchValueOptions {
 
 interface UseGroupOptions {
   name: string
-  updateValue: (options: UpdateValueOptions) => void
+  updateValue: (options: UpdateValueOptions) => string | number
   watchValue: (options: WatchValueOptions) => void
   formValue: Ref<ModelValue> | ModelValue[]
 }
@@ -142,16 +143,20 @@ export function useCheckboxOrRadioGroup(
 ) {
   const { children } = useGroup(name)
 
-  const {
-    formName,
-    validateAfterEventTrigger,
+  function hookFormValue() {
+    return isRef(formValue) ? formValue.value : cloneData(formValue)
+  }
+
+  const { formName, validateAfterEventTrigger, eventEmit, root } = useFormItem<
+    ModelValue
+  >(props, ctx, {
+    formValue,
     hookFormValue,
-    eventEmit,
-    root
-  } = useFormItem<ModelValue>(props, ctx, { formValue })
+    hookResetValue: () => _updateValue(true)
+  })
 
   function _updateValue(isChange: boolean, uid?: number) {
-    updateValue({ isChange, children, uid, hookFormValue })
+    return updateValue({ isChange, children, uid, hookFormValue })
   }
 
   function onChange(uid: number) {

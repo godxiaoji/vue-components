@@ -1,5 +1,4 @@
 import {
-  onMounted,
   ref,
   SetupContext,
   reactive,
@@ -16,8 +15,8 @@ import {
   validateValues,
   updateArray
 } from '@/Picker/util'
-import type { UseProps } from '../helpers/types'
-import type { DetailObject, Labels, Values } from './types'
+import { UseProps } from '../helpers/types'
+import { DetailObject, Labels, Values } from './types'
 import { getEnumsValue } from '@/helpers/validator'
 import { useFormItem } from '@/hooks/form'
 
@@ -53,58 +52,55 @@ export function usePicker(
   const separator = props.initialSeparator
   // const defaultDetail = getDefaultDetail()
 
-  const {
-    formName,
-    validateAfterEventTrigger,
-    formReset,
-    getInputEl,
-    hookFormValue
-  } = useFormItem<string | number>(props, ctx, {
+  const { formName, validateAfterEventTrigger, hookFormValue } = useFormItem<
+    string | number
+  >(props, ctx, {
     formValue,
-    hookFormValue() {
-      return props.formatString ? formValueString.value : cloneData(formValue)
-    }
+    hookFormValue: () =>
+      props.formatString ? formValueString.value : cloneData(formValue),
+    hookResetValue: () => updateValue(cloneData(defaultValue)).value
   })
 
   function updateValue(val: unknown) {
     if (popup.value) {
       const popupDetail: DetailObject = popup.value.updateValue(val)
 
-      updateDetail(isEmpty(val) && val !== 0 ? getDefaultDetail() : popupDetail)
-      return
+      return updateDetail(
+        isEmpty(val) && val !== 0 ? getDefaultDetail() : popupDetail
+      )
     }
 
     const values = string2Array(val, mode, separator)
 
-    if (values instanceof Error) {
-      return
-    }
-
-    const { options, isCascade } = getFormatOptions(
-      props.options,
-      props.fieldNames,
-      mode,
-      name === 'cascader'
-    )
-
-    if (!isSameArray(values, formValue)) {
-      const validateRet = validateValues(
-        values,
-        options,
+    if (!(values instanceof Error)) {
+      const { options, isCascade } = getFormatOptions(
+        props.options,
+        props.fieldNames,
         mode,
-        separator,
-        isCascade
+        name === 'cascader'
       )
 
-      if (validateRet.valid) {
-        updateDetail(validateRet.detail)
+      if (!isSameArray(values, formValue)) {
+        const validateRet = validateValues(
+          values,
+          options,
+          mode,
+          separator,
+          isCascade
+        )
+
+        if (validateRet.valid) {
+          return updateDetail(validateRet.detail)
+        }
       }
     }
+
+    return cloneData(detail)
   }
 
   function updateDetail(newDetail: DetailObject) {
     if (!isSameArray(newDetail.value, formValue)) {
-      emit('value-change', cloneData(detail))
+      emit('value-change', cloneData(newDetail).value, cloneData(detail.value))
     }
 
     detail = newDetail
@@ -112,6 +108,8 @@ export function usePicker(
     updateArray(formLabel, newDetail.label)
     formValueString.value = newDetail.valueString
     formLabelString.value = newDetail.labelString
+
+    return cloneData(detail)
   }
 
   function onFieldClick() {
@@ -133,14 +131,6 @@ export function usePicker(
     validateAfterEventTrigger('change', hookFormValue())
   }
 
-  //   function reset() {
-  //     updateValue(this.getInputEl().value)
-  //     emit('update:modelValue', hookFormValue())
-  //     emit('reset', { name: this.formName, value: hookFormValue() })
-
-  //     return hookFormValue()
-  //   }
-
   watch(
     [() => props.modelValue, () => props.options],
     () => updateValue(props.modelValue),
@@ -157,10 +147,7 @@ export function usePicker(
     }
   )
 
-  onMounted(() => {
-    const $input = getInputEl()
-    $input.defaultValue = $input.value
-  })
+  const defaultValue = cloneData(detail).value
 
   return {
     popup,
@@ -173,6 +160,7 @@ export function usePicker(
     onFieldClick,
     onChange,
     hookFormValue,
-    validateAfterEventTrigger
+    validateAfterEventTrigger,
+    defaultValue
   }
 }

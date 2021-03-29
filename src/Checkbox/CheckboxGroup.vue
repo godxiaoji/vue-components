@@ -18,7 +18,7 @@ import {
   inArray
 } from '@/helpers/util'
 import { useCheckboxOrRadioGroup } from '@/hooks/checkbox-radio'
-import type { ModelValue } from '../hooks/checkbox-radio'
+import { ModelValue } from '../hooks/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-checkbox-group',
@@ -54,6 +54,8 @@ export default defineComponent({
         if (isChange && !isSameArray(value, props.modelValue)) {
           ctx.emit('update:modelValue', hookFormValue())
         }
+
+        return hookFormValue()
       },
       watchValue({ children, value }) {
         value = value as ModelValue[]

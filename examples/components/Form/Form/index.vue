@@ -2,20 +2,30 @@
   <div>
     <fx-group title="基础用法">
       <fx-form @validate-submit="onSubmit" @reset="onReset" :rules="rules">
-        <fx-form-item name="nickname" :label="'昵称'" required>
+        <fx-form-item name="nickname" label="昵称" required>
           <fx-input
             v-model="form.nickname"
-            :placeholder="'请输入昵称'"
+            placeholder="请输入昵称"
             @reset="onReset"
           />
         </fx-form-item>
-        <fx-form-item name="gender" :label="'性别'" required>
+        <fx-form-item name="avatar" label="头像" required>
+          <fx-image-uploader
+            v-model="form.avatar"
+            @reset="onReset"
+            :uploadReady="onUpload"
+            :columnNumber="1"
+            :maxCount="1"
+          />
+        </fx-form-item>
+        <fx-form-item name="gender" label="性别" required>
           <fx-radio-group v-model="form.gender" :inline="true" @reset="onReset">
             <fx-radio value="1">男</fx-radio>
             <fx-radio value="2">女</fx-radio>
           </fx-radio-group>
         </fx-form-item>
-        <fx-form-item name="season" :label="'季节'" required>
+
+        <fx-form-item name="season" label="季节" required>
           <fx-picker
             v-model="form.season"
             :options="multiOptions"
@@ -31,17 +41,17 @@
           >
           </fx-calendar>
         </fx-form-item>
-        <fx-form-item name="region" :label="'地区'" required>
+        <fx-form-item name="region" label="地区" required>
           <fx-cascader
             :options="regionOptions"
             :field-names="{ value: 'label' }"
             v-model="form.region"
-            :placeholder="'选择地区'"
+            placeholder="选择地区"
             :format-string="formatString"
             @reset="onReset"
           ></fx-cascader>
         </fx-form-item>
-        <fx-form-item name="weight" :label="'体重Kg'" required>
+        <fx-form-item name="weight" label="体重Kg" required>
           <fx-slider
             v-model="form.weight"
             :min="35"
@@ -50,14 +60,14 @@
             @reset="onReset"
           ></fx-slider>
         </fx-form-item>
-        <fx-form-item name="character" :label="'性格'" required>
+        <fx-form-item name="character" label="性格" required>
           <fx-checkbox-group v-model="form.character" @reset="onReset">
             <fx-checkbox :value="char" v-for="char in characters" :key="char">{{
               char
             }}</fx-checkbox>
           </fx-checkbox-group>
         </fx-form-item>
-        <fx-form-item name="happinessIndex" :label="'幸福指数'" required>
+        <fx-form-item name="happinessIndex" label="幸福指数" required>
           <fx-rate
             v-model="form.happinessIndex"
             :allow-half="true"
@@ -65,7 +75,7 @@
           >
           </fx-rate>
         </fx-form-item>
-        <fx-form-item name="stepper" :label="'步进器'" required>
+        <fx-form-item name="stepper" label="步进器" required>
           <fx-stepper
             v-model.number="form.stepper"
             :max="10"
@@ -75,7 +85,7 @@
           >
           </fx-stepper>
         </fx-form-item>
-        <fx-form-item name="agree" :label="'认可'" required>
+        <fx-form-item name="agree" label="认可" required>
           <fx-switch v-model="form.agree" @reset="onReset" />
         </fx-form-item>
         <div class="form-btns">
@@ -102,6 +112,7 @@ export default {
           { required: true, message: '请输入昵称', trigger: 'blur' },
           { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
         ],
+        avatar: [{ required: true, type: 'array', message: '请选择头像' }],
         gender: [{ required: true, message: '请选择性别' }],
         age: [{ required: true, message: '请选择年龄' }],
         region: [{ required: true, message: '请选择地区' }],
@@ -155,9 +166,9 @@ export default {
         weight: 0,
         character: ['活泼'],
         season: [],
-        region: [],
+        region: ['北京市', '北京市', '东城区'],
         stepper: 0,
-        birthday: '',
+        birthday: [new Date()],
         agree: false
       },
       multiOptions,
@@ -176,6 +187,22 @@ export default {
     },
     onReset(res) {
       console.log(res)
+    },
+    onUpload(file, handlers) {
+      console.log(file)
+      this.getDataUrl(file).then(url => {
+        handlers.success(url)
+      })
+    },
+
+    getDataUrl(file) {
+      return new Promise(resolve => {
+        const fr = new FileReader()
+        fr.onload = function(e) {
+          resolve(e.target.result)
+        }
+        fr.readAsDataURL(file)
+      })
     }
   }
 }

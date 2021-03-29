@@ -33,11 +33,13 @@ export default defineComponent({
     const {
       formName,
       validateAfterEventTrigger,
-      formReset,
       getInputEl,
       hookFormValue,
       eventEmit
-    } = useFormItem<boolean>(props, ctx, { formValue })
+    } = useFormItem<boolean>(props, ctx, {
+      formValue,
+      hookResetValue: input => input?.checked || false
+    })
 
     watch(
       () => props.modelValue,
@@ -62,10 +64,6 @@ export default defineComponent({
       eventEmit(e.type)
     }
 
-    function reset() {
-      return formReset(getInputEl().checked)
-    }
-
     onMounted(() => {
       const $input = getInputEl()
 
@@ -76,7 +74,6 @@ export default defineComponent({
       formName,
       formValue,
       onChange,
-      reset,
       hookFormValue,
       validateAfterEventTrigger
     }

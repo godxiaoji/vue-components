@@ -5,7 +5,7 @@ exports[`Picker should render prop set options correctly 1`] = `
   <div class="fx-input">
     <div class="fx-input_input placeholder"></div><svg class="fx-icon fx-input_arrow">
       <use xlink:href="#icon-RightOutlined"></use>
-    </svg><input class="fx-input_cover" type="text" readonly="" name="" value="">
+    </svg><input class="fx-input_cover" type="text" readonly="" name="">
   </div>
   <!--v-if-->
 </div>

@@ -1,3 +1,10 @@
+# [2.0.0-beta.10](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2021-03-30)
+
+
+### Bug Fixes
+
+* **form:** 优化form的reset ([66882b0](https://github.com/godxiaoji/vfox/commit/66882b01313bfe26538a28c5019fbf673a7362b2))
+
 # [2.0.0-beta.9](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-03-27)
 
 

@@ -1,5 +1,4 @@
 import '../../style/hairline.scss'
-import '../../Icon/index.scss'
-import '../../Button/index.scss'
-import '../../ButtonGroup/index.scss'
+import '../../Button/style'
+import '../../ButtonGroup/style'
 import '../index.scss'

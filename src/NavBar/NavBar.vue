@@ -1,81 +1,76 @@
 <template>
-  <div class="fx-nav-bar">
-    <div
-      class="fx-nav-bar_inner fx-horizontal-hairline"
-      :class="{ fixed: fixedTop }"
-    >
-      <div class="fx-nav-bar_layout">
-        <div class="fx-nav-bar_left">
-          <slot name="left" v-if="$slots.left"></slot>
+  <div class="fx-nav-bar fx-horizontal-hairline">
+    <div class="fx-nav-bar_inner">
+      <div class="fx-nav-bar_left">
+        <slot name="left" v-if="$slots.left"></slot>
+        <fx-button-group
+          v-else-if="leftButtons.length > 0 || showBack || showHome"
+          class="fx-nav-bar_button-group"
+          :shape="iconOnly ? 'square' : 'rectangle'"
+          pattern="borderless"
+        >
+          <template v-if="leftButtons.length > 0">
+            <fx-button
+              class="fx-nav-bar_button"
+              transparent
+              :type="item.type || 'default'"
+              :icon="item.icon"
+              v-for="(item, index) in leftButtons"
+              :key="index"
+              @click="onLeftIconClick(item, index)"
+              >{{ item.text }}</fx-button
+            >
+          </template>
+          <template v-else>
+            <fx-button
+              class="fx-nav-bar_button"
+              type="default"
+              icon="LeftOutlined"
+              transparent
+              v-if="showBack"
+              @click="onBack"
+              >返回</fx-button
+            >
+            <fx-button
+              class="fx-nav-bar_button"
+              type="default"
+              icon="HomeOutlined"
+              transparent
+              v-if="showHome"
+              @click="onBackHome"
+              >首页</fx-button
+            >
+          </template>
+        </fx-button-group>
+      </div>
+      <div
+        class="fx-nav-bar_title"
+        @mousedown="onTitleStart"
+        @touchstart="onTitleStart"
+      >
+        {{ title }}
+      </div>
+      <div class="fx-nav-bar_right">
+        <slot name="right" v-if="$slots.right"></slot>
+        <template v-else>
           <fx-button-group
-            v-else-if="leftButtons.length > 0 || showBack || showHome"
             class="fx-nav-bar_button-group"
             :shape="iconOnly ? 'square' : 'rectangle'"
             pattern="borderless"
+            v-if="rightButtons.length > 0"
           >
-            <template v-if="leftButtons.length > 0">
-              <fx-button
-                class="fx-nav-bar_button"
-                transparent
-                :type="item.type || 'default'"
-                :icon="item.icon"
-                v-for="(item, index) in leftButtons"
-                :key="index"
-                @click="onLeftIconClick(item, index)"
-                >{{ item.text }}</fx-button
-              >
-            </template>
-            <template v-else>
-              <fx-button
-                class="fx-nav-bar_button"
-                type="default"
-                icon="LeftOutlined"
-                transparent
-                v-if="showBack"
-                @click="onBack"
-                >返回</fx-button
-              >
-              <fx-button
-                class="fx-nav-bar_button"
-                type="default"
-                icon="HomeOutlined"
-                transparent
-                v-if="showHome"
-                @click="onBackHome"
-                >首页</fx-button
-              >
-            </template>
-          </fx-button-group>
-        </div>
-        <div
-          class="fx-nav-bar_title"
-          @mousedown="onTitleStart"
-          @touchstart="onTitleStart"
-        >
-          {{ title }}
-        </div>
-        <div class="fx-nav-bar_right">
-          <slot name="right" v-if="$slots.right"></slot>
-          <template v-else>
-            <fx-button-group
-              class="fx-nav-bar_button-group"
-              :shape="iconOnly ? 'square' : 'rectangle'"
-              pattern="borderless"
-              v-if="rightButtons.length > 0"
+            <fx-button
+              class="fx-nav-bar_button"
+              :type="item.type || 'default'"
+              :icon="item.icon"
+              v-for="(item, index) in rightButtons"
+              :key="index"
+              transparent
+              @click="onRightIconClick(item, index)"
+              >{{ item.text }}</fx-button
             >
-              <fx-button
-                class="fx-nav-bar_button"
-                :type="item.type || 'default'"
-                :icon="item.icon"
-                v-for="(item, index) in rightButtons"
-                :key="index"
-                transparent
-                @click="onRightIconClick(item, index)"
-                >{{ item.text }}</fx-button
-              >
-            </fx-button-group>
-          </template>
-        </div>
+          </fx-button-group>
+        </template>
       </div>
     </div>
   </div>
@@ -118,11 +113,6 @@ export default defineComponent({
     title: {
       type: String,
       default: ''
-    },
-    // 是否展示返回按钮
-    fixedTop: {
-      type: Boolean,
-      default: false
     },
     // 是否展示返回按钮
     showBack: {

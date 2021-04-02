@@ -1,13 +1,15 @@
 <template>
-  <div class="fx-fixed" :style="styles" ref="root">
+  <div class="fx-fixed" ref="root">
     <!--fixed start-->
     <div
-      class="fx-fixed_fixed"
-      ref="fixed"
+      class="fx-fixed_inner"
       :class="[placementClassName]"
       :style="fixedStyles"
+      ref="inner"
     >
-      <slot></slot>
+      <div class="fx-fixed_content-wrapper" ref="content">
+        <slot></slot>
+      </div>
     </div>
     <!--fixed end-->
   </div>
@@ -18,19 +20,21 @@ import {
   computed,
   defineComponent,
   inject,
-  onBeforeUnmount,
   onMounted,
   PropType,
   ref,
-  toRef
+  toRef,
+  watch
 } from 'vue'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { capitalize } from '@/helpers/util'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import type { PlacementType } from '../hooks/constants'
+import { PlacementType } from '../hooks/constants'
 import { useResizeDetector } from '@/hooks/resize-detector'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { StyleObject } from '../helpers/types'
+import { useFixed } from '@/hooks/fixed'
+import { addClassName, removeClassName } from '@/helpers/dom'
 
 export default defineComponent({
   name: 'fx-fixed',
@@ -40,6 +44,11 @@ export default defineComponent({
     }
   },
   props: {
+    // 开启fixed模式
+    fixed: {
+      type: Boolean,
+      default: true
+    },
     // 固定方向
     placement: {
       type: String as PropType<PlacementType>,
@@ -65,10 +74,9 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const width = ref(0)
-    const height = ref(0)
     const root = ref<HTMLElement>()
-    const fixed = ref<HTMLElement>()
+    const inner = ref<HTMLElement>()
+    const content = ref<HTMLElement>()
     const disableFixed = inject('disableFixed', false)
 
     const safeAreaInsets = useSafeAreaInsets(
@@ -76,60 +84,71 @@ export default defineComponent({
     )
 
     function updateSize() {
-      const { offsetWidth, offsetHeight } = fixed.value as HTMLElement
+      if (!(root.value && inner.value && content.value)) {
+        return
+      }
 
-      width.value = offsetWidth
-      height.value = offsetHeight
+      const { offsetWidth, offsetHeight } = content.value
+
+      if (offsetWidth === 0 || offsetHeight === 0) {
+        root.value.style.width = ''
+        root.value.style.height = ''
+        removeClassName(inner.value, 'fixed')
+        return
+      }
+
+      root.value.style.width =
+        props.fixed && props.spaceHold ? offsetWidth + 'px' : ''
+      root.value.style.height =
+        props.fixed && props.spaceHold ? offsetHeight + 'px' : ''
+
+      props.fixed
+        ? addClassName(inner.value, 'fixed')
+        : removeClassName(inner.value, 'fixed')
     }
 
     const placementClassName = computed(
       () => 'placement--' + getEnumsValue(PLACEMENT_TYPES, props.placement)
     )
 
-    const styles = computed(() => {
-      return {
-        width: (props.spaceHold ? width.value : 0) + 'px',
-        height: (props.spaceHold ? height.value : 0) + 'px'
-      }
-    })
-
     const fixedStyles = computed(() => {
       const styles: StyleObject = {
-        background: props.background,
-        zIndex: props.zIndex.toString()
+        background: props.background
       }
 
-      const placement = getEnumsValue(PLACEMENT_TYPES, props.placement)
-      if (props.enableSafeAreaInsets && safeAreaInsets.support) {
-        styles['padding' + capitalize(placement)] =
-          safeAreaInsets[placement as 'top'] + 'px'
+      if (props.fixed) {
+        if (props.enableSafeAreaInsets && safeAreaInsets.support) {
+          const placement = getEnumsValue(PLACEMENT_TYPES, props.placement)
+          styles['padding' + capitalize(placement)] =
+            safeAreaInsets[placement as 'top'] + 'px'
+        }
+
+        styles.zIndex = props.zIndex.toString()
       }
 
       return styles
     })
 
-    useResizeDetector(fixed, updateSize)
+    useResizeDetector(content, updateSize)
 
-    onMounted(() => {
-      if (disableFixed) {
-        // 针对在tranform下 fixed 会失效的问题
-        document.body.append(fixed.value as HTMLElement)
-      }
-
-      updateSize()
+    useFixed({
+      disableFixed,
+      root,
+      inner,
+      fixed: computed(() => props.fixed)
     })
 
-    onBeforeUnmount(() => {
-      if (disableFixed) {
-        ;(root.value as HTMLElement).append(fixed.value as HTMLElement)
-      }
+    watch([() => props.fixed, () => props.spaceHold], updateSize)
+
+    onMounted(() => {
+      updateSize()
     })
 
     return {
       root,
-      fixed,
+      inner,
+      content,
       placementClassName,
-      styles,
       fixedStyles,
       safeAreaInsets
     }

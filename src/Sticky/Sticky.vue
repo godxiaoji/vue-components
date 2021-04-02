@@ -14,7 +14,9 @@ import {
   onMounted,
   inject,
   watch,
-  onBeforeUnmount
+  onBeforeUnmount,
+  onActivated,
+  onDeactivated
 } from 'vue'
 import { widgetZIndex } from '@/helpers/layer'
 import { selectorValidator, sizeValidator } from '@/helpers/validator'
@@ -25,7 +27,8 @@ import {
   getSizeValue,
   querySelector
 } from '@/helpers/dom'
-import type { StyleObject } from '../helpers/types'
+import { StyleObject } from '../helpers/types'
+import { useFixed } from '@/hooks/fixed'
 
 export default defineComponent({
   name: 'fx-sticky',
@@ -60,6 +63,14 @@ export default defineComponent({
     const width = ref<number | null>(null)
     const height = ref<number | null>(null)
     const disableFixed = inject('disableFixed', false)
+    const fixed = ref(false)
+
+    const { toBody, backRoot } = useFixed({
+      disableFixed,
+      root,
+      inner: content,
+      fixed
+    })
 
     const onScroll: OnScrollCallback = (e: Event, { scrollTop }) => {
       updateFixed(scrollTop)
@@ -96,12 +107,11 @@ export default defineComponent({
       }
     }
 
-    function updateStyles(fixed: boolean) {
+    function updateStyles(isFixed: boolean) {
       const $root = root.value as HTMLElement
-      const $content = content.value as HTMLElement
-      const styles = $content.style
+      const styles = (content.value as HTMLElement).style
 
-      if (fixed) {
+      if (isFixed) {
         const { offsetTop } = getRelativeOffset($container)
         const { offsetLeft } = getRelativeOffset($root)
 
@@ -115,17 +125,11 @@ export default defineComponent({
         }
         styles.zIndex = widgetZIndex.toString()
         styles.position = 'fixed'
-
-        if (disableFixed) {
-          // 针对在tranform下 fixed 会失效的问题
-          document.body.append($content)
-        }
       } else {
         styles.cssText = ''
-        if (disableFixed) {
-          $root.append($content)
-        }
       }
+
+      fixed.value = isFixed
     }
 
     let $container: HTMLElement
@@ -157,13 +161,9 @@ export default defineComponent({
 
     onMounted(() => resetContainer(props.containSelector))
 
-    onBeforeUnmount(() => {
-      disableFixed &&
-        (root.value as HTMLElement).append(content.value as HTMLElement)
-    })
-
     return {
       root,
+      fixed,
       content,
       styles,
       resetContainer

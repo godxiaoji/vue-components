@@ -100,7 +100,7 @@ export function usePicker(
 
   function updateDetail(newDetail: DetailObject) {
     if (!isSameArray(newDetail.value, formValue)) {
-      emit('value-change', cloneData(newDetail).value, cloneData(detail.value))
+      emit('value-change', cloneData(newDetail), cloneData(detail))
     }
 
     detail = newDetail

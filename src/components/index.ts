@@ -86,8 +86,8 @@ import Order from '@/Order'
 
 /* Other */
 import Copy from '@/Copy'
-// import Scroll from '@/Scroll'
-// import LocalStorage from '@/LocalStorage'
+import Scroll from '@/Scroll'
+import LocalStorage from '@/LocalStorage'
 
 export {
   ScrollView,
@@ -158,8 +158,8 @@ export {
   IndexView,
   IndexViewItem,
   TabBar,
-  // Scroll,
-  // LocalStorage,
+  Scroll,
+  LocalStorage,
   SearchBar,
   SwipeCell,
   SideTab,

@@ -11,13 +11,13 @@ type ResizeDetectorCallback = () => void
  * @param {Function} callback 回调函数
  */
 export function resizeDetector(
-  $el: Element,
+  $el: HTMLElement,
   callback: ResizeDetectorCallback
 ): ResizeDetectorStopHandle {
   // 监听
   const object = document.createElement('object') as any
   object.style.cssText =
-    'display: block; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none; padding: 0px; margin: 0px; opacity: 0; z-index: -1000; pointer-events: none;'
+    'display: block; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none; padding: 0px; margin: 0px; opacity: 0; z-index: -1000; pointer-events: none; visibility: hidden;'
   object.tabIndex = -1
   object.type = 'text/html'
   object.setAttribute('aria-hidden', 'true')
@@ -28,6 +28,7 @@ export function resizeDetector(
     }
   }
 
+  $el.style.position = 'relative'
   $el.appendChild(object)
 
   return function off() {
@@ -36,6 +37,7 @@ export function resizeDetector(
       object.contentDocument.defaultView.removeEventListener('resize', callback)
     }
     removeEl(object)
+    $el.style.position = ''
   }
 }
 
@@ -46,7 +48,7 @@ export function useResizeDetector(
   let stopHandle: ResizeDetectorStopHandle
 
   onMounted(() => {
-    const $el = isElement(ctx.value)
+    const $el: HTMLElement = isElement(ctx.value)
       ? (ctx.value as HTMLElement)
       : (ctx as Ref<ComponentPublicInstance>).value.$el
 

@@ -2,7 +2,7 @@
   <div
     class="fx-swiper-item fx-tab-view-item"
     :data-name="name"
-    :data-subName="subName"
+    :data-sub-name="subName"
     ref="root"
   >
     <slot></slot>

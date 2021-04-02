@@ -4,7 +4,6 @@ import {
   notNullValidator,
   stringArrayValidator,
   getType,
-  elementValidator,
   calendarValueValidator,
   createEnumsValidator,
   stringNumberArrayMixValidator,
@@ -348,9 +347,9 @@ export const apiRules: ApiRules = {
       default: 300
     }
   },
-  elementScrollTo: {
-    element: {
-      validator: elementValidator,
+  scrollTo: {
+    selector: {
+      validator: selectorValidator,
       required: true
     },
     scrollTop: {

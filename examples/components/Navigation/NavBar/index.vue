@@ -31,7 +31,7 @@
         :right-buttons="[{ icon: 'MenuOutlined', text: '菜单' }]"
       ></fx-nav-bar>
     </fx-group>
-    <fx-group title="固定顶部">
+    <fx-group title="固定顶部(配合 fixed 组件)">
       <div class="navBar-fixed">
         上下滑动观察最顶部的导航
       </div>

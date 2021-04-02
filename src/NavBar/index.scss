@@ -6,30 +6,17 @@
 
   position: relative;
   height: var(--nav-bar-height);
+  background-color: var(--nav-bar-background);
   width: 100%;
   font-size: 17px;
+  display: flex;
+  flex-direction: column;
 
-  &_inner {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: var(--nav-bar-height);
-    background: var(--nav-bar-background);
-
-    &.fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
-
-    &::after {
-      content: '';
-    }
+  &::after {
+    content: '';
   }
 
-  &_layout {
+  &_inner {
     position: relative;
     display: flex;
     align-items: center;

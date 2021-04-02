@@ -5,7 +5,6 @@
 | 属性          | 类型    | 默认值 | 必填 | 说明               |
 | ------------- | ------- | ------ | ---- | ------------------ |
 | title         | string  | ''     | 否   | 标题               |
-| fixed-top     | boolean | false  | 否   | 是否固定顶部       |
 | show-back     | boolean | false  | 否   | 是否展示返回按钮   |
 | show-home     | boolean | false  | 否   | 是否展示首页按钮   |
 | right-buttons | array   | []     |      | 右侧按钮列表       |

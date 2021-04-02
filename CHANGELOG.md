@@ -1,3 +1,10 @@
+# [2.0.0-beta.11](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2021-04-02)
+
+
+### Features
+
+* 加回Scroll和LocalStorage组件 ([c51d59c](https://github.com/godxiaoji/vfox/commit/c51d59cdbb9113eb4a90f9b08a443ddbe56aa382))
+
 # [2.0.0-beta.10](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.9...v2.0.0-beta.10) (2021-03-30)
 
 

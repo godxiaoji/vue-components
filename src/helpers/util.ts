@@ -476,3 +476,17 @@ export const isPromiseLike = (object: unknown) => {
     (isObject(object) || isFunction(object)) && isFunction((object as any).then)
   )
 }
+
+/**
+ * 是否为URL
+ * @param object 值
+ * @returns boolean
+ */
+export const isURL = (object: unknown) => {
+  return (
+    isString(object) &&
+    /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?(@?)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/i.test(
+      object as string
+    )
+  )
+}

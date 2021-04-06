@@ -12,6 +12,9 @@
     <fx-group title="自定义颜色">
       <fx-tab-bar class="tab-bar-custom-color" :options="baseList" />
     </fx-group>
+    <fx-group title="自定义图片（icon=URL）">
+      <fx-tab-bar class="tab-bar-custom-image" :options="imageList" />
+    </fx-group>
     <fx-group title="配合 Fixed 实现置底">
       <fx-fixed>
         <fx-tab-bar :options="baseList" v-model:activeValue="activeValue" />
@@ -21,7 +24,7 @@
 </template>
 
 <script>
-import { baseList, badgeList } from './data'
+import { baseList, badgeList, imageList } from './data'
 import { markRaw } from 'vue'
 import TaobaoSvg from '../../Basic/Icon/svgs/taobao.svg'
 import QqSvg from '../../Basic/Icon/svgs/qq.svg'
@@ -59,7 +62,8 @@ export default {
       activeValue: 1,
       customIconList,
       baseList,
-      badgeList
+      badgeList,
+      imageList
     }
   }
 }
@@ -74,6 +78,10 @@ export default {
     --tab-bar-color: #{$danger-border-color} !important;
     --tab-bar-active-color: #fff !important;
     --tab-bar-background-color: #{$danger-color} !important;
+  }
+
+  &-custom-image {
+    --tab-bar-active-color: #{$title-color} !important;
   }
 }
 </style>

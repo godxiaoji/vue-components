@@ -12,12 +12,13 @@ import {
   isNumber,
   isObject,
   isString,
-  isStringNumberMix
+  isStringNumberMix,
+  isURL
 } from '@/helpers/util'
 import { frameTo } from '@/helpers/animation'
 import Exception from '@/helpers/exception'
 import { iconValidator } from '@/helpers/validator'
-import type { UseProps } from '../helpers/types'
+import { UseProps } from '../helpers/types'
 
 interface TabProps extends UseProps {
   options: OptionList
@@ -31,7 +32,9 @@ export interface OptionItem {
   label: string
   value: OptionValue
   icon?: any
+  iconLink?: string
   activeIcon?: any
+  activeIconLink?: string
   badge?: any
   subLabel?: string
 }
@@ -117,13 +120,21 @@ export function useTab(
               icon: iconValidator(item.icon) ? item.icon : null
             }
 
+            if (!option.icon && isURL(item.icon)) {
+              option.iconLink = item.icon as string
+
+              option.activeIconLink = isURL(item.activeIcon)
+                ? (item.activeIcon as string)
+                : option.iconLink
+            } else {
+              option.activeIcon = iconValidator(item.activeIcon)
+                ? item.activeIcon
+                : option.icon
+            }
+
             if (option.subLabel) {
               hasSub.value = true
             }
-
-            option.activeIcon = iconValidator(item.activeIcon)
-              ? item.activeIcon
-              : option.icon
 
             if (isStringNumberMix(item.badge)) {
               option.badge = {

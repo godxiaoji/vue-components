@@ -11,7 +11,8 @@ import {
   isNumberArray,
   isFunction,
   isSymbol,
-  isArray
+  isArray,
+  isURL
 } from '@/helpers/util'
 import dayjs from 'dayjs'
 import { getSizeValue } from '@/helpers/dom'
@@ -177,6 +178,6 @@ export function isSvgComponent(value: any) {
 }
 
 export const iconValidator: Validator = (value: unknown) => {
-  return isString(value) || isSvgComponent(value)
+  return isString(value) && !isURL(value) || isSvgComponent(value)
 }
 iconValidator._type = 'string Or SVG Component'

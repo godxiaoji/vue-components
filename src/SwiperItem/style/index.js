@@ -1,1 +1,1 @@
-import '../../Swiper/index.scss'
+import '../index.scss'

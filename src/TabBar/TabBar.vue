@@ -11,8 +11,12 @@
         @click="onChange(item.value)"
       >
         <badge class="fx-tab-bar_item-icon" v-bind="item.badge">
+          <fx-image
+            v-if="item.iconLink"
+            :src="index === activeIndex ? item.activeIconLink : item.iconLink"
+          />
           <icon
-            v-if="item.icon"
+            v-else-if="item.icon"
             :icon="index === activeIndex ? item.activeIcon : item.icon"
           />
         </badge>
@@ -24,13 +28,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import FxImage from '@/Image'
 import Icon from '@/Icon'
 import Badge from '@/Badge'
 import { useTab, tabEmits, tabProps } from '@/hooks/tab'
 
 export default defineComponent({
   name: 'fx-tab-bar',
-  components: { Icon, Badge },
+  components: { FxImage, Icon, Badge },
   props: {
     ...tabProps,
     scrollThreshold: {

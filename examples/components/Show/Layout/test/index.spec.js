@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils'
 import Row from '@/Row'
 import Col from '@/Col'
 
-describe('Grid', () => {
+describe('Layout', () => {
   test('Row should render default correctly', () => {
     const wrapper = mount(Row, {})
 

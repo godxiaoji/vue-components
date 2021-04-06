@@ -1,7 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <div class="icon-grid">
+      <div class="icon-flex">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="6">
             <fx-icon class="icon-icon" icon="UpOutlined"></fx-icon>
@@ -23,7 +23,7 @@
       </div>
     </fx-group>
     <fx-group title="大小">
-      <div class="icon-grid">
+      <div class="icon-flex">
         <fx-row :gutter="[16, 16]" align="bottom">
           <fx-col :span="6">
             <fx-icon
@@ -57,7 +57,7 @@
       </div>
     </fx-group>
     <fx-group title="颜色">
-      <div class="icon-grid">
+      <div class="icon-flex">
         <fx-row :gutter="[16, 16]" align="bottom">
           <fx-col :span="6">
             <fx-icon
@@ -91,7 +91,7 @@
       </div>
     </fx-group>
     <fx-group title="颜色">
-      <div class="icon-grid">
+      <div class="icon-flex">
         <fx-row :gutter="[16, 16]" align="bottom">
           <fx-col :span="6">
             <fx-icon class="icon-icon color-primary" :icon="QqSvg"></fx-icon>
@@ -147,7 +147,7 @@ export default {
 @import '@/style/var.scss';
 
 .icon {
-  &-grid {
+  &-flex {
     padding: 16px 16px 0;
   }
 

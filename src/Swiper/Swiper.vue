@@ -64,7 +64,7 @@ import { isNumber } from '@/helpers/util'
 import { useList } from '@/hooks/list'
 import { useResizeDetector } from '@/hooks/resize-detector'
 import { getStretchOffset } from '@/helpers/animation'
-import type { StyleObject } from '../helpers/types'
+import { StyleObject } from '../helpers/types'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { styleObject2CssText } from '@/helpers/dom'
 
@@ -382,7 +382,10 @@ export default defineComponent({
           .slice(7, transform.length - 1)
           .split(', ')[direction.value === 'y' ? 5 : 4]
 
-        if (parseFloat(currentSize).toFixed(2) === transSize.toFixed(2) || frameNumber > 0) {
+        if (
+          parseFloat(currentSize).toFixed(2) === transSize.toFixed(2) ||
+          frameNumber > 0
+        ) {
           // 校对清楚再回调
           playing = false
 

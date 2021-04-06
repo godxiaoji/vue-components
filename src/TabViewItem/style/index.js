@@ -1,1 +1,1 @@
-import '../../TabView/index.scss'
+import '../index.scss'

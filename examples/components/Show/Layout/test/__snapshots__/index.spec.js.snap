@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout Col should render default slot correctly 1`] = `<div class="fx-col fx-col-24">content</div>`;
+
+exports[`Layout Row & Col should render default correctly 1`] = `
+<div class="fx-row">
+  <div class="fx-col fx-col-24">content</div>
+</div>
+`;
+
+exports[`Layout Row should render default correctly 1`] = `<div class="fx-row"></div>`;

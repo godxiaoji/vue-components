@@ -41,18 +41,23 @@
     justify-content: center;
     align-items: center;
     color: var(--tab-bar-color);
-    font-size: 12px;
-    line-height: 17px;
+    font-size: 10px;
+    line-height: 14px;
 
     &-icon {
       display: block;
-      width: 24px;
-      height: 24px;
-      margin-top: 1px;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 2px;
+    }
+
+    .fx-image {
+      width: 28px;
+      height: 28px;
     }
 
     .fx-icon {
-      --size: 24px;
+      --size: 28px;
       --color: var(--tab-bar-color);
     }
 

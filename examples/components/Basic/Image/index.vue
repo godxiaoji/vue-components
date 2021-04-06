@@ -1,7 +1,7 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <div class="image-grid">
+      <div class="image-flex">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="8">
             <fx-image
@@ -14,7 +14,7 @@
       </div>
     </fx-group>
     <fx-group title="填充模式">
-      <div class="image-grid">
+      <div class="image-flex">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="8">
             <fx-image
@@ -128,7 +128,7 @@
       </div>
     </fx-group>
     <fx-group title="设置宽高比（设置后高度按比例缩放）">
-      <div class="image-grid">
+      <div class="image-flex">
         <fx-row :gutter="[16, 16]" align="bottom">
           <fx-col :span="8">
             <fx-image
@@ -158,7 +158,7 @@
       </div>
     </fx-group>
     <fx-group title="加载/加载错误">
-      <div class="image-grid">
+      <div class="image-flex">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="8">
             <fx-image class="image-image" :aspect-ratio="1"></fx-image>
@@ -174,7 +174,7 @@
       </div>
     </fx-group>
     <fx-group title="懒加载">
-      <div class="image-grid">
+      <div class="image-flex">
         <fx-row :gutter="[16, 16]">
           <fx-col :span="8">
             <fx-image
@@ -205,7 +205,7 @@ export default {
 @import '@/style/var.scss';
 
 .image {
-  &-grid {
+  &-flex {
     overflow: hidden;
     margin-bottom: -16px;
   }

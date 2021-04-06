@@ -1,6 +1,6 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
-import ScrollTabItem from '../Tab/ScrollTabItem.vue'
+import ScrollTabItem from '../ScrollTab/ScrollTabItem.vue'
 
 const _ScrollTabItem: SFCWithInstall<typeof ScrollTabItem> = Object.assign(
   ScrollTabItem,

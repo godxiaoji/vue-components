@@ -1,6 +1,6 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
-import SideTab from '../Tab/SideTab.vue'
+import SideTab from './SideTab.vue'
 
 const _SideTab: SFCWithInstall<typeof SideTab> = Object.assign(SideTab, {
   install: function(app: App) {

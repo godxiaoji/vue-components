@@ -1,6 +1,6 @@
-# Grid 宫格
+# Layout 布局
 
-布局的栅格化系统，我们是基于行（row）和列（col）来定义信息区块的外部框架，以保证页面的每个区域能够稳健地排布起来。
+基于 Flex 栅格化系统，利用 Row 和列 Col 来定义信息区块的外部框架，以保证页面的每个区域能够稳健地排布起来。
 
 ## Row Props
 
@@ -14,7 +14,7 @@
 
 ```
 <fx-row :gutter="10">
-  <fx-col :span="24">Grid</fx-col>
+  <fx-col :span="24">Layout</fx-col>
 </fx-row>
 ```
 
@@ -30,6 +30,6 @@
 
 ```
 <fx-row :gutter="10">
-  <fx-col :span="24">Grid</fx-col>
+  <fx-col :span="24">Layout</fx-col>
 </fx-row>
 ```

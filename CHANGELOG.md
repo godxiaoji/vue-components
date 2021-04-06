@@ -1,3 +1,15 @@
+# [2.0.0-beta.12](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2021-04-06)
+
+
+### Bug Fixes
+
+* 调整组件 ([0313c93](https://github.com/godxiaoji/vfox/commit/0313c93344c8651e6f0710858a11909c8944da50))
+
+
+### Features
+
+* **tabbar:** tabbar支持引入图片URL ([f577581](https://github.com/godxiaoji/vfox/commit/f577581bf2e6fc51fe266c636994b38d3a3d6ca7))
+
 # [2.0.0-beta.11](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.10...v2.0.0-beta.11) (2021-04-02)
 
 

@@ -1,3 +1,10 @@
+# [2.0.0-beta.13](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2021-04-13)
+
+
+### Features
+
+* add CountDown & Steps/Step ([f3ac2ff](https://github.com/godxiaoji/vfox/commit/f3ac2ffbf78fa7aa7cc12530170c2de57e3a2c62))
+
 # [2.0.0-beta.12](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.11...v2.0.0-beta.12) (2021-04-06)
 
 

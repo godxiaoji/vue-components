@@ -93,7 +93,7 @@ export default defineComponent({
       )
     }
 
-    const { list, update } = useList('tab-view', resetItems)
+    const { list } = useList('tabView', resetItems)
 
     function onChange(res: SwiperCallbackRes) {
       emit('change', res)
@@ -138,7 +138,6 @@ export default defineComponent({
       swiper.value && swiper.value.swipeTo(activeIndex)
     }
 
-    provide('fxTabViewUpdate', update)
     provide('fxTabViewVertical', vertical.value)
 
     return {

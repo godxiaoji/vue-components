@@ -5,23 +5,16 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  defineComponent,
-  onMounted,
-  inject,
-  onUnmounted,
-  onUpdated
-} from 'vue'
+import { ref, defineComponent } from 'vue'
+import { useListItem } from '@/hooks/list'
 
 export default defineComponent({
   name: 'fx-swiper-item',
   setup() {
     const root = ref<HTMLElement>()
-    const update = inject('fxSwiperUpdate', (lazy?: number) => {})
 
-    onMounted(() => update())
-    onUnmounted(() => update())
+    useListItem('swiper')
+
     // onUpdated(() => {
     //   const $item = root.value as HTMLElement
 

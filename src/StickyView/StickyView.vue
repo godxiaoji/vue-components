@@ -23,7 +23,6 @@ import {
   computed,
   defineComponent,
   onMounted,
-  provide,
   ref,
   shallowRef,
   watch
@@ -254,7 +253,7 @@ export default defineComponent({
       )
     }
 
-    const { list, update } = useList('sticky-view', resetItems)
+    const { list } = useList('stickyView', resetItems)
 
     const fixedStyles = computed(() => {
       return {
@@ -272,8 +271,6 @@ export default defineComponent({
     onMounted(() => {
       resetContainer(props.containSelector)
     })
-
-    provide('fxStickyViewUpdate', update)
 
     return {
       root,

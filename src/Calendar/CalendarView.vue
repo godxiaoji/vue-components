@@ -113,13 +113,7 @@ function printError(message: string) {
 
 export default defineComponent({
   name: 'fx-calendar-view',
-  inject: {
-    appCalendarPopup: {
-      default: null
-    }
-  },
   props: { ...commonProps },
-
   emits: ['select', 'update:modelValue'],
   setup(props, { emit }) {
     const weekDays = reactive<WeekDay[]>([])
@@ -581,22 +575,6 @@ export default defineComponent({
 
     updateOptions()
     !isEmpty(props.modelValue) && updateValue(props.modelValue)
-
-    // const popup = this.appCalendarPopup
-
-    // updateValue(
-    //   _parseValues(
-    //     popup && popup.modelValue != null ? popup.modelValue : this.modelValue
-    //   )
-    // )
-
-    // if (popup) {
-    //   popup.detail = getDetail()
-    //   popup.updateValue = val => {
-    //     return updateValue(_parseValues(val))
-    //   }
-    //   popup.initialized()
-    // }
 
     return {
       type,

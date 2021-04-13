@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, onUnmounted } from 'vue'
-import { createUpdateInItem } from '@/hooks/list'
+import { defineComponent } from 'vue'
+import { useListItem } from '@/hooks/list'
 
 export default defineComponent({
   name: 'fx-sticky-view-item',
@@ -18,16 +18,7 @@ export default defineComponent({
     }
   },
   setup() {
-    const update = inject(
-      'fxStickyViewUpdate',
-      createUpdateInItem('sticky-view')
-    )
-
-    onMounted(() => {
-      update()
-    })
-
-    onUnmounted(() => update())
+    useListItem('stickyView')
 
     return {}
   }

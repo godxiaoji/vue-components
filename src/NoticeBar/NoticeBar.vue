@@ -60,11 +60,6 @@ const modeMaps = new Map([
 export default defineComponent({
   name: 'fx-notice-bar',
   components: { Icon },
-  inject: {
-    appNotify: {
-      default: null
-    }
-  },
   props: {
     // 是否显示
     visible: {
@@ -117,7 +112,7 @@ export default defineComponent({
   emits: ['update:visible', 'show', 'hide', 'close-click'],
   setup(props, ctx) {
     const { emit } = ctx
-    const appNotify = inject('appNotify', null)
+    const notifyExist = inject('fxNotifyExist', false)
     const visible2 = ref(!!props.visible)
     const marqueeX = ref(0)
     const marqueeDuration = ref(0)
@@ -181,7 +176,7 @@ export default defineComponent({
 
     function onRightIconClick() {
       if (props.mode === 'closable') {
-        if (!appNotify) {
+        if (!notifyExist) {
           hide()
         }
 

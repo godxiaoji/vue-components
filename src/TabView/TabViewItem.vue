@@ -10,15 +10,8 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  defineComponent,
-  onMounted,
-  inject,
-  onUnmounted,
-  onUpdated
-} from 'vue'
-import { createUpdateInItem } from '@/hooks/list'
+import { ref, defineComponent, inject } from 'vue'
+import { useListItem } from '@/hooks/list'
 import { useTouch, UseTouchEvent } from '@/hooks/touch'
 
 export default defineComponent({
@@ -35,28 +28,19 @@ export default defineComponent({
   },
   setup() {
     const root = ref<HTMLElement>()
-    const swiperUpdate = inject('fxSwiperUpdate', (lazy?: number) => {})
-    const tabViewUpdate = inject(
-      'fxTabViewUpdate',
-      createUpdateInItem('tab-view')
-    )
     const vertical = inject('fxTabViewVertical', false)
 
-    function update() {
-      swiperUpdate()
-      tabViewUpdate()
-    }
+    useListItem('swiper')
+    useListItem('tabView')
 
-    onMounted(() => update())
-    onUnmounted(() => update())
-    onUpdated(() => {
-      const $item = root.value as HTMLElement
+    // onUpdated(() => {
+    //   const $item = root.value as HTMLElement
 
-      if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
-        // 解决默认 hidden 的问题
-        update()
-      }
-    })
+    //   if ($item.offsetWidth === 0 || $item.offsetHeight === 0) {
+    //     // 解决默认 hidden 的问题
+    //     update()
+    //   }
+    // })
 
     let coords: any
 

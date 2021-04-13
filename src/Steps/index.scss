@@ -1,0 +1,15 @@
+@import '../style/var.scss';
+
+.fx-steps {
+  --steps-color: #{$font3-color};
+  --steps-active-color: #{$primary-color};
+
+  &.dot .fx-step_index:not(.has--icon) {
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+    text-indent: -9999px;
+    left: 21px;
+    top: 20px;
+  }
+}

@@ -32,7 +32,7 @@ export default defineComponent({
   components: { NoticeBar },
   provide() {
     return {
-      appNotify: this
+      fxNotifyExist: true
     }
   },
   props: {

@@ -83,6 +83,9 @@ import Badge from '@/Badge'
 import Progress from '@/Progress'
 import Tag from '@/Tag'
 import Order from '@/Order'
+import CountDown from '@/CountDown'
+import Steps from '@/Steps'
+import Step from '@/Step'
 
 /* Other */
 import Copy from '@/Copy'
@@ -168,5 +171,8 @@ export {
   Fixed,
   NumberKeyboard,
   Order,
-  ImageUploader
+  ImageUploader,
+  CountDown,
+  Steps,
+  Step
 }

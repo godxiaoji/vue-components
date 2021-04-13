@@ -37,11 +37,6 @@ import Exception from '@/helpers/exception'
 export default defineComponent({
   name: 'fx-collapse-item',
   components: { Cell },
-  inject: {
-    appCollapse: {
-      default: null
-    }
-  },
   props: {
     icon: {
       validator: iconValidator,

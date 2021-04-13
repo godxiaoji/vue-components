@@ -15,11 +15,6 @@ function rangeCol(number: number | string) {
 
 export default defineComponent({
   name: 'fx-col',
-  inject: {
-    fxRowGutter: {
-      default: [0, 0]
-    }
-  },
   props: {
     // 栅格占据的列数
     span: {

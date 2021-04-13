@@ -2,10 +2,15 @@ import {
   getCurrentInstance,
   ref,
   onBeforeUnmount,
-  ComponentInternalInstance
+  ComponentInternalInstance,
+  provide,
+  onMounted,
+  onUnmounted,
+  inject,
+  Ref
 } from 'vue'
 import Exception from '@/helpers/exception'
-import { kebabCase2CamelCase } from '@/helpers/util'
+import { camelCase2KebabCase, capitalize } from '@/helpers/util'
 
 type ListUpdateCallback = ($items: HTMLElement[]) => void
 
@@ -14,16 +19,33 @@ type ListUpdateCallback = ($items: HTMLElement[]) => void
  * @param name 横杆形式
  */
 export function createUpdateInItem(name: string) {
-  name = kebabCase2CamelCase(name)
+  name = capitalize(name)
+
   return function(lazy = 17) {
     new Exception(`${name}Item is not in ${name}`, Exception.TYPE.DEFAULT, name)
   }
 }
 
+/**
+ * useList
+ * @param name eg: tabView
+ * @param updateCallback 更新函数
+ * @returns
+ */
 export function useList(name: string, updateCallback: ListUpdateCallback) {
   const instance = getCurrentInstance()
   const list = ref<HTMLElement>()
   let updateTimer: number
+
+  function doUpdate() {
+    const $items = getItems()
+
+    $items.forEach(($item, index) => {
+      $item._fxSetIndex && $item._fxSetIndex(index)
+    })
+
+    updateCallback($items)
+  }
 
   function update(lazy = 17) {
     if (!(instance as ComponentInternalInstance).isMounted) {
@@ -32,21 +54,26 @@ export function useList(name: string, updateCallback: ListUpdateCallback) {
 
     if (lazy === 0) {
       if (!(instance as ComponentInternalInstance).isUnmounted) {
-        updateCallback(getItems())
+        doUpdate()
       }
     } else {
       clearTimeout(updateTimer)
       updateTimer = window.setTimeout(() => {
         if (!(instance as ComponentInternalInstance).isUnmounted) {
-          updateCallback(getItems())
+          doUpdate()
         }
       }, lazy)
     }
   }
 
-  function getItems(): HTMLElement[] {
+  provide(`fx${capitalize(name)}Update`, update)
+
+  function getItems(): ListItemElement[] {
     return list.value
-      ? [].slice.call(list.value.querySelectorAll(`.fx-${name}-item`), 0)
+      ? [].slice.call(
+          list.value.querySelectorAll(`.fx-${camelCase2KebabCase(name)}-item`),
+          0
+        )
       : []
   }
 
@@ -55,6 +82,32 @@ export function useList(name: string, updateCallback: ListUpdateCallback) {
   return {
     list,
     getItems,
+    update
+  }
+}
+
+interface ListItemElement extends HTMLElement {
+  _fxSetIndex?(_index: number): void
+}
+
+export function useListItem(
+  name: string,
+  root?: Ref<ListItemElement | undefined>
+) {
+  const index = ref(-1)
+  const update = inject(`fx${capitalize(name)}Update`, createUpdateInItem(name))
+
+  onMounted(() => {
+    if (root?.value) {
+      root.value._fxSetIndex = _index => (index.value = _index)
+    }
+
+    update()
+  })
+  onUnmounted(() => update())
+
+  return {
+    index,
     update
   }
 }

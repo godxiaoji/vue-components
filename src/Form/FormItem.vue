@@ -26,16 +26,6 @@ import { useGroupItem } from '@/hooks/group'
 export default defineComponent({
   name: 'fx-form-item',
   components: { Cell },
-  provide() {
-    return {
-      appFormItem: this
-    }
-  },
-  inject: {
-    appForm: {
-      default: null
-    }
-  },
   props: {
     name: {
       type: String,

@@ -45,11 +45,6 @@ import type { DetailObject } from './types'
 export default defineComponent({
   name: 'fx-calendar-popup',
   components: { CalendarView, Drawer, FxButton },
-  provide() {
-    return {
-      appCalendarPopup: this
-    }
-  },
   props: {
     ...commonProps,
     ...popupExtendProps,

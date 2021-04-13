@@ -13,11 +13,6 @@ import { FormRules, FormInputElement, FormGroupItemOut } from '../hooks/form'
 
 export default defineComponent({
   name: 'fx-form',
-  provide() {
-    return {
-      appForm: this
-    }
-  },
   props: {
     rules: Object as PropType<FormRules>
   },

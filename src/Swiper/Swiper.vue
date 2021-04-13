@@ -657,7 +657,6 @@ export default defineComponent({
       $items = []
     })
 
-    provide('fxSwiperUpdate', update)
     provide('disableFixed', true)
 
     return {

@@ -4,7 +4,7 @@ import PopMenu from '../Popover/PopMenu.vue'
 import type { ApiOptions } from '../apis/types'
 import { showPopup, PopupHook } from '@/apis/Popup'
 import type { DomSelector } from '../helpers/types'
-import type { PlacementType } from '../hooks/constants'
+import type { PlacementType } from '../hooks/types'
 import type { OptionItem } from '../Popover/types'
 
 type ShowPopMenuOptions = {

@@ -22,6 +22,19 @@
         </fx-row>
       </div>
     </fx-group>
+    <fx-group title="图标（Slot）">
+      <div class="badge-flex">
+        <fx-row :gutter="[16, 16]">
+          <fx-col :span="6"
+            ><fx-badge :content="1">
+              <div class="badge-slot"></div>
+              <template #badge>
+                <fx-icon icon="CheckOutlined"></fx-icon>
+              </template> </fx-badge
+          ></fx-col>
+        </fx-row>
+      </div>
+    </fx-group>
     <fx-group title="文本">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">

@@ -7,45 +7,51 @@
   --badge-background-color: #{$danger-color};
   --badge-color: #fff;
 
-  &_num {
+  &_badge {
     position: absolute;
-    height: 15px;
-    line-height: 15px;
-    min-width: 15px;
+    height: 17px;
+    min-width: 17px;
+    line-height: 17px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding: 0 4px;
-    border-radius: 7.5px;
+    border-radius: 8.5px;
     box-sizing: border-box;
     font-size: 11px;
     font-weight: 400;
     color: var(--badge-color);
     background-color: var(--badge-background-color);
     transform: scale(0);
-  }
-
-  &_dot {
-    position: absolute;
-    right: -5px;
-    top: -5px;
-    height: 10px;
-    width: 10px;
-    border-radius: 5px;
+    border: 1px solid #fff;
     box-sizing: border-box;
-    color: var(--badge-color);
-    background-color: var(--badge-background-color);
-    border: 1px solid var(--border-color);
-    transform: scale(0);
+
+    .fx-icon {
+      --size: 11px;
+      --color: var(--badge-color);
+      margin: 0 -4px;
+    }
+
+    &.dot {
+      right: -6px;
+      top: -6px;
+      height: 12px;
+      width: 12px;
+      min-width: 0;
+      padding: 0;
+      overflow: hidden;
+      text-indent: -9999px;
+
+      * {
+        display: none;
+      }
+    }
   }
 
   &.animated {
     .fx-badge {
-      &_num {
+      &_badge {
         transition: transform 0.2s;
-      }
-
-      &_dot {
-        transition: transform 0.1s;
       }
     }
   }

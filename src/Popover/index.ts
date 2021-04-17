@@ -4,7 +4,7 @@ import Popover from './Popover.vue'
 import type { ApiOptions } from '../apis/types'
 import { showPopup, PopupHook } from '@/apis/Popup'
 import type { DomSelector } from '../helpers/types'
-import type { PlacementType } from '../hooks/constants'
+import type { PlacementType } from '../hooks/types'
 
 type ShowPopoverOptions = {
   selector: DomSelector

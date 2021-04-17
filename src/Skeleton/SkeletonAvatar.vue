@@ -8,11 +8,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { createEnumsValidator } from '@/helpers/validator'
-import {
-  AVATAR_SHAPE_NAMES,
-  AvatarShapeNames,
-  useSubSkeleton
-} from '@/hooks/skeleton'
+import { AVATAR_SHAPE_NAMES, useSubSkeleton } from '@/Skeleton/skeleton'
+import { AvatarShapeNames } from './types'
 
 export default defineComponent({
   name: 'fx-skeleton-avatar',

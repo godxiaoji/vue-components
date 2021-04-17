@@ -29,7 +29,7 @@ import {
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { capitalize } from '@/helpers/util'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import { PlacementType } from '../hooks/constants'
+import { PlacementType } from '../hooks/types'
 import { useResizeDetector } from '@/hooks/resize-detector'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { StyleObject } from '../helpers/types'

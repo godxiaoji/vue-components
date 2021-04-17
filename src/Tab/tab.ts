@@ -19,6 +19,8 @@ import { frameTo } from '@/helpers/animation'
 import Exception from '@/helpers/exception'
 import { iconValidator } from '@/helpers/validator'
 import { UseProps } from '../helpers/types'
+import { handleBadge } from '@/Badge/util'
+import { BadgeOptions } from '../Badge/types'
 
 interface TabProps extends UseProps {
   options: OptionList
@@ -35,7 +37,7 @@ export interface OptionItem {
   iconLink?: string
   activeIcon?: any
   activeIconLink?: string
-  badge?: any
+  badge?: BadgeOptions | number | string
   subLabel?: string
 }
 
@@ -136,17 +138,7 @@ export function useTab(
               hasSub.value = true
             }
 
-            if (isStringNumberMix(item.badge)) {
-              option.badge = {
-                content: item.badge
-              }
-            } else if (isObject(item.badge)) {
-              option.badge = item.badge
-            } else {
-              option.badge = {
-                content: null
-              }
-            }
+            option.badge = handleBadge(item.badge)
           }
         }
 

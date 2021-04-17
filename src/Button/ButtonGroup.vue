@@ -23,7 +23,7 @@ import type {
   SizeType,
   ButtonPatternType,
   ButtonShapeType,
-} from '../hooks/constants'
+} from '../hooks/types'
 import { useGroup } from '@/hooks/group'
 import { defineComponent, PropType, provide, reactive, watch } from 'vue'
 

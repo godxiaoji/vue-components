@@ -49,7 +49,7 @@ import {
 } from '@/helpers/validator'
 import type { StyleObject } from '../helpers/types'
 import { STATE_TYPES } from '@/hooks/constants'
-import type { StateType } from '../hooks/constants'
+import type { StateType } from '../hooks/types'
 
 const modeMaps = new Map([
   ['default', ''],

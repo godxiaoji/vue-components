@@ -1,10 +1,16 @@
 <template>
   <div class="fx-badge" :class="{ animated: !!animated }">
     <slot></slot>
-    <i v-if="dot && content != null" class="fx-badge_dot" :style="styles"></i>
-    <span v-else-if="content != null" class="fx-badge_num" :style="styles">{{
-      showCount
-    }}</span>
+    <div
+      class="fx-badge_badge"
+      :class="{ dot }"
+      :style="styles"
+      v-if="content != null"
+    >
+      <slot name="badge">
+        {{ showCount }}
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -18,7 +24,7 @@ import {
   watch
 } from 'vue'
 import { isNumber, isString, rangeInteger } from '@/helpers/util'
-import type { StyleObject } from '../helpers/types'
+import { StyleObject } from '../helpers/types'
 import { AnimationFrameTask, frameTo } from '@/helpers/animation'
 
 export default defineComponent({
@@ -55,6 +61,16 @@ export default defineComponent({
       default: () => {
         return [0, 0]
       }
+    },
+    // 背景颜色
+    backgroundColor: {
+      type: String,
+      default: null
+    },
+    // 文字颜色
+    color: {
+      type: String,
+      default: null
     }
   },
   setup(props) {
@@ -80,7 +96,7 @@ export default defineComponent({
     })
 
     const styles = computed(() => {
-      return {
+      const obj: StyleObject = {
         transform: `translate3d(50%, -50%, 0px) scale(${
           (isString(props.content) && props.content) ||
           props.showZero ||
@@ -90,7 +106,16 @@ export default defineComponent({
         })`,
         right: `${-props.offset[0]}px`,
         top: `${props.offset[1]}px`
-      } as StyleObject
+      }
+
+      if (isString(props.backgroundColor)) {
+        obj.backgroundColor = props.backgroundColor
+      }
+      if (isString(props.color)) {
+        obj.color = props.color
+      }
+
+      return obj
     })
 
     watch(

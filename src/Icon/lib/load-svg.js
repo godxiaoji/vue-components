@@ -3253,21 +3253,23 @@ var map = {
 	"./outlined/keyboard.svg": 112,
 	"./outlined/left.svg": 113,
 	"./outlined/loading.svg": 114,
-	"./outlined/menu.svg": 115,
-	"./outlined/minus.svg": 116,
-	"./outlined/plus.svg": 117,
-	"./outlined/reload.svg": 118,
-	"./outlined/right.svg": 119,
-	"./outlined/scan.svg": 120,
-	"./outlined/search.svg": 121,
-	"./outlined/setting.svg": 122,
-	"./outlined/share-alt.svg": 123,
-	"./outlined/sound.svg": 124,
-	"./outlined/star.svg": 125,
-	"./outlined/stop.svg": 126,
-	"./outlined/up-circle.svg": 127,
-	"./outlined/up.svg": 128,
-	"./outlined/user.svg": 129
+	"./outlined/man.svg": 115,
+	"./outlined/menu.svg": 116,
+	"./outlined/minus.svg": 117,
+	"./outlined/plus.svg": 118,
+	"./outlined/reload.svg": 119,
+	"./outlined/right.svg": 120,
+	"./outlined/scan.svg": 121,
+	"./outlined/search.svg": 122,
+	"./outlined/setting.svg": 123,
+	"./outlined/share-alt.svg": 124,
+	"./outlined/sound.svg": 125,
+	"./outlined/star.svg": 126,
+	"./outlined/stop.svg": 127,
+	"./outlined/up-circle.svg": 128,
+	"./outlined/up.svg": 129,
+	"./outlined/user.svg": 130,
+	"./outlined/woman.svg": 131
 };
 
 
@@ -3891,6 +3893,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
+  "id": "icon-ManOutlined",
+  "use": "icon-ManOutlined-usage",
+  "viewBox": "0 0 1024 1024",
+  "content": "<symbol viewBox=\"0 0 1024 1024\" id=\"icon-ManOutlined\"><path d=\"M874 120H622c-3.3 0-6 2.7-6 6v56c0 3.3 2.7 6 6 6h160.4L583.1 387.3c-50-38.5-111-59.3-175.1-59.3-76.9 0-149.3 30-203.6 84.4S120 539.1 120 616s30 149.3 84.4 203.6C258.7 874 331.1 904 408 904s149.3-30 203.6-84.4C666 765.3 696 692.9 696 616c0-64.1-20.8-124.9-59.2-174.9L836 241.9V402c0 3.3 2.7 6 6 6h56c3.3 0 6-2.7 6-6V150c0-16.5-13.5-30-30-30zM408 828c-116.9 0-212-95.1-212-212s95.1-212 212-212 212 95.1 212 212-95.1 212-212 212z\" /></symbol>"
+});
+var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default.a.add(symbol);
+/* harmony default export */ __webpack_exports__["default"] = (symbol);
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
   "id": "icon-MenuOutlined",
   "use": "icon-MenuOutlined-usage",
   "viewBox": "0 0 1024 1024",
@@ -3900,7 +3923,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3921,7 +3944,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3942,7 +3965,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3963,7 +3986,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3984,7 +4007,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4005,7 +4028,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4026,7 +4049,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4047,7 +4070,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4068,7 +4091,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4089,7 +4112,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4110,7 +4133,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4131,7 +4154,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4152,7 +4175,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4173,7 +4196,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4189,6 +4212,27 @@ var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPO
   "use": "icon-UserOutlined-usage",
   "viewBox": "0 0 1024 1024",
   "content": "<symbol viewBox=\"0 0 1024 1024\" id=\"icon-UserOutlined\"><path d=\"M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z\" /></symbol>"
+});
+var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default.a.add(symbol);
+/* harmony default export */ __webpack_exports__["default"] = (symbol);
+
+/***/ }),
+/* 131 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
+  "id": "icon-WomanOutlined",
+  "use": "icon-WomanOutlined-usage",
+  "viewBox": "0 0 1024 1024",
+  "content": "<symbol viewBox=\"0 0 1024 1024\" id=\"icon-WomanOutlined\"><path d=\"M712.8 548.8c53.6-53.6 83.2-125 83.2-200.8 0-75.9-29.5-147.2-83.2-200.8C659.2 93.6 587.8 64 512 64s-147.2 29.5-200.8 83.2C257.6 200.9 228 272.1 228 348c0 63.8 20.9 124.4 59.4 173.9 7.3 9.4 15.2 18.3 23.7 26.9 8.5 8.5 17.5 16.4 26.8 23.7 39.6 30.8 86.3 50.4 136.1 57V736H360c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h114v140c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V812h114c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8H550V629.5c61.5-8.2 118.2-36.1 162.8-80.7zM512 556c-55.6 0-107.7-21.6-147.1-60.9C325.6 455.8 304 403.6 304 348s21.6-107.7 60.9-147.1C404.2 161.5 456.4 140 512 140s107.7 21.6 147.1 60.9C698.4 240.2 720 292.4 720 348s-21.6 107.7-60.9 147.1C619.7 534.4 567.6 556 512 556z\" /></symbol>"
 });
 var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default.a.add(symbol);
 /* harmony default export */ __webpack_exports__["default"] = (symbol);

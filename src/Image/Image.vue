@@ -6,10 +6,10 @@
       :style="{ 'padding-top': aspectRatio * 100 + '%' }"
     ></span>
     <i class="fx-image_loading" v-if="loading">
-      <icon icon="ImageOutlined" />
+      <icon :icon="loadingIcon" :size="iconSize" />
     </i>
     <i class="fx-image_error" v-if="error">
-      <icon icon="ImageBreakOutlined" />
+      <icon :icon="errorIcon" :size="iconSize" />
     </i>
     <img
       v-if="currentSrc"
@@ -41,7 +41,11 @@ import {
   computed,
   ComponentInternalInstance
 } from 'vue'
-import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
+import {
+  createEnumsValidator,
+  getEnumsValue,
+  iconValidator
+} from '@/helpers/validator'
 import Exception from '@/helpers/exception'
 import { ImageModes } from './types'
 
@@ -90,6 +94,20 @@ export default defineComponent({
     draggable: {
       type: Boolean,
       default: true
+    },
+    // 左侧图标名称
+    loadingIcon: {
+      validator: iconValidator,
+      default: 'ImageOutlined'
+    },
+    // 左侧图标名称
+    errorIcon: {
+      validator: iconValidator,
+      default: 'ImageBreakOutlined'
+    },
+    iconSize: {
+      type: Number,
+      default: null
     }
   },
   setup(props, { emit }) {

@@ -4,10 +4,9 @@ import SkeletonLayout from './SkeletonLayout.vue'
 import {
   paragraphDefaultRow,
   AVATAR_SHAPE_NAMES,
-  BUTTON_SHAPE_NAMES,
-  ButtonShapeNames,
-  AvatarShapeNames
-} from '@/hooks/skeleton'
+  BUTTON_SHAPE_NAMES
+} from '@/Skeleton/skeleton'
+import { ButtonShapeNames, AvatarShapeNames } from './types'
 import { createEnumsValidator } from '@/helpers/validator'
 
 export default defineComponent({

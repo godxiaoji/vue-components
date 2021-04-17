@@ -1,15 +1,12 @@
 import { computed, ComputedRef, inject } from 'vue'
-import type { UseProps } from '../helpers/types'
+import { UseProps } from '../helpers/types'
 import { isNumber } from '@/helpers/util'
 import { getEnumsValue } from '@/helpers/validator'
+import { AvatarShapeNames, ButtonShapeNames } from './types'
 
 export const paragraphDefaultRow = 3
-
-export type AvatarShapeNames = 'default' | 'circle'
-export const AVATAR_SHAPE_NAMES = ['default', 'circle']
-
-export type ButtonShapeNames = 'default' | 'round'
-export const BUTTON_SHAPE_NAMES = ['default', 'round']
+export const AVATAR_SHAPE_NAMES: AvatarShapeNames[] = ['default', 'circle']
+export const BUTTON_SHAPE_NAMES: ButtonShapeNames[] = ['default', 'round']
 
 interface SkeletonProps extends UseProps {
   animated: boolean

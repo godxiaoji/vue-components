@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Price should render default slot correctly 1`] = `
+<div class="fx-price">
+  <!--v-if--><span class="fx-price_integer">1111</span><span class="fx-price_decimal">.11</span>
+</div>
+`;
+
+exports[`Price should render prop decimalDigits=3 correctly 1`] = `
+<div class="fx-price">
+  <!--v-if--><span class="fx-price_integer">1111</span><span class="fx-price_decimal">.110</span>
+</div>
+`;
+
+exports[`Price should render prop symbol="￥" correctly 1`] = `<div class="fx-price"><span class="fx-price_symbol">￥</span><span class="fx-price_integer">1111</span><span class="fx-price_decimal">.11</span></div>`;
+
+exports[`Price should render prop thousands=true correctly 1`] = `
+<div class="fx-price">
+  <!--v-if--><span class="fx-price_integer">1,111</span><span class="fx-price_decimal">.11</span>
+</div>
+`;

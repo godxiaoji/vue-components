@@ -44,7 +44,7 @@ import type {
   ButtonPatternType,
   ButtonShapeType,
   StateType
-} from '../hooks/constants'
+} from '../hooks/types'
 import { useGroupItem } from '@/hooks/group'
 
 const FORM_TYPES = ['button', 'submit', 'reset']

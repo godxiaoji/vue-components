@@ -86,6 +86,9 @@ import Order from '@/Order'
 import CountDown from '@/CountDown'
 import Steps from '@/Steps'
 import Step from '@/Step'
+import Price from '@/Price'
+import Avatar from '@/Avatar'
+import AvatarGroup from '@/AvatarGroup'
 
 /* Other */
 import Copy from '@/Copy'
@@ -174,5 +177,8 @@ export {
   ImageUploader,
   CountDown,
   Steps,
-  Step
+  Step,
+  Price,
+  Avatar,
+  AvatarGroup
 }

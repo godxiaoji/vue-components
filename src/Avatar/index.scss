@@ -1,0 +1,99 @@
+@import '../style/var.scss';
+
+.fx-avatar {
+  --avatar-size: 48px;
+  --avatar-font-size: 24px;
+  --avatar-color: #{$font-color};
+
+  background-color: $background-color;
+  color: #fff;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: var(--avatar-font-size);
+  color: var(--avatar-color);
+  box-sizing: border-box;
+
+  .fx-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+    .fx-icon {
+      --size: 1.333em;
+      --color: var(--avatar-color);
+    }
+  }
+
+  &.shape--square {
+    border-radius: 4px;
+
+    .fx-image {
+      border-radius: 4px;
+    }
+  }
+
+  &.size--large {
+    --avatar-size: 64px;
+    --avatar-font-size: 32px;
+  }
+
+  &.size--small {
+    --avatar-size: 36px;
+    --avatar-font-size: 18px;
+  }
+
+  &.color-- {
+    &DustRed {
+      background-color: #ff4d4f;
+      --avatar-color: #fff;
+    }
+    &Volcano {
+      background-color: #ff7a45;
+      --avatar-color: #fff;
+    }
+    &SunsetOrange {
+      background-color: #fa8c16;
+      --avatar-color: #fff;
+    }
+    &CalendulaGold {
+      background-color: #faad14;
+      --avatar-color: #fff;
+    }
+    &SunriseYellow {
+      background-color: #fadb14;
+      --avatar-color: #{$title-color};
+    }
+    &Lime {
+      background-color: #a0d911;
+      --avatar-color: #fff;
+    }
+    &PolarGreen {
+      background-color: #52c41a;
+      --avatar-color: #fff;
+    }
+    &Cyan {
+      background-color: #36cfc9;
+      --avatar-color: #fff;
+    }
+    &DaybreakBlue {
+      background-color: #1890ff;
+      --avatar-color: #fff;
+    }
+    &GeekBlue {
+      background-color: #597ef7;
+      --avatar-color: #fff;
+    }
+    &GoldenPurple {
+      background-color: #9254de;
+      --avatar-color: #fff;
+    }
+    &Magenta {
+      background-color: #f759ab;
+      --avatar-color: #fff;
+    }
+  }
+}

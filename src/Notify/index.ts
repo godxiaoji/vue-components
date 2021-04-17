@@ -3,7 +3,7 @@ import { SFCWithInstall } from '@/helpers/types'
 import Notify from './Notify.vue'
 import { showPopup, hidePopup, PopupHook } from '@/apis/Popup'
 import type { ApiOptions } from '../apis/types'
-import type { StateType } from '../hooks/constants'
+import type { StateType } from '../hooks/types'
 
 type ShowNotifyOptions = {
   title: string

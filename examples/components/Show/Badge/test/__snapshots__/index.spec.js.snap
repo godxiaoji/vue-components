@@ -1,9 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Badge should render default slot correctly 1`] = `<div class="fx-badge"><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</span></div>`;
+exports[`Badge should render default slot correctly 1`] = `
+<div class="fx-badge">
+  <div class="fx-badge_badge" style="transform: translate3d(50%, -50%, 0px) scale(0); right: 0px; top: 0px;">0</div>
+</div>
+`;
 
-exports[`Badge should render prop content=1 correctly 1`] = `<div class="fx-badge"><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</span></div>`;
+exports[`Badge should render prop content=1 correctly 1`] = `
+<div class="fx-badge">
+  <div class="fx-badge_badge" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</div>
+</div>
+`;
 
-exports[`Badge should render prop content=1000 correctly 1`] = `<div class="fx-badge"><span class="fx-badge_num" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">99+</span></div>`;
+exports[`Badge should render prop content=1000 correctly 1`] = `
+<div class="fx-badge">
+  <div class="fx-badge_badge" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">99+</div>
+</div>
+`;
 
-exports[`Badge should render prop dot=true correctly 1`] = `<div class="fx-badge"><i class="fx-badge_dot" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;"></i></div>`;
+exports[`Badge should render prop dot=true correctly 1`] = `
+<div class="fx-badge">
+  <div class="fx-badge_badge dot" style="transform: translate3d(50%, -50%, 0px) scale(1); right: 0px; top: 0px;">1</div>
+</div>
+`;

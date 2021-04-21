@@ -1,3 +1,10 @@
+# [2.0.0-beta.14](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2021-04-17)
+
+
+### Features
+
+* **new components:** add Price & Avatar ([2a8e8ce](https://github.com/godxiaoji/vfox/commit/2a8e8ce2af8accc11fb2ba7ac66a72317716360c))
+
 # [2.0.0-beta.13](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.12...v2.0.0-beta.13) (2021-04-13)
 
 

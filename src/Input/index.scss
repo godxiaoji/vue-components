@@ -1,7 +1,6 @@
 @import '../style/var.scss';
 
 .fx-input {
-  --input-height: 48px;
   --input-font-size: 17px;
   --input-icon-size: 20px;
   --input-color: #{$title-color};
@@ -9,16 +8,16 @@
   --input-border-color: #{$border-color};
   --input-focus-border-color: #{$primary-color};
 
-  height: var(--input-height);
+  height: 48px;
   width: 100%;
   position: relative;
   display: flex;
   align-items: center;
 
   border: 1px solid var(--input-border-color);
-  border-radius: 4px;
+  border-radius: 0;
   box-sizing: border-box;
-  padding: 0 16px;
+  padding: 11px 16px;
   font-size: var(--input-font-size);
   background-color: #fff;
   color: var(--input-color);
@@ -57,16 +56,23 @@
     }
   }
 
+  &_limit {
+    font-size: 17px;
+    line-height: 24px;
+    height: 24px;
+    color: $font-color;
+    margin-left: 8px;
+  }
+
   &_input {
     flex: 1;
     display: block;
-    overflow: hidden;
     margin: 0;
     outline: none;
     border: none;
     width: 100%;
     height: 100%;
-    line-height: calc(var(--input-height) - 2px);
+    line-height: 1.412;
     padding: 0;
     font-size: var(--input-font-size);
     cursor: pointer;
@@ -75,8 +81,9 @@
     box-sizing: border-box;
     box-shadow: none;
     resize: none;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
 
     &:read-only {
       cursor: auto;
@@ -118,5 +125,15 @@
     &:disabled {
       cursor: not-allowed;
     }
+  }
+}
+
+.fx-textarea {
+  height: 108px;
+
+  .fx-input_limit {
+    position: absolute;
+    right: 16px;
+    bottom: 8px;
   }
 }

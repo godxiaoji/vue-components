@@ -122,12 +122,12 @@
 
   .fx {
     &-input {
-      --input-height: 32px;
+      height: 32px;
       border-left-width: 0;
       border-right-width: 0;
       border-top-color: transparent;
       border-bottom-color: transparent;
-      padding: 0;
+      padding: 3px 0;
       border-radius: 0;
 
       &.focus {
@@ -141,6 +141,10 @@
       &.disabled {
         background-color: transparent;
       }
+    }
+
+    &-textarea {
+      height: 92px;
     }
 
     &-radio-group {

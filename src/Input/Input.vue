@@ -14,7 +14,7 @@
     </div>
     <textarea
       v-if="type === 'textarea'"
-      class="fx-input_input"
+      class="fx-input_input fx-input_textarea"
       :name="formName"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -44,6 +44,9 @@
       @compositionend="onCompositionEnd"
       ref="input"
     />
+    <span class="fx-input_limit" v-if="showLimit && maxlength > 0"
+      >{{ formValue.length }}/{{ maxlength }}</span
+    >
     <icon
       v-if="showClear"
       v-show="formValue && focus2"
@@ -82,7 +85,9 @@ export default defineComponent({
     ...formItemProps,
     maxlength: {
       type: [String, Number],
-      validator: isNumeric,
+      validator: (val: number | string) => {
+        return isNumeric(val) || val === ''
+      },
       default: 140
     },
     placeholder: {
@@ -107,6 +112,11 @@ export default defineComponent({
       default: false
     },
     showClear: {
+      type: Boolean,
+      default: false
+    },
+    // 展示字数限制文本
+    showLimit: {
       type: Boolean,
       default: false
     }

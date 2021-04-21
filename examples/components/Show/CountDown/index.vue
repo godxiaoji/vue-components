@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: 'Countdown',
+  name: 'CountDown',
   props: {},
   data() {
     return {

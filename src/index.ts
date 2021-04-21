@@ -1,7 +1,7 @@
 import { App } from 'vue'
 import * as Components from './components'
 import { isIOS, isMobile } from './helpers/device'
-import './style'
+// import './style'
 
 // iOS点击态
 function initEvent() {

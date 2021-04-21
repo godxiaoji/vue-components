@@ -1,4 +1,5 @@
 @import '../style/var.scss';
+@import '../style/mixin.scss';
 
 .fx-cell {
   --cell-label-color: #{$title-color};

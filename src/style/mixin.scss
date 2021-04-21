@@ -1,15 +1,15 @@
 @import './var.scss';
 
-@mixin rotate-360-animation($duration: 800ms) {
-  animation: fx-rotate-360 $duration infinite linear both;
+@mixin box-shadow {
+  box-shadow: 0px 2px 4px rgba($color: $black-color, $alpha: 0.04);
 }
 
-@keyframes fx-rotate-360 {
-  0% {
-    transform: rotate(0);
-  }
+@mixin background-active {
+  background-color: rgba($color: $black-color, $alpha: 0.16);
+}
 
-  100% {
-    transform: rotate(360deg);
-  }
+@mixin card {
+  border-radius: 8px;
+  background-color: #fff;
+  @include box-shadow;
 }

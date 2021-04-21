@@ -89,6 +89,9 @@ import Step from '@/Step'
 import Price from '@/Price'
 import Avatar from '@/Avatar'
 import AvatarGroup from '@/AvatarGroup'
+import QrCode from '@/QrCode'
+import Timeline from '@/Timeline'
+import TimelineItem from '@/TimelineItem'
 
 /* Other */
 import Copy from '@/Copy'
@@ -180,5 +183,8 @@ export {
   Step,
   Price,
   Avatar,
-  AvatarGroup
+  AvatarGroup,
+  QrCode,
+  Timeline,
+  TimelineItem
 }

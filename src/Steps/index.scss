@@ -1,15 +1,30 @@
 @import '../style/var.scss';
 
 .fx-steps {
-  --steps-color: #{$font3-color};
+  --steps-color: #{$border-color};
   --steps-active-color: #{$primary-color};
 
-  &.dot .fx-step_index:not(.has--icon) {
-    width: 8px;
-    height: 8px;
+  &.dot .fx-step_index {
+    width: 10px;
+    height: 10px;
     border-width: 2px;
     text-indent: -9999px;
     left: 21px;
-    top: 20px;
+    top: 19px;
+
+    * {
+      display: none;
+    }
+  }
+
+  &.horizontal {
+    display: flex;
+    margin: 0 -8px;
+
+    &.dot .fx-step_index {
+      left: 50%;
+      top: 18px;
+      margin-left: -5px;
+    }
   }
 }

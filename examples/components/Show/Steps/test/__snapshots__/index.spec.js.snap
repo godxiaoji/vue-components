@@ -3,7 +3,7 @@
 exports[`Steps Step should render default correctly 1`] = `
 <div class="fx-step fx-steps-item fx-horizontal-hairline finish">
   <div class="fx-step_line"></div>
-  <div class="fx-step_index"><span>0</span></div>
+  <div class="fx-step_index">0</div>
   <div class="fx-step_inner">
     <div class="fx-step_title">title-1</div>
     <div class="fx-step_content">content-1</div>

@@ -1,12 +1,12 @@
 <template>
-  <div class="fx-steps" :class="{ dot }" ref="list">
+  <div class="fx-steps" :class="{ dot, horizontal }" ref="list">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, toRef } from 'vue'
-import { useList } from '@/hooks/list'
+import { defineComponent } from 'vue'
+import { stepsEmits, useStepList } from '@/Steps/steps'
 
 export default defineComponent({
   name: 'fx-steps',
@@ -18,19 +18,15 @@ export default defineComponent({
     dot: {
       type: Boolean,
       default: false
+    },
+    horizontal: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['update:activeIndex'],
-  setup(props, { emit }) {
-    const { list } = useList('steps', $items => {
-      if (props.activeIndex >= $items.length) {
-        emit('update:activeIndex', $items.length - 1)
-      }
-    })
-
-    provide('fxStepsActiveIndex', toRef(props, 'activeIndex'))
-
-    return { list }
+  emits: [...stepsEmits],
+  setup(props, ctx) {
+    return { ...useStepList(props, ctx, 'steps') }
   }
 })
 </script>

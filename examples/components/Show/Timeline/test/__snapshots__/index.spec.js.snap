@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timeline Timeline should render default correctly 1`] = `<div class="fx-timeline"></div>`;
+
+exports[`Timeline TimelineItem should render default correctly 1`] = `
+<div class="fx-timeline-item fx-horizontal-hairline">
+  <div class="fx-timeline-item_line"></div>
+  <div class="fx-timeline-item_index"><i class="fx-timeline-item_dot"></i></div>
+  <div class="fx-timeline-item_inner">
+    <div class="fx-timeline-item_title">title-1</div>
+    <div class="fx-timeline-item_content">content-1</div>
+  </div>
+</div>
+`;

@@ -1,0 +1,6 @@
+@import '../style/var.scss';
+
+.fx-timeline {
+  --timeline-color: #{$border-color};
+  --timeline-active-color: #{$primary-color};
+}

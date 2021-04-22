@@ -8,7 +8,6 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'fx-timeline',
-  props: {}
+  name: 'fx-timeline'
 })
 </script>

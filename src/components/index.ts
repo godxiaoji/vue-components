@@ -92,6 +92,9 @@ import AvatarGroup from '@/AvatarGroup'
 import QrCode from '@/QrCode'
 import Timeline from '@/Timeline'
 import TimelineItem from '@/TimelineItem'
+import Stopwatch from '@/Stopwatch'
+import Result from '@/Result'
+import LoadMore from '@/LoadMore'
 
 /* Other */
 import Copy from '@/Copy'
@@ -186,5 +189,8 @@ export {
   AvatarGroup,
   QrCode,
   Timeline,
-  TimelineItem
+  TimelineItem,
+  Stopwatch,
+  Result,
+  LoadMore
 }

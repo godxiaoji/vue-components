@@ -1,0 +1,57 @@
+@import '../style/var.scss';
+
+.fx-load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 64px;
+  color: $font3-color;
+  font-size: 14px;
+  line-height: 20px;
+  height: 20px;
+
+  &_icon {
+    --size: 20px;
+    --color: #{$primary-color};
+    margin-right: 8px;
+  }
+
+  &_dot {
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: $font3-color;
+  }
+
+  &:not(.loading) {
+    &::before,
+    &::after {
+      flex: 1;
+      content: '';
+      display: block;
+      box-sizing: border-box;
+      height: 1px;
+      border-top: 1px solid $divider-color;
+      margin: 0 8px;
+    }
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .fx-load-more:not(.loading) {
+    &::before,
+    &::after {
+      transform: scaleY(0.5);
+    }
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+  .fx-load-more:not(.loading) {
+    &::before,
+    &::after {
+      transform: scaleY($one-third);
+    }
+  }
+}

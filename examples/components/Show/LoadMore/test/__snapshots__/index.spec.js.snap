@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadMore should render default correctly 1`] = `
+<div class="fx-load-more">
+  <!--v-if--><i class="fx-load-more_dot"></i>
+</div>
+`;

@@ -1,15 +1,15 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="默认" class="countdown-box">
+      <fx-cell label="默认" class="count-down-box">
         <fx-count-down v-model:timestamp="time"></fx-count-down>
       </fx-cell>
-      <fx-cell label="显示天数" class="countdown-box">
+      <fx-cell label="显示天数" class="count-down-box">
         <fx-count-down v-model:timestamp="time2" showDays></fx-count-down>
       </fx-cell>
     </fx-group>
     <fx-group title="Slot">
-      <fx-cell label="中文显示" class="countdown-box">
+      <fx-cell label="中文显示" class="count-down-box">
         <fx-count-down v-model:timestamp="time3">
           <template #default="countDown">
             {{ countDown.fullHours }}时{{ countDown.minutes }}分{{
@@ -18,7 +18,7 @@
           </template>
         </fx-count-down>
       </fx-cell>
-      <fx-cell label="毫秒" class="countdown-box">
+      <fx-cell label="毫秒" class="count-down-box">
         <fx-count-down v-model:timestamp="time5">
           <template #default="countDown">
             {{ countDown.fullHours }}:{{ countDown.minutes }}:{{
@@ -27,25 +27,27 @@
           </template>
         </fx-count-down>
       </fx-cell>
-      <fx-cell label="自定义风格" class="countdown-box">
+      <fx-cell label="自定义风格" class="count-down-box">
         <fx-count-down v-model:timestamp="time3">
           <template #default="countDown">
-            <span class="countdown-time-item">{{ countDown.fullHours }}</span
-            ><span class="countdown-time-item">{{ countDown.minutes }}</span
-            ><span class="countdown-time-item">{{ countDown.seconds }}</span>
+            <span class="count-down-time-item">{{ countDown.fullHours }}</span
+            ><span class="count-down-time-item">{{ countDown.minutes }}</span
+            ><span class="count-down-time-item">{{ countDown.seconds }}</span>
           </template>
         </fx-count-down>
       </fx-cell>
     </fx-group>
     <fx-group title="时间监听">
-      <fx-cell label="pause/resume/end" class="countdown-box">
-        <fx-count-down
-          v-model:timestamp="time4"
-          :paused="paused"
-          @pause="onPause"
-          @resume="onResume"
-          @end="onEnd"
-        ></fx-count-down>
+      <fx-cell label="pause/resume/end" class="count-down-box">
+        <div class="count-down-time-r">
+          <fx-count-down
+            v-model:timestamp="time4"
+            :paused="paused"
+            @pause="onPause"
+            @resume="onResume"
+            @end="onEnd"
+          ></fx-count-down>
+        </div>
         <fx-button @click="paused = !paused" size="small">{{
           paused ? '恢复' : '暂停'
         }}</fx-button>
@@ -92,7 +94,7 @@ export default {
 <style lang="scss">
 @import '@/style/var.scss';
 
-.countdown {
+.count-down {
   &-box {
     .fx-button {
       flex-grow: 0;
@@ -107,6 +109,10 @@ export default {
     background: $primary-color;
     color: #fff;
     margin-left: 5px;
+  }
+
+  &-time-r {
+    margin-right: 16px;
   }
 }
 </style>

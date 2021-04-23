@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stopwatch should render prop text="hello world" correctly 1`] = `<div class="fx-stopwatch">00:00.000</div>`;

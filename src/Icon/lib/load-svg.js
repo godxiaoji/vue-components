@@ -3229,47 +3229,49 @@ var map = {
 	"./filled/check-square.svg": 88,
 	"./filled/close-circle.svg": 89,
 	"./filled/heart.svg": 90,
-	"./filled/star.svg": 91,
-	"./outlined/backspace.svg": 92,
-	"./outlined/border.svg": 93,
-	"./outlined/check-circle.svg": 94,
-	"./outlined/check-square.svg": 95,
-	"./outlined/check.svg": 96,
-	"./outlined/circle.svg": 97,
-	"./outlined/close-circle.svg": 98,
-	"./outlined/close.svg": 99,
-	"./outlined/delete.svg": 100,
-	"./outlined/down-circle.svg": 101,
-	"./outlined/down.svg": 102,
-	"./outlined/edit.svg": 103,
-	"./outlined/exclamation-circle.svg": 104,
-	"./outlined/exclamation.svg": 105,
-	"./outlined/heart.svg": 106,
-	"./outlined/home.svg": 107,
-	"./outlined/image-break.svg": 108,
-	"./outlined/image.svg": 109,
-	"./outlined/info-circle.svg": 110,
-	"./outlined/info.svg": 111,
-	"./outlined/keyboard.svg": 112,
-	"./outlined/left.svg": 113,
-	"./outlined/loading.svg": 114,
-	"./outlined/man.svg": 115,
-	"./outlined/menu.svg": 116,
-	"./outlined/minus.svg": 117,
-	"./outlined/plus.svg": 118,
-	"./outlined/reload.svg": 119,
-	"./outlined/right.svg": 120,
-	"./outlined/scan.svg": 121,
-	"./outlined/search.svg": 122,
-	"./outlined/setting.svg": 123,
-	"./outlined/share-alt.svg": 124,
-	"./outlined/sound.svg": 125,
-	"./outlined/star.svg": 126,
-	"./outlined/stop.svg": 127,
-	"./outlined/up-circle.svg": 128,
-	"./outlined/up.svg": 129,
-	"./outlined/user.svg": 130,
-	"./outlined/woman.svg": 131
+	"./filled/info-circle.svg": 91,
+	"./filled/star.svg": 92,
+	"./filled/warning.svg": 93,
+	"./outlined/backspace.svg": 94,
+	"./outlined/border.svg": 95,
+	"./outlined/check-circle.svg": 96,
+	"./outlined/check-square.svg": 97,
+	"./outlined/check.svg": 98,
+	"./outlined/circle.svg": 99,
+	"./outlined/close-circle.svg": 100,
+	"./outlined/close.svg": 101,
+	"./outlined/delete.svg": 102,
+	"./outlined/down-circle.svg": 103,
+	"./outlined/down.svg": 104,
+	"./outlined/edit.svg": 105,
+	"./outlined/exclamation-circle.svg": 106,
+	"./outlined/exclamation.svg": 107,
+	"./outlined/heart.svg": 108,
+	"./outlined/home.svg": 109,
+	"./outlined/image-break.svg": 110,
+	"./outlined/image.svg": 111,
+	"./outlined/info-circle.svg": 112,
+	"./outlined/info.svg": 113,
+	"./outlined/keyboard.svg": 114,
+	"./outlined/left.svg": 115,
+	"./outlined/loading.svg": 116,
+	"./outlined/man.svg": 117,
+	"./outlined/menu.svg": 118,
+	"./outlined/minus.svg": 119,
+	"./outlined/plus.svg": 120,
+	"./outlined/reload.svg": 121,
+	"./outlined/right.svg": 122,
+	"./outlined/scan.svg": 123,
+	"./outlined/search.svg": 124,
+	"./outlined/setting.svg": 125,
+	"./outlined/share-alt.svg": 126,
+	"./outlined/sound.svg": 127,
+	"./outlined/star.svg": 128,
+	"./outlined/stop.svg": 129,
+	"./outlined/up-circle.svg": 130,
+	"./outlined/up.svg": 131,
+	"./outlined/user.svg": 132,
+	"./outlined/woman.svg": 133
 };
 
 
@@ -3389,6 +3391,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
+  "id": "icon-InfoCircleFilled",
+  "use": "icon-InfoCircleFilled-usage",
+  "viewBox": "0 0 1024 1024",
+  "content": "<symbol viewBox=\"0 0 1024 1024\" id=\"icon-InfoCircleFilled\"><path d=\"M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 010-96 48.01 48.01 0 010 96z\" /></symbol>"
+});
+var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default.a.add(symbol);
+/* harmony default export */ __webpack_exports__["default"] = (symbol);
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
   "id": "icon-StarFilled",
   "use": "icon-StarFilled-usage",
   "viewBox": "0 0 1024 1024",
@@ -3398,7 +3421,28 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 92 */
+/* 93 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var symbol = new _node_modules_svg_baker_runtime_browser_symbol_js__WEBPACK_IMPORTED_MODULE_0___default.a({
+  "id": "icon-WarningFilled",
+  "use": "icon-WarningFilled-usage",
+  "viewBox": "0 0 1024 1024",
+  "content": "<symbol viewBox=\"0 0 1024 1024\" id=\"icon-WarningFilled\"><path d=\"M955.7 856l-416-720c-6.2-10.7-16.9-16-27.7-16s-21.6 5.3-27.7 16l-416 720C56 877.4 71.4 904 96 904h832c24.6 0 40-26.6 27.7-48zM480 416c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v184c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V416zm32 352a48.01 48.01 0 010-96 48.01 48.01 0 010 96z\" /></symbol>"
+});
+var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WEBPACK_IMPORTED_MODULE_1___default.a.add(symbol);
+/* harmony default export */ __webpack_exports__["default"] = (symbol);
+
+/***/ }),
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3419,7 +3463,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3440,7 +3484,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3461,7 +3505,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3482,7 +3526,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3503,7 +3547,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3524,7 +3568,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3545,7 +3589,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3566,7 +3610,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3587,7 +3631,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3608,7 +3652,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3629,7 +3673,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3650,7 +3694,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3671,7 +3715,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3692,7 +3736,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3713,7 +3757,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3734,7 +3778,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3755,7 +3799,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3776,7 +3820,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3797,7 +3841,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3818,7 +3862,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3839,7 +3883,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3860,7 +3904,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3881,7 +3925,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3902,7 +3946,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3923,7 +3967,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3944,7 +3988,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3965,7 +4009,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3986,7 +4030,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4007,7 +4051,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4028,7 +4072,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4049,7 +4093,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4070,7 +4114,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4091,7 +4135,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4112,7 +4156,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4133,7 +4177,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4154,7 +4198,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4175,7 +4219,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 129 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4196,7 +4240,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 130 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4217,7 +4261,7 @@ var result = _node_modules_svg_sprite_loader_runtime_browser_sprite_build_js__WE
 /* harmony default export */ __webpack_exports__["default"] = (symbol);
 
 /***/ }),
-/* 131 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

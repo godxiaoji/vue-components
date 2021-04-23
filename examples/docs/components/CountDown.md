@@ -24,21 +24,23 @@ PS：本组件没有指定样式，默认情况下可对文字样式进行自定
 
 ```
 <fx-count-down v-model:timestamp="timestamp">
-  <template #default="countDown">
-    {{ countDown.fullHours }}:{{ countDown.minutes }}:{{
-        countDown.seconds
-    }}.{{ countDown.milliseconds }}
+  <template #default="countTime">
+    {{ countTime.fullHours }}:{{ countTime.minutes }}:{{
+        countTime.seconds
+    }}.{{ countTime.milliseconds }}
   </template>
 </fx-count-down>
 ```
 
-### countDown 的结构
+### countTime 的结构
 
-| 字段名       | 类型   | 说明                                            |
-| ------------ | ------ | ----------------------------------------------- |
-| days         | string | 剩余天数                                        |
-| hours        | string | 剩余小时数（<24），需要跟 days 配合，保留 2 位  |
-| fullHours    | string | 剩余小时数，含天数综合，如 '124'，至少保留 2 位 |
-| minutes      | string | 剩余分钟数，保留 2 位                           |
-| seconds      | string | 剩余秒钟数，保留 2 位                           |
-| milliseconds | string | 剩余毫秒数，保留 3 位                           |
+| 字段名             | 类型   | 说明                                        |
+| ------------------ | ------ | ------------------------------------------- |
+| time               | number | 持续时间                                    |
+| days               | string | 天数                                        |
+| hours              | string | 小时数（<24），需要跟 days 配合，保留 2 位  |
+| fullHours          | string | 小时数，含天数综合，如 '124'，至少保留 2 位 |
+| thousandsFullHours | string | 千分位形式的小时数，含天数综合，如 '1,234'  |
+| minutes            | string | 分钟数，保留 2 位                           |
+| seconds            | string | 秒钟数，保留 2 位                           |
+| milliseconds       | string | 毫秒数，保留 3 位                           |

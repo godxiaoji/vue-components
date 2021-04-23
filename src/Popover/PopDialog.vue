@@ -54,14 +54,17 @@ export default defineComponent({
       default: '',
       required: true
     },
+    // 展示取消按钮
     showCancel: {
       type: Boolean,
       default: true
     },
+    // 取消文本
     cancelText: {
       type: String,
       default: '取消'
     },
+    // 确认文本
     confirmText: {
       type: String,
       default: '确定'

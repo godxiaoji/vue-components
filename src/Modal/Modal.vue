@@ -17,9 +17,9 @@
         <div class="fx-modal_box-inner">
           <slot></slot>
         </div>
-        <i v-if="showClose" class="fx-modal_close" @click="onCloseClick"
-          ><icon icon="CloseCircleFilled"></icon
-        ></i>
+        <i v-if="showClose" class="fx-modal_close" @click="onCloseClick">
+          <icon icon="CloseCircleFilled"></icon>
+        </i>
       </div>
     </div>
   </teleport>

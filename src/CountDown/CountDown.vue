@@ -1,26 +1,18 @@
 <template>
   <div class="fx-count-down">
-    <slot :="countDown">
+    <slot :="countTime">
       {{
         showDays
-          ? countDown.days + '天 ' + countDown.hours
-          : countDown.fullHours
-      }}:{{ countDown.minutes }}:{{ countDown.seconds }}
+          ? countTime.days + '天 ' + countTime.hours
+          : countTime.fullHours
+      }}:{{ countTime.minutes }}:{{ countTime.seconds }}
     </slot>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, reactive, watch } from 'vue'
-
-interface CountDown {
-  days: string
-  fullHours: string
-  hours: string
-  minutes: string
-  seconds: string
-  milliseconds: string
-}
+import { defineComponent, watch } from 'vue'
+import { useCountTime } from '@/hooks/count-time'
 
 export default defineComponent({
   name: 'fx-count-down',
@@ -43,83 +35,46 @@ export default defineComponent({
   },
   emits: ['update:timestamp', 'pause', 'resume', 'end'],
   setup(props, { emit }) {
-    const countDown = reactive<CountDown>({
-      days: '0',
-      fullHours: '0',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
-      milliseconds: '000'
-    })
-
     let startTime = 0
     let expiredTime = 0
     let remainTime = 0
 
-    function formatNumber(num: number) {
-      return (num > 9 ? '' : '0') + num
-    }
+    const countTime = useCountTime(({ update, stop }) => {
+      remainTime = expiredTime - Date.now()
 
-    function cutOne(num: number, divisor: number) {
-      return Math.floor(num / divisor)
-    }
+      if (remainTime > 0) {
+        update(remainTime)
+        emit('update:timestamp', remainTime)
 
-    function update(timestamp: number) {
-      countDown.milliseconds =
-        (remainTime % 1000 > 99 ? '' : '0') + formatNumber(remainTime % 1000)
-      timestamp = cutOne(remainTime, 1000)
-      countDown.seconds = formatNumber(timestamp % 60)
-      timestamp = cutOne(timestamp, 60)
-      countDown.minutes = formatNumber(timestamp % 60)
-      timestamp = cutOne(timestamp, 60)
-      countDown.fullHours = formatNumber(timestamp)
-      countDown.hours = formatNumber(timestamp % 24)
-      countDown.days = cutOne(timestamp, 24).toString()
-    }
+      } else {
+        remainTime = 0
+        update(remainTime)
+        emit('update:timestamp', remainTime)
+        emit('end', {
+          startTime,
+          endTime: expiredTime
+        })
 
-    let timer: number
-
-    function start() {
-      timer = requestAnimationFrame(() => {
-        remainTime = expiredTime - Date.now()
-
-        if (remainTime > 0) {
-          update(remainTime)
-          emit('update:timestamp', remainTime)
-          start()
-        } else {
-          remainTime = 0
-          update(remainTime)
-          emit('update:timestamp', remainTime)
-          stop()
-          emit('end', {
-            startTime,
-            endTime: expiredTime
-          })
-        }
-      })
-    }
-
-    function stop() {
-      cancelAnimationFrame(timer)
-    }
+        stop()
+      }
+    })
 
     watch(
       () => props.timestamp,
       val => {
-        if (props.timestamp === remainTime) {
+        if (Math.abs(props.timestamp - remainTime) < 1000) {
           return
         }
 
-        stop()
+        countTime.stop()
 
         startTime = Date.now()
         expiredTime = val + startTime
         remainTime = val
 
-        update(remainTime)
+        countTime.update(remainTime)
 
-        !props.paused && start()
+        !props.paused && countTime.start()
       },
       {
         immediate: true
@@ -135,7 +90,7 @@ export default defineComponent({
             remainTime
           })
 
-          stop()
+          countTime.stop()
         } else {
           emit('resume', {
             type: 'resume',
@@ -144,15 +99,13 @@ export default defineComponent({
 
           expiredTime = remainTime + Date.now()
 
-          start()
+          countTime.start()
         }
       }
     )
 
-    onBeforeUnmount(stop)
-
     return {
-      countDown
+      countTime: countTime.times
     }
   }
 })

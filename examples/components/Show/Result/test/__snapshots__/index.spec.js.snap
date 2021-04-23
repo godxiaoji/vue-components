@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Result should render default correctly 1`] = `
+<div class="fx-result type--info">
+  <div class="fx-result_header">
+    <fx-icon-stub class="fx-result_icon type--info" icon="InfoCircleFilled"></fx-icon-stub>
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+  <div class="fx-result_footer">
+    <fx-button-stub type="primary"></fx-button-stub>
+    <fx-button-stub type="primary"></fx-button-stub>
+  </div>
+</div>
+`;

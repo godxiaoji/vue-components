@@ -1,11 +1,11 @@
 /* global describe,test,expect */
 
 import { shallowMount } from '@vue/test-utils'
-import Stopwatch from '@/Stopwatch'
+import Result from '@/Result'
 
-describe('Stopwatch', () => {
+describe('Result', () => {
   test('should render default correctly', () => {
-    const wrapper = shallowMount(Stopwatch, {})
+    const wrapper = shallowMount(Result, {})
 
     expect(wrapper.html()).toMatchSnapshot()
   })

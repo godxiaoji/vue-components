@@ -9,8 +9,8 @@
 | content         | string  |        | 否   | 提示的内容，优先于 slot  |
 | mask-closable   | boolean | false  | 否   | 点击蒙层是否触发关闭操作 |
 | show-cancel     | boolean | true   | 否   | 是否显示取消按钮         |
-| confirmText     | string  | '确定' | 否   | 确认按钮的文字           |
-| cancelText      | string  | '取消' | 否   | 取消按钮的文字           |
+| confirm-text    | string  | '确定' | 否   | 确认按钮的文字           |
+| cancel-text     | string  | '取消' | 否   | 取消按钮的文字           |
 
 ## Events
 

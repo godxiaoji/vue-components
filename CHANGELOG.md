@@ -1,3 +1,12 @@
+# [2.0.0-beta.16](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2021-04-23)
+
+
+### Features
+
+* **loadmore:** add LoadMore ([4630d35](https://github.com/godxiaoji/vfox/commit/4630d35bf5a378ffb69e1f5ab9390cf39fae6fff))
+* **result:** add Result ([2f4a710](https://github.com/godxiaoji/vfox/commit/2f4a710c0043f45bc5b30d1b3fe40b0be93a060f))
+* **stopwatch:** add Stopwatch ([94ab2e6](https://github.com/godxiaoji/vfox/commit/94ab2e6737c8d05d16811aedea4e24c745ca148e))
+
 # [2.0.0-beta.15](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2021-04-22)
 
 

@@ -1,3 +1,17 @@
+# [2.0.0-beta.15](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.14...v2.0.0-beta.15) (2021-04-22)
+
+
+### Bug Fixes
+
+* **textarea:** input 支持 showLimit ([10a9abb](https://github.com/godxiaoji/vfox/commit/10a9abb1f0d03a46f03b868e40753394921d5fbd))
+
+
+### Features
+
+* **qrcode:** add QrCode ([907fd65](https://github.com/godxiaoji/vfox/commit/907fd6559b03bcb17c318448744fdec370c10c4b))
+* **theme:** 支持主题定制 ([9dc7fd5](https://github.com/godxiaoji/vfox/commit/9dc7fd5accafa8e9e78d21a1e5df1c795119ffec))
+* **timeline:** add Timeline ([b64ecdb](https://github.com/godxiaoji/vfox/commit/b64ecdbce656982cfd3a6456e783136ddc81d554))
+
 # [2.0.0-beta.14](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.13...v2.0.0-beta.14) (2021-04-17)
 
 

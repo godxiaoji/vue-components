@@ -1,4 +1,4 @@
-import type { DataObject } from '../helpers/types'
+import { DataObject } from '../helpers/types'
 
 export interface UserFieldNames {
   label?: string
@@ -48,3 +48,38 @@ export interface ColRow {
 }
 
 export type ModeNames = 'multiSelector' | 'date' | 'time' | 'datetime'
+
+export type HandleType = 'label' | 'value'
+
+export interface ValueParser {
+  (value: any, type: HandleType): Values | Labels | Error
+}
+
+export interface ValueFormatter {
+  (array: Values | Labels, type?: HandleType): string
+}
+
+export interface OptionsHandler {
+  (index: number, parent?: ColRow): ColRow[]
+}
+
+export interface DefaultValueHandler {
+  (): Values
+}
+
+export interface ValueHook {
+  (array: Values): any
+}
+
+export interface DetailHook {
+  (detail: DetailObject): any
+}
+
+export interface PickerHandlers {
+  optionsHandler?: OptionsHandler
+  valueParser?: ValueParser
+  valueFormatter?: ValueFormatter
+  defaultValueHandler?: DefaultValueHandler
+  valueHook?: ValueHook
+  detailHook?: DetailHook
+}

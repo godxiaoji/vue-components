@@ -1,4 +1,3 @@
 import '../../style/hairline.scss'
-import '../../Icon/index.scss'
-import '../../Cell/index.scss'
+import '../../Cell/style'
 import '../index.scss'

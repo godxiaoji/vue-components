@@ -1,9 +1,9 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import ActionSheet from './ActionSheet.vue'
-import { showPopup, PopupHook } from '@/apis/Popup'
-import type { ActionSheetItem } from './types'
-import type { ApiOptions } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
+import { ActionSheetItem } from './types'
+import { ApiOptions, PopupHook } from '../apis/types'
 
 type ShowActionSheetOptions = {
   title?: string

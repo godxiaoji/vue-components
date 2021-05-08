@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, watch } from 'vue'
-import dayjs from 'dayjs'
+import dayjs from '@/helpers/day'
 import { Dayjs } from 'dayjs'
 import { isDate, isInNumberRange, isEmpty } from '@/helpers/util'
 import Toast from '@/Toast'
@@ -73,7 +73,7 @@ import {
 } from '@/Calendar/util'
 import { isSameArray } from '@/helpers/util'
 import Exception from '@/helpers/exception'
-import commonProps from '@/Calendar/props'
+import calendarCommonProps from '@/Calendar/props'
 import { getEnumsValue } from '@/helpers/validator'
 import type { DayInfo } from './types'
 
@@ -113,7 +113,7 @@ function printError(message: string) {
 
 export default defineComponent({
   name: 'fx-calendar-view',
-  props: { ...commonProps },
+  props: { ...calendarCommonProps },
   emits: ['select', 'update:modelValue'],
   setup(props, { emit }) {
     const weekDays = reactive<WeekDay[]>([])

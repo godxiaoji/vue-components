@@ -1,54 +1,26 @@
-import { isStringNumberMixArray } from '@/helpers/util'
-import type {
+import {
   OptionItem,
-  ModeNames,
   UserOptionItem,
   UserFieldNames,
   DetailObject,
   Values,
   ExtraData,
   ColRow,
-  FieldNames
-} from './types'
-import {
-  getDateValues,
-  getTimeValues,
-  getDatetimeValues,
-  dateString2Array,
-  timeString2Array,
-  datetimeString2Array,
-  parseDateList,
-  parseTimeList,
-  parseDatetimeList
-} from '@/Picker/date'
+  FieldNames,
+  OptionsHandler,
+  ValueHook
+} from '../Picker/types'
 import {
   cloneData,
   isArray,
   isNumber,
   isObject,
   isString,
-  isStringNumberMix
+  isStringNumberMix,
+  isStringNumberMixArray
 } from '@/helpers/util'
 import Exception from '@/helpers/exception'
-import type { DataObject } from '../helpers/types'
-
-export function getDateTimeRows(
-  mode: ModeNames,
-  index: number,
-  parent?: ColRow
-): ColRow[] {
-  if (mode === 'date') {
-    return parseDateList(index, parent)
-  }
-  if (mode === 'time') {
-    return parseTimeList(index, parent)
-  }
-  if (mode === 'datetime') {
-    return parseDatetimeList(index, parent)
-  }
-
-  return []
-}
+import { DataObject } from '../helpers/types'
 
 export function getColRows(options: OptionItem[], indexes: number[]) {
   const rows: ColRow[] = []
@@ -65,40 +37,44 @@ export function getColRows(options: OptionItem[], indexes: number[]) {
   return rows
 }
 
-export function array2String(values: Values, mode: ModeNames, separator = '/') {
-  if (mode === 'date') {
-    return values.join('-')
-  } else if (mode === 'time') {
-    return values.join(':')
-  } else if (mode === 'datetime' && values.length > 0) {
-    return [values.slice(0, 3).join('-'), values.slice(3, 6).join(':')].join(
-      ' '
-    )
-  }
+// export function string2Array(value: any, valueParser?: ValueParser) {
+//   try {
+//     let values: Values = []
 
-  return values.join(separator)
-}
+//     if (isFunction(valueParser)) {
+//       values = (valueParser as ValueParser)(value, 'value')
+//     } else if (value == null) {
+//       // return []
+//     } else if (isNumber(value)) {
+//       values = [value]
+//     } else if (!value) {
+//       values = []
+//     } else if (isStringNumberMixArray(value)) {
+//       values = value as Values
+//     } else {
+//       throw new Error('Invalid prop: invalid "value".')
+//     }
 
-export function string2Array(value: any, mode: ModeNames, separator = '/') {
+//     return values
+//   } catch (e) {
+//     return new Error(e.message)
+//   }
+// }
+
+export function defaultValueParser(value: any, separator: string) {
+  let values: Values = []
+
   try {
-    let values: Values = []
-
     if (value == null) {
-      // return []
+      values = []
     } else if (isNumber(value)) {
       values = [value]
+    } else if (isString(value) && value) {
+      values = value.split(separator)
     } else if (!value) {
       values = []
     } else if (isStringNumberMixArray(value)) {
       values = value as Values
-    } else if (mode === 'date') {
-      values = dateString2Array(value)
-    } else if (mode === 'time') {
-      values = timeString2Array(value)
-    } else if (mode === 'datetime') {
-      values = datetimeString2Array(value)
-    } else if (isString(value)) {
-      values = (value as string).split(separator)
     } else {
       throw new Error('Invalid prop: invalid "value".')
     }
@@ -109,68 +85,54 @@ export function string2Array(value: any, mode: ModeNames, separator = '/') {
   }
 }
 
-export function getDefaultSelecteds(mode: ModeNames) {
-  if (mode === 'date') {
-    return getDateValues()
-  } else if (mode === 'time') {
-    return getTimeValues()
-  } else if (mode === 'datetime') {
-    return getDatetimeValues()
-  }
-
-  return []
-}
-
 export function parseOptions(options: any[], fieldNames: FieldNames) {
   const newOptions: OptionItem[] | OptionItem[][] = []
 
   if (isArray(options)) {
-    options.forEach(
-      (option: UserOptionItem | UserOptionItem[]) => {
-        if (isArray(option)) {
-          // 二维数组
-          const subOptions = parseOptions(
-            option as UserOptionItem[],
-            fieldNames
-          ) as OptionItem[]
+    options.forEach((option: UserOptionItem | UserOptionItem[]) => {
+      if (isArray(option)) {
+        // 二维数组
+        const subOptions = parseOptions(
+          option as UserOptionItem[],
+          fieldNames
+        ) as OptionItem[]
 
-          if (subOptions.length > 0) {
-            ;(newOptions as OptionItem[][]).push(subOptions)
-          }
-        } else if (isNumber(option) || isString(option)) {
-          // 纯数值或者字符串
+        if (subOptions.length > 0) {
+          ;(newOptions as OptionItem[][]).push(subOptions)
+        }
+      } else if (isNumber(option) || isString(option)) {
+        // 纯数值或者字符串
+        ;(newOptions as OptionItem[]).push({
+          label: option.toString(),
+          value: option as string,
+          children: [],
+          disabled: false,
+          extraData: {}
+        })
+      } else if (isObject(option)) {
+        option = option as DataObject<any>
+
+        if (isStringNumberMix(option[fieldNames.value])) {
+          const extraData = cloneData(option)
+          delete extraData[fieldNames.label]
+          delete extraData[fieldNames.value]
+          delete extraData[fieldNames.children]
           ;(newOptions as OptionItem[]).push({
-            label: option.toString(),
-            value: option as string,
-            children: [],
-            disabled: false,
-            extraData: {}
+            label:
+              option[fieldNames.label] == null
+                ? option[fieldNames.value]
+                : option[fieldNames.label],
+            value: option[fieldNames.value],
+            disabled: option.disabled ? true : false,
+            children: parseOptions(
+              option[fieldNames.children],
+              fieldNames
+            ) as OptionItem[],
+            extraData
           })
-        } else if (isObject(option)) {
-          option = option as DataObject<any>
-
-          if (isStringNumberMix(option[fieldNames.value])) {
-            const extraData = cloneData(option)
-            delete extraData[fieldNames.label]
-            delete extraData[fieldNames.value]
-            delete extraData[fieldNames.children]
-            ;(newOptions as OptionItem[]).push({
-              label:
-                option[fieldNames.label] == null
-                  ? option[fieldNames.value]
-                  : option[fieldNames.label],
-              value: option[fieldNames.value],
-              disabled: option.disabled ? true : false,
-              children: parseOptions(
-                option[fieldNames.children],
-                fieldNames
-              ) as OptionItem[],
-              extraData
-            })
-          }
         }
       }
-    )
+    })
   }
 
   return newOptions
@@ -186,23 +148,27 @@ export const getDefaultDetail: () => DetailObject = () => {
     value: [],
     labelString: '',
     label: [],
-    extraData: []
+    extraData: [],
+    modelValue: []
   }
 }
 
-export const MODE_NAMES: ModeNames[] = [
-  'multiSelector',
-  'date',
-  'time',
-  'datetime'
-]
+interface ValidateReturn {
+  valid: boolean
+  value: Values
+  label: string[]
+  extraData: ExtraData[]
+}
 
 /**
  * 非级联检查
  * @param values
  * @param options
  */
-function validateCols(values: Values, options: OptionItem[] | OptionItem[][]) {
+function validateCols(
+  values: Values,
+  options: OptionItem[] | OptionItem[][]
+): ValidateReturn {
   const optionList = isArray(options[0])
     ? (options as OptionItem[][])
     : [options as OptionItem[]]
@@ -248,8 +214,8 @@ function validateCols(values: Values, options: OptionItem[] | OptionItem[][]) {
 function validateCascadeCols(
   values: Values,
   options: OptionItem[],
-  mode: ModeNames
-) {
+  virtualHandler?: OptionsHandler | null
+): ValidateReturn {
   const value: Values = []
   const label: string[] = []
   const extraData: ExtraData[] = []
@@ -297,14 +263,14 @@ function validateCascadeCols(
     function row2OptionItem(row: ColRow) {
       return {
         label: row.label,
-        value: row.label,
+        value: row.value,
         children: [],
         disabled: false,
         extraData: {}
       }
     }
 
-    const rows = getDateTimeRows(mode, index, parent)
+    const rows = (virtualHandler as OptionsHandler)(index, parent)
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i]
@@ -328,9 +294,9 @@ function validateCascadeCols(
     return false
   }
 
-  return (mode === MODE_NAMES[0]
-  ? deep(options, 0, [])
-  : virtualOptionsDeep(0, 0))
+  return (virtualHandler
+  ? virtualOptionsDeep(0, 0)
+  : deep(options, 0, []))
     ? {
         valid: true,
         value,
@@ -355,70 +321,48 @@ function printError(message: string) {
  * 校验值
  * @param values 值
  * @param options
- * @param mode
  * @param separator
  * @param isCascade
+ * @param virtualHandler
  * @returns { valid, detail }
  */
 export function validateValues(
-  values: unknown,
+  values: Values | Error,
   options: any[],
-  mode: ModeNames,
-  separator: string,
-  isCascade: boolean
-) {
-  const newValues = string2Array(values, mode, separator)
+  isCascade: boolean,
+  virtualHandler?: OptionsHandler | null
+): ValidateReturn {
+  let valid = false
 
-  let valid: boolean
-  let detail = getDefaultDetail()
-
-  if (newValues instanceof Error) {
-    console.error(newValues.message)
-    printError
-    valid = false
-    detail = getDefaultDetail()
-  } else if (newValues.length === 0) {
+  if (values instanceof Error) {
+    printError(values.message)
+  } else if (values.length === 0) {
     // 空数组也算符合
     valid = true
-    detail = getDefaultDetail()
   } else {
     const ret = isCascade
-      ? validateCascadeCols(newValues, options, mode)
-      : validateCols(newValues, options)
+      ? validateCascadeCols(values, options, virtualHandler)
+      : validateCols(values, options)
 
     if (!ret.valid) {
-      console.error(
-        new Exception(
-          '"value" is not in "options".',
-          Exception.TYPE.PROP_ERROR,
-          'MulitSelector'
-        )
-      )
+      printError('"value" is not in "options".')
     } else {
-      detail = {
-        value: ret.value,
-        label: ret.label,
-        valueString:
-          ret.value.length > 0 ? array2String(ret.value, mode, separator) : '',
-        labelString:
-          ret.label.length > 0 ? array2String(ret.label, mode, separator) : '',
-        extraData: ret.extraData
-      }
+      return ret
     }
-
-    valid = ret.valid
   }
 
   return {
     valid,
-    detail
+    value: [],
+    label: [],
+    extraData: []
   }
 }
 
 export function getFormatOptions(
   options: UserOptionItem[],
   fieldNames: UserFieldNames,
-  mode: ModeNames,
+  virtualHandler: OptionsHandler | null,
   cascader = false
 ) {
   const newFieldNames = getDefaultFieldNames()
@@ -426,7 +370,7 @@ export function getFormatOptions(
   let newOptions: OptionItem[] | OptionItem[][] = []
   let isCascade = false
 
-  if (mode === MODE_NAMES[0]) {
+  if (virtualHandler === null) {
     if (isObject(fieldNames)) {
       isString(fieldNames.label) &&
         fieldNames.label &&
@@ -459,13 +403,6 @@ export function getFormatOptions(
     isCascade = true
   }
 
-  // console.log({
-  //   options: newOptions,
-  //   isCascade,
-  //   fieldNames: newFieldNames,
-  //   mode
-  // })
-
   return {
     options: newOptions,
     isCascade,
@@ -475,4 +412,28 @@ export function getFormatOptions(
 
 export function updateArray(array: any[], newArray: any[]) {
   array.splice(0, Infinity, ...newArray)
+}
+
+export function getHookValue(
+  detail: DetailObject,
+  formatString: boolean,
+  hook?: ValueHook
+) {
+  const value = cloneData(detail.value)
+
+  return hook
+    ? hook(value)
+    : formatString
+    ? detail.valueString
+    : cloneData(value)
+}
+
+export function cloneDetail(detail: DetailObject) {
+  const newDetail = cloneData(detail)
+
+  newDetail.extraData.forEach((v, k) => {
+    newDetail.extraData[k] = detail.extraData[k]
+  })
+
+  return newDetail
 }

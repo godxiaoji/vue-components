@@ -1,10 +1,10 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import PopDialog from '../Popover/PopDialog.vue'
-import type { ApiOptions } from '../apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
-import type { DomSelector } from '../helpers/types'
-import type { PlacementType } from '../hooks/types'
+import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
+import { DomSelector } from '../helpers/types'
+import { PlacementType } from '../hooks/types'
 
 type ShowPopDialogOptions = {
   selector: DomSelector

@@ -1,7 +1,11 @@
 @import '../style/var.scss';
 
-.fx-form-item.fx-cell {
-  .fx-cell_body {
+.fx-form-item {
+  &.fx-cell .fx-cell_body {
+    color: $danger-color;
+  }
+
+  &_required {
     color: $danger-color;
   }
 }

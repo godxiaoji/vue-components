@@ -1,11 +1,11 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import PopMenu from '../Popover/PopMenu.vue'
-import type { ApiOptions } from '../apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
-import type { DomSelector } from '../helpers/types'
-import type { PlacementType } from '../hooks/types'
-import type { OptionItem } from '../Popover/types'
+import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
+import { DomSelector } from '../helpers/types'
+import { PlacementType } from '../hooks/types'
+import { OptionItem } from '../Popover/types'
 
 type ShowPopMenuOptions = {
   selector: DomSelector

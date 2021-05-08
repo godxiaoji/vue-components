@@ -20,9 +20,6 @@
         @change="onChange"
       ></fx-picker-view>
     </fx-group>
-    <fx-group title="日期选择器">
-      <fx-picker-view initial-mode="date" @change="onChange"></fx-picker-view>
-    </fx-group>
   </div>
 </template>
 

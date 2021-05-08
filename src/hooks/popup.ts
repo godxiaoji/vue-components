@@ -11,13 +11,14 @@ import {
 import { isFunction, isObject } from '@/helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
 import { popupZIndex } from '@/helpers/layer'
-import type { UseProps, DataObject } from '../helpers/types'
+import { UseProps, DataObject } from '../helpers/types'
 import { useBlur } from '@/hooks/blur'
-
-export interface PopupPublicInstance {
-  customCancel: (key: string, focus?: boolean) => void
-  customConfirm: (res?: any, key?: string) => void
-}
+import {
+  VisibleStateChangeArgs,
+  VisibleState,
+  PopupPublicInstance
+} from './types'
+import { PopupBridge } from '../apis/types'
 
 interface UseOptions {
   forbidScroll?: boolean
@@ -27,24 +28,6 @@ interface UseOptions {
   afterShow?: Function
   afterHidden?: Function
 }
-
-type VisibleState = 'show' | 'shown' | 'hide' | 'hidden'
-
-export interface VisibleStateChangeRes {
-  type: string
-  state: VisibleState
-  [propName: string]: any
-}
-
-export interface PopupBridge {
-  in?: (key: string, value?: any) => void
-  out?: (key: string, value: any) => void
-}
-
-export type PopupRes = {
-  cancel?: boolean
-  detail?: DataObject<any>
-} & DataObject<any>
 
 let puid = 1
 let zIndex = popupZIndex
@@ -140,7 +123,6 @@ export function usePopup(
   }
 
   function show(res: DataObject<any> = {}) {
-
     const isSuccess = doShow(() => {
       emitVisibleState('shown', res)
     })
@@ -270,7 +252,7 @@ export function usePopup(
   watch(
     () => props.visible,
     (val: boolean) => {
-      val ? show({visible: true}) : hide({visible: false})
+      val ? show({ visible: true }) : hide({ visible: false })
     }
   )
 
@@ -317,7 +299,7 @@ export function usePopupExtend({ emit }: SetupContext<any>) {
     popup.value && popup.value.customConfirm(res, key)
   }
 
-  function onVisibleStateChange(e: VisibleStateChangeRes) {
+  function onVisibleStateChange(e: VisibleStateChangeArgs) {
     emit('visible-state-change', e)
   }
 

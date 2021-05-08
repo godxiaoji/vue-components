@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { CountTime } from '../hooks/count-time'
+import { CountTime } from '../hooks/types'
 import { useCountTime, getCountTime } from '@/hooks/count-time'
 import { cloneData } from '@/helpers/util'
 

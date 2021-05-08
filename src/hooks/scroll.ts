@@ -1,16 +1,8 @@
 import { onBeforeUnmount } from 'vue'
 import { getScrollDom } from '@/helpers/dom'
 import { addEvent, removeEvent } from '@/helpers/events'
-import type { EventElement, EventCallback } from '../helpers/types'
-
-export interface OnScrollCallback {
-  (
-    e: Event,
-    res: {
-      scrollTop: number
-    }
-  ): void
-}
+import { EventElement, EventCallback } from '../helpers/types'
+import { OnScrollCallback } from './types'
 
 export function useScrollEvent($el: EventElement, callback: OnScrollCallback) {
   const onScroll: EventCallback = (e, $el) => {

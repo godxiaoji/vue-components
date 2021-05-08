@@ -35,7 +35,8 @@ import {
   querySelector
 } from '@/helpers/dom'
 import { selectorValidator, sizeValidator } from '@/helpers/validator'
-import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
+import { useScrollEvent } from '@/hooks/scroll'
+import { OnScrollCallback } from '../hooks/types'
 import { isNumber } from '@/helpers/util'
 import { useList } from '@/hooks/list'
 import { ScrollToOptions, ScrollToIndexOptions } from '../helpers/types'

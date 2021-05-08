@@ -33,7 +33,7 @@ import Empty from '@/Empty'
 import { frameTo } from '@/helpers/animation'
 import { hasClassName } from '@/helpers/dom'
 import { useView, viewEmits } from '@/Picker/view'
-import commonProps from '@/Picker/props'
+import pickerCommonProps from '@/Picker/props'
 
 interface ScrollElement extends HTMLElement {
   scrolling?: boolean
@@ -44,7 +44,7 @@ export default defineComponent({
   name: 'fx-picker-view',
   components: { Empty },
   props: {
-    ...commonProps
+    ...pickerCommonProps
   },
   // created() {
   //   this.formLabel = this.cacheLabel
@@ -54,7 +54,7 @@ export default defineComponent({
   //   emit('update:modelValue', this.hookFormValue())
   // },
   emits: viewEmits,
-  setup(props, { emit }) {
+  setup(props, ctx) {
     const root = ref<HTMLElement>()
 
     const defaultItemHeight = 48
@@ -68,18 +68,14 @@ export default defineComponent({
       update,
       updateColSelected,
       getValuesByRow,
-      updateValue
-    } = useView(props, 'picker', updatePos)
-
-    function emitValue() {
-      const { value, valueString } = getDetail()
-      emit('update:modelValue', props.formatString ? valueString : value)
-    }
-
-    function onChange() {
-      emitValue()
-      emit('change', getDetail())
-    }
+      updateValue,
+      onChange
+    } = useView(
+      props,
+      ctx,
+      { name: 'picker', afterUpdate: updatePos },
+      props.handlers || {}
+    )
 
     function updatePos() {
       nextTick(() => {
@@ -180,8 +176,6 @@ export default defineComponent({
         }, 400)
       }
     }
-
-    emitValue()
 
     return {
       root,

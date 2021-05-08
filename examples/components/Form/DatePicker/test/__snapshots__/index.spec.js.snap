@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DatePicker should render default correctly 1`] = `
+<div class="fx-picker">
+  <fx-picker-input-stub formlabelstring="" formvaluestring="" disabled="false" formname="" placeholder=""></fx-picker-input-stub>
+  <!--v-if-->
+</div>
+`;

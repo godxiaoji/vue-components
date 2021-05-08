@@ -7,9 +7,9 @@ import {
 } from '@/helpers/validator'
 import { querySelector } from '@/helpers/dom'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import type { PlacementType } from '../hooks/types'
+import { PlacementType } from '../hooks/types'
 import { usePopup, popupProps, popupEmits } from '@/hooks/popup'
-import type { StyleObject, UseProps } from '../helpers/types'
+import { StyleObject, UseProps } from '../helpers/types'
 
 type PopoverPos = {
   t: number | null

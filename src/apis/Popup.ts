@@ -2,13 +2,11 @@ import { createApp } from 'vue'
 import { isObject, isString } from '@/helpers/util'
 import { getCallbackFns } from '@/apis/callback'
 import { parseParamsByRules } from '@/apis/rules'
-import type { ApiOptions } from '../apis/types'
-import type { PopupBridge, PopupRes } from '../hooks/popup'
+import { ApiOptions, PopupHook, PopupBridge } from './types'
 import { createPopup } from '@/hooks/popup'
 import Exception from '@/helpers/exception'
 
-export type PopupHook = (hookName: string, res: PopupRes) => void
-type PopupDone = (res: PopupRes) => void
+type PopupDone = (res: any) => void
 
 interface RefFns {
   [propName: string]: Function
@@ -46,7 +44,7 @@ export function showPopup(
 
   const { success, fail, complete } = getCallbackFns(options)
 
-  return new Promise<PopupRes>(function(resolve, reject) {
+  return new Promise<any>(function(resolve, reject) {
     try {
       const key = apiName.replace('show', '')
       const { component, hook, singleMode } = getOptions(function(res) {

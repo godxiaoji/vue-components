@@ -32,6 +32,9 @@ import Calendar from '@/Calendar'
 import SearchBar from '@/SearchBar'
 import NumberKeyboard from '@/NumberKeyboard'
 import ImageUploader from '@/ImageUploader'
+import DatePicker from '@/DatePicker'
+import DatePickerPopup from '@/DatePickerPopup'
+import DatePickerView from '@/DatePickerView'
 
 /* Feedback */
 import Toast from '@/Toast'
@@ -192,5 +195,8 @@ export {
   TimelineItem,
   Stopwatch,
   Result,
-  LoadMore
+  LoadMore,
+  DatePicker,
+  DatePickerPopup,
+  DatePickerView
 }

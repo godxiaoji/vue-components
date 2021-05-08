@@ -158,16 +158,23 @@ export function isSymbol(object: any) {
  * @param object 值
  */
 export function isEmptyObject(object: any) {
-  let has = false
-
-  for (const i in object) {
-    if (hasOwnProperty(object, i)) {
-      has = true
-      break
+  if (
+    isObject(object) &&
+    !isDate(object) &&
+    !isElement(object) &&
+    !(object instanceof Error)
+  ) {
+    let has = false
+    for (const i in object) {
+      if (hasOwnProperty(object, i)) {
+        has = true
+        break
+      }
     }
+    return !has
   }
 
-  return !has
+  return false
 }
 
 /**

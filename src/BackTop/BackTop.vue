@@ -12,7 +12,8 @@ import Icon from '@/Icon'
 import { getScrollDom } from '@/helpers/dom'
 import { useSafeAreaInsets } from '@/hooks/safe-area-insets'
 import { isNumber, isNumberArray } from '@/helpers/util'
-import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
+import { useScrollEvent } from '@/hooks/scroll'
+import { OnScrollCallback } from '../hooks/types'
 
 export default defineComponent({
   name: 'fx-back-top',

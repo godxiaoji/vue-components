@@ -6,26 +6,16 @@
         disabled
       }
     ]"
+    ref="root"
   >
-    <div
-      class="fx-input"
-      :class="{ 'has--value': formLabelString, disabled }"
-      @click="onFieldClick"
-    >
-      <div class="fx-input_input" :class="{ placeholder: !formLabelString }">
-        {{ formLabelString || placeholder }}
-      </div>
-      <icon class="fx-input_arrow" icon="RightOutlined" />
-      <input
-        class="fx-input_cover"
-        type="text"
-        readonly
-        :name="formName"
-        :disabled="disabled"
-        :value="formValueString"
-        ref="input"
-      />
-    </div>
+    <picker-input
+      :formLabelString="formLabelString"
+      :formValueString="formValueString"
+      :disabled="disabled"
+      :formName="formName"
+      :placeholder="placeholder"
+      @field-click="onFieldClick"
+    />
     <cascader-popup
       v-bind="$props"
       :title="placeholder"
@@ -40,19 +30,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import CascaderPopup from '@/CascaderPopup'
-import Icon from '@/Icon'
+import PickerInput from '@/Picker/PickerInput.vue'
 import { formItemEmits, formItemProps } from '@/hooks/form'
 import { usePicker, pickerEmits, pickerProps } from '@/Picker/picker'
-import commonProps from '@/Picker/props'
+import pickerCommonProps from '@/Picker/props'
 
 export default defineComponent({
   name: 'fx-cascader',
-  components: { CascaderPopup, Icon },
-  props: { ...formItemProps, ...commonProps, ...pickerProps },
+  components: { CascaderPopup, PickerInput },
+  props: { ...formItemProps, ...pickerCommonProps, ...pickerProps },
   emits: [...formItemEmits, ...pickerEmits],
   setup(props, ctx) {
     return {
-      ...usePicker(props, ctx, { name: 'cascader' })
+      ...usePicker(props, ctx, { name: 'cascader' }, {})
     }
   }
 })

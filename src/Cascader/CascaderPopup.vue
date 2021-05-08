@@ -43,20 +43,20 @@ import Drawer from '@/Drawer'
 import { frameTo } from '@/helpers/animation'
 import { isSameArray } from '@/helpers/util'
 import { useView, viewEmits } from '@/Picker/view'
-import commonProps from '@/Picker/props'
+import pickerCommonProps from '@/Picker/props'
 import {
   usePopupExtend,
   popupExtendEmits,
   popupExtendProps
 } from '@/hooks/popup'
-import type { ColRow, Values } from '../Picker/types'
+import { ColRow, Values } from '../Picker/types'
 
 export default defineComponent({
   name: 'fx-cascader-popup',
   components: { Drawer },
   props: {
     ...popupExtendProps,
-    ...commonProps,
+    ...pickerCommonProps,
     title: {
       type: String,
       default: ''
@@ -148,8 +148,7 @@ export default defineComponent({
       } else {
         if (!isSameArray(formValue, selecteds)) {
           onSelect(selecteds)
-          emitValue()
-          emit('change', getDetail())
+          onChange()
         } else {
           onSelect(selecteds)
         }
@@ -158,13 +157,8 @@ export default defineComponent({
 
     function onSelect(selecteds: Values) {
       const confirmDetail = updateValue(selecteds)
-      ctx.emit('confirm', confirmDetail)
+      emit('confirm', confirmDetail)
       popup.customConfirm(confirmDetail, 'selected')
-    }
-
-    function emitValue() {
-      const { value, valueString } = getDetail()
-      emit('update:modelValue', props.formatString ? valueString : value)
     }
 
     const {
@@ -176,8 +170,9 @@ export default defineComponent({
       cols,
       update,
       getValuesByRow,
-      updateValue
-    } = useView(props, 'cascader', updateLayout)
+      updateValue,
+      onChange
+    } = useView(props, ctx, { name: 'cascader', afterUpdate: updateLayout }, {})
 
     const title2 = computed(() => {
       return format2String(cacheLabel) || props.title

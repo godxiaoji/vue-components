@@ -81,6 +81,10 @@ export default defineComponent({
     showMask: {
       type: Boolean,
       default: true
+    },
+    beforeConfirm: {
+      type: Function as PropType<() => any>,
+      default: null
     }
   },
   emits: popupEmits,
@@ -137,7 +141,7 @@ export default defineComponent({
       if (props.showClose) {
         popup.onCloseClick()
       } else if (props.showConfirm) {
-        popup.customConfirm({})
+        popup.customConfirm(props.beforeConfirm ? props.beforeConfirm() : {})
       }
     }
 

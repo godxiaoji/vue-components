@@ -5,7 +5,7 @@ function getKey(name: string) {
   return `fx${capitalize(name)}Group`
 }
 
-export interface GroupProvide {
+interface GroupProvide {
   addChild: (obj: unknown) => void
   removeChild: (obj: unknown) => void
 }

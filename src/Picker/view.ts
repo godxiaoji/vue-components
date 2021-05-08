@@ -1,34 +1,41 @@
-import { computed, reactive, ref, watch } from 'vue'
-import { isArray, cloneData, isSameArray } from '@/helpers/util'
+import { computed, reactive, ref, SetupContext, watch } from 'vue'
+import { isArray, cloneData, isSameArray, isFunction } from '@/helpers/util'
 import {
-  getDefaultSelecteds,
-  array2String,
-  MODE_NAMES,
   validateValues,
   getFormatOptions,
   getColRows,
-  getDateTimeRows,
-  updateArray
+  updateArray,
+  defaultValueParser,
+  getHookValue,
+  cloneDetail
 } from '@/Picker/util'
-import { getEnumsValue } from '@/helpers/validator'
-import type {
+import {
   ColRow,
   Labels,
-  ModeNames,
   OptionItem,
   Values,
-  ExtraData
+  ExtraData,
+  OptionsHandler,
+  PickerHandlers,
+  DetailObject,
+  ValueFormatter,
+  HandleType
 } from './types'
-import type { UseProps } from '../helpers/types'
+import { UseProps } from '../helpers/types'
 
 export const viewEmits = ['change', 'update:modelValue']
 
+interface UseOptions {
+  name: 'cascader' | 'picker'
+  afterUpdate: () => void
+}
+
 export function useView(
   props: UseProps,
-  name: string,
-  afterUpdate: () => void
+  { emit }: SetupContext<any>,
+  { name, afterUpdate }: UseOptions,
+  handlers: PickerHandlers
 ) {
-  const mode = getEnumsValue<ModeNames>(MODE_NAMES, props.initialMode)
   const separator: string = props.initialSeparator
 
   const cols = reactive<ColRow[][]>([])
@@ -40,13 +47,14 @@ export function useView(
   const cacheLabel = reactive<Labels>([])
   const cacheValue = reactive<Values>([])
 
+  const optionsHandler: OptionsHandler | null = handlers.optionsHandler || null
   let extraData: any = []
 
   function updateOptions(val: Values) {
     const { options, isCascade: isCascade2 } = getFormatOptions(
       props.options,
       props.fieldNames,
-      mode,
+      optionsHandler,
       name === 'cascader'
     )
 
@@ -59,40 +67,58 @@ export function useView(
   }
 
   function updateValue(val: unknown, forceUpdate = false) {
-    const { valid, detail } = validateValues(
-      val,
+    const values = handlers.valueParser
+      ? handlers.valueParser(val, 'value')
+      : defaultValueParser(val, separator)
+
+    const { valid, value } = validateValues(
+      values,
       options2,
-      mode,
-      separator,
-      isCascade.value
+      isCascade.value,
+      optionsHandler
     )
 
-    if ((valid && !isSameArray(detail.value, formValue)) || forceUpdate) {
-      update(detail.value)
+    if ((valid && !isSameArray(value, formValue)) || forceUpdate) {
+      update(value)
 
       updateArray(
         formLabel,
-        detail.value.length > 0 || name === 'picker' ? cacheLabel : []
+        value.length > 0 || name === 'picker' ? cacheLabel : []
       )
       updateArray(
         formValue,
-        detail.value.length > 0 || name === 'picker' ? cacheValue : []
+        value.length > 0 || name === 'picker' ? cacheValue : []
       )
     }
 
     return getDetail()
   }
 
+  const format2String: ValueFormatter = (
+    array: Values,
+    type: HandleType = 'label'
+  ) => {
+    return handlers.valueFormatter
+      ? handlers.valueFormatter(array, type)
+      : array.join(separator as string)
+  }
+
   function getDetail() {
-    const detail = {
-      valueString: format2String(formValue),
-      labelString: format2String(formLabel),
+    const detail: DetailObject = {
+      valueString: format2String(formValue, 'value'),
+      labelString: format2String(formLabel, 'label'),
       value: cloneData(formValue),
       label: cloneData(formLabel),
-      extraData: cloneData(extraData)
+      extraData
     }
 
     return detail
+  }
+
+  function detailHook(detail: DetailObject): any {
+    const newDetail = cloneDetail(detail)
+
+    return handlers.detailHook ? handlers.detailHook(newDetail) : newDetail
   }
 
   function addCache(item: {
@@ -102,7 +128,7 @@ export function useView(
   }) {
     cacheValue.push(item.value)
     cacheLabel.push(item.label)
-    extraData.push(cloneData(item.extraData))
+    extraData.push(item.extraData)
   }
 
   function update(selecteds: Values) {
@@ -188,8 +214,9 @@ export function useView(
 
     cols.length = 0
 
+    const getRows = optionsHandler as OptionsHandler
     let colIndex = 0
-    let rows = getDateTimeRows(mode, colIndex)
+    let rows = getRows(colIndex)
     let lastGroupSelected = false
 
     for (let i = 0; i <= selecteds.length; i++) {
@@ -226,7 +253,7 @@ export function useView(
       if (!nextParent) {
         break
       } else {
-        rows = getDateTimeRows(mode, colIndex, nextParent)
+        rows = getRows(colIndex, nextParent)
       }
     }
 
@@ -245,7 +272,7 @@ export function useView(
 
         if (lastColFirstRow.hasChildren) {
           colIndex++
-          rows = getDateTimeRows(mode, colIndex, lastColFirstRow)
+          rows = getRows(colIndex, lastColFirstRow)
           cols.push(rows)
 
           lastColFirstRow = rows[0]
@@ -261,7 +288,7 @@ export function useView(
    * @param selecteds 选择值
    */
   function updateCascadeCols(selecteds: Values) {
-    if (mode !== MODE_NAMES[0]) {
+    if (isFunction(optionsHandler)) {
       updateVirtualOptionsCols(selecteds)
       return
     }
@@ -361,7 +388,9 @@ export function useView(
    * @summary 主要用于一些日期啥的，可以默认当天
    */
   function getCascadeDefaultSelecteds() {
-    const selecteds = getDefaultSelecteds(mode)
+    const selecteds = handlers.defaultValueHandler
+      ? handlers.defaultValueHandler()
+      : []
 
     if (selecteds.length > 0) {
       return selecteds
@@ -410,13 +439,20 @@ export function useView(
     return values
   }
 
-  function format2String(values: Values) {
-    return array2String(values, mode, separator)
+  const formLabelString = computed(() => format2String(formLabel, 'label'))
+  const formValueString = computed(() => format2String(formValue, 'value'))
+
+  function emitValue() {
+    emit(
+      'update:modelValue',
+      getHookValue(getDetail(), props.formatString || false, handlers.valueHook)
+    )
   }
 
-  const formLabelString = computed(() => format2String(formLabel))
-
-  const formValueString = computed(() => format2String(formValue))
+  function onChange() {
+    emitValue()
+    emit('change', detailHook(getDetail()))
+  }
 
   watch(
     [() => props.options, () => props.fieldNames],
@@ -436,6 +472,11 @@ export function useView(
 
   updateOptions(props.modelValue)
 
+  // picker 要默认数据
+  if (name === 'picker') {
+    emitValue()
+  }
+
   return {
     format2String,
     cols,
@@ -450,6 +491,7 @@ export function useView(
     update,
     updateColSelected,
     getValuesByRow,
-    updateValue
+    updateValue,
+    onChange
   }
 }

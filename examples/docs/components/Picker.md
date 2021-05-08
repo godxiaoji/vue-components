@@ -5,26 +5,10 @@
 | 属性              | 类型                            | 默认值                                                   | 必填 | 说明                                              |
 | ----------------- | ------------------------------- | -------------------------------------------------------- | ---- | ------------------------------------------------- |
 | v-modal           | string/number/string[]/number[] | []                                                       | 否   | 选中值                                            |
-| initial-mode      | string                          |                                                          | 否   | 设置特殊选择器，设置后忽略 `options`属性          |
 | options           | array                           | []                                                       | 否   | 数据集                                            |
 | format-string     | boolean                         | false                                                    | 否   | value 双向绑定值是为字符串                        |
 | initial-separator | string                          | '/'                                                      | 否   | 分隔符                                            |
 | field-names       | object                          | { label: 'label', value: 'value', children: 'children' } | 否   | 自定义 options 中 label value children 的字段 key |
-
-### mode 的合法值</a>
-
-| 值       | 说明           |
-| -------- | -------------- |
-| time     | 时间选择器     |
-| date     | 日期选择器     |
-| datetime | 日期时间选择器 |
-
-```
-import Vfox from 'vfox'
-import regionData from 'vfox/data/region'
-
-Vfox.addRegionData(regionData)
-```
 
 ### options 的结构
 

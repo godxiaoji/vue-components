@@ -6,30 +6,31 @@
     >
     </fx-notice-bar>
     <fx-group title="Picker">
-      <fx-cell label="单列">
+      <fx-form-item name="picker" label="单列">
         <fx-picker :options="options" @change="onChange"></fx-picker>
-      </fx-cell>
-      <fx-cell label="多列">
+      </fx-form-item>
+      <fx-form-item name="picker" label="多列">
         <fx-picker :options="multiOptions" @change="onChange"></fx-picker>
-      </fx-cell>
-      <fx-cell label="级联">
+      </fx-form-item>
+      <fx-form-item name="picker" label="级联">
         <fx-picker :options="cascadeOptions" @change="onChange"></fx-picker>
-      </fx-cell>
-      <fx-cell label="时间（initial-mode=datetime）">
-        <fx-picker initial-mode="datetime" @change="onChange" />
-      </fx-cell>
-      <fx-cell label="地区">
+      </fx-form-item>
+      <fx-form-item name="picker" label="地区">
         <fx-picker
           :options="regionOptions"
           :field-names="{ value: 'label' }"
           :format-string="true"
-          v-model="pickerValue"
+          v-model="regionValue"
           @change="onChange"
         />
-      </fx-cell>
-      <fx-cell label="禁用">
-        <fx-picker initial-mode="datetime" disabled />
-      </fx-cell>
+      </fx-form-item>
+      <fx-form-item name="picker" label="禁用">
+        <fx-picker
+          :modelValue="disableValue"
+          :options="multiOptions"
+          disabled
+        />
+      </fx-form-item>
     </fx-group>
     <fx-group title="PickerPopup">
       <fx-cell
@@ -57,7 +58,7 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showPicker" isLink @click="onCallApi()"></fx-cell>
+      <fx-cell label="showPicker" isLink @click="onCallApi"></fx-cell>
     </fx-group>
     <fx-picker-popup
       v-model:visible="visible"
@@ -83,7 +84,8 @@ export default {
   props: {},
   data() {
     return {
-      pickerValue: [],
+      regionValue: [],
+      disableValue: [2000, '春'],
       value: '2000/夏',
       visible: false,
       title: 'Picker',

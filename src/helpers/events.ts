@@ -1,6 +1,6 @@
 import { isMobile } from '@/helpers/device'
 import { objectForEach, isFunction } from '@/helpers/util'
-import type { EventElement, EventCallback, MixEventCallback } from './types'
+import { EventElement, EventCallback, MixEventCallback } from './types'
 
 export function getDataset(object: any) {
   const dataset: any = {}
@@ -284,7 +284,10 @@ interface LongPressCoords {
  * @param {Element} $el 绑定的元素
  * @param {Function} callback 回调函数
  */
-export function addLongPressEvent($el: HTMLElement, callback: MixEventCallback) {
+export function addLongPressEvent(
+  $el: HTMLElement,
+  callback: MixEventCallback
+) {
   let coords: LongPressCoords | null
 
   const object = {

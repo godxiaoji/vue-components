@@ -1,31 +1,36 @@
 <template>
-  <cell
-    class="fx-form-item"
-    :label="label"
-    :description="errMsg"
-    :required="required"
-  >
-    <slot></slot>
-  </cell>
+  <label class="fx-form-item fx-cell fx-horizontal-hairline" @click="onClick">
+    <div class="fx-cell_cover"></div>
+    <div class="fx-cell_header">
+      <div class="fx-cell_label" v-if="label">
+        {{ label }}
+        <span class="fx-form-item_required" v-if="required">*</span>
+      </div>
+      <div class="fx-cell_content">
+        <slot></slot>
+      </div>
+    </div>
+    <div class="fx-cell_body" v-if="errMsg">
+      {{ errMsg }}
+    </div>
+  </label>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject, PropType, provide, ref } from 'vue'
-import Cell from '@/Cell'
 import Schema from 'async-validator'
 import { isArray, isBoolean, isNumber } from '@/helpers/util'
-import type {
+import {
   FormItemProvide,
   FormRuleItem,
   FormRules,
   FormRuleType,
   FormRuleValidate
-} from '../hooks/form'
+} from '../hooks/types'
 import { useGroupItem } from '@/hooks/group'
 
 export default defineComponent({
   name: 'fx-form-item',
-  components: { Cell },
   props: {
     name: {
       type: String,

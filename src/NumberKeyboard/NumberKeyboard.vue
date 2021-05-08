@@ -61,9 +61,9 @@ import { isStringArray, isString } from '@/helpers/util'
 import {
   usePopupExtend,
   popupExtendEmits,
-  popupExtendProps,
-  VisibleStateChangeRes
+  popupExtendProps
 } from '@/hooks/popup'
+import { VisibleStateChangeArgs } from '../hooks/types'
 import { getEnumsValue } from '@/helpers/validator'
 
 const TYPE_NAMES = ['default', 'rightColumn']
@@ -106,7 +106,7 @@ export default defineComponent({
 
     const popup = usePopupExtend(ctx)
 
-    function onVisibleStateChange2(e: VisibleStateChangeRes) {
+    function onVisibleStateChange2(e: VisibleStateChangeArgs) {
       popup.onVisibleStateChange(e)
 
       if (e.state === 'show') {

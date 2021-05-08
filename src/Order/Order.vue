@@ -64,7 +64,7 @@ import { useTouch } from '@/hooks/touch'
 import { UseTouchEvent } from '../hooks/touch'
 import { addClassName, getParentTarget, removeClassName } from '@/helpers/dom'
 import { cloneData } from '@/helpers/util'
-import { VisibleStateChangeRes } from '../hooks/popup'
+import { VisibleStateChangeArgs } from '../hooks/types'
 
 type Item = {
   id: string | number
@@ -480,7 +480,7 @@ export default defineComponent({
       }
     }
 
-    function onVisibleStateChange(e: VisibleStateChangeRes) {
+    function onVisibleStateChange(e: VisibleStateChangeArgs) {
       if (e.state === 'shown') {
         const rects = (deleteButton.value as HTMLElement).getClientRects()[0]
 

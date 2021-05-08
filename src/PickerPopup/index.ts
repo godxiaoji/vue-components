@@ -1,14 +1,15 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import PickerPopup from '../Picker/PickerPopup.vue'
-import type { ApiOptions } from '../apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
+import { ApiOptions } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
+import { PopupHook } from '../apis/types'
 import {
   ModeNames,
   UserFieldNames,
   ModelValue,
   UserOptionItem
-} from '@/Picker/types'
+} from '../Picker/types'
 
 type ShowPickerOptions = {
   title?: string

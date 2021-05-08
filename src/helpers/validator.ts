@@ -14,11 +14,11 @@ import {
   isArray,
   isURL
 } from '@/helpers/util'
-import dayjs from 'dayjs'
+import dayjs from '@/helpers/day'
 import { getSizeValue } from '@/helpers/dom'
 import type { Validator, DomSelector } from './types'
 
-const emptys = ['null', 'undefined', 'NaN']
+const empties = ['null', 'undefined', 'NaN']
 
 /**
  * dom
@@ -36,7 +36,7 @@ elementValidator._type = `HTMLElement`
 export const stringArrayValidator: Validator = (value: unknown) => {
   return isStringArray(value)
 }
-stringArrayValidator._type = `String[]`
+stringArrayValidator._type = `string[]`
 
 /**
  * 非空校验器
@@ -48,7 +48,7 @@ export const notNullValidator: Validator = (value: unknown) => {
   }
   return true
 }
-notNullValidator._type = `any(not in [${emptys
+notNullValidator._type = `any(not in [${empties
   .map(v => {
     return `"${v}"`
   })
@@ -123,7 +123,7 @@ export function getType(obj: unknown) {
     return 'symbol'
   } else if (isString(obj)) {
     return typeof obj
-  } else if (inArray(obj + '', emptys)) {
+  } else if (inArray(obj + '', empties)) {
     return obj + ''
   } else if (isArray(obj)) {
     return 'array'

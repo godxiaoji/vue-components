@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import CalendarPopup from '../Calendar/CalendarPopup.vue'
-import { ApiOptions } from '@/apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
+import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
 import type { CalendarType, CalendarValue, DayHandler } from '@/Calendar/types'
 
 type ShowCalendarOptions = {

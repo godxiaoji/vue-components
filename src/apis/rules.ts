@@ -7,13 +7,13 @@ import {
   calendarValueValidator,
   createEnumsValidator,
   stringNumberArrayMixValidator,
-  selectorValidator,
+  selectorValidator
 } from '@/helpers/validator'
-import { MODE_NAMES as SELECT_MODE_NAMES } from '@/Picker/util'
 import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '@/Calendar/util'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
-import type { DataObject, Validator } from '../helpers/types'
-import type { ApiOptions } from '../apis/types'
+import { DataObject, Validator } from '../helpers/types'
+import { ApiOptions } from '../apis/types'
+import dayjs from '@/helpers/day'
 
 const placementValidator = createEnumsValidator(PLACEMENT_TYPES)
 
@@ -105,6 +105,28 @@ export const apiRules: ApiRules = {
       default: false
     }
   },
+  showDatePicker: {
+    title: {
+      type: String
+    },
+    mode: {
+      type: String
+    },
+    value: {
+      type: Date
+    },
+    // 最小日期
+    minDate: {
+      type: Date
+    },
+    // 最大日期
+    maxDate: {
+      type: Date
+    },
+    filter: {
+      type: Function
+    }
+  },
   showPicker: {
     title: {
       type: String
@@ -118,10 +140,6 @@ export const apiRules: ApiRules = {
       default() {
         return []
       }
-    },
-    mode: {
-      enums: SELECT_MODE_NAMES,
-      default: SELECT_MODE_NAMES[0]
     },
     fieldNames: {
       type: Object,
@@ -143,10 +161,6 @@ export const apiRules: ApiRules = {
       default() {
         return []
       }
-    },
-    mode: {
-      enums: SELECT_MODE_NAMES,
-      default: SELECT_MODE_NAMES[0]
     },
     fieldNames: {
       type: Object,

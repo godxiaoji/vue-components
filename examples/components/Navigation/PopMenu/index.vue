@@ -229,3 +229,22 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '@/style/var.scss';
+
+.popover {
+  &-box2 {
+    padding: 8px 16px;
+
+    > div {
+      display: flex;
+      justify-content: center;
+    }
+
+    .fx-button + .fx-button {
+      margin-left: 32px;
+    }
+  }
+}
+</style>

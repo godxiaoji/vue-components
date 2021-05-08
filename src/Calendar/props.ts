@@ -1,5 +1,5 @@
 import { PropType } from 'vue'
-import dayjs from 'dayjs'
+import dayjs from '@/helpers/day'
 import { isInNumberRange, isInteger } from '@/helpers/util'
 import { DEFAULT_MONTH_RANGE, TYPE_NAMES } from '@/Calendar/util'
 import { calendarValueValidator, createEnumsValidator } from '@/helpers/validator'

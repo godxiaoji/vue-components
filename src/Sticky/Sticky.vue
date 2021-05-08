@@ -7,20 +7,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  ref,
-  onMounted,
-  inject,
-  watch,
-  onBeforeUnmount,
-  onActivated,
-  onDeactivated
-} from 'vue'
+import { defineComponent, computed, ref, onMounted, inject, watch } from 'vue'
 import { widgetZIndex } from '@/helpers/layer'
 import { selectorValidator, sizeValidator } from '@/helpers/validator'
-import { OnScrollCallback, useScrollEvent } from '@/hooks/scroll'
+import { useScrollEvent } from '@/hooks/scroll'
+import { OnScrollCallback } from '../hooks/types'
 import {
   getRelativeOffset,
   getScrollDom,

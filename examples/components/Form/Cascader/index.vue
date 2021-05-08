@@ -19,13 +19,6 @@
         />
       </fx-cell>
     </fx-group>
-    <fx-group title="内置选择器">
-      <fx-cell label="mode=date"><fx-cascader initial-mode="date"/></fx-cell>
-      <fx-cell label="mode=time"><fx-cascader initial-mode="time"/></fx-cell>
-      <fx-cell label="mode=datetime">
-        <fx-cascader initial-mode="datetime" />
-      </fx-cell>
-    </fx-group>
     <fx-group title="事件监听">
       <fx-cell label="家电">
         <fx-cascader

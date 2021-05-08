@@ -6,26 +6,16 @@
         disabled
       }
     ]"
+    ref="root"
   >
-    <div
-      class="fx-input"
-      :class="{ 'has--value': formLabel, disabled }"
-      @click="onFieldClick"
-    >
-      <div class="fx-input_input" :class="{ placeholder: !formLabel }">
-        {{ formLabel || placeholder }}
-      </div>
-      <icon class="fx-input_arrow" icon="RightOutlined" />
-      <input
-        class="fx-input_cover"
-        type="text"
-        readonly
-        :name="formName"
-        :disabled="disabled"
-        :value="formLabel"
-        ref="input"
-      />
-    </div>
+    <picker-input
+      :formLabelString="formLabel"
+      :formValueString="formLabel"
+      :disabled="disabled"
+      :formName="formName"
+      :placeholder="placeholder"
+      @field-click="onFieldClick"
+    />
     <calendar-popup
       v-bind="$props"
       :title="placeholder"
@@ -46,7 +36,7 @@ import {
   ref,
   watch
 } from 'vue'
-import Icon from '@/Icon'
+import PickerInput from '@/Picker/PickerInput.vue'
 import CalendarPopup from '@/CalendarPopup'
 import {
   cloneDetail,
@@ -57,17 +47,17 @@ import {
   TYPE_NAMES
 } from '@/Calendar/util'
 import { isFunction, isUndefined } from '@/helpers/util'
-import dayjs from 'dayjs'
-import commonProps from '@/Calendar/props'
+import dayjs from '@/helpers/day'
+import calendarCommonProps from '@/Calendar/props'
 import { formItemEmits, formItemProps, useFormItem } from '@/hooks/form'
 import { getEnumsValue } from '@/helpers/validator'
 import { DetailObject } from './types'
 
 export default defineComponent({
   name: 'fx-calendar',
-  components: { Icon, CalendarPopup },
+  components: { PickerInput, CalendarPopup },
   props: {
-    ...commonProps,
+    ...calendarCommonProps,
     ...formItemProps,
     placeholder: {
       type: String,
@@ -143,9 +133,12 @@ export default defineComponent({
       validateAfterEventTrigger('change', formatValue)
     }
 
-    const { formName, validateAfterEventTrigger, hookFormValue } = useFormItem<
-      Date
-    >(props, ctx, {
+    const {
+      formName,
+      validateAfterEventTrigger,
+      hookFormValue,
+      root
+    } = useFormItem<Date>(props, ctx, {
       formValue,
       hookFormValue() {
         const newValue = cloneDetail(detail).value
@@ -180,6 +173,7 @@ export default defineComponent({
     const defaultValue = cloneDetail(detail).value
 
     return {
+      root,
       isInitPopup,
       popupVisible,
       formName,

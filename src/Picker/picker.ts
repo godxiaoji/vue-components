@@ -10,14 +10,19 @@ import { cloneData, isSameArray, isEmpty } from '@/helpers/util'
 import {
   getDefaultDetail,
   getFormatOptions,
-  MODE_NAMES,
-  string2Array,
   validateValues,
-  updateArray
+  updateArray,
+  defaultValueParser
 } from '@/Picker/util'
 import { UseProps } from '../helpers/types'
-import { DetailObject, Labels, Values } from './types'
-import { getEnumsValue } from '@/helpers/validator'
+import {
+  DetailObject,
+  Labels,
+  Values,
+  OptionsHandler,
+  PickerHandlers,
+  HandleType
+} from './types'
 import { useFormItem } from '@/hooks/form'
 
 interface UseOptions {
@@ -36,7 +41,8 @@ export const pickerEmits = ['value-change']
 export function usePicker(
   props: UseProps,
   ctx: SetupContext<any>,
-  { name }: UseOptions
+  { name }: UseOptions,
+  handlers: PickerHandlers
 ) {
   const { emit } = ctx
   const isInitPopup = ref(false)
@@ -48,18 +54,31 @@ export function usePicker(
   const popup = shallowRef<ComponentPublicInstance<any>>()
 
   let detail = getDefaultDetail()
-  const mode = getEnumsValue(MODE_NAMES, props.initialMode)
-  const separator = props.initialSeparator
+  const separator: string = props.initialSeparator
   // const defaultDetail = getDefaultDetail()
+  const optionsHandler: OptionsHandler | null = handlers.optionsHandler || null
 
-  const { formName, validateAfterEventTrigger, hookFormValue } = useFormItem<
-    string | number
-  >(props, ctx, {
+  const {
+    formName,
+    validateAfterEventTrigger,
+    hookFormValue,
+    root
+  } = useFormItem<string | number>(props, ctx, {
     formValue,
     hookFormValue: () =>
-      props.formatString ? formValueString.value : cloneData(formValue),
+      handlers.valueHook
+        ? handlers.valueHook(cloneData(formValue))
+        : props.formatString
+        ? formValueString.value
+        : cloneData(formValue),
     hookResetValue: () => updateValue(cloneData(defaultValue)).value
   })
+
+  const format2String = (array: Values, type: HandleType = 'value') => {
+    return handlers.valueFormatter
+      ? handlers.valueFormatter(array, type)
+      : array.join(separator)
+  }
 
   function updateValue(val: unknown) {
     if (popup.value) {
@@ -70,37 +89,44 @@ export function usePicker(
       )
     }
 
-    const values = string2Array(val, mode, separator)
+    const values = handlers.valueParser
+      ? handlers.valueParser(val, 'value')
+      : defaultValueParser(val, separator)
 
     if (!(values instanceof Error)) {
       const { options, isCascade } = getFormatOptions(
-        props.options,
-        props.fieldNames,
-        mode,
+        props.options || [],
+        props.fieldNames || {},
+        optionsHandler,
         name === 'cascader'
       )
 
       if (!isSameArray(values, formValue)) {
-        const validateRet = validateValues(
+        const { value, label, valid, extraData } = validateValues(
           values,
           options,
-          mode,
-          separator,
-          isCascade
+          isCascade,
+          optionsHandler
         )
 
-        if (validateRet.valid) {
-          return updateDetail(validateRet.detail)
+        if (valid) {
+          return updateDetail({
+            value,
+            label,
+            extraData,
+            valueString: format2String(value, 'value'),
+            labelString: format2String(label, 'label')
+          })
         }
       }
     }
 
-    return cloneData(detail)
+    return getDetail()
   }
 
   function updateDetail(newDetail: DetailObject) {
     if (!isSameArray(newDetail.value, formValue)) {
-      emit('value-change', cloneData(newDetail), cloneData(detail))
+      emit('value-change', detailHook(newDetail), detailHook(detail))
     }
 
     detail = newDetail
@@ -109,7 +135,7 @@ export function usePicker(
     formValueString.value = newDetail.valueString
     formLabelString.value = newDetail.labelString
 
-    return cloneData(detail)
+    return getDetail()
   }
 
   function onFieldClick() {
@@ -122,11 +148,19 @@ export function usePicker(
     }
   }
 
+  function detailHook(detail: DetailObject): any {
+    return handlers.detailHook ? handlers.detailHook(detail) : cloneData(detail)
+  }
+
+  function getDetail(): DetailObject {
+    return cloneData(detail)
+  }
+
   function onChange(detail: DetailObject) {
     updateDetail(detail)
 
     emit('update:modelValue', hookFormValue())
-    emit('change', cloneData(detail))
+    emit('change', detailHook(detail))
 
     validateAfterEventTrigger('change', hookFormValue())
   }
@@ -139,17 +173,10 @@ export function usePicker(
     }
   )
 
-  watch(
-    () => props.options,
-    val => updateValue(val),
-    {
-      immediate: true
-    }
-  )
-
-  const defaultValue = cloneData(detail).value
+  const defaultValue = getDetail().value
 
   return {
+    root,
     popup,
     formName,
     isInitPopup,

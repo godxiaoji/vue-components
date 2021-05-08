@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import ImagePreview from './ImagePreview.vue'
-import type { ApiOptions } from '../apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
+import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
 
 type PreviewImageOptions = {
   urls: string[]

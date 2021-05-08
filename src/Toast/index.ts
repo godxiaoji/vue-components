@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import Toast from './Toast.vue'
-import { showPopup, hidePopup, PopupHook } from '@/apis/Popup'
-import type { ApiOptions } from '../apis/types'
+import { showPopup, hidePopup } from '@/apis/Popup'
+import { ApiOptions, PopupHook } from '../apis/types'
 import { isObject, isString } from '@/helpers/util'
 
 type ShowToastOptions = {

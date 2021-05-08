@@ -1,16 +1,6 @@
 import { cloneData, thousands } from '@/helpers/util'
 import { onBeforeUnmount, reactive } from 'vue'
-
-export interface CountTime {
-  time: number
-  days: string
-  fullHours: string
-  thousandsFullHours: string
-  hours: string
-  minutes: string
-  seconds: string
-  milliseconds: string
-}
+import { CountTime } from './types'
 
 interface StepHandlers {
   update: (time: number) => void

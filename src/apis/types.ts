@@ -18,3 +18,10 @@ export interface ApiOptions {
   complete?: ApiOptionsComplete
   [propName: string]: any
 }
+
+export type PopupHook = (hookName: string, args: any) => void
+
+export interface PopupBridge {
+  in?: (key: string, value?: any) => void
+  out?: (key: string, value: any) => void
+}

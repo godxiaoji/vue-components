@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import CascaderPopup from '../Cascader/CascaderPopup.vue'
-import { ApiOptions } from '@/apis/types'
-import { showPopup, PopupHook } from '@/apis/Popup'
+import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup } from '@/apis/Popup'
 import {
   ModeNames,
   UserFieldNames,

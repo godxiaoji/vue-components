@@ -1,5 +1,5 @@
 import { cloneData, isDate, isArray } from '@/helpers/util'
-import dayjs from 'dayjs'
+import dayjs from '@/helpers/day'
 import type { CalendarType, DetailObject } from './types'
 
 export const DEFAULT_MONTH_RANGE = 6

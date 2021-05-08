@@ -34,7 +34,7 @@ import CalendarView from '@/CalendarView'
 import Drawer from '@/Drawer'
 import FxButton from '@/Button'
 import { getDefaultDetail, cloneDetail } from '@/Calendar/util'
-import commonProps from '@/Calendar/props'
+import calendarCommonProps from '@/Calendar/props'
 import {
   usePopupExtend,
   popupExtendEmits,
@@ -46,7 +46,7 @@ export default defineComponent({
   name: 'fx-calendar-popup',
   components: { CalendarView, Drawer, FxButton },
   props: {
-    ...commonProps,
+    ...calendarCommonProps,
     ...popupExtendProps,
     title: {
       type: String,

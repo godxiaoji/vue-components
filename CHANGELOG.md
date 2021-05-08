@@ -1,3 +1,10 @@
+# [2.0.0-beta.17](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2021-05-08)
+
+
+### Features
+
+* **datepicker:** add DatePicker ([28ed482](https://github.com/godxiaoji/vfox/commit/28ed482740b6d824052461397dd313ed1b61718c))
+
 # [2.0.0-beta.16](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.15...v2.0.0-beta.16) (2021-04-23)
 
 

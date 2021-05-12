@@ -44,7 +44,8 @@
     "async-validator": "^3.4.0",
     "dayjs": "^1.10.4",
     "qrcode": "^1.4.4",
-    "safe-area-insets": "^1.4.1"
+    "safe-area-insets": "^1.4.1",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

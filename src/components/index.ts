@@ -35,6 +35,7 @@ import ImageUploader from '@/ImageUploader'
 import DatePicker from '@/DatePicker'
 import DatePickerPopup from '@/DatePickerPopup'
 import DatePickerView from '@/DatePickerView'
+import Range from '@/Range'
 
 /* Feedback */
 import Toast from '@/Toast'
@@ -98,6 +99,7 @@ import TimelineItem from '@/TimelineItem'
 import Stopwatch from '@/Stopwatch'
 import Result from '@/Result'
 import LoadMore from '@/LoadMore'
+import TimeAgo from '@/TimeAgo'
 
 /* Other */
 import Copy from '@/Copy'
@@ -198,5 +200,7 @@ export {
   LoadMore,
   DatePicker,
   DatePickerPopup,
-  DatePickerView
+  DatePickerView,
+  Range,
+  TimeAgo
 }

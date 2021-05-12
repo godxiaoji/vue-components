@@ -1,23 +1,24 @@
 <template>
   <div class="fx-slider" :class="{ disabled: !!disabled }">
-    <div class="fx-slider_inner">
+    <div class="fx-slider_inner" ref="slider">
       <div class="fx-slider_box">
-        <div class="fx-slider_track" :style="[{ width: progress }]"></div>
-        <div class="fx-slider_thumb" :style="[{ left: progress }]">
+        <div
+          class="fx-slider_track"
+          :style="[{ width: progress * 100 + '%', backgroundColor: color }]"
+        ></div>
+        <div
+          class="fx-slider_thumb"
+          data-thumb="true"
+          :style="[{ left: progress * 100 + '%', color }]"
+        >
           {{ showValue ? formValue : '' }}
         </div>
       </div>
       <input
-        class="fx-slider_range"
-        type="range"
+        type="hidden"
+        :name="formName"
         :disabled="disabled"
         :value="formValue"
-        :min="min"
-        :max="max"
-        :step="step"
-        :name="formName"
-        @input="onInput"
-        @change="onChange"
         ref="input"
       />
     </div>
@@ -25,119 +26,99 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, defineComponent, watch, computed, nextTick } from 'vue'
+import { ref, defineComponent, watch, nextTick } from 'vue'
 import { isNumeric } from '@/helpers/util'
 import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
+import { slideProps, slideEmits, useSlide } from '@/Slider/slide'
 
 export default defineComponent({
   name: 'fx-slider',
   props: {
     ...formItemProps,
+    ...slideProps,
     modelValue: {
       type: [Number, String],
       validator: isNumeric,
       default: null
-    },
-    min: {
-      type: [Number, String],
-      validator: isNumeric,
-      default: 0
-    },
-    max: {
-      type: [Number, String],
-      validator: isNumeric,
-      default: 100
-    },
-    step: {
-      type: [Number, String],
-      validator: isNumeric,
-      default: 1
-    },
-    showValue: {
-      type: Boolean,
-      default: false
     }
   },
-  emits: [...formItemEmits, 'input'],
+  emits: [...formItemEmits, ...slideEmits],
   setup(props, ctx) {
-    const formValue = ref('')
+    const progress = ref(0)
+    const formValue = ref(0)
     const { emit } = ctx
 
     const {
       formName,
       validateAfterEventTrigger,
-      getInputEl,
       hookFormValue,
       eventEmit
-    } = useFormItem<string>(props, ctx, {
-      formValue,
-      hookFormValue() {
-        return parseFloat(formValue.value)
-      }
+    } = useFormItem<number>(props, ctx, {
+      formValue
     })
 
-    function updateValue() {
-      formValue.value = getInputEl().value
-    }
+    const { slider, toInteger, rangeValue, value2Progress } = useSlide(props, {
+      getValue() {
+        return formValue.value
+      },
+      move({ value: newVal, progress: newProgress }) {
+        formValue.value = newVal
+        progress.value = newProgress
+
+        inputModel()
+        eventEmit('input')
+      },
+      end({ isChange }) {
+        isChange && eventEmit('change')
+      }
+    })
 
     function inputModel() {
       if (
         props.modelValue == null ||
-        formValue.value !== props.modelValue.toString()
+        formValue.value !== toInteger(props.modelValue)
       ) {
         emit('update:modelValue', hookFormValue())
       }
     }
 
-    function onInput(e: Event) {
-      formValue.value = (e.target as HTMLInputElement).value
+    function updateValue(val: unknown) {
+      if (val == null) {
+        return
+      }
 
-      inputModel()
+      let newVal = toInteger(val as string)
 
-      eventEmit(e.type)
+      if (isNaN(newVal)) {
+        return
+      }
+
+      newVal = rangeValue(newVal)
+
+      if (newVal !== formValue.value) {
+        formValue.value = newVal
+        progress.value = value2Progress(newVal)
+      }
     }
-
-    function onChange(e: Event) {
-      eventEmit(e.type)
-    }
-
-    const progress = computed(() => {
-      return (
-        ((parseFloat(formValue.value) - parseFloat(props.min as string)) /
-          (parseFloat(props.max as string) - parseFloat(props.min as string))) *
-          100 +
-        '%'
-      )
-    })
 
     watch(
       () => props.modelValue,
-      val => {
-        formValue.value = val.toString()
-
-        nextTick(() => {
-          updateValue()
-        })
-      }
+      val => updateValue(val)
     )
 
     watch([() => props.min, () => props.max], () => {
       nextTick(() => {
-        updateValue()
+        updateValue(formValue.value)
         inputModel()
       })
     })
 
-    onMounted(() => {
-      formValue.value = getInputEl().value
-
-      inputModel()
-    })
+    updateValue(props.modelValue || 0)
+    inputModel()
 
     return {
+      slider,
       progress,
-      onChange,
-      onInput,
       formName,
       formValue,
       validateAfterEventTrigger

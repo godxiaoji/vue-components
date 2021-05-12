@@ -38,7 +38,7 @@ import {
 import StickyView from '@/StickyView'
 import { sizeValidator } from '@/helpers/validator'
 import { rangeInteger } from '@/helpers/util'
-import type { ScrollToIndexOptions, ScrollToOptions } from '../helpers/types'
+import { ScrollToIndexOptions, ScrollToOptions } from '../helpers/types'
 import { useTouch } from '@/hooks/touch'
 
 export default defineComponent({

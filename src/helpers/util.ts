@@ -189,7 +189,7 @@ export const isStringNumberMix = (object: any) => {
  * 是否Number[]
  * @param object 值
  */
-export function isNumberArray(object: any) {
+export const isNumberArray = (object: any) => {
   let is = false
 
   if (isArray(object)) {

@@ -1,38 +1,42 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <div class="slider-box">
-        <fx-slider />
-      </div>
+      <fx-cell class="slider-box" :label="'value: ' + value">
+        <fx-slider v-model="value" />
+      </fx-cell>
     </fx-group>
-    <fx-group title="显示数值">
-      <div class="slider-box">
-        <fx-slider show-value />
-      </div>
+    <fx-group title="显示数值 showValue=true">
+      <fx-cell class="slider-box" :label="'value: ' + value2">
+        <fx-slider show-value v-model="value2" />
+      </fx-cell>
     </fx-group>
-    <fx-group title="自定义颜色">
-      <div class="slider-box">
-        <fx-slider class="slider-custom-color" show-value />
-      </div>
-    </fx-group>
-    <fx-group title="限制范围">
-      <div class="slider-box">
-        <fx-slider show-value :min="min" :max="max" v-model="value" />
-      </div>
+    <fx-group title="自定义颜色 color=#ff7875">
+      <fx-cell class="slider-box" :label="'value: ' + value3">
+        <fx-slider color="#ff7875" v-model="value3" show-value />
+      </fx-cell>
     </fx-group>
     <fx-group title="设置步进（step=5）">
-      <div class="slider-box">
-        <fx-slider show-value step="5" />
-      </div>
+      <fx-cell class="slider-box" :label="'value: ' + value4">
+        <fx-slider show-value v-model="value4" step="5" />
+      </fx-cell>
+    </fx-group>
+    <fx-group title="限制范围 min=50 & max=150">
+      <fx-cell class="slider-box" :label="'value: ' + value5">
+        <fx-slider show-value :min="min" :max="max" v-model="value5" />
+      </fx-cell>
     </fx-group>
     <fx-group title="禁用">
-      <div class="slider-box">
-        <fx-slider disabled />
-      </div>
+      <fx-cell class="slider-box" :label="'value: ' + value6">
+        <fx-slider disabled v-model="value6" />
+      </fx-cell>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="input"><fx-slider @input="onInput"/></fx-cell>
-      <fx-cell label="change"><fx-slider @change="onChange"/></fx-cell>
+      <fx-cell class="slider-box" label="input"
+        ><fx-slider v-model="value7" @input="onInput" />
+      </fx-cell>
+      <fx-cell class="slider-box" label="change"
+        ><fx-slider v-model="value8" @change="onChange" />
+      </fx-cell>
     </fx-group>
   </div>
 </template>
@@ -43,9 +47,17 @@ export default {
   props: {},
   data() {
     return {
-      min: 50,
-      max: 150,
-      value: null
+      min: 40,
+      max: 140,
+
+      value: null,
+      value2: 10,
+      value3: 20,
+      value4: 30,
+      value5: 40,
+      value6: 50,
+      value7: 60,
+      value8: 70
     }
   },
   methods: {
@@ -65,12 +77,9 @@ export default {
 
 .slider {
   &-box {
-    padding: 0 16px;
-  }
-
-  &-custom-color {
-    --slider-track-active-color: #{$danger-color} !important;
-    --slider-track-color: #{$danger-background-color} !important;
+    .fx-cell_content {
+      width: 100%;
+    }
   }
 }
 </style>

@@ -13,13 +13,7 @@
 | step       | number  | 1      | 否   | 步长，取值必须大于 0，并且可被(max - min)整除 |
 | disabled   | boolean | false  | 否   | 是否禁用                                      |
 | show-value | boolean | false  | 否   | 是否显示当前 value                            |
-
-## CSS
-
-| 属性                        | 默认值                               | 说明         |
-| --------------------------- | ------------------------------------ | ------------ |
-| --slider-track-active-color | <font color="#1890ff">#1890ff</font> | 轨道激活色   |
-| --slider-track-color        | <font color="#d9d9d9">#d9d9d9</font> | 轨道未激活色 |
+| color      | string  |        | 否   | 设置主色                                      |
 
 ## Events
 

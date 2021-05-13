@@ -42,3 +42,5 @@ export interface EventCallback {
 export interface MixEventCallback {
   (res: { type: string } & DataObject<any>): void
 }
+
+export type EasingType = 'linear' | 'swing'

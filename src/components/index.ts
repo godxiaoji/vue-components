@@ -100,6 +100,7 @@ import Stopwatch from '@/Stopwatch'
 import Result from '@/Result'
 import LoadMore from '@/LoadMore'
 import TimeAgo from '@/TimeAgo'
+import CountUp from '@/CountUp'
 
 /* Other */
 import Copy from '@/Copy'
@@ -202,5 +203,6 @@ export {
   DatePickerPopup,
   DatePickerView,
   Range,
-  TimeAgo
+  TimeAgo,
+  CountUp
 }

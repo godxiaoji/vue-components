@@ -1,7 +1,10 @@
 import { isFunction } from '@/helpers/util'
+import { EasingType } from './types'
 
 type TaskRef = {
   idle: number | null
+  id: number
+  done: () => void
 }
 
 const Easing = {
@@ -13,79 +16,102 @@ const Easing = {
   }
 }
 
-export class AnimationFrameTask {
-  stop: () => void
+let uid = 0
 
-  constructor(ref: TaskRef) {
+export class AnimationFrameTask {
+  stop: () => boolean
+  id: number
+
+  constructor(ref: TaskRef, id: number) {
     this.stop = function() {
       if (ref.idle) {
         cancelAnimationFrame(ref.idle)
         ref.idle = null
+        ref.done()
+        return true
       }
+
+      return false
     }
+
+    this.id = id
   }
 }
 
-interface FrameOptionsComplete {
-  (res: { current: number }): void
+interface OptionsProgress {
+  (res: { current: number; frameIndex: number; id: number }): void
+}
+
+interface OptionsComplete {
+  (res: { current: number; id: number }): void
+}
+
+interface Options {
+  from: number
+  to: number
+  duration: number
+  progress: OptionsProgress
+  complete?: OptionsComplete
+  easing?: EasingType
 }
 
 /**
  * 变化解帧
  * @param options 设置项
  */
-export function frameTo(options: {
-  from: number
-  to: number
-  duration: number
-  progress: (res: { current: number; frameIndex: number }) => void
-  complete?: FrameOptionsComplete
-}) {
-  const { from, to, duration, progress, complete } = options
+export function frameTo(options: Options) {
+  const { from, to, duration, progress, complete, easing } = options
 
   const start = Date.now()
   const end = start + duration
+  const id = ++uid
 
-  const ref: TaskRef = { idle: null }
+  function done() {
+    complete && complete({ current, id })
+  }
+
+  const ref: TaskRef = { idle: null, id, done }
   let frameIndex = 0
+  let current = from
 
   function step() {
     ref.idle = requestAnimationFrame(function() {
       const t = Date.now()
-      let current
 
       if (t >= end) {
         current = to
 
         progress({
           current,
-          frameIndex: frameIndex++
+          frameIndex: ++frameIndex,
+          id
         })
 
-        isFunction(complete) && (complete as FrameOptionsComplete)({ current })
+        done()
       } else {
-        const p = Easing['swing']((t - start) / duration)
+        const p = Easing[easing || 'swing']((t - start) / duration)
         current = from + (to - from) * p
 
-        if (isFunction(progress)) {
-          progress({
-            current,
-            frameIndex: frameIndex++
-          })
-        }
+        progress({
+          current,
+          frameIndex: ++frameIndex,
+          id
+        })
 
         step()
       }
     })
   }
 
-  if (from !== to) {
-    step()
-  } else {
-    isFunction(complete) && (complete as FrameOptionsComplete)({ current: to })
-  }
+  progress({
+    current,
+    frameIndex,
+    id
+  })
 
-  return new AnimationFrameTask(ref)
+  step()
+
+  return new AnimationFrameTask(ref, id)
 }
 
 export function getStretchOffset(offset: number) {

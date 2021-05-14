@@ -1,4 +1,3 @@
-import { isFunction } from '@/helpers/util'
 import { EasingType } from './types'
 
 type TaskRef = {

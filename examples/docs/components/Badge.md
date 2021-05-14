@@ -17,6 +17,8 @@
 
 ## Slots
 
+### 默认（#default）
+
 ```
 <fx-badge :count="1" show-zero>
   <fx-button>badge</fx-button>

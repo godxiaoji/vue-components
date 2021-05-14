@@ -62,6 +62,7 @@ import ScrollTabItem from '@/ScrollTabItem'
 import IndexView from '@/IndexView'
 import IndexViewItem from '@/IndexViewItem'
 import Fixed from '@/Fixed'
+import Pagination from '@/Pagination'
 
 /* Show */
 import Swiper from '@/Swiper'
@@ -204,5 +205,6 @@ export {
   DatePickerView,
   Range,
   TimeAgo,
-  CountUp
+  CountUp,
+  Pagination
 }

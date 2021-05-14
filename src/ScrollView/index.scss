@@ -44,8 +44,7 @@
     }
   }
 
-  &_pull-refresh,
-  &_lower-loading {
+  &_pull-refresh {
     position: absolute;
     top: 0;
     left: 0;
@@ -61,21 +60,21 @@
       justify-content: center;
       width: 100%;
       font-size: 14px;
-      color: $font-color;
+      color: $font3-color;
       box-sizing: border-box;
       height: 48px;
-
-      .fx-icon {
-        --size: 18px;
-        --color: #{$font-color};
-        margin-right: 8px;
-      }
 
       span {
         line-height: 16px;
         text-align: center;
         white-space: normal;
       }
+    }
+
+    &-icon {
+      --size: 18px;
+      --color: #{$border-color};
+      margin-right: 8px;
     }
 
     &.direction--unknown {

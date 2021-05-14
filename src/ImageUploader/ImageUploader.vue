@@ -39,11 +39,11 @@
             class="fx-image-uploader_item-status"
             v-if="item.status !== 'uploaded' && item.status !== 'reading'"
           >
-            <icon
-              icon="LoadingOutlined"
-              spin
+            <activity-indicator
               v-if="item.status === 'uploading'"
-            ></icon>
+              :size="40"
+              color="#ffffff"
+            />
             <icon
               icon="DeleteOutlined"
               v-else-if="item.status === 'failed'"
@@ -96,6 +96,7 @@ import Icon from '@/Icon'
 import Order from '@/Order'
 import ImagePreview from '@/ImagePreview'
 import Dialog from '@/Dialog'
+import ActivityIndicator from '@/ActivityIndicator'
 import {
   isPromiseLike,
   isString,
@@ -171,7 +172,14 @@ function getAccepts(val: string | string[]) {
 
 export default defineComponent({
   name: 'fx-image-uploader',
-  components: { Order, Icon, ImagePreview, FxButton, FxImage },
+  components: {
+    Order,
+    Icon,
+    ImagePreview,
+    FxButton,
+    FxImage,
+    ActivityIndicator
+  },
   props: {
     ...formItemProps,
     modelValue: {

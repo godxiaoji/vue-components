@@ -52,7 +52,7 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: '#1890ff'
+      default: null
     }
   },
   setup(props) {

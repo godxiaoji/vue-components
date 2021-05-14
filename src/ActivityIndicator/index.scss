@@ -1,0 +1,17 @@
+@import '../style/var.scss';
+@import '../style/animation.scss';
+
+.fx-activity-indicator {
+  &.animated {
+    @include rotate-360-animation(800ms);
+  }
+
+  &_track {
+    stroke: rgba($color: $black-color, $alpha: 0.15);
+  }
+
+  &_thumb {
+    stroke: $primary-color;
+    transition: stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s;
+  }
+}

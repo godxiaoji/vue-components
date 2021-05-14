@@ -27,13 +27,15 @@
               class="fx-scroll-view_pull-refresh-indicator"
               :style="indicatorStyles"
             >
+              <activity-indicator
+                class="fx-scroll-view_pull-refresh-icon"
+                v-if="pullRefreshState === PullRefreshState.Refreshing"
+                :size="18"
+              />
               <icon
-                :icon="
-                  pullRefreshState === PullRefreshState.Refreshing
-                    ? 'LoadingOutlined'
-                    : 'CircleOutlined'
-                "
-                :spin="pullRefreshState === PullRefreshState.Refreshing"
+                class="fx-scroll-view_pull-refresh-icon"
+                v-else
+                icon="CircleOutlined"
               />
               <span>{{
                 pullRefreshState === PullRefreshState.Refreshing
@@ -54,6 +56,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted, watch, reactive } from 'vue'
 import Icon from '@/Icon'
+import ActivityIndicator from '@/ActivityIndicator'
 import {
   inArray,
   stringMix2StringArray,
@@ -90,7 +93,7 @@ interface ScrollCoords extends UseTouchCoords {
 
 export default defineComponent({
   name: 'fx-scroll-view',
-  components: { Icon },
+  components: { Icon, ActivityIndicator },
   provide() {
     return {
       disableFixed: true

@@ -42,9 +42,9 @@
         </div>
       </li>
     </ul>
-    <div class="fx-flat-list_indicator" v-show="lowerLoading">
-      <icon icon="LoadingOutlined" spin /><span>正在加载</span>
-    </div>
+    <load-more class="fx-flat-list_indicator" v-show="lowerLoading" loading>
+      正在加载
+    </load-more>
     <div class="fx-flat-list_empty" v-show="list.length === 0">
       <slot name="empty"></slot>
     </div>
@@ -67,7 +67,7 @@ import {
   ComponentPublicInstance,
   shallowRef
 } from 'vue'
-import Icon from '@/Icon'
+import LoadMore from '@/LoadMore'
 import {
   cloneData,
   isFunction,
@@ -94,7 +94,7 @@ interface FlatItemElement extends HTMLElement {
 
 export default defineComponent({
   name: 'fx-flat-list',
-  components: { ScrollView, Icon },
+  components: { ScrollView, LoadMore },
   props: {
     dataKey: {
       type: String,

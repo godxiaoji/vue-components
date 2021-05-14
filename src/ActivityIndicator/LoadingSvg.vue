@@ -1,19 +1,21 @@
 <template>
   <svg
-    class="fx-loading-svg"
+    class="fx-activity-indicator"
     :height="size"
     :width="size"
     viewBox="0 0 1024 1024"
   >
     <circle
+      class="fx-activity-indicator_track"
       r="448"
       cx="512"
       cy="512"
-      stroke="rgba(0, 0, 0, 0.04)"
       :stroke-width="(strokeWidth / size) * 896"
       fill="none"
+      :style="{ stroke: backgroundColor }"
     ></circle>
     <circle
+      class="fx-activity-indicator_thumb"
       r="448"
       cx="512"
       cy="512"
@@ -23,7 +25,7 @@
       fill="none"
       transform="rotate(-90,512,512)"
       stroke-linecap="round"
-      style="transition: stroke-dasharray 0.6s ease 0s, stroke 0.6s ease 0s;"
+      :style="{ stroke: color }"
     ></circle>
   </svg>
 </template>
@@ -32,7 +34,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'fx-loading-svg',
+  name: 'fx-activity-indicator-loading',
   props: {
     rate: {
       type: Number,
@@ -49,7 +51,11 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: '#1890ff'
+      default: null
+    },
+    backgroundColor: {
+      type: String,
+      default: null
     }
   }
 })

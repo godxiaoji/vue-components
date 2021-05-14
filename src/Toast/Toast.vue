@@ -8,12 +8,13 @@
       v-show="isShow"
     >
       <div class="fx-toast_box" :class="{ 'has--icon': !!iconName }">
-        <icon
-          v-if="iconName"
+        <activity-indicator
           class="fx-toast_icon"
-          :icon="iconName"
-          :spin="type === 'loading'"
+          :size="21"
+          color="#ffffff"
+          v-if="type === 'loading'"
         />
+        <icon v v-else-if="iconName" class="fx-toast_icon" :icon="iconName" />
         <div class="fx-toast_text">
           {{ title }}
         </div>
@@ -25,6 +26,7 @@
 <script lang="ts">
 import { defineComponent, computed, onBeforeUnmount, PropType } from 'vue'
 import Icon from '@/Icon'
+import ActivityIndicator from '@/ActivityIndicator'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { isUndefined } from '@/helpers/util'
 import { iconValidator } from '@/helpers/validator'
@@ -38,7 +40,7 @@ const typeMaps = new Map([
 
 export default defineComponent({
   name: 'fx-toast',
-  components: { Icon },
+  components: { Icon, ActivityIndicator },
   props: {
     ...popupProps,
     title: {

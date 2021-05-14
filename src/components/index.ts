@@ -103,6 +103,7 @@ import LoadMore from '@/LoadMore'
 import TimeAgo from '@/TimeAgo'
 import CountUp from '@/CountUp'
 import CircleProgress from '@/CircleProgress'
+import ActivityIndicator from '@/ActivityIndicator'
 
 /* Other */
 import Copy from '@/Copy'
@@ -208,5 +209,6 @@ export {
   TimeAgo,
   CountUp,
   Pagination,
-  CircleProgress
+  CircleProgress,
+  ActivityIndicator
 }

@@ -1,3 +1,15 @@
+# [2.0.0-beta.18](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2021-05-14)
+
+
+### Features
+
+* **activityindicator:** add ActivityIndicator ([3f4d350](https://github.com/godxiaoji/vfox/commit/3f4d350eff254c57e593d40145ae29cb4ae50538))
+* **circleprogress:** add CircleProgress ([d9343a9](https://github.com/godxiaoji/vfox/commit/d9343a943c984a65bcbad6e310ef907adb262470))
+* **countup:** add CountUp ([7929327](https://github.com/godxiaoji/vfox/commit/792932798ce79db4e9015c4976908fbd65adba33))
+* **pagination:** add Pagination ([1231124](https://github.com/godxiaoji/vfox/commit/1231124f969f19f8fb6c7c820a1cfdec85e42d3c))
+* **range:** slider refactor & add Range ([9b6835e](https://github.com/godxiaoji/vfox/commit/9b6835e3284dd69e0a9eead17374acc229ae9802))
+* **timeago:** add TimeAgo ([9a54f3a](https://github.com/godxiaoji/vfox/commit/9a54f3a3ffff26f052e7d8adeff3b2c648077132))
+
 # [2.0.0-beta.17](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.16...v2.0.0-beta.17) (2021-05-08)
 
 

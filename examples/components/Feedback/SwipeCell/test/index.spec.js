@@ -3,7 +3,7 @@
 import { shallowMount } from '@vue/test-utils'
 import SwipeCell from '@/SwipeCell'
 
-describe('Cell', () => {
+describe('SwipeCell', () => {
   test('should render default slot correctly', () => {
     const wrapper = shallowMount(SwipeCell, {})
 

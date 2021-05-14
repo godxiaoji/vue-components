@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CircleProgress should render custom default slot correctly 1`] = `
+<div class="fx-circle-progress" style="font-size: 14.875px;">
+  <fx-loading-svg-stub class="fx-circle-progress_bar" size="100" rate="0" strokewidth="5.37" color="#1890ff"></fx-loading-svg-stub>
+  <div class="fx-circle-progress_text" style="padding: 5.37px;">0%</div>
+</div>
+`;
+
+exports[`CircleProgress should render default slot correctly 1`] = `
+<div class="fx-circle-progress" style="font-size: 14.875px;">
+  <fx-loading-svg-stub class="fx-circle-progress_bar" size="100" rate="0" strokewidth="5.37" color="#1890ff"></fx-loading-svg-stub>
+  <div class="fx-circle-progress_text" style="padding: 5.37px;">0%</div>
+</div>
+`;
+
+exports[`CircleProgress should render default slot correctly 2`] = `
+<div class="fx-circle-progress" style="font-size: 14.875px;">
+  <fx-loading-svg-stub class="fx-circle-progress_bar" size="100" rate="0" strokewidth="5.37" color="#1890ff"></fx-loading-svg-stub>
+  <div class="fx-circle-progress_text" style="padding: 5.37px;">50%</div>
+</div>
+`;
+
+exports[`CircleProgress should render default slot correctly 3`] = `
+<div class="fx-circle-progress" style="font-size: 14.875px;">
+  <fx-loading-svg-stub class="fx-circle-progress_bar" size="100" rate="0" strokewidth="5.37" color="#1890ff"></fx-loading-svg-stub>
+  <div class="fx-circle-progress_text" style="padding: 5.37px;">100%</div>
+</div>
+`;

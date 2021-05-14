@@ -102,6 +102,7 @@ import Result from '@/Result'
 import LoadMore from '@/LoadMore'
 import TimeAgo from '@/TimeAgo'
 import CountUp from '@/CountUp'
+import CircleProgress from '@/CircleProgress'
 
 /* Other */
 import Copy from '@/Copy'
@@ -206,5 +207,6 @@ export {
   Range,
   TimeAgo,
   CountUp,
-  Pagination
+  Pagination,
+  CircleProgress
 }

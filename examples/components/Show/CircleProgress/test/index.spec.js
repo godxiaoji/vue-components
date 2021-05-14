@@ -1,11 +1,11 @@
 /* global describe,test,expect */
 
 import { shallowMount } from '@vue/test-utils'
-import Progress from '@/Progress'
+import CircleProgress from '@/CircleProgress'
 
-describe('Progress', () => {
+describe('CircleProgress', () => {
   test('should render default slot correctly', async () => {
-    const wrapper = shallowMount(Progress, {
+    const wrapper = shallowMount(CircleProgress, {
       props: { percentage: 0 }
     })
     expect(wrapper.html()).toMatchSnapshot()
@@ -17,17 +17,8 @@ describe('Progress', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  test('should render prop showText=true correctly', () => {
-    const wrapper = shallowMount(Progress, {
-      props: { percentage: 0, showText: true }
-    })
-
-    expect(wrapper.html()).toMatchSnapshot()
-  })
-
   test('should render custom default slot correctly', () => {
-    const wrapper = shallowMount(Progress, {
-      props: { percentage: 0, showText: true },
+    const wrapper = shallowMount(CircleProgress, {
       scopedSlots: {
         default: `<span>Sale {{ props.progress }}</span>`
       }
@@ -37,7 +28,7 @@ describe('Progress', () => {
   })
 
   test('should prop percentage=800 then progress="100%" correctly', async () => {
-    const wrapper = shallowMount(Progress, {
+    const wrapper = shallowMount(CircleProgress, {
       props: { percentage: 800 }
     })
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cell should render custom default slot correctly 1`] = `
+exports[`Progress should render custom default slot correctly 1`] = `
 <div class="fx-progress">
   <div class="fx-progress_bar">
     <div class="fx-progress_track animated" style="width: 0%;"></div>
@@ -9,7 +9,7 @@ exports[`Cell should render custom default slot correctly 1`] = `
 </div>
 `;
 
-exports[`Cell should render default slot correctly 1`] = `
+exports[`Progress should render default slot correctly 1`] = `
 <div class="fx-progress">
   <div class="fx-progress_bar">
     <div class="fx-progress_track animated" style="width: 0%;"></div>
@@ -18,7 +18,7 @@ exports[`Cell should render default slot correctly 1`] = `
 </div>
 `;
 
-exports[`Cell should render default slot correctly 2`] = `
+exports[`Progress should render default slot correctly 2`] = `
 <div class="fx-progress">
   <div class="fx-progress_bar">
     <div class="fx-progress_track animated" style="width: 50%;"></div>
@@ -27,7 +27,7 @@ exports[`Cell should render default slot correctly 2`] = `
 </div>
 `;
 
-exports[`Cell should render default slot correctly 3`] = `
+exports[`Progress should render default slot correctly 3`] = `
 <div class="fx-progress">
   <div class="fx-progress_bar">
     <div class="fx-progress_track animated" style="width: 100%;"></div>
@@ -36,7 +36,7 @@ exports[`Cell should render default slot correctly 3`] = `
 </div>
 `;
 
-exports[`Cell should render prop showText=true correctly 1`] = `
+exports[`Progress should render prop showText=true correctly 1`] = `
 <div class="fx-progress">
   <div class="fx-progress_bar">
     <div class="fx-progress_track animated" style="width: 0%;"></div>

@@ -16,7 +16,7 @@ import {
 } from '@/helpers/util'
 import dayjs from '@/helpers/day'
 import { getSizeValue } from '@/helpers/dom'
-import type { Validator, DomSelector } from './types'
+import { Validator, DomSelector } from './types'
 
 const empties = ['null', 'undefined', 'NaN']
 
@@ -148,7 +148,7 @@ export const sizeValidator: Validator = (value: number | string) => {
 sizeValidator._type = 'number or string(eg: 10px, 5vw, 1vh)'
 
 export const createEnumsValidator = (enums: string[]) => {
-  const validator: Validator = function(value: string) {
+  const validator: Validator = function (value: string) {
     return inArray(value, enums)
   }
 
@@ -170,14 +170,19 @@ export function getEnumsValue<T = string>(enums: T[], value?: unknown): T {
  * @param value 值
  */
 export function isSvgComponent(value: any) {
+  if (isFunction(value) && value.name === 'render') {
+    // vite-svg-loader
+    return true
+  }
+
   return !!(
     isObject(value) &&
     value.__file &&
     value.__file.indexOf('.svg') > -1
-  )
+  ) // vue-svg-loader
 }
 
 export const iconValidator: Validator = (value: unknown) => {
-  return isString(value) && !isURL(value) || isSvgComponent(value)
+  return (isString(value) && !isURL(value)) || isSvgComponent(value)
 }
 iconValidator._type = 'string Or SVG Component'

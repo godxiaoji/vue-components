@@ -4,22 +4,22 @@
       <fx-cell
         label="主要"
         isLink
-        @click="onShowNotify({ title: '通知文本' })"
+        @click="show({ title: '通知文本' })"
       ></fx-cell>
       <fx-cell
         label="成功"
         isLink
-        @click="onShowNotify({ title: '成功文本', type: 'success' })"
+        @click="show({ title: '成功文本', type: 'success' })"
       ></fx-cell>
       <fx-cell
         label="警告"
         isLink
-        @click="onShowNotify({ title: '警告文本', type: 'warning' })"
+        @click="show({ title: '警告文本', type: 'warning' })"
       ></fx-cell>
       <fx-cell
         label="危险"
         isLink
-        @click="onShowNotify({ title: '危险文本', type: 'danger' })"
+        @click="show({ title: '危险文本', type: 'danger' })"
       ></fx-cell>
     </fx-group>
     <fx-group title="自定义图标">
@@ -27,7 +27,7 @@
         label="成功"
         isLink
         @click="
-          onShowNotify({
+          show({
             title: '成功文本',
             type: 'success',
             icon: 'CheckCircleOutlined'
@@ -38,7 +38,7 @@
         label="警告"
         isLink
         @click="
-          onShowNotify({
+          show({
             title: '警告文本',
             type: 'warning',
             icon: 'ExclamationCircleOutlined'
@@ -49,7 +49,7 @@
         label="危险"
         isLink
         @click="
-          onShowNotify({
+          show({
             title: '危险文本',
             type: 'danger',
             icon: 'CloseCircleOutlined'
@@ -61,13 +61,13 @@
       <fx-cell
         label="自定义时长"
         isLink
-        @click="onShowNotify({ title: '5秒后消失', duration: 5000 })"
+        @click="show({ title: '5秒后消失', duration: 5000 })"
       ></fx-cell>
       <fx-cell
         label="自定义颜色"
         isLink
         @click="
-          onShowNotify({
+          show({
             title: '深色调',
             icon: 'InfoCircleOutlined',
             backgroundColor: '#ff4d4f',
@@ -78,14 +78,12 @@
       <fx-cell
         label="手动关闭"
         isLink
-        @click="
-          onShowNotify({ title: '常驻可手动关闭', duration: 0, closable: true })
-        "
+        @click="show({ title: '常驻可手动关闭', duration: 0, closable: true })"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell label="showNotify" isLink @click="onCallApi"></fx-cell>
-      <fx-cell label="hideNotify" isLink @click="$hideNotify()"></fx-cell>
+      <fx-cell label="showNotify" isLink @click="callShowApi"></fx-cell>
+      <fx-cell label="hideNotify" isLink @click="callHideApi"></fx-cell>
     </fx-group>
     <fx-notify
       v-model:visible="visible"
@@ -97,15 +95,27 @@
       :duration="duration"
       :closable="closable"
       @cancel="onCancel"
-      @visible-state-change="onVisibleStateChange"
     ></fx-notify>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { PopupCancelArgs, StateType } from '../../utils/types'
+import Notify from '@/Notify'
+
+interface showArgs {
+  icon?: any
+  title?: string
+  backgroundColor?: string
+  color?: string
+  type?: StateType
+  closable?: boolean
+  duration?: number
+}
+
+export default defineComponent({
   name: 'Notify',
-  props: {},
   data() {
     return {
       visible: false,
@@ -119,17 +129,17 @@ export default {
     }
   },
   methods: {
-    onCallApi() {
-      this.$showNotify({
+    callShowApi() {
+      Notify.showNotify({
         title: '通知文本',
         duration: 5000,
         closable: true,
-        success(res) {
+        success(res: any) {
           console.log('success', res)
         }
       })
     },
-    onShowNotify({
+    show({
       title,
       backgroundColor,
       color,
@@ -137,7 +147,7 @@ export default {
       duration,
       icon,
       closable
-    }) {
+    }: showArgs) {
       this.icon = icon || null
       this.title = title || ''
       this.backgroundColor = backgroundColor || null
@@ -147,12 +157,12 @@ export default {
       this.duration = duration != null ? duration : 1500
       this.visible = true
     },
-    onVisibleStateChange({ state }) {
-      console.log(`${state} 事件触发`)
+    callHideApi() {
+      Notify.hideNotify()
     },
-    onCancel(res) {
+    onCancel(res: PopupCancelArgs) {
       console.log('cancel', res)
     }
   }
-}
+})
 </script>

@@ -36,6 +36,9 @@
 
 <script>
 import { cascadeOptions, regionOptions } from '../Picker/data'
+import Toast from '@/Toast'
+import Dialog from '@/Dialog'
+import Cascader from '@/Cascader'
 
 export default {
   name: 'Cascader',
@@ -51,22 +54,22 @@ export default {
     onChange(res) {
       console.log('change', res)
 
-      this.$showDialog({
+      Dialog.showDialog({
         title: '选择了',
         showCancel: false,
         content: `label: '${res.labelString}'\nvalue: ${res.valueString}`
       })
     },
     onCallApi() {
-      this.$showCascader({
+      Cascader.showCascader({
         title: '家电',
         options: cascadeOptions,
         success: res => {
           console.log('success', res)
           if (res.cancel) {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           } else {
-            this.$showToast(`选择了 ${res.detail.labelString}`)
+            Toast.showToast(`选择了 ${res.detail.labelString}`)
           }
         }
       })

@@ -1,6 +1,15 @@
 <template>
   <div class="fx-count-down">
-    <slot :="countTime">
+    <slot
+      :time="countTime.time"
+      :days="countTime.days"
+      :fullHours="countTime.fullHours"
+      :thousandsFullHours="countTime.thousandsFullHours"
+      :hours="countTime.hours"
+      :minutes="countTime.minutes"
+      :seconds="countTime.seconds"
+      :milliseconds="countTime.milliseconds"
+    >
       {{
         showDays
           ? countTime.days + '天 ' + countTime.hours
@@ -45,7 +54,6 @@ export default defineComponent({
       if (remainTime > 0) {
         update(remainTime)
         emit('update:timestamp', remainTime)
-
       } else {
         remainTime = 0
         update(remainTime)

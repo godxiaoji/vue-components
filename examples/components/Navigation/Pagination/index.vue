@@ -5,7 +5,7 @@
     </fx-group>
     <fx-group title="Slot default">
       <fx-pagination v-model:current="current2" :total="total">
-        <template #default="{current}"> 第 {{ current }} 页 </template>
+        <template #default="{ current }"> 第 {{ current }} 页 </template>
       </fx-pagination>
     </fx-group>
     <fx-group title="Slot prev & next">
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Pagination',
   props: {},
@@ -48,7 +50,7 @@ export default {
   methods: {
     onChange(e) {
       console.log(e)
-      this.$showToast(`跳转到第 ${e.current} 页`)
+      Toast.showToast(`跳转到第 ${e.current} 页`)
     }
   }
 }

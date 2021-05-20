@@ -34,7 +34,6 @@
 <script>
 export default {
   name: 'Sticky',
-  props: {},
   data() {
     return {
       activeIndex: 0

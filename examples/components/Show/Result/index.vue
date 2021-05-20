@@ -40,32 +40,7 @@
 
 <script>
 export default {
-  name: 'Result',
-  props: {},
-  data() {
-    return {
-      time: 300 * 1000,
-      time2: 1.5 * 24 * 3600 * 1000,
-      time3: 300 * 1000,
-      time4: 100 * 1000,
-      time5: 300 * 1000,
-      paused: false
-    }
-  },
-  methods: {
-    onPause(e) {
-      console.log(e)
-      this.$showToast('已暂停')
-    },
-    onResume(e) {
-      console.log(e)
-      this.$showToast('继续计时')
-    },
-    onEnd(e) {
-      console.log(e)
-      this.$showToast('计时结束')
-    }
-  }
+  name: 'Result'
 }
 </script>
 
@@ -74,12 +49,6 @@ export default {
 @import '@/style/var.scss';
 
 .result {
-  &-box {
-    margin: 12px 16px;
-    background-color: #fff;
-    border-radius: 4px;
-  }
-
   &-extra {
     padding: 12px 16px;
     font-size: 14px;

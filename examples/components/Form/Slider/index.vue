@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Slider',
-  props: {},
   data() {
     return {
       min: 40,
@@ -62,10 +63,10 @@ export default {
   },
   methods: {
     onInput({ value }) {
-      this.$showToast(`Input value: ${value}`)
+      Toast.showToast(`Input value: ${value}`)
     },
     onChange({ value }) {
-      this.$showToast(`Change value: ${value}`)
+      Toast.showToast(`Change value: ${value}`)
     }
   }
 }

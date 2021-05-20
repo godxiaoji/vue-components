@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: 'QrCode',
-  props: {}
+  name: 'QrCode'
 }
 </script>

@@ -21,7 +21,6 @@ import dayjs from '@/helpers/day'
 
 export default {
   name: 'TimeAgo',
-  props: {},
   data() {
     return {
       time: new Date(),

@@ -3,9 +3,9 @@
     <fx-group title="基础用法">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="1"> <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1"> <div class="badge-slot"></div> </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-badge :content="99"> <div class="badge-slot"></div> </fx-badge>
           </fx-col>
@@ -15,32 +15,34 @@
     <fx-group title="小红点">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="1" dot>
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1" dot>
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
         </fx-row>
       </div>
     </fx-group>
     <fx-group title="图标（Slot）">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="1">
+          <fx-col :span="6">
+            <fx-badge :content="1">
               <div class="badge-slot"></div>
               <template #badge>
                 <fx-icon icon="CheckOutlined"></fx-icon>
-              </template> </fx-badge
-          ></fx-col>
+              </template>
+            </fx-badge>
+          </fx-col>
         </fx-row>
       </div>
     </fx-group>
     <fx-group title="文本">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge content="惠"> <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge content="惠"> <div class="badge-slot"></div> </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-badge content="热"> <div class="badge-slot"></div> </fx-badge>
           </fx-col>
@@ -50,28 +52,32 @@
     <fx-group title="限制最大数">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="1000" :max-count="9">
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
-          <fx-col :span="6"
-            ><fx-badge :content="1000" :max-count="10">
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
-          <fx-col :span="6"
-            ><fx-badge :content="1000" :max-count="99">
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1000" :max-count="9">
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1000" :max-count="10">
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1000" :max-count="99">
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
         </fx-row>
       </div>
     </fx-group>
     <fx-group title="展示 0">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="0" show-zero>
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="0" show-zero>
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-badge :content="0" dot show-zero>
               <div class="badge-slot"></div>
@@ -83,10 +89,11 @@
     <fx-group title="偏移">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="1" :offset="[10, -10]">
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="1" :offset="[10, -10]">
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-badge :content="1" dot :offset="[-20, 20]">
               <div class="badge-slot"></div>
@@ -98,19 +105,21 @@
     <fx-group title="展示动画">
       <div class="badge-flex">
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="count" show-zero animated>
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="count" show-zero animated>
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-switch @change="onSwitch"></fx-switch>
           </fx-col>
         </fx-row>
         <fx-row :gutter="[16, 16]">
-          <fx-col :span="6"
-            ><fx-badge :content="count2" dot animated>
-              <div class="badge-slot"></div> </fx-badge
-          ></fx-col>
+          <fx-col :span="6">
+            <fx-badge :content="count2" dot animated>
+              <div class="badge-slot"></div>
+            </fx-badge>
+          </fx-col>
           <fx-col :span="6">
             <fx-switch @change="onSwitch2"></fx-switch>
           </fx-col>
@@ -123,7 +132,6 @@
 <script>
 export default {
   name: 'Badge',
-  props: {},
   data() {
     return {
       count: 0,

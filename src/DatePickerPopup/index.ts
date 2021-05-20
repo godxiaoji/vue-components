@@ -14,8 +14,8 @@ type ShowPickerOptions = {
   filter?: OptionFilter
 } & ApiOptions
 
-const showDatePicker = function(object: ShowPickerOptions) {
-  return showPopup(object, 'showDatePicker', function(done) {
+const showDatePicker = function (object: ShowPickerOptions) {
+  return showPopup(object, 'showDatePicker', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -29,18 +29,13 @@ const showDatePicker = function(object: ShowPickerOptions) {
   })
 }
 
-const _DatePickerPopup: SFCWithInstall<typeof DatePickerPopup> = Object.assign(
-  DatePickerPopup,
-  {
-    install: function(app: App) {
-      app.component(DatePickerPopup.name, DatePickerPopup)
-
-      const properties = app.config.globalProperties
-
-      properties.$showDatePicker = showDatePicker
-    },
-    showDatePicker
-  }
-)
+const _DatePickerPopup: SFCWithInstall<typeof DatePickerPopup> & {
+  showDatePicker: typeof showDatePicker
+} = Object.assign(DatePickerPopup, {
+  install: function (app: App) {
+    app.component(DatePickerPopup.name, DatePickerPopup)
+  },
+  showDatePicker
+})
 
 export default _DatePickerPopup

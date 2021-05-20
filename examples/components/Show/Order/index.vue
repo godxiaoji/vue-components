@@ -42,7 +42,6 @@ const items = [
 
 export default {
   name: 'Order',
-  props: {},
   data() {
     return {
       items: cloneData(items),

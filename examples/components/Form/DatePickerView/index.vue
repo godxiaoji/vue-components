@@ -78,11 +78,10 @@
 
 <script>
 import dayjs from '@/helpers/day'
+import Toast from '@/Toast'
 
 export default {
-  components: {},
   name: 'DatePickerView',
-  props: {},
   data() {
     return {
       dateValue: '',
@@ -90,14 +89,8 @@ export default {
       dateTimeValue: '',
 
       // 设定时间访问
-      minDate: dayjs()
-        .startOf('day')
-        .subtract(4, 'year')
-        .toDate(),
-      maxDate: dayjs()
-        .startOf('day')
-        .add(5, 'year')
-        .toDate(),
+      minDate: dayjs().startOf('day').subtract(4, 'year').toDate(),
+      maxDate: dayjs().startOf('day').add(5, 'year').toDate(),
       minMaxValue: '',
 
       // 格式化
@@ -124,7 +117,7 @@ export default {
     onChangeEvent(e) {
       console.log(e)
 
-      this.$showToast(`change: ${e.formatted}`)
+      Toast.showToast(`change: ${e.formatted}`)
     }
   }
 }

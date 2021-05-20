@@ -1,12 +1,12 @@
 <template>
   <div>
     <fx-group title="基础用法">
-      <fx-cell label="默认" isLink @click="onShowModal({})"></fx-cell>
+      <fx-cell label="默认" isLink @click="showModel({})"></fx-cell>
       <fx-cell
         label="蒙层可点击"
         isLink
         @click="
-          onShowModal({
+          showModel({
             maskClosable: true
           })
         "
@@ -15,7 +15,7 @@
         label="隐藏关闭按钮"
         isLink
         @click="
-          onShowModal({
+          showModel({
             maskClosable: true,
             showClose: false
           })
@@ -30,26 +30,21 @@
         label="close"
         isLink
         @click="
-          onShowModal(
-            {
+          ;(callbackEvent = true) &&
+            showModel({
               maskClosable: true
-            },
-            true
-          )
+            })
         "
       ></fx-cell>
       <fx-cell
         label="visible-state-change"
         isLink
         @click="
-          onShowModal(
-            {
+          ;(visibleEvent = true) &&
+            showModel({
               title: '标题',
               content: '提示内容提示内容提示内容提示内容提示内容提示内容'
-            },
-            false,
-            true
-          )
+            })
         "
       ></fx-cell>
     </fx-group>
@@ -72,6 +67,8 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Modal',
   props: {},
@@ -82,14 +79,14 @@ export default {
       showClose: true,
 
       callbackEvent: false,
-      otherEvent: false,
+      visibleEvent: false,
 
       visible2: false,
       imageUrl: 'https://cdn.fox2.cn/vfox/swiper/center-2.jpg'
     }
   },
   methods: {
-    onShowModal(obj, callbackEvent, otherEvent) {
+    showModel(obj) {
       obj = Object.assign(
         {
           maskClosable: false,
@@ -102,25 +99,26 @@ export default {
         this[k] = obj[k]
       })
 
-      this.callbackEvent = !!callbackEvent
-      this.otherEvent = !!otherEvent
-
       this.visible = true
     },
     onClose(res) {
       console.log('cancel', res)
       if (this.callbackEvent) {
         if (res.closeClick) {
-          this.$showToast('点击了关闭按钮')
+          Toast.showToast('点击了关闭按钮')
         } else if (res.maskClick) {
-          this.$showToast('点击了蒙层')
+          Toast.showToast('点击了蒙层')
         }
       }
     },
     onVisibleStateChange({ state }) {
-      if (this.otherEvent) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
         console.log(`${state} 事件触发`)
+        Toast.showToast(`${state} 事件触发`)
+      }
+      if (state === 'hidden') {
+        this.callbackEvent = false
+        this.visibleEvent = false
       }
     }
   }

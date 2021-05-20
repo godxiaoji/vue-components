@@ -22,11 +22,7 @@
 
 <script>
 export default {
-  name: 'BackTop',
-  props: {},
-  data() {
-    return {}
-  }
+  name: 'BackTop'
 }
 </script>
 

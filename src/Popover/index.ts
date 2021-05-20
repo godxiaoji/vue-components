@@ -12,8 +12,8 @@ type ShowPopoverOptions = {
   placement?: PlacementType
 } & ApiOptions
 
-const showPopover = function(object: ShowPopoverOptions) {
-  return showPopup(object, 'showPopover', function(done) {
+const showPopover = function (object: ShowPopoverOptions) {
+  return showPopup(object, 'showPopover', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterShow') {
         done(res)
@@ -27,13 +27,11 @@ const showPopover = function(object: ShowPopoverOptions) {
   })
 }
 
-const _Popover: SFCWithInstall<typeof Popover> = Object.assign(Popover, {
-  install: function(app: App) {
+const _Popover: SFCWithInstall<typeof Popover> & {
+  showPopover: typeof showPopover
+} = Object.assign(Popover, {
+  install: function (app: App) {
     app.component(Popover.name, Popover)
-
-    const properties = app.config.globalProperties
-
-    properties.$showPopover = showPopover
   },
   showPopover
 })

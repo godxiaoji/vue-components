@@ -29,7 +29,6 @@ import { cascadeOptions, multiOptions, options } from '../Picker/data'
 
 export default {
   name: 'PickerView',
-  props: {},
   data() {
     return {
       options,

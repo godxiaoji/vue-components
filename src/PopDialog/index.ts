@@ -15,8 +15,8 @@ type ShowPopDialogOptions = {
   confirmText?: string
 } & ApiOptions
 
-const showPopDialog = function(object: ShowPopDialogOptions) {
-  return showPopup(object, 'showPopDialog', function(done) {
+const showPopDialog = function (object: ShowPopDialogOptions) {
+  return showPopup(object, 'showPopDialog', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -30,13 +30,11 @@ const showPopDialog = function(object: ShowPopDialogOptions) {
   })
 }
 
-const _PopDialog: SFCWithInstall<typeof PopDialog> = Object.assign(PopDialog, {
-  install: function(app: App) {
+const _PopDialog: SFCWithInstall<typeof PopDialog> & {
+  showPopDialog: typeof showPopDialog
+} = Object.assign(PopDialog, {
+  install: function (app: App) {
     app.component(PopDialog.name, PopDialog)
-
-    const properties = app.config.globalProperties
-
-    properties.$showPopDialog = showPopDialog
   },
   showPopDialog
 })

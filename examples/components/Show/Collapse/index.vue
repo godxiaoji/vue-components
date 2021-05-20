@@ -97,9 +97,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Collapse',
-  props: {},
   data() {
     return {
       activeNames: [],
@@ -110,13 +111,13 @@ export default {
   },
   methods: {
     onChange({ activeNames }) {
-      this.$showToast(
+      Toast.showToast(
         activeNames.length > 0 ? activeNames.join('，') : '没有项' + '展开'
       )
     },
     onToggle(res) {
       console.log(res)
-      this.$showToast(res.spread ? '展开' : '收起')
+      Toast.showToast(res.spread ? '展开' : '收起')
     }
   }
 }

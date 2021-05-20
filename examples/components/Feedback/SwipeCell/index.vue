@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'SwipeCell',
   data() {
@@ -36,7 +38,7 @@ export default {
   methods: {
     onButtonClick(e) {
       console.log(e)
-      this.$showToast(`点击了 ${e.item.text}`)
+      Toast.showToast(`点击了 ${e.item.text}`)
     }
   }
 }

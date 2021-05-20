@@ -19,8 +19,8 @@ type ShowPickerOptions = {
   fieldNames?: UserFieldNames
 } & ApiOptions
 
-const showPicker = function(object: ShowPickerOptions) {
-  return showPopup(object, 'showPicker', function(done) {
+const showPicker = function (object: ShowPickerOptions) {
+  return showPopup(object, 'showPicker', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -34,18 +34,13 @@ const showPicker = function(object: ShowPickerOptions) {
   })
 }
 
-const _PickerPopup: SFCWithInstall<typeof PickerPopup> = Object.assign(
-  PickerPopup,
-  {
-    install: function(app: App) {
-      app.component(PickerPopup.name, PickerPopup)
-
-      const properties = app.config.globalProperties
-
-      properties.$showPicker = showPicker
-    },
-    showPicker
-  }
-)
+const _PickerPopup: SFCWithInstall<typeof PickerPopup> & {
+  showPicker: typeof showPicker
+} = Object.assign(PickerPopup, {
+  install: function (app: App) {
+    app.component(PickerPopup.name, PickerPopup)
+  },
+  showPicker
+})
 
 export default _PickerPopup

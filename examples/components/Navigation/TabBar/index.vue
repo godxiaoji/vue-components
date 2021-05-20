@@ -56,7 +56,6 @@ const customIconList = [
 
 export default {
   name: 'TabBar',
-  props: {},
   data() {
     return {
       activeValue: 1,

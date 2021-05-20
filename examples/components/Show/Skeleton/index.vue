@@ -24,9 +24,7 @@
           <div class="skeleton-sub-component">
             <fx-icon icon="HeartFilled" />
             <h4 class="title">hello World</h4>
-            <p class="paragraph">
-              简单不先于复杂，而是在复杂之后。
-            </p>
+            <p class="paragraph">简单不先于复杂，而是在复杂之后。</p>
           </div>
         </fx-skeleton>
       </div>
@@ -49,7 +47,6 @@
 <script>
 export default {
   name: 'Skeleton',
-  props: {},
   data() {
     return {
       animated: true,

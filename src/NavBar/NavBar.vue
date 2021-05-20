@@ -82,10 +82,12 @@ import FxButton from '@/Button'
 import FxButtonGroup from '@/ButtonGroup'
 import { isArray, isString, isObject } from '@/helpers/util'
 import { iconValidator } from '@/helpers/validator'
+import { StateType } from '../hooks/types'
 
 interface ButtonOptions {
   text: string
-  icon: any
+  icon?: any
+  type?: StateType
 }
 
 const validateButtons = (val: any[]) => {

@@ -1,6 +1,6 @@
-# Popover
+# Popover 气泡类型弹窗
 
-## showPopover(object)
+## Popover.showPopover(object)
 
 显示气泡。
 
@@ -21,7 +21,9 @@ Object object
 ### Usage
 
 ```
-this.$showPopover({
+import { Popover } from 'vfox'
+
+Popover.showPopover({
   selector: '#popoverTarget',
   content: '这是气泡内容',
   success: res => {
@@ -30,7 +32,7 @@ this.$showPopover({
 })
 ```
 
-## showPopDialog(object)
+## PopDialog.showPopDialog(object)
 
 显示气泡对话框。
 
@@ -60,7 +62,9 @@ Object object
 ### Usage
 
 ```
-this.$showPopDialog({
+import { PopDialog } from 'vfox'
+
+PopDialog.showPopDialog({
   selector: '#popDialogTarget',
   content: this.content,
   success: (res) => {
@@ -69,7 +73,7 @@ this.$showPopDialog({
 })
 ```
 
-## showPopMenu(object)
+## PopMenu.showPopMenu(object)
 
 显示气泡菜单。
 
@@ -88,11 +92,11 @@ Object object
 
 #### options 的结构
 
-| options[index] 值 | 类型   | 默认值 | 必填 | 说明     |
-| ----------------- | ------ | ------ | ---- | -------- |
-| name              | string |        | 是   | 选项名   |
-| disabled          | string | false  | 否   | 是否禁用 |
-| icon              | string |        | 否   | 图标，使用 [Icon](./Icon.md) 组件     |
+| options[index] 值 | 类型   | 默认值 | 必填 | 说明                              |
+| ----------------- | ------ | ------ | ---- | --------------------------------- |
+| name              | string |        | 是   | 选项名                            |
+| disabled          | string | false  | 否   | 是否禁用                          |
+| icon              | string |        | 否   | 图标，使用 [Icon](./Icon.md) 组件 |
 
 ```
 [
@@ -116,7 +120,9 @@ Object object
 ### Usage
 
 ```
-this.$showPopMenu({
+import { PopMenu } from 'vfox'
+
+PopMenu.showPopMenu({
   selector: '#popMenuTarget',
   options: [{
     icon: 'HeartOutlined',

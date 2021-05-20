@@ -39,30 +39,31 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Stepper',
-  props: {},
   data() {
     return { value: '1' }
   },
   methods: {
     onChange({ value }) {
-      this.$showToast(`值改变为：${value}`)
+      Toast.showToast(`值改变为：${value}`)
     },
     onInput({ value }) {
-      this.$showToast(`当前值为：${value}`)
+      Toast.showToast(`当前值为：${value}`)
     },
     onPlusClick() {
-      this.$showToast('点击 + 按钮')
+      Toast.showToast('点击 + 按钮')
     },
     onMinusClick() {
-      this.$showToast('点击 - 按钮')
+      Toast.showToast('点击 - 按钮')
     },
     onFocus() {
-      this.$showToast('聚焦 focus')
+      Toast.showToast('聚焦 focus')
     },
     onBlur() {
-      this.$showToast('失焦 blur')
+      Toast.showToast('失焦 blur')
     }
   }
 }

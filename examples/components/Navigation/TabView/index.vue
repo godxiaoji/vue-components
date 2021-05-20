@@ -52,7 +52,6 @@
 <script>
 export default {
   name: 'TabView',
-  props: {},
   data() {
     return {
       activeName: 1

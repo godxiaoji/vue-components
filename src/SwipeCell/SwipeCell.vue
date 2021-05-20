@@ -40,10 +40,11 @@ import {
   isArray,
   isObject,
   isString,
-  rangeNumber
+  rangeNumber,
+  noop
 } from '@/helpers/util'
 import { STATE_TYPES } from '@/hooks/constants'
-import type { StateType } from '../hooks/types'
+import { StateType } from '../hooks/types'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 import { getStretchOffset } from '@/helpers/animation'
 import { useBlur } from '@/hooks/blur'
@@ -219,7 +220,7 @@ export default defineComponent({
       translateX,
       duration,
       buttons2,
-      noop() {},
+      noop,
       onButtonClick
     }
   }

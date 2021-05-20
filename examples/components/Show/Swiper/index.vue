@@ -93,9 +93,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Swiper',
-  props: {},
   data() {
     return {
       swiperList: [1, 2, 3, 4],
@@ -110,14 +111,14 @@ export default {
   },
   methods: {
     onChange({ activeIndex }) {
-      this.$showToast(`change 到第 ${activeIndex + 1} 张`)
+      Toast.showToast(`change 到第 ${activeIndex + 1} 张`)
       console.log(`change 事件触发`, activeIndex)
     },
     onClick() {
-      this.$showToast(`click 触发`)
+      Toast.showToast(`click 触发`)
     },
     onAnimated({ activeIndex }) {
-      this.$showToast(`第 ${activeIndex + 1} 张 animated`)
+      Toast.showToast(`第 ${activeIndex + 1} 张 animated`)
       console.log(`animated 事件触发`, activeIndex)
     }
   }

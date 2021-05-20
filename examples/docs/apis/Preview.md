@@ -1,6 +1,6 @@
-# Preview
+# Preview 预览类型弹窗
 
-## previewImage(object)
+## ImagePreview.previewImage(object)
 
 预览图片。
 
@@ -16,7 +16,9 @@ Object object
 ### Usage
 
 ```
-this.$previewImage({
+import { ImagePreview } from 'vfox'
+
+ImagePreview.previewImage({
   urls: [
     'https://cdn.fox2.cn/vfox/empty/default@2x.png',
     'https://cdn.fox2.cn/vfox/empty/network@2x.png'

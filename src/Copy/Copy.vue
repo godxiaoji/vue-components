@@ -1,12 +1,12 @@
 <template>
   <div class="fx-copy" @click="onCopy">
-    <input type="text" :value="text" class="fx-copy_input" />
+    <input type="text" :value="text" class="fx-copy_input" ref="input" />
     <div class="fx-copy_box"><slot>复制</slot></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'fx-copy',
@@ -17,25 +17,31 @@ export default defineComponent({
       required: true
     }
   },
-  methods: {
+  setup(props, { emit }) {
+    const input = ref<HTMLInputElement>()
     /**
      * 复制
      */
-    onCopy(e: Event) {
-      const $el = this.$el
-
+    function onCopy(e: Event) {
       try {
-        $el.firstElementChild.select()
+        const $el = input.value as HTMLInputElement
+
+        $el.select()
         document.execCommand('Copy')
 
-        this.$emit('success', {
-          text: $el.firstElementChild.value
+        emit('success', {
+          text: $el.value
         })
       } catch (error) {
-        this.$emit('error', error)
+        emit('error', error)
       }
 
-      this.$emit(e.type, e)
+      emit(e.type, e)
+    }
+
+    return {
+      input,
+      onCopy
     }
   }
 })

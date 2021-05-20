@@ -1,8 +1,17 @@
 <template>
   <div class="fx-stopwatch">
-    <slot :a="countTime">
+    <slot
+      :time="countTime.time"
+      :days="countTime.days"
+      :fullHours="countTime.fullHours"
+      :thousandsFullHours="countTime.thousandsFullHours"
+      :hours="countTime.hours"
+      :minutes="countTime.minutes"
+      :seconds="countTime.seconds"
+      :milliseconds="countTime.milliseconds"
+    >
       {{
-        countTime.fullHours > 0
+        parseInt(countTime.fullHours) > 0
           ? (thousands ? countTime.thousandsFullHours : countTime.fullHours) +
             ':'
           : ''

@@ -3,7 +3,7 @@
     <span
       v-if="aspectRatio != null && aspectRatio > 0"
       class="fx-image_ratio"
-      :style="{ 'padding-top': aspectRatio * 100 + '%' }"
+      :style="{ paddingTop: aspectRatio * 100 + '%' }"
     ></span>
     <i class="fx-image_loading" v-if="loading">
       <icon :icon="loadingIcon" :size="iconSize" />
@@ -130,12 +130,9 @@ export default defineComponent({
     }
 
     function checkInView() {
-      const {
-        top,
-        right,
-        bottom,
-        left
-      } = (root.value as HTMLElement).getBoundingClientRect()
+      const { top, right, bottom, left } = (
+        root.value as HTMLElement
+      ).getBoundingClientRect()
 
       return (
         top < window.innerHeight * LAZY_PRELOAD &&

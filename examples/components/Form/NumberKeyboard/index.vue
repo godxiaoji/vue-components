@@ -93,9 +93,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'NumberKeyboard',
-  props: {},
   data() {
     return {
       value: '',
@@ -112,17 +113,15 @@ export default {
   },
   methods: {
     onInput({ key }) {
-      this.$showToast(key)
+      Toast.showToast(key)
     },
-
     onDelete() {
-      this.$showToast('删除')
+      Toast.showToast('删除')
     },
-
     onClose(res) {
       console.log('close', res)
 
-      this.$showToast(`输入值为：${res.value}`)
+      Toast.showToast(`输入值为：${res.value}`)
     }
   }
 }

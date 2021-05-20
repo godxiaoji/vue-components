@@ -9,7 +9,7 @@
       :deletable="deletable"
       :items="orderItems"
       @delete="onDelete"
-      @update:orderItems="onUpdateOptions"
+      @update:items="onUpdateOptions"
     >
       <template #default="{ item }">
         <div
@@ -103,7 +103,8 @@ import {
   isStringArray,
   isBoolean,
   isSameArray,
-  cloneData
+  cloneData,
+  noop
 } from '@/helpers/util'
 import { formatFileSize } from '@/helpers/file'
 import { DataObject } from '../helpers/types'
@@ -564,8 +565,6 @@ export default defineComponent({
         }
       }
     }
-
-    function noop() {}
 
     const accept2 = computed(() => {
       return getAccepts(props.accept as string).join(', ')

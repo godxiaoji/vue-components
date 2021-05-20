@@ -67,9 +67,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'NoticeBar',
-  props: {},
   data() {
     return {
       visible: true,
@@ -80,10 +81,10 @@ export default {
   },
   methods: {
     onClose() {
-      this.$showToast('点击了关闭按钮')
+      Toast.showToast('点击了关闭按钮')
     },
     onClick() {
-      this.$showToast('点击了通告栏')
+      Toast.showToast('点击了通告栏')
     }
   }
 }

@@ -34,7 +34,7 @@
           <div class="fx-number-keyboard_backspace">
             <div
               class="fx-number-keyboard_button"
-              @click="onNumberClick({ type: 'backspace' })"
+              @click="onNumberClick(backspaceItem)"
             >
               <icon icon="BackspaceOutlined"></icon>
             </div>
@@ -57,7 +57,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 import Icon from '@/Icon'
 import Drawer from '@/Drawer'
-import { isStringArray, isString } from '@/helpers/util'
+import { isStringArray, isString, noop } from '@/helpers/util'
 import {
   usePopupExtend,
   popupExtendEmits,
@@ -103,6 +103,11 @@ export default defineComponent({
   setup(props, ctx) {
     const { emit } = ctx
     let cacheValue = ''
+    const backspaceItem: NumberKeyboardItem = {
+      text: '删除',
+      type: 'backspace',
+      icon: 'BackspaceOutlined'
+    }
 
     const popup = usePopupExtend(ctx)
 
@@ -185,11 +190,7 @@ export default defineComponent({
           )
         }
 
-        list.push({
-          text: '删除',
-          type: 'backspace',
-          icon: 'BackspaceOutlined'
-        })
+        list.push(backspaceItem)
       }
 
       return list
@@ -240,6 +241,7 @@ export default defineComponent({
 
     return {
       ...popup,
+      noop,
       onVisibleStateChange2,
       showHeaderConfirm,
       bodyClasses,
@@ -247,7 +249,8 @@ export default defineComponent({
       onNumberClick,
       onConfirmClick,
       onConfirm,
-      onCancel
+      onCancel,
+      backspaceItem
     }
   }
 })

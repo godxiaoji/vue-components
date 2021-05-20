@@ -17,11 +17,7 @@
 
 <script>
 export default {
-  name: 'Divider',
-  props: {},
-  data() {
-    return {}
-  }
+  name: 'Divider'
 }
 </script>
 

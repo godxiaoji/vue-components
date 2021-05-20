@@ -13,8 +13,8 @@ type ShowPopMenuOptions = {
   placement?: PlacementType
 } & ApiOptions
 
-const showPopMenu = function(object: ShowPopMenuOptions) {
-  return showPopup(object, 'showPopMenu', function(done) {
+const showPopMenu = function (object: ShowPopMenuOptions) {
+  return showPopup(object, 'showPopMenu', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -28,13 +28,11 @@ const showPopMenu = function(object: ShowPopMenuOptions) {
   })
 }
 
-const _PopMenu: SFCWithInstall<typeof PopMenu> = Object.assign(PopMenu, {
-  install: function(app: App) {
+const _PopMenu: SFCWithInstall<typeof PopMenu> & {
+  showPopMenu: typeof showPopMenu
+} = Object.assign(PopMenu, {
+  install: function (app: App) {
     app.component(PopMenu.name, PopMenu)
-
-    const properties = app.config.globalProperties
-
-    properties.$showPopMenu = showPopMenu
   },
   showPopMenu
 })

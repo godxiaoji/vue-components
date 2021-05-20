@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Radio',
   props: {},
@@ -55,7 +57,7 @@ export default {
   },
   methods: {
     onChange({ value }) {
-      this.$showToast(`Change Value: ${value}`)
+      Toast.showToast(`Change Value: ${value}`)
     }
   }
 }

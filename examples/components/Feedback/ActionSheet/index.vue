@@ -71,7 +71,7 @@
       <fx-cell
         label="visible-state-change"
         isLink
-        @click=";(showOtherEvent = true), (visible = true)"
+        @click=";(visibleEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
@@ -90,8 +90,24 @@
   </div>
 </template>
 
-<script>
-const options = [
+<script lang="ts">
+import { defineComponent } from 'vue'
+import {
+  PopupCancelArgs,
+  PopupConfirmArgs,
+  PopupVisibleStateChangeArgs
+} from '../../utils/types'
+import Toast from '@/Toast'
+import Dialog from '@/Dialog'
+import ActionSheet from '@/ActionSheet'
+
+interface Option {
+  name: string
+  description?: string
+  highlight?: boolean
+}
+
+const defaultOptions: Option[] = [
   {
     name: '选项1'
   },
@@ -103,7 +119,7 @@ const options = [
   }
 ]
 
-export default {
+export default defineComponent({
   name: 'ActionSheet',
   props: {},
   data() {
@@ -112,7 +128,7 @@ export default {
       title: null,
       showCancel: false,
       cancelText: '取消',
-      options: options,
+      options: defaultOptions,
       options2: [
         {
           name: '选项1',
@@ -124,59 +140,62 @@ export default {
         {
           name: '选项3'
         }
-      ]
+      ] as Option[],
+
+      showEvent: false,
+      visibleEvent: false
     }
   },
   methods: {
-    onVisibleStateChange({ state }) {
-      if (this.showOtherEvent) {
-        this.$showToast(`${state} 事件触发`)
+    onVisibleStateChange({ state }: PopupVisibleStateChangeArgs) {
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
         console.log(`${state} 事件触发`)
       }
       if (state === 'hidden') {
         this.showCancel = false
         this.cancelText = '取消'
-        this.options = options
+        this.options = defaultOptions
         this.title = null
-        this.showOtherEvent = false
+        this.visibleEvent = false
         this.showEvent = false
       }
     },
-    onConfirm(res) {
+    onConfirm(res: PopupConfirmArgs) {
       console.log('confirm', res)
       if (this.showEvent) {
-        this.$showDialog({
+        Dialog.showDialog({
           title: '选择了',
           showCancel: false,
           content: `item.name: '${res.item.name}'\nindex: ${res.index}`
         })
       }
     },
-    onCancel(res) {
+    onCancel(res: PopupCancelArgs) {
       console.log('cancel', res)
-      this.showEvent && this.$showToast(`取消事件触发`)
+      this.showEvent && Toast.showToast(`取消事件触发`)
     },
     onCallApi() {
-      this.$showActionSheet({
+      ActionSheet.showActionSheet({
         title: '标题',
         options: this.options,
         showCancel: true,
-        success: res => {
+        success: (res: any) => {
           console.log('confirm', res)
           const { selected, detail } = res
 
           if (selected) {
-            this.$showDialog({
+            Dialog.showDialog({
               title: '选择了',
               showCancel: false,
               content: `item.name: '${detail.item.name}'\nindex: ${detail.index}`
             })
           } else {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           }
         }
       })
     }
   }
-}
+})
 </script>

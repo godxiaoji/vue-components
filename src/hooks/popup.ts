@@ -8,7 +8,7 @@ import {
   shallowRef,
   ComponentPublicInstance
 } from 'vue'
-import { isFunction, isObject } from '@/helpers/util'
+import { isFunction, isObject, noop } from '@/helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
 import { popupZIndex } from '@/helpers/layer'
 import { UseProps, DataObject } from '../helpers/types'
@@ -75,7 +75,7 @@ export function usePopup(
   const zIndex = ref(popupZIndex)
   const visible2 = ref(false)
   const top = ref<string | null>(null)
-  const position = ref<string | null>(null)
+  const position = ref<'absolute' | null>(null)
 
   let isShowing = false
   let isHiding = false
@@ -267,7 +267,7 @@ export function usePopup(
     hide,
     customConfirm,
     customCancel,
-    noop() {},
+    noop,
     onMaskClick,
     onCloseClick,
     onCancelClick

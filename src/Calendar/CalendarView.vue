@@ -75,7 +75,7 @@ import { isSameArray } from '@/helpers/util'
 import Exception from '@/helpers/exception'
 import calendarCommonProps from '@/Calendar/props'
 import { getEnumsValue } from '@/helpers/validator'
-import type { DayInfo } from './types'
+import { DayInfo } from './types'
 
 interface WeekDay {
   label: string

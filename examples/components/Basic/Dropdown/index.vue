@@ -14,7 +14,7 @@
         id="dropdownCellEvent"
         @click="
           ;(selector = '#dropdownCellEvent'),
-            (showEventCallback = true),
+            (visibleEvent = true),
             (visible = true)
         "
       />
@@ -28,28 +28,32 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { PopupVisibleStateChangeArgs } from '../../utils/types'
+import Toast from '@/Toast'
+
+export default defineComponent({
   name: 'Dropdown',
-  props: {},
   data() {
     return {
       visible: false,
-      selector: ''
+      selector: '',
+      visibleEvent: false
     }
   },
   methods: {
-    onVisibleStateChange({ state }) {
-      if (this.showEventCallback) {
-        this.$showToast(`${state} 事件触发`)
+    onVisibleStateChange({ state }: PopupVisibleStateChangeArgs) {
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
         console.log(`${state} 事件触发`)
       }
       if (state === 'hidden') {
-        this.showEventCallback = false
+        this.visibleEvent = false
       }
     }
   }
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

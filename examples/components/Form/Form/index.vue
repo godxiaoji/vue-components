@@ -99,10 +99,10 @@
 
 <script>
 import { multiOptions, regionOptions } from '../Picker/data'
+import Toast from '@/Toast'
 
 export default {
   name: 'Form',
-  props: {},
   data() {
     return {
       ageVisible: false,
@@ -161,6 +161,7 @@ export default {
       },
       form: {
         nickname: '',
+        avatar: '',
         gender: '',
         happinessIndex: 0,
         weight: 0,
@@ -183,7 +184,7 @@ export default {
   methods: {
     onSubmit(res) {
       console.log(res)
-      this.$showToast(res.valid ? '校验通过' : '校验失败')
+      Toast.showToast(res.valid ? '校验通过' : '校验失败')
     },
     onReset(res) {
       console.log(res)
@@ -198,7 +199,7 @@ export default {
     getDataUrl(file) {
       return new Promise(resolve => {
         const fr = new FileReader()
-        fr.onload = function(e) {
+        fr.onload = function (e) {
           resolve(e.target.result)
         }
         fr.readAsDataURL(file)

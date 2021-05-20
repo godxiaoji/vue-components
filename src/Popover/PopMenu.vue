@@ -42,7 +42,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import { popoverProps, popoverEmits, usePopover } from '@/hooks/popover'
 import Icon from '@/Icon'
 import { cloneData, isArray, isObject } from '@/helpers/util'
-import type { OptionItem } from './types'
+import { OptionItem } from './types'
 
 export default defineComponent({
   name: 'fx-pop-menu',

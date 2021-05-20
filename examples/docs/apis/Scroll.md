@@ -1,6 +1,6 @@
-# Scroll
+# Scroll 滚动
 
-## pageScrollTo(object)
+## Scroll.pageScrollTo(object)
 
 将页面滚动到目标位置。
 
@@ -19,13 +19,15 @@ Object object
 ### Usage
 
 ```
-this.$pageScrollTo({
+import { Scroll } from 'vfox'
+
+Scroll.pageScrollTo({
   scrollTop: 0,
   duration: 300
 })
 ```
 
-## scrollTo(object)
+## Scroll.scrollTo(object)
 
 ### Params
 
@@ -43,7 +45,7 @@ Object object
 ### Usage
 
 ```
-this.$elementScrollTo({
+Scroll.elementScrollTo({
   selector: document.documentElement
   scrollTop: 0,
   duration: 300

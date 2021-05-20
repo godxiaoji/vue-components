@@ -22,6 +22,8 @@ interface Options {
   onChange: (uid: number) => void
 }
 
+export const checkboxOrRadioEmits = ['update:checked', 'change']
+
 export function useCheckboxOrRadio(
   props: UseProps,
   ctx: SetupContext<any>,
@@ -60,7 +62,12 @@ export function useCheckboxOrRadio(
     if (options) {
       options.onChange(instance.uid)
     } else {
-      emit('update:checked', !!(e.target as HTMLInputElement).checked)
+      const checked = !!(e.target as HTMLInputElement).checked
+      emit('update:checked', checked)
+      emit('change', {
+        type: 'change',
+        checked
+      })
     }
   }
 
@@ -147,13 +154,12 @@ export function useCheckboxOrRadioGroup(
     return isRef(formValue) ? formValue.value : cloneData(formValue)
   }
 
-  const { formName, validateAfterEventTrigger, eventEmit, root } = useFormItem<
-    ModelValue
-  >(props, ctx, {
-    formValue,
-    hookFormValue,
-    hookResetValue: () => _updateValue(true)
-  })
+  const { formName, validateAfterEventTrigger, eventEmit, root } =
+    useFormItem<ModelValue>(props, ctx, {
+      formValue,
+      hookFormValue,
+      hookResetValue: () => _updateValue(true)
+    })
 
   function _updateValue(isChange: boolean, uid?: number) {
     return updateValue({ isChange, children, uid, hookFormValue })

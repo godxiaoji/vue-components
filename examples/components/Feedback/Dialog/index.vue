@@ -5,7 +5,7 @@
         label="默认"
         isLink
         @click="
-          onShowDialog({
+          show({
             title: '标题',
             content: '提示内容提示内容提示内容提示内容提示内容提示内容'
           })
@@ -15,7 +15,7 @@
         label="不带标题"
         isLink
         @click="
-          onShowDialog({
+          show({
             content: '提示内容提示内容提示内容提示内容提示内容提示内容'
           })
         "
@@ -24,7 +24,7 @@
         label="不显示取消按钮"
         isLink
         @click="
-          onShowDialog({
+          show({
             title: '标题',
             content: '提示内容提示内容提示内容提示内容提示内容提示内容',
             showCancel: false
@@ -35,7 +35,7 @@
         label="自定义按钮文案"
         isLink
         @click="
-          onShowDialog({
+          show({
             title: '惊喜',
             content: '这有一份关爱保险待你查收',
             cancelText: '拒绝',
@@ -49,7 +49,7 @@
         label="confirm/cancel"
         isLink
         @click="
-          onShowDialog(
+          show(
             {
               title: '标题',
               content: '提示内容提示内容提示内容提示内容提示内容提示内容'
@@ -62,7 +62,7 @@
         label="visible-state-change"
         isLink
         @click="
-          onShowDialog(
+          show(
             {
               title: '标题',
               content: '提示内容提示内容提示内容提示内容提示内容提示内容'
@@ -91,8 +91,21 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { PopupVisibleStateChangeArgs, PopupCancelArgs } from '../../utils/types'
+import Toast from '@/Toast'
+import Dialog from '@/Dialog'
+
+interface showArgs {
+  title?: string
+  content?: string
+  showCancel?: boolean
+  cancelText?: string
+  confirmText?: string
+}
+
+export default defineComponent({
   name: 'Dialog',
   props: {},
   data() {
@@ -105,11 +118,11 @@ export default {
       showCancel: false,
 
       callbackEvent: false,
-      otherEvent: false
+      visibleEvent: false
     }
   },
   methods: {
-    onShowDialog(obj, callbackEvent, otherEvent) {
+    show(obj: showArgs, callbackEvent?: boolean, visibleEvent?: boolean) {
       obj = Object.assign(
         {
           title: null,
@@ -126,35 +139,35 @@ export default {
       })
 
       this.callbackEvent = !!callbackEvent
-      this.otherEvent = !!otherEvent
+      this.visibleEvent = !!visibleEvent
 
       this.visible = true
     },
     onCallApi() {
-      this.$showDialog({
+      Dialog.showDialog({
         title: '标题',
         content: '提示内容提示内容提示内容提示内容提示内容提示内容',
         maskClosable: true,
-        success: res => {
+        success: (res: any) => {
           console.log('success', res)
-          this.$showToast(res.confirm ? 'confirm = true' : 'cancel = true')
+          Toast.showToast(res.confirm ? 'confirm = true' : 'cancel = true')
         }
       })
     },
-    onConfirm(res) {
+    onConfirm(res: PopupCancelArgs) {
       console.log('confirm', res)
-      this.callbackEvent && this.$showToast('点击确定按钮')
+      this.callbackEvent && Toast.showToast('点击确定按钮')
     },
-    onCancel(res) {
+    onCancel(res: PopupCancelArgs) {
       console.log('cancel', res)
-      this.callbackEvent && this.$showToast('点击取消按钮')
+      this.callbackEvent && Toast.showToast('点击取消按钮')
     },
-    onVisibleStateChange({ state }) {
-      if (this.otherEvent) {
-        this.$showToast(`${state} 事件触发`)
+    onVisibleStateChange({ state }: PopupVisibleStateChangeArgs) {
+      if (this.visibleEvent) {
         console.log(`${state} 事件触发`)
+        Toast.showToast(`${state} 事件触发`)
       }
     }
   }
-}
+})
 </script>

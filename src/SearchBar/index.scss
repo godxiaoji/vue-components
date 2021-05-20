@@ -23,8 +23,9 @@
     flex: 1;
     background-color: $background-color;
     padding: 0 8px;
-    --input-height: 36px;
+    height: 36px;
     --input-focus-border-color: var(--search-color);
+    border-radius: 4px;
 
     &.ghost {
       background-color: #fff;

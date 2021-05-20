@@ -12,8 +12,8 @@ type ShowActionSheetOptions = {
   options: ActionSheetItem[]
 } & ApiOptions
 
-const showActionSheet = function(object: ShowActionSheetOptions) {
-  return showPopup(object, 'showActionSheet', function(done) {
+const showActionSheet = function (object: ShowActionSheetOptions) {
+  return showPopup(object, 'showActionSheet', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -27,18 +27,13 @@ const showActionSheet = function(object: ShowActionSheetOptions) {
   })
 }
 
-const _ActionSheet: SFCWithInstall<typeof ActionSheet> = Object.assign(
-  ActionSheet,
-  {
-    install: function(app: App) {
-      app.component(ActionSheet.name, ActionSheet)
-
-      const properties = app.config.globalProperties
-
-      properties.$showActionSheet = showActionSheet
-    },
-    showActionSheet
-  }
-)
+const _ActionSheet: SFCWithInstall<typeof ActionSheet> & {
+  showActionSheet: typeof showActionSheet
+} = Object.assign(ActionSheet, {
+  install: function (app: App) {
+    app.component(ActionSheet.name, ActionSheet)
+  },
+  showActionSheet
+})
 
 export default _ActionSheet

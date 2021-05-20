@@ -1,8 +1,8 @@
-# Notify
+# Notify 通知类型弹窗
 
 注：目前仅支持单例模式。
 
-## showNotify(object)
+## Notify.showNotify(object)
 
 显示消息提示。
 
@@ -33,13 +33,15 @@
 ### Usage
 
 ```
-this.$showNotify({
+import { Notify } from 'vfox'
+
+Notify.showNotify({
   title: '提示内容',
   duration: 2000
 })
 ```
 
-## hideNotify([object])
+## Notify.hideNotify([object])
 
 隐藏消息提示框。
 
@@ -52,3 +54,11 @@ Object object
 | success  | function |        | 否   | 接口调用成功的回调函数                           |
 | fail     | function |        | 否   | 接口调用失败的回调函数                           |
 | complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
+
+### Usage
+
+```
+import { Notify } from 'vfox'
+
+Notify.hideNotify()
+```

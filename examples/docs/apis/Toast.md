@@ -1,8 +1,8 @@
-# Toast
+# Toast 消息类型弹窗
 
 注：目前仅支持单例模式。
 
-## showToast(object)
+## Toast.showToast(object)
 
 显示消息提示框。
 
@@ -33,14 +33,16 @@ Object object
 ### Usage
 
 ```
-this.$showToast({
+import { Toast } from 'vfox'
+
+Toast.showToast({
   title: '成功',
   type: 'success',
   duration: 2000
 })
 ```
 
-## hideToast(object)
+## Toast.hideToast([object])
 
 隐藏消息提示框。
 
@@ -54,7 +56,15 @@ Object object
 | fail     | function |        | 否   | 接口调用失败的回调函数                           |
 | complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
 
-## showLoading(object)
+### Usage
+
+```
+import { Toast } from 'vfox'
+
+Toast.hideToast()
+```
+
+## Toast.showLoading(object)
 
 显示 loading 提示框。需主动调用 [hideLoading](./Toast.md#hideloading-object) 才能关闭提示框。
 
@@ -73,16 +83,14 @@ Object object
 ### Usage
 
 ```
-this.$showLoading({
+import { Toast } from 'vfox'
+
+Toast.showLoading({
   title: '加载中',
 })
-
-setTimeout(() => {
-  this.$hideLoading()
-}, 2000)
 ```
 
-## hideLoading(object)
+## Toast.hideLoading([object])
 
 隐藏 loading 提示框。
 
@@ -95,3 +103,11 @@ Object object
 | success  | function |        | 否   | 接口调用成功的回调函数                           |
 | fail     | function |        | 否   | 接口调用失败的回调函数                           |
 | complete | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行） |
+
+### Usage
+
+```
+import { Toast } from 'vfox'
+
+Toast.hideLoading()
+```

@@ -9,19 +9,19 @@
     <fx-group title="参数设置">
       <ul class="circle-progress-list">
         <li>
-          <fx-circle-progress :percentage="percentage" color="#ff4d4f"
-            >color</fx-circle-progress
-          >
-        </li>
-        <li>
-          <fx-circle-progress :percentage="percentage" :strokeWidth="2"
-            >strokeWidth
+          <fx-circle-progress :percentage="percentage" color="#ff4d4f">
+            color
           </fx-circle-progress>
         </li>
         <li>
-          <fx-circle-progress :percentage="percentage" :size="80"
-            >size</fx-circle-progress
-          >
+          <fx-circle-progress :percentage="percentage" :strokeWidth="2">
+            strokeWidth
+          </fx-circle-progress>
+        </li>
+        <li>
+          <fx-circle-progress :percentage="percentage" :size="80">
+            size
+          </fx-circle-progress>
         </li>
       </ul>
     </fx-group>

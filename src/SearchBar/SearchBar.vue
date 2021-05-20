@@ -53,7 +53,7 @@
             <cell
               v-for="item in suggestList"
               :key="item.text"
-              :label="item.text"
+              :label="item.text.toString()"
               class="fx-search_suggest-item"
               clickable
               @click="onSuggestItemClick(item.text)"
@@ -216,10 +216,10 @@ export default defineComponent({
       })
     }
 
-    function onSuggestItemClick(text: string) {
-      searchText.value = text
+    function onSuggestItemClick(text: string | number) {
+      searchText.value = text.toString()
 
-      onSearch(text, 'suggest')
+      onSearch(text.toString(), 'suggest')
     }
 
     function onCancel() {

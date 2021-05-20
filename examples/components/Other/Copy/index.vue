@@ -2,9 +2,9 @@
   <div>
     <fx-group title="基本用法">
       <div class="copy-pad">
-        <fx-copy class="copy-box" text="复制的文本"
-          ><fx-button type="primary">点击复制</fx-button></fx-copy
-        >
+        <fx-copy class="copy-box" text="复制的文本">
+          <fx-button type="primary">点击复制</fx-button>
+        </fx-copy>
       </div>
     </fx-group>
     <fx-group title="事件监听">
@@ -14,26 +14,28 @@
           text="复制的文本2"
           @success="onSuccess"
           @error="onError"
-          ><fx-button type="primary">点击复制</fx-button></fx-copy
         >
+          <fx-button type="primary">点击复制</fx-button>
+        </fx-copy>
       </div>
     </fx-group>
   </div>
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Copy',
-  props: {},
   methods: {
     onSuccess({ text }) {
-      this.$showToast({
+      Toast.showToast({
         title: `${text}`,
         type: 'success'
       })
     },
     onError(error) {
-      this.$showToast({
+      Toast.showToast({
         title: error.message,
         type: 'fail'
       })

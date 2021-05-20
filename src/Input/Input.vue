@@ -19,7 +19,7 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
-      :maxlength="maxlength"
+      :maxlength="maxLength"
       @input="onInput"
       @change="onChange"
       @focus="onFocus"
@@ -35,7 +35,7 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
-      :maxlength="maxlength"
+      :maxlength="maxLength"
       @input="onInput"
       @change="onChange"
       @focus="onFocus"
@@ -44,8 +44,8 @@
       @compositionend="onCompositionEnd"
       ref="input"
     />
-    <span class="fx-input_limit" v-if="showLimit && maxlength > 0"
-      >{{ formValue.length }}/{{ maxlength }}</span
+    <span class="fx-input_limit" v-if="showLimit && maxLength > 0"
+      >{{ formValue.length }}/{{ maxLength }}</span
     >
     <icon
       v-if="showClear"
@@ -63,7 +63,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import Icon from '@/Icon'
-import { isNumeric, isStringNumberMix } from '@/helpers/util'
+import { isNumeric, isNumber, isStringNumberMix } from '@/helpers/util'
 import { formatInputDigit, formatInputNumber } from '@/helpers/input'
 import { getEnumsValue } from '@/helpers/validator'
 import { useFormItem, formItemEmits, formItemProps } from '@/hooks/form'
@@ -230,7 +230,8 @@ export default defineComponent({
     })
 
     const inputMode = computed(() => {
-      let mode = ''
+      let mode: 'search' | 'numeric' | 'decimal' | 'tel' | 'text' | 'none' =
+        'none'
 
       switch (props.type) {
         case 'search':
@@ -276,6 +277,17 @@ export default defineComponent({
       }
     )
 
+    const maxLength = computed(() => {
+      if (isNumber(props.maxlength)) {
+        return Math.round(props.maxlength as number)
+      }
+      if (isNumeric(props.maxlength)) {
+        return Math.round(parseFloat(props.maxlength as string))
+      }
+
+      return 140
+    })
+
     onMounted(() => {
       updateValue(props.modelValue ?? '')
 
@@ -298,7 +310,8 @@ export default defineComponent({
       onClear,
       hookFormValue,
       inputType,
-      inputMode
+      inputMode,
+      maxLength
     }
   }
 })

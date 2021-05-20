@@ -12,8 +12,8 @@ type PreviewImageOptions = {
   imageHighRendering?: boolean
 } & ApiOptions
 
-const previewImage = function(object: PreviewImageOptions) {
-  return showPopup(object, 'previewImage', function(done) {
+const previewImage = function (object: PreviewImageOptions) {
+  return showPopup(object, 'previewImage', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterCancel') {
         done(res)
@@ -27,18 +27,13 @@ const previewImage = function(object: PreviewImageOptions) {
   })
 }
 
-const _ImagePreview: SFCWithInstall<typeof ImagePreview> = Object.assign(
-  ImagePreview,
-  {
-    install: function(app: App) {
-      app.component(ImagePreview.name, ImagePreview)
-
-      const properties = app.config.globalProperties
-
-      properties.$previewImage = previewImage
-    },
-    previewImage
-  }
-)
+const _ImagePreview: SFCWithInstall<typeof ImagePreview> & {
+  previewImage: typeof previewImage
+} = Object.assign(ImagePreview, {
+  install: function (app: App) {
+    app.component(ImagePreview.name, ImagePreview)
+  },
+  previewImage
+})
 
 export default _ImagePreview

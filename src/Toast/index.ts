@@ -19,8 +19,8 @@ type ShowLoadingOptions = {
   mask?: boolean
 } & ApiOptions
 
-const showToast = function(object: string | ShowToastOptions) {
-  return showPopup(object, 'showToast', function(done) {
+const showToast = function (object: string | ShowToastOptions) {
+  return showPopup(object, 'showToast', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterShow') {
         done(res)
@@ -35,7 +35,7 @@ const showToast = function(object: string | ShowToastOptions) {
   })
 }
 
-const showLoading = function(object: string | ShowLoadingOptions) {
+const showLoading = function (object: string | ShowLoadingOptions) {
   let newObject: ShowLoadingOptions
 
   if (isString(object)) {
@@ -53,7 +53,7 @@ const showLoading = function(object: string | ShowLoadingOptions) {
   newObject.type = 'loading'
   newObject.duration = 0
 
-  return showPopup(newObject, 'showLoading', function(done) {
+  return showPopup(newObject, 'showLoading', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterShow') {
         done(res)
@@ -68,24 +68,22 @@ const showLoading = function(object: string | ShowLoadingOptions) {
   })
 }
 
-const hideToast = function(object: ApiOptions) {
-  return hidePopup(object, 'hideToast')
+const hideToast = function (object?: ApiOptions) {
+  return hidePopup(object || {}, 'hideToast')
 }
 
-const hideLoading = function(object: ApiOptions) {
-  return hidePopup(object, 'hideLoading')
+const hideLoading = function (object?: ApiOptions) {
+  return hidePopup(object || {}, 'hideLoading')
 }
 
-const _Toast: SFCWithInstall<typeof Toast> = Object.assign(Toast, {
-  install: function(app: App) {
+const _Toast: SFCWithInstall<typeof Toast> & {
+  showToast: typeof showToast
+  hideToast: typeof hideToast
+  showLoading: typeof showLoading
+  hideLoading: typeof hideLoading
+} = Object.assign(Toast, {
+  install: function (app: App) {
     app.component(Toast.name, Toast)
-
-    const properties = app.config.globalProperties
-
-    properties.$showToast = showToast
-    properties.$hideToast = hideToast
-    properties.$showLoading = showLoading
-    properties.$hideLoading = hideLoading
   },
   showToast,
   hideToast,

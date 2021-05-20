@@ -54,7 +54,7 @@
       <fx-cell
         label="visible-state-change"
         isLink
-        @click=";(otherEvent = true), (visible = true)"
+        @click=";(visibleEvent = true), (visible = true)"
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
@@ -77,11 +77,11 @@
 
 <script>
 import { cascadeOptions, multiOptions, options, regionOptions } from './data'
+import Toast from '@/Toast'
+import Picker from '@/Picker'
 
 export default {
-  components: {},
   name: 'Picker',
-  props: {},
   data() {
     return {
       regionValue: [],
@@ -93,49 +93,53 @@ export default {
       multiOptions,
       options,
       cascadeOptions,
-      regionOptions
+      regionOptions,
+
+      clickEvent: false,
+      changeEvent: false,
+      visibleEvent: false
     }
   },
   methods: {
     onChange(res) {
       console.log('change', res)
-      this.changeEvent && this.$showToast(`值改为 ${res.labelString}`)
+      this.changeEvent && Toast.showToast(`值改为 ${res.labelString}`)
     },
     onConfirm(res) {
       console.log('confirm', res)
-      this.clickEvent && this.$showToast(`点击确定按钮`)
+      this.clickEvent && Toast.showToast(`点击确定按钮`)
     },
     onCancel(res) {
       console.log('cancel', res)
       if (this.clickEvent) {
         if (res.cancelClick) {
-          this.$showToast('点击了取消按钮')
+          Toast.showToast('点击了取消按钮')
         } else if (res.maskClick) {
-          this.$showToast('点击了蒙层')
+          Toast.showToast('点击了蒙层')
         }
       }
     },
     onVisibleStateChange({ state }) {
-      if (this.otherEvent) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
       }
 
       if (state === 'hidden') {
         this.clickEvent = false
-        this.otherEvent = false
+        this.visibleEvent = false
         this.changeEvent = false
       }
     },
     onCallApi() {
-      this.$showPicker({
+      Picker.showPicker({
         title: this.title,
         options: multiOptions,
         success: res => {
           console.log(res)
           if (res.cancel) {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           } else {
-            this.$showToast(`选择了 ${res.detail.labelString}`)
+            Toast.showToast(`选择了 ${res.detail.labelString}`)
           }
         }
       })

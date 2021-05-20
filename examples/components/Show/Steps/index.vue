@@ -6,8 +6,9 @@
           v-for="(item, index) in steps"
           :key="index"
           :title="item.title"
-          >{{ item.content }}</fx-step
         >
+          {{ item.content }}
+        </fx-step>
       </fx-steps>
     </fx-group>
     <fx-group title="小点模式">
@@ -16,8 +17,9 @@
           v-for="(item, index) in steps"
           :key="index"
           :title="item.title"
-          >{{ item.content }}</fx-step
         >
+          {{ item.content }}
+        </fx-step>
       </fx-steps>
     </fx-group>
     <fx-group title="自定义图标">
@@ -31,7 +33,6 @@
             <fx-icon v-if="finish" icon="CheckOutlined"></fx-icon>
             <fx-icon v-else-if="active" icon="LoadingOutlined" spin></fx-icon>
           </template>
-
           {{ item.content }}
         </fx-step>
       </fx-steps>
@@ -42,8 +43,9 @@
           v-for="(item, index) in steps"
           :key="index"
           :title="item.title"
-          >{{ item.content }}</fx-step
         >
+          {{ item.content }}
+        </fx-step>
       </fx-steps>
     </fx-group>
     <fx-group title="横向（不要标题 & 小点）">
@@ -65,16 +67,19 @@
           </template>
           2021-04-13 11:22:16
         </fx-step>
-        <fx-step title="【珠海市】快件离开【珠海中心】已发往【珠海一部】"
-          >2021-04-13 09:04:03</fx-step
-        >
+        <fx-step title="【珠海市】快件离开【珠海中心】已发往【珠海一部】">
+          2021-04-13 09:04:03
+        </fx-step>
       </fx-steps>
     </fx-group>
     <fx-fixed>
       <div class="steps-next">
-        <fx-button @click="stepIndex = (stepIndex + 1) % steps.length" type="primary"
-          >下一步</fx-button
+        <fx-button
+          @click="stepIndex = (stepIndex + 1) % steps.length"
+          type="primary"
         >
+          下一步
+        </fx-button>
       </div>
     </fx-fixed>
   </div>
@@ -83,7 +88,6 @@
 <script>
 export default {
   name: 'Steps',
-  props: {},
   data() {
     return {
       stepIndex: 1,

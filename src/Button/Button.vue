@@ -116,7 +116,7 @@ export default defineComponent({
     })
 
     const realFormType = computed(() => {
-      return getEnumsValue(FORM_TYPES, props.formType)
+      return getEnumsValue(FORM_TYPES, props.formType) as FormTypes
     })
 
     useGroupItem('button', uid)

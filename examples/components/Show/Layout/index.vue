@@ -111,11 +111,7 @@
 
 <script>
 export default {
-  name: 'Layout',
-  props: {},
-  data() {
-    return {}
-  }
+  name: 'Layout'
 }
 </script>
 

@@ -31,7 +31,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Icon from '@/Icon'
-import { useCheckboxOrRadio } from '@/hooks/checkbox-radio'
+import {
+  useCheckboxOrRadio,
+  checkboxOrRadioEmits
+} from '@/hooks/checkbox-radio'
 
 export default defineComponent({
   name: 'fx-checkbox',
@@ -62,7 +65,7 @@ export default defineComponent({
       default: ''
     }
   },
-  emits: ['update:checked'],
+  emits: [...checkboxOrRadioEmits],
   setup(props, ctx) {
     return useCheckboxOrRadio(props, ctx, 'checkbox')
   }

@@ -4,7 +4,7 @@
       icon="MinusOutlined"
       shape="square"
       size="small"
-      :disabled="disabled || disabledMinus || formValue <= min"
+      :disabled="disabled || disabledMinus || parseFloat(formValue) <= min"
       @click="onMinusOrPlusClick(false)"
     />
     <input
@@ -24,7 +24,7 @@
       icon="PlusOutlined"
       shape="square"
       size="small"
-      :disabled="disabled || disabledPlus || formValue >= max"
+      :disabled="disabled || disabledPlus || parseFloat(formValue) >= max"
       @click="onMinusOrPlusClick(true)"
     />
   </div>
@@ -98,12 +98,8 @@ export default defineComponent({
     const { emit } = ctx
     const formValue = ref('1')
 
-    const {
-      formName,
-      validateAfterEventTrigger,
-      getInputEl,
-      hookFormValue
-    } = useFormItem<string>(props, ctx, { formValue })
+    const { formName, validateAfterEventTrigger, getInputEl, hookFormValue } =
+      useFormItem<string>(props, ctx, { formValue })
 
     function onMinusOrPlusClick(isPlus = true) {
       let type = 'plus-click'

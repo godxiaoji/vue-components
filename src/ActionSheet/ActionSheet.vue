@@ -48,7 +48,7 @@ import {
   popupExtendEmits,
   popupExtendProps
 } from '@/hooks/popup'
-import type { ActionSheetItem } from './types'
+import { ActionSheetItem } from './types'
 
 export default defineComponent({
   name: 'fx-action-sheet',

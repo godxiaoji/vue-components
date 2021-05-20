@@ -42,14 +42,14 @@
     </fx-group>
     <fx-group title="其他">
       <fx-cell label="可关闭的">
-        <fx-tag type="primary" pattern="dark" size="large" closable
-          >标签</fx-tag
-        >
+        <fx-tag type="primary" pattern="dark" size="large" closable>
+          标签
+        </fx-tag>
       </fx-cell>
       <fx-cell label="自定义颜色">
-        <fx-tag class="tag-custom-color-1" type="default" pattern="plain"
-          >标签</fx-tag
-        >
+        <fx-tag class="tag-custom-color-1" type="default" pattern="plain">
+          标签
+        </fx-tag>
         <fx-tag class="tag-custom-color-2" type="default" closable>标签</fx-tag>
       </fx-cell>
     </fx-group>
@@ -62,29 +62,28 @@
           @click="onClick"
           @close="onClose"
           @long-press="onLongPress"
-          >标签</fx-tag
         >
+          标签
+        </fx-tag>
       </fx-cell>
     </fx-group>
   </div>
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Tag',
-  props: {},
-  data() {
-    return {}
-  },
   methods: {
     onClick() {
-      this.$showToast('点击事件')
+      Toast.showToast('点击事件')
     },
     onClose() {
-      this.$showToast('关闭事件')
+      Toast.showToast('关闭事件')
     },
     onLongPress() {
-      this.$showToast('长按事件')
+      Toast.showToast('长按事件')
     }
   }
 }

@@ -64,7 +64,7 @@ import {
   isString,
   isStringArray
 } from '@/helpers/util'
-import type { ScrollToOffsetOptions, StyleObject } from '../helpers/types'
+import { ScrollToOffsetOptions, StyleObject } from '../helpers/types'
 import { useTouch, UseTouchCoords, UseTouchEvent } from '@/hooks/touch'
 
 enum ScrollState {

@@ -31,7 +31,6 @@ import { shortTabList, tabList, mixTabList, subTabList } from './data'
 
 export default {
   name: 'Tab',
-  props: {},
   data() {
     return {
       shortActiveValue: 1,

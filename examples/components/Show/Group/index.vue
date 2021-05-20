@@ -11,9 +11,7 @@
       <fx-cell label="单元格" content="内容"></fx-cell>
     </fx-group>
     <fx-group title="基础风格">
-      <template #header>
-        右侧文案
-      </template>
+      <template #header> 右侧文案 </template>
       <fx-cell label="单元格" content="内容"></fx-cell>
       <fx-cell label="单元格" content="内容"></fx-cell>
       <fx-cell label="单元格" content="内容"></fx-cell>
@@ -21,9 +19,7 @@
     </fx-group>
     <fx-group title="强化标题栏" strongHeader>
       <template #header>
-        <fx-button size="small">
-          查看更多
-        </fx-button>
+        <fx-button size="small"> 查看更多 </fx-button>
       </template>
       <fx-cell label="单元格" content="内容"></fx-cell>
       <fx-cell label="单元格" content="内容"></fx-cell>
@@ -35,10 +31,6 @@
 
 <script>
 export default {
-  name: 'Group',
-  props: {},
-  data() {
-    return {}
-  }
+  name: 'Group'
 }
 </script>

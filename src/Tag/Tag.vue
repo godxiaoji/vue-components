@@ -22,7 +22,8 @@ import Icon from '@/Icon'
 import { createEnumsValidator, getEnumsValue } from '@/helpers/validator'
 import { SIZE_TYPES, STATE_TYPES, TAG_PATTERN_TYPES } from '@/hooks/constants'
 import { useLongPress } from '@/hooks/long-press'
-import type { SizeType, StateType, TagPatternType } from '../hooks/types'
+import { noop } from '@/helpers/util'
+import { SizeType, StateType, TagPatternType } from '../hooks/types'
 
 export default defineComponent({
   name: 'fx-tag',
@@ -86,7 +87,7 @@ export default defineComponent({
     return {
       root,
       classNames,
-      noop() {},
+      noop,
       onClose
     }
   }

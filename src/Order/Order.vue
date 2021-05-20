@@ -24,7 +24,7 @@
     >
       <span
         class="fx-order_item-ratio"
-        :style="{ 'padding-top': aspectRatio * 100 + '%' }"
+        :style="{ paddingTop: aspectRatio * 100 + '%' }"
       ></span>
       <div class="fx-order_item-inner">
         <slot :item="item.data" :index="index"> </slot>

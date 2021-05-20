@@ -18,8 +18,8 @@ type ShowCascaderOptions = {
   fieldNames?: UserFieldNames
 } & ApiOptions
 
-const showCascader = function(object: ShowCascaderOptions) {
-  return showPopup(object, 'showCascader', function(done) {
+const showCascader = function (object: ShowCascaderOptions) {
+  return showPopup(object, 'showCascader', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
         done(res)
@@ -33,18 +33,13 @@ const showCascader = function(object: ShowCascaderOptions) {
   })
 }
 
-const _CascaderPopup: SFCWithInstall<typeof CascaderPopup> = Object.assign(
-  CascaderPopup,
-  {
-    install: function(app: App) {
-      app.component(CascaderPopup.name, CascaderPopup)
-
-      const properties = app.config.globalProperties
-
-      properties.$showCascader = showCascader
-    },
-    showCascader
-  }
-)
+const _CascaderPopup: SFCWithInstall<typeof CascaderPopup> & {
+  showCascader: typeof showCascader
+} = Object.assign(CascaderPopup, {
+  install: function (app: App) {
+    app.component(CascaderPopup.name, CascaderPopup)
+  },
+  showCascader
+})
 
 export default _CascaderPopup

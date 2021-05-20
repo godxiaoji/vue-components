@@ -105,7 +105,7 @@
           icon="MenuOutlined"
           @click="
             ;(selector = '#popMenuPopupEvent'),
-              (showPopupEvent = true),
+              (visibleEvent = true),
               (visible = true)
           "
         >
@@ -155,9 +155,12 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+import Dialog from '@/Dialog'
+import PopMenu from '@/PopMenu'
+
 export default {
   name: 'PopMenu',
-  props: {},
   data() {
     return {
       visible: false,
@@ -183,24 +186,27 @@ export default {
           name: '圈圈',
           disabled: true
         }
-      ]
+      ],
+
+      showEvent: false,
+      visibleEvent: false
     }
   },
   methods: {
     onVisibleStateChange({ state }) {
-      if (this.showPopupEvent) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
         console.log(`${state} 事件触发`)
       }
       if (state === 'hidden') {
-        this.showPopupEvent = false
+        this.visibleEvent = false
         this.showEvent = false
       }
     },
     onConfirm(res) {
       console.log('confirm', res)
       if (this.showEvent) {
-        this.$showDialog({
+        Dialog.showDialog({
           title: '选择了',
           showCancel: false,
           content: `item.name: '${res.item.name}'\nindex: ${res.index}`
@@ -209,19 +215,19 @@ export default {
     },
     onCancel(res) {
       console.log('cancel', res)
-      this.showEvent && this.$showToast('取消了')
+      this.showEvent && Toast.showToast('取消了')
     },
     onCallApi(selector) {
-      this.$showPopMenu({
+      PopMenu.showPopMenu({
         selector,
         options: this.options,
         placement: 'top',
         success: res => {
           console.log('confirm', res)
           if (res.selected) {
-            this.$showToast(`选择了 ${res.detail.item.name}`)
+            Toast.showToast(`选择了 ${res.detail.item.name}`)
           } else {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           }
         }
       })

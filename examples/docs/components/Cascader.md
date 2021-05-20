@@ -86,7 +86,7 @@
 ]
 ```
 
-### value 的结构
+### modelValue 的结构
 
 ```
 [ 'xiyiji', 'guntong' ]

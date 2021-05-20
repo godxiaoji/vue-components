@@ -16,6 +16,12 @@
 | --checkbox-active-color | <font color=#1890ff>#1890ff</font> | 图标激活色 |
 | --checkbox-font-color   | <font color=#262626>#262626</font> | 文本色     |
 
+## Checkbox Events
+
+| 事件名称 | 描述               | 回调函数参数         |
+| -------- | ------------------ | -------------------- |
+| change   | 勾选发生改变时触发 | { checked: boolean } |
+
 ## Checkbox Slots
 
 ```

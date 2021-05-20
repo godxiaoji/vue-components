@@ -12,19 +12,17 @@
     </fx-group>
     <fx-group title="Slot default">
       <fx-empty description="网络错误" type="network">
-        <fx-button type="primary" size="small">
-          刷新试试
-        </fx-button>
+        <fx-button type="primary" size="small"> 刷新试试 </fx-button>
       </fx-empty>
     </fx-group>
     <fx-group title="Slot image">
       <fx-empty description="网站被小猫咪吃了">
-        <template #image
-          ><fx-image
+        <template #image>
+          <fx-image
             class="empty-custom-image"
             src="https://cdn.fox2.cn/vfox/swiper/different-1.jpg"
-          ></fx-image
-        ></template>
+          />
+        </template>
       </fx-empty>
     </fx-group>
   </div>
@@ -32,11 +30,7 @@
 
 <script>
 export default {
-  name: 'Empty',
-  props: {},
-  data() {
-    return {}
-  }
+  name: 'Empty'
 }
 </script>
 

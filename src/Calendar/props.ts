@@ -3,7 +3,7 @@ import dayjs from '@/helpers/day'
 import { isInNumberRange, isInteger } from '@/helpers/util'
 import { DEFAULT_MONTH_RANGE, TYPE_NAMES } from '@/Calendar/util'
 import { calendarValueValidator, createEnumsValidator } from '@/helpers/validator'
-import type { DayHandler, CalendarType } from './types'
+import { DayHandler, CalendarType } from './types'
 
 export default {
   modelValue: {

@@ -155,6 +155,8 @@
 
 <script>
 import dayjs from '@/helpers/day'
+import Toast from '@/Toast'
+import DatePicker from '@/DatePicker'
 
 export default {
   name: 'DatePicker',
@@ -167,14 +169,8 @@ export default {
       dateTimeValue: '',
 
       // 设定时间访问
-      minDate: dayjs()
-        .startOf('day')
-        .subtract(4, 'year')
-        .toDate(),
-      maxDate: dayjs()
-        .startOf('day')
-        .add(5, 'year')
-        .toDate(),
+      minDate: dayjs().startOf('day').subtract(4, 'year').toDate(),
+      maxDate: dayjs().startOf('day').add(5, 'year').toDate(),
       minMaxValue: '',
 
       // 格式化
@@ -199,7 +195,11 @@ export default {
       // popup
 
       visible: false,
-      popupValue: ''
+      popupValue: '',
+
+      clickEvent: false,
+      visibleEvent: false,
+      changeEvent: false
     }
   },
   methods: {
@@ -207,7 +207,7 @@ export default {
       console.log(e)
 
       if (this.changeEvent) {
-        this.$showToast(`值改为: ${e.formatted}`)
+        Toast.showToast(`值改为: ${e.formatted}`)
       }
     },
     onChangeEvent(e) {
@@ -215,21 +215,21 @@ export default {
     },
     onConfirm(res) {
       console.log('confirm', res)
-      this.clickEvent && this.$showToast(`点击确定按钮`)
+      this.clickEvent && Toast.showToast(`点击确定按钮`)
     },
     onCancel(res) {
       console.log('cancel', res)
       if (this.clickEvent) {
         if (res.cancelClick) {
-          this.$showToast('点击了取消按钮')
+          Toast.showToast('点击了取消按钮')
         } else if (res.maskClick) {
-          this.$showToast('点击了蒙层')
+          Toast.showToast('点击了蒙层')
         }
       }
     },
     onVisibleStateChange({ state }) {
       if (this.visibleEvent) {
-        this.$showToast(`${state} 事件触发`)
+        Toast.showToast(`${state} 事件触发`)
       }
 
       if (state === 'hidden') {
@@ -239,14 +239,14 @@ export default {
       }
     },
     onCallApi() {
-      this.$showDatePicker({
+      DatePicker.showDatePicker({
         title: 'DatePicker',
         success: res => {
           console.log(res)
           if (res.cancel) {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           } else {
-            this.$showToast(`选择了 ${res.detail.labelString}`)
+            Toast.showToast(`选择了 ${res.detail.formatted}`)
           }
         }
       })

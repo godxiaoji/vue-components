@@ -22,7 +22,7 @@ import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { selectorValidator } from '@/helpers/validator'
 import Exception from '@/helpers/exception'
 import { querySelector } from '@/helpers/dom'
-import type { DomSelector } from '../helpers/types'
+import { DomSelector } from '../helpers/types'
 
 export default defineComponent({
   name: 'fx-dropdown',

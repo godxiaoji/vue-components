@@ -23,9 +23,10 @@
 
 <script lang="ts">
 import NoticeBar from '@/NoticeBar'
-import { defineComponent, onBeforeUnmount } from 'vue'
+import { defineComponent, onBeforeUnmount, PropType } from 'vue'
 import { popupEmits, popupProps, usePopup } from '@/hooks/popup'
 import { iconValidator } from '@/helpers/validator'
+import { StateType } from '../hooks/types'
 
 export default defineComponent({
   name: 'fx-notify',
@@ -66,8 +67,8 @@ export default defineComponent({
     },
     // 类型
     type: {
-      type: String,
-      default: 'primary'
+      type: String as PropType<StateType>,
+      default: null
     }
   },
   emits: [...popupEmits, 'close-click'],

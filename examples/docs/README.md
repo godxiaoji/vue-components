@@ -89,18 +89,14 @@ import 'vfox/src/Button/style'
 app.use(Button)
 ```
 
-### 函数调用
+### API调用
 
 ```
 import { Toast } from 'vfox'
 
-app.use(Toast)
-
-// app 内的子组件可以直接调用 $showToast 等方法
-
 export default {
   mounted() {
-    this.$showToast({
+    Toast.showToast({
       title: '成功',
       type: 'success',
       duration: 2000

@@ -67,15 +67,16 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Input',
-  props: {},
   data() {
     return { value: '' }
   },
   methods: {
     onInput({ value }) {
-      this.$showToast(`当前值为：${value}`)
+      Toast.showToast(`当前值为：${value}`)
     }
   }
 }

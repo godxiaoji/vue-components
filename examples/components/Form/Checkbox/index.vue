@@ -60,15 +60,16 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Checkbox',
-  props: {},
   data() {
     return { checked: false, groupValue: ['A', 'C'], groups: ['A', 'B', 'C'] }
   },
   methods: {
     onChange({ value }) {
-      this.$showToast(`Change Value: ${value}`)
+      Toast.showToast(`Change Value: ${value}`)
     }
   }
 }

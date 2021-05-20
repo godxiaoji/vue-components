@@ -60,9 +60,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'CountDown',
-  props: {},
   data() {
     return {
       time: 300 * 1000,
@@ -76,15 +77,15 @@ export default {
   methods: {
     onPause(e) {
       console.log(e)
-      this.$showToast('已暂停')
+      Toast.showToast('已暂停')
     },
     onResume(e) {
       console.log(e)
-      this.$showToast('继续计时')
+      Toast.showToast('继续计时')
     },
     onEnd(e) {
       console.log(e)
-      this.$showToast('计时结束')
+      Toast.showToast('计时结束')
     }
   }
 }

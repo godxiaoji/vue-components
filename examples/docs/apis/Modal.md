@@ -1,6 +1,6 @@
-# Modal
+# Modal 模态框弹窗
 
-## showDialog(object)
+## Dialog.showDialog(object)
 
 显示模态对话框。
 
@@ -30,7 +30,9 @@ Object object
 ### Usage
 
 ```
-this.$showDialog({
+import { Dialog } from 'vfox'
+
+Dialog.showDialog({
   title: '提示',
   content: '这是一个模态弹窗',
   success (res) {

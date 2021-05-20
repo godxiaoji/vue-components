@@ -131,37 +131,39 @@
       <fx-cell
         label="scrollToIndex({ index: 49 })"
         isLink
-        @click="$refs.flatList.scrollToIndex({ index: 49 })"
+        @click="scrollToIndex(49)"
       ></fx-cell>
       <fx-cell
         label="同上加 viewPosition=0.5"
         isLink
-        @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 0.5 })"
+        @click="scrollToIndex(49, 0.5)"
       ></fx-cell>
       <fx-cell
         label="同上加 viewPosition=1"
         isLink
-        @click="$refs.flatList.scrollToIndex({ index: 49, viewPosition: 1 })"
+        @click="scrollToIndex(49, 1)"
       ></fx-cell>
       <fx-cell
         label="scrollToOffset({ offset: 200 })"
         isLink
-        @click="$refs.flatList.scrollToOffset({ offset: 200 })"
+        @click="scrollToOffset(200)"
       ></fx-cell>
     </fx-group>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Toast from '@/Toast'
+
+export default defineComponent({
   name: 'FlatList',
-  props: {},
   data() {
     return {
       list: [],
       lowerLoading: false,
       loadList: [],
-      getItemSize(item, index) {
+      getItemSize(item: any, index: number) {
         return 50 + (index % 10) * 2
       }
     }
@@ -181,9 +183,16 @@ export default {
     this.getLoadList()
   },
   methods: {
-    onRefreshing(res, done) {
+    scrollToIndex(index: number, viewPosition = 0) {
+      this.$refs.flatList.scrollToIndex({ index, viewPosition })
+    },
+    scrollToOffset(offset: number) {
+      this.$refs.flatList.scrollToOffset({ offset })
+    },
+
+    onRefreshing(res: any, done: () => void) {
       setTimeout(() => {
-        this.$showToast({
+        Toast.showToast({
           title: `刷新成功`,
           type: 'success'
         })
@@ -191,7 +200,7 @@ export default {
       }, 2000)
     },
     onEndReached() {
-      this.$showToast(`到底了`)
+      Toast.showToast(`到底了`)
     },
     onLoadMore() {
       if (this.loadList.length >= 100) {
@@ -202,16 +211,24 @@ export default {
 
       setTimeout(() => {
         this.getLoadList()
-        this.$showToast({
+        Toast.showToast({
           title: `加载成功`,
           type: 'success'
         })
         this.lowerLoading = false
       }, 500)
     },
-    onRecycleChange({ item, index, recycled }) {
+    onRecycleChange({
+      item,
+      index,
+      recycled
+    }: {
+      item: any
+      index: number
+      recycled: boolean
+    }) {
       index === 49 &&
-        this.$showToast(`${item.text} ${recycled ? '回收了' : '加入了'}`)
+        Toast.showToast(`${item.text} ${recycled ? '回收了' : '加入了'}`)
     },
     getLoadList() {
       for (
@@ -226,7 +243,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

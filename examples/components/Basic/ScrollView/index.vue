@@ -71,12 +71,10 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'ScrollView',
-  props: {},
-  data() {
-    return {}
-  },
   methods: {
     onRefreshing(res, done) {
       setTimeout(() => {
@@ -84,10 +82,10 @@ export default {
       }, 2000)
     },
     onScrollUpper({ direction }) {
-      this.$showToast(`滚动到 ${direction}`)
+      Toast.showToast(`滚动到 ${direction}`)
     },
     onScrollLower({ direction }) {
-      this.$showToast(`滚动到 ${direction}`)
+      Toast.showToast(`滚动到 ${direction}`)
     }
   }
 }

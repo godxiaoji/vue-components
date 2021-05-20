@@ -95,7 +95,7 @@
         label="visible-state-change"
         isLink
         @click="
-          ;(otherEvent = true),
+          ;(visibleEvent = true),
             (popupShowConfirm = true),
             (popupShowClose = true),
             (popupVisible = true)
@@ -127,12 +127,13 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
+import dayjs from '@/helpers/day'
+import Toast from '@/Toast'
+import Calendar from '@/Calendar'
 
 export default {
   components: {},
   name: 'Calendar',
-  props: {},
   data() {
     return {
       viewDate: new Date(),
@@ -149,7 +150,10 @@ export default {
 
       value: new Date(),
       rangeValue: [],
-      placeholder: ''
+      placeholder: '',
+
+      confirmEvent: false,
+      visibleEvent: false
     }
   },
   computed: {
@@ -175,41 +179,37 @@ export default {
       console.log('select', res)
     },
     addOneDay() {
-      this.popupValue = [
-        dayjs(this.popupValue[0])
-          .add(1, 'day')
-          .toDate()
-      ]
+      this.popupValue = [dayjs(this.popupValue[0]).add(1, 'day').toDate()]
     },
     onConfirm(res) {
       console.log('confirm', res)
-      this.confirmEvent && this.$showToast(`触发了确定事件`)
+      this.confirmEvent && Toast.showToast(`触发了确定事件`)
     },
     onRangeConfirm(detail) {
-      this.$showToast(`选择了 ${detail.label}`)
+      Toast.showToast(`选择了 ${detail.label}`)
     },
     onVisibleStateChange({ state }) {
       // console.log(`${type} 事件触发`)
 
-      if (this.otherEvent) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
       }
 
       if (state === 'hidden') {
-        this.otherEvent = false
+        this.visibleEvent = false
         this.confirmEvent = false
       }
     },
     onCallApi() {
-      this.$showCalendar({
+      Calendar.showCalendar({
         type: 'range',
         showClose: true,
         success: res => {
           console.log(res)
           if (res.cancel) {
-            this.$showToast('取消了')
+            Toast.showToast('取消了')
           } else {
-            this.$showToast(`选择了 ${res.detail.label}`)
+            Toast.showToast(`选择了 ${res.detail.label}`)
           }
         }
       })

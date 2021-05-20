@@ -56,18 +56,10 @@
       ></fx-cell>
     </fx-group>
     <fx-group title="API">
-      <fx-cell
-        label="showToast"
-        isLink
-        @click="$showToast({ title: '提示文本', duration: 5000 })"
-      ></fx-cell>
-      <fx-cell label="hideToast" isLink @click="$hideToast()"></fx-cell>
-      <fx-cell
-        label="showLoading"
-        isLink
-        @click="$showLoading({ title: '加载中' })"
-      ></fx-cell>
-      <fx-cell label="hideLoading" isLink @click="$hideLoading()"></fx-cell>
+      <fx-cell label="showToast" isLink @click="callShowToastApi"></fx-cell>
+      <fx-cell label="hideToast" isLink @click="callHideToastApi"></fx-cell>
+      <fx-cell label="showLoading" isLink @click="callShowLoadingApi"></fx-cell>
+      <fx-cell label="hideLoading" isLink @click="callHideLoadingApi"></fx-cell>
     </fx-group>
     <fx-toast
       v-model:visible="visible"
@@ -80,8 +72,21 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Toast from '@/Toast'
+
+interface showArgs {
+  icon?: any
+  title?: string
+  mask?: boolean
+  type?: ToastType
+  duration?: number
+}
+
+type ToastType = 'default' | 'success' | 'fail' | 'loading'
+
+export default defineComponent({
   name: 'Toast',
   props: {},
   data() {
@@ -95,14 +100,26 @@ export default {
     }
   },
   methods: {
-    onShowToast({ title, mask, type, duration, icon }) {
+    onShowToast({ title, mask, type, duration, icon }: showArgs) {
       this.icon = icon || null
       this.title = title || ''
       this.mask = mask || false
       this.type = type || 'default'
       this.duration = duration != null ? duration : 1500
       this.visible = true
+    },
+    callShowToastApi() {
+      Toast.showToast({ title: '提示文本', duration: 5000 })
+    },
+    callShowLoadingApi() {
+      Toast.showLoading({ title: '加载中' })
+    },
+    callHideLoadingApi() {
+      Toast.hideLoading()
+    },
+    callHideToastApi() {
+      Toast.hideToast()
     }
   }
-}
+})
 </script>

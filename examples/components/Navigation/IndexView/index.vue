@@ -18,7 +18,6 @@
 <script>
 export default {
   name: 'IndexView',
-  props: {},
   data() {
     return {
       offsetTop: 52,

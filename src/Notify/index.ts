@@ -15,8 +15,8 @@ type ShowNotifyOptions = {
   closable?: boolean
 } & ApiOptions
 
-const showNotify = function(object: string | ShowNotifyOptions) {
-  return showPopup(object, 'showNotify', function(done) {
+const showNotify = function (object: string | ShowNotifyOptions) {
+  return showPopup(object, 'showNotify', function (done) {
     const hook: PopupHook = (hookName, res) => {
       if (hookName === 'afterShow') {
         done(res)
@@ -31,18 +31,16 @@ const showNotify = function(object: string | ShowNotifyOptions) {
   })
 }
 
-const hideNotify = function(object: ApiOptions) {
-  return hidePopup(object, 'hideNotify')
+const hideNotify = function (object?: ApiOptions) {
+  return hidePopup(object || {}, 'hideNotify')
 }
 
-const _Notify: SFCWithInstall<typeof Notify> = Object.assign(Notify, {
-  install: function(app: App) {
+const _Notify: SFCWithInstall<typeof Notify> & {
+  showNotify: typeof showNotify
+  hideNotify: typeof hideNotify
+} = Object.assign(Notify, {
+  install: function (app: App) {
     app.component(Notify.name, Notify)
-
-    const properties = app.config.globalProperties
-
-    properties.$showNotify = showNotify
-    properties.$hideNotify = hideNotify
   },
   showNotify,
   hideNotify

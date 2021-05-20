@@ -1,10 +1,10 @@
-# LocalStorage
+# LocalStorage 本地缓存
 
 - 原本定义的 `localStorage` 是只有 string 类型的 value 。
 
 - 封装的接口支持序列化数据，序列化和反序列化操作由接口内部实现。
 
-## getStorage(key)
+## LocalStorage.getStorage(key)
 
 ### Params
 
@@ -21,8 +21,10 @@ key 对应的内容
 ### Usage
 
 ```
+import { LocalStorage } from 'vfox'
+
 try {
-  const value = this.$getStorageSync('key')
+  const value = LocalStorage.getStorageSync('key')
   if (value) {
     // Do something with return value
   }
@@ -31,7 +33,7 @@ try {
 }
 ```
 
-## setStorage(key, value)
+## LocalStorage.setStorage(key, value)
 
 ### Params
 
@@ -43,12 +45,14 @@ try {
 ### Usage
 
 ```
+import { LocalStorage } from 'vfox'
+
 try {
-  this.$setStorageSync('key', 'value')
+  LocalStorage.setStorageSync('key', 'value')
 } catch (e) { }
 ```
 
-## removeStorage(key)
+## LocalStorage.removeStorage(key)
 
 ### Params
 
@@ -59,26 +63,30 @@ try {
 ### Usage
 
 ```
+import { LocalStorage } from 'vfox'
+
 try {
-  this.$removeStorageSync('key')
+  LocalStorage.removeStorageSync('key')
 } catch (e) {
   // Do something when catch error
 }
 ```
 
-## clearStorage()
+## LocalStorage.clearStorage()
 
 ### Usage
 
 ```
+import { LocalStorage } from 'vfox'
+
 try {
-  this.$clearStorageSync()
+  LocalStorage.clearStorageSync()
 } catch(e) {
   // Do something when catch error
 }
 ```
 
-## getStorageInfo()
+## LocalStorage.getStorageInfo()
 
 ### Return
 
@@ -93,8 +101,10 @@ Object object
 ### Usage
 
 ```
+import { LocalStorage } from 'vfox'
+
 try {
-  const res = this.$getStorageInfoSync()
+  const res = LocalStorage.getStorageInfoSync()
   console.log(res.keys)
   console.log(res.currentSize)
   console.log(res.limitSize)
@@ -103,7 +113,7 @@ try {
 }
 ```
 
-## createStorage(areaName[, options])
+## LocalStorage.createStorage(areaName[, options])
 
 创建指定分区的实例，来维护自身缓存，避免缓存污染全局。
 
@@ -128,6 +138,8 @@ try {
 ### Usage
 
 ```
-const myArea = this.$createStorage('myArea', { limitSize: 1000 })
+import { LocalStorage } from 'vfox'
+
+const myArea = LocalStorage.createStorage('myArea', { limitSize: 1000 })
 myArea.setStorage('a', 1)
 ```

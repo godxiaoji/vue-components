@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'ImageUploader',
   props: {},
@@ -50,10 +52,10 @@ export default {
   methods: {
     onBeforeUpload(file, { formatSize }) {
       if (file.size > 1024 * 1024) {
-        this.$showToast(`上传图片不能大于 ${formatSize(1024 * 1024)}`)
+        Toast.showToast(`上传图片不能大于 ${formatSize(1024 * 1024)}`)
         return false
       }
-      this.$showToast(`上传图片大小为 ${formatSize(file.size)}`)
+      Toast.showToast(`上传图片大小为 ${formatSize(file.size)}`)
     },
 
     onUploadOrFail(file, handlers) {
@@ -96,11 +98,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-@import '@/style/var.scss';
-
-.image-uploader {
-}
-</style>

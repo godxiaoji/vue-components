@@ -52,7 +52,6 @@
 <script>
 export default {
   name: 'ScrollTab',
-  props: {},
   data() {
     return {
       offsetTop: 52,

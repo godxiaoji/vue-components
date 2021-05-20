@@ -8,12 +8,7 @@ const Scroll = {
 }
 
 const _Scroll: SFCWithInstall<typeof Scroll> = Object.assign(Scroll, {
-  install: function(app: App) {
-    const properties = app.config.globalProperties
-
-    properties.$pageScrollTo = pageScrollTo
-    properties.$scrollTo = scrollTo
-  }
+  install: function (app: App) {}
 })
 
 export default _Scroll

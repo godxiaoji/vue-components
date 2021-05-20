@@ -5,7 +5,7 @@
       type="checkbox"
       :disabled="disabled"
       :name="formName"
-      :value="formValue"
+      :value="formValue.toString()"
       @change="onChange"
       ref="input"
     />

@@ -136,7 +136,7 @@
           icon="DeleteOutlined"
           @click="
             ;(selector = '#popDialogPopupEvent'),
-              (showPopupEvent = true),
+              (visibleEvent = true),
               (visible = true)
           "
         >
@@ -187,6 +187,9 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+import PopDialog from '@/PopDialog'
+
 export default {
   name: 'PopDialog',
   props: {},
@@ -203,18 +206,21 @@ export default {
       visible2: false,
       selector2: '',
 
-      visible3: false
+      visible3: false,
+
+      showEvent: false,
+      visibleEvent: false
     }
   },
   methods: {
     onVisibleStateChange({ state }) {
-      if (this.showPopupEvent) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
         console.log(`${state} 事件触发`)
+        Toast.showToast(`${state} 事件触发`)
       }
       if (state === 'hidden') {
         this.showCancel = true
-        this.showPopupEvent = false
+        this.visibleEvent = false
         this.showEvent = false
         this.content = '确定要删除该条数据？'
         this.confirmText = '确定'
@@ -224,23 +230,23 @@ export default {
     onCancel(res) {
       console.log('cancel', res)
       if (this.showEvent) {
-        this.$showToast(`取消事件触发`)
+        Toast.showToast(`取消事件触发`)
       }
     },
     onConfirm(res) {
       console.log('confirm', res)
       if (this.showEvent) {
-        this.$showToast(`确定事件触发`)
+        Toast.showToast(`确定事件触发`)
       }
     },
     onCallApi(selector) {
-      this.$showPopDialog({
+      PopDialog.showPopDialog({
         selector,
         placement: 'top',
         content: this.content,
         success: res => {
           console.log('success', res)
-          this.$showToast(res.confirm ? `点击了确定` : `点击了取消`)
+          Toast.showToast(res.confirm ? `点击了确定` : `点击了取消`)
         }
       })
     }

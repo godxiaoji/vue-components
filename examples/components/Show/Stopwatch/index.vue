@@ -17,16 +17,18 @@
           <fx-button
             @click="startOrStop"
             :type="!paused ? 'danger' : 'success'"
-            >{{ paused ? '启动' : '停止' }}</fx-button
           >
+            {{ paused ? '启动' : '停止' }}
+          </fx-button>
         </div>
       </div>
       <fx-cell
         :label="'计次 ' + (laps.length - index)"
         v-for="(item, index) in laps"
         :key="item"
-        >{{ item }}</fx-cell
       >
+        {{ item }}
+      </fx-cell>
     </fx-group>
   </div>
 </template>
@@ -34,7 +36,6 @@
 <script>
 export default {
   name: 'Stopwatch',
-  props: {},
   data() {
     return {
       paused: true,

@@ -21,7 +21,6 @@ import { mixTabList, tabList } from '../Tab/data'
 
 export default {
   name: 'SideTab',
-  props: {},
   data() {
     return {
       activeValue: 1,

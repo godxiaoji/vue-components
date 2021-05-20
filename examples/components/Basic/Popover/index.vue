@@ -129,7 +129,7 @@
           icon="PlusOutlined"
           @click="
             ;(selector = '#popoverEvent'),
-              (showEventCallback = true),
+              (visibleEvent = true),
               (visible = true)
           "
         >
@@ -167,6 +167,9 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+import Popover from '@/Popover'
+
 export default {
   name: 'Popover',
   props: {},
@@ -176,7 +179,9 @@ export default {
       selector: '',
       placement: 'bottom',
       content: '这是气泡内容',
-      noMaskVisible: false
+      noMaskVisible: false,
+
+      visibleEvent: false
     }
   },
   methods: {
@@ -187,26 +192,19 @@ export default {
       }, 5000)
     },
     onVisibleStateChange({ state }) {
-      if (this.showEventCallback) {
-        this.$showToast(`${state} 事件触发`)
+      if (this.visibleEvent) {
+        Toast.showToast(`${state} 事件触发`)
         console.log(`${state} 事件触发`)
       }
       if (state === 'hidden') {
         this.selector = ''
         this.placement = 'bottom'
         this.content = '这是气泡内容'
-        this.showEventCallback = false
+        this.visibleEvent = false
       }
     },
-    onSelect(res) {
-      this.$showDialog({
-        title: '选择了',
-        showCancel: false,
-        content: `item.name: '${res.item.name}'\nindex: ${res.index}`
-      })
-    },
     onCallApi(selector) {
-      this.$showPopover({
+      Popover.showPopover({
         selector,
         content: '这是气泡内容',
         placement: 'top',

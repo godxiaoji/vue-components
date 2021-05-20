@@ -47,7 +47,6 @@
         isLink
         checkbox
         @click="onClick"
-        @checkbox-change="onCheckboxChange"
       ></fx-cell>
     </fx-group>
     <fx-group title="Slot default">
@@ -76,7 +75,7 @@
           <span class="cell-user-item-nickname">小明</span>
         </div>
         <template #icon>
-          <fx-checkbox circle />
+          <fx-checkbox circle @change="onCheckboxChange" />
         </template>
       </fx-cell>
     </fx-group>
@@ -84,19 +83,20 @@
 </template>
 
 <script>
+import Toast from '@/Toast'
+
 export default {
   name: 'Cell',
-  props: {},
   data() {
     return { checked: false }
   },
   methods: {
     onClick() {
-      this.$showToast('点击事件')
+      Toast.showToast('点击事件')
     },
     onCheckboxChange(e) {
       console.log(e)
-      this.$showToast(e.checked ? '勾选' : '取消勾选')
+      Toast.showToast(e.checked ? '勾选' : '取消勾选')
     }
   }
 }

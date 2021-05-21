@@ -1,3 +1,15 @@
+# [2.0.0-beta.19](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.18...v2.0.0-beta.19) (2021-05-21)
+
+
+### Bug Fixes
+
+* **vite:** 基于vite bug修复 ([66fff7e](https://github.com/godxiaoji/vfox/commit/66fff7e42e70db4fdc6ebb73fc6f5566c503a2ee))
+
+
+### Features
+
+* **popup:** popup重新梳理 ([f9df5a7](https://github.com/godxiaoji/vfox/commit/f9df5a7080c4733b649f89d1355182b751ff0911))
+
 # [2.0.0-beta.18](https://github.com/godxiaoji/vfox/compare/v2.0.0-beta.17...v2.0.0-beta.18) (2021-05-14)
 
 

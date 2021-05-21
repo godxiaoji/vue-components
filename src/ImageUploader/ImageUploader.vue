@@ -546,7 +546,7 @@ export default defineComponent({
             Dialog.showDialog({
               content: '要删除这张图片吗？',
               confirmText: '删除'
-            }).then((res: { confirm: boolean }) => {
+            }).then(res => {
               if (res.confirm) {
                 orderItems.splice(i, 1)
                 updateUploadButton()

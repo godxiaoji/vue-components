@@ -20,7 +20,7 @@
       </fx-cell>
     </fx-group>
     <fx-group title="事件监听">
-      <fx-cell label="家电">
+      <fx-cell label="change">
         <fx-cascader
           :options="options"
           placeholder="选择家电"

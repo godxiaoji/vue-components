@@ -1,13 +1,5 @@
 <template>
-  <div
-    class="fx-calendar"
-    :class="[
-      {
-        disabled
-      }
-    ]"
-    ref="root"
-  >
+  <div class="fx-calendar" :class="{ disabled }" ref="root">
     <picker-input
       :formLabelString="formLabel"
       :formValueString="formLabel"
@@ -43,8 +35,8 @@ import {
   getDefaultDetail,
   getDetail as _getDetail,
   isSameDateArray,
-  parseValues,
-  TYPE_NAMES
+  MODE_NAMES,
+  parseValues
 } from '@/Calendar/util'
 import { isFunction, isUndefined } from '@/helpers/util'
 import dayjs from '@/helpers/day'
@@ -85,7 +77,7 @@ export default defineComponent({
     const formValue = reactive<Date[]>([])
     const popup = shallowRef<ComponentPublicInstance<typeof CalendarPopup>>()
 
-    const type = getEnumsValue(TYPE_NAMES, props.initialType)
+    const mode = getEnumsValue(MODE_NAMES, props.initialMode)
     let detail = getDefaultDetail()
     let _changeValue: any = null
 
@@ -93,13 +85,13 @@ export default defineComponent({
       if (popup.value) {
         return updateDetail(popup.value.updateValue(val))
       } else {
-        return updateDetail(_getDetail(parseValues(val, type), type))
+        return updateDetail(_getDetail(parseValues(val, mode), mode))
       }
     }
 
     function updateDetail(_detail: DetailObject) {
       detail = _detail
-      formLabel.value = _detail.label
+      formLabel.value = _detail.formatted
       formValue.splice(0, Infinity, ...getDetail().value)
 
       return getDetail()
@@ -133,28 +125,26 @@ export default defineComponent({
       validateAfterEventTrigger('change', formatValue)
     }
 
-    const {
-      formName,
-      validateAfterEventTrigger,
-      hookFormValue,
-      root
-    } = useFormItem<Date>(props, ctx, {
-      formValue,
-      hookFormValue() {
-        const newValue = cloneDetail(detail).value
-        if (isFunction(props.formatter)) {
-          return props.formatter(newValue, function formatter(
-            template: string
-          ) {
-            return newValue.map(date => {
-              return dayjs(date).format(template)
-            })
-          })
-        }
-        return newValue
-      },
-      hookResetValue: () => updateValue(defaultValue).value
-    })
+    const { formName, validateAfterEventTrigger, hookFormValue, root } =
+      useFormItem<Date>(props, ctx, {
+        formValue,
+        hookFormValue() {
+          const newValue = cloneDetail(detail).value
+          if (isFunction(props.formatter)) {
+            return props.formatter(
+              newValue,
+              function formatter(template: string) {
+                return newValue.map(date => {
+                  return dayjs(date).format(template)
+                })
+              }
+            )
+          }
+          return newValue
+        },
+        hookResetValue: () => updateValue(defaultValue).value
+      })
+
     watch(
       () => props.modelValue,
       val => {

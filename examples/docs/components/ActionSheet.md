@@ -10,7 +10,7 @@
 | title           | string  |        | 否   | 标题，不设置则不展示标题栏 |
 | options         | array   |        | 否   | 选项列表                   |
 | mask-closable   | boolean | true   | 否   | 点击蒙层是否触发关闭操作   |
-| show-cancel     | boolean | true   | 否   | 是否显示取消按钮           |
+| show-cancel     | boolean | false  | 否   | 是否显示取消按钮           |
 | cancel-text     | string  | '取消' | 否   | 取消按钮的文本             |
 
 ### options 的结构
@@ -41,12 +41,12 @@
 
 ## Events
 
-| 事件                 | 描述           | 回调函数参数               |
-| -------------------- | -------------- | -------------------------- |
-| confirm              | 点击选项时触发 | {item: any: index: number} |
-| visible-state-change | 展示隐藏时触发 | { state: string }          |
+| 事件                 | 描述           | 回调函数参数                                                    |
+| -------------------- | -------------- | --------------------------------------------------------------- |
+| confirm              | 点击选项时触发 | {item: any: index: number}                                      |
+| visible-state-change | 展示隐藏时触发 | { state: [VisibleState](./ActionSheet.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |

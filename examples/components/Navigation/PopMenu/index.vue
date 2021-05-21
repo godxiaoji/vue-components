@@ -223,8 +223,8 @@ export default {
         options: this.options,
         placement: 'top',
         success: res => {
-          console.log('confirm', res)
-          if (res.selected) {
+          console.log('success', res)
+          if (res.confirm) {
             Toast.showToast(`选择了 ${res.detail.item.name}`)
           } else {
             Toast.showToast('取消了')

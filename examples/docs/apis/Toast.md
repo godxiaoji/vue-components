@@ -14,7 +14,7 @@ Object object
 | -------- | -------- | --------- | ---- | ---------------------------------------------------- |
 | title    | string   |           | 是   | 提示的内容                                           |
 | type     | string   | 'default' | 否   | 类型，可选 'success', 'loading', 'fail'              |
-| icon     | string   |           | 否   | 图标，使用 [Icon](./Icon.md) 组件，优先级高于 `type` |
+| icon     | string   |           | 否   | 图标，使用 [Icon](../components/Icon.md) 组件，优先级高于 `type` |
 | duration | number   | 1500      | 否   | 提示的延迟关闭时间                                   |
 | mask     | boolean  | false     | 否   | 是否显示透明蒙层，防止触摸穿透                       |
 | success  | function |           | 否   | 接口调用成功的回调函数                               |
@@ -66,7 +66,7 @@ Toast.hideToast()
 
 ## Toast.showLoading(object)
 
-显示 loading 提示框。需主动调用 [hideLoading](./Toast.md#hideloading-object) 才能关闭提示框。
+显示 loading 提示框。需主动调用 [hideLoading](./Toast.md#toast-hideloading-object) 才能关闭提示框。
 
 ### Params
 

@@ -5,6 +5,7 @@
     placement="right"
     :visible="visible"
     @visible-state-change="onVisibleStateChange"
+    @confirm="onConfirm"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -64,7 +65,6 @@ export default defineComponent({
   },
   emits: [...viewEmits, ...popupExtendEmits],
   setup(props, ctx) {
-    const { emit } = ctx
     const dropdown = ref<HTMLElement>()
 
     const popup = usePopupExtend(ctx)
@@ -157,8 +157,7 @@ export default defineComponent({
 
     function onSelect(selecteds: Values) {
       const confirmDetail = updateValue(selecteds)
-      emit('confirm', confirmDetail)
-      popup.customConfirm(confirmDetail, 'selected')
+      popup.customConfirm(confirmDetail)
     }
 
     const {

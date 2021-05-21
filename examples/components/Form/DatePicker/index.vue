@@ -203,15 +203,15 @@ export default {
     }
   },
   methods: {
-    onChange(e) {
-      console.log(e)
+    onChange(res) {
+      console.log('change', res)
 
       if (this.changeEvent) {
-        Toast.showToast(`值改为: ${e.formatted}`)
+        Toast.showToast(`值改为: ${res.formatted}`)
       }
     },
-    onChangeEvent(e) {
-      console.log(e)
+    onChangeEvent(res) {
+      console.log('change', res)
     },
     onConfirm(res) {
       console.log('confirm', res)

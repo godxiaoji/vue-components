@@ -12,7 +12,7 @@
 | --------------- | -------- | --------- | ---- | ----------------------------------------------------------------------- |
 | title           | string   |           | 是   | 提示内容                                                                |
 | type            | string   | 'default' | 否   | 提示类型，可选值：'primary' / 'success' / 'warning' / 'danger'          |
-| icon            | string   |           | 否   | 图标，使用 [Icon](./Icon.md) 组件，图标优先级高于 `type`，颜色随 `type` |
+| icon            | string   |           | 否   | 图标，使用 [Icon](../components/Icon.md) 组件，图标优先级高于 `type`，颜色随 `type` |
 | duration        | number   | 1500      | 否   | 展示时长(单位 ms)，值为 0 时，`notify` 不会消失                         |
 | backgroundColor | string   |           | 否   | 指定背景颜色，会覆盖 type 的颜色                                        |
 | color           | string   |           | 否   | 指定前景颜色（含字体，图标）                                            |

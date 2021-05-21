@@ -14,13 +14,13 @@
 
 ## Events
 
-| 事件                 | 描述               | 回调函数参数                     |
-| -------------------- | ------------------ | -------------------------------- |
-| cancel               | 取消按钮点击时触发 | { confirm: false, cancel: true } |
-| confirm              | 确认按钮点击时触发 | { confirm: true, cancel: false } |
-| visible-state-change | 展示隐藏时触发     | { state: string }                |
+| 事件                 | 描述               | 回调函数参数                                               |
+| -------------------- | ------------------ | ---------------------------------------------------------- |
+| cancel               | 取消按钮点击时触发 | { confirm: false, cancel: true }                           |
+| confirm              | 确认按钮点击时触发 | { confirm: true, cancel: false }                           |
+| visible-state-change | 展示隐藏时触发     | { state: [VisibleState](./Dialog.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |

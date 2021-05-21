@@ -22,7 +22,7 @@ export default defineComponent({
 
     function onSubmit(e: Event) {
       const inputEls = (e.target as HTMLFormElement).elements
-      const value: DataObject<any> = {}
+      const value: DataObject = {}
       const uids = []
 
       for (let i = 0, len = inputEls.length; i < len; i++) {
@@ -110,7 +110,7 @@ export default defineComponent({
       return false
     }
 
-    function validate(value: DataObject<any>) {
+    function validate(value: DataObject) {
       const retList: Promise<any>[] = []
 
       children.forEach(child => {
@@ -126,7 +126,7 @@ export default defineComponent({
 
     function onReset(e: Event) {
       const inputEls = (e.target as HTMLFormElement).elements
-      const values: DataObject<any> = {}
+      const values: DataObject = {}
       const uids: number[] = []
 
       setTimeout(() => {

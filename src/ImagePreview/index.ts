@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import ImagePreview from './ImagePreview.vue'
-import { ApiOptions, PopupHook } from '../apis/types'
-import { showPopup } from '@/apis/Popup'
+import { ApiOptions, PopupConfirmArgs } from '../apis/types'
+import { createConfirmHook, showPopup } from '@/apis/Popup'
 
 type PreviewImageOptions = {
   urls: string[]
@@ -13,16 +13,10 @@ type PreviewImageOptions = {
 } & ApiOptions
 
 const previewImage = function (object: PreviewImageOptions) {
-  return showPopup(object, 'previewImage', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
+  return showPopup<PopupConfirmArgs>(object, 'previewImage', function (done) {
     return {
       component: ImagePreview,
-      hook
+      hook: createConfirmHook(done)
     }
   })
 }

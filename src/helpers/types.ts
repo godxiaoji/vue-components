@@ -8,7 +8,7 @@ export interface DataObject<T = any> {
 
 export type StyleObject = DataObject<string>
 
-export type UseProps = Readonly<DataObject<any>>
+export type UseProps = Readonly<DataObject>
 
 /**
  * Scroll
@@ -40,7 +40,7 @@ export interface EventCallback {
 }
 
 export interface MixEventCallback {
-  (res: { type: string } & DataObject<any>): void
+  (res: { type: string } & DataObject): void
 }
 
 export type EasingType = 'linear' | 'swing'

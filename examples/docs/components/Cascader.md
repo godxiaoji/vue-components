@@ -100,13 +100,12 @@ xiyiji/guntong
 
 ## Events
 
-| 事件                 | 描述                        | 回调函数参数                                                                     |
-| -------------------- | --------------------------- | -------------------------------------------------------------------------------- |
-| select               | 选择后触发                  | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| change               | 选择后 value 发生改变时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| visible-state-change | 展示隐藏时触发              | { state: string }                                                                |
+| 事件                 | 描述                        | 回调函数参数                                                 |
+| -------------------- | --------------------------- | ------------------------------------------------------------ |
+| change               | 选择后 value 发生改变时触发 | [DetailObject](./Cascader.md#detailobject-的结构)            |
+| visible-state-change | 展示隐藏时触发              | { state: [VisibleState](./Cascader.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |
@@ -115,7 +114,7 @@ xiyiji/guntong
 | hide   | 隐藏时触发           | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 | hidden | 隐藏且动画结束后触发 | 可能携带其他参数 cancel, maskClick, closeClick 等 |
 
-### change 等回调参数的 detail 结构
+### DetailObject 的结构
 
 | 值          | 类型              | 说明                 |
 | ----------- | ----------------- | -------------------- |

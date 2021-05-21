@@ -13,12 +13,12 @@
 
 ## Events
 
-| 事件                 | 描述                 | 回调函数参数             |
-| -------------------- | -------------------- | ------------------------ |
-| change               | 隐藏且动画结束后触发 | { activeIndex, current } |
-| visible-state-change | 展示隐藏时触发       | { state: string }        |
+| 事件                 | 描述                 | 回调函数参数                                                     |
+| -------------------- | -------------------- | ---------------------------------------------------------------- |
+| change               | 隐藏且动画结束后触发 | { activeIndex: number, current: string }                         |
+| visible-state-change | 展示隐藏时触发       | { state: [VisibleState](./ImagePreview.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |

@@ -9,11 +9,10 @@ import {
   stringNumberArrayMixValidator,
   selectorValidator
 } from '@/helpers/validator'
-import { TYPE_NAMES as CALENDAR_TYPE_NAMES } from '@/Calendar/util'
+import { MODE_NAMES as CALENDAR_MODE_NAMES } from '@/Calendar/util'
 import { PLACEMENT_TYPES } from '@/hooks/constants'
 import { DataObject, Validator } from '../helpers/types'
 import { ApiOptions } from '../apis/types'
-import dayjs from '@/helpers/day'
 
 const placementValidator = createEnumsValidator(PLACEMENT_TYPES)
 
@@ -189,9 +188,9 @@ export const apiRules: ApiRules = {
     maxDate: {
       type: Date
     },
-    type: {
-      enums: CALENDAR_TYPE_NAMES,
-      default: CALENDAR_TYPE_NAMES[0]
+    mode: {
+      enums: CALENDAR_MODE_NAMES,
+      default: CALENDAR_MODE_NAMES[0]
     },
     allowSameDay: {
       type: Boolean,
@@ -432,7 +431,7 @@ export const apiRules: ApiRules = {
   }
 }
 
-export const parseParamsByRules = function(
+export const parseParamsByRules = function (
   options: ApiOptions,
   apiName: string
 ) {
@@ -441,7 +440,7 @@ export const parseParamsByRules = function(
   }
 
   const rules = apiRules[apiName]
-  const ret: DataObject<any> = {}
+  const ret: DataObject = {}
   const PARAM_ERROR = Exception.TYPE.PARAM_ERROR
 
   for (const k in rules) {

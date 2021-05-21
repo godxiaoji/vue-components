@@ -2,9 +2,10 @@
   <modal
     class="fx-dialog"
     :visible="visible"
-    :show-close="false"
-    :mask-closable="maskClosable"
-    @visible-state-change="onVisibleStateChange"
+    :showClose="false"
+    :maskClosable="maskClosable"
+    @visibleStateChange="onVisibleStateChange"
+    @confirm="onConfirm"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -86,7 +87,6 @@ export default defineComponent({
     const popup = usePopupExtend(ctx)
 
     function onConfirmClick() {
-      ctx.emit('confirm', {})
       popup.customConfirm({})
     }
 

@@ -1,9 +1,12 @@
 import { PropType } from 'vue'
 import dayjs from '@/helpers/day'
 import { isInNumberRange, isInteger } from '@/helpers/util'
-import { DEFAULT_MONTH_RANGE, TYPE_NAMES } from '@/Calendar/util'
-import { calendarValueValidator, createEnumsValidator } from '@/helpers/validator'
-import { DayHandler, CalendarType } from './types'
+import { DEFAULT_MONTH_RANGE, MODE_NAMES } from '@/Calendar/util'
+import {
+  calendarValueValidator,
+  createEnumsValidator
+} from '@/helpers/validator'
+import { DayHandler, CalendarMode } from './types'
 
 export default {
   modelValue: {
@@ -13,23 +16,17 @@ export default {
   },
   minDate: {
     type: Date,
-    default: () =>
-      dayjs()
-        .startOf('day')
-        .toDate()
+    default: () => dayjs().startOf('day').toDate()
   },
   maxDate: {
     type: Date,
     default: () =>
-      dayjs()
-        .startOf('day')
-        .add(DEFAULT_MONTH_RANGE, 'month')
-        .toDate()
+      dayjs().startOf('day').add(DEFAULT_MONTH_RANGE, 'month').toDate()
   },
-  initialType: {
-    type: String as PropType<CalendarType>,
-    validator: createEnumsValidator(TYPE_NAMES),
-    default: TYPE_NAMES[0]
+  initialMode: {
+    type: String as PropType<CalendarMode>,
+    validator: createEnumsValidator(MODE_NAMES),
+    default: MODE_NAMES[0]
   },
   allowSameDay: {
     type: Boolean,

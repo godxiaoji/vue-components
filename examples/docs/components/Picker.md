@@ -182,11 +182,11 @@ xiyiji/guntong
 
 ## Picker Events
 
-| 事件   | 描述                       | 回调函数参数                                                                     |
-| ------ | -------------------------- | -------------------------------------------------------------------------------- |
-| change | 选择后选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| 事件   | 描述                       | 回调函数参数                                    |
+| ------ | -------------------------- | ----------------------------------------------- |
+| change | 选择后选中值发生变化时触发 | [DetailObject](./Picker.md#detailobject-的结构) |
 
-### change 等回调参数的 detail 结构
+### DetailObject 的结构
 
 | 值          | 类型              | 说明                 |
 | ----------- | ----------------- | -------------------- |
@@ -206,14 +206,14 @@ xiyiji/guntong
 
 ## PickerPopup Events
 
-| 事件                 | 描述                 | 回调函数参数                                                                     |
-| -------------------- | -------------------- | -------------------------------------------------------------------------------- |
-| cancel               | 点击取消按钮后触发   | {}                                                                               |
-| confirm              | 点击确定按钮后触发   | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| change               | 选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
-| visible-state-change | 展示隐藏时触发       | { state: string }                                                                |
+| 事件                 | 描述                 | 回调函数参数                                    |
+| -------------------- | -------------------- | ----------------------------------------------- |
+| cancel               | 点击取消按钮后触发   |                                                 |
+| confirm              | 点击确定按钮后触发   | [DetailObject](./Picker.md#detailobject-的结构) |
+| change               | 选中值发生变化时触发 | [DetailObject](./Picker.md#detailobject-的结构) |
+| visible-state-change | 展示隐藏时触发       | { state: [VisibleState](./DatePicker.md#visiblestate-值说明) }                               |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |
@@ -228,6 +228,6 @@ xiyiji/guntong
 
 ## PickerView Events
 
-| 事件   | 描述                       | 回调函数参数                                                                     |
-| ------ | -------------------------- | -------------------------------------------------------------------------------- |
-| change | 滑动后选中值发生变化时触发 | detail：{ value: array, valueString: string, label: array, labelString: string } |
+| 事件   | 描述                       | 回调函数参数                                    |
+| ------ | -------------------------- | ----------------------------------------------- |
+| change | 滑动后选中值发生变化时触发 | [DetailObject](./Picker.md#detailobject-的结构) |

@@ -83,7 +83,10 @@ export default defineComponent({
       ImagePreview.previewImage({
         urls: this.imageUrls,
         showClose: true,
-        imageHighRendering: false
+        imageHighRendering: false,
+        success: res => {
+          console.log('success', res)
+        }
       })
     },
     show(res: showArgs) {

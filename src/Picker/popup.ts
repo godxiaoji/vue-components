@@ -1,14 +1,9 @@
-import {
-  ComponentPublicInstance,
-  onMounted,
-  SetupContext,
-  shallowRef,
-  watch
-} from 'vue'
+import { ComponentPublicInstance, onMounted, shallowRef, watch } from 'vue'
 import { isSameArray, isEmpty } from '@/helpers/util'
 import { DetailObject, PickerHandlers } from './types'
-import { UseProps } from '../helpers/types'
+import { DataObject, UseProps } from '../helpers/types'
 import { cloneDetail, getDefaultDetail, getHookValue } from '@/Picker/util'
+import { PopupCustomConfirm, UseEmit } from '@/hooks/types'
 
 export const pickerPopupProps = {
   title: {
@@ -19,14 +14,22 @@ export const pickerPopupProps = {
 
 export function usePickerPopup(
   props: UseProps,
-  { emit }: SetupContext<any>,
+  {
+    emit,
+    customConfirm,
+    onCancelClick
+  }: {
+    emit: UseEmit
+    customConfirm: PopupCustomConfirm
+    onCancelClick: () => void
+  },
   handlers: PickerHandlers
 ) {
   const view = shallowRef<ComponentPublicInstance<any>>()
 
   let detail = getDefaultDetail()
 
-  function beforeConfirm() {
+  function beforeConfirm(): DataObject {
     const newDetail = view.value?.getDetail() || getDefaultDetail()
 
     if (!isSameArray(newDetail.value, detail.value)) {
@@ -43,8 +46,12 @@ export function usePickerPopup(
     return detailHook(detail)
   }
 
-  function onConfirm(e: any) {
-    emit('confirm', e)
+  function onHeaderLeftClick() {
+    onCancelClick()
+  }
+
+  function onHeaderRightClick() {
+    customConfirm(beforeConfirm())
   }
 
   function detailHook(detail: DetailObject): any {
@@ -84,9 +91,9 @@ export function usePickerPopup(
 
   return {
     view,
-    onConfirm,
     updateValue,
     getDetail,
-    beforeConfirm
+    onHeaderLeftClick,
+    onHeaderRightClick
   }
 }

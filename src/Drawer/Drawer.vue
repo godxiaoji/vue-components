@@ -13,23 +13,19 @@
         :class="[alignClassName, { 'has--header': hasHeader }]"
         :style="innerStyles"
       >
-        <nav-bar
-          v-if="hasHeader"
-          class="fx-drawer_header"
-          :title="title"
-          :left-buttons="showCancel ? [{ text: '取消', type: 'primary' }] : []"
-          :right-buttons="
-            showClose
-              ? [{ text: '关闭', type: 'primary' }]
-              : showConfirm
-              ? [{ text: '完成', type: 'primary' }]
-              : []
-          "
-          :icon-only="false"
-          @left-button-click="onHeaderLeftClick"
-          @right-button-click="onHeaderRightClick"
-        >
-        </nav-bar>
+        <slot name="header">
+          <nav-bar
+            v-if="hasHeader"
+            class="fx-drawer_header"
+            :title="title"
+            :rightButtons="
+              showClose ? [{ icon: 'CloseOutlined', text: '关闭' }] : []
+            "
+            :icon-only="true"
+            @rightButtonClick="onHeaderRightClick"
+          >
+          </nav-bar>
+        </slot>
         <div class="fx-drawer_body">
           <slot></slot>
         </div>
@@ -61,15 +57,7 @@ export default defineComponent({
       validator: createEnumsValidator(PLACEMENT_TYPES),
       default: getEnumsValue(PLACEMENT_TYPES)
     },
-    showCancel: {
-      type: Boolean,
-      default: false
-    },
     showClose: {
-      type: Boolean,
-      default: false
-    },
-    showConfirm: {
       type: Boolean,
       default: false
     },
@@ -81,10 +69,6 @@ export default defineComponent({
     showMask: {
       type: Boolean,
       default: true
-    },
-    beforeConfirm: {
-      type: Function as PropType<() => any>,
-      default: null
     }
   },
   emits: popupEmits,
@@ -103,11 +87,7 @@ export default defineComponent({
     )
 
     const hasHeader = computed(
-      () =>
-        props.title != null ||
-        props.showClose ||
-        props.showCancel ||
-        props.showConfirm
+      () => props.title != null || props.showClose || ctx.slots.header
     )
 
     const innerStyles = computed(() => {
@@ -133,15 +113,9 @@ export default defineComponent({
       }
     })
 
-    function onHeaderLeftClick() {
-      popup.onCancelClick()
-    }
-
     function onHeaderRightClick() {
       if (props.showClose) {
         popup.onCloseClick()
-      } else if (props.showConfirm) {
-        popup.customConfirm(props.beforeConfirm ? props.beforeConfirm() : {})
       }
     }
 
@@ -156,7 +130,6 @@ export default defineComponent({
       alignClassName,
       hasHeader,
       innerStyles,
-      onHeaderLeftClick,
       onHeaderRightClick
     }
   }

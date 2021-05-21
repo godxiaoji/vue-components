@@ -4,7 +4,8 @@
     :title="title"
     placement="bottom"
     :visible="visible"
-    @visible-state-change="onVisibleStateChange"
+    @visibleStateChange="onVisibleStateChange"
+    @confirm="onConfirm"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -77,13 +78,10 @@ export default defineComponent({
     const popup = usePopupExtend(ctx)
 
     function onItemClick(index: number) {
-      const detail = {
+      popup.customConfirm({
         item: cloneData(props.options[index]),
         index
-      }
-
-      ctx.emit('confirm', detail)
-      popup.customConfirm(detail, 'selected')
+      })
     }
 
     const options2 = computed(() => {

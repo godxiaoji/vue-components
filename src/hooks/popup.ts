@@ -6,7 +6,8 @@ import {
   watch,
   inject,
   shallowRef,
-  ComponentPublicInstance
+  ComponentPublicInstance,
+  provide
 } from 'vue'
 import { isFunction, isObject, noop } from '@/helpers/util'
 import { addClassName, getScrollDom, removeClassName } from '@/helpers/dom'
@@ -16,7 +17,10 @@ import { useBlur } from '@/hooks/blur'
 import {
   VisibleStateChangeArgs,
   VisibleState,
-  PopupPublicInstance
+  PopupPublicInstance,
+  PopupCustomCancel,
+  PopupCustomConfirm,
+  UseEmit
 } from './types'
 import { PopupBridge } from '../apis/types'
 
@@ -29,21 +33,10 @@ interface UseOptions {
   afterHidden?: Function
 }
 
-let puid = 1
 let zIndex = popupZIndex
 
 export function getNewZIndex() {
   return zIndex++
-}
-
-export function createPopup() {
-  const $wrapper = document.createElement('div')
-  const id = puid++
-
-  return {
-    id,
-    $wrapper
-  }
 }
 
 export const popupProps = {
@@ -66,10 +59,11 @@ export const popupEmits = [
 
 export function usePopup(
   props: UseProps,
-  { emit }: SetupContext<any>,
+  ctx: SetupContext<any>,
   useOptions: UseOptions
 ) {
   const apis = inject<PopupBridge>('fxApis', {})
+  const isParent = inject<boolean>('fxPopupExtend', false)
 
   const isShow = ref(false)
   const zIndex = ref(popupZIndex)
@@ -82,6 +76,14 @@ export function usePopup(
   let visibleTimer: number
 
   const visibleBlur = useBlur(onBlur)
+
+  function emit(event: string, res: any) {
+    if (isParent || !apis.in) {
+      ctx.emit(event, res)
+    } else {
+      apis.in(event, res)
+    }
+  }
 
   function doShow(callback: Function) {
     if (isShowing) {
@@ -122,7 +124,7 @@ export function usePopup(
     return true
   }
 
-  function show(res: DataObject<any> = {}) {
+  function show(res: DataObject = {}) {
     const isSuccess = doShow(() => {
       emitVisibleState('shown', res)
     })
@@ -179,23 +181,22 @@ export function usePopup(
   }
 
   function afterCall(lifeName: string, res: unknown) {
-    apis.in && apis.in(lifeName, res)
     if (isFunction((useOptions as any)[lifeName])) {
       ;(useOptions as any)[lifeName](res)
     }
   }
 
   function emitVisibleState(state: VisibleState, res: unknown) {
-    emit(
-      'visible-state-change',
-      Object.assign(
-        {
-          type: 'visible-state-change',
-          state
-        },
-        res
-      )
+    // TODO: 是否合并res值得商榷
+    res = Object.assign(
+      {
+        type: 'visible-state-change',
+        state
+      },
+      res
     )
+
+    emit('visible-state-change', res)
   }
 
   function onBlur() {
@@ -217,25 +218,24 @@ export function usePopup(
     customCancel('cancelClick')
   }
 
-  function customCancel(key: string, focus = false) {
+  const customCancel: PopupCustomCancel = (key, focus = false) => {
     if (isShowing && !focus) {
       return
     }
 
-    emit('cancel', { [key]: true })
-    hide({ cancel: true, [key]: true }, 'afterCancel')
+    const res = { [key]: true }
+
+    emit('cancel', res)
+    hide(res, 'afterCancel')
   }
 
-  function customConfirm(res: DataObject<any>, key?: string) {
-    emit('confirm', res)
-
-    const afterRes: DataObject<any> = { confirm: true, detail: res }
-    key && (afterRes[key] = true)
-
-    hide(afterRes, 'afterConfirm')
+  const customConfirm: PopupCustomConfirm = detail => {
+    emit('confirm', detail)
+    hide(detail, 'afterConfirm')
   }
 
   onMounted(() => {
+    // 兼容devtools
     props.visible && show()
   })
 
@@ -259,6 +259,7 @@ export function usePopup(
   apis.out && apis.out('customCancel', customCancel)
 
   return {
+    emit,
     isShow,
     visible2,
     zIndex,
@@ -288,15 +289,24 @@ export const popupExtendProps = {
   }
 }
 
-export function usePopupExtend({ emit }: SetupContext<any>) {
+export function usePopupExtend(ctx: SetupContext<any>) {
   const popup = shallowRef<ComponentPublicInstance<PopupPublicInstance>>()
+  const apis = inject<PopupBridge>('fxApis', {})
 
-  function customCancel(key: string, focus = false) {
+  const emit: UseEmit = (event: string, res: any) => {
+    if (!apis.in) {
+      ctx.emit(event, res)
+    } else {
+      apis.in(event, res)
+    }
+  }
+
+  const customCancel: PopupCustomCancel = (key, focus = false) => {
     popup.value && popup.value.customCancel(key, focus)
   }
 
-  function customConfirm(res: any, key?: string) {
-    popup.value && popup.value.customConfirm(res, key)
+  const customConfirm: PopupCustomConfirm = detail => {
+    popup.value && popup.value.customConfirm(detail)
   }
 
   function onVisibleStateChange(e: VisibleStateChangeArgs) {
@@ -311,17 +321,25 @@ export function usePopupExtend({ emit }: SetupContext<any>) {
     emit('cancel', res)
   }
 
+  function onConfirm(res: any) {
+    emit('confirm', res)
+  }
+
   function onUpdateVisible(value: boolean) {
     emit('update:visible', value)
   }
 
+  provide('fxPopupExtend', true)
+
   return {
+    emit,
     popup,
     customCancel,
     customConfirm,
     onUpdateVisible,
     onVisibleStateChange,
     onCancelClick,
-    onCancel
+    onCancel,
+    onConfirm
   }
 }

@@ -6,6 +6,7 @@
     :title="title || null"
     :show-close="showClose"
     @visible-state-change="onVisibleStateChange"
+    @confirm="onConfirm"
     @cancel="onCancel"
     @update:visible="onUpdateVisible"
     ref="popup"
@@ -63,10 +64,8 @@ export default defineComponent({
   },
   emits: [...popupExtendEmits, 'update:modelValue'],
   setup(props, ctx) {
-    const { emit } = ctx
-    const calendarView = shallowRef<
-      ComponentPublicInstance<typeof CalendarView>
-    >()
+    const calendarView =
+      shallowRef<ComponentPublicInstance<typeof CalendarView>>()
     const detail = reactive<DetailObject>(getDefaultDetail())
 
     const popup = usePopupExtend(ctx)
@@ -90,10 +89,10 @@ export default defineComponent({
 
       updateDetail(calendarView.value.getDetail())
 
-      emit('update:modelValue', getDetail().value)
+      popup.emit('update:modelValue', getDetail().value)
 
       const confirmDetail = getDetail()
-      ctx.emit('confirm', confirmDetail)
+
       popup.customConfirm(confirmDetail)
     }
 
@@ -103,7 +102,8 @@ export default defineComponent({
 
     function updateDetail(_detail: DetailObject) {
       detail.value.splice(0, Infinity, ..._detail.value)
-      detail.label = _detail.label
+      detail.valueArray.splice(0, Infinity, ..._detail.valueArray)
+      detail.formatted = _detail.formatted
       detail.rangeCount = _detail.rangeCount
     }
 

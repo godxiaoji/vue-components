@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import Notify from './Notify.vue'
-import { showPopup, hidePopup } from '@/apis/Popup'
-import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup, hidePopup, createAlertHook } from '@/apis/Popup'
+import { ApiOptions } from '../apis/types'
 import { StateType } from '../hooks/types'
 
 type ShowNotifyOptions = {
@@ -17,15 +17,9 @@ type ShowNotifyOptions = {
 
 const showNotify = function (object: string | ShowNotifyOptions) {
   return showPopup(object, 'showNotify', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterShow') {
-        done(res)
-      }
-    }
-
     return {
       component: Notify,
-      hook,
+      hook: createAlertHook(done),
       singleMode: true
     }
   })

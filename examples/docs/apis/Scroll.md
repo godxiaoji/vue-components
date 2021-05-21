@@ -45,7 +45,7 @@ Object object
 ### Usage
 
 ```
-Scroll.elementScrollTo({
+Scroll.scrollTo({
   selector: document.documentElement
   scrollTop: 0,
   duration: 300

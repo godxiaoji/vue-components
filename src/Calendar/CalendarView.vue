@@ -33,7 +33,7 @@
                 day.state === 'selected' ||
                 day.state === 'startSelected' ||
                 day.state === 'endSelected',
-              'in-range': type === 'range' && day.state === 'selected'
+              'in-range': mode === 'range' && day.state === 'selected'
             }"
             v-for="(day, dayIndex) in month.days"
             :key="dayIndex"
@@ -69,7 +69,7 @@ import {
   DEFAULT_MONTH_RANGE,
   getDetail as _getDetail,
   parseValues,
-  TYPE_NAMES
+  MODE_NAMES
 } from '@/Calendar/util'
 import { isSameArray } from '@/helpers/util'
 import Exception from '@/helpers/exception'
@@ -119,7 +119,7 @@ export default defineComponent({
     const weekDays = reactive<WeekDay[]>([])
     const months = reactive<Month[]>([])
 
-    const type = getEnumsValue(TYPE_NAMES, props.initialType)
+    const mode = getEnumsValue(MODE_NAMES, props.initialMode)
     let start: SelectDay = getDefaultSelectDay()
     let end: SelectDay = getDefaultSelectDay()
 
@@ -154,14 +154,14 @@ export default defineComponent({
     }
 
     function updateValue(val: unknown) {
-      const timeArr = parseValues(val, type)
+      const timeArr = parseValues(val, mode)
 
       if (!isSameArray(timeArr, [start.timestamp, end.timestamp])) {
         if (timeArr.length === 0) {
           setSelected('start', null)
           setSelected('end', null)
           updateStates()
-        } else if (type === 'range') {
+        } else if (mode === 'range') {
           const _start = getSelectedInfo(timeArr[0])
           const _end = getSelectedInfo(timeArr[1])
 
@@ -212,14 +212,14 @@ export default defineComponent({
       let state = ''
 
       if (
-        (type === 'range' &&
+        (mode === 'range' &&
           timestamp >= start.timestamp &&
           timestamp <= end.timestamp) ||
         timestamp === start.timestamp
       ) {
         state = 'selected'
       }
-      if (type === 'range' && state == 'selected') {
+      if (mode === 'range' && state == 'selected') {
         if (timestamp === end.timestamp) {
           state = 'endSelected'
         } else if (timestamp === start.timestamp) {
@@ -320,14 +320,10 @@ export default defineComponent({
 
     function updateOptions() {
       if (isDate(props.minDate)) {
-        minTimestamp = dayjs(props.minDate)
-          .startOf('day')
-          .valueOf()
+        minTimestamp = dayjs(props.minDate).startOf('day').valueOf()
       } else {
         printError(`"minDate"必须是 Date 类型.`)
-        minTimestamp = dayjs()
-          .startOf('day')
-          .valueOf()
+        minTimestamp = dayjs().startOf('day').valueOf()
       }
 
       if (isDate(props.maxDate)) {
@@ -337,9 +333,7 @@ export default defineComponent({
             .add(DEFAULT_MONTH_RANGE, 'month')
             .valueOf()
         } else {
-          maxTimestamp = dayjs(props.maxDate)
-            .startOf('day')
-            .valueOf()
+          maxTimestamp = dayjs(props.maxDate).startOf('day').valueOf()
         }
       } else {
         printError(`"maxDate"必须是 Date 类型.`)
@@ -370,7 +364,7 @@ export default defineComponent({
 
         // if (
         //   dayInfo.state === 'startSelected' ||
-        //   (type === 'single' && dayInfo.state === 'selected')
+        //   (mode === 'single' && dayInfo.state === 'selected')
         // ) {
         //   setSelected('start', dayInfo, _months.length, month.days.length)
         // } else if (dayInfo.state === 'endSelected') {
@@ -435,7 +429,7 @@ export default defineComponent({
         return
       }
 
-      if (type === 'range') {
+      if (mode === 'range') {
         // 范围
         if ((start.dateString && end.dateString) || !start.dateString) {
           setSelected('end', null)
@@ -498,7 +492,7 @@ export default defineComponent({
     function onSelect() {
       let value: Date | Date[]
 
-      if (type === 'range') {
+      if (mode === 'range') {
         value = [dayjs(start.timestamp).toDate(), dayjs(end.timestamp).toDate()]
       } else {
         value = dayjs(start.timestamp).toDate()
@@ -509,7 +503,7 @@ export default defineComponent({
     }
 
     function getDetail() {
-      return _getDetail([start.timestamp, end.timestamp], type)
+      return _getDetail([start.timestamp, end.timestamp], mode)
     }
 
     /**
@@ -577,7 +571,7 @@ export default defineComponent({
     !isEmpty(props.modelValue) && updateValue(props.modelValue)
 
     return {
-      type,
+      mode,
       weekDays,
       months,
       onDaysClick,

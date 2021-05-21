@@ -110,7 +110,7 @@ export function parseOptions(options: any[], fieldNames: FieldNames) {
           extraData: {}
         })
       } else if (isObject(option)) {
-        option = option as DataObject<any>
+        option = option as DataObject
 
         if (isStringNumberMix(option[fieldNames.value])) {
           const extraData = cloneData(option)

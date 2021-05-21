@@ -22,10 +22,10 @@ Object object
 
 #### object.success 回调参数
 
-| 属性    | 类型    | 说明                               |
-| ------- | ------- | ---------------------------------- |
-| confirm | boolean | 为 true 时，表示用户点击了确定按钮 |
-| cancel  | boolean | 为 true 时，表示用户点击了取消     |
+| 属性     | 类型    | 说明                               |
+| -------- | ------- | ---------------------------------- |
+| confirm? | boolean | 为 true 时，表示用户点击了确定按钮 |
+| cancel?  | boolean | 为 true 时，表示用户取消了         |
 
 ### Usage
 

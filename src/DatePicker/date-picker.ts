@@ -63,7 +63,7 @@ export const datePickerProps = {
   }
 }
 
-export function useDatePicker(props: UseProps, { emit }: SetupContext<any>) {
+export function useDatePicker(props: UseProps) {
   const mode = getEnumsValue(MODE_NAMES, props.initialMode)
 
   const optionsHandler: OptionsHandler = (index, parent) => {

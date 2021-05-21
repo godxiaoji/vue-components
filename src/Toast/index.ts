@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import Toast from './Toast.vue'
-import { showPopup, hidePopup } from '@/apis/Popup'
-import { ApiOptions, PopupHook } from '../apis/types'
+import { showPopup, hidePopup, createAlertHook } from '@/apis/Popup'
+import { ApiOptions } from '../apis/types'
 import { isObject, isString } from '@/helpers/util'
 
 type ShowToastOptions = {
@@ -21,15 +21,9 @@ type ShowLoadingOptions = {
 
 const showToast = function (object: string | ShowToastOptions) {
   return showPopup(object, 'showToast', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterShow') {
-        done(res)
-      }
-    }
-
     return {
       component: Toast,
-      hook,
+      hook: createAlertHook(done),
       singleMode: true
     }
   })
@@ -54,15 +48,9 @@ const showLoading = function (object: string | ShowLoadingOptions) {
   newObject.duration = 0
 
   return showPopup(newObject, 'showLoading', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterShow') {
-        done(res)
-      }
-    }
-
     return {
       component: Toast,
-      hook,
+      hook: createAlertHook(done),
       singleMode: true
     }
   })

@@ -3,8 +3,8 @@ import { isObject, isString } from '@/helpers/util'
 import { getCallbackFns } from '@/apis/callback'
 import { parseParamsByRules } from '@/apis/rules'
 import { ApiOptions, PopupHook, PopupBridge } from './types'
-import { createPopup } from '@/hooks/popup'
 import Exception from '@/helpers/exception'
+import { DataObject } from '../helpers/types'
 
 type PopupDone = (res: any) => void
 
@@ -19,16 +19,31 @@ const $refs: {
   }
 } = {}
 
+let puid = 1
+
+function createPopup() {
+  const $wrapper = document.createElement('div')
+
+  const id = puid++
+
+  return {
+    id,
+    $wrapper
+  }
+}
+
 /**
  * 展示弹窗
  * @param object 参数
  */
-export function showPopup(
+export function showPopup<T = DataObject>(
   object: string | ApiOptions,
   apiName: string,
-  getOptions: (
-    done: PopupDone
-  ) => { component: any; hook?: PopupHook; singleMode?: boolean }
+  getOptions: (done: PopupDone) => {
+    component: any
+    hook?: PopupHook
+    singleMode?: boolean
+  }
 ) {
   let options: ApiOptions
 
@@ -44,10 +59,10 @@ export function showPopup(
 
   const { success, fail, complete } = getCallbackFns(options)
 
-  return new Promise<any>(function(resolve, reject) {
+  return new Promise<T>(function (resolve, reject) {
     try {
       const key = apiName.replace('show', '')
-      const { component, hook, singleMode } = getOptions(function(res) {
+      const { component, hook, singleMode } = getOptions(function (res) {
         success(res)
         complete()
         resolve(res)
@@ -76,18 +91,13 @@ export function showPopup(
         })
       )
       app.provide('fxApis', {
-        in(hookName, res) {
-          switch (hookName) {
-            case 'afterHidden': {
-              app.unmount()
-              singleMode && remove(key, $ref.uid)
-              break
-            }
-            default: {
-              hook && hook(hookName, res)
-              break
-            }
+        in(hookEvent, res) {
+          if (hookEvent === 'visible-state-change' && res.state === 'hidden') {
+            app.unmount()
+            singleMode && remove(key, $ref.uid)
           }
+
+          hook && hook(hookEvent, res)
         },
         out(key: string, value: any) {
           fns[key] = value
@@ -136,12 +146,45 @@ export function hidePopup(object: ApiOptions, apiName: string) {
 
   const { success, fail, complete } = getCallbackFns(object)
 
-  try {
-    clear(apiName.replace('hide', ''))
+  return new Promise<{}>((resolve, reject) => {
+    try {
+      clear(apiName.replace('hide', ''))
 
-    success()
-  } catch (e) {
-    fail(new Exception(e.message))
+      success()
+      complete()
+      resolve({})
+    } catch (e) {
+      fail(new Exception(e.message))
+      complete()
+      reject(e)
+    }
+  })
+}
+
+export function createConfirmHook(done: PopupDone) {
+  const hook: PopupHook = (hookEvent, args) => {
+    if (hookEvent === 'cancel') {
+      done({
+        cancel: true,
+        ...args
+      })
+    } else if (hookEvent === 'confirm') {
+      done({
+        confirm: true,
+        detail: args
+      })
+    }
   }
-  complete()
+
+  return hook
+}
+
+export function createAlertHook(done: PopupDone) {
+  const hook: PopupHook = (hookEvent, args) => {
+    if (hookEvent === 'visible-state-change' && args.state === 'shown') {
+      done({})
+    }
+  }
+
+  return hook
 }

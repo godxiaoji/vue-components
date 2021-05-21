@@ -1,10 +1,11 @@
 export interface DetailObject {
   value: Date[]
-  label: string
+  valueArray: number[][]
+  formatted: string
   rangeCount: number
 }
 
-export type CalendarType = 'single' | 'range'
+export type CalendarMode = 'single' | 'range'
 
 export interface DayInfo {
   cover?: boolean

@@ -24,7 +24,7 @@ export default defineComponent({
   emits: [...viewEmits],
   setup(props, ctx) {
     const { emit } = ctx
-    const { handlers } = useDatePicker(props, ctx)
+    const { handlers } = useDatePicker(props)
 
     function onChange(e: DateDetailObject) {
       emit(

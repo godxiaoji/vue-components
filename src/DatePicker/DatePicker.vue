@@ -41,7 +41,7 @@ export default defineComponent({
   props: { ...formItemProps, ...datePickerProps, ...pickerProps },
   emits: [...formItemEmits, ...pickerEmits],
   setup(props, ctx) {
-    const { handlers } = useDatePicker(props, ctx)
+    const { handlers } = useDatePicker(props)
 
     return {
       ...usePicker(props, ctx, { name: 'picker' }, handlers),

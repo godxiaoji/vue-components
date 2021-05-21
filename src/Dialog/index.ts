@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import Dialog from './Dialog.vue'
-import { ApiOptions, PopupHook } from '../apis/types'
-import { showPopup } from '@/apis/Popup'
+import { ApiOptions, PopupConfirmArgs } from '../apis/types'
+import { createConfirmHook, showPopup } from '@/apis/Popup'
 
 type ShowDialogOptions = {
   title?: string
@@ -14,16 +14,10 @@ type ShowDialogOptions = {
 } & ApiOptions
 
 const showDialog = function (object: ShowDialogOptions) {
-  return showPopup(object, 'showDialog', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
+  return showPopup<PopupConfirmArgs>(object, 'showDialog', function (done) {
     return {
       component: Dialog,
-      hook
+      hook: createConfirmHook(done)
     }
   })
 }

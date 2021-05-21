@@ -64,12 +64,10 @@ export default defineComponent({
         return
       }
 
-      const detail = {
+      popoverHook.customConfirm({
         item: cloneData(item),
         index
-      }
-
-      popoverHook.customConfirm(detail, 'selected')
+      })
     }
 
     const options2 = computed(() => {

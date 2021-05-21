@@ -139,11 +139,13 @@ export default defineComponent({
   },
   emits: [...popupEmits, 'update:current', 'change'],
   setup(props, ctx) {
-    const { emit } = ctx
     const activeIndex = ref(0)
     const images = reactive<ImageObject[]>([])
     const zoomAnimated = ref(false)
     const swiperInit = ref(false)
+
+    const popup = usePopup(props, ctx, {})
+    const emit = popup.emit
 
     let coords: ImageCoords | null
 
@@ -469,8 +471,6 @@ export default defineComponent({
         deep: true
       }
     )
-
-    const popup = usePopup(props, ctx, {})
 
     watch(
       () => props.current,

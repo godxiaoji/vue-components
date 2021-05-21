@@ -30,12 +30,12 @@
 
 ## Events
 
-| 事件                 | 描述               | 回调函数参数               |
-| -------------------- | ------------------ | -------------------------- |
-| confirm              | 确认按钮点击时触发 | {item: any: index: number} |
-| visible-state-change | 展示隐藏时触发     | { state: string }          |
+| 事件                 | 描述               | 回调函数参数                                                |
+| -------------------- | ------------------ | ----------------------------------------------------------- |
+| confirm              | 确认按钮点击时触发 | {item: any: index: number}                                  |
+| visible-state-change | 展示隐藏时触发     | { state: [VisibleState](./PopMenu.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |

@@ -181,10 +181,10 @@ export default defineComponent({
         options: this.options,
         showCancel: true,
         success: (res: any) => {
-          console.log('confirm', res)
-          const { selected, detail } = res
+          console.log('success', res)
+          const { confirm, detail } = res
 
-          if (selected) {
+          if (confirm) {
             Dialog.showDialog({
               title: '选择了',
               showCancel: false,

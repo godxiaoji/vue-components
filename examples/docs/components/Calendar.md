@@ -2,28 +2,30 @@
 
 ## Calendar/CalendarPopup/CalendarView 的公共 Props
 
-| 属性           | 类型        | 默认值             | 必填 | 说明                                                      |
-| -------------- | ----------- | ------------------ | ---- | --------------------------------------------------------- |
-| v-modal        | Date/Date[] | []                 | 否   | 选中值                                                    |
-| min-date       | Date        | 当前日期           | 否   | 可选最小值                                                |
-| max-date       | Date        | 当前日期的六个月后 | 否   | 可选最大值                                                |
-| initial-type   | string      | 'single'           | 否   | 选择类型：`single` 表示选择一天，`range` 选择一个日期区间 |
-| allow-same-day | boolean     | false              | 否   | `initialType="range"`生效，设置开始结束时间是否可以同一天 |
-| max-range      | number      | Infinity           | 否   | `initialType="range"`生效，选择区间的最长天数             |
-| day-handler    | Function    |                    | 否   | 日历每个日期处理函数                                      |
+| 属性           | 类型        | 默认值             | 必填 | 说明                                                  |
+| -------------- | ----------- | ------------------ | ---- | ----------------------------------------------------- |
+| v-modal        | Date/Date[] | []                 | 否   | 选中值                                                |
+| min-date       | Date        | 当前日期           | 否   | 可选最小值                                            |
+| max-date       | Date        | 当前日期的六个月后 | 否   | 可选最大值                                            |
+| initial-mode   | string      | 'single'           | 否   | 模式：`single` 表示选择一天，`range` 选择一个日期区间 |
+| allow-same-day | boolean     | false              | 否   | `range` 模式生效，设置开始结束时间是否可以同一天      |
+| max-range      | number      | Infinity           | 否   | `range` 模式生效，选择区间的最长天数                  |
+| day-handler    | Function    |                    | 否   | 日历每个日期处理函数                                  |
 
 ### v-modal 的合法值
 
-`Date` 类型，或者可以被 `new Date(value)`的有效值，如果`initialType="range"`，则为数组形式
+`Date` 类型，或者可以被 `new Date(value)`的有效值，如果是 `range` 模式，则为数组形式。
 
-### day-handler 函数 (Object: Day) => Day
+### dayHandler 函数
+
+dayHandler(Object: Day) => Day
 
 日历中的每个日期都对应一个 Day 对象，通过 `day-handler` 属性可以修改 Day 对象的内容后返回。
 
 | 值              | 类型    | 说明                                                                                                                                                                                                                                         |
 | --------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | date            | Date    | 日期对应的 Date 对象，该字段修改无效                                                                                                                                                                                                         |
-| state           | string  | 日期当前的状态，有：`selected` 选中，`startSelected` 开始（initialType="range"下），`endSelected` 结束（initialType="range"下），`disabled` 禁用。在空字符串的情况下，可以设置为 `disabled` 强制设置该日期为禁用（一般在票卖完的情况下设置） |
+| state           | string  | 日期当前的状态，有：`selected` 选中，`startSelected` 开始（initialMode="range"下），`endSelected` 结束（initialMode="range"下），`disabled` 禁用。在空字符串的情况下，可以设置为 `disabled` 强制设置该日期为禁用（一般在票卖完的情况下设置） |
 | text            | string  | 日期文本，不建议修改                                                                                                                                                                                                                         |
 | topText         | string  | 日期上方展示文本，一般可修改为“节日名称”、“今天”、“明天”、“开始”、“结束”等                                                                                                                                                                   |
 | topHighlight    | boolean | 日期上方展示文本是否高亮                                                                                                                                                                                                                     |
@@ -54,17 +56,18 @@ formatter(value: Date[]) => any
 
 ## Calendar Events
 
-| 事件   | 描述                   | 回调函数参数                                        |
-| ------ | ---------------------- | --------------------------------------------------- |
-| change | 选择后值发生改变时触发 | { value: array, label: string, rangeCount: number } |
+| 事件   | 描述                   | 回调函数参数                                      |
+| ------ | ---------------------- | ------------------------------------------------- |
+| change | 选择后值发生改变时触发 | [DetailObject](./Calendar.md#detailobject-的结构) |
 
-### change 事件的回调参数
+### DetailObject 的结构
 
-| 值         | 类型   | 说明                                                             |
-| ---------- | ------ | ---------------------------------------------------------------- |
-| value      | Date[] | 选择的值，`initialType="range"` 下有开始 Date 和结束 Date 两个值 |
-| label      | label  | 选中值对应的描述文本                                             |
-| rangeCount | number | 选择区间持续的天数                                               |
+| 值         | 类型                | 说明                                                     |
+| ---------- | ------------------- | -------------------------------------------------------- |
+| value      | [Date]/[Date, Date] | 选择的值，`range` 模式下有开始 Date 和结束 Date 两个实例 |
+| valueArray | number[][]          | 如：[[2021, 5, 1], [2021, 5, 30]]                        |
+| formatted  | string              | 选中值对应的描述文本                                     |
+| rangeCount | number              | 选择区间持续的天数（含首尾）                             |
 
 ## CalendarPopup 日历弹窗
 
@@ -79,12 +82,12 @@ formatter(value: Date[]) => any
 
 ## CalendarPopup Events
 
-| 事件                 | 描述                                                    | 回调函数参数                                        |
-| -------------------- | ------------------------------------------------------- | --------------------------------------------------- |
-| confirm              | 选择完毕后触发 / `show-confirm=true` 点击确定按钮后触发 | { value: array, label: string, rangeCount: number } |
-| visible-state-change | 展示隐藏时触发                                          | { state: string }                                   |
+| 事件                 | 描述                                              | 回调函数参数                                                 |
+| -------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
+| confirm              | 选择完毕后触发 / `showConfirm` 点击确定按钮后触发 | [DetailObject](./Calendar.md#detailobject-的结构)            |
+| visible-state-change | 展示隐藏时触发                                    | { state: [VisibleState](./Calendar.md#visiblestate-值说明) } |
 
-### visible-state-change 的 state 值
+### VisibleState 值说明
 
 | 值     | 说明                 | 备注                                              |
 | ------ | -------------------- | ------------------------------------------------- |
@@ -99,6 +102,6 @@ formatter(value: Date[]) => any
 
 ## CalendarView Events
 
-| 事件   | 描述       | 回调函数参数                                        |
-| ------ | ---------- | --------------------------------------------------- |
-| select | 选择后触发 | { value: array, label: string, rangeCount: number } |
+| 事件   | 描述       | 回调函数参数                                      |
+| ------ | ---------- | ------------------------------------------------- |
+| select | 选择后触发 | [DetailObject](./Calendar.md#detailobject-的结构) |

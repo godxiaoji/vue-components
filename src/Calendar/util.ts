@@ -1,14 +1,15 @@
 import { cloneData, isDate, isArray } from '@/helpers/util'
 import dayjs from '@/helpers/day'
-import { CalendarType, DetailObject } from './types'
+import { CalendarMode, DetailObject } from './types'
 
 export const DEFAULT_MONTH_RANGE = 6
-export const TYPE_NAMES: CalendarType[] = ['single', 'range']
+export const MODE_NAMES: CalendarMode[] = ['single', 'range']
 
 export function getDefaultDetail(): DetailObject {
   return {
     value: [],
-    label: '',
+    valueArray: [],
+    formatted: '',
     rangeCount: 0
   }
 }
@@ -42,7 +43,7 @@ export function isSameDateArray(a: Date[], b: Date[]) {
   return true
 }
 
-export function parseValues(val: any, type: CalendarType) {
+export function parseValues(val: any, mode: CalendarMode) {
   const values: number[] = []
 
   if (val == null || val === 0 || val === '') {
@@ -51,62 +52,56 @@ export function parseValues(val: any, type: CalendarType) {
 
   if (isArray(val)) {
     if (val[0] != null && dayjs(val[0]).isValid()) {
-      values.push(
-        dayjs(val[0])
-          .startOf('day')
-          .valueOf()
-      )
+      values.push(dayjs(val[0]).startOf('day').valueOf())
     }
     if (val[1] != null && dayjs(val[1]).isValid()) {
-      values.push(
-        dayjs(val[1])
-          .startOf('day')
-          .valueOf()
-      )
+      values.push(dayjs(val[1]).startOf('day').valueOf())
     }
   } else if (dayjs(val).isValid()) {
-    values.push(
-      dayjs(val)
-        .startOf('day')
-        .valueOf()
-    )
+    values.push(dayjs(val).startOf('day').valueOf())
   }
   if (values[0] && (!values[1] || values[1] < values[0])) {
-    values[1] = dayjs(values[0])
-      .add(1, 'day')
-      .valueOf()
+    values[1] = dayjs(values[0]).add(1, 'day').valueOf()
   }
 
-  if (values.length > 0 && type !== 'range') {
+  if (values.length > 0 && mode !== 'range') {
     values[1] = 0
   }
   return values
 }
 
-export function getDetail(timeArray: number[], type: CalendarType) {
+export function getDetail(timeArray: number[], mode: CalendarMode) {
   const detail = getDefaultDetail()
   const start = timeArray[0]
   const end = timeArray[1]
 
   if (start) {
-    if (type === 'range') {
+    const startDjs = dayjs(start)
+
+    if (mode === 'range') {
       if (start && end) {
-        detail.value.push(dayjs(start).toDate())
-        detail.value.push(dayjs(end).toDate())
+        const endDjs = dayjs(end)
+
+        detail.value.push(startDjs.toDate())
+        detail.value.push(endDjs.toDate())
+        detail.valueArray.push(startDjs.toArray().slice(0, 3))
+        detail.valueArray.push(endDjs.toArray().slice(0, 3))
+
         if (start === end) {
-          detail.label = dayjs(start).format('YYYY-MM-DD')
+          detail.formatted = startDjs.format('YYYY-MM-DD')
         } else {
-          detail.label = [
-            dayjs(start).format('MM-DD'),
-            dayjs(end).format('MM-DD')
+          detail.formatted = [
+            startDjs.format('MM-DD'),
+            endDjs.format('MM-DD')
           ].join(' ~ ')
         }
 
         detail.rangeCount = Math.floor((end - start) / (24 * 3600 * 1000)) + 1
       }
     } else {
-      detail.value.push(dayjs(start).toDate())
-      detail.label = dayjs(start).format('YYYY-MM-DD')
+      detail.value.push(startDjs.toDate())
+      detail.valueArray.push(startDjs.toArray().slice(0, 3))
+      detail.formatted = startDjs.format('YYYY-MM-DD')
       detail.rangeCount = 1
     }
   }

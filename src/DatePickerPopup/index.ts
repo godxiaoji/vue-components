@@ -1,9 +1,9 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import DatePickerPopup from '../DatePicker/DatePickerPopup.vue'
-import { showPopup } from '@/apis/Popup'
+import { createConfirmHook, showPopup } from '@/apis/Popup'
 import { ModeName, OptionFilter } from '../DatePicker/types'
-import { ApiOptions, PopupHook } from '../apis/types'
+import { ApiOptions, PopupConfirmArgs } from '../apis/types'
 
 type ShowPickerOptions = {
   title?: string
@@ -15,16 +15,10 @@ type ShowPickerOptions = {
 } & ApiOptions
 
 const showDatePicker = function (object: ShowPickerOptions) {
-  return showPopup(object, 'showDatePicker', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
+  return showPopup<PopupConfirmArgs>(object, 'showDatePicker', function (done) {
     return {
       component: DatePickerPopup,
-      hook
+      hook: createConfirmHook(done)
     }
   })
 }

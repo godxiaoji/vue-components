@@ -1,5 +1,5 @@
 import { RuleItem, RuleType } from 'async-validator'
-import { UseProps } from '../helpers/types'
+import { DataObject, UseProps } from '../helpers/types'
 
 export type PlacementType = 'bottom' | 'top' | 'left' | 'right'
 export type StateType = 'default' | 'primary' | 'success' | 'warning' | 'danger'
@@ -93,7 +93,19 @@ export interface FormItemProvide {
   validateAfterEventTrigger: (type: string, value: any) => void
 }
 
+export interface PopupCustomCancel {
+  (key: string, focus?: boolean): void
+}
+
+export interface PopupCustomConfirm {
+  (detail?: DataObject): void
+}
+
 export interface PopupPublicInstance {
-  customCancel: (key: string, focus?: boolean) => void
-  customConfirm: (res?: any, key?: string) => void
+  customCancel: PopupCustomCancel
+  customConfirm: PopupCustomConfirm
+}
+
+export interface UseEmit {
+  (event: string, ...args: any[]): void
 }

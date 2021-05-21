@@ -1,8 +1,8 @@
 import { App } from 'vue'
 import { SFCWithInstall } from '@/helpers/types'
 import PopDialog from '../Popover/PopDialog.vue'
-import { ApiOptions, PopupHook } from '../apis/types'
-import { showPopup } from '@/apis/Popup'
+import { ApiOptions, PopupConfirmArgs } from '../apis/types'
+import { createConfirmHook, showPopup } from '@/apis/Popup'
 import { DomSelector } from '../helpers/types'
 import { PlacementType } from '../hooks/types'
 
@@ -16,16 +16,10 @@ type ShowPopDialogOptions = {
 } & ApiOptions
 
 const showPopDialog = function (object: ShowPopDialogOptions) {
-  return showPopup(object, 'showPopDialog', function (done) {
-    const hook: PopupHook = (hookName, res) => {
-      if (hookName === 'afterConfirm' || hookName === 'afterCancel') {
-        done(res)
-      }
-    }
-
+  return showPopup<PopupConfirmArgs>(object, 'showPopDialog', function (done) {
     return {
       component: PopDialog,
-      hook
+      hook: createConfirmHook(done)
     }
   })
 }

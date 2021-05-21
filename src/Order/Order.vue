@@ -69,7 +69,7 @@ import { VisibleStateChangeArgs } from '../hooks/types'
 type Item = {
   id: string | number
   draggable?: boolean
-} & DataObject<any>
+} & DataObject
 
 interface TargetObject {
   id: string | number

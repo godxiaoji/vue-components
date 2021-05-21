@@ -15,18 +15,18 @@
           popup-show-close
         />
       </fx-cell>
-      <fx-cell label="initial-type=range">
+      <fx-cell label="initialMode=range">
         <fx-calendar
-          initial-type="range"
+          initialMode="range"
           v-model="rangeValue"
           @change="onChange"
           popup-show-close
         />
       </fx-cell>
-      <fx-cell label="initial-type=range && allow-same-day">
+      <fx-cell label="initialMode=range && allowSameDay">
         <fx-calendar
-          initial-type="range"
-          allow-same-day
+          initialMode="range"
+          allowSameDay
           @change="onChange"
           popup-show-close
         />
@@ -40,19 +40,19 @@
         <div class="calendar-view-header">选择：{{ viewDateString }}</div>
         <div class="calendar-view-body">
           <fx-calendar-view
-            initial-type="single"
+            initialMode="single"
             v-model="viewDate"
             @select="onSelect"
           ></fx-calendar-view>
         </div>
       </div>
     </fx-group>
-    <fx-group title="CalendarView initial-type=range">
+    <fx-group title="CalendarView initialMode=range">
       <div class="calendar-view-box">
         <div class="calendar-view-header">选择：{{ viewRangeDateString }}</div>
         <div class="calendar-view-body">
           <fx-calendar-view
-            initial-type="range"
+            initialMode="range"
             :first-day-of-week="1"
             v-model="viewRangeDate"
             @select="onSelect"
@@ -75,7 +75,7 @@
         "
       ></fx-cell>
       <fx-cell
-        label="initial-type=range && max-range=5"
+        label="initialMode=range && max-range=5"
         isLink
         @click="popupRangeVisible = true"
       ></fx-cell>
@@ -117,7 +117,7 @@
     <fx-calendar-popup
       v-model:visible="popupRangeVisible"
       :title="title"
-      initial-type="range"
+      initialMode="range"
       :max-range="5"
       :show-confirm="true"
       v-model="popupRangeValue"
@@ -202,14 +202,14 @@ export default {
     },
     onCallApi() {
       Calendar.showCalendar({
-        type: 'range',
+        mode: 'range',
         showClose: true,
         success: res => {
-          console.log(res)
+          console.log('success', res)
           if (res.cancel) {
             Toast.showToast('取消了')
           } else {
-            Toast.showToast(`选择了 ${res.detail.label}`)
+            Toast.showToast(`选择了 ${res.detail.formatted}`)
           }
         }
       })

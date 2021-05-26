@@ -13,7 +13,9 @@
     "build:svg": "webpack --config=./build/webpack.svg.config.js",
     "lint": "eslint ./src/**/*.js",
     "build:css": "gulp build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -80,6 +82,7 @@
     "vue-jest": "^3.0.7",
     "vue-loader": "^15.9.4",
     "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.8.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11"
   },

@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Switch should render default correctly 1`] = `<label class="fx-switch"><input type="checkbox" class="fx-switch_checkbox"> <input type="hidden" name="" value="false"></label>`;
-
-exports[`Switch should render prop disabled=true correctly 1`] = `<label class="fx-switch disabled"><input type="checkbox" disabled="disabled" class="fx-switch_checkbox"> <input type="hidden" disabled="disabled" name="" value="false"></label>`;
-
-exports[`Switch should render prop value=true correctly 1`] = `<label class="fx-switch"><input type="checkbox" class="fx-switch_checkbox" checked=""> <input type="hidden" name="" value="true"></label>`;

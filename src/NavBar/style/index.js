@@ -1,5 +1,0 @@
-import '../../style/hairline.css'
-import '../../Icon/index.css'
-import '../../Button/index.css'
-import '../../ButtonGroup/index.css'
-import '../index.css'

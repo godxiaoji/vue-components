@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Icon should render prop icon="UpOutlined" correctly 1`] = `
-<svg class="fx-icon">
-  <use xlink:href="#icon-UpOutlined"></use>
-</svg>
-`;

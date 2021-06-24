@@ -42,7 +42,7 @@ export default {
     _reset(value) {
       this.formValue = value
 
-      if (value != this.value) {
+      if (value != this.modelValue) {
         this.$emit('update:modelValue', this.hookFormValue())
       }
 

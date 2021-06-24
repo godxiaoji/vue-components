@@ -96,7 +96,7 @@ export default {
       clearTimeout(this.durationTimer)
     },
     afterShow() {
-      console.log('afterShow')
+      // console.log('afterShow')
       this.setAutoClose()
     }
   }

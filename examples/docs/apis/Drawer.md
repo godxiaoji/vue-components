@@ -86,7 +86,7 @@ Cascader.showCascader({
 })
 ```
 
-## showActionSheet(object)
+## ActionSheet.showActionSheet(object)
 
 显示动作面板。
 

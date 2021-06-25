@@ -1,0 +1,1 @@
+import{o as t,c as e,a as r}from"./app.e71fba3c.js";const d='{"title":"TimeAgo 相对时间","description":"","frontmatter":{},"headers":[{"level":2,"title":"Props","slug":"props"}],"relativePath":"components/TimeAgo.md","lastUpdated":1624600516065}',a={},o=r('',4);a.render=function(r,d,a,h,n,i){return t(),e("div",null,[o])};export default a;export{d as __pageData};

@@ -1,0 +1,1 @@
+import{o as t,c as e,a as r}from"./app.e71fba3c.js";const d='{"title":"QrCode 二维码","description":"","frontmatter":{},"headers":[{"level":2,"title":"Props","slug":"props"}],"relativePath":"components/QrCode.md","lastUpdated":1624600516061}',o={},a=r('',4);o.render=function(r,d,o,h,n,p){return t(),e("div",null,[a])};export default o;export{d as __pageData};

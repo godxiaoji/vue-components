@@ -1,0 +1,1 @@
+import{o as t,c as d,a as r}from"./app.28c4bf22.js";const a='{"title":"ActivityIndicator 活动指示器","description":"","frontmatter":{},"headers":[{"level":2,"title":"Props","slug":"props"}],"relativePath":"components/ActivityIndicator.md","lastUpdated":1624583539153}',e={},i=r('',3);e.render=function(r,a,e,o,h,c){return t(),d("div",null,[i])};export default e;export{a as __pageData};

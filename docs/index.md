@@ -19,10 +19,6 @@ sidebarDepth: 2
 
 该版本已使用 `Composition API` 和 `Typescript` 重构。
 
-[Demo](https://cdn.fox2.cn/2.x/demo/)
-
-[Docs](https://cdn.fox2.cn/2.x/docs/)
-
 ## 安装
 
 ### NPM

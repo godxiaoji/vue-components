@@ -30,7 +30,7 @@ module.exports = {
         text: "选择版本",
         items: [
           { text: "1.x", link: "https://cdn.fox2.cn/1.x/docs/" },
-          { text: "2.x", link: "/" },
+          { text: "2.x", link: "/", activeMatch: '^/' },
         ],
       },
     ],

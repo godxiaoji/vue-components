@@ -1,1 +1,0 @@
-import{o as t,c as d,a as r}from"./app.28c4bf22.js";const e='{"title":"Price 价格","description":"","frontmatter":{},"headers":[{"level":2,"title":"Props","slug":"props"}],"relativePath":"components/Price.md","lastUpdated":1624583539157}',a={},i=r('',4);a.render=function(r,e,a,h,s,o){return t(),d("div",null,[i])};export default a;export{e as __pageData};
